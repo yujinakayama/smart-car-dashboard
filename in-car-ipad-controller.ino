@@ -140,7 +140,7 @@ static unsigned long lastiPadSleepPreventionMillis = 0;
 
 static bool rateIsAbout(float rate, float referenceRate) {
   // The voltage tend to be higher when the buttan is contacting
-  return (referenceRate - 0.01) < rate && rate < (referenceRate + 0.10);
+  return (referenceRate - 0.01) < rate && rate < (referenceRate + 0.06);
 }
 
 SteeringRemoteInput getSteeringRemoteInputWithoutChatter() {
