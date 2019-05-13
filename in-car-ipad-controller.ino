@@ -26,6 +26,8 @@ static const uint8_t kReportMap[] = {
     // Beginning of Keyboard report
     REPORT_ID(1), kKeyboardReportID,
 
+    // Sadly, without root usage Generic Desktop Page (0x01) - Keyboard (0x06)
+    // Left GUI (0xE3) and Right GUI (0xE7) don't work as the Command key on iOS :(
     USAGE_PAGE(1),      0x07, // Keyboard/Keypad
     USAGE_MINIMUM(1),   0xE0, // Left Control
     USAGE_MAXIMUM(1),   0xE7, // Right GUI
