@@ -13,6 +13,8 @@ static const int kAnalogInputMaxValue = 4095;
 
 static const int kNonChatterThresholdMillis = 50;
 
+static const int kiPadSleepPreventionIntervalMillis = 30 * 1000;
+
 static const std::string kDeviceName = "Levorg";
 
 static const uint8_t kKeyboardReportID = 1;
@@ -74,6 +76,7 @@ static const uint8_t kReportMap[] = {
 
     USAGE_PAGE(1),      0x0C, // Consumer
     USAGE(1),           0x40, // Menu
+    USAGE(1),           0x95, // Help
     USAGE(1),           0xB5, // Scan Next Track
     USAGE(1),           0xB6, // Scan Previous Track
     USAGE(1),           0xCD, // Play/Pause
@@ -95,7 +98,7 @@ static const uint8_t kReportMap[] = {
 
     // Padding
     REPORT_COUNT(1),       1,
-    REPORT_SIZE(1),        2,
+    REPORT_SIZE(1),        1,
     HIDINPUT(1), kUSBHIDReportFlagConstant,
 
     // End of Consumer report
@@ -106,12 +109,13 @@ static const uint8_t kReportMap[] = {
 typedef enum {
   ConsumerReportCodeNone              = 0,
   ConsumerReportCodeMenu              = 1 << 0,
-  ConsumerReportCodeScanNextTrack     = 1 << 1,
-  ConsumerReportCodeScanPreviousTrack = 1 << 2,
-  ConsumerReportCodePlayPause         = 1 << 3,
-  ConsumerReportCodeMute              = 1 << 4,
-  ConsumerReportCodeVolumeIncrement   = 1 << 5,
-  ConsumerReportCodeVolumeDecrement   = 1 << 6,
+  ConsumerReportCodeHelp              = 1 << 1,
+  ConsumerReportCodeScanNextTrack     = 1 << 2,
+  ConsumerReportCodeScanPreviousTrack = 1 << 3,
+  ConsumerReportCodePlayPause         = 1 << 4,
+  ConsumerReportCodeMute              = 1 << 5,
+  ConsumerReportCodeVolumeIncrement   = 1 << 6,
+  ConsumerReportCodeVolumeDecrement   = 1 << 7,
 } ConsumerReportCode;
 
 typedef enum {
@@ -132,6 +136,7 @@ static SteeringRemoteInput previousSteeringRemoteInput = SteeringRemoteInputNone
 static BLECharacteristic* inputReportCharacteristic;
 static bool isConnected = false;
 static bool wasConnected = false;
+static unsigned long lastiPadSleepPreventionMillis = 0;
 
 static bool rateIsAbout(float rate, float referenceRate) {
   // The voltage tend to be higher when the buttan is contacting
@@ -225,6 +230,19 @@ static void startBLEServer() {
     advertising->start();
 };
 
+static void handleSteeringRemoteInput() {
+  SteeringRemoteInput currentSteeringRemoteInput = getSteeringRemoteInputWithoutChatter();
+
+  if (currentSteeringRemoteInput != previousSteeringRemoteInput) {
+    sendBluetoothCommandForSteeringRemoteInput(currentSteeringRemoteInput);
+    #ifdef DEBUG
+    Serial.println(currentSteeringRemoteInput);
+    #endif
+  }
+
+  previousSteeringRemoteInput = currentSteeringRemoteInput;
+}
+
 static void sendBluetoothCommandForSteeringRemoteInput(SteeringRemoteInput steeringRemoteInput) {
   ConsumerReportCode code = ConsumerReportCodeNone;
 
@@ -272,6 +290,19 @@ static void unlockiPad() {
   sendConsumerReportCode(ConsumerReportCodeMenu);
 }
 
+static void keepiPadAwake() {
+  unsigned long currentMillis = millis();
+
+  if (currentMillis > lastiPadSleepPreventionMillis + kiPadSleepPreventionIntervalMillis) {
+    #ifdef DEBUG
+    Serial.println("Sending Help key code to keep the iPad awake");
+    #endif
+
+    sendConsumerReportCode(ConsumerReportCodeHelp);
+    lastiPadSleepPreventionMillis = currentMillis;
+  }
+}
+
 void setup() {
   #ifdef DEBUG
   Serial.begin(115200);
@@ -288,16 +319,9 @@ void loop() {
       unlockiPad();
     }
 
-    SteeringRemoteInput currentSteeringRemoteInput = getSteeringRemoteInputWithoutChatter();
+    handleSteeringRemoteInput();
 
-    if (currentSteeringRemoteInput != previousSteeringRemoteInput) {
-      sendBluetoothCommandForSteeringRemoteInput(currentSteeringRemoteInput);
-      #ifdef DEBUG
-      Serial.println(currentSteeringRemoteInput);
-      #endif
-    }
-
-    previousSteeringRemoteInput = currentSteeringRemoteInput;
+    keepiPadAwake();
   }
 
   wasConnected = isConnected;
