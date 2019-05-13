@@ -6,6 +6,11 @@
 
 // #define DEBUG
 
+static const int kSteeringRemoteInputPinA = 34; // Connect to the brown-yellow wire in the car
+static const int kSteeringRemoteInputPinB = 35; // Connect to the brown-white wire in the car
+
+static const int kAnalogInputMaxValue = 4095;
+
 static const std::string kDeviceName = "Levorg";
 
 static const uint8_t kKeyboardReportID = 1;
@@ -96,8 +101,67 @@ static const uint8_t kReportMap[] = {
   END_COLLECTION(0)
 };
 
+typedef enum {
+  ConsumerReportCodeNone              = 0,
+  ConsumerReportCodeMenu              = 1 << 0,
+  ConsumerReportCodeScanNextTrack     = 1 << 1,
+  ConsumerReportCodeScanPreviousTrack = 1 << 2,
+  ConsumerReportCodePlayPause         = 1 << 3,
+  ConsumerReportCodeMute              = 1 << 4,
+  ConsumerReportCodeVolumeIncrement   = 1 << 5,
+  ConsumerReportCodeVolumeDecrement   = 1 << 6,
+} ConsumerReportCode;
+
+typedef enum {
+  SteeringRemoteInputUnknown = -1,
+  SteeringRemoteInputNone = 0,
+  SteeringRemoteInputNext,
+  SteeringRemoteInputPrevious,
+  SteeringRemoteInputPlus,
+  SteeringRemoteInputMinus,
+  SteeringRemoteInputMute,
+  SteeringRemoteInputSource,
+  SteeringRemoteInputAnswerPhone,
+  SteeringRemoteInputHangUpPhone,
+  SteeringRemoteInputVoiceInput
+} SteeringRemoteInput;
+
+static SteeringRemoteInput previousSteeringRemoteInput = SteeringRemoteInputNone;
 static BLECharacteristic* inputReportCharacteristic;
 static bool connected = false;
+
+static bool rateIsAbout(float rate, float referenceRate) {
+  return (referenceRate - 0.02) < rate && rate < (referenceRate + 0.02);
+}
+
+static SteeringRemoteInput getCurrentSteeringRemoteInput() {
+  float inputRateA = (float)analogRead(kSteeringRemoteInputPinA) / kAnalogInputMaxValue;
+  float inputRateB = (float)analogRead(kSteeringRemoteInputPinB) / kAnalogInputMaxValue;
+
+  if (rateIsAbout(inputRateA, 1.00) && rateIsAbout(inputRateB, 1.00)) {
+    return SteeringRemoteInputNone;
+  } else if (rateIsAbout(inputRateA, 0.00)) {
+    return SteeringRemoteInputNext;
+  } else if (rateIsAbout(inputRateA, 0.09)) {
+    return SteeringRemoteInputPrevious;
+  } else if (rateIsAbout(inputRateA, 0.28)) {
+    return SteeringRemoteInputPlus;
+  } else if (rateIsAbout(inputRateA, 0.51)) {
+    return SteeringRemoteInputMinus;
+  } else if (rateIsAbout(inputRateA, 0.67)) {
+    return SteeringRemoteInputMute;
+  } else if (rateIsAbout(inputRateB, 0.00)) {
+    return SteeringRemoteInputSource;
+  } else if (rateIsAbout(inputRateB, 0.09)) {
+    return SteeringRemoteInputAnswerPhone;
+  } else if (rateIsAbout(inputRateB, 0.28)) {
+    return SteeringRemoteInputHangUpPhone;
+  } else if (rateIsAbout(inputRateB, 0.51)) {
+    return SteeringRemoteInputVoiceInput;
+  } else {
+    return SteeringRemoteInputUnknown;
+  }
+}
 
 class ServerCallbacks : public BLEServerCallbacks {
   void onConnect(BLEServer* server) {
@@ -132,34 +196,42 @@ static void startBLEServer() {
     advertising->start();
 };
 
+static void sendBluetoothInputReportForSteeringRemoteInput(SteeringRemoteInput steeringRemoteInput) {
+  uint8_t code = ConsumerReportCodeNone;
+
+  switch (steeringRemoteInput) {
+    case SteeringRemoteInputNext:
+      code = ConsumerReportCodeScanNextTrack;
+      break;
+    case SteeringRemoteInputPrevious:
+      code = ConsumerReportCodeScanPreviousTrack;
+      break;
+    case SteeringRemoteInputPlus:
+      code = ConsumerReportCodeVolumeIncrement;
+      break;
+    case SteeringRemoteInputMinus:
+      code = ConsumerReportCodeVolumeDecrement;
+      break;
+    case SteeringRemoteInputMute:
+      code = ConsumerReportCodePlayPause;
+      break;
+  }
+
+  if (code == ConsumerReportCodeNone) {
+    return;
+  }
+
+  uint8_t keyPressedReport[] = {kConsumerReportID, code};
+  notifyInputReport(keyPressedReport, sizeof(keyPressedReport));
+
+  uint8_t keyUnpressedReport[] = {kConsumerReportID, 0};
+  notifyInputReport(keyUnpressedReport, sizeof(keyUnpressedReport));
+}
+
 static void notifyInputReport(uint8_t* report, uint8_t size) {
   inputReportCharacteristic->setValue(report, size);
   inputReportCharacteristic->notify(true);
 }
-
-#ifdef DEBUG
-static void notifyConsumerUsageInputReportFromSerialInput() {
-  if (!connected) {
-    return;
-  }
-
-  if (Serial.available() == 0) {
-    return;
-  }
-
-  String debugInput = Serial.readStringUntil('\r');
-  debugInput.trim();
-  uint8_t bitShiftCount = strtol(debugInput.c_str(), NULL, 10);
-  uint8_t usageCode = 1 << bitShiftCount;
-  Serial.println(usageCode);
-
-  uint8_t keyPressedReport[] = {kConsumerReportID, usageCode, 0};
-  notifyInputReport(keyPressedReport, sizeof(keyPressedReport));
-
-  uint8_t keyUnpressedReport[] = {kConsumerReportID, 0, 0};
-  notifyInputReport(keyUnpressedReport, sizeof(keyUnpressedReport));
-}
-#endif
 
 void setup() {
   #ifdef DEBUG
@@ -170,7 +242,16 @@ void setup() {
 }
 
 void loop() {
-  #ifdef DEBUG
-  notifyConsumerUsageInputReportFromSerialInput();
-  #endif
+  if (connected) {
+    SteeringRemoteInput currentSteeringRemoteInput = getCurrentSteeringRemoteInput();
+
+    if (currentSteeringRemoteInput != previousSteeringRemoteInput) {
+      sendBluetoothInputReportForSteeringRemoteInput(currentSteeringRemoteInput);
+      #ifdef DEBUG
+      Serial.println(currentSteeringRemoteInput);
+      #endif
+    }
+
+    previousSteeringRemoteInput = currentSteeringRemoteInput;
+  }
 }
