@@ -130,7 +130,8 @@ typedef enum {
 
 static SteeringRemoteInput previousSteeringRemoteInput = SteeringRemoteInputNone;
 static BLECharacteristic* inputReportCharacteristic;
-static bool connected = false;
+static bool isConnected = false;
+static bool wasConnected = false;
 
 static bool rateIsAbout(float rate, float referenceRate) {
   // The voltage tend to be higher when the buttan is contacting
@@ -193,11 +194,11 @@ static SteeringRemoteInput getCurrentSteeringRemoteInput() {
 
 class ServerCallbacks : public BLEServerCallbacks {
   void onConnect(BLEServer* server) {
-    connected = true;
+    isConnected = true;
   }
 
   void onDisconnect(BLEServer* server) {
-    connected = false;
+    isConnected = false;
   }
 };
 
@@ -224,8 +225,8 @@ static void startBLEServer() {
     advertising->start();
 };
 
-static void sendBluetoothInputReportForSteeringRemoteInput(SteeringRemoteInput steeringRemoteInput) {
-  uint8_t code = ConsumerReportCodeNone;
+static void sendBluetoothCommandForSteeringRemoteInput(SteeringRemoteInput steeringRemoteInput) {
+  ConsumerReportCode code = ConsumerReportCodeNone;
 
   switch (steeringRemoteInput) {
     case SteeringRemoteInputNext:
@@ -249,16 +250,26 @@ static void sendBluetoothInputReportForSteeringRemoteInput(SteeringRemoteInput s
     return;
   }
 
+  sendConsumerReportCode(code);
+}
+
+static void sendConsumerReportCode(ConsumerReportCode code) {
   uint8_t keyPressedReport[] = {kConsumerReportID, code};
   notifyInputReport(keyPressedReport, sizeof(keyPressedReport));
 
-  uint8_t keyUnpressedReport[] = {kConsumerReportID, 0};
+  uint8_t keyUnpressedReport[] = {kConsumerReportID, ConsumerReportCodeNone};
   notifyInputReport(keyUnpressedReport, sizeof(keyUnpressedReport));
 }
 
 static void notifyInputReport(uint8_t* report, uint8_t size) {
   inputReportCharacteristic->setValue(report, size);
   inputReportCharacteristic->notify(true);
+}
+
+static void unlockiPad() {
+  sendConsumerReportCode(ConsumerReportCodeMenu);
+  delay(500);
+  sendConsumerReportCode(ConsumerReportCodeMenu);
 }
 
 void setup() {
@@ -270,11 +281,17 @@ void setup() {
 }
 
 void loop() {
-  if (connected) {
+  if (isConnected) {
+    if (!wasConnected) {
+      // Not sure but this doen't work in ServerCallbacks::onConnect()
+      delay(1000);
+      unlockiPad();
+    }
+
     SteeringRemoteInput currentSteeringRemoteInput = getSteeringRemoteInputWithoutChatter();
 
     if (currentSteeringRemoteInput != previousSteeringRemoteInput) {
-      sendBluetoothInputReportForSteeringRemoteInput(currentSteeringRemoteInput);
+      sendBluetoothCommandForSteeringRemoteInput(currentSteeringRemoteInput);
       #ifdef DEBUG
       Serial.println(currentSteeringRemoteInput);
       #endif
@@ -282,4 +299,6 @@ void loop() {
 
     previousSteeringRemoteInput = currentSteeringRemoteInput;
   }
+
+  wasConnected = isConnected;
 }
