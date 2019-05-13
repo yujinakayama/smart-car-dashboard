@@ -132,6 +132,11 @@ static void startBLEServer() {
     advertising->start();
 };
 
+static void notifyInputReport(uint8_t* report, uint8_t size) {
+  inputReportCharacteristic->setValue(report, size);
+  inputReportCharacteristic->notify(true);
+}
+
 #ifdef DEBUG
 static void notifyConsumerUsageInputReportFromSerialInput() {
   if (!connected) {
@@ -149,12 +154,10 @@ static void notifyConsumerUsageInputReportFromSerialInput() {
   Serial.println(usageCode);
 
   uint8_t keyPressedReport[] = {kConsumerReportID, usageCode, 0};
-  inputReportCharacteristic->setValue(keyPressedReport, sizeof(keyPressedReport));
-  inputReportCharacteristic->notify(true);
+  notifyInputReport(keyPressedReport, sizeof(keyPressedReport));
 
   uint8_t keyUnpressedReport[] = {kConsumerReportID, 0, 0};
-  inputReportCharacteristic->setValue(keyUnpressedReport, sizeof(keyUnpressedReport));
-  inputReportCharacteristic->notify(true);
+  notifyInputReport(keyUnpressedReport, sizeof(keyUnpressedReport));
 }
 #endif
 
