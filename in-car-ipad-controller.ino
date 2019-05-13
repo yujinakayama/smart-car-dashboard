@@ -11,6 +11,8 @@ static const int kSteeringRemoteInputPinB = 35; // Connect to the brown-white wi
 
 static const int kAnalogInputMaxValue = 4095;
 
+static const int kNonChatterThresholdMillis = 50;
+
 static const std::string kDeviceName = "Levorg";
 
 static const uint8_t kKeyboardReportID = 1;
@@ -131,7 +133,26 @@ static BLECharacteristic* inputReportCharacteristic;
 static bool connected = false;
 
 static bool rateIsAbout(float rate, float referenceRate) {
-  return (referenceRate - 0.02) < rate && rate < (referenceRate + 0.02);
+  // The voltage tend to be higher when the buttan is contacting
+  return (referenceRate - 0.01) < rate && rate < (referenceRate + 0.10);
+}
+
+SteeringRemoteInput getSteeringRemoteInputWithoutChatter() {
+  SteeringRemoteInput initialInput = getCurrentSteeringRemoteInput();
+
+  if (initialInput <= 0) {
+    return SteeringRemoteInputNone;
+  }
+
+  unsigned long initialInputMillis = millis();
+
+  while (getCurrentSteeringRemoteInput() == initialInput) {
+    if (millis() > initialInputMillis + kNonChatterThresholdMillis) {
+      return initialInput;
+    }
+  }
+
+  return SteeringRemoteInputNone;
 }
 
 static SteeringRemoteInput getCurrentSteeringRemoteInput() {
@@ -159,6 +180,13 @@ static SteeringRemoteInput getCurrentSteeringRemoteInput() {
   } else if (rateIsAbout(inputRateB, 0.51)) {
     return SteeringRemoteInputVoiceInput;
   } else {
+    #ifdef DEBUG
+    Serial.print("Unknown Steering Remote Input: ");
+    Serial.print(inputRateA);
+    Serial.print(" ");
+    Serial.print(inputRateB);
+    Serial.println();
+    #endif
     return SteeringRemoteInputUnknown;
   }
 }
@@ -243,7 +271,7 @@ void setup() {
 
 void loop() {
   if (connected) {
-    SteeringRemoteInput currentSteeringRemoteInput = getCurrentSteeringRemoteInput();
+    SteeringRemoteInput currentSteeringRemoteInput = getSteeringRemoteInputWithoutChatter();
 
     if (currentSteeringRemoteInput != previousSteeringRemoteInput) {
       sendBluetoothInputReportForSteeringRemoteInput(currentSteeringRemoteInput);
