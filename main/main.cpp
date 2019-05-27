@@ -139,27 +139,19 @@ static bool isConnected = false;
 static bool wasConnected = false;
 static unsigned long lastiPadSleepPreventionMillis = 0;
 
+class ServerCallbacks : public BLEServerCallbacks {
+  void onConnect(BLEServer* server) {
+    isConnected = true;
+  }
+
+  void onDisconnect(BLEServer* server) {
+    isConnected = false;
+  }
+};
+
 static bool rateIsAbout(float rate, float referenceRate) {
   // The voltage tend to be higher when the buttan is contacting
   return (referenceRate - 0.01) < rate && rate < (referenceRate + 0.06);
-}
-
-SteeringRemoteInput getSteeringRemoteInputWithoutChatter() {
-  SteeringRemoteInput initialInput = getCurrentSteeringRemoteInput();
-
-  if (initialInput <= 0) {
-    return SteeringRemoteInputNone;
-  }
-
-  unsigned long initialInputMillis = millis();
-
-  while (getCurrentSteeringRemoteInput() == initialInput) {
-    if (millis() > initialInputMillis + kNonChatterThresholdMillis) {
-      return initialInput;
-    }
-  }
-
-  return SteeringRemoteInputNone;
 }
 
 static SteeringRemoteInput getCurrentSteeringRemoteInput() {
@@ -198,15 +190,23 @@ static SteeringRemoteInput getCurrentSteeringRemoteInput() {
   }
 }
 
-class ServerCallbacks : public BLEServerCallbacks {
-  void onConnect(BLEServer* server) {
-    isConnected = true;
+SteeringRemoteInput getSteeringRemoteInputWithoutChatter() {
+  SteeringRemoteInput initialInput = getCurrentSteeringRemoteInput();
+
+  if (initialInput <= 0) {
+    return SteeringRemoteInputNone;
   }
 
-  void onDisconnect(BLEServer* server) {
-    isConnected = false;
+  unsigned long initialInputMillis = millis();
+
+  while (getCurrentSteeringRemoteInput() == initialInput) {
+    if (millis() > initialInputMillis + kNonChatterThresholdMillis) {
+      return initialInput;
+    }
   }
-};
+
+  return SteeringRemoteInputNone;
+}
 
 static void startBLEServer() {
     BLEDevice::init(kDeviceName);
@@ -231,17 +231,17 @@ static void startBLEServer() {
     advertising->start();
 };
 
-static void handleSteeringRemoteInput() {
-  SteeringRemoteInput currentSteeringRemoteInput = getSteeringRemoteInputWithoutChatter();
+static void notifyInputReport(uint8_t* report, uint8_t size) {
+  inputReportCharacteristic->setValue(report, size);
+  inputReportCharacteristic->notify(true);
+}
 
-  if (currentSteeringRemoteInput != previousSteeringRemoteInput) {
-    sendBluetoothCommandForSteeringRemoteInput(currentSteeringRemoteInput);
-    #ifdef DEBUG
-    Serial.println(currentSteeringRemoteInput);
-    #endif
-  }
+static void sendConsumerReportCode(ConsumerReportCode code) {
+  uint8_t keyPressedReport[] = {kConsumerReportID, code};
+  notifyInputReport(keyPressedReport, sizeof(keyPressedReport));
 
-  previousSteeringRemoteInput = currentSteeringRemoteInput;
+  uint8_t keyUnpressedReport[] = {kConsumerReportID, ConsumerReportCodeNone};
+  notifyInputReport(keyUnpressedReport, sizeof(keyUnpressedReport));
 }
 
 static void sendBluetoothCommandForSteeringRemoteInput(SteeringRemoteInput steeringRemoteInput) {
@@ -272,17 +272,17 @@ static void sendBluetoothCommandForSteeringRemoteInput(SteeringRemoteInput steer
   sendConsumerReportCode(code);
 }
 
-static void sendConsumerReportCode(ConsumerReportCode code) {
-  uint8_t keyPressedReport[] = {kConsumerReportID, code};
-  notifyInputReport(keyPressedReport, sizeof(keyPressedReport));
+static void handleSteeringRemoteInput() {
+  SteeringRemoteInput currentSteeringRemoteInput = getSteeringRemoteInputWithoutChatter();
 
-  uint8_t keyUnpressedReport[] = {kConsumerReportID, ConsumerReportCodeNone};
-  notifyInputReport(keyUnpressedReport, sizeof(keyUnpressedReport));
-}
+  if (currentSteeringRemoteInput != previousSteeringRemoteInput) {
+    sendBluetoothCommandForSteeringRemoteInput(currentSteeringRemoteInput);
+    #ifdef DEBUG
+    Serial.println(currentSteeringRemoteInput);
+    #endif
+  }
 
-static void notifyInputReport(uint8_t* report, uint8_t size) {
-  inputReportCharacteristic->setValue(report, size);
-  inputReportCharacteristic->notify(true);
+  previousSteeringRemoteInput = currentSteeringRemoteInput;
 }
 
 static void unlockiPad() {
