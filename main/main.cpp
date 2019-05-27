@@ -211,31 +211,31 @@ SteeringRemoteInput getSteeringRemoteInputWithoutChatter() {
 #ifdef DEBUG
 // https://github.com/espressif/esp-idf/blob/v3.2/components/bt/bluedroid/api/include/api/esp_gatts_api.h#L26-L54
 static const String kGATTServerEventNames[] = {
-    String("REG"),
-    String("READ"),
-    String("WRITE"),
-    String("EXEC_WRITE"),
-    String("MTU"),
-    String("CONF"),
-    String("UNREG"),
-    String("CREATE"),
-    String("ADD_INCL_SRVC"),
-    String("ADD_CHAR"),
-    String("ADD_CHAR_DESCR"),
-    String("DELETE"),
-    String("START"),
-    String("STOP"),
-    String("CONNECT"),
-    String("DISCONNECT"),
-    String("OPEN"),
-    String("CANCEL_OPEN"),
-    String("CLOSE"),
-    String("LISTEN"),
-    String("CONGEST"),
-    String("RESPONSE"),
-    String("CREAT_ATTR_TAB"),
-    String("SET_ATTR_VAL"),
-    String("SEND_SERVICE_CHANGE")
+  String("REG"),
+  String("READ"),
+  String("WRITE"),
+  String("EXEC_WRITE"),
+  String("MTU"),
+  String("CONF"),
+  String("UNREG"),
+  String("CREATE"),
+  String("ADD_INCL_SRVC"),
+  String("ADD_CHAR"),
+  String("ADD_CHAR_DESCR"),
+  String("DELETE"),
+  String("START"),
+  String("STOP"),
+  String("CONNECT"),
+  String("DISCONNECT"),
+  String("OPEN"),
+  String("CANCEL_OPEN"),
+  String("CLOSE"),
+  String("LISTEN"),
+  String("CONGEST"),
+  String("RESPONSE"),
+  String("CREAT_ATTR_TAB"),
+  String("SET_ATTR_VAL"),
+  String("SEND_SERVICE_CHANGE")
 };
 
 void handleBLEServerEvent(esp_gatts_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gatts_cb_param_t* param) {
@@ -246,29 +246,29 @@ void handleBLEServerEvent(esp_gatts_cb_event_t event, esp_gatt_if_t gattc_if, es
 
 static void startBLEServer() {
 #ifdef DEBUG
-    BLEDevice::setCustomGattsHandler(handleBLEServerEvent);
+  BLEDevice::setCustomGattsHandler(handleBLEServerEvent);
 #endif
 
-    BLEDevice::init(kDeviceName);
+  BLEDevice::init(kDeviceName);
 
-    BLEServer* server = BLEDevice::createServer();
-    server->setCallbacks(new ServerCallbacks());
+  BLEServer* server = BLEDevice::createServer();
+  server->setCallbacks(new ServerCallbacks());
 
-    BLEHIDDevice* hidDevice = new BLEHIDDevice(server);
-    hidDevice->reportMap((uint8_t*)kReportMap, sizeof(kReportMap));
-    hidDevice->pnp(2, 0x05AC, 0x0255, 0);
-    // inputReport() is defined as BLEHIDDevice::inputReport(uint8_t reportID)
-    // but using each input report for report ID 1 and 2 does not work for some reason.
-    // Anyway we can indicate report ID with the first byte of notification data.
-    inputReportCharacteristic = hidDevice->inputReport(1);
+  BLEHIDDevice* hidDevice = new BLEHIDDevice(server);
+  hidDevice->reportMap((uint8_t*)kReportMap, sizeof(kReportMap));
+  hidDevice->pnp(2, 0x05AC, 0x0255, 0);
+  // inputReport() is defined as BLEHIDDevice::inputReport(uint8_t reportID)
+  // but using each input report for report ID 1 and 2 does not work for some reason.
+  // Anyway we can indicate report ID with the first byte of notification data.
+  inputReportCharacteristic = hidDevice->inputReport(1);
 
-    hidDevice->startServices();
+  hidDevice->startServices();
 
-    // TODO: Use BLEAdvertisementData::setName() to show the name properly even before unpaired
-    BLEAdvertising* advertising = server->getAdvertising();
-    advertising->setAppearance(ESP_BLE_APPEARANCE_GENERIC_HID);
-    advertising->addServiceUUID(hidDevice->hidService()->getUUID());
-    advertising->start();
+  // TODO: Use BLEAdvertisementData::setName() to show the name properly even before unpaired
+  BLEAdvertising* advertising = server->getAdvertising();
+  advertising->setAppearance(ESP_BLE_APPEARANCE_GENERIC_HID);
+  advertising->addServiceUUID(hidDevice->hidService()->getUUID());
+  advertising->start();
 };
 
 static void notifyInputReport(uint8_t* report, uint8_t size) {
