@@ -263,6 +263,8 @@ static void sendBluetoothCommandForSteeringRemoteInput(SteeringRemoteInput steer
     case SteeringRemoteInputMute:
       code = ConsumerReportCodePlayPause;
       break;
+    default:
+      break;
   }
 
   if (code == ConsumerReportCodeNone) {
