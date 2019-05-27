@@ -208,7 +208,47 @@ SteeringRemoteInput getSteeringRemoteInputWithoutChatter() {
   return SteeringRemoteInputNone;
 }
 
+#ifdef DEBUG
+// https://github.com/espressif/esp-idf/blob/v3.2/components/bt/bluedroid/api/include/api/esp_gatts_api.h#L26-L54
+static const String kGATTServerEventNames[] = {
+    String("REG"),
+    String("READ"),
+    String("WRITE"),
+    String("EXEC_WRITE"),
+    String("MTU"),
+    String("CONF"),
+    String("UNREG"),
+    String("CREATE"),
+    String("ADD_INCL_SRVC"),
+    String("ADD_CHAR"),
+    String("ADD_CHAR_DESCR"),
+    String("DELETE"),
+    String("START"),
+    String("STOP"),
+    String("CONNECT"),
+    String("DISCONNECT"),
+    String("OPEN"),
+    String("CANCEL_OPEN"),
+    String("CLOSE"),
+    String("LISTEN"),
+    String("CONGEST"),
+    String("RESPONSE"),
+    String("CREAT_ATTR_TAB"),
+    String("SET_ATTR_VAL"),
+    String("SEND_SERVICE_CHANGE")
+};
+
+void handleBLEServerEvent(esp_gatts_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gatts_cb_param_t* param) {
+  Serial.print("handleBLEServerEvent: ");
+  Serial.println(kGATTServerEventNames[event]);
+}
+#endif
+
 static void startBLEServer() {
+#ifdef DEBUG
+    BLEDevice::setCustomGattsHandler(handleBLEServerEvent);
+#endif
+
     BLEDevice::init(kDeviceName);
 
     BLEServer* server = BLEDevice::createServer();
