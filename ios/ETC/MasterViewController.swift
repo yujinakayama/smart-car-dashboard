@@ -10,7 +10,6 @@ import UIKit
 
 class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETCDeviceDelegate {
     var detailViewController: DetailViewController? = nil
-    var objects = [Any]()
 
     var deviceManager: ETCDeviceManager?
     var device: ETCDevice?
@@ -18,11 +17,7 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        navigationItem.leftBarButtonItem = editButtonItem
 
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
-        navigationItem.rightBarButtonItem = addButton
         if let split = splitViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
@@ -36,13 +31,6 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
         super.viewWillAppear(animated)
     }
 
-    @objc
-    func insertNewObject(_ sender: Any) {
-        objects.insert(NSDate(), at: 0)
-        let indexPath = IndexPath(row: 0, section: 0)
-        tableView.insertRows(at: [indexPath], with: .automatic)
-    }
-
     // MARK: - ETCDeviceManagerDelegate
 
     func deviceManager(_ deviceManager: ETCDeviceManager, didConnectToDevice device: ETCDevice) {
@@ -54,13 +42,12 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
 
     func deviceDidFinishPreparation(_ device: ETCDevice, error: Error?) {
         print(#function)
-        try? device.send(ETCDevice.SendableMessage.deviceNameRequest)
+        try? device.send(ETCDevice.SendableMessage.initialUsageRecordRequest)
     }
 
     func startObservingDeviceAttributes(_ attributes: ETCDeviceAttributes) {
-        let observation = attributes.observe(\.deviceName, options: .new) { (attributes, change) in
-            let deviceName = change.newValue!
-            print("\(#function): \(deviceName as String?)")
+        let observation = attributes.observe(\.usages, options: .new) { [unowned self] (attributes, change) in
+            self.tableView.reloadData()
         }
         observations.append(observation)
     }
@@ -70,9 +57,9 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
-                let object = objects[indexPath.row] as! NSDate
+                let usage = device!.attributes.usages[indexPath.row]
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = object
+                controller.detailItem = usage
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
@@ -86,31 +73,15 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return objects.count
+        return device?.attributes.usages.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
-        let object = objects[indexPath.row] as! NSDate
-        cell.textLabel!.text = object.description
+        let usage = device!.attributes.usages[indexPath.row]
+        cell.textLabel!.text = usage.date?.description
         return cell
     }
-
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            objects.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-        }
-    }
-
-
 }
 

@@ -123,6 +123,8 @@ extension ETCDevice {
         static let handshakeRequest = SendablePlainMessage(headerBytes: [0xFA])
         static let acknowledgement = SendableChecksummedMessage(headerBytes: [0x02, 0xC0])
         static let deviceNameRequest = SendableChecksummedMessage(headerBytes: [0x01, 0xC6, byte(of: "K")])
+        static let initialUsageRecordRequest = SendableChecksummedMessage(headerBytes: [0x01, 0xC6, byte(of: "L")])
+        static let nextUsageRecordRequest = SendableChecksummedMessage(headerBytes: [0x01, 0xC6, byte(of: "M")])
 
         struct SendablePlainMessage: ETCSendableMessage {
             let headerBytes: [UInt8]
@@ -156,7 +158,11 @@ extension ETCDevice {
             HeartBeat.self,
             HandshakeAcknowledgement.self,
             HandshakeRequest.self,
-            DeviceNameResponse.self
+            DeviceNameResponse.self,
+            InitialUsageRecordExistenceResponse.self,
+            InitialUsageRecordNonExistenceResponse.self,
+            NextUsageRecordNonExistenceResponse.self,
+            UsageRecordResponse.self,
         ]
 
         struct HeartBeat: ETCReceivedMessage, Plain {
@@ -184,6 +190,52 @@ extension ETCDevice {
 
             var deviceName: String? {
                 return String(bytes: payloadBytes, encoding: .ascii)
+            }
+        }
+
+        struct InitialUsageRecordExistenceResponse: ETCReceivedMessage, Checksummed {
+            static let headerBytes: [UInt8] = [0x02, 0xC1, byte(of: "7")]
+            static let payloadLength = 0
+            var data: Data
+        }
+
+        struct InitialUsageRecordNonExistenceResponse: ETCReceivedMessage, Checksummed {
+            static let headerBytes: [UInt8] = [0x02, 0xC1, byte(of: "5")]
+            static let payloadLength = 0
+            var data: Data
+        }
+
+        struct NextUsageRecordNonExistenceResponse: ETCReceivedMessage, Checksummed {
+            static let headerBytes: [UInt8] = [0x02, 0xC1, byte(of: "8")]
+            static let payloadLength = 0
+            var data: Data
+        }
+
+        struct UsageRecordResponse: ETCReceivedMessage, Checksummed {
+            static let headerBytes: [UInt8] = [0x02, 0xE5]
+            static let payloadLength = 41
+            var data: Data
+
+            var usage: ETCUsage {
+                let usage = ETCUsage()
+                usage.entranceRoadNumber      = number(in: 4...5)
+                usage.entranceTollboothNumber = number(in: 6...8)
+                usage.exitRoadNumber          = number(in: 13...14)
+                usage.exitTollboothNumber     = number(in: 15...17)
+                usage.year                    = number(in: 18...21)
+                usage.month                   = number(in: 22...23)
+                usage.day                     = number(in: 24...25)
+                usage.hour                    = number(in: 26...27)
+                usage.minute                  = number(in: 28...29)
+                usage.second                  = number(in: 30...31)
+                usage.vehicleType             = number(in: 32...34)
+                usage.fee                     = number(in: 35...40)
+                return usage
+            }
+
+            func number(in range: ClosedRange<Int>) -> Int? {
+                guard let string = String(bytes: payloadBytes[range], encoding: .ascii) else { return nil }
+                return Int(string.trimmingCharacters(in: .whitespaces))
             }
         }
 

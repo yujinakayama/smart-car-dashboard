@@ -19,6 +19,7 @@ enum ETCDeviceError: Error {
 // Using NSObject intead of struct for KVO
 class ETCDeviceAttributes: NSObject {
     @objc dynamic var deviceName: String?
+    @objc dynamic var usages: [ETCUsage] = []
 }
 
 class ETCDevice: NSObject, UARTDeviceDelegate {
@@ -77,6 +78,12 @@ class ETCDevice: NSObject, UARTDeviceDelegate {
         switch message {
         case let deviceNameResponse as ReceivedMessage.DeviceNameResponse:
             attributes.deviceName = deviceNameResponse.deviceName
+        case is ReceivedMessage.InitialUsageRecordExistenceResponse:
+            try! send(SendableMessage.initialUsageRecordRequest)
+        case let usageRecordResponse as ReceivedMessage.UsageRecordResponse:
+            dump(usageRecordResponse.usage)
+            attributes.usages.append(usageRecordResponse.usage)
+            try! send(SendableMessage.nextUsageRecordRequest)
         default:
             break
         }

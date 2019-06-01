@@ -20,6 +20,7 @@
 		B9DC5B46229EB8B200B645D5 /* ETCDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B45229EB8B200B645D5 /* ETCDeviceManager.swift */; };
 		B9DC5B4A229EDA0000B645D5 /* UARTDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B49229EDA0000B645D5 /* UARTDevice.swift */; };
 		B9E96CBB22A3CE7500C2E009 /* ETCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CBA22A3CE7500C2E009 /* ETCTests.swift */; };
+		B9E96CC822A4EF1300C2E009 /* ETCUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCUsage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		B9E96CB822A3CE7500C2E009 /* ETCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ETCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9E96CBA22A3CE7500C2E009 /* ETCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCTests.swift; sourceTree = "<group>"; };
 		B9E96CBC22A3CE7500C2E009 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B9E96CC722A4EF1200C2E009 /* ETCUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCUsage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 				B9DC5B45229EB8B200B645D5 /* ETCDeviceManager.swift */,
 				B9DC5B38229D5D8100B645D5 /* ETCDevice.swift */,
 				B9B36BDF22A2810400ECF0AA /* ETCMessage.swift */,
+				B9E96CC722A4EF1200C2E009 /* ETCUsage.swift */,
 				B9DC5B49229EDA0000B645D5 /* UARTDevice.swift */,
 				B9DC5B3E229D9E4F00B645D5 /* BLERemotePeripheralManager.swift */,
 				B9DC5B3C229D9E0C00B645D5 /* BLERemotePeripheral.swift */,
@@ -220,6 +223,7 @@
 			files = (
 				B9B36BE022A2810400ECF0AA /* ETCMessage.swift in Sources */,
 				B9DC5B46229EB8B200B645D5 /* ETCDeviceManager.swift in Sources */,
+				B9E96CC822A4EF1300C2E009 /* ETCUsage.swift in Sources */,
 				B9DC5B29229D59BE00B645D5 /* DetailViewController.swift in Sources */,
 				B9DC5B27229D59BE00B645D5 /* MasterViewController.swift in Sources */,
 				B9DC5B3F229D9E4F00B645D5 /* BLERemotePeripheralManager.swift in Sources */,
