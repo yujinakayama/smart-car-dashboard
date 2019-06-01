@@ -7,15 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B9B36BE022A2810400ECF0AA /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B36BDF22A2810400ECF0AA /* ETCMessage.swift */; };
 		B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B24229D59BE00B645D5 /* AppDelegate.swift */; };
 		B9DC5B27229D59BE00B645D5 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B26229D59BE00B645D5 /* MasterViewController.swift */; };
 		B9DC5B29229D59BE00B645D5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B28229D59BE00B645D5 /* DetailViewController.swift */; };
 		B9DC5B2C229D59BE00B645D5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9DC5B2A229D59BE00B645D5 /* Main.storyboard */; };
 		B9DC5B2E229D59BF00B645D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9DC5B2D229D59BF00B645D5 /* Assets.xcassets */; };
 		B9DC5B31229D59BF00B645D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9DC5B2F229D59BF00B645D5 /* LaunchScreen.storyboard */; };
+		B9DC5B39229D5D8100B645D5 /* ETCDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B38229D5D8100B645D5 /* ETCDevice.swift */; };
+		B9DC5B3D229D9E0C00B645D5 /* BLERemotePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B3C229D9E0C00B645D5 /* BLERemotePeripheral.swift */; };
+		B9DC5B3F229D9E4F00B645D5 /* BLERemotePeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B3E229D9E4F00B645D5 /* BLERemotePeripheralManager.swift */; };
+		B9DC5B46229EB8B200B645D5 /* ETCDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B45229EB8B200B645D5 /* ETCDeviceManager.swift */; };
+		B9DC5B4A229EDA0000B645D5 /* UARTDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B49229EDA0000B645D5 /* UARTDevice.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B9B36BDF22A2810400ECF0AA /* ETCMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCMessage.swift; sourceTree = "<group>"; };
 		B9DC5B21229D59BE00B645D5 /* ETC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ETC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9DC5B24229D59BE00B645D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9DC5B26229D59BE00B645D5 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +31,11 @@
 		B9DC5B2D229D59BF00B645D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B9DC5B30229D59BF00B645D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B9DC5B32229D59BF00B645D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B9DC5B38229D5D8100B645D5 /* ETCDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDevice.swift; sourceTree = "<group>"; };
+		B9DC5B3C229D9E0C00B645D5 /* BLERemotePeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLERemotePeripheral.swift; sourceTree = "<group>"; };
+		B9DC5B3E229D9E4F00B645D5 /* BLERemotePeripheralManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLERemotePeripheralManager.swift; sourceTree = "<group>"; };
+		B9DC5B45229EB8B200B645D5 /* ETCDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceManager.swift; sourceTree = "<group>"; };
+		B9DC5B49229EDA0000B645D5 /* UARTDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UARTDevice.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +71,12 @@
 				B9DC5B24229D59BE00B645D5 /* AppDelegate.swift */,
 				B9DC5B26229D59BE00B645D5 /* MasterViewController.swift */,
 				B9DC5B28229D59BE00B645D5 /* DetailViewController.swift */,
+				B9DC5B45229EB8B200B645D5 /* ETCDeviceManager.swift */,
+				B9DC5B38229D5D8100B645D5 /* ETCDevice.swift */,
+				B9B36BDF22A2810400ECF0AA /* ETCMessage.swift */,
+				B9DC5B49229EDA0000B645D5 /* UARTDevice.swift */,
+				B9DC5B3E229D9E4F00B645D5 /* BLERemotePeripheralManager.swift */,
+				B9DC5B3C229D9E0C00B645D5 /* BLERemotePeripheral.swift */,
 				B9DC5B2A229D59BE00B645D5 /* Main.storyboard */,
 				B9DC5B2D229D59BF00B645D5 /* Assets.xcassets */,
 				B9DC5B2F229D59BF00B645D5 /* LaunchScreen.storyboard */,
@@ -138,9 +156,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9B36BE022A2810400ECF0AA /* ETCMessage.swift in Sources */,
+				B9DC5B46229EB8B200B645D5 /* ETCDeviceManager.swift in Sources */,
 				B9DC5B29229D59BE00B645D5 /* DetailViewController.swift in Sources */,
 				B9DC5B27229D59BE00B645D5 /* MasterViewController.swift in Sources */,
+				B9DC5B3F229D9E4F00B645D5 /* BLERemotePeripheralManager.swift in Sources */,
+				B9DC5B39229D5D8100B645D5 /* ETCDevice.swift in Sources */,
 				B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */,
+				B9DC5B3D229D9E0C00B645D5 /* BLERemotePeripheral.swift in Sources */,
+				B9DC5B4A229EDA0000B645D5 /* UARTDevice.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
