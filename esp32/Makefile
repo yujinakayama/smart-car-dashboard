@@ -3,7 +3,6 @@
 # project subdirectory.
 #
 
-PROJECT_NAME := hello-world
+PROJECT_NAME := ipad-car-integration
 
 include $(IDF_PATH)/make/project.mk
-
