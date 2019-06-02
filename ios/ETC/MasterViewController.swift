@@ -46,6 +46,19 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
         try? device.send(ETCDevice.SendableMessage.initialUsageRecordRequest)
     }
 
+    func device(_ device: ETCDevice, didReceiveMessage message: ETCReceivedMessage) {
+        switch message {
+        case is ETCDevice.ReceivedMessage.GateEntranceNotification:
+            UserNotificationManager.shared.deliverNotification(title: "Entered ETC gate")
+        case is ETCDevice.ReceivedMessage.GateExitNotification:
+            UserNotificationManager.shared.deliverNotification(title: "Exited ETC gate")
+        case let paymentNotification as ETCDevice.ReceivedMessage.PaymentNotification:
+            UserNotificationManager.shared.deliverNotification(title: "ETC Payment: ¥\(paymentNotification.fee as Int?)")
+        default:
+            break
+        }
+    }
+
     func startObservingDeviceAttributes(_ attributes: ETCDeviceAttributes) {
         let observation = attributes.observe(\.usages, options: [.old, .new]) { [unowned self] (attributes, change) in
             self.tableView.animateRowChanges(oldData: change.oldValue!, newData: change.newValue!)

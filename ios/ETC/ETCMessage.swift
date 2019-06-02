@@ -97,6 +97,12 @@ extension ETCReceivedMessage {
         return "\(type(of: self))(data: \(data.map { String(format: "%02X", $0) }.joined(separator: " ")))"
     }
 
+    func number(in range: ClosedRange<Int>? = nil) -> Int? {
+        let targetRange = range == nil ? 0...(Self.payloadLength - 1) : range!
+        guard let string = String(bytes: payloadBytes[targetRange], encoding: .ascii) else { return nil }
+        return Int(string.trimmingCharacters(in: .whitespaces))
+    }
+
     // TODO: Add validation for terminal bytes
 }
 
@@ -163,6 +169,9 @@ extension ETCDevice {
             InitialUsageRecordNonExistenceResponse.self,
             NextUsageRecordNonExistenceResponse.self,
             UsageRecordResponse.self,
+            GateEntranceNotification.self,
+            GateExitNotification.self,
+            PaymentNotification.self
         ]
 
         struct HeartBeat: ETCReceivedMessage, Plain {
@@ -232,10 +241,27 @@ extension ETCDevice {
                 usage.fee                     = number(in: 35...40)
                 return usage
             }
+        }
 
-            func number(in range: ClosedRange<Int>) -> Int? {
-                guard let string = String(bytes: payloadBytes[range], encoding: .ascii) else { return nil }
-                return Int(string.trimmingCharacters(in: .whitespaces))
+        struct GateEntranceNotification: ETCReceivedMessage, Checksummed {
+            static let headerBytes: [UInt8] = [0x01, 0xC7, byte(of: "a")]
+            static let payloadLength = 0
+            var data: Data
+        }
+
+        struct GateExitNotification: ETCReceivedMessage, Checksummed {
+            static let headerBytes: [UInt8] = [0x01, 0xC7, byte(of: "A")]
+            static let payloadLength = 0
+            var data: Data
+        }
+
+        struct PaymentNotification: ETCReceivedMessage, Checksummed {
+            static let headerBytes: [UInt8] = [0x01, 0xC5]
+            static let payloadLength = 6
+            var data: Data
+
+            var fee: Int? {
+                return number()
             }
         }
 

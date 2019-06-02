@@ -10,6 +10,7 @@ import Foundation
 
 protocol ETCDeviceDelegate: NSObjectProtocol {
     func deviceDidFinishPreparation(_ device: ETCDevice, error: Error?)
+    func device(_ device: ETCDevice, didReceiveMessage message: ETCReceivedMessage)
 }
 
 enum ETCDeviceError: Error {
@@ -97,6 +98,10 @@ class ETCDevice: NSObject, UARTDeviceDelegate {
                 hasCompletedPreparation = true
                 delegate?.deviceDidFinishPreparation(self, error: nil)
             }
+        }
+
+        if !(message is ReceivedMessage.Unknown) {
+            delegate?.device(self, didReceiveMessage: message)
         }
     }
 
