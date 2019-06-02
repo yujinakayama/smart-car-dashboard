@@ -8,11 +8,13 @@
 
 import UIKit
 
-class MasterViewController: UITableViewController {
-
+class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETCDeviceDelegate {
     var detailViewController: DetailViewController? = nil
     var objects = [Any]()
 
+    var deviceManager: ETCDeviceManager?
+    var device: ETCDevice?
+    var observations: [NSKeyValueObservation] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +27,8 @@ class MasterViewController: UITableViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
+
+        deviceManager = ETCDeviceManager(delegate: self)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -37,6 +41,28 @@ class MasterViewController: UITableViewController {
         objects.insert(NSDate(), at: 0)
         let indexPath = IndexPath(row: 0, section: 0)
         tableView.insertRows(at: [indexPath], with: .automatic)
+    }
+
+    // MARK: - ETCDeviceManagerDelegate
+
+    func deviceManager(_ deviceManager: ETCDeviceManager, didConnectToDevice device: ETCDevice) {
+        self.device = device
+        device.delegate = self
+        startObservingDeviceAttributes(device.attributes)
+        device.startPreparation()
+    }
+
+    func deviceDidFinishPreparation(_ device: ETCDevice, error: Error?) {
+        print(#function)
+        try? device.send(ETCDevice.SendableMessage.deviceNameRequest)
+    }
+
+    func startObservingDeviceAttributes(_ attributes: ETCDeviceAttributes) {
+        let observation = attributes.observe(\.deviceName, options: .new) { (attributes, change) in
+            let deviceName = change.newValue!
+            print("\(#function): \(deviceName as String?)")
+        }
+        observations.append(observation)
     }
 
     // MARK: - Segues
