@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B99356D922A9483F00BA08AB /* japan_etc_tollbooths.csv in Resources */ = {isa = PBXBuildFile; fileRef = B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */; };
+		B99356DB22A9484700BA08AB /* ETCUsageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356DA22A9484700BA08AB /* ETCUsageTests.swift */; };
+		B99356DC22A9485800BA08AB /* ETCUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCUsage.swift */; };
 		B9B36BE022A2810400ECF0AA /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B36BDF22A2810400ECF0AA /* ETCMessage.swift */; };
 		B9CD1D8D22A51AAD00170082 /* Differ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9CD1D8C22A51AAD00170082 /* Differ.framework */; };
 		B9CD1D9022A52A9200170082 /* UserNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD1D8F22A52A9100170082 /* UserNotificationManager.swift */; };
@@ -37,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = japan_etc_tollbooths.csv; sourceTree = "<group>"; };
+		B99356DA22A9484700BA08AB /* ETCUsageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCUsageTests.swift; sourceTree = "<group>"; };
 		B9B36BDF22A2810400ECF0AA /* ETCMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCMessage.swift; sourceTree = "<group>"; };
 		B9CD1D8C22A51AAD00170082 /* Differ.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Differ.framework; path = Carthage/Build/iOS/Differ.framework; sourceTree = "<group>"; };
 		B9CD1D8F22A52A9100170082 /* UserNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationManager.swift; sourceTree = "<group>"; };
@@ -133,6 +138,7 @@
 				B9CD1D9322A535A900170082 /* Sounds */,
 				B9DC5B2F229D59BF00B645D5 /* LaunchScreen.storyboard */,
 				B9DC5B32229D59BF00B645D5 /* Info.plist */,
+				B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */,
 			);
 			path = ETC;
 			sourceTree = "<group>";
@@ -141,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				B9E96CBA22A3CE7500C2E009 /* ETCTests.swift */,
+				B99356DA22A9484700BA08AB /* ETCUsageTests.swift */,
 				B9E96CBC22A3CE7500C2E009 /* Info.plist */,
 			);
 			path = ETCTests;
@@ -230,6 +237,7 @@
 			files = (
 				B9DC5B31229D59BF00B645D5 /* LaunchScreen.storyboard in Resources */,
 				B9CD1D9222A535A200170082 /* Affirmative.wav in Resources */,
+				B99356D922A9483F00BA08AB /* japan_etc_tollbooths.csv in Resources */,
 				B9DC5B2E229D59BF00B645D5 /* Assets.xcassets in Resources */,
 				B9DC5B2C229D59BE00B645D5 /* Main.storyboard in Resources */,
 			);
@@ -289,6 +297,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B99356DC22A9485800BA08AB /* ETCUsage.swift in Sources */,
+				B99356DB22A9484700BA08AB /* ETCUsageTests.swift in Sources */,
 				B9E96CBB22A3CE7500C2E009 /* ETCTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

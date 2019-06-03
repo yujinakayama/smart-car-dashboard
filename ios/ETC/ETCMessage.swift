@@ -226,20 +226,20 @@ extension ETCDevice {
             var data: Data
 
             var usage: ETCUsage {
-                let usage = ETCUsage()
-                usage.entranceRoadNumber      = number(in: 4...5)
-                usage.entranceTollboothNumber = number(in: 6...8)
-                usage.exitRoadNumber          = number(in: 13...14)
-                usage.exitTollboothNumber     = number(in: 15...17)
-                usage.year                    = number(in: 18...21)
-                usage.month                   = number(in: 22...23)
-                usage.day                     = number(in: 24...25)
-                usage.hour                    = number(in: 26...27)
-                usage.minute                  = number(in: 28...29)
-                usage.second                  = number(in: 30...31)
-                usage.vehicleType             = number(in: 32...34)
-                usage.fee                     = number(in: 35...40)
-                return usage
+                return ETCUsage(
+                    entranceRoadNumber: number(in: 4...5),
+                    entranceTollboothNumber: number(in: 6...8),
+                    exitRoadNumber: number(in: 13...14),
+                    exitTollboothNumber: number(in: 15...17),
+                    year: number(in: 18...21),
+                    month: number(in: 22...23),
+                    day: number(in: 24...25),
+                    hour: number(in: 26...27),
+                    minute: number(in: 28...29),
+                    second: number(in: 30...31),
+                    vehicleType: number(in: 32...34),
+                    fee: number(in: 35...40)
+                )
             }
         }
 
