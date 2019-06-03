@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Differ
 
 class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETCDeviceDelegate {
     var detailViewController: DetailViewController? = nil
@@ -46,8 +47,8 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
     }
 
     func startObservingDeviceAttributes(_ attributes: ETCDeviceAttributes) {
-        let observation = attributes.observe(\.usages, options: .new) { [unowned self] (attributes, change) in
-            self.tableView.reloadData()
+        let observation = attributes.observe(\.usages, options: [.old, .new]) { [unowned self] (attributes, change) in
+            self.tableView.animateRowChanges(oldData: change.oldValue!, newData: change.newValue!)
         }
         observations.append(observation)
     }
