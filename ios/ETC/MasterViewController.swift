@@ -67,7 +67,7 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
 
     func startObservingDeviceAttributes(_ attributes: ETCDeviceAttributes) {
         let observation = attributes.observe(\.usages, options: [.old, .new]) { [unowned self] (attributes, change) in
-            self.tableView.animateRowChanges(oldData: change.oldValue!, newData: change.newValue!)
+            self.tableView.animateRowChanges(oldData: change.oldValue!, newData: change.newValue!, deletionAnimation: .fade, insertionAnimation: .left)
         }
         observations.append(observation)
     }
@@ -97,10 +97,10 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ETCUsageTableViewCell
 
         let usage = deviceClient!.deviceAttributes.usages[indexPath.row]
-        cell.textLabel!.text = usage.date?.description
+        cell.usage = usage
         return cell
     }
 }

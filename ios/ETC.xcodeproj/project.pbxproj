@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B90255C722AB9CA7003D91C6 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90255C622AB9CA7003D91C6 /* UIViewExtension.swift */; };
 		B99356D922A9483F00BA08AB /* japan_etc_tollbooths.csv in Resources */ = {isa = PBXBuildFile; fileRef = B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */; };
 		B99356DB22A9484700BA08AB /* ETCUsageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356DA22A9484700BA08AB /* ETCUsageTests.swift */; };
 		B99356DC22A9485800BA08AB /* ETCUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCUsage.swift */; };
 		B99356E422A94D6900BA08AB /* BLESerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E322A94D6900BA08AB /* BLESerialPort.swift */; };
 		B99356E622A9525C00BA08AB /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
 		B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E722A9553A00BA08AB /* MockSerialPort.swift */; };
+		B99356EE22A96E1000BA08AB /* ETCUsageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356ED22A96E1000BA08AB /* ETCUsageTableViewCell.swift */; };
 		B9CD1D8D22A51AAD00170082 /* Differ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9CD1D8C22A51AAD00170082 /* Differ.framework */; };
 		B9CD1D9022A52A9200170082 /* UserNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD1D8F22A52A9100170082 /* UserNotificationManager.swift */; };
 		B9CD1D9222A535A200170082 /* Affirmative.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9CD1D9122A535A200170082 /* Affirmative.wav */; };
@@ -42,11 +44,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B90255C622AB9CA7003D91C6 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = japan_etc_tollbooths.csv; sourceTree = "<group>"; };
 		B99356DA22A9484700BA08AB /* ETCUsageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCUsageTests.swift; sourceTree = "<group>"; };
 		B99356E322A94D6900BA08AB /* BLESerialPort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLESerialPort.swift; sourceTree = "<group>"; };
 		B99356E522A9525C00BA08AB /* ETCMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCMessage.swift; sourceTree = "<group>"; };
 		B99356E722A9553A00BA08AB /* MockSerialPort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSerialPort.swift; sourceTree = "<group>"; };
+		B99356ED22A96E1000BA08AB /* ETCUsageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCUsageTableViewCell.swift; sourceTree = "<group>"; };
 		B9CD1D8C22A51AAD00170082 /* Differ.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Differ.framework; path = Carthage/Build/iOS/Differ.framework; sourceTree = "<group>"; };
 		B9CD1D8F22A52A9100170082 /* UserNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationManager.swift; sourceTree = "<group>"; };
 		B9CD1D9122A535A200170082 /* Affirmative.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Affirmative.wav; sourceTree = "<group>"; };
@@ -139,6 +143,8 @@
 				B99356E722A9553A00BA08AB /* MockSerialPort.swift */,
 				B9DC5B3E229D9E4F00B645D5 /* BLERemotePeripheralManager.swift */,
 				B9DC5B3C229D9E0C00B645D5 /* BLERemotePeripheral.swift */,
+				B99356ED22A96E1000BA08AB /* ETCUsageTableViewCell.swift */,
+				B90255C622AB9CA7003D91C6 /* UIViewExtension.swift */,
 				B9DC5B2A229D59BE00B645D5 /* Main.storyboard */,
 				B9DC5B2D229D59BF00B645D5 /* Assets.xcassets */,
 				B9CD1D9322A535A900170082 /* Sounds */,
@@ -288,7 +294,9 @@
 				B99356E622A9525C00BA08AB /* ETCMessage.swift in Sources */,
 				B9DC5B46229EB8B200B645D5 /* ETCDeviceManager.swift in Sources */,
 				B9E96CC822A4EF1300C2E009 /* ETCUsage.swift in Sources */,
+				B99356EE22A96E1000BA08AB /* ETCUsageTableViewCell.swift in Sources */,
 				B9DC5B29229D59BE00B645D5 /* DetailViewController.swift in Sources */,
+				B90255C722AB9CA7003D91C6 /* UIViewExtension.swift in Sources */,
 				B9DC5B27229D59BE00B645D5 /* MasterViewController.swift in Sources */,
 				B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */,
 				B9DC5B3F229D9E4F00B645D5 /* BLERemotePeripheralManager.swift in Sources */,

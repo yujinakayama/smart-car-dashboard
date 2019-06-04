@@ -83,24 +83,67 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="Arm-wq-HPj" style="IBUITableViewCellStyleDefault" id="WCw-Qf-5nD">
-                                <rect key="frame" x="0.0" y="28" width="375" height="52"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="120" id="WCw-Qf-5nD" customClass="ETCUsageTableViewCell" customModule="ETC" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="120"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WCw-Qf-5nD" id="37f-cq-3Eg">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="51.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Arm-wq-HPj">
-                                            <rect key="frame" x="16" y="0.0" width="343" height="51.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="2019/05/31 12:34" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Lp-b1-rnx">
+                                            <rect key="frame" x="110.5" y="29" width="244.5" height="18"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="五反田 - 台場" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ElS-Fh-95g">
+                                            <rect key="frame" x="32" y="70" width="323" height="21"/>
+                                            <fontDescription key="fontDescription" name="HiraginoSans-W6" family="Hiragino Sans" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="yXL-mj-wgO">
+                                            <rect key="frame" x="32" y="29" width="78.5" height="29"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" text="¥1280" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ukE-X2-gHW">
+                                                    <rect key="frame" x="9" y="2" width="61.5" height="26"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="19"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.41176470588235292" green="0.16078431372549018" blue="0.81176470588235294" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="ukE-X2-gHW" firstAttribute="top" secondItem="yXL-mj-wgO" secondAttribute="top" constant="2" id="XCG-zL-WAG"/>
+                                                <constraint firstAttribute="trailing" secondItem="ukE-X2-gHW" secondAttribute="trailing" constant="8" id="ZS6-Kz-adh"/>
+                                                <constraint firstAttribute="bottom" secondItem="ukE-X2-gHW" secondAttribute="bottom" constant="1" id="d4N-Nj-vZk"/>
+                                                <constraint firstItem="ukE-X2-gHW" firstAttribute="leading" secondItem="yXL-mj-wgO" secondAttribute="leading" constant="9" id="vxR-c0-VPR"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="6"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ElS-Fh-95g" firstAttribute="top" secondItem="yXL-mj-wgO" secondAttribute="bottom" constant="12" id="741-FW-pgK"/>
+                                        <constraint firstItem="ElS-Fh-95g" firstAttribute="leading" secondItem="yXL-mj-wgO" secondAttribute="leading" id="AJ8-l5-iKp"/>
+                                        <constraint firstItem="1Lp-b1-rnx" firstAttribute="trailing" secondItem="ElS-Fh-95g" secondAttribute="trailing" id="EzI-GT-HIm"/>
+                                        <constraint firstItem="yXL-mj-wgO" firstAttribute="top" secondItem="37f-cq-3Eg" secondAttribute="topMargin" constant="14" id="NBw-by-7kD"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="ElS-Fh-95g" secondAttribute="bottom" constant="14" id="bLd-tc-ONe"/>
+                                        <constraint firstItem="yXL-mj-wgO" firstAttribute="leading" secondItem="37f-cq-3Eg" secondAttribute="leadingMargin" constant="16" id="kZR-h4-z9P"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="1Lp-b1-rnx" secondAttribute="trailing" constant="4" id="lZd-0e-4Yr"/>
+                                        <constraint firstItem="1Lp-b1-rnx" firstAttribute="top" secondItem="yXL-mj-wgO" secondAttribute="top" id="nMV-re-bbr"/>
+                                        <constraint firstItem="1Lp-b1-rnx" firstAttribute="leading" secondItem="yXL-mj-wgO" secondAttribute="trailing" id="o8u-Um-TVU"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
+                                    <outlet property="dateLabel" destination="1Lp-b1-rnx" id="m5q-Ov-7ll"/>
+                                    <outlet property="feeLabel" destination="ukE-X2-gHW" id="bys-ax-zyE"/>
+                                    <outlet property="feeView" destination="yXL-mj-wgO" id="164-06-0Jz"/>
+                                    <outlet property="tollboothLabel" destination="ElS-Fh-95g" id="IgH-ny-k4R"/>
                                     <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" id="6S0-TO-JiA"/>
                                 </connections>
                             </tableViewCell>
@@ -115,7 +158,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="709" y="-630"/>
+            <point key="canvasLocation" x="708.93118594436305" y="-630.46875"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">

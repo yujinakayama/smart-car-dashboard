@@ -72,7 +72,7 @@ class ETCUsage: NSObject {
     }
 }
 
-struct Tollbooth {
+struct Tollbooth: Equatable {
     static var all: [Identifier: Tollbooth] = {
         var tollbooths: [Identifier: Tollbooth] = [:]
 
@@ -135,7 +135,7 @@ extension Tollbooth {
     }
 }
 
-struct Road {
+struct Road: Equatable {
     static let irregularAbbreviations = [
         "首都圏中央連絡自動車道": "圏央道",
         "名古屋第二環状自動車道": "名二環"
