@@ -17,7 +17,7 @@ class ETCDeviceManager: NSObject, BLERemotePeripheralManagerDelegate {
     weak var delegate: ETCDeviceManagerDelegate?
 
     lazy var peripheralManager: BLERemotePeripheralManager = {
-        let peripheralManager = BLERemotePeripheralManager(delegate: self, serviceUUID: UARTDevice.serviceUUID)
+        let peripheralManager = BLERemotePeripheralManager(delegate: self, serviceUUID: BLEUARTDevice.serviceUUID)
         peripheralManager.delegate = self
         return peripheralManager
     }()
@@ -47,7 +47,7 @@ class ETCDeviceManager: NSObject, BLERemotePeripheralManagerDelegate {
 
     func peripheralManager(_ peripheralManager: BLERemotePeripheralManager, didConnectToPeripheral peripheral: BLERemotePeripheral) {
         print(#function)
-        let uartDevice = UARTDevice(peripheral: peripheral)
+        let uartDevice = BLEUARTDevice(peripheral: peripheral)
         let etcDevice = ETCDevice(uartDevice: uartDevice)
         delegate?.deviceManager(self, didConnectToDevice: etcDevice)
     }

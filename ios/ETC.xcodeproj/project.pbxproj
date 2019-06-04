@@ -10,6 +10,7 @@
 		B99356D922A9483F00BA08AB /* japan_etc_tollbooths.csv in Resources */ = {isa = PBXBuildFile; fileRef = B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */; };
 		B99356DB22A9484700BA08AB /* ETCUsageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356DA22A9484700BA08AB /* ETCUsageTests.swift */; };
 		B99356DC22A9485800BA08AB /* ETCUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCUsage.swift */; };
+		B99356DE22A9488A00BA08AB /* BLEUARTDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356DD22A9488A00BA08AB /* BLEUARTDevice.swift */; };
 		B9B36BE022A2810400ECF0AA /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B36BDF22A2810400ECF0AA /* ETCMessage.swift */; };
 		B9CD1D8D22A51AAD00170082 /* Differ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9CD1D8C22A51AAD00170082 /* Differ.framework */; };
 		B9CD1D9022A52A9200170082 /* UserNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD1D8F22A52A9100170082 /* UserNotificationManager.swift */; };
@@ -42,6 +43,7 @@
 /* Begin PBXFileReference section */
 		B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = japan_etc_tollbooths.csv; sourceTree = "<group>"; };
 		B99356DA22A9484700BA08AB /* ETCUsageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCUsageTests.swift; sourceTree = "<group>"; };
+		B99356DD22A9488A00BA08AB /* BLEUARTDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEUARTDevice.swift; sourceTree = "<group>"; };
 		B9B36BDF22A2810400ECF0AA /* ETCMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCMessage.swift; sourceTree = "<group>"; };
 		B9CD1D8C22A51AAD00170082 /* Differ.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Differ.framework; path = Carthage/Build/iOS/Differ.framework; sourceTree = "<group>"; };
 		B9CD1D8F22A52A9100170082 /* UserNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationManager.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				B9B36BDF22A2810400ECF0AA /* ETCMessage.swift */,
 				B9E96CC722A4EF1200C2E009 /* ETCUsage.swift */,
 				B9DC5B49229EDA0000B645D5 /* UARTDevice.swift */,
+				B99356DD22A9488A00BA08AB /* BLEUARTDevice.swift */,
 				B9DC5B3E229D9E4F00B645D5 /* BLERemotePeripheralManager.swift */,
 				B9DC5B3C229D9E0C00B645D5 /* BLERemotePeripheral.swift */,
 				B9DC5B2A229D59BE00B645D5 /* Main.storyboard */,
@@ -288,6 +291,7 @@
 				B9DC5B39229D5D8100B645D5 /* ETCDevice.swift in Sources */,
 				B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */,
 				B9CD1D9022A52A9200170082 /* UserNotificationManager.swift in Sources */,
+				B99356DE22A9488A00BA08AB /* BLEUARTDevice.swift in Sources */,
 				B9DC5B3D229D9E0C00B645D5 /* BLERemotePeripheral.swift in Sources */,
 				B9DC5B4A229EDA0000B645D5 /* UARTDevice.swift in Sources */,
 			);
