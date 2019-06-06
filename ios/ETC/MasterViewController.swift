@@ -34,6 +34,12 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
 
     // MARK: - ETCDeviceManagerDelegate
 
+    func deviceManager(_ deviceManager: ETCDeviceManager, didUpdateAvailability available: Bool) {
+        if available {
+            deviceManager.startDiscovering()
+        }
+    }
+
     func deviceManager(_ deviceManager: ETCDeviceManager, didConnectToDevice deviceClient: ETCDeviceClient) {
         self.deviceClient = deviceClient
         deviceClient.delegate = self

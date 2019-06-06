@@ -12,6 +12,7 @@
 		B99356DC22A9485800BA08AB /* ETCUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCUsage.swift */; };
 		B99356E422A94D6900BA08AB /* BLESerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E322A94D6900BA08AB /* BLESerialPort.swift */; };
 		B99356E622A9525C00BA08AB /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
+		B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E722A9553A00BA08AB /* MockSerialPort.swift */; };
 		B9CD1D8D22A51AAD00170082 /* Differ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9CD1D8C22A51AAD00170082 /* Differ.framework */; };
 		B9CD1D9022A52A9200170082 /* UserNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD1D8F22A52A9100170082 /* UserNotificationManager.swift */; };
 		B9CD1D9222A535A200170082 /* Affirmative.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9CD1D9122A535A200170082 /* Affirmative.wav */; };
@@ -45,6 +46,7 @@
 		B99356DA22A9484700BA08AB /* ETCUsageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCUsageTests.swift; sourceTree = "<group>"; };
 		B99356E322A94D6900BA08AB /* BLESerialPort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLESerialPort.swift; sourceTree = "<group>"; };
 		B99356E522A9525C00BA08AB /* ETCMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCMessage.swift; sourceTree = "<group>"; };
+		B99356E722A9553A00BA08AB /* MockSerialPort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSerialPort.swift; sourceTree = "<group>"; };
 		B9CD1D8C22A51AAD00170082 /* Differ.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Differ.framework; path = Carthage/Build/iOS/Differ.framework; sourceTree = "<group>"; };
 		B9CD1D8F22A52A9100170082 /* UserNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationManager.swift; sourceTree = "<group>"; };
 		B9CD1D9122A535A200170082 /* Affirmative.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Affirmative.wav; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 				B9E96CC722A4EF1200C2E009 /* ETCUsage.swift */,
 				B9DC5B49229EDA0000B645D5 /* SerialPort.swift */,
 				B99356E322A94D6900BA08AB /* BLESerialPort.swift */,
+				B99356E722A9553A00BA08AB /* MockSerialPort.swift */,
 				B9DC5B3E229D9E4F00B645D5 /* BLERemotePeripheralManager.swift */,
 				B9DC5B3C229D9E0C00B645D5 /* BLERemotePeripheral.swift */,
 				B9DC5B2A229D59BE00B645D5 /* Main.storyboard */,
@@ -287,6 +290,7 @@
 				B9E96CC822A4EF1300C2E009 /* ETCUsage.swift in Sources */,
 				B9DC5B29229D59BE00B645D5 /* DetailViewController.swift in Sources */,
 				B9DC5B27229D59BE00B645D5 /* MasterViewController.swift in Sources */,
+				B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */,
 				B9DC5B3F229D9E4F00B645D5 /* BLERemotePeripheralManager.swift in Sources */,
 				B9DC5B39229D5D8100B645D5 /* ETCDeviceClient.swift in Sources */,
 				B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */,

@@ -9,6 +9,7 @@
 import Foundation
 
 protocol ETCDeviceManagerDelegate: NSObjectProtocol {
+    func deviceManager(_ deviceManager: ETCDeviceManager, didUpdateAvailability available: Bool)
     func deviceManager(_ deviceManager: ETCDeviceManager, didConnectToDevice deviceClient: ETCDeviceClient)
     // TODO: More error handling
 }
@@ -25,18 +26,35 @@ class ETCDeviceManager: NSObject, BLERemotePeripheralManagerDelegate {
     init(delegate: ETCDeviceManagerDelegate) {
         self.delegate = delegate
         super.init()
+
+        #if targetEnvironment(simulator)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            guard let self = self else { return }
+            delegate.deviceManager(self, didUpdateAvailability: true)
+        }
+        #else
         _ = peripheralManager
+        #endif
+    }
+
+    func startDiscovering() {
+        #if targetEnvironment(simulator)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            guard let self = self else { return }
+            let serialPort = MockSerialPort()
+            let deviceClient = ETCDeviceClient(serialPort: serialPort)
+            self.delegate?.deviceManager(self, didConnectToDevice: deviceClient)
+        }
+        #else
+        peripheralManager.startDiscovering()
+        #endif
     }
 
     // MARK: BLERemotePeripheralManagerDelegate
 
     func peripheralManager(_ peripheralManager: BLERemotePeripheralManager, didUpdateAvailability available: Bool) {
         print(#function)
-        if available {
-            peripheralManager.startDiscovering()
-        } else {
-            // TODO
-        }
+        delegate?.deviceManager(self, didUpdateAvailability: available)
     }
 
     func peripheralManager(_ peripheralManager: BLERemotePeripheralManager, didDiscoverPeripheral peripheral: BLERemotePeripheral) {

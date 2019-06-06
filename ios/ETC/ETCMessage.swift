@@ -12,6 +12,14 @@ fileprivate func byte(of character: String) -> UInt8 {
     return Character(character).asciiValue!
 }
 
+fileprivate func checksum(of headerAndPayloadBytes: [UInt8]) -> [UInt8] {
+    var targetBytes = headerAndPayloadBytes
+    targetBytes.removeFirst()
+    let sum = targetBytes.reduce(0 as Int) { sum, byte in sum + Int(byte) }
+    let lowerTwoDigitStringOfSum = String(format: "%02X", sum).suffix(2)
+    return lowerTwoDigitStringOfSum.map { $0.asciiValue! }
+}
+
 protocol ETCMessageProtocol {
     var bytes: [UInt8] { get }
     var headerBytes: [UInt8] { get }
@@ -24,15 +32,15 @@ extension ETCMessageProtocol {
     static var terminalByte: UInt8 {
         return 0x0D
     }
-
-    var bytes: [UInt8] {
-        return headerBytes + payloadBytes + terminalBytes
-    }
 }
 
 protocol ETCMessageFromClientProtocol: ETCMessageProtocol {}
 
 extension ETCMessageFromClientProtocol {
+    var bytes: [UInt8] {
+        return headerBytes + payloadBytes + terminalBytes
+    }
+
     var data: Data {
         return Data(bytes)
     }
@@ -40,6 +48,10 @@ extension ETCMessageFromClientProtocol {
     var requiresPreliminaryHandshake: Bool {
         return bytes.first == 0x01
     }
+}
+
+enum ETCMessageFromDeviceProtocolError: Error {
+    case invalidPayloadLength
 }
 
 protocol ETCMessageFromDeviceProtocol: ETCMessageProtocol, CustomDebugStringConvertible {
@@ -63,6 +75,22 @@ extension ETCMessageFromDeviceProtocol {
     static func matches(data: Data) -> Bool {
         return data.count >= length && [UInt8](data.prefix(headerLength)) == headerBytes
     }
+
+    static func makeMockMessage(payload: String) throws -> Self {
+        let bytes = Array(payload.utf8)
+        return try makeMockMessage(payloadBytes: bytes)
+    }
+
+    static func makeMockMessage(payloadBytes: [UInt8]? = []) throws -> Self {
+        guard (payloadBytes?.count) == Self.payloadLength else {
+            throw ETCMessageFromDeviceProtocolError.invalidPayloadLength
+        }
+
+        let terminalBytes = checksum(of: Self.headerBytes + payloadBytes!) + [Self.terminalByte]
+        let data = Data(Self.headerBytes + payloadBytes! + terminalBytes)
+        return Self(data: data)
+    }
+
 
     static var length: Int {
         return headerLength + payloadLength + terminalLength
@@ -147,11 +175,7 @@ enum ETCMessageFromClient {
         }
 
         var checksumBytes: [UInt8] {
-            var targetBytes = headerBytes + payloadBytes
-            targetBytes.removeFirst()
-            let sum = targetBytes.reduce(0 as Int) { sum, byte in sum + Int(byte) }
-            let lowerTwoDigitStringOfSum = String(format: "%02X", sum).suffix(2)
-            return lowerTwoDigitStringOfSum.map { $0.asciiValue! }
+            return checksum(of: headerBytes + payloadBytes)
         }
     }
 }
