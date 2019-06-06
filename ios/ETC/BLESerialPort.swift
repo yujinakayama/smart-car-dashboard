@@ -13,19 +13,19 @@ fileprivate func hexString(_ data: Data) -> String {
     return data.map { String(format: "%02X", $0) }.joined(separator: " ")
 }
 
-enum BLEUARTDeviceError: Error {
+enum BLESerialPortError: Error {
     case txCharacteristicNotFound
     case rxCharacteristicNotFound
 }
 
-class BLEUARTDevice: NSObject, UARTDevice, BLERemotePeripheralDelegate, CBPeripheralDelegate {
+class BLESerialPort: NSObject, SerialPort, BLERemotePeripheralDelegate, CBPeripheralDelegate {
     static let serviceUUID          = CBUUID(string: "6E400001-B5A3-F393-E0A9-E50E24DCCA9E")
     static let txCharacteristicUUID = CBUUID(string: "6E400002-B5A3-F393-E0A9-E50E24DCCA9E")
     static let rxCharacteristicUUID = CBUUID(string: "6E400003-B5A3-F393-E0A9-E50E24DCCA9E")
 
     let peripheral: BLERemotePeripheral
 
-    weak var delegate: UARTDeviceDelegate?
+    weak var delegate: SerialPortDelegate?
 
     var txCharacteristic: CBCharacteristic?
     var rxCharacteristic: CBCharacteristic?
@@ -40,9 +40,9 @@ class BLEUARTDevice: NSObject, UARTDevice, BLERemotePeripheralDelegate, CBPeriph
         peripheral.startDiscoveringCharacteristics()
     }
 
-    func write(_ data: Data) throws {
+    func transmit(_ data: Data) throws {
         guard rxCharacteristic != nil else {
-            throw BLEUARTDeviceError.rxCharacteristicNotFound
+            throw BLESerialPortError.rxCharacteristicNotFound
         }
 
         print("\(#function): \(hexString(data))")
@@ -53,22 +53,22 @@ class BLEUARTDevice: NSObject, UARTDevice, BLERemotePeripheralDelegate, CBPeriph
 
     func peripheral(_ peripheral: BLERemotePeripheral, didDiscoverCharacteristics characteristics: [CBCharacteristic], error: Error?) {
         print(#function)
-        let txCharacteristic = characteristics.first { $0.uuid == BLEUARTDevice.txCharacteristicUUID }
+        let txCharacteristic = characteristics.first { $0.uuid == BLESerialPort.txCharacteristicUUID }
         guard txCharacteristic != nil else {
-            delegate?.deviceDidFinishPreparation(self, error: BLEUARTDeviceError.txCharacteristicNotFound)
+            delegate?.serialPortDidFinishPreparation(self, error: BLESerialPortError.txCharacteristicNotFound)
             return
         }
         self.txCharacteristic = txCharacteristic!
         peripheral.peripheral.setNotifyValue(true, for: txCharacteristic!)
 
-        let rxCharacteristic = characteristics.first { $0.uuid == BLEUARTDevice.rxCharacteristicUUID }
+        let rxCharacteristic = characteristics.first { $0.uuid == BLESerialPort.rxCharacteristicUUID }
         guard rxCharacteristic != nil else {
-            delegate?.deviceDidFinishPreparation(self, error: BLEUARTDeviceError.rxCharacteristicNotFound)
+            delegate?.serialPortDidFinishPreparation(self, error: BLESerialPortError.rxCharacteristicNotFound)
             return
         }
         self.rxCharacteristic = rxCharacteristic!
 
-        delegate?.deviceDidFinishPreparation(self, error: nil)
+        delegate?.serialPortDidFinishPreparation(self, error: nil)
     }
 
     // MARK: CBPeripheralDelegate
@@ -76,7 +76,7 @@ class BLEUARTDevice: NSObject, UARTDevice, BLERemotePeripheralDelegate, CBPeriph
     func peripheral(_ peripheral: BLERemotePeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if characteristic == txCharacteristic && error == nil {
             print("\(#function): \(hexString(characteristic.value!))")
-            delegate?.device(self, didReceiveData: characteristic.value!)
+            delegate?.serialPort(self, didReceiveData: characteristic.value!)
         }
     }
 }

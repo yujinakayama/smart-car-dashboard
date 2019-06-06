@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ETCDeviceManagerDelegate: NSObjectProtocol {
-    func deviceManager(_ deviceManager: ETCDeviceManager, didConnectToDevice device: ETCDevice)
+    func deviceManager(_ deviceManager: ETCDeviceManager, didConnectToDevice deviceClient: ETCDeviceClient)
     // TODO: More error handling
 }
 
@@ -17,7 +17,7 @@ class ETCDeviceManager: NSObject, BLERemotePeripheralManagerDelegate {
     weak var delegate: ETCDeviceManagerDelegate?
 
     lazy var peripheralManager: BLERemotePeripheralManager = {
-        let peripheralManager = BLERemotePeripheralManager(delegate: self, serviceUUID: BLEUARTDevice.serviceUUID)
+        let peripheralManager = BLERemotePeripheralManager(delegate: self, serviceUUID: BLESerialPort.serviceUUID)
         peripheralManager.delegate = self
         return peripheralManager
     }()
@@ -47,9 +47,9 @@ class ETCDeviceManager: NSObject, BLERemotePeripheralManagerDelegate {
 
     func peripheralManager(_ peripheralManager: BLERemotePeripheralManager, didConnectToPeripheral peripheral: BLERemotePeripheral) {
         print(#function)
-        let uartDevice = BLEUARTDevice(peripheral: peripheral)
-        let etcDevice = ETCDevice(uartDevice: uartDevice)
-        delegate?.deviceManager(self, didConnectToDevice: etcDevice)
+        let serialPort = BLESerialPort(peripheral: peripheral)
+        let deviceClient = ETCDeviceClient(serialPort: serialPort)
+        delegate?.deviceManager(self, didConnectToDevice: deviceClient)
     }
 
     func peripheralManager(_ peripheralManager: BLERemotePeripheralManager, didFailToConnectToPeripheral peripheral: BLERemotePeripheral, error: Error?) {

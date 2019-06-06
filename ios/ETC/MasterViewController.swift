@@ -9,11 +9,11 @@
 import UIKit
 import Differ
 
-class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETCDeviceDelegate {
+class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETCDeviceClientDelegate {
     var detailViewController: DetailViewController? = nil
 
     var deviceManager: ETCDeviceManager?
-    var device: ETCDevice?
+    var deviceClient: ETCDeviceClient?
     var observations: [NSKeyValueObservation] = []
 
     override func viewDidLoad() {
@@ -34,25 +34,25 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
 
     // MARK: - ETCDeviceManagerDelegate
 
-    func deviceManager(_ deviceManager: ETCDeviceManager, didConnectToDevice device: ETCDevice) {
-        self.device = device
-        device.delegate = self
-        startObservingDeviceAttributes(device.attributes)
-        device.startPreparation()
+    func deviceManager(_ deviceManager: ETCDeviceManager, didConnectToDevice deviceClient: ETCDeviceClient) {
+        self.deviceClient = deviceClient
+        deviceClient.delegate = self
+        startObservingDeviceAttributes(deviceClient.deviceAttributes)
+        deviceClient.startPreparation()
     }
 
-    func deviceDidFinishPreparation(_ device: ETCDevice, error: Error?) {
+    func deviceClientDidFinishPreparation(_ device: ETCDeviceClient, error: Error?) {
         print(#function)
-        try? device.send(ETCDevice.SendableMessage.initialUsageRecordRequest)
+        try? device.send(ETCMessageFromClient.initialUsageRecordRequest)
     }
 
-    func device(_ device: ETCDevice, didReceiveMessage message: ETCReceivedMessage) {
+    func deviceClient(_ deviceClient: ETCDeviceClient, didReceiveMessage message: ETCMessageFromDeviceProtocol) {
         switch message {
-        case is ETCDevice.ReceivedMessage.GateEntranceNotification:
+        case is ETCMessageFromDevice.GateEntranceNotification:
             UserNotificationManager.shared.deliverNotification(title: "Entered ETC gate")
-        case is ETCDevice.ReceivedMessage.GateExitNotification:
+        case is ETCMessageFromDevice.GateExitNotification:
             UserNotificationManager.shared.deliverNotification(title: "Exited ETC gate")
-        case let paymentNotification as ETCDevice.ReceivedMessage.PaymentNotification:
+        case let paymentNotification as ETCMessageFromDevice.PaymentNotification:
             UserNotificationManager.shared.deliverNotification(title: "ETC Payment: ¥\(paymentNotification.fee as Int?)")
         default:
             break
@@ -71,7 +71,7 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
-                let usage = device!.attributes.usages[indexPath.row]
+                let usage = deviceClient!.deviceAttributes.usages[indexPath.row]
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
                 controller.detailItem = usage
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
@@ -87,13 +87,13 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return device?.attributes.usages.count ?? 0
+        return deviceClient?.deviceAttributes.usages.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
-        let usage = device!.attributes.usages[indexPath.row]
+        let usage = deviceClient!.deviceAttributes.usages[indexPath.row]
         cell.textLabel!.text = usage.date?.description
         return cell
     }
