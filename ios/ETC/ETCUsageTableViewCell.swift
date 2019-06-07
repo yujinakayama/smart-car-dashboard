@@ -9,6 +9,7 @@
 import UIKit
 
 class ETCUsageTableViewCell: UITableViewCell {
+    @IBOutlet weak var yenLabel: UILabel!
     @IBOutlet weak var feeView: UIView!
     @IBOutlet weak var feeLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
@@ -17,7 +18,7 @@ class ETCUsageTableViewCell: UITableViewCell {
     var usage: ETCUsage? {
         didSet {
             if let fee = usage?.fee {
-                feeLabel.attributedText = kern("¥\(fee)", space: 1.5, range: 0...0)
+                feeLabel.text = "\(fee)"
             } else {
                 feeLabel.text = nil
             }
@@ -43,6 +44,24 @@ class ETCUsageTableViewCell: UITableViewCell {
         }
     }
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        var font: UIFont
+
+        if let avenirNext = UIFont(name: "AvenirNext-Bold", size: 17) {
+            let fontMetrics = UIFontMetrics(forTextStyle: .headline)
+            font = fontMetrics.scaledFont(for: avenirNext)
+        } else {
+            font = UIFont.preferredFont(forTextStyle: .headline)
+        }
+
+        [yenLabel, feeLabel].forEach { (label) in
+            label!.font = font
+            label!.adjustsFontForContentSizeCategory = true
+        }
+    }
+
     // https://stackoverflow.com/questions/6745919/uitableviewcell-subview-disappears-when-cell-is-selected
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         let color = feeView.backgroundColor
@@ -54,11 +73,5 @@ class ETCUsageTableViewCell: UITableViewCell {
         let color = feeView.backgroundColor
         super.setSelected(selected, animated: animated)
         feeView.backgroundColor = color
-    }
-
-    func kern(_ string: String, space: Float, range: ClosedRange<Int>) -> NSAttributedString {
-        let attributedString = NSMutableAttributedString(string: string)
-        attributedString.addAttributes([NSAttributedString.Key.kern: space], range: NSRange(range))
-        return attributedString
     }
 }

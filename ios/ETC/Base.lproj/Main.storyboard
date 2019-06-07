@@ -90,23 +90,29 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="2019/05/31 12:34" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Lp-b1-rnx">
-                                            <rect key="frame" x="110.5" y="29" width="244.5" height="18"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="2019/05/31 12:34" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Lp-b1-rnx">
+                                            <rect key="frame" x="112.5" y="29" width="242.5" height="18"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="五反田 - 台場" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ElS-Fh-95g">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="五反田 - 台場" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ElS-Fh-95g">
                                             <rect key="frame" x="32" y="70" width="323" height="21"/>
-                                            <fontDescription key="fontDescription" name="HiraginoSans-W6" family="Hiragino Sans" pointSize="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="yXL-mj-wgO">
-                                            <rect key="frame" x="32" y="29" width="78.5" height="29"/>
+                                            <rect key="frame" x="32" y="29" width="80.5" height="29"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" text="¥1280" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ukE-X2-gHW">
-                                                    <rect key="frame" x="9" y="2" width="61.5" height="26"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" text="1280" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ukE-X2-gHW">
+                                                    <rect key="frame" x="23" y="2" width="49.5" height="26"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="19"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" text="¥" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6wB-E0-moo">
+                                                    <rect key="frame" x="9" y="2" width="13" height="26"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="19"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -114,10 +120,13 @@
                                             </subviews>
                                             <color key="backgroundColor" red="0.41176470588235292" green="0.16078431372549018" blue="0.81176470588235294" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
+                                                <constraint firstItem="ukE-X2-gHW" firstAttribute="bottom" secondItem="6wB-E0-moo" secondAttribute="bottom" id="Dk9-7e-ZeE"/>
                                                 <constraint firstItem="ukE-X2-gHW" firstAttribute="top" secondItem="yXL-mj-wgO" secondAttribute="top" constant="2" id="XCG-zL-WAG"/>
                                                 <constraint firstAttribute="trailing" secondItem="ukE-X2-gHW" secondAttribute="trailing" constant="8" id="ZS6-Kz-adh"/>
                                                 <constraint firstAttribute="bottom" secondItem="ukE-X2-gHW" secondAttribute="bottom" constant="1" id="d4N-Nj-vZk"/>
-                                                <constraint firstItem="ukE-X2-gHW" firstAttribute="leading" secondItem="yXL-mj-wgO" secondAttribute="leading" constant="9" id="vxR-c0-VPR"/>
+                                                <constraint firstItem="6wB-E0-moo" firstAttribute="leading" secondItem="yXL-mj-wgO" secondAttribute="leading" constant="9" id="dAh-h0-mOt"/>
+                                                <constraint firstItem="ukE-X2-gHW" firstAttribute="leading" secondItem="6wB-E0-moo" secondAttribute="trailing" constant="1" id="pev-ru-buL"/>
+                                                <constraint firstItem="ukE-X2-gHW" firstAttribute="top" secondItem="6wB-E0-moo" secondAttribute="top" id="rI2-hp-exz"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -144,6 +153,7 @@
                                     <outlet property="feeLabel" destination="ukE-X2-gHW" id="bys-ax-zyE"/>
                                     <outlet property="feeView" destination="yXL-mj-wgO" id="164-06-0Jz"/>
                                     <outlet property="tollboothLabel" destination="ElS-Fh-95g" id="IgH-ny-k4R"/>
+                                    <outlet property="yenLabel" destination="6wB-E0-moo" id="JaW-EC-5zD"/>
                                     <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" id="6S0-TO-JiA"/>
                                 </connections>
                             </tableViewCell>
