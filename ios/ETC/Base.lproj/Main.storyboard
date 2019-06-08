@@ -91,28 +91,22 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="2019/05/31 12:34" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Lp-b1-rnx">
-                                            <rect key="frame" x="112.5" y="29" width="242.5" height="18"/>
+                                            <rect key="frame" x="96" y="27" width="263" height="18"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="五反田 - 台場" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ElS-Fh-95g">
-                                            <rect key="frame" x="32" y="70" width="323" height="21"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="yXL-mj-wgO">
-                                            <rect key="frame" x="32" y="29" width="80.5" height="29"/>
+                                            <rect key="frame" x="16" y="27" width="80" height="29"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" text="1280" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ukE-X2-gHW">
-                                                    <rect key="frame" x="23" y="2" width="49.5" height="26"/>
+                                                    <rect key="frame" x="22.5" y="2" width="49.5" height="26"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="19"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" text="¥" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6wB-E0-moo">
-                                                    <rect key="frame" x="9" y="2" width="13" height="26"/>
+                                                    <rect key="frame" x="9" y="2" width="12.5" height="26"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="19"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -134,25 +128,111 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </view>
+                                        <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" distribution="equalSpacing" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="ZAn-lS-AfA">
+                                            <rect key="frame" x="16" y="72" width="244.5" height="21"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="EML-DI-UKx">
+                                                    <rect key="frame" x="0.0" y="2" width="54" height="17.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="首都高速" textAlignment="natural" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CtC-aV-rx7">
+                                                            <rect key="frame" x="5" y="2" width="45" height="13.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="CtC-aV-rx7" secondAttribute="trailing" constant="4" id="5hw-qu-0KQ"/>
+                                                        <constraint firstAttribute="bottom" secondItem="CtC-aV-rx7" secondAttribute="bottom" constant="2" id="DSJ-Br-xyn"/>
+                                                        <constraint firstItem="CtC-aV-rx7" firstAttribute="leading" secondItem="EML-DI-UKx" secondAttribute="leading" constant="5" id="Df9-oT-9Fj"/>
+                                                        <constraint firstItem="CtC-aV-rx7" firstAttribute="top" secondItem="EML-DI-UKx" secondAttribute="top" constant="2" id="Zks-cE-zEk"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="4"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="台場" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ElS-Fh-95g">
+                                                    <rect key="frame" x="60" y="0.5" width="35" height="20.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ySj-Vp-5bH">
+                                                    <rect key="frame" x="101" y="0.5" width="8" height="20.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Rko-mV-7BI">
+                                                    <rect key="frame" x="115" y="2" width="54" height="17.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="東名高速" textAlignment="natural" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mrm-PV-omm">
+                                                            <rect key="frame" x="5" y="2" width="45" height="13.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstItem="mrm-PV-omm" firstAttribute="top" secondItem="Rko-mV-7BI" secondAttribute="top" constant="2" id="G7z-ro-4Ec"/>
+                                                        <constraint firstItem="mrm-PV-omm" firstAttribute="leading" secondItem="Rko-mV-7BI" secondAttribute="leading" constant="5" id="Rlk-QB-jOX"/>
+                                                        <constraint firstAttribute="trailing" secondItem="mrm-PV-omm" secondAttribute="trailing" constant="4" id="l4C-ze-dvm"/>
+                                                        <constraint firstAttribute="bottom" secondItem="mrm-PV-omm" secondAttribute="bottom" constant="2" id="mzg-At-3Os"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="4"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="横浜青葉" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Flp-ga-yBP">
+                                                    <rect key="frame" x="175" y="0.5" width="69.5" height="20.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="ElS-Fh-95g" firstAttribute="top" secondItem="yXL-mj-wgO" secondAttribute="bottom" constant="12" id="741-FW-pgK"/>
-                                        <constraint firstItem="ElS-Fh-95g" firstAttribute="leading" secondItem="yXL-mj-wgO" secondAttribute="leading" id="AJ8-l5-iKp"/>
-                                        <constraint firstItem="1Lp-b1-rnx" firstAttribute="trailing" secondItem="ElS-Fh-95g" secondAttribute="trailing" id="EzI-GT-HIm"/>
-                                        <constraint firstItem="yXL-mj-wgO" firstAttribute="top" secondItem="37f-cq-3Eg" secondAttribute="topMargin" constant="14" id="NBw-by-7kD"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="ElS-Fh-95g" secondAttribute="bottom" constant="14" id="bLd-tc-ONe"/>
-                                        <constraint firstItem="yXL-mj-wgO" firstAttribute="leading" secondItem="37f-cq-3Eg" secondAttribute="leadingMargin" constant="16" id="kZR-h4-z9P"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="1Lp-b1-rnx" secondAttribute="trailing" constant="4" id="lZd-0e-4Yr"/>
+                                        <constraint firstItem="ZAn-lS-AfA" firstAttribute="top" secondItem="yXL-mj-wgO" secondAttribute="bottom" constant="16" id="Bfr-Av-NAt"/>
+                                        <constraint firstItem="yXL-mj-wgO" firstAttribute="top" secondItem="37f-cq-3Eg" secondAttribute="topMargin" constant="12" id="NBw-by-7kD"/>
+                                        <constraint firstItem="ZAn-lS-AfA" firstAttribute="leading" secondItem="yXL-mj-wgO" secondAttribute="leading" id="auj-Cr-8MZ"/>
+                                        <constraint firstItem="yXL-mj-wgO" firstAttribute="leading" secondItem="37f-cq-3Eg" secondAttribute="leadingMargin" id="kZR-h4-z9P"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="1Lp-b1-rnx" secondAttribute="trailing" id="lZd-0e-4Yr"/>
                                         <constraint firstItem="1Lp-b1-rnx" firstAttribute="top" secondItem="yXL-mj-wgO" secondAttribute="top" id="nMV-re-bbr"/>
                                         <constraint firstItem="1Lp-b1-rnx" firstAttribute="leading" secondItem="yXL-mj-wgO" secondAttribute="trailing" id="o8u-Um-TVU"/>
+                                        <constraint firstItem="ZAn-lS-AfA" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="1Lp-b1-rnx" secondAttribute="trailing" id="xdK-V9-40M"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="ZAn-lS-AfA" secondAttribute="bottom" constant="12" id="xgg-6F-Mep"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
+                                    <outlet property="dashLabel" destination="ySj-Vp-5bH" id="bIZ-ew-Lu5"/>
                                     <outlet property="dateLabel" destination="1Lp-b1-rnx" id="m5q-Ov-7ll"/>
+                                    <outlet property="exitRoadLabel" destination="mrm-PV-omm" id="oqj-jg-yiu"/>
+                                    <outlet property="exitRoadView" destination="Rko-mV-7BI" id="sIc-GS-n8I"/>
+                                    <outlet property="exitTollboothLabel" destination="Flp-ga-yBP" id="voM-Ba-YeK"/>
                                     <outlet property="feeLabel" destination="ukE-X2-gHW" id="bys-ax-zyE"/>
                                     <outlet property="feeView" destination="yXL-mj-wgO" id="164-06-0Jz"/>
-                                    <outlet property="tollboothLabel" destination="ElS-Fh-95g" id="IgH-ny-k4R"/>
+                                    <outlet property="roadLabel" destination="CtC-aV-rx7" id="VEH-pW-shN"/>
+                                    <outlet property="tollboothLabel" destination="ElS-Fh-95g" id="a6q-bF-N5u"/>
                                     <outlet property="yenLabel" destination="6wB-E0-moo" id="JaW-EC-5zD"/>
                                     <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" id="6S0-TO-JiA"/>
                                 </connections>

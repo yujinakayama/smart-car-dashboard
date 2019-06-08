@@ -9,38 +9,27 @@
 import UIKit
 
 class ETCUsageTableViewCell: UITableViewCell {
+    static var dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .short
+        return dateFormatter
+    }()
+
     @IBOutlet weak var yenLabel: UILabel!
     @IBOutlet weak var feeView: UIView!
     @IBOutlet weak var feeLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var roadLabel: UILabel!
     @IBOutlet weak var tollboothLabel: UILabel!
+    @IBOutlet weak var dashLabel: UILabel!
+    @IBOutlet weak var exitRoadView: UIView!
+    @IBOutlet weak var exitRoadLabel: UILabel!
+    @IBOutlet weak var exitTollboothLabel: UILabel!
 
     var usage: ETCUsage? {
         didSet {
-            if let fee = usage?.fee {
-                feeLabel.text = "\(fee)"
-            } else {
-                feeLabel.text = nil
-            }
-
-            if let date = usage?.date {
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateStyle = .short
-                dateFormatter.timeStyle = .short
-                dateLabel.text = dateFormatter.string(from: date)
-            } else {
-                dateLabel.text = nil
-            }
-
-            if let entrance = usage?.entranceTollbooth, let exit = usage?.exitTollbooth {
-                if entrance == exit {
-                    tollboothLabel.text = entrance.name
-                } else {
-                    tollboothLabel.text = "\(entrance.name) - \(exit.name)"
-                }
-            } else {
-                tollboothLabel.text = nil
-            }
+            updateViews()
         }
     }
 
@@ -59,6 +48,40 @@ class ETCUsageTableViewCell: UITableViewCell {
         [yenLabel, feeLabel].forEach { (label) in
             label!.font = font
             label!.adjustsFontForContentSizeCategory = true
+        }
+    }
+
+    private func updateViews() {
+        feeLabel.text = usage?.fee.map { "\($0)" }
+
+        dateLabel.text = usage?.date.map { ETCUsageTableViewCell.dateFormatter.string(from: $0) }
+
+        if let entrance = usage?.entranceTollbooth, let exit = usage?.exitTollbooth {
+            roadLabel.text = entrance.road.abbreviatedName
+            tollboothLabel.text = entrance.name
+
+            if entrance == exit {
+                dashLabel.isHidden = true
+                exitRoadView.isHidden = true
+                exitTollboothLabel.isHidden = true
+            } else {
+                dashLabel.isHidden = false
+
+                if entrance.road.name == exit.road.name {
+                    exitRoadView.isHidden = true
+                } else {
+                    exitRoadView.isHidden = false
+                    exitRoadLabel.text = exit.road.abbreviatedName
+                }
+
+                exitTollboothLabel.isHidden = false
+                exitTollboothLabel.text = exit.name
+            }
+        } else {
+            roadLabel.text = nil
+            tollboothLabel.text = nil
+            exitRoadLabel.text = nil
+            exitRoadLabel.text = nil
         }
     }
 

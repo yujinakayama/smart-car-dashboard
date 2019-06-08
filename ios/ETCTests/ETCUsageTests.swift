@@ -26,7 +26,7 @@ class ETCUsageTests: XCTestCase {
         )
 
         XCTAssertEqual(usage.entranceTollbooth?.road.name, "首都高速道路")
-        XCTAssertEqual(usage.entranceTollbooth?.road.abbreviatedName, "首都高速")
+        XCTAssertEqual(usage.entranceTollbooth?.road.abbreviatedName, "首都高")
         XCTAssertEqual(usage.entranceTollbooth?.road.routeName, "中央環状線")
         XCTAssertEqual(usage.entranceTollbooth?.name, "五反田")
         XCTAssertEqual(usage.exitTollbooth?.road.name, "首都高速道路")
