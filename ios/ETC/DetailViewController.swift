@@ -30,12 +30,38 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
     }
 
     func configureView() {
-        guard usage?.entranceTollbooth != nil && usage?.exitTollbooth != nil else { return }
+        showNavigationTitle()
 
         fetchEntranceAndExitLocation { [weak self] (entrance, exit) in
             guard let self = self, entrance != nil && exit != nil else { return }
             self.showRoute(source: entrance!, destination: exit!)
         }
+    }
+
+    private func showNavigationTitle() {
+        guard let entrance = usage?.entranceTollbooth, let exit = usage?.exitTollbooth else {
+            navigationItem.title = nil
+            return
+        }
+
+        var components: [String?] = [
+            entrance.road.abbreviatedName,
+            entrance.road.routeName,
+            entrance.name
+        ]
+
+        if entrance != exit {
+            components.append("-")
+
+            if entrance.road != exit.road {
+                components.append(exit.road.abbreviatedName)
+                components.append(exit.road.routeName)
+            }
+
+            components.append(exit.name)
+        }
+
+        navigationItem.title = components.compactMap { $0 }.joined(separator: " ")
     }
 
     private func fetchEntranceAndExitLocation(completionHandler: @escaping (MKMapItem?, MKMapItem?) -> Void) {
