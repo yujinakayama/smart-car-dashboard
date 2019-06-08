@@ -79,7 +79,7 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
             if let indexPath = tableView.indexPathForSelectedRow {
                 let usage = deviceClient!.deviceAttributes.usages[indexPath.row]
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = usage
+                controller.usage = usage
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
