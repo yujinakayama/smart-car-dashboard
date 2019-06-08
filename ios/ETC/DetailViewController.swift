@@ -68,17 +68,22 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
         routeBetween(source: entranceMapItem!, destination: exitMapItem!) { [weak self] (route) in
             guard let self = self else { return }
 
-            [source, destination].forEach { (mapItem) in
-                let annotation = MKPointAnnotation()
-                annotation.title = mapItem.name
-                annotation.coordinate = mapItem.placemark.coordinate
-                self.mapView.addAnnotation(annotation)
-            }
+            self.clearMapView()
+            self.showAnnotations(mapItems: [source, destination])
 
             guard route != nil else { return }
 
             self.mapView.addOverlay(route!.polyline)
-            self.mapView.setVisibleMapRect(route!.polyline.boundingMapRect, edgePadding: self.routeRectPadding, animated: false)
+            self.mapView.setVisibleMapRect(route!.polyline.boundingMapRect, edgePadding: self.routeRectPadding, animated: true)
+        }
+    }
+
+    private func showAnnotations(mapItems: [MKMapItem]) {
+        mapItems.forEach { (mapItem) in
+            let annotation = MKPointAnnotation()
+            annotation.title = mapItem.name
+            annotation.coordinate = mapItem.placemark.coordinate
+            mapView.addAnnotation(annotation)
         }
     }
 
@@ -101,6 +106,11 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
         MKDirections(request: request).calculate { (response, error) in
             completionHandler(response?.routes.first)
         }
+    }
+
+    private func clearMapView() {
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.removeOverlays(mapView.overlays)
     }
 
     private var routeRectPadding: UIEdgeInsets {
