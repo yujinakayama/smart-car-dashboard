@@ -9,6 +9,12 @@
 import UIKit
 
 class ETCUsageTableViewCell: UITableViewCell {
+    static var numberFormatter: NumberFormatter = {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        return numberFormatter
+    }()
+
     static var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short
@@ -52,7 +58,7 @@ class ETCUsageTableViewCell: UITableViewCell {
     }
 
     private func updateViews() {
-        feeLabel.text = usage?.fee.map { "\($0)" }
+        feeLabel.text = usage?.fee.map { ETCUsageTableViewCell.numberFormatter.string(from: NSNumber(value: $0))! }
 
         dateLabel.text = usage?.date.map { ETCUsageTableViewCell.dateFormatter.string(from: $0) }
 
