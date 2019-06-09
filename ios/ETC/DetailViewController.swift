@@ -21,10 +21,13 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
     var entranceMapItem: MKMapItem?
     var exitMapItem: MKMapItem?
 
+    let annotationViewIdentifier = "AnnotationView"
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         mapView.delegate = self
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: annotationViewIdentifier)
 
         configureView()
     }
@@ -95,7 +98,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
             guard let self = self else { return }
 
             self.clearMapView()
-            self.showAnnotations(mapItems: [source, destination])
+            self.showAnnotations(entrance: source, exit: destination)
 
             guard route != nil else { return }
 
@@ -104,10 +107,11 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
         }
     }
 
-    private func showAnnotations(mapItems: [MKMapItem]) {
-        mapItems.forEach { (mapItem) in
+    private func showAnnotations(entrance: MKMapItem, exit: MKMapItem) {
+        [entrance, exit].forEach { (mapItem) in
             let annotation = MKPointAnnotation()
             annotation.title = mapItem.name
+            annotation.subtitle = mapItem == entrance ? "出発" : "到着"
             annotation.coordinate = mapItem.placemark.coordinate
             mapView.addAnnotation(annotation)
         }
@@ -149,6 +153,13 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
             bottom: verticalPadding,
             right: horizontalPadding
         )
+    }
+
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let view = mapView.dequeueReusableAnnotationView(withIdentifier: annotationViewIdentifier, for: annotation) as! MKMarkerAnnotationView
+        view.titleVisibility = .visible
+        view.subtitleVisibility = .visible
+        return view
     }
 
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
