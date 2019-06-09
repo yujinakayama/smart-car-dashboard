@@ -22,6 +22,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
     var exitMapItem: MKMapItem?
 
     let annotationViewIdentifier = "AnnotationView"
+    var hasInitiallyZoomedToUserLocation = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -155,7 +156,18 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
         )
     }
 
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        guard !hasInitiallyZoomedToUserLocation else { return }
+
+        let coordinateSpan = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
+        let region = MKCoordinateRegion(center: userLocation.coordinate, span: coordinateSpan)
+        mapView.region = region
+        hasInitiallyZoomedToUserLocation = true
+    }
+
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard !(annotation is MKUserLocation) else { return nil }
+
         let view = mapView.dequeueReusableAnnotationView(withIdentifier: annotationViewIdentifier, for: annotation) as! MKMarkerAnnotationView
         view.titleVisibility = .visible
         view.subtitleVisibility = .visible
