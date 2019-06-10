@@ -10,7 +10,8 @@ import UIKit
 import Differ
 
 class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETCDeviceClientDelegate {
-    var detailViewController: DetailViewController? = nil
+    var detailNavigationController: UINavigationController!
+    var detailViewController: DetailViewController!
 
     var deviceManager: ETCDeviceManager?
     var deviceClient: ETCDeviceClient?
@@ -19,10 +20,8 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let split = splitViewController {
-            let controllers = split.viewControllers
-            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
-        }
+        detailNavigationController = (splitViewController!.viewControllers.last as! UINavigationController)
+        detailViewController = (detailNavigationController.topViewController as! DetailViewController)
 
         deviceManager = ETCDeviceManager(delegate: self)
     }
@@ -93,6 +92,7 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let usage = deviceClient!.deviceAttributes.usages[indexPath.row]
         detailViewController!.usage = usage
+        showDetailViewController(detailNavigationController, sender: self)
 
         if splitViewController!.displayMode == .primaryOverlay {
             UIView.animate(withDuration: 0.25, animations: { [unowned self] in
