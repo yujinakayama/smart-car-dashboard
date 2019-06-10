@@ -79,6 +79,14 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
             if let indexPath = tableView.indexPathForSelectedRow {
                 let usage = deviceClient!.deviceAttributes.usages[indexPath.row]
                 detailViewController!.usage = usage
+
+                if splitViewController!.displayMode == .primaryOverlay {
+                    UIView.animate(withDuration: 0.25, animations: { [unowned self] in
+                        self.splitViewController!.preferredDisplayMode = .primaryHidden
+                    }, completion: { (completed) in
+                        self.splitViewController!.preferredDisplayMode = .automatic
+                    })
+                }
             }
             return false
         } else {
