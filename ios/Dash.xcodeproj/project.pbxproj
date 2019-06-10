@@ -30,7 +30,7 @@
 		B9DC5B3F229D9E4F00B645D5 /* BLERemotePeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B3E229D9E4F00B645D5 /* BLERemotePeripheralManager.swift */; };
 		B9DC5B46229EB8B200B645D5 /* ETCDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B45229EB8B200B645D5 /* ETCDeviceManager.swift */; };
 		B9DC5B4A229EDA0000B645D5 /* SerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B49229EDA0000B645D5 /* SerialPort.swift */; };
-		B9E96CBB22A3CE7500C2E009 /* ETCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CBA22A3CE7500C2E009 /* ETCTests.swift */; };
+		B9E96CBB22A3CE7500C2E009 /* DashTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CBA22A3CE7500C2E009 /* DashTests.swift */; };
 		B9E96CC822A4EF1300C2E009 /* ETCUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCUsage.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,7 +56,7 @@
 		B9CD1D8C22A51AAD00170082 /* Differ.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Differ.framework; path = Carthage/Build/iOS/Differ.framework; sourceTree = "<group>"; };
 		B9CD1D8F22A52A9100170082 /* UserNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationManager.swift; sourceTree = "<group>"; };
 		B9CD1D9122A535A200170082 /* Affirmative.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Affirmative.wav; sourceTree = "<group>"; };
-		B9DC5B21229D59BE00B645D5 /* ETC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ETC.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9DC5B21229D59BE00B645D5 /* Dash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9DC5B24229D59BE00B645D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9DC5B26229D59BE00B645D5 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		B9DC5B28229D59BE00B645D5 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -69,8 +69,8 @@
 		B9DC5B3E229D9E4F00B645D5 /* BLERemotePeripheralManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLERemotePeripheralManager.swift; sourceTree = "<group>"; };
 		B9DC5B45229EB8B200B645D5 /* ETCDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceManager.swift; sourceTree = "<group>"; };
 		B9DC5B49229EDA0000B645D5 /* SerialPort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerialPort.swift; sourceTree = "<group>"; };
-		B9E96CB822A3CE7500C2E009 /* ETCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ETCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B9E96CBA22A3CE7500C2E009 /* ETCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCTests.swift; sourceTree = "<group>"; };
+		B9E96CB822A3CE7500C2E009 /* DashTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DashTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9E96CBA22A3CE7500C2E009 /* DashTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashTests.swift; sourceTree = "<group>"; };
 		B9E96CBC22A3CE7500C2E009 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9E96CC722A4EF1200C2E009 /* ETCUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCUsage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,8 +113,8 @@
 		B9DC5B18229D59BE00B645D5 = {
 			isa = PBXGroup;
 			children = (
-				B9DC5B23229D59BE00B645D5 /* ETC */,
-				B9E96CB922A3CE7500C2E009 /* ETCTests */,
+				B9DC5B23229D59BE00B645D5 /* Dash */,
+				B9E96CB922A3CE7500C2E009 /* DashTests */,
 				B9DC5B22229D59BE00B645D5 /* Products */,
 				B9CD1D8B22A51AAD00170082 /* Frameworks */,
 			);
@@ -123,13 +123,13 @@
 		B9DC5B22229D59BE00B645D5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B9DC5B21229D59BE00B645D5 /* ETC.app */,
-				B9E96CB822A3CE7500C2E009 /* ETCTests.xctest */,
+				B9DC5B21229D59BE00B645D5 /* Dash.app */,
+				B9E96CB822A3CE7500C2E009 /* DashTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B9DC5B23229D59BE00B645D5 /* ETC */ = {
+		B9DC5B23229D59BE00B645D5 /* Dash */ = {
 			isa = PBXGroup;
 			children = (
 				B9DC5B24229D59BE00B645D5 /* AppDelegate.swift */,
@@ -155,25 +155,25 @@
 				B9DC5B32229D59BF00B645D5 /* Info.plist */,
 				B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */,
 			);
-			path = ETC;
+			path = Dash;
 			sourceTree = "<group>";
 		};
-		B9E96CB922A3CE7500C2E009 /* ETCTests */ = {
+		B9E96CB922A3CE7500C2E009 /* DashTests */ = {
 			isa = PBXGroup;
 			children = (
-				B9E96CBA22A3CE7500C2E009 /* ETCTests.swift */,
+				B9E96CBA22A3CE7500C2E009 /* DashTests.swift */,
 				B99356DA22A9484700BA08AB /* ETCUsageTests.swift */,
 				B9E96CBC22A3CE7500C2E009 /* Info.plist */,
 			);
-			path = ETCTests;
+			path = DashTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B9DC5B20229D59BE00B645D5 /* ETC */ = {
+		B9DC5B20229D59BE00B645D5 /* Dash */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B9DC5B35229D59BF00B645D5 /* Build configuration list for PBXNativeTarget "ETC" */;
+			buildConfigurationList = B9DC5B35229D59BF00B645D5 /* Build configuration list for PBXNativeTarget "Dash" */;
 			buildPhases = (
 				B9DC5B1D229D59BE00B645D5 /* Sources */,
 				B9DC5B1E229D59BE00B645D5 /* Frameworks */,
@@ -184,14 +184,14 @@
 			);
 			dependencies = (
 			);
-			name = ETC;
+			name = Dash;
 			productName = ETC;
-			productReference = B9DC5B21229D59BE00B645D5 /* ETC.app */;
+			productReference = B9DC5B21229D59BE00B645D5 /* Dash.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B9E96CB722A3CE7500C2E009 /* ETCTests */ = {
+		B9E96CB722A3CE7500C2E009 /* DashTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B9E96CC122A3CE7500C2E009 /* Build configuration list for PBXNativeTarget "ETCTests" */;
+			buildConfigurationList = B9E96CC122A3CE7500C2E009 /* Build configuration list for PBXNativeTarget "DashTests" */;
 			buildPhases = (
 				B9E96CB422A3CE7500C2E009 /* Sources */,
 				B9E96CB522A3CE7500C2E009 /* Frameworks */,
@@ -202,9 +202,9 @@
 			dependencies = (
 				B9E96CBE22A3CE7500C2E009 /* PBXTargetDependency */,
 			);
-			name = ETCTests;
+			name = DashTests;
 			productName = ETCTests;
-			productReference = B9E96CB822A3CE7500C2E009 /* ETCTests.xctest */;
+			productReference = B9E96CB822A3CE7500C2E009 /* DashTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -226,7 +226,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B9DC5B1C229D59BE00B645D5 /* Build configuration list for PBXProject "ETC" */;
+			buildConfigurationList = B9DC5B1C229D59BE00B645D5 /* Build configuration list for PBXProject "Dash" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -239,8 +239,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B9DC5B20229D59BE00B645D5 /* ETC */,
-				B9E96CB722A3CE7500C2E009 /* ETCTests */,
+				B9DC5B20229D59BE00B645D5 /* Dash */,
+				B9E96CB722A3CE7500C2E009 /* DashTests */,
 			);
 		};
 /* End PBXProject section */
@@ -319,7 +319,7 @@
 			files = (
 				B99356DC22A9485800BA08AB /* ETCUsage.swift in Sources */,
 				B99356DB22A9484700BA08AB /* ETCUsageTests.swift in Sources */,
-				B9E96CBB22A3CE7500C2E009 /* ETCTests.swift in Sources */,
+				B9E96CBB22A3CE7500C2E009 /* DashTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,7 +328,7 @@
 /* Begin PBXTargetDependency section */
 		B9E96CBE22A3CE7500C2E009 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B9DC5B20229D59BE00B645D5 /* ETC */;
+			target = B9DC5B20229D59BE00B645D5 /* Dash */;
 			targetProxy = B9E96CBD22A3CE7500C2E009 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -479,12 +479,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = ETC/Info.plist;
+				INFOPLIST_FILE = Dash/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = me.yujinakayama.ETC;
+				PRODUCT_BUNDLE_IDENTIFIER = me.yujinakayama.Dash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -501,12 +501,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = ETC/Info.plist;
+				INFOPLIST_FILE = Dash/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = me.yujinakayama.ETC;
+				PRODUCT_BUNDLE_IDENTIFIER = me.yujinakayama.Dash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -519,17 +519,17 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5NKMULV7SQ;
-				INFOPLIST_FILE = ETCTests/Info.plist;
+				INFOPLIST_FILE = DashTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = me.yujinakayama.ETCTests;
+				PRODUCT_BUNDLE_IDENTIFIER = me.yujinakayama.DashTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ETC.app/ETC";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dash.app/Dash";
 			};
 			name = Debug;
 		};
@@ -539,24 +539,24 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5NKMULV7SQ;
-				INFOPLIST_FILE = ETCTests/Info.plist;
+				INFOPLIST_FILE = DashTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = me.yujinakayama.ETCTests;
+				PRODUCT_BUNDLE_IDENTIFIER = me.yujinakayama.DashTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ETC.app/ETC";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dash.app/Dash";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B9DC5B1C229D59BE00B645D5 /* Build configuration list for PBXProject "ETC" */ = {
+		B9DC5B1C229D59BE00B645D5 /* Build configuration list for PBXProject "Dash" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B9DC5B33229D59BF00B645D5 /* Debug */,
@@ -565,7 +565,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B9DC5B35229D59BF00B645D5 /* Build configuration list for PBXNativeTarget "ETC" */ = {
+		B9DC5B35229D59BF00B645D5 /* Build configuration list for PBXNativeTarget "Dash" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B9DC5B36229D59BF00B645D5 /* Debug */,
@@ -574,7 +574,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B9E96CC122A3CE7500C2E009 /* Build configuration list for PBXNativeTarget "ETCTests" */ = {
+		B9E96CC122A3CE7500C2E009 /* Build configuration list for PBXNativeTarget "DashTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B9E96CBF22A3CE7500C2E009 /* Debug */,

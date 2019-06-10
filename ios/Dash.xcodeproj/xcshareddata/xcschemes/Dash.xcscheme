@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B9DC5B20229D59BE00B645D5"
-               BuildableName = "ETC.app"
-               BlueprintName = "ETC"
-               ReferencedContainer = "container:ETC.xcodeproj">
+               BuildableName = "Dash.app"
+               BlueprintName = "Dash"
+               ReferencedContainer = "container:Dash.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B9E96CB722A3CE7500C2E009"
-               BuildableName = "ETCTests.xctest"
-               BlueprintName = "ETCTests"
-               ReferencedContainer = "container:ETC.xcodeproj">
+               BuildableName = "DashTests.xctest"
+               BlueprintName = "DashTests"
+               ReferencedContainer = "container:Dash.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B9DC5B20229D59BE00B645D5"
-            BuildableName = "ETC.app"
-            BlueprintName = "ETC"
-            ReferencedContainer = "container:ETC.xcodeproj">
+            BuildableName = "Dash.app"
+            BlueprintName = "Dash"
+            ReferencedContainer = "container:Dash.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -66,9 +66,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B9DC5B20229D59BE00B645D5"
-            BuildableName = "ETC.app"
-            BlueprintName = "ETC"
-            ReferencedContainer = "container:ETC.xcodeproj">
+            BuildableName = "Dash.app"
+            BlueprintName = "Dash"
+            ReferencedContainer = "container:Dash.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -85,9 +85,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B9DC5B20229D59BE00B645D5"
-            BuildableName = "ETC.app"
-            BlueprintName = "ETC"
-            ReferencedContainer = "container:ETC.xcodeproj">
+            BuildableName = "Dash.app"
+            BlueprintName = "Dash"
+            ReferencedContainer = "container:Dash.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
