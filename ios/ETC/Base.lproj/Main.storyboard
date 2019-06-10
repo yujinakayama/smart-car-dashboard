@@ -241,7 +241,6 @@
                                     <outlet property="roadLabel" destination="CtC-aV-rx7" id="VEH-pW-shN"/>
                                     <outlet property="tollboothLabel" destination="ElS-Fh-95g" id="a6q-bF-N5u"/>
                                     <outlet property="yenLabel" destination="6wB-E0-moo" id="JaW-EC-5zD"/>
-                                    <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" id="6S0-TO-JiA"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -274,7 +273,4 @@
             <point key="canvasLocation" x="-45" y="129"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="Tll-UG-LXB"/>
-    </inferredMetricsTieBreakers>
 </document>

@@ -72,28 +72,6 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
         observations.append(observation)
     }
 
-    // MARK: - Segues
-
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        if identifier == "showDetail" {
-            if let indexPath = tableView.indexPathForSelectedRow {
-                let usage = deviceClient!.deviceAttributes.usages[indexPath.row]
-                detailViewController!.usage = usage
-
-                if splitViewController!.displayMode == .primaryOverlay {
-                    UIView.animate(withDuration: 0.25, animations: { [unowned self] in
-                        self.splitViewController!.preferredDisplayMode = .primaryHidden
-                    }, completion: { (completed) in
-                        self.splitViewController!.preferredDisplayMode = .automatic
-                    })
-                }
-            }
-            return false
-        } else {
-            return true
-        }
-    }
-
     // MARK: - Table View
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -110,6 +88,19 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
         let usage = deviceClient!.deviceAttributes.usages[indexPath.row]
         cell.usage = usage
         return cell
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let usage = deviceClient!.deviceAttributes.usages[indexPath.row]
+        detailViewController!.usage = usage
+
+        if splitViewController!.displayMode == .primaryOverlay {
+            UIView.animate(withDuration: 0.25, animations: { [unowned self] in
+                self.splitViewController!.preferredDisplayMode = .primaryHidden
+            }, completion: { (completed) in
+                self.splitViewController!.preferredDisplayMode = .automatic
+            })
+        }
     }
 }
 
