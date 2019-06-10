@@ -21,6 +21,8 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
     var entranceMapItem: MKMapItem?
     var exitMapItem: MKMapItem?
 
+    let activityIndicator = UIActivityIndicatorView(style: .gray)
+
     let annotationViewIdentifier = "AnnotationView"
     var hasInitiallyZoomedToUserLocation = false
 
@@ -30,14 +32,19 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
         mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: annotationViewIdentifier)
 
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicator)
+
         configureView()
     }
 
     func configureView() {
         showNavigationTitle()
 
+        activityIndicator.startAnimating()
         fetchEntranceAndExitLocation { [weak self] (entrance, exit) in
-            guard let self = self, entrance != nil && exit != nil else { return }
+            guard let self = self else { return }
+            self.activityIndicator.stopAnimating()
+            guard entrance != nil && exit != nil else { return }
             self.showRoute(source: entrance!, destination: exit!)
         }
     }
