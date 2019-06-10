@@ -21,7 +21,7 @@ class ETCUsageTests: XCTestCase {
             hour: 1,
             minute: 23,
             second: 56,
-            vehicleType: 1,
+            vehicleClassification: VehicleClassification(rawValue: 1),
             fee: 650
         )
 
@@ -32,6 +32,7 @@ class ETCUsageTests: XCTestCase {
         XCTAssertEqual(usage.exitTollbooth?.road.name, "首都高速道路")
         XCTAssertEqual(usage.exitTollbooth?.name, "台場")
         XCTAssertEqual(iso8601(usage.date!), "2019-05-31T01:23:56+09:00")
+        XCTAssertEqual(usage.vehicleClassification, .standard)
     }
 
     func testTollbooth() {

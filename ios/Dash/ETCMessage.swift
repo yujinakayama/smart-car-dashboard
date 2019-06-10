@@ -258,7 +258,7 @@ enum ETCMessageFromDevice {
                 hour: number(in: 26...27),
                 minute: number(in: 28...29),
                 second: number(in: 30...31),
-                vehicleType: number(in: 32...34),
+                vehicleClassification: number(in: 32...34).map { VehicleClassification(rawValue: $0) } ?? nil,
                 fee: number(in: 35...40)
             )
         }

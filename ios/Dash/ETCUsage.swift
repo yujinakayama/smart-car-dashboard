@@ -19,7 +19,7 @@ class ETCUsage: NSObject {
     var hour: Int?
     var minute: Int?
     var second: Int?
-    var vehicleType: Int?
+    var vehicleClassification: VehicleClassification?
     var fee: Int?
 
     var entranceTollbooth: Tollbooth? {
@@ -54,7 +54,7 @@ class ETCUsage: NSObject {
         hour: Int?,
         minute: Int?,
         second: Int?,
-        vehicleType: Int?,
+        vehicleClassification: VehicleClassification?,
         fee: Int?
     ) {
         self.entranceRoadNumber = entranceRoadNumber
@@ -67,7 +67,7 @@ class ETCUsage: NSObject {
         self.hour = hour
         self.minute = minute
         self.second = second
-        self.vehicleType = vehicleType
+        self.vehicleClassification = vehicleClassification
         self.fee = fee
     }
 }
@@ -179,4 +179,13 @@ struct Road: Equatable {
 
         return abbreviation
     }
+}
+
+// https://global.c-nexco.co.jp/en/navi/classifying/
+enum VehicleClassification: Int {
+    case light       = 5
+    case standard    = 1
+    case mid_size    = 4
+    case oversized   = 2
+    case extra_large = 3
 }
