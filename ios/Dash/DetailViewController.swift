@@ -37,6 +37,23 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
         configureView()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        mapView.showsUserLocation = true
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        // When launching the app with the compact width size class,
+        // splitViewController(_:collapseSecondary:onto:) is called and if we return true from that
+        // a DetailViewController instance's view won't be loaded
+        // (i.e. neither loadView() nor viewDidLoad() is called)
+        // but viewDidDisapper() will be called :(
+        if mapView != nil {
+            mapView.showsUserLocation = false
+        }
+        super.viewDidDisappear(animated)
+    }
+
     func configureView() {
         showNavigationTitle()
 
