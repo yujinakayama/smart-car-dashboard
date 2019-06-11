@@ -1,18 +1,15 @@
 #include "Arduino.h"
+#include "steering_remote.h"
+#include "usb_hid_definition.h"
 #include <BLEDevice.h>
 #include <BLEServer.h>
 #include <BLEHIDDevice.h>
 #include <HIDTypes.h>
-#include "usb_hid_definition.h"
 
 // #define DEBUG
 
 static const int kSteeringRemoteInputPinA = 34; // Connect to the brown-yellow wire in the car
 static const int kSteeringRemoteInputPinB = 35; // Connect to the brown-white wire in the car
-
-static const int kAnalogInputMaxValue = 4095;
-
-static const int kNonChatterThresholdMillis = 50;
 
 static const int kiPadSleepPreventionIntervalMillis = 30 * 1000;
 
@@ -119,20 +116,7 @@ typedef enum {
   ConsumerReportCodeVolumeDecrement   = 1 << 7,
 } ConsumerReportCode;
 
-typedef enum {
-  SteeringRemoteInputUnknown = -1,
-  SteeringRemoteInputNone = 0,
-  SteeringRemoteInputNext,
-  SteeringRemoteInputPrevious,
-  SteeringRemoteInputPlus,
-  SteeringRemoteInputMinus,
-  SteeringRemoteInputMute,
-  SteeringRemoteInputSource,
-  SteeringRemoteInputAnswerPhone,
-  SteeringRemoteInputHangUpPhone,
-  SteeringRemoteInputVoiceInput
-} SteeringRemoteInput;
-
+static SteeringRemote* steeringRemote;
 static SteeringRemoteInput previousSteeringRemoteInput = SteeringRemoteInputNone;
 static BLECharacteristic* inputReportCharacteristic;
 static bool isConnected = false;
@@ -148,65 +132,6 @@ class ServerCallbacks : public BLEServerCallbacks {
     isConnected = false;
   }
 };
-
-static bool rateIsAbout(float rate, float referenceRate) {
-  // The voltage tend to be higher when the buttan is contacting
-  return (referenceRate - 0.01) < rate && rate < (referenceRate + 0.06);
-}
-
-static SteeringRemoteInput getCurrentSteeringRemoteInput() {
-  float inputRateA = (float)analogRead(kSteeringRemoteInputPinA) / kAnalogInputMaxValue;
-  float inputRateB = (float)analogRead(kSteeringRemoteInputPinB) / kAnalogInputMaxValue;
-
-  if (rateIsAbout(inputRateA, 1.00) && rateIsAbout(inputRateB, 1.00)) {
-    return SteeringRemoteInputNone;
-  } else if (rateIsAbout(inputRateA, 0.00)) {
-    return SteeringRemoteInputNext;
-  } else if (rateIsAbout(inputRateA, 0.09)) {
-    return SteeringRemoteInputPrevious;
-  } else if (rateIsAbout(inputRateA, 0.28)) {
-    return SteeringRemoteInputPlus;
-  } else if (rateIsAbout(inputRateA, 0.51)) {
-    return SteeringRemoteInputMinus;
-  } else if (rateIsAbout(inputRateA, 0.67)) {
-    return SteeringRemoteInputMute;
-  } else if (rateIsAbout(inputRateB, 0.00)) {
-    return SteeringRemoteInputSource;
-  } else if (rateIsAbout(inputRateB, 0.09)) {
-    return SteeringRemoteInputAnswerPhone;
-  } else if (rateIsAbout(inputRateB, 0.28)) {
-    return SteeringRemoteInputHangUpPhone;
-  } else if (rateIsAbout(inputRateB, 0.51)) {
-    return SteeringRemoteInputVoiceInput;
-  } else {
-    #ifdef DEBUG
-    Serial.print("Unknown Steering Remote Input: ");
-    Serial.print(inputRateA);
-    Serial.print(" ");
-    Serial.print(inputRateB);
-    Serial.println();
-    #endif
-    return SteeringRemoteInputUnknown;
-  }
-}
-
-SteeringRemoteInput getSteeringRemoteInputWithoutChatter() {
-  SteeringRemoteInput initialInput = getCurrentSteeringRemoteInput();
-
-  if (initialInput <= 0) {
-    return SteeringRemoteInputNone;
-  }
-
-  unsigned long initialInputMillis = millis();
-
-  while (getCurrentSteeringRemoteInput() == initialInput) {
-    if (millis() > initialInputMillis + kNonChatterThresholdMillis) {
-      return initialInput;
-    }
-  }
-
-  return SteeringRemoteInputNone;
-}
 
 #ifdef DEBUG
 // https://github.com/espressif/esp-idf/blob/v3.2/components/bt/bluedroid/api/include/api/esp_gatts_api.h#L26-L54
@@ -315,16 +240,16 @@ static void sendBluetoothCommandForSteeringRemoteInput(SteeringRemoteInput steer
 }
 
 static void handleSteeringRemoteInput() {
-  SteeringRemoteInput currentSteeringRemoteInput = getSteeringRemoteInputWithoutChatter();
+  SteeringRemoteInput currentInput = steeringRemote->getDebouncedCurrentInput();
 
-  if (currentSteeringRemoteInput != previousSteeringRemoteInput) {
-    sendBluetoothCommandForSteeringRemoteInput(currentSteeringRemoteInput);
+  if (currentInput != previousSteeringRemoteInput) {
+    sendBluetoothCommandForSteeringRemoteInput(currentInput);
     #ifdef DEBUG
     Serial.println(currentSteeringRemoteInput);
     #endif
   }
 
-  previousSteeringRemoteInput = currentSteeringRemoteInput;
+  previousSteeringRemoteInput = currentInput;
 }
 
 static void unlockiPad() {
@@ -351,6 +276,7 @@ void setup() {
   Serial.begin(115200);
   #endif
 
+  steeringRemote = new SteeringRemote(kSteeringRemoteInputPinA, kSteeringRemoteInputPinB);
   startBLEServer();
 }
 
