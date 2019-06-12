@@ -117,11 +117,12 @@ typedef enum {
 } ConsumerReportCode;
 
 static SteeringRemote* steeringRemote;
-static SteeringRemoteInput previousSteeringRemoteInput = SteeringRemoteInputNone;
 static BLECharacteristic* inputReportCharacteristic;
 static bool isConnected = false;
 static bool wasConnected = false;
 static unsigned long lastiPadSleepPreventionMillis = 0;
+
+static void sendBluetoothCommandForSteeringRemoteInput(SteeringRemoteInput steeringRemoteInput);
 
 class ServerCallbacks : public BLEServerCallbacks {
   void onConnect(BLEServer* server) {
@@ -130,6 +131,14 @@ class ServerCallbacks : public BLEServerCallbacks {
 
   void onDisconnect(BLEServer* server) {
     isConnected = false;
+  }
+};
+
+class MySteeringRemoteCallbacks : public SteeringRemoteCallbacks {
+  void onInputChange(SteeringRemote* steeringRemote, SteeringRemoteInput input) {
+    if (isConnected) {
+      sendBluetoothCommandForSteeringRemoteInput(input);
+    }
   }
 };
 
@@ -239,19 +248,6 @@ static void sendBluetoothCommandForSteeringRemoteInput(SteeringRemoteInput steer
   sendConsumerReportCode(code);
 }
 
-static void handleSteeringRemoteInput() {
-  SteeringRemoteInput currentInput = steeringRemote->getDebouncedCurrentInput();
-
-  if (currentInput != previousSteeringRemoteInput) {
-    sendBluetoothCommandForSteeringRemoteInput(currentInput);
-    #ifdef DEBUG
-    Serial.println(currentSteeringRemoteInput);
-    #endif
-  }
-
-  previousSteeringRemoteInput = currentInput;
-}
-
 static void unlockiPad() {
   sendConsumerReportCode(ConsumerReportCodeMenu);
   delay(500);
@@ -277,6 +273,9 @@ void setup() {
   #endif
 
   steeringRemote = new SteeringRemote(kSteeringRemoteInputPinA, kSteeringRemoteInputPinB);
+  steeringRemote->setCallbacks(new MySteeringRemoteCallbacks());
+  steeringRemote->startInputObservation();
+
   startBLEServer();
 }
 
@@ -287,8 +286,6 @@ void loop() {
       delay(1000);
       unlockiPad();
     }
-
-    handleSteeringRemoteInput();
 
     keepiPadAwake();
   }

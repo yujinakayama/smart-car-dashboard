@@ -10,9 +10,32 @@ static bool rateIsAbout(float rate, float referenceRate) {
   return (referenceRate - 0.01) < rate && rate < (referenceRate + 0.06);
 }
 
+static void observeInput(void* pvParameters) {
+  SteeringRemote* steeringRemote = (SteeringRemote*)pvParameters;
+  SteeringRemoteInput previousInput = SteeringRemoteInputNone;
+
+  while (true) {
+    SteeringRemoteInput currentInput = steeringRemote->getDebouncedCurrentInput();
+
+    if (currentInput != previousInput && steeringRemote->callbacks != nullptr) {
+      steeringRemote->callbacks->onInputChange(steeringRemote, currentInput);
+    }
+
+    previousInput = currentInput;
+  }
+}
+
 SteeringRemote::SteeringRemote(int inputPinA, int inputPinB) {
   this->inputPinA = inputPinA;
   this->inputPinB = inputPinB;
+}
+
+void SteeringRemote::setCallbacks(SteeringRemoteCallbacks* callbacks) {
+  this->callbacks = callbacks;
+}
+
+void SteeringRemote::startInputObservation() {
+  xTaskCreatePinnedToCore(observeInput, "SteeringRemote::observeInput", 4096, this, 1, nullptr, CONFIG_ARDUINO_RUNNING_CORE);
 }
 
 SteeringRemoteInput SteeringRemote::getDebouncedCurrentInput() {
