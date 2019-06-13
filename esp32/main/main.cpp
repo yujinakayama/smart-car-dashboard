@@ -1,4 +1,5 @@
 #include "log_config.h" // This needs to be the top
+#include "ble_debug.h"
 #include "ipad_hid_device.h"
 #include "steering_remote.h"
 #include "Arduino.h"
@@ -42,42 +43,7 @@ class MySteeringRemoteCallbacks : public SteeringRemoteCallbacks {
   }
 };
 
-// https://github.com/espressif/esp-idf/blob/v3.2/components/bt/bluedroid/api/include/api/esp_gatts_api.h#L26-L54
-static const char* kGATTServerEventNames[] = {
-  "REG",
-  "READ",
-  "WRITE",
-  "EXEC_WRITE",
-  "MTU",
-  "CONF",
-  "UNREG",
-  "CREATE",
-  "ADD_INCL_SRVC",
-  "ADD_CHAR",
-  "ADD_CHAR_DESCR",
-  "DELETE",
-  "START",
-  "STOP",
-  "CONNECT",
-  "DISCONNECT",
-  "OPEN",
-  "CANCEL_OPEN",
-  "CLOSE",
-  "LISTEN",
-  "CONGEST",
-  "RESPONSE",
-  "CREAT_ATTR_TAB",
-  "SET_ATTR_VAL",
-  "SEND_SERVICE_CHANGE",
-};
-
-void handleBLEServerEvent(esp_gatts_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gatts_cb_param_t* param) {
-  ESP_LOGD(TAG, "%s", kGATTServerEventNames[event]);
-}
-
 static void startBLEServer() {
-  BLEDevice::setCustomGattsHandler(handleBLEServerEvent);
-
   BLEDevice::init(kDeviceName);
 
   BLEServer* server = BLEDevice::createServer();
@@ -141,6 +107,7 @@ static void keepiPadAwake() {
 
 void setup() {
   setupLogLevel();
+  enableBLEServerEventLogging();
 
   steeringRemote = new SteeringRemote(kSteeringRemoteInputPinA, kSteeringRemoteInputPinB);
   steeringRemote->setCallbacks(new MySteeringRemoteCallbacks());
