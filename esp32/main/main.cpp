@@ -9,42 +9,70 @@
 #include <HIDTypes.h>
 
 static const char* TAG = "main";
-
+static const std::string kBLEDeviceName = "Levorg";
 static const int kSteeringRemoteInputPinA = 34; // Connect to the brown-yellow wire in the car
 static const int kSteeringRemoteInputPinB = 35; // Connect to the brown-white wire in the car
-
 static const int kiPadSleepPreventionIntervalMillis = 30 * 1000;
-
-static const std::string kDeviceName = "Levorg";
 
 static iPadHIDDevice* ipadHIDDevice;
 static SteeringRemote* steeringRemote;
-static bool isConnected = false;
-static bool wasConnected = false;
+static bool isiPadConnected = false;
+static bool wasiPadConnected = false;
 static unsigned long lastiPadSleepPreventionMillis = 0;
 
+static void startSteeringRemoteInputObservation();
+static void startBLEServer();
 static void sendBluetoothCommandForSteeringRemoteInput(SteeringRemoteInput steeringRemoteInput);
-
-class MyBLEServerCallbacks : public BLEServerCallbacks {
-  void onConnect(BLEServer* server) {
-    isConnected = true;
-  }
-
-  void onDisconnect(BLEServer* server) {
-    isConnected = false;
-  }
-};
+static void unlockiPad();
+static void keepiPadAwake();
 
 class MySteeringRemoteCallbacks : public SteeringRemoteCallbacks {
   void onInputChange(SteeringRemote* steeringRemote, SteeringRemoteInput input) {
-    if (isConnected) {
+    if (isiPadConnected) {
       sendBluetoothCommandForSteeringRemoteInput(input);
     }
   }
 };
 
+class MyBLEServerCallbacks : public BLEServerCallbacks {
+  void onConnect(BLEServer* server) {
+    isiPadConnected = true;
+  }
+
+  void onDisconnect(BLEServer* server) {
+    isiPadConnected = false;
+  }
+};
+
+void setup() {
+  setupLogLevel();
+  enableBLEServerEventLogging();
+  startSteeringRemoteInputObservation();
+  startBLEServer();
+}
+
+void loop() {
+  if (isiPadConnected) {
+    if (!wasiPadConnected) {
+      // Not sure but this doen't work in ServerCallbacks::onConnect()
+      delay(1000);
+      unlockiPad();
+    }
+
+    keepiPadAwake();
+  }
+
+  wasiPadConnected = isiPadConnected;
+}
+
+static void startSteeringRemoteInputObservation() {
+  steeringRemote = new SteeringRemote(kSteeringRemoteInputPinA, kSteeringRemoteInputPinB);
+  steeringRemote->setCallbacks(new MySteeringRemoteCallbacks());
+  steeringRemote->startInputObservation();
+}
+
 static void startBLEServer() {
-  BLEDevice::init(kDeviceName);
+  BLEDevice::init(kBLEDeviceName);
 
   BLEServer* server = BLEDevice::createServer();
   server->setCallbacks(new MyBLEServerCallbacks());
@@ -90,6 +118,7 @@ static void sendBluetoothCommandForSteeringRemoteInput(SteeringRemoteInput steer
 }
 
 static void unlockiPad() {
+  ESP_LOGI(TAG, "Unlocking the iPad");
   ipadHIDDevice->sendInputCode(iPadHIDDeviceInputCodeMenu);
   delay(500);
   ipadHIDDevice->sendInputCode(iPadHIDDeviceInputCodeMenu);
@@ -103,29 +132,4 @@ static void keepiPadAwake() {
     ipadHIDDevice->sendInputCode(iPadHIDDeviceInputCodeHelp);
     lastiPadSleepPreventionMillis = currentMillis;
   }
-}
-
-void setup() {
-  setupLogLevel();
-  enableBLEServerEventLogging();
-
-  steeringRemote = new SteeringRemote(kSteeringRemoteInputPinA, kSteeringRemoteInputPinB);
-  steeringRemote->setCallbacks(new MySteeringRemoteCallbacks());
-  steeringRemote->startInputObservation();
-
-  startBLEServer();
-}
-
-void loop() {
-  if (isConnected) {
-    if (!wasConnected) {
-      // Not sure but this doen't work in ServerCallbacks::onConnect()
-      delay(1000);
-      unlockiPad();
-    }
-
-    keepiPadAwake();
-  }
-
-  wasConnected = isConnected;
 }
