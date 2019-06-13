@@ -7,8 +7,6 @@
 
 #include <esp_log.h>
 
-extern const char* TAG;
-
 void setupLogLevel();
 
 #endif

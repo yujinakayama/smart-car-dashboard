@@ -7,6 +7,8 @@
 #include <BLEHIDDevice.h>
 #include <HIDTypes.h>
 
+static const char* TAG = "main";
+
 static const int kSteeringRemoteInputPinA = 34; // Connect to the brown-yellow wire in the car
 static const int kSteeringRemoteInputPinB = 35; // Connect to the brown-white wire in the car
 

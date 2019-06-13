@@ -2,6 +2,8 @@
 #include "steering_remote.h"
 #include "Arduino.h"
 
+static const char* TAG = "SteeringRemote";
+
 static const int kAnalogInputMaxValue = 4095;
 
 static const int kDebounceThresholdMillis = 50;

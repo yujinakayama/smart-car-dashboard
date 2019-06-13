@@ -1,7 +1,10 @@
+#include "log_config.h"
 #include "ipad_hid_device.h"
 #include "usb_hid_definition.h"
 #include "Arduino.h"
 #include <HIDTypes.h>
+
+static const char* TAG = "iPadHIDDevice";
 
 static const uint8_t kKeyboardReportID = 1;
 static const uint8_t kConsumerReportID = 2;
