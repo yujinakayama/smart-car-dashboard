@@ -1,3 +1,6 @@
+#ifndef IPAD_CAR_INTEGRATION_IPAD_HID_DEVICE_H_
+#define IPAD_CAR_INTEGRATION_IPAD_HID_DEVICE_H_
+
 #include <BLEHIDDevice.h>
 #include <BLEServer.h>
 #include <BLEService.h>
@@ -29,3 +32,5 @@ private:
   BLEHIDDevice* createHIDDevice();
   void notifyInputReport(uint8_t* report, size_t size);
 };
+
+#endif

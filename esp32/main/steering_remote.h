@@ -1,3 +1,6 @@
+#ifndef IPAD_CAR_INTEGRATION_STEERING_REMOTE_H_
+#define IPAD_CAR_INTEGRATION_STEERING_REMOTE_H_
+
 typedef enum {
   SteeringRemoteInputUnknown = -1,
   SteeringRemoteInputNone = 0,
@@ -31,3 +34,5 @@ class SteeringRemoteCallbacks {
 public:
 	virtual void onInputChange(SteeringRemote* steeringRemote, SteeringRemoteInput input);
 };
+
+#endif
