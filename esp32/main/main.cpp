@@ -1,6 +1,6 @@
 #include "log_config.h" // This needs to be the top
 #include "ble_debug.h"
-#include "ipad_hid_device.h"
+#include "hid.h"
 #include "steering_remote.h"
 #include "Arduino.h"
 #include <BLEDevice.h>
@@ -14,7 +14,7 @@ static const int kSteeringRemoteInputPinA = 34; // Connect to the brown-yellow w
 static const int kSteeringRemoteInputPinB = 35; // Connect to the brown-white wire in the car
 static const int kiPadSleepPreventionIntervalMillis = 30 * 1000;
 
-static iPadHIDDevice* ipadHIDDevice;
+static HID* hid;
 static SteeringRemote* steeringRemote;
 static bool isiPadConnected = false;
 static bool wasiPadConnected = false;
@@ -77,51 +77,51 @@ static void startBLEServer() {
   BLEServer* server = BLEDevice::createServer();
   server->setCallbacks(new MyBLEServerCallbacks());
 
-  ipadHIDDevice = new iPadHIDDevice(server);
-  ipadHIDDevice->startServices();
+  hid = new HID(server);
+  hid->startServices();
 
   // TODO: Use BLEAdvertisementData::setName() to show the name properly even before unpaired
   BLEAdvertising* advertising = server->getAdvertising();
   advertising->setAppearance(ESP_BLE_APPEARANCE_GENERIC_HID);
-  advertising->addServiceUUID(ipadHIDDevice->getHIDService()->getUUID());
+  advertising->addServiceUUID(hid->getHIDService()->getUUID());
   advertising->start();
 };
 
 static void sendBluetoothCommandForSteeringRemoteInput(SteeringRemoteInput steeringRemoteInput) {
-  iPadHIDDeviceInputCode code = iPadHIDDeviceInputCodeNone;
+  HIDInputCode code = HIDInputCodeNone;
 
   switch (steeringRemoteInput) {
     case SteeringRemoteInputNext:
-      code = iPadHIDDeviceInputCodeScanNextTrack;
+      code = HIDInputCodeScanNextTrack;
       break;
     case SteeringRemoteInputPrevious:
-      code = iPadHIDDeviceInputCodeScanPreviousTrack;
+      code = HIDInputCodeScanPreviousTrack;
       break;
     case SteeringRemoteInputPlus:
-      code = iPadHIDDeviceInputCodeVolumeIncrement;
+      code = HIDInputCodeVolumeIncrement;
       break;
     case SteeringRemoteInputMinus:
-      code = iPadHIDDeviceInputCodeVolumeDecrement;
+      code = HIDInputCodeVolumeDecrement;
       break;
     case SteeringRemoteInputMute:
-      code = iPadHIDDeviceInputCodePlayPause;
+      code = HIDInputCodePlayPause;
       break;
     default:
       break;
   }
 
-  if (code == iPadHIDDeviceInputCodeNone) {
+  if (code == HIDInputCodeNone) {
     return;
   }
 
-  ipadHIDDevice->sendInputCode(code);
+  hid->sendInputCode(code);
 }
 
 static void unlockiPad() {
   ESP_LOGI(TAG, "Unlocking the iPad");
-  ipadHIDDevice->sendInputCode(iPadHIDDeviceInputCodeMenu);
+  hid->sendInputCode(HIDInputCodeMenu);
   delay(500);
-  ipadHIDDevice->sendInputCode(iPadHIDDeviceInputCodeMenu);
+  hid->sendInputCode(HIDInputCodeMenu);
 }
 
 static void keepiPadAwake() {
@@ -129,7 +129,7 @@ static void keepiPadAwake() {
 
   if (currentMillis > lastiPadSleepPreventionMillis + kiPadSleepPreventionIntervalMillis) {
     ESP_LOGI(TAG, "Sending Help key code to keep the iPad awake");
-    ipadHIDDevice->sendInputCode(iPadHIDDeviceInputCodeHelp);
+    hid->sendInputCode(HIDInputCodeHelp);
     lastiPadSleepPreventionMillis = currentMillis;
   }
 }

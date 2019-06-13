@@ -1,10 +1,10 @@
 #include "log_config.h"
-#include "ipad_hid_device.h"
+#include "hid.h"
 #include "usb_hid_definition.h"
 #include "Arduino.h"
 #include <HIDTypes.h>
 
-static const char* TAG = "iPadHIDDevice";
+static const char* TAG = "HID";
 
 static const uint8_t kKeyboardReportID = 1;
 static const uint8_t kConsumerReportID = 2;
@@ -95,7 +95,7 @@ static const uint8_t kReportMap[] = {
   END_COLLECTION(0)
 };
 
-iPadHIDDevice::iPadHIDDevice(BLEServer* server) {
+HID::HID(BLEServer* server) {
   this->server = server;
   hidDevice = createHIDDevice();
   // inputReport() is defined as BLEHIDDevice::inputReport(uint8_t reportID)
@@ -104,30 +104,30 @@ iPadHIDDevice::iPadHIDDevice(BLEServer* server) {
   inputReportCharacteristic = hidDevice->inputReport(1);
 }
 
-BLEHIDDevice* iPadHIDDevice::createHIDDevice() {
+BLEHIDDevice* HID::createHIDDevice() {
   BLEHIDDevice* hidDevice = new BLEHIDDevice(server);
   hidDevice->reportMap((uint8_t*)kReportMap, sizeof(kReportMap));
   hidDevice->pnp(2, 0x05AC, 0x0255, 0);
   return hidDevice;
 };
 
-BLEService* iPadHIDDevice::getHIDService() {
+BLEService* HID::getHIDService() {
   return hidDevice->hidService();
 }
 
-void iPadHIDDevice::startServices() {
+void HID::startServices() {
   hidDevice->startServices();
 };
 
-void iPadHIDDevice::sendInputCode(iPadHIDDeviceInputCode code) {
+void HID::sendInputCode(HIDInputCode code) {
   uint8_t keyPressedReport[] = {kConsumerReportID, code};
   notifyInputReport(keyPressedReport, sizeof(keyPressedReport));
 
-  uint8_t keyUnpressedReport[] = {kConsumerReportID, iPadHIDDeviceInputCodeNone};
+  uint8_t keyUnpressedReport[] = {kConsumerReportID, HIDInputCodeNone};
   notifyInputReport(keyUnpressedReport, sizeof(keyUnpressedReport));
 }
 
-void iPadHIDDevice::notifyInputReport(uint8_t* report, size_t size) {
+void HID::notifyInputReport(uint8_t* report, size_t size) {
   inputReportCharacteristic->setValue(report, size);
   inputReportCharacteristic->notify(true);
 }
