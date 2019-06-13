@@ -1,3 +1,4 @@
+#include "log_config.h"
 #include "steering_remote.h"
 #include "Arduino.h"
 
@@ -81,13 +82,7 @@ SteeringRemoteInput SteeringRemote::getCurrentInput() {
   } else if (rateIsAbout(inputRateB, 0.51)) {
     return SteeringRemoteInputVoiceInput;
   } else {
-    #ifdef DEBUG
-    Serial.print("Unknown Steering Remote Input: ");
-    Serial.print(inputRateA);
-    Serial.print(" ");
-    Serial.print(inputRateB);
-    Serial.println();
-    #endif
+    ESP_LOGD(TAG, "Unknown Steering Remote Input: %f %f", inputRateA, inputRateB);
     return SteeringRemoteInputUnknown;
   }
 }

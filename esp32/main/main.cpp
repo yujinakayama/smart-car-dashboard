@@ -1,12 +1,11 @@
-#include "Arduino.h"
+#include "log_config.h" // This needs to be the top
 #include "ipad_hid_device.h"
 #include "steering_remote.h"
+#include "Arduino.h"
 #include <BLEDevice.h>
 #include <BLEServer.h>
 #include <BLEHIDDevice.h>
 #include <HIDTypes.h>
-
-// #define DEBUG
 
 static const int kSteeringRemoteInputPinA = 34; // Connect to the brown-yellow wire in the car
 static const int kSteeringRemoteInputPinB = 35; // Connect to the brown-white wire in the car
@@ -41,46 +40,41 @@ class MySteeringRemoteCallbacks : public SteeringRemoteCallbacks {
   }
 };
 
-#ifdef DEBUG
 // https://github.com/espressif/esp-idf/blob/v3.2/components/bt/bluedroid/api/include/api/esp_gatts_api.h#L26-L54
-static const String kGATTServerEventNames[] = {
-  String("REG"),
-  String("READ"),
-  String("WRITE"),
-  String("EXEC_WRITE"),
-  String("MTU"),
-  String("CONF"),
-  String("UNREG"),
-  String("CREATE"),
-  String("ADD_INCL_SRVC"),
-  String("ADD_CHAR"),
-  String("ADD_CHAR_DESCR"),
-  String("DELETE"),
-  String("START"),
-  String("STOP"),
-  String("CONNECT"),
-  String("DISCONNECT"),
-  String("OPEN"),
-  String("CANCEL_OPEN"),
-  String("CLOSE"),
-  String("LISTEN"),
-  String("CONGEST"),
-  String("RESPONSE"),
-  String("CREAT_ATTR_TAB"),
-  String("SET_ATTR_VAL"),
-  String("SEND_SERVICE_CHANGE")
+static const char* kGATTServerEventNames[] = {
+  "REG",
+  "READ",
+  "WRITE",
+  "EXEC_WRITE",
+  "MTU",
+  "CONF",
+  "UNREG",
+  "CREATE",
+  "ADD_INCL_SRVC",
+  "ADD_CHAR",
+  "ADD_CHAR_DESCR",
+  "DELETE",
+  "START",
+  "STOP",
+  "CONNECT",
+  "DISCONNECT",
+  "OPEN",
+  "CANCEL_OPEN",
+  "CLOSE",
+  "LISTEN",
+  "CONGEST",
+  "RESPONSE",
+  "CREAT_ATTR_TAB",
+  "SET_ATTR_VAL",
+  "SEND_SERVICE_CHANGE",
 };
 
 void handleBLEServerEvent(esp_gatts_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gatts_cb_param_t* param) {
-  Serial.print("handleBLEServerEvent: ");
-  Serial.println(kGATTServerEventNames[event]);
+  ESP_LOGD(TAG, "%s", kGATTServerEventNames[event]);
 }
-#endif
 
 static void startBLEServer() {
-#ifdef DEBUG
   BLEDevice::setCustomGattsHandler(handleBLEServerEvent);
-#endif
 
   BLEDevice::init(kDeviceName);
 
@@ -137,19 +131,14 @@ static void keepiPadAwake() {
   unsigned long currentMillis = millis();
 
   if (currentMillis > lastiPadSleepPreventionMillis + kiPadSleepPreventionIntervalMillis) {
-    #ifdef DEBUG
-    Serial.println("Sending Help key code to keep the iPad awake");
-    #endif
-
+    ESP_LOGI(TAG, "Sending Help key code to keep the iPad awake");
     ipadHIDDevice->sendInputCode(iPadHIDDeviceInputCodeHelp);
     lastiPadSleepPreventionMillis = currentMillis;
   }
 }
 
 void setup() {
-  #ifdef DEBUG
-  Serial.begin(115200);
-  #endif
+  setupLogLevel();
 
   steeringRemote = new SteeringRemote(kSteeringRemoteInputPinA, kSteeringRemoteInputPinB);
   steeringRemote->setCallbacks(new MySteeringRemoteCallbacks());
