@@ -11,7 +11,7 @@ import Foundation
 protocol ETCDeviceManagerDelegate: NSObjectProtocol {
     func deviceManager(_ deviceManager: ETCDeviceManager, didUpdateAvailability available: Bool)
     func deviceManager(_ deviceManager: ETCDeviceManager, didConnectToDevice deviceClient: ETCDeviceClient)
-    // TODO: More error handling
+    func deviceManager(_ deviceManager: ETCDeviceManager, didDisconnectToDevice deviceClient: ETCDeviceClient)
 }
 
 class ETCDeviceManager: NSObject, BLERemotePeripheralManagerDelegate {
@@ -22,6 +22,8 @@ class ETCDeviceManager: NSObject, BLERemotePeripheralManagerDelegate {
         peripheralManager.delegate = self
         return peripheralManager
     }()
+
+    private var connectedClients = [BLERemotePeripheral: ETCDeviceClient]()
 
     init(delegate: ETCDeviceManagerDelegate) {
         self.delegate = delegate
@@ -67,6 +69,7 @@ class ETCDeviceManager: NSObject, BLERemotePeripheralManagerDelegate {
         print(#function)
         let serialPort = BLESerialPort(peripheral: peripheral)
         let deviceClient = ETCDeviceClient(serialPort: serialPort)
+        connectedClients[peripheral] = deviceClient
         delegate?.deviceManager(self, didConnectToDevice: deviceClient)
     }
 
@@ -86,7 +89,11 @@ class ETCDeviceManager: NSObject, BLERemotePeripheralManagerDelegate {
             print("\(#function): \(error)")
         }
 
-        // TODO: Better handling
+        if let deviceClient = connectedClients[peripheral] {
+            delegate?.deviceManager(self, didDisconnectToDevice: deviceClient)
+            connectedClients.removeValue(forKey: peripheral)
+        }
+
         peripheralManager.connect(to: peripheral)
     }
 }

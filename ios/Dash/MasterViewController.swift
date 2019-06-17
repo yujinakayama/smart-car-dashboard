@@ -13,6 +13,14 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
     var detailNavigationController: UINavigationController!
     var detailViewController: DetailViewController!
 
+    lazy var connectionStatusImageView: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFit
+        view.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        view.widthAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        return view
+    }()
+
     var deviceManager: ETCDeviceManager?
     var deviceClient: ETCDeviceClient?
     var observations: [NSKeyValueObservation] = []
@@ -22,6 +30,9 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
 
         detailNavigationController = (splitViewController!.viewControllers.last as! UINavigationController)
         detailViewController = (detailNavigationController.topViewController as! DetailViewController)
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: connectionStatusImageView)
+        updateConnectionStatusView()
 
         deviceManager = ETCDeviceManager(delegate: self)
     }
@@ -46,8 +57,15 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
         deviceClient.startPreparation()
     }
 
+    func deviceManager(_ deviceManager: ETCDeviceManager, didDisconnectToDevice deviceClient: ETCDeviceClient) {
+        self.deviceClient = nil
+        updateConnectionStatusView()
+        tableView.reloadData() // TODO: Persist usage history in Core Data
+    }
+
     func deviceClientDidFinishPreparation(_ device: ETCDeviceClient, error: Error?) {
         print(#function)
+        updateConnectionStatusView()
         try? device.send(ETCMessageFromClient.initialUsageRecordRequest)
     }
 
@@ -69,6 +87,16 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
             self.tableView.animateRowChanges(oldData: change.oldValue!, newData: change.newValue!, deletionAnimation: .fade, insertionAnimation: .left)
         }
         observations.append(observation)
+    }
+
+    func updateConnectionStatusView() {
+        if deviceClient?.hasCompletedPreparation == true {
+            connectionStatusImageView.image = UIImage(named: "bolt")
+            connectionStatusImageView.tintColor = UIColor(hue: 263 / 360, saturation: 0.8, brightness: 1, alpha: 1)
+        } else {
+            connectionStatusImageView.image = UIImage(named: "bolt-slash")
+            connectionStatusImageView.tintColor = UIColor.lightGray
+        }
     }
 
     // MARK: - Table View
