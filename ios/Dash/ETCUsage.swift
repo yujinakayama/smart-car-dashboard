@@ -70,6 +70,12 @@ class ETCUsage: NSObject {
         self.vehicleClassification = vehicleClassification
         self.fee = fee
     }
+
+    override func isEqual(_ object: Any?) -> Bool {
+        guard let usage = object as? ETCUsage else { return false }
+        guard date != nil && usage.date != nil else { return false }
+        return date == usage.date
+    }
 }
 
 struct Tollbooth: Equatable {

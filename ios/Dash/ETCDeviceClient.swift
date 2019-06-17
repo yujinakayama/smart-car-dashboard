@@ -83,8 +83,13 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
             try! send(ETCMessageFromClient.initialUsageRecordRequest)
         case let usageRecordResponse as ETCMessageFromDevice.UsageRecordResponse:
             dump(usageRecordResponse.usage)
-            deviceAttributes.usages.append(usageRecordResponse.usage)
-            try! send(ETCMessageFromClient.nextUsageRecordRequest)
+            // TODO: ETCDeviceClient should focus only on communication and should not handle state management.
+            // FIXME: Inefficient. Use Set or Core Data.
+            if !deviceAttributes.usages.contains(usageRecordResponse.usage) {
+                deviceAttributes.usages.append(usageRecordResponse.usage)
+                deviceAttributes.usages.sort { (a, b) in a.date ?? Date.distantPast > b.date ?? Date.distantPast }
+                try! send(ETCMessageFromClient.nextUsageRecordRequest)
+            }
         default:
             break
         }

@@ -77,6 +77,7 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
             UserNotificationManager.shared.deliverNotification(title: "Exited ETC gate")
         case let paymentNotification as ETCMessageFromDevice.PaymentNotification:
             UserNotificationManager.shared.deliverNotification(title: "ETC Payment: ¥\(paymentNotification.fee as Int?)")
+            try? deviceClient.send(ETCMessageFromClient.initialUsageRecordRequest)
         default:
             break
         }
