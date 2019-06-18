@@ -10,7 +10,7 @@ static const int kDebounceThresholdMillis = 50;
 
 static bool rateIsAbout(float rate, float referenceRate) {
   // The voltage tend to be higher when the buttan is contacting
-  return (referenceRate - 0.01) < rate && rate < (referenceRate + 0.06);
+  return (referenceRate - 0.02) < rate && rate < (referenceRate + 0.05);
 }
 
 static void logCurrentInput(SteeringRemote* steeringRemote) {
