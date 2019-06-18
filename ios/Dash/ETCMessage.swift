@@ -59,6 +59,7 @@ enum ETCMessageFromDeviceProtocolError: Error {
 }
 
 protocol ETCMessageFromDeviceProtocol: ETCMessageProtocol {
+    static func validTerminalBytes(payloadBytes: [UInt8]) -> [UInt8]
     static var headerBytes: [UInt8] { get }
     static var length: Int { get }
     static var headerLength: Int { get }
@@ -85,13 +86,13 @@ extension ETCMessageFromDeviceProtocol {
         return try makeMockMessage(payloadBytes: bytes)
     }
 
-    static func makeMockMessage(payloadBytes: [UInt8]? = []) throws -> Self {
-        guard (payloadBytes?.count) == Self.payloadLength else {
+    static func makeMockMessage(payloadBytes: [UInt8] = []) throws -> Self {
+        guard (payloadBytes.count) == payloadLength else {
             throw ETCMessageFromDeviceProtocolError.invalidPayloadLength
         }
 
-        let terminalBytes = checksum(of: Self.headerBytes + payloadBytes!) + [Self.terminalByte]
-        let data = Data(Self.headerBytes + payloadBytes! + terminalBytes)
+        let terminalBytes = validTerminalBytes(payloadBytes: payloadBytes)
+        let data = Data(headerBytes + payloadBytes + terminalBytes)
         return Self(data: data)
     }
 
@@ -137,6 +138,10 @@ extension ETCMessageFromDeviceProtocol {
 protocol Plain where Self: ETCMessageFromDeviceProtocol {}
 
 extension Plain {
+    static func validTerminalBytes(payloadBytes: [UInt8]) -> [UInt8] {
+        return [terminalByte]
+    }
+
     static var terminalLength: Int {
         return 1
     }
@@ -145,6 +150,10 @@ extension Plain {
 protocol Checksummed where Self: ETCMessageFromDeviceProtocol  {}
 
 extension Checksummed {
+    static func validTerminalBytes(payloadBytes: [UInt8]) -> [UInt8] {
+        return checksum(of: headerBytes + payloadBytes) + [terminalByte]
+    }
+
     static var terminalLength: Int {
         return 3
     }
@@ -286,7 +295,7 @@ enum ETCMessageFromDevice {
         }
     }
 
-    struct Unknown: ETCMessageFromDeviceProtocol {
+    struct Unknown: ETCMessageFromDeviceProtocol, Plain {
         static let headerBytes: [UInt8] = []
         static let payloadLength = 0
         static let terminalLength = 0

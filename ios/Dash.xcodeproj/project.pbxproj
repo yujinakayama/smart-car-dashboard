@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		B90255C722AB9CA7003D91C6 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90255C622AB9CA7003D91C6 /* UIViewExtension.swift */; };
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
+		B942554522B8ED10008B053B /* ETCMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554422B8ED10008B053B /* ETCMessageTests.swift */; };
+		B942554622B8ED32008B053B /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
 		B95BE8E222B8A8BE004C1CC0 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */; };
 		B95BE8E322B8A8BE004C1CC0 /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */; };
 		B99356D922A9483F00BA08AB /* japan_etc_tollbooths.csv in Resources */ = {isa = PBXBuildFile; fileRef = B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */; };
@@ -50,6 +52,7 @@
 /* Begin PBXFileReference section */
 		B90255C622AB9CA7003D91C6 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		B942553C22B8C3E2008B053B /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		B942554422B8ED10008B053B /* ETCMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCMessageTests.swift; sourceTree = "<group>"; };
 		B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCGLogger.framework; path = Carthage/Build/iOS/XCGLogger.framework; sourceTree = "<group>"; };
 		B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjcExceptionBridging.framework; path = Carthage/Build/iOS/ObjcExceptionBridging.framework; sourceTree = "<group>"; };
 		B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = japan_etc_tollbooths.csv; sourceTree = "<group>"; };
@@ -173,6 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				B9E96CBA22A3CE7500C2E009 /* DashTests.swift */,
+				B942554422B8ED10008B053B /* ETCMessageTests.swift */,
 				B99356DA22A9484700BA08AB /* ETCUsageTests.swift */,
 				B9E96CBC22A3CE7500C2E009 /* Info.plist */,
 			);
@@ -333,6 +337,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B942554522B8ED10008B053B /* ETCMessageTests.swift in Sources */,
+				B942554622B8ED32008B053B /* ETCMessage.swift in Sources */,
 				B99356DC22A9485800BA08AB /* ETCUsage.swift in Sources */,
 				B99356DB22A9484700BA08AB /* ETCUsageTests.swift in Sources */,
 				B9E96CBB22A3CE7500C2E009 /* DashTests.swift in Sources */,
