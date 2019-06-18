@@ -28,6 +28,8 @@ public:
   void startInputObservation();
   SteeringRemoteInput getDebouncedCurrentInput();
   SteeringRemoteInput getCurrentInput();
+  uint16_t getRawInputA();
+  uint16_t getRawInputB();
 };
 
 class SteeringRemoteCallbacks {
