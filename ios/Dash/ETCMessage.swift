@@ -20,7 +20,7 @@ fileprivate func checksum(of headerAndPayloadBytes: [UInt8]) -> [UInt8] {
     return lowerTwoDigitStringOfSum.map { $0.asciiValue! }
 }
 
-protocol ETCMessageProtocol {
+protocol ETCMessageProtocol: CustomDebugStringConvertible {
     var bytes: [UInt8] { get }
     var headerBytes: [UInt8] { get }
     var payloadBytes: [UInt8] { get }
@@ -31,6 +31,10 @@ protocol ETCMessageProtocol {
 extension ETCMessageProtocol {
     static var terminalByte: UInt8 {
         return 0x0D
+    }
+
+    var debugDescription: String {
+        return "\(type(of: self))(data: \(data.map { String(format: "%02X", $0) }.joined(separator: " ")))"
     }
 }
 
@@ -54,7 +58,7 @@ enum ETCMessageFromDeviceProtocolError: Error {
     case invalidPayloadLength
 }
 
-protocol ETCMessageFromDeviceProtocol: ETCMessageProtocol, CustomDebugStringConvertible {
+protocol ETCMessageFromDeviceProtocol: ETCMessageProtocol {
     static var headerBytes: [UInt8] { get }
     static var length: Int { get }
     static var headerLength: Int { get }
@@ -119,10 +123,6 @@ extension ETCMessageFromDeviceProtocol {
 
     var requiresAcknowledgement: Bool {
         return bytes.first == 0x01
-    }
-
-    var debugDescription: String {
-        return "\(type(of: self))(data: \(data.map { String(format: "%02X", $0) }.joined(separator: " ")))"
     }
 
     func number(in range: ClosedRange<Int>? = nil) -> Int? {

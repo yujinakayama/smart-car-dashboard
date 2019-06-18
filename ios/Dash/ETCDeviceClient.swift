@@ -42,7 +42,20 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
         serialPort.startPreparation()
     }
 
+    private func startHandshake() {
+        logger.info()
+        try! send(ETCMessageFromClient.handshakeRequest)
+    }
+
+    private func completeHandshake() {
+        logger.info()
+        hasCompletedPreparation = true
+        delegate?.deviceClientDidFinishPreparation(self, error: nil)
+    }
+
     func send(_ message: ETCMessageFromClientProtocol) throws {
+        logger.debug(message)
+
         if !hasCompletedPreparation && message.requiresPreliminaryHandshake {
             throw ETCDeviceClientError.messageCannotBeSentBeforePreliminaryHandshake
         }
@@ -51,7 +64,7 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
     }
 
     private func handleReceivedData(_ data: Data) {
-        print("\(#function): \(data)")
+        logger.debug("\(data.count) bytes: \(data.map { String(format: "%02X", $0) }.joined(separator: " "))")
 
         var matchingResult: (message: ETCMessageFromDeviceProtocol, unconsumedData: Data)?
 
@@ -76,13 +89,14 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
     }
 
     private func handleReceivedMessage(_ message: ETCMessageFromDeviceProtocol) {
+        logger.debug(message)
+
         switch message {
         case let deviceNameResponse as ETCMessageFromDevice.DeviceNameResponse:
             deviceAttributes.deviceName = deviceNameResponse.deviceName
         case is ETCMessageFromDevice.InitialUsageRecordExistenceResponse:
             try! send(ETCMessageFromClient.initialUsageRecordRequest)
         case let usageRecordResponse as ETCMessageFromDevice.UsageRecordResponse:
-            dump(usageRecordResponse.usage)
             // TODO: ETCDeviceClient should focus only on communication and should not handle state management.
             // FIXME: Inefficient. Use Set or Core Data.
             if !deviceAttributes.usages.contains(usageRecordResponse.usage) {
@@ -94,14 +108,11 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
             break
         }
 
-        print("Received message: \(message)")
-
         if message.requiresAcknowledgement {
             try! send(ETCMessageFromClient.acknowledgement)
 
             if !hasCompletedPreparation && message is ETCMessageFromDevice.HandshakeRequest {
-                hasCompletedPreparation = true
-                delegate?.deviceClientDidFinishPreparation(self, error: nil)
+                completeHandshake()
             }
         }
 
@@ -113,8 +124,10 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
     // MARK: SerialPortDelegate
 
     func serialPortDidFinishPreparation(_ device: SerialPort, error: Error?) {
+        logger.debug(error)
+
         if error == nil {
-            try! send(ETCMessageFromClient.handshakeRequest)
+            startHandshake()
         } else {
             delegate?.deviceClientDidFinishPreparation(self, error: error)
         }

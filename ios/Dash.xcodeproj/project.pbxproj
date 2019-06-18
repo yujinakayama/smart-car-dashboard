@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B90255C722AB9CA7003D91C6 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90255C622AB9CA7003D91C6 /* UIViewExtension.swift */; };
+		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
 		B95BE8E222B8A8BE004C1CC0 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */; };
 		B95BE8E322B8A8BE004C1CC0 /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */; };
 		B99356D922A9483F00BA08AB /* japan_etc_tollbooths.csv in Resources */ = {isa = PBXBuildFile; fileRef = B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */; };
@@ -48,6 +49,7 @@
 
 /* Begin PBXFileReference section */
 		B90255C622AB9CA7003D91C6 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		B942553C22B8C3E2008B053B /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCGLogger.framework; path = Carthage/Build/iOS/XCGLogger.framework; sourceTree = "<group>"; };
 		B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjcExceptionBridging.framework; path = Carthage/Build/iOS/ObjcExceptionBridging.framework; sourceTree = "<group>"; };
 		B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = japan_etc_tollbooths.csv; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				B99356ED22A96E1000BA08AB /* ETCUsageTableViewCell.swift */,
 				B90255C622AB9CA7003D91C6 /* UIViewExtension.swift */,
 				B9CB7C0C22AD65A40059433E /* UITableViewCellExtension.swift */,
+				B942553C22B8C3E2008B053B /* Logger.swift */,
 				B9DC5B2A229D59BE00B645D5 /* Main.storyboard */,
 				B9DC5B2D229D59BF00B645D5 /* Assets.xcassets */,
 				B9CD1D9322A535A900170082 /* Sounds */,
@@ -319,6 +322,7 @@
 				B9DC5B39229D5D8100B645D5 /* ETCDeviceClient.swift in Sources */,
 				B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */,
 				B9CD1D9022A52A9200170082 /* UserNotificationManager.swift in Sources */,
+				B942553D22B8C3E2008B053B /* Logger.swift in Sources */,
 				B9DC5B3D229D9E0C00B645D5 /* BLERemotePeripheral.swift in Sources */,
 				B99356E422A94D6900BA08AB /* BLESerialPort.swift in Sources */,
 				B9DC5B4A229EDA0000B645D5 /* SerialPort.swift in Sources */,

@@ -37,22 +37,25 @@ class BLESerialPort: NSObject, SerialPort, BLERemotePeripheralDelegate, CBPeriph
     }
 
     func startPreparation() {
+        logger.verbose()
         peripheral.startDiscoveringCharacteristics()
     }
 
     func transmit(_ data: Data) throws {
+        logger.verbose(hexString(data))
+
         guard rxCharacteristic != nil else {
             throw BLESerialPortError.rxCharacteristicNotFound
         }
 
-        print("\(#function): \(hexString(data))")
         peripheral.peripheral.writeValue(data, for: rxCharacteristic!, type: .withoutResponse)
     }
 
     // MARK: BLERemotePeripheralDelegate
 
     func peripheral(_ peripheral: BLERemotePeripheral, didDiscoverCharacteristics characteristics: [CBCharacteristic], error: Error?) {
-        print(#function)
+        logger.verbose(characteristics)
+
         let txCharacteristic = characteristics.first { $0.uuid == BLESerialPort.txCharacteristicUUID }
         guard txCharacteristic != nil else {
             delegate?.serialPortDidFinishPreparation(self, error: BLESerialPortError.txCharacteristicNotFound)
@@ -74,8 +77,9 @@ class BLESerialPort: NSObject, SerialPort, BLERemotePeripheralDelegate, CBPeriph
     // MARK: CBPeripheralDelegate
 
     func peripheral(_ peripheral: BLERemotePeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        logger.verbose(hexString(characteristic.value!))
+
         if characteristic == txCharacteristic && error == nil {
-            print("\(#function): \(hexString(characteristic.value!))")
             delegate?.serialPort(self, didReceiveData: characteristic.value!)
         }
     }

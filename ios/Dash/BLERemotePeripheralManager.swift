@@ -38,7 +38,7 @@ class BLERemotePeripheralManager: NSObject, CBCentralManagerDelegate {
     }
 
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        print(#function)
+        logger.verbose(centralManager.state)
         let availability = centralManager.state == .poweredOn
         delegate?.peripheralManager(self, didUpdateAvailability: availability)
     }
@@ -46,6 +46,8 @@ class BLERemotePeripheralManager: NSObject, CBCentralManagerDelegate {
     // MARK: Peripheral Discovery
 
     func startDiscovering() {
+        logger.verbose()
+
         let peripheral = discoverConnectedPeripheral()
 
         if let peripheral = peripheral {
@@ -56,20 +58,23 @@ class BLERemotePeripheralManager: NSObject, CBCentralManagerDelegate {
     }
 
     func stopDiscovering() {
+        logger.verbose()
         centralManager.stopScan()
     }
 
     private func discoverConnectedPeripheral() -> CBPeripheral? {
+        logger.verbose()
         let peripherals = centralManager.retrieveConnectedPeripherals(withServices: [serviceUUID])
         return peripherals.first
     }
 
     private func startScanning() {
+        logger.verbose()
         centralManager.scanForPeripherals(withServices: [serviceUUID], options: nil)
     }
 
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        print(#function)
+        logger.verbose((peripheral, advertisementData, RSSI))
         didDiscover(peripheral)
     }
 
@@ -81,26 +86,27 @@ class BLERemotePeripheralManager: NSObject, CBCentralManagerDelegate {
     // MARK: Peripheral Connection
 
     func connect(to peripheral: BLERemotePeripheral) {
+        logger.verbose(peripheral)
         connectingPeripherals[peripheral.peripheral] = peripheral
         centralManager.connect(peripheral.peripheral, options: nil)
     }
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        print(#function)
+        logger.verbose(peripheral)
         let remotePeripheral = connectingPeripherals[peripheral]!
         remotePeripheral.isConnected = true
         delegate?.peripheralManager(self, didConnectToPeripheral: remotePeripheral)
     }
 
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-        print(#function)
+        logger.verbose((peripheral, error))
         let remotePeripheral = connectingPeripherals[peripheral]!
         remotePeripheral.isConnected = false
         delegate?.peripheralManager(self, didFailToConnectToPeripheral: connectingPeripherals[peripheral]!, error: error)
     }
 
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        print(#function)
+        logger.verbose((peripheral, error))
         let remotePeripheral = connectingPeripherals[peripheral]!
         remotePeripheral.isConnected = false
         delegate?.peripheralManager(self, didDisconnectToPeripheral: connectingPeripherals[peripheral]!, error: error)

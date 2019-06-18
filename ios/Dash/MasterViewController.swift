@@ -64,9 +64,8 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
     }
 
     func deviceClientDidFinishPreparation(_ device: ETCDeviceClient, error: Error?) {
-        print(#function)
         updateConnectionStatusView()
-        try? device.send(ETCMessageFromClient.initialUsageRecordRequest)
+        try! device.send(ETCMessageFromClient.initialUsageRecordRequest)
     }
 
     func deviceClient(_ deviceClient: ETCDeviceClient, didReceiveMessage message: ETCMessageFromDeviceProtocol) {
@@ -79,7 +78,7 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
             if let fee = paymentNotification.fee {
                 UserNotificationManager.shared.deliverNotification(title: "ETC Payment: ¥\(fee)")
             }
-            try? deviceClient.send(ETCMessageFromClient.initialUsageRecordRequest)
+            try! deviceClient.send(ETCMessageFromClient.initialUsageRecordRequest)
         default:
             break
         }

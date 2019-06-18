@@ -55,18 +55,18 @@ class ETCDeviceManager: NSObject, BLERemotePeripheralManagerDelegate {
     // MARK: BLERemotePeripheralManagerDelegate
 
     func peripheralManager(_ peripheralManager: BLERemotePeripheralManager, didUpdateAvailability available: Bool) {
-        print(#function)
+        logger.info(available)
         delegate?.deviceManager(self, didUpdateAvailability: available)
     }
 
     func peripheralManager(_ peripheralManager: BLERemotePeripheralManager, didDiscoverPeripheral peripheral: BLERemotePeripheral) {
-        print(#function)
+        logger.info(peripheral)
         peripheralManager.stopDiscovering()
         peripheralManager.connect(to: peripheral)
     }
 
     func peripheralManager(_ peripheralManager: BLERemotePeripheralManager, didConnectToPeripheral peripheral: BLERemotePeripheral) {
-        print(#function)
+        logger.info(peripheral)
         let serialPort = BLESerialPort(peripheral: peripheral)
         let deviceClient = ETCDeviceClient(serialPort: serialPort)
         connectedClients[peripheral] = deviceClient
@@ -74,20 +74,12 @@ class ETCDeviceManager: NSObject, BLERemotePeripheralManagerDelegate {
     }
 
     func peripheralManager(_ peripheralManager: BLERemotePeripheralManager, didFailToConnectToPeripheral peripheral: BLERemotePeripheral, error: Error?) {
-        print(#function)
-        if let error = error {
-            print("\(#function): \(error)")
-        }
-
-        // TODO: Better handling
+        logger.info((peripheral, error))
         peripheralManager.connect(to: peripheral)
     }
 
     func peripheralManager(_ peripheralManager: BLERemotePeripheralManager, didDisconnectToPeripheral peripheral: BLERemotePeripheral, error: Error?) {
-        print(#function)
-        if let error = error {
-            print("\(#function): \(error)")
-        }
+        logger.info((peripheral, error))
 
         if let deviceClient = connectedClients[peripheral] {
             delegate?.deviceManager(self, didDisconnectToDevice: deviceClient)

@@ -35,13 +35,12 @@ class BLERemotePeripheral: NSObject, CBPeripheralDelegate {
     }
 
     func startDiscoveringCharacteristics() {
+        logger.verbose()
         peripheral.discoverServices([serviceUUID])
     }
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        if let error = error {
-            print("\(#function): \(error)")
-        }
+        logger.verbose(error)
 
         let targetService = peripheral.services?.first(where: { (service) -> Bool in
             service.uuid == serviceUUID
@@ -53,12 +52,15 @@ class BLERemotePeripheral: NSObject, CBPeripheralDelegate {
     }
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        logger.verbose(error)
+
         if service.uuid == serviceUUID {
             delegate?.peripheral(self, didDiscoverCharacteristics: service.characteristics!, error: error)
         }
     }
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        logger.verbose(error)
         delegate?.peripheral(self, didUpdateValueFor: characteristic, error: error)
     }
 }

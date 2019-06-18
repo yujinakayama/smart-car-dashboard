@@ -26,7 +26,7 @@ class UserNotificationManager: NSObject, UNUserNotificationCenterDelegate {
 
     func requestAuthorization() {
         notificationCenter.requestAuthorization(options: authorizationOptions) { (granted, error) in
-            print("\(#function): \(granted), \(error as Error?)")
+            logger.info((granted, error))
         }
     }
 
@@ -35,7 +35,7 @@ class UserNotificationManager: NSObject, UNUserNotificationCenterDelegate {
 
         UNUserNotificationCenter.current().add(request) { (error) in
             if let error = error {
-                print("\(#function): \(error)")
+                logger.error(error)
             }
         }
     }
