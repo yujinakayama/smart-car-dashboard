@@ -10,7 +10,7 @@ import XCTest
 
 class ETCMessageTests: XCTestCase {
     func testMakeMockMessage() {
-        XCTAssertEqual(try! ETCMessageFromDevice.HandshakeAcknowledgement.makeMockMessage().bytes, [0xF0, 0x0D])
-        XCTAssertEqual(try! ETCMessageFromDevice.HandshakeRequest.makeMockMessage().bytes, [0x01, 0xC2, 0x30, 0x46, 0x32, 0x0D])
+        XCTAssertEqual(ETCMessageFromDevice.HandshakeAcknowledgement.makeMockMessage().bytes, [0xF0, 0x0D])
+        XCTAssertEqual(ETCMessageFromDevice.HandshakeRequest.makeMockMessage().bytes, [0x01, 0xC2, 0x30, 0x46, 0x32, 0x0D])
     }
 }

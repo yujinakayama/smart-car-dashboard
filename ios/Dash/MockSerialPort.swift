@@ -55,23 +55,21 @@ class MockSerialPort: NSObject, SerialPort {
     func transmit(_ data: Data) throws {
         switch data {
         case ETCMessageFromClient.handshakeRequest.data:
-            simulateReceive(try! ETCMessageFromDevice.HandshakeAcknowledgement.makeMockMessage())
-            simulateReceive(try! ETCMessageFromDevice.HandshakeRequest.makeMockMessage())
+            simulateReceive(ETCMessageFromDevice.HandshakeAcknowledgement.makeMockMessage())
+            simulateReceive(ETCMessageFromDevice.HandshakeRequest.makeMockMessage())
         case ETCMessageFromClient.initialUsageRecordRequest.data:
             if usageRecordPayloadIterator == nil {
                 usageRecordPayloadIterator = usageRecordResponsePayloads.makeIterator()
-                simulateReceive(try! ETCMessageFromDevice.InitialUsageRecordExistenceResponse.makeMockMessage())
+                simulateReceive(ETCMessageFromDevice.InitialUsageRecordExistenceResponse.makeMockMessage())
             } else if let payload = usageRecordPayloadIterator!.next() {
-                let message = try! ETCMessageFromDevice.UsageRecordResponse.makeMockMessage(payload: payload)
-                simulateReceive(message)
+                simulateReceive(ETCMessageFromDevice.UsageRecordResponse.makeMockMessage(payload: payload))
             }
         case ETCMessageFromClient.nextUsageRecordRequest.data:
             if let payload = usageRecordPayloadIterator?.next() {
-                let message = try! ETCMessageFromDevice.UsageRecordResponse.makeMockMessage(payload: payload)
-                simulateReceive(message)
+                simulateReceive(ETCMessageFromDevice.UsageRecordResponse.makeMockMessage(payload: payload))
             } else {
                 usageRecordPayloadIterator = nil
-                simulateReceive(try! ETCMessageFromDevice.NextUsageRecordNonExistenceResponse.makeMockMessage())
+                simulateReceive(ETCMessageFromDevice.NextUsageRecordNonExistenceResponse.makeMockMessage())
             }
         default:
             break
@@ -88,14 +86,14 @@ class MockSerialPort: NSObject, SerialPort {
     private func startHeartbeats() {
         var heartbeatCount = 0
 
-        simulateReceive(try! ETCMessageFromDevice.HeartBeat.makeMockMessage())
+        simulateReceive(ETCMessageFromDevice.HeartBeat.makeMockMessage())
         heartbeatCount += 1
 
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] (timer) in
             guard let self = self else { return }
 
             if heartbeatCount < 5 {
-                self.simulateReceive(try! ETCMessageFromDevice.HeartBeat.makeMockMessage())
+                self.simulateReceive(ETCMessageFromDevice.HeartBeat.makeMockMessage())
                 heartbeatCount += 1
             } else {
                 timer.invalidate()

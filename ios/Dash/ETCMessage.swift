@@ -54,10 +54,6 @@ extension ETCMessageFromClientProtocol {
     }
 }
 
-enum ETCMessageFromDeviceProtocolError: Error {
-    case invalidPayloadLength
-}
-
 protocol ETCMessageFromDeviceProtocol: ETCMessageProtocol {
     static func validTerminalBytes(payloadBytes: [UInt8]) -> [UInt8]
     static var headerBytes: [UInt8] { get }
@@ -81,16 +77,13 @@ extension ETCMessageFromDeviceProtocol {
         return data.count >= length && [UInt8](data.prefix(headerLength)) == headerBytes
     }
 
-    static func makeMockMessage(payload: String) throws -> Self {
+    static func makeMockMessage(payload: String) -> Self {
         let bytes = Array(payload.utf8)
-        return try makeMockMessage(payloadBytes: bytes)
+        return makeMockMessage(payloadBytes: bytes)
     }
 
-    static func makeMockMessage(payloadBytes: [UInt8] = []) throws -> Self {
-        guard (payloadBytes.count) == payloadLength else {
-            throw ETCMessageFromDeviceProtocolError.invalidPayloadLength
-        }
-
+    static func makeMockMessage(payloadBytes: [UInt8] = []) -> Self {
+        assert(payloadBytes.count == payloadLength)
         let terminalBytes = validTerminalBytes(payloadBytes: payloadBytes)
         let data = Data(headerBytes + payloadBytes + terminalBytes)
         return Self(data: data)
