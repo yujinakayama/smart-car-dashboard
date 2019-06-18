@@ -17,6 +17,12 @@ enum ETCDeviceClientError: Error {
     case messageCannotBeSentBeforePreliminaryHandshake
 }
 
+enum ETCDeviceClientHandshakeStatus {
+    case incomplete
+    case trying
+    case complete
+}
+
 // Using NSObject intead of struct for KVO
 class ETCDeviceAttributes: NSObject {
     @objc dynamic var deviceName: String?
@@ -30,7 +36,13 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
 
     let deviceAttributes = ETCDeviceAttributes()
 
-    var hasCompletedPreparation = false
+    var isAvailable: Bool {
+        return serialPort.isAvailable && handshakeStatus == .complete
+    }
+
+    private var handshakeStatus = ETCDeviceClientHandshakeStatus.incomplete
+    private let handshakeTimeoutTimeInterval: TimeInterval = 1
+    private var handshakeTimeoutTimer: Timer?
 
     init(serialPort: SerialPort) {
         self.serialPort = serialPort
@@ -44,19 +56,35 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
 
     private func startHandshake() {
         logger.info()
+
+        handshakeStatus = .trying
+
+        handshakeTimeoutTimer = Timer.scheduledTimer(withTimeInterval: handshakeTimeoutTimeInterval, repeats: false) { [weak self] (timer) in
+            guard let self = self else { return }
+
+            if self.handshakeStatus == .trying {
+                logger.info("Handshake timed out")
+                self.handshakeStatus = .incomplete
+            }
+
+            self.handshakeTimeoutTimer = nil
+        }
+
         try! send(ETCMessageFromClient.handshakeRequest)
     }
 
     private func completeHandshake() {
         logger.info()
-        hasCompletedPreparation = true
+        handshakeStatus = .complete
+        handshakeTimeoutTimer?.invalidate()
+        handshakeTimeoutTimer = nil
         delegate?.deviceClientDidFinishPreparation(self, error: nil)
     }
 
     func send(_ message: ETCMessageFromClientProtocol) throws {
         logger.debug(message)
 
-        if !hasCompletedPreparation && message.requiresPreliminaryHandshake {
+        if handshakeStatus != .complete && message.requiresPreliminaryHandshake {
             throw ETCDeviceClientError.messageCannotBeSentBeforePreliminaryHandshake
         }
 
@@ -92,6 +120,10 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
         logger.debug(message)
 
         switch message {
+        case is ETCMessageFromDevice.HeartBeat:
+            if handshakeStatus == .incomplete {
+                startHandshake()
+            }
         case let deviceNameResponse as ETCMessageFromDevice.DeviceNameResponse:
             deviceAttributes.deviceName = deviceNameResponse.deviceName
         case is ETCMessageFromDevice.InitialUsageRecordExistenceResponse:
@@ -111,7 +143,7 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
         if message.requiresAcknowledgement {
             try! send(ETCMessageFromClient.acknowledgement)
 
-            if !hasCompletedPreparation && message is ETCMessageFromDevice.HandshakeRequest {
+            if handshakeStatus == .trying && message is ETCMessageFromDevice.HandshakeRequest {
                 completeHandshake()
             }
         }

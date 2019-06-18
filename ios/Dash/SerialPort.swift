@@ -15,6 +15,7 @@ protocol SerialPortDelegate: NSObjectProtocol {
 
 protocol SerialPort: NSObjectProtocol {
     var delegate: SerialPortDelegate? { get set }
+    var isAvailable: Bool { get }
     func startPreparation()
     func transmit(_ data: Data) throws
 }

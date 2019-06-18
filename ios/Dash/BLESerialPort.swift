@@ -27,6 +27,10 @@ class BLESerialPort: NSObject, SerialPort, BLERemotePeripheralDelegate, CBPeriph
 
     weak var delegate: SerialPortDelegate?
 
+    var isAvailable: Bool {
+        return peripheral.isConnected && txCharacteristic != nil && rxCharacteristic != nil
+    }
+
     var txCharacteristic: CBCharacteristic?
     var rxCharacteristic: CBCharacteristic?
 

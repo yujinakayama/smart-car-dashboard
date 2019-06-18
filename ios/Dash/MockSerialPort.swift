@@ -42,10 +42,14 @@ let usageRecordResponsePayloads = [
 class MockSerialPort: NSObject, SerialPort {
     weak var delegate: SerialPortDelegate?
 
+    var isAvailable = false
+
     private var usageRecordPayloadIterator: IndexingIterator<[String]>?
 
     func startPreparation() {
         delegate?.serialPortDidFinishPreparation(self, error: nil)
+        isAvailable = true
+        startHeartbeats()
     }
 
     func transmit(_ data: Data) throws {
@@ -78,6 +82,24 @@ class MockSerialPort: NSObject, SerialPort {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
             guard let self = self else { return }
             self.delegate?.serialPort(self, didReceiveData: message.data)
+        }
+    }
+
+    private func startHeartbeats() {
+        var heartbeatCount = 0
+
+        simulateReceive(try! ETCMessageFromDevice.HeartBeat.makeMockMessage())
+        heartbeatCount += 1
+
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] (timer) in
+            guard let self = self else { return }
+
+            if heartbeatCount < 5 {
+                self.simulateReceive(try! ETCMessageFromDevice.HeartBeat.makeMockMessage())
+                heartbeatCount += 1
+            } else {
+                timer.invalidate()
+            }
         }
     }
 }

@@ -92,7 +92,7 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
     }
 
     func updateConnectionStatusView() {
-        if deviceClient?.hasCompletedPreparation == true {
+        if deviceClient?.isAvailable == true {
             connectionStatusImageView.image = UIImage(named: "bolt")
             connectionStatusImageView.tintColor = UIColor(hue: 263 / 360, saturation: 0.8, brightness: 1, alpha: 1)
         } else {
