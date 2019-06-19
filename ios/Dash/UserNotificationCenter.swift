@@ -19,6 +19,8 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
         return UNUserNotificationCenter.current()
     }
 
+    let notificationHistory = LatestUserNotificationHistory()
+
     override init() {
         super.init()
         notificationCenter.delegate = self
@@ -30,26 +32,22 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
         }
     }
 
-    func deliverNotification(title: String) {
-        let request = makeNotificationRequest(title: title)
+    func requestDelivery(_ notification: UserNotificationProtocol) {
+        logger.info(notification)
+        guard notification.shouldBeDelivered(history: notificationHistory) else { return }
+        deliver(notification)
+    }
 
-        UNUserNotificationCenter.current().add(request) { (error) in
+    private func deliver(_ notification: UserNotificationProtocol) {
+        logger.info(notification)
+
+        UNUserNotificationCenter.current().add(notification.makeRequest()) { (error) in
             if let error = error {
                 logger.error(error)
             }
         }
-    }
 
-    private func makeNotificationRequest(title: String) -> UNNotificationRequest {
-        let content = UNMutableNotificationContent()
-        content.title = title
-        content.sound = UNNotificationSound(named: UNNotificationSoundName("Affirmative.wav"))
-
-        return UNNotificationRequest(
-            identifier: "me.yujinakayama.ETC",
-            content: content,
-            trigger: nil
-        )
+        notificationHistory.append(notification)
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
@@ -62,5 +60,24 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
                 return
             }
         }
+    }
+}
+
+class LatestUserNotificationHistory {
+    let dropOutTimeInterval: TimeInterval = 5
+
+    private var notifications: [UserNotificationProtocol] = []
+
+    func append(_ notification: UserNotificationProtocol) {
+        notifications.append(notification)
+
+        Timer.scheduledTimer(withTimeInterval: dropOutTimeInterval, repeats: false) { [weak self] (timer) in
+            guard let self = self else { return }
+            self.notifications.removeFirst()
+        }
+    }
+
+    func contains(where predicate: (UserNotificationProtocol) -> Bool) -> Bool {
+        return notifications.contains(where: predicate)
     }
 }

@@ -71,12 +71,12 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
     func deviceClient(_ deviceClient: ETCDeviceClient, didReceiveMessage message: ETCMessageFromDeviceProtocol) {
         switch message {
         case is ETCMessageFromDevice.GateEntranceNotification:
-            UserNotificationCenter.shared.deliverNotification(title: "Entered ETC gate")
+            UserNotificationCenter.shared.requestDelivery(TollgateEntranceNotification())
         case is ETCMessageFromDevice.GateExitNotification:
-            UserNotificationCenter.shared.deliverNotification(title: "Exited ETC gate")
+            UserNotificationCenter.shared.requestDelivery(TollgateExitNotification())
         case let paymentNotification as ETCMessageFromDevice.PaymentNotification:
             if let fee = paymentNotification.fee {
-                UserNotificationCenter.shared.deliverNotification(title: "ETC Payment: ¥\(fee)")
+                UserNotificationCenter.shared.requestDelivery(PaymentNotification(amount: fee))
             }
             try! deviceClient.send(ETCMessageFromClient.initialUsageRecordRequest)
         default:
