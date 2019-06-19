@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         navigationController.topViewController!.navigationItem.leftItemsSupplementBackButton = true
         splitViewController.delegate = self
 
-        UserNotificationManager.shared.requestAuthorization()
+        UserNotificationCenter.shared.requestAuthorization()
 
         locationManager.requestWhenInUseAuthorization()
 

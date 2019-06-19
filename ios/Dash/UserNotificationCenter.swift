@@ -9,8 +9,8 @@
 import Foundation
 import UserNotifications
 
-class UserNotificationManager: NSObject, UNUserNotificationCenterDelegate {
-    static let shared = UserNotificationManager()
+class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
+    static let shared = UserNotificationCenter()
 
     let authorizationOptions: UNAuthorizationOptions = [.sound, .alert]
     let presentationOptions: UNNotificationPresentationOptions = [.sound, .alert]

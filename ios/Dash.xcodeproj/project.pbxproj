@@ -23,7 +23,7 @@
 		B99356EE22A96E1000BA08AB /* ETCUsageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356ED22A96E1000BA08AB /* ETCUsageTableViewCell.swift */; };
 		B9CB7C0D22AD65A40059433E /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB7C0C22AD65A40059433E /* UITableViewCellExtension.swift */; };
 		B9CD1D8D22A51AAD00170082 /* Differ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9CD1D8C22A51AAD00170082 /* Differ.framework */; };
-		B9CD1D9022A52A9200170082 /* UserNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD1D8F22A52A9100170082 /* UserNotificationManager.swift */; };
+		B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */; };
 		B9CD1D9222A535A200170082 /* Affirmative.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9CD1D9122A535A200170082 /* Affirmative.wav */; };
 		B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B24229D59BE00B645D5 /* AppDelegate.swift */; };
 		B9DC5B27229D59BE00B645D5 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B26229D59BE00B645D5 /* MasterViewController.swift */; };
@@ -65,7 +65,7 @@
 		B99356ED22A96E1000BA08AB /* ETCUsageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCUsageTableViewCell.swift; sourceTree = "<group>"; };
 		B9CB7C0C22AD65A40059433E /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
 		B9CD1D8C22A51AAD00170082 /* Differ.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Differ.framework; path = Carthage/Build/iOS/Differ.framework; sourceTree = "<group>"; };
-		B9CD1D8F22A52A9100170082 /* UserNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationManager.swift; sourceTree = "<group>"; };
+		B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationCenter.swift; sourceTree = "<group>"; };
 		B9CD1D9122A535A200170082 /* Affirmative.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Affirmative.wav; sourceTree = "<group>"; };
 		B9DC5B21229D59BE00B645D5 /* Dash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9DC5B24229D59BE00B645D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -150,7 +150,7 @@
 				B9DC5B24229D59BE00B645D5 /* AppDelegate.swift */,
 				B9DC5B26229D59BE00B645D5 /* MasterViewController.swift */,
 				B9DC5B28229D59BE00B645D5 /* DetailViewController.swift */,
-				B9CD1D8F22A52A9100170082 /* UserNotificationManager.swift */,
+				B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */,
 				B9DC5B45229EB8B200B645D5 /* ETCDeviceManager.swift */,
 				B9DC5B38229D5D8100B645D5 /* ETCDeviceClient.swift */,
 				B99356E522A9525C00BA08AB /* ETCMessage.swift */,
@@ -329,7 +329,7 @@
 				B9DC5B3F229D9E4F00B645D5 /* BLERemotePeripheralManager.swift in Sources */,
 				B9DC5B39229D5D8100B645D5 /* ETCDeviceClient.swift in Sources */,
 				B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */,
-				B9CD1D9022A52A9200170082 /* UserNotificationManager.swift in Sources */,
+				B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */,
 				B942553D22B8C3E2008B053B /* Logger.swift in Sources */,
 				B9DC5B3D229D9E0C00B645D5 /* BLERemotePeripheral.swift in Sources */,
 				B99356E422A94D6900BA08AB /* BLESerialPort.swift in Sources */,
