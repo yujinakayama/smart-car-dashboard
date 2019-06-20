@@ -13,10 +13,6 @@ protocol ETCDeviceClientDelegate: NSObjectProtocol {
     func deviceClient(_ deviceClient: ETCDeviceClient, didReceiveMessage message: ETCMessageFromDeviceProtocol)
 }
 
-enum ETCDeviceClientError: Error {
-    case messageCannotBeSentBeforePreliminaryHandshake
-}
-
 enum ETCDeviceClientHandshakeStatus {
     case incomplete
     case trying
@@ -83,11 +79,7 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
 
     func send(_ message: ETCMessageFromClientProtocol) throws {
         logger.debug(message)
-
-        if handshakeStatus != .complete && message.requiresPreliminaryHandshake {
-            throw ETCDeviceClientError.messageCannotBeSentBeforePreliminaryHandshake
-        }
-
+        assert(!message.requiresPreliminaryHandshake || handshakeStatus == .complete)
         try serialPort.transmit(message.data)
     }
 
