@@ -63,9 +63,9 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
         tableView.reloadData() // TODO: Persist usage history in Core Data
     }
 
-    func deviceClientDidFinishPreparation(_ device: ETCDeviceClient, error: Error?) {
+    func deviceClientDidFinishPreparation(_ deviceClient: ETCDeviceClient, error: Error?) {
         updateConnectionStatusView()
-        try! device.send(ETCMessageFromClient.initialUsageRecordRequest)
+        try! deviceClient.send(ETCMessageFromClient.initialUsageRecordRequest)
     }
 
     func deviceClient(_ deviceClient: ETCDeviceClient, didReceiveMessage message: ETCMessageFromDeviceProtocol) {
