@@ -194,7 +194,9 @@ enum ETCMessageFromDevice {
         UsageRecordResponse.self,
         GateEntranceNotification.self,
         GateExitNotification.self,
-        PaymentNotification.self
+        PaymentNotification.self,
+        CardInsertionNotification.self,
+        CardEjectionNotification.self
     ]
 
     struct HeartBeat: ETCMessageFromDeviceProtocol, Plain {
@@ -286,6 +288,18 @@ enum ETCMessageFromDevice {
         var fee: Int? {
             return number()
         }
+    }
+
+    struct CardInsertionNotification: ETCMessageFromDeviceProtocol, Checksummed {
+        static let headerBytes: [UInt8] = [0x01, 0xC2, byte(of: "D")]
+        static let payloadLength = 0
+        var data: Data
+    }
+
+    struct CardEjectionNotification: ETCMessageFromDeviceProtocol, Checksummed {
+        static let headerBytes: [UInt8] = [0x01, 0xC2, byte(of: "E")]
+        static let payloadLength = 0
+        var data: Data
     }
 
     struct Unknown: ETCMessageFromDeviceProtocol, Plain {

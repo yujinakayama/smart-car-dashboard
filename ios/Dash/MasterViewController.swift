@@ -79,6 +79,8 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
                 UserNotificationCenter.shared.requestDelivery(PaymentNotification(amount: fee))
             }
             try! deviceClient.send(ETCMessageFromClient.initialUsageRecordRequest)
+        case is ETCMessageFromDevice.CardInsertionNotification:
+            try! deviceClient.send(ETCMessageFromClient.initialUsageRecordRequest)
         default:
             break
         }

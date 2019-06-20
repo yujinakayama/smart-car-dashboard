@@ -128,6 +128,8 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
                 deviceAttributes.usages.sort { (a, b) in a.date ?? Date.distantPast > b.date ?? Date.distantPast }
                 try! send(ETCMessageFromClient.nextUsageRecordRequest)
             }
+        case is ETCMessageFromDevice.CardEjectionNotification:
+            deviceAttributes.usages.removeAll()
         default:
             break
         }
