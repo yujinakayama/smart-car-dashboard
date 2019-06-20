@@ -119,8 +119,8 @@ extension ETCMessageFromDeviceProtocol {
         return bytes.first == 0x01
     }
 
-    func number(in range: ClosedRange<Int>? = nil) -> Int? {
-        let targetRange = range == nil ? 0...(Self.payloadLength - 1) : range!
+    func extractNumberFromPayload(in range: ClosedRange<Int>? = nil) -> Int? {
+        let targetRange = range ?? 0...(Self.payloadLength - 1)
         guard let string = String(bytes: payloadBytes[targetRange], encoding: .ascii) else { return nil }
         return Int(string.trimmingCharacters(in: .whitespaces))
     }
@@ -252,18 +252,18 @@ enum ETCMessageFromDevice {
 
         var usage: ETCUsage {
             return ETCUsage(
-                entranceRoadNumber: number(in: 4...5),
-                entranceTollboothNumber: number(in: 6...8),
-                exitRoadNumber: number(in: 13...14),
-                exitTollboothNumber: number(in: 15...17),
-                year: number(in: 18...21),
-                month: number(in: 22...23),
-                day: number(in: 24...25),
-                hour: number(in: 26...27),
-                minute: number(in: 28...29),
-                second: number(in: 30...31),
-                vehicleClassification: number(in: 32...34).map { VehicleClassification(rawValue: $0) } ?? nil,
-                fee: number(in: 35...40)
+                entranceRoadNumber: extractNumberFromPayload(in: 4...5),
+                entranceTollboothNumber: extractNumberFromPayload(in: 6...8),
+                exitRoadNumber: extractNumberFromPayload(in: 13...14),
+                exitTollboothNumber: extractNumberFromPayload(in: 15...17),
+                year: extractNumberFromPayload(in: 18...21),
+                month: extractNumberFromPayload(in: 22...23),
+                day: extractNumberFromPayload(in: 24...25),
+                hour: extractNumberFromPayload(in: 26...27),
+                minute: extractNumberFromPayload(in: 28...29),
+                second: extractNumberFromPayload(in: 30...31),
+                vehicleClassification: extractNumberFromPayload(in: 32...34).map { VehicleClassification(rawValue: $0) } ?? nil,
+                fee: extractNumberFromPayload(in: 35...40)
             )
         }
     }
@@ -286,7 +286,7 @@ enum ETCMessageFromDevice {
         var data: Data
 
         var fee: Int? {
-            return number()
+            return extractNumberFromPayload()
         }
     }
 
