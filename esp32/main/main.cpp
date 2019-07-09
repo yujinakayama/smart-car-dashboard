@@ -1,6 +1,7 @@
 #include "log_config.h" // This needs to be the top
 #include "ble_debug.h"
 #include "hid.h"
+#include "serial_ble_bridge.h"
 #include "steering_remote.h"
 #include "Arduino.h"
 #include <BLEDevice.h>
@@ -14,7 +15,9 @@ static const int kSteeringRemoteInputPinA = 34; // Connect to the brown-yellow w
 static const int kSteeringRemoteInputPinB = 35; // Connect to the brown-white wire in the car
 static const int kiPadSleepPreventionIntervalMillis = 30 * 1000;
 
+static HardwareSerial* etcDeviceSerial = &Serial2;
 static HID* hid;
+static SerialBLEBridge* serialBLEBridge;
 static SteeringRemote* steeringRemote;
 static bool isiPadConnected = false;
 static bool wasiPadConnected = false;
@@ -48,6 +51,7 @@ void setup() {
   setupLogLevel();
   enableBLEServerEventLogging();
   startSteeringRemoteInputObservation();
+  etcDeviceSerial->begin(19200, SERIAL_8E1);
   startBLEServer();
 }
 
@@ -80,10 +84,14 @@ static void startBLEServer() {
   hid = new HID(server);
   hid->startServices();
 
+  serialBLEBridge = new SerialBLEBridge(etcDeviceSerial, server);
+  serialBLEBridge->start();
+
   // TODO: Use BLEAdvertisementData::setName() to show the name properly even before unpaired
   BLEAdvertising* advertising = server->getAdvertising();
   advertising->setAppearance(ESP_BLE_APPEARANCE_GENERIC_HID);
   advertising->addServiceUUID(hid->getHIDService()->getUUID());
+  advertising->addServiceUUID(serialBLEBridge->uart->getService()->getUUID());
   advertising->start();
 };
 
