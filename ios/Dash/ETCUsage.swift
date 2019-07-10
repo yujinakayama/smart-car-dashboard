@@ -189,9 +189,9 @@ struct Road: Equatable {
 
 // https://global.c-nexco.co.jp/en/navi/classifying/
 enum VehicleClassification: Int {
-    case light       = 5
-    case standard    = 1
-    case mid_size    = 4
-    case oversized   = 2
-    case extra_large = 3
+    case light      = 5
+    case standard   = 1
+    case midSize    = 4
+    case oversized  = 2
+    case extraLarge = 3
 }
