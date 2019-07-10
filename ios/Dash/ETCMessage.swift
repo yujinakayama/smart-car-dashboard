@@ -263,7 +263,7 @@ enum ETCMessageFromDevice {
                 minute: extractNumberFromPayload(in: 28...29),
                 second: extractNumberFromPayload(in: 30...31),
                 vehicleClassification: extractNumberFromPayload(in: 32...34).map { VehicleClassification(rawValue: $0) } ?? nil,
-                fee: extractNumberFromPayload(in: 35...40)
+                paymentAmount: extractNumberFromPayload(in: 35...40)
             )
         }
     }
@@ -285,7 +285,7 @@ enum ETCMessageFromDevice {
         static let payloadLength = 6
         let data: Data
 
-        var fee: Int? {
+        var amount: Int? {
             return extractNumberFromPayload()
         }
     }

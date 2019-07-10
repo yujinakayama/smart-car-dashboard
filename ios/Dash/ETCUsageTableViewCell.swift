@@ -23,8 +23,8 @@ class ETCUsageTableViewCell: UITableViewCell {
     }()
 
     @IBOutlet weak var yenLabel: UILabel!
-    @IBOutlet weak var feeView: UIView!
-    @IBOutlet weak var feeLabel: UILabel!
+    @IBOutlet weak var paymentAmountView: UIView!
+    @IBOutlet weak var paymentAmountLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var roadLabel: UILabel!
     @IBOutlet weak var tollboothLabel: UILabel!
@@ -51,14 +51,14 @@ class ETCUsageTableViewCell: UITableViewCell {
             font = UIFont.preferredFont(forTextStyle: .headline)
         }
 
-        [yenLabel, feeLabel].forEach { (label) in
+        [yenLabel, paymentAmountLabel].forEach { (label) in
             label!.font = font
             label!.adjustsFontForContentSizeCategory = true
         }
     }
 
     private func updateViews() {
-        feeLabel.text = usage?.fee.map { ETCUsageTableViewCell.numberFormatter.string(from: NSNumber(value: $0))! }
+        paymentAmountLabel.text = usage?.paymentAmount.map { ETCUsageTableViewCell.numberFormatter.string(from: NSNumber(value: $0))! }
 
         dateLabel.text = usage?.date.map { ETCUsageTableViewCell.dateFormatter.string(from: $0) }
 
@@ -93,14 +93,14 @@ class ETCUsageTableViewCell: UITableViewCell {
 
     // https://stackoverflow.com/questions/6745919/uitableviewcell-subview-disappears-when-cell-is-selected
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
-        let color = feeView.backgroundColor
+        let color = paymentAmountView.backgroundColor
         super.setHighlighted(highlighted, animated: animated)
-        feeView.backgroundColor = color
+        paymentAmountView.backgroundColor = color
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
-        let color = feeView.backgroundColor
+        let color = paymentAmountView.backgroundColor
         super.setSelected(selected, animated: animated)
-        feeView.backgroundColor = color
+        paymentAmountView.backgroundColor = color
     }
 }

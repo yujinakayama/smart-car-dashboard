@@ -20,7 +20,7 @@ class ETCUsage: NSObject {
     var minute: Int?
     var second: Int?
     var vehicleClassification: VehicleClassification?
-    var fee: Int?
+    var paymentAmount: Int?
 
     var entranceTollbooth: Tollbooth? {
         return Tollbooth.findTollbooth(roadNumber: entranceRoadNumber, tollboothNumber: entranceTollboothNumber)
@@ -55,7 +55,7 @@ class ETCUsage: NSObject {
         minute: Int?,
         second: Int?,
         vehicleClassification: VehicleClassification?,
-        fee: Int?
+        paymentAmount: Int?
     ) {
         self.entranceRoadNumber = entranceRoadNumber
         self.entranceTollboothNumber = entranceTollboothNumber
@@ -68,7 +68,7 @@ class ETCUsage: NSObject {
         self.minute = minute
         self.second = second
         self.vehicleClassification = vehicleClassification
-        self.fee = fee
+        self.paymentAmount = paymentAmount
     }
 
     override func isEqual(_ object: Any?) -> Bool {

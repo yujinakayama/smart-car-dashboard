@@ -75,8 +75,8 @@ class ETCUsageTableViewController: UITableViewController, ETCDeviceManagerDelega
         case is ETCMessageFromDevice.GateExitNotification:
             UserNotificationCenter.shared.requestDelivery(TollgateExitNotification())
         case let paymentNotification as ETCMessageFromDevice.PaymentNotification:
-            if let fee = paymentNotification.fee {
-                UserNotificationCenter.shared.requestDelivery(PaymentNotification(amount: fee))
+            if let amount = paymentNotification.amount {
+                UserNotificationCenter.shared.requestDelivery(PaymentNotification(amount: amount))
             }
             try! deviceClient.send(ETCMessageFromClient.initialUsageRecordRequest)
         case is ETCMessageFromDevice.CardInsertionNotification:

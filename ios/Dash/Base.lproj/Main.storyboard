@@ -236,8 +236,8 @@
                                     <outlet property="exitRoadLabel" destination="mrm-PV-omm" id="oqj-jg-yiu"/>
                                     <outlet property="exitRoadView" destination="Rko-mV-7BI" id="sIc-GS-n8I"/>
                                     <outlet property="exitTollboothLabel" destination="Flp-ga-yBP" id="voM-Ba-YeK"/>
-                                    <outlet property="feeLabel" destination="ukE-X2-gHW" id="bys-ax-zyE"/>
-                                    <outlet property="feeView" destination="yXL-mj-wgO" id="164-06-0Jz"/>
+                                    <outlet property="paymentAmountLabel" destination="ukE-X2-gHW" id="bys-ax-zyE"/>
+                                    <outlet property="paymentAmountView" destination="yXL-mj-wgO" id="164-06-0Jz"/>
                                     <outlet property="roadLabel" destination="CtC-aV-rx7" id="VEH-pW-shN"/>
                                     <outlet property="tollboothLabel" destination="ElS-Fh-95g" id="a6q-bF-N5u"/>
                                     <outlet property="yenLabel" destination="6wB-E0-moo" id="JaW-EC-5zD"/>

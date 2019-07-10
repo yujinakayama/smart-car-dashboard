@@ -22,7 +22,7 @@ class ETCUsageTests: XCTestCase {
             minute: 23,
             second: 56,
             vehicleClassification: VehicleClassification(rawValue: 1),
-            fee: 650
+            paymentAmount: 650
         )
 
         XCTAssertEqual(usage.entranceTollbooth?.road.name, "首都高速道路")
