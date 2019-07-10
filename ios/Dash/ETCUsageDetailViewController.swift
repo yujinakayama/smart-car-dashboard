@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class DetailViewController: UIViewController, MKMapViewDelegate {
+class ETCUsageDetailViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
 
     var usage: ETCUsage? {

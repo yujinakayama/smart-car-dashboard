@@ -9,9 +9,9 @@
 import UIKit
 import Differ
 
-class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETCDeviceClientDelegate {
+class ETCUsageTableViewController: UITableViewController, ETCDeviceManagerDelegate, ETCDeviceClientDelegate {
     var detailNavigationController: UINavigationController!
-    var detailViewController: DetailViewController!
+    var detailViewController: ETCUsageDetailViewController!
 
     lazy var connectionStatusImageView: UIImageView = {
         let view = UIImageView()
@@ -29,7 +29,7 @@ class MasterViewController: UITableViewController, ETCDeviceManagerDelegate, ETC
         super.viewDidLoad()
 
         detailNavigationController = (splitViewController!.viewControllers.last as! UINavigationController)
-        detailViewController = (detailNavigationController.topViewController as! DetailViewController)
+        detailViewController = (detailNavigationController.topViewController as! ETCUsageDetailViewController)
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: connectionStatusImageView)
         updateConnectionStatusView()
