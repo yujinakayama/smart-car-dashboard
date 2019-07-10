@@ -120,9 +120,13 @@ extension ETCMessageFromDeviceProtocol {
     }
 
     func extractNumberFromPayload(in range: ClosedRange<Int>? = nil) -> Int? {
-        let targetRange = range ?? 0...(Self.payloadLength - 1)
-        guard let string = String(bytes: payloadBytes[targetRange], encoding: .ascii) else { return nil }
+        guard let string = extractStringFromPayload(in: range) else { return nil }
         return Int(string.trimmingCharacters(in: .whitespaces))
+    }
+
+    func extractStringFromPayload(in range: ClosedRange<Int>? = nil) -> String? {
+        let targetRange = range ?? 0...(Self.payloadLength - 1)
+        return String(bytes: payloadBytes[targetRange], encoding: .ascii)
     }
 
     // TODO: Add validation for terminal bytes
@@ -252,10 +256,8 @@ enum ETCMessageFromDevice {
 
         var usage: ETCUsage {
             return ETCUsage(
-                entranceRoadNumber: extractNumberFromPayload(in: 4...5),
-                entranceTollboothNumber: extractNumberFromPayload(in: 6...8),
-                exitRoadNumber: extractNumberFromPayload(in: 13...14),
-                exitTollboothNumber: extractNumberFromPayload(in: 15...17),
+                entranceTollboothID: entranceTollboothID,
+                exitTollboothID: exitTollboothID,
                 year: extractNumberFromPayload(in: 18...21),
                 month: extractNumberFromPayload(in: 22...23),
                 day: extractNumberFromPayload(in: 24...25),
@@ -266,6 +268,19 @@ enum ETCMessageFromDevice {
                 paymentAmount: extractNumberFromPayload(in: 35...40)
             )
         }
+
+        var entranceTollboothID: String? {
+            guard let roadNumber = extractStringFromPayload(in: 4...5) else { return nil }
+            guard let tollboothNumber = extractStringFromPayload(in: 6...8) else { return nil }
+            return "\(roadNumber)-\(tollboothNumber)"
+        }
+
+        var exitTollboothID: String? {
+            guard let roadNumber = extractStringFromPayload(in: 13...14) else { return nil }
+            guard let tollboothNumber = extractStringFromPayload(in: 15...17) else { return nil }
+            return "\(roadNumber)-\(tollboothNumber)"
+        }
+
     }
 
     struct GateEntranceNotification: ETCMessageFromDeviceProtocol, Checksummed {

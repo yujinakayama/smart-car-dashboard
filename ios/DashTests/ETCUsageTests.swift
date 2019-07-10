@@ -11,10 +11,8 @@ import XCTest
 class ETCUsageTests: XCTestCase {
     func testUsage() {
         let usage =  ETCUsage(
-            entranceRoadNumber: 12,
-            entranceTollboothNumber: 137,
-            exitRoadNumber: 12,
-            exitTollboothNumber: 585,
+            entranceTollboothID: "12-137",
+            exitTollboothID: "12-585",
             year: 2019,
             month: 5,
             day: 31,
@@ -38,7 +36,7 @@ class ETCUsageTests: XCTestCase {
     func testTollbooth() {
         var tollbooth: Tollbooth?
 
-        tollbooth = Tollbooth.findTollbooth(roadNumber: 4, tollboothNumber: 49)
+        tollbooth = Tollbooth.findTollbooth(id: "04-049")
         XCTAssertEqual(tollbooth?.name, "茅ヶ崎JCT")
         XCTAssertEqual(tollbooth?.road.name, "首都圏中央連絡自動車道")
         XCTAssertEqual(tollbooth?.road.abbreviatedName, "圏央道")

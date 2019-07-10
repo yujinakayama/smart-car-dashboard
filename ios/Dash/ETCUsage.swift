@@ -9,10 +9,8 @@
 import Foundation
 
 class ETCUsage: NSObject {
-    var entranceRoadNumber: Int?
-    var entranceTollboothNumber: Int?
-    var exitRoadNumber: Int?
-    var exitTollboothNumber: Int?
+    var entranceTollboothID: String?
+    var exitTollboothID: String?
     var year: Int?
     var month: Int?
     var day: Int?
@@ -23,11 +21,13 @@ class ETCUsage: NSObject {
     var paymentAmount: Int?
 
     var entranceTollbooth: Tollbooth? {
-        return Tollbooth.findTollbooth(roadNumber: entranceRoadNumber, tollboothNumber: entranceTollboothNumber)
+        guard let id = entranceTollboothID else { return nil }
+        return Tollbooth.findTollbooth(id: id)
     }
 
     var exitTollbooth: Tollbooth? {
-        return Tollbooth.findTollbooth(roadNumber: exitRoadNumber, tollboothNumber: exitTollboothNumber)
+        guard let id = exitTollboothID else { return nil }
+        return Tollbooth.findTollbooth(id: id)
     }
 
     var date: Date? {
@@ -44,10 +44,8 @@ class ETCUsage: NSObject {
     }
 
     init(
-        entranceRoadNumber: Int?,
-        entranceTollboothNumber: Int?,
-        exitRoadNumber: Int?,
-        exitTollboothNumber: Int?,
+        entranceTollboothID: String?,
+        exitTollboothID: String?,
         year: Int?,
         month: Int?,
         day: Int?,
@@ -57,10 +55,8 @@ class ETCUsage: NSObject {
         vehicleClassification: VehicleClassification?,
         paymentAmount: Int?
     ) {
-        self.entranceRoadNumber = entranceRoadNumber
-        self.entranceTollboothNumber = entranceTollboothNumber
-        self.exitRoadNumber = exitRoadNumber
-        self.exitTollboothNumber = exitTollboothNumber
+        self.entranceTollboothID = entranceTollboothID
+        self.exitTollboothID = exitTollboothID
         self.year = year
         self.month = month
         self.day = day
@@ -79,38 +75,28 @@ class ETCUsage: NSObject {
 }
 
 struct Tollbooth: Equatable {
-    static var all: [Identifier: Tollbooth] = {
-        var tollbooths: [Identifier: Tollbooth] = [:]
+    static var all: [String: Tollbooth] = {
+        var tollbooths: [String: Tollbooth] = [:]
 
         loadCSV().forEach({ (values) in
             let tollbooth = makeTollbooth(values: values)
             if let tollbooth = tollbooth {
-                tollbooths[tollbooth.identifier] = tollbooth
+                tollbooths[tollbooth.id] = tollbooth
             }
         })
 
         return tollbooths
     }()
 
-    static func findTollbooth(roadNumber: Int?, tollboothNumber: Int?) -> Tollbooth? {
-        guard roadNumber != nil && tollboothNumber != nil else { return nil }
-        let identifier = Identifier(roadNumber: roadNumber!, tollboothNumber: tollboothNumber!)
-        return all[identifier]
+    static func findTollbooth(id: String) -> Tollbooth? {
+        return all[id]
     }
 
     private static func makeTollbooth(values: [String]) -> Tollbooth? {
-        let roadNumber = Int(values[0])
-        let tollboothNumber = Int(values[1])
-
-        if roadNumber == nil || tollboothNumber == nil {
-            return nil
-        }
-
-        let identifier = Identifier(roadNumber: roadNumber!, tollboothNumber: tollboothNumber!)
-        let road = Road(name: values[2], routeName: values[3].isEmpty ? nil : values[3])
-        let tollboothName = values[4]
-
-        return Tollbooth(identifier: identifier, road: road, name: tollboothName)
+        let id = values[0]
+        let road = Road(name: values[1], routeName: values[2].isEmpty ? nil : values[2])
+        let tollboothName = values[3]
+        return Tollbooth(id: id, road: road, name: tollboothName)
     }
 
     static func loadCSV() -> [[String]] {
@@ -123,21 +109,14 @@ struct Tollbooth: Equatable {
         return listOfValues
     }
 
-    let identifier: Identifier
+    let id: String
     let road: Road
     let name: String
 
-    init(identifier: Identifier, road: Road, name: String) {
-        self.identifier = identifier
+    init(id: String, road: Road, name: String) {
+        self.id = id
         self.road = road
         self.name = name
-    }
-}
-
-extension Tollbooth {
-    struct Identifier: Hashable {
-        let roadNumber: Int
-        let tollboothNumber: Int
     }
 }
 
