@@ -8,7 +8,7 @@
 
 import Foundation
 
-let usageRecordResponsePayloads = [
+let paymentRecordResponsePayloads = [
     "01031210701031204920190604184534001   470",
     "01031275301031206920190531175618001   840",
     "01031291501031291920190531172428001   300",
@@ -44,7 +44,7 @@ class MockSerialPort: NSObject, SerialPort {
 
     var isAvailable = false
 
-    private var usageRecordPayloadIterator: IndexingIterator<[String]>?
+    private var paymentRecordPayloadIterator: IndexingIterator<[String]>?
 
     func startPreparation() {
         delegate?.serialPortDidFinishPreparation(self, error: nil)
@@ -57,19 +57,19 @@ class MockSerialPort: NSObject, SerialPort {
         case ETCMessageFromClient.handshakeRequest.data:
             simulateReceive(ETCMessageFromDevice.HandshakeAcknowledgement.makeMockMessage())
             simulateReceive(ETCMessageFromDevice.HandshakeRequest.makeMockMessage())
-        case ETCMessageFromClient.initialUsageRecordRequest.data:
-            if usageRecordPayloadIterator == nil {
-                usageRecordPayloadIterator = usageRecordResponsePayloads.makeIterator()
-                simulateReceive(ETCMessageFromDevice.InitialUsageRecordExistenceResponse.makeMockMessage())
-            } else if let payload = usageRecordPayloadIterator!.next() {
-                simulateReceive(ETCMessageFromDevice.UsageRecordResponse.makeMockMessage(payload: payload))
+        case ETCMessageFromClient.initialPaymentRecordRequest.data:
+            if paymentRecordPayloadIterator == nil {
+                paymentRecordPayloadIterator = paymentRecordResponsePayloads.makeIterator()
+                simulateReceive(ETCMessageFromDevice.InitialPaymentRecordExistenceResponse.makeMockMessage())
+            } else if let payload = paymentRecordPayloadIterator!.next() {
+                simulateReceive(ETCMessageFromDevice.PaymentRecordResponse.makeMockMessage(payload: payload))
             }
-        case ETCMessageFromClient.nextUsageRecordRequest.data:
-            if let payload = usageRecordPayloadIterator?.next() {
-                simulateReceive(ETCMessageFromDevice.UsageRecordResponse.makeMockMessage(payload: payload))
+        case ETCMessageFromClient.nextPaymentRecordRequest.data:
+            if let payload = paymentRecordPayloadIterator?.next() {
+                simulateReceive(ETCMessageFromDevice.PaymentRecordResponse.makeMockMessage(payload: payload))
             } else {
-                usageRecordPayloadIterator = nil
-                simulateReceive(ETCMessageFromDevice.NextUsageRecordNonExistenceResponse.makeMockMessage())
+                paymentRecordPayloadIterator = nil
+                simulateReceive(ETCMessageFromDevice.NextPaymentRecordNonExistenceResponse.makeMockMessage())
             }
         default:
             break

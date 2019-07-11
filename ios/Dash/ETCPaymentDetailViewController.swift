@@ -9,10 +9,10 @@
 import UIKit
 import MapKit
 
-class ETCUsageDetailViewController: UIViewController, MKMapViewDelegate {
+class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
 
-    var usage: ETCUsage? {
+    var payment: ETCPayment? {
         didSet {
             configureView()
         }
@@ -67,7 +67,7 @@ class ETCUsageDetailViewController: UIViewController, MKMapViewDelegate {
     }
 
     private func showNavigationTitle() {
-        guard let entrance = usage?.entranceTollbooth, let exit = usage?.exitTollbooth else {
+        guard let entrance = payment?.entranceTollbooth, let exit = payment?.exitTollbooth else {
             navigationItem.title = nil
             return
         }
@@ -93,7 +93,7 @@ class ETCUsageDetailViewController: UIViewController, MKMapViewDelegate {
     }
 
     private func fetchEntranceAndExitLocation(completionHandler: @escaping (MKMapItem?, MKMapItem?) -> Void) {
-        guard let entrance = usage?.entranceTollbooth, let exit = usage?.exitTollbooth else {
+        guard let entrance = payment?.entranceTollbooth, let exit = payment?.exitTollbooth else {
             completionHandler(nil, nil)
             return
         }

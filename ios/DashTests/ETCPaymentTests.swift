@@ -8,9 +8,9 @@
 
 import XCTest
 
-class ETCUsageTests: XCTestCase {
-    func testUsage() {
-        let usage =  ETCUsage(
+class ETCPaymentTests: XCTestCase {
+    func testPayment() {
+        let payment =  ETCPayment(
             entranceTollboothID: "12-137",
             exitTollboothID: "12-585",
             year: 2019,
@@ -20,17 +20,17 @@ class ETCUsageTests: XCTestCase {
             minute: 23,
             second: 56,
             vehicleClassification: VehicleClassification(rawValue: 1),
-            paymentAmount: 650
+            amount: 650
         )
 
-        XCTAssertEqual(usage.entranceTollbooth?.road.name, "首都高速道路")
-        XCTAssertEqual(usage.entranceTollbooth?.road.abbreviatedName, "首都高")
-        XCTAssertEqual(usage.entranceTollbooth?.road.routeName, "中央環状線")
-        XCTAssertEqual(usage.entranceTollbooth?.name, "五反田")
-        XCTAssertEqual(usage.exitTollbooth?.road.name, "首都高速道路")
-        XCTAssertEqual(usage.exitTollbooth?.name, "台場")
-        XCTAssertEqual(iso8601(usage.date!), "2019-05-31T01:23:56+09:00")
-        XCTAssertEqual(usage.vehicleClassification, .standard)
+        XCTAssertEqual(payment.entranceTollbooth?.road.name, "首都高速道路")
+        XCTAssertEqual(payment.entranceTollbooth?.road.abbreviatedName, "首都高")
+        XCTAssertEqual(payment.entranceTollbooth?.road.routeName, "中央環状線")
+        XCTAssertEqual(payment.entranceTollbooth?.name, "五反田")
+        XCTAssertEqual(payment.exitTollbooth?.road.name, "首都高速道路")
+        XCTAssertEqual(payment.exitTollbooth?.name, "台場")
+        XCTAssertEqual(iso8601(payment.date!), "2019-05-31T01:23:56+09:00")
+        XCTAssertEqual(payment.vehicleClassification, .standard)
     }
 
     func testTollbooth() {

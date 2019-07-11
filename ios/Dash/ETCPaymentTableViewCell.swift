@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ETCUsageTableViewCell: UITableViewCell {
+class ETCPaymentTableViewCell: UITableViewCell {
     static var numberFormatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
@@ -23,8 +23,8 @@ class ETCUsageTableViewCell: UITableViewCell {
     }()
 
     @IBOutlet weak var yenLabel: UILabel!
-    @IBOutlet weak var paymentAmountView: UIView!
-    @IBOutlet weak var paymentAmountLabel: UILabel!
+    @IBOutlet weak var amountView: UIView!
+    @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var roadLabel: UILabel!
     @IBOutlet weak var tollboothLabel: UILabel!
@@ -33,7 +33,7 @@ class ETCUsageTableViewCell: UITableViewCell {
     @IBOutlet weak var exitRoadLabel: UILabel!
     @IBOutlet weak var exitTollboothLabel: UILabel!
 
-    var usage: ETCUsage? {
+    var payment: ETCPayment? {
         didSet {
             updateViews()
         }
@@ -51,18 +51,18 @@ class ETCUsageTableViewCell: UITableViewCell {
             font = UIFont.preferredFont(forTextStyle: .headline)
         }
 
-        [yenLabel, paymentAmountLabel].forEach { (label) in
+        [yenLabel, amountLabel].forEach { (label) in
             label!.font = font
             label!.adjustsFontForContentSizeCategory = true
         }
     }
 
     private func updateViews() {
-        paymentAmountLabel.text = usage?.paymentAmount.map { ETCUsageTableViewCell.numberFormatter.string(from: NSNumber(value: $0))! }
+        amountLabel.text = payment?.amount.map { ETCPaymentTableViewCell.numberFormatter.string(from: NSNumber(value: $0))! }
 
-        dateLabel.text = usage?.date.map { ETCUsageTableViewCell.dateFormatter.string(from: $0) }
+        dateLabel.text = payment?.date.map { ETCPaymentTableViewCell.dateFormatter.string(from: $0) }
 
-        if let entrance = usage?.entranceTollbooth, let exit = usage?.exitTollbooth {
+        if let entrance = payment?.entranceTollbooth, let exit = payment?.exitTollbooth {
             roadLabel.text = entrance.road.abbreviatedName
             tollboothLabel.text = entrance.name
 
@@ -93,14 +93,14 @@ class ETCUsageTableViewCell: UITableViewCell {
 
     // https://stackoverflow.com/questions/6745919/uitableviewcell-subview-disappears-when-cell-is-selected
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
-        let color = paymentAmountView.backgroundColor
+        let color = amountView.backgroundColor
         super.setHighlighted(highlighted, animated: animated)
-        paymentAmountView.backgroundColor = color
+        amountView.backgroundColor = color
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
-        let color = paymentAmountView.backgroundColor
+        let color = amountView.backgroundColor
         super.setSelected(selected, animated: animated)
-        paymentAmountView.backgroundColor = color
+        amountView.backgroundColor = color
     }
 }

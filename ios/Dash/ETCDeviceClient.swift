@@ -22,7 +22,7 @@ enum ETCDeviceClientHandshakeStatus {
 // Using NSObject intead of struct for KVO
 class ETCDeviceAttributes: NSObject {
     @objc dynamic var deviceName: String?
-    @objc dynamic var usages: [ETCUsage] = []
+    @objc dynamic var payments: [ETCPayment] = []
 }
 
 class ETCDeviceClient: NSObject, SerialPortDelegate {
@@ -118,18 +118,18 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
             }
         case let deviceNameResponse as ETCMessageFromDevice.DeviceNameResponse:
             deviceAttributes.deviceName = deviceNameResponse.deviceName
-        case is ETCMessageFromDevice.InitialUsageRecordExistenceResponse:
-            try! send(ETCMessageFromClient.initialUsageRecordRequest)
-        case let usageRecordResponse as ETCMessageFromDevice.UsageRecordResponse:
+        case is ETCMessageFromDevice.InitialPaymentRecordExistenceResponse:
+            try! send(ETCMessageFromClient.initialPaymentRecordRequest)
+        case let paymentRecordResponse as ETCMessageFromDevice.PaymentRecordResponse:
             // TODO: ETCDeviceClient should focus only on communication and should not handle state management.
             // FIXME: Inefficient. Use Set or Core Data.
-            if !deviceAttributes.usages.contains(usageRecordResponse.usage) {
-                deviceAttributes.usages.append(usageRecordResponse.usage)
-                deviceAttributes.usages.sort { (a, b) in a.date ?? Date.distantPast > b.date ?? Date.distantPast }
-                try! send(ETCMessageFromClient.nextUsageRecordRequest)
+            if !deviceAttributes.payments.contains(paymentRecordResponse.payment) {
+                deviceAttributes.payments.append(paymentRecordResponse.payment)
+                deviceAttributes.payments.sort { (a, b) in a.date ?? Date.distantPast > b.date ?? Date.distantPast }
+                try! send(ETCMessageFromClient.nextPaymentRecordRequest)
             }
         case is ETCMessageFromDevice.CardEjectionNotification:
-            deviceAttributes.usages.removeAll()
+            deviceAttributes.payments.removeAll()
         default:
             break
         }

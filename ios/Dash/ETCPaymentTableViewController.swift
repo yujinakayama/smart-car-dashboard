@@ -9,9 +9,9 @@
 import UIKit
 import Differ
 
-class ETCUsageTableViewController: UITableViewController, ETCDeviceManagerDelegate, ETCDeviceClientDelegate {
+class ETCPaymentTableViewController: UITableViewController, ETCDeviceManagerDelegate, ETCDeviceClientDelegate {
     var detailNavigationController: UINavigationController!
-    var detailViewController: ETCUsageDetailViewController!
+    var detailViewController: ETCPaymentDetailViewController!
 
     lazy var connectionStatusImageView: UIImageView = {
         let view = UIImageView()
@@ -29,7 +29,7 @@ class ETCUsageTableViewController: UITableViewController, ETCDeviceManagerDelega
         super.viewDidLoad()
 
         detailNavigationController = (splitViewController!.viewControllers.last as! UINavigationController)
-        detailViewController = (detailNavigationController.topViewController as! ETCUsageDetailViewController)
+        detailViewController = (detailNavigationController.topViewController as! ETCPaymentDetailViewController)
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: connectionStatusImageView)
         updateConnectionStatusView()
@@ -60,12 +60,12 @@ class ETCUsageTableViewController: UITableViewController, ETCDeviceManagerDelega
     func deviceManager(_ deviceManager: ETCDeviceManager, didDisconnectToDevice deviceClient: ETCDeviceClient) {
         self.deviceClient = nil
         updateConnectionStatusView()
-        tableView.reloadData() // TODO: Persist usage history in Core Data
+        tableView.reloadData() // TODO: Persist payment history in Core Data
     }
 
     func deviceClientDidFinishPreparation(_ deviceClient: ETCDeviceClient, error: Error?) {
         updateConnectionStatusView()
-        try! deviceClient.send(ETCMessageFromClient.initialUsageRecordRequest)
+        try! deviceClient.send(ETCMessageFromClient.initialPaymentRecordRequest)
     }
 
     func deviceClient(_ deviceClient: ETCDeviceClient, didReceiveMessage message: ETCMessageFromDeviceProtocol) {
@@ -78,16 +78,16 @@ class ETCUsageTableViewController: UITableViewController, ETCDeviceManagerDelega
             if let amount = paymentNotification.amount {
                 UserNotificationCenter.shared.requestDelivery(PaymentNotification(amount: amount))
             }
-            try! deviceClient.send(ETCMessageFromClient.initialUsageRecordRequest)
+            try! deviceClient.send(ETCMessageFromClient.initialPaymentRecordRequest)
         case is ETCMessageFromDevice.CardInsertionNotification:
-            try! deviceClient.send(ETCMessageFromClient.initialUsageRecordRequest)
+            try! deviceClient.send(ETCMessageFromClient.initialPaymentRecordRequest)
         default:
             break
         }
     }
 
     func startObservingDeviceAttributes(_ attributes: ETCDeviceAttributes) {
-        let observation = attributes.observe(\.usages, options: [.old, .new]) { [unowned self] (attributes, change) in
+        let observation = attributes.observe(\.payments, options: [.old, .new]) { [unowned self] (attributes, change) in
             self.tableView.animateRowChangesWithoutMoves(
                 oldData: change.oldValue!,
                 newData: change.newValue!,
@@ -115,20 +115,20 @@ class ETCUsageTableViewController: UITableViewController, ETCDeviceManagerDelega
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return deviceClient?.deviceAttributes.usages.count ?? 0
+        return deviceClient?.deviceAttributes.payments.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ETCUsageTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ETCPaymentTableViewCell
 
-        let usage = deviceClient!.deviceAttributes.usages[indexPath.row]
-        cell.usage = usage
+        let payment = deviceClient!.deviceAttributes.payments[indexPath.row]
+        cell.payment = payment
         return cell
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let usage = deviceClient!.deviceAttributes.usages[indexPath.row]
-        detailViewController!.usage = usage
+        let payment = deviceClient!.deviceAttributes.payments[indexPath.row]
+        detailViewController!.payment = payment
         showDetailViewController(detailNavigationController, sender: self)
 
         if splitViewController!.displayMode == .primaryOverlay {

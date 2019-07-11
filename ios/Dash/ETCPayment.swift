@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ETCUsage: NSObject {
+class ETCPayment: NSObject {
     var entranceTollboothID: String?
     var exitTollboothID: String?
     var year: Int?
@@ -18,7 +18,7 @@ class ETCUsage: NSObject {
     var minute: Int?
     var second: Int?
     var vehicleClassification: VehicleClassification?
-    var paymentAmount: Int?
+    var amount: Int?
 
     var entranceTollbooth: Tollbooth? {
         guard let id = entranceTollboothID else { return nil }
@@ -53,7 +53,7 @@ class ETCUsage: NSObject {
         minute: Int?,
         second: Int?,
         vehicleClassification: VehicleClassification?,
-        paymentAmount: Int?
+        amount: Int?
     ) {
         self.entranceTollboothID = entranceTollboothID
         self.exitTollboothID = exitTollboothID
@@ -64,13 +64,13 @@ class ETCUsage: NSObject {
         self.minute = minute
         self.second = second
         self.vehicleClassification = vehicleClassification
-        self.paymentAmount = paymentAmount
+        self.amount = amount
     }
 
     override func isEqual(_ object: Any?) -> Bool {
-        guard let usage = object as? ETCUsage else { return false }
-        guard date != nil && usage.date != nil else { return false }
-        return date == usage.date
+        guard let payment = object as? ETCPayment else { return false }
+        guard date != nil && payment.date != nil else { return false }
+        return date == payment.date
     }
 }
 
