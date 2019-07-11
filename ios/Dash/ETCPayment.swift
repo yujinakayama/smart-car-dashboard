@@ -9,67 +9,32 @@
 import Foundation
 
 class ETCPayment: NSObject {
-    var entranceTollboothID: String?
-    var exitTollboothID: String?
-    var year: Int?
-    var month: Int?
-    var day: Int?
-    var hour: Int?
-    var minute: Int?
-    var second: Int?
-    var vehicleClassification: VehicleClassification?
-    var amount: Int?
+    var entranceTollboothID: String
+    var exitTollboothID: String
+    var date: Date
+    var vehicleClassification: VehicleClassification
+    var amount: Int
 
-    var entranceTollbooth: Tollbooth? {
-        guard let id = entranceTollboothID else { return nil }
-        return Tollbooth.findTollbooth(id: id)
-    }
+    lazy var entranceTollbooth: Tollbooth? = Tollbooth.findTollbooth(id: entranceTollboothID)
 
-    var exitTollbooth: Tollbooth? {
-        guard let id = exitTollboothID else { return nil }
-        return Tollbooth.findTollbooth(id: id)
-    }
-
-    var date: Date? {
-        var dateComponents = DateComponents()
-        dateComponents.calendar = Calendar(identifier: .gregorian)
-        dateComponents.timeZone = TimeZone(identifier: "Asia/Tokyo")
-        dateComponents.year = year
-        dateComponents.month = month
-        dateComponents.day = day
-        dateComponents.hour = hour
-        dateComponents.minute = minute
-        dateComponents.second = second
-        return dateComponents.date
-    }
+    lazy var exitTollbooth: Tollbooth? = Tollbooth.findTollbooth(id: exitTollboothID)
 
     init(
-        entranceTollboothID: String?,
-        exitTollboothID: String?,
-        year: Int?,
-        month: Int?,
-        day: Int?,
-        hour: Int?,
-        minute: Int?,
-        second: Int?,
-        vehicleClassification: VehicleClassification?,
-        amount: Int?
+        entranceTollboothID: String,
+        exitTollboothID: String,
+        date: Date,
+        vehicleClassification: VehicleClassification,
+        amount: Int
     ) {
         self.entranceTollboothID = entranceTollboothID
         self.exitTollboothID = exitTollboothID
-        self.year = year
-        self.month = month
-        self.day = day
-        self.hour = hour
-        self.minute = minute
-        self.second = second
+        self.date = date
         self.vehicleClassification = vehicleClassification
         self.amount = amount
     }
 
     override func isEqual(_ object: Any?) -> Bool {
         guard let payment = object as? ETCPayment else { return false }
-        guard date != nil && payment.date != nil else { return false }
         return date == payment.date
     }
 }

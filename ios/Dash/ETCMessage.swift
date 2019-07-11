@@ -20,6 +20,13 @@ fileprivate func checksum(of headerAndPayloadBytes: [UInt8]) -> [UInt8] {
     return lowerTwoDigitStringOfSum.map { $0.asciiValue! }
 }
 
+enum ETCMessageError: Error {
+    case unparsableString
+    case unparsableInteger
+    case invalidDate
+    case unknownVehicleClassification
+}
+
 protocol ETCMessageProtocol: CustomDebugStringConvertible {
     var bytes: [UInt8] { get }
     var headerBytes: [UInt8] { get }
@@ -119,14 +126,24 @@ extension ETCMessageFromDeviceProtocol {
         return bytes.first == 0x01
     }
 
-    func extractNumberFromPayload(in range: ClosedRange<Int>? = nil) -> Int? {
-        guard let string = extractStringFromPayload(in: range) else { return nil }
-        return Int(string.trimmingCharacters(in: .whitespaces))
+    func extractIntegerFromPayload(in range: ClosedRange<Int>? = nil) throws -> Int {
+        let string = try extractStringFromPayload(in: range)
+
+        if let integer = Int(string.trimmingCharacters(in: .whitespaces)) {
+            return integer
+        } else {
+            throw ETCMessageError.unparsableInteger
+        }
     }
 
-    func extractStringFromPayload(in range: ClosedRange<Int>? = nil) -> String? {
+    func extractStringFromPayload(in range: ClosedRange<Int>? = nil) throws -> String {
         let targetRange = range ?? 0...(Self.payloadLength - 1)
-        return String(bytes: payloadBytes[targetRange], encoding: .ascii)
+
+        if let string = String(bytes: payloadBytes[targetRange], encoding: .ascii) {
+            return string
+        } else {
+            throw ETCMessageError.unparsableString
+        }
     }
 
     // TODO: Add validation for terminal bytes
@@ -254,33 +271,63 @@ enum ETCMessageFromDevice {
         static let payloadLength = 41
         let data: Data
 
-        var payment: ETCPayment {
-            return ETCPayment(
-                entranceTollboothID: entranceTollboothID,
-                exitTollboothID: exitTollboothID,
-                year: extractNumberFromPayload(in: 18...21),
-                month: extractNumberFromPayload(in: 22...23),
-                day: extractNumberFromPayload(in: 24...25),
-                hour: extractNumberFromPayload(in: 26...27),
-                minute: extractNumberFromPayload(in: 28...29),
-                second: extractNumberFromPayload(in: 30...31),
-                vehicleClassification: extractNumberFromPayload(in: 32...34).map { VehicleClassification(rawValue: $0) } ?? nil,
-                amount: extractNumberFromPayload(in: 35...40)
-            )
+        var payment: ETCPayment? {
+            do {
+                return ETCPayment(
+                    entranceTollboothID: try entranceTollboothID(),
+                    exitTollboothID: try exitTollboothID(),
+                    date: try date(),
+                    vehicleClassification: try vehicleClassification(),
+                    amount: try amount()
+                )
+            } catch {
+                return nil
+            }
         }
 
-        var entranceTollboothID: String? {
-            guard let roadNumber = extractStringFromPayload(in: 4...5) else { return nil }
-            guard let tollboothNumber = extractStringFromPayload(in: 6...8) else { return nil }
+        func entranceTollboothID() throws -> String {
+            let roadNumber = try extractStringFromPayload(in: 4...5)
+            let tollboothNumber = try extractStringFromPayload(in: 6...8)
             return "\(roadNumber)-\(tollboothNumber)"
         }
 
-        var exitTollboothID: String? {
-            guard let roadNumber = extractStringFromPayload(in: 13...14) else { return nil }
-            guard let tollboothNumber = extractStringFromPayload(in: 15...17) else { return nil }
+        func exitTollboothID() throws -> String {
+            let roadNumber = try extractStringFromPayload(in: 13...14)
+            let tollboothNumber = try extractStringFromPayload(in: 15...17)
             return "\(roadNumber)-\(tollboothNumber)"
         }
 
+        func date() throws -> Date {
+            var dateComponents = DateComponents()
+            dateComponents.calendar = Calendar(identifier: .gregorian)
+            dateComponents.timeZone = TimeZone(identifier: "Asia/Tokyo")
+            dateComponents.year = try extractIntegerFromPayload(in: 18...21)
+            dateComponents.month = try extractIntegerFromPayload(in: 22...23)
+            dateComponents.day = try extractIntegerFromPayload(in: 24...25)
+            dateComponents.hour = try extractIntegerFromPayload(in: 26...27)
+            dateComponents.minute = try extractIntegerFromPayload(in: 28...29)
+            dateComponents.second = try extractIntegerFromPayload(in: 30...31)
+
+            if let date = dateComponents.date {
+                return date
+            } else {
+                throw ETCMessageError.invalidDate
+            }
+        }
+
+        func vehicleClassification() throws -> VehicleClassification {
+            let integer = try extractIntegerFromPayload(in: 32...34)
+
+            if let vehicleClassification = VehicleClassification(rawValue: integer) {
+                return vehicleClassification
+            } else {
+                throw ETCMessageError.unknownVehicleClassification
+            }
+        }
+
+        func amount() throws -> Int {
+            return try extractIntegerFromPayload(in: 35...40)
+        }
     }
 
     struct GateEntranceNotification: ETCMessageFromDeviceProtocol, Checksummed {
@@ -301,7 +348,7 @@ enum ETCMessageFromDevice {
         let data: Data
 
         var amount: Int? {
-            return extractNumberFromPayload()
+            return try? extractIntegerFromPayload()
         }
     }
 

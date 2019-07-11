@@ -58,9 +58,9 @@ class ETCPaymentTableViewCell: UITableViewCell {
     }
 
     private func updateViews() {
-        amountLabel.text = payment?.amount.map { ETCPaymentTableViewCell.numberFormatter.string(from: NSNumber(value: $0))! }
+        amountLabel.text = payment.map { ETCPaymentTableViewCell.numberFormatter.string(from: NSNumber(value: $0.amount))! }
 
-        dateLabel.text = payment?.date.map { ETCPaymentTableViewCell.dateFormatter.string(from: $0) }
+        dateLabel.text = payment.map { ETCPaymentTableViewCell.dateFormatter.string(from: $0.date) }
 
         if let entrance = payment?.entranceTollbooth, let exit = payment?.exitTollbooth {
             roadLabel.text = entrance.road.abbreviatedName

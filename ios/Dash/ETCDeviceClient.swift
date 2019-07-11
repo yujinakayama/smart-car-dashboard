@@ -116,16 +116,16 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
             if handshakeStatus == .incomplete {
                 startHandshake()
             }
-        case let deviceNameResponse as ETCMessageFromDevice.DeviceNameResponse:
-            deviceAttributes.deviceName = deviceNameResponse.deviceName
+        case let response as ETCMessageFromDevice.DeviceNameResponse:
+            deviceAttributes.deviceName = response.deviceName
         case is ETCMessageFromDevice.InitialPaymentRecordExistenceResponse:
             try! send(ETCMessageFromClient.initialPaymentRecordRequest)
-        case let paymentRecordResponse as ETCMessageFromDevice.PaymentRecordResponse:
+        case let response as ETCMessageFromDevice.PaymentRecordResponse:
             // TODO: ETCDeviceClient should focus only on communication and should not handle state management.
             // FIXME: Inefficient. Use Set or Core Data.
-            if !deviceAttributes.payments.contains(paymentRecordResponse.payment) {
-                deviceAttributes.payments.append(paymentRecordResponse.payment)
-                deviceAttributes.payments.sort { (a, b) in a.date ?? Date.distantPast > b.date ?? Date.distantPast }
+            if let payment = response.payment, !deviceAttributes.payments.contains(payment) {
+                deviceAttributes.payments.append(payment)
+                deviceAttributes.payments.sort { (a, b) in a.date > b.date }
                 try! send(ETCMessageFromClient.nextPaymentRecordRequest)
             }
         case is ETCMessageFromDevice.CardEjectionNotification:
