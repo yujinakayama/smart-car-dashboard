@@ -8,7 +8,6 @@
 
 import UIKit
 import CoreData
-import Differ
 
 class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, ETCDeviceManagerDelegate, ETCDeviceClientDelegate {
     let persistentContainer = NSPersistentContainer(name: "Dash")

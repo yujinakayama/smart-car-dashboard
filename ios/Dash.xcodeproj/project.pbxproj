@@ -11,7 +11,6 @@
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
 		B942554522B8ED10008B053B /* ETCMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554422B8ED10008B053B /* ETCMessageTests.swift */; };
 		B942554622B8ED32008B053B /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
-		B942554A22B95A4C008B053B /* DifferExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554922B95A4C008B053B /* DifferExtension.swift */; };
 		B942555022BAA5D1008B053B /* UserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554F22BAA5D1008B053B /* UserNotification.swift */; };
 		B95BE8E222B8A8BE004C1CC0 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */; };
 		B95BE8E322B8A8BE004C1CC0 /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */; };
@@ -23,7 +22,6 @@
 		B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E722A9553A00BA08AB /* MockSerialPort.swift */; };
 		B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */; };
 		B9CB7C0D22AD65A40059433E /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB7C0C22AD65A40059433E /* UITableViewCellExtension.swift */; };
-		B9CD1D8D22A51AAD00170082 /* Differ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9CD1D8C22A51AAD00170082 /* Differ.framework */; };
 		B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */; };
 		B9CD1D9222A535A200170082 /* Affirmative.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9CD1D9122A535A200170082 /* Affirmative.wav */; };
 		B9DB8E5522D7A410003E4BD8 /* Dash.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B9DB8E5322D7A410003E4BD8 /* Dash.xcdatamodeld */; };
@@ -57,7 +55,6 @@
 		B90255C622AB9CA7003D91C6 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		B942553C22B8C3E2008B053B /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B942554422B8ED10008B053B /* ETCMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCMessageTests.swift; sourceTree = "<group>"; };
-		B942554922B95A4C008B053B /* DifferExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifferExtension.swift; sourceTree = "<group>"; };
 		B942554F22BAA5D1008B053B /* UserNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotification.swift; sourceTree = "<group>"; };
 		B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCGLogger.framework; path = Carthage/Build/iOS/XCGLogger.framework; sourceTree = "<group>"; };
 		B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjcExceptionBridging.framework; path = Carthage/Build/iOS/ObjcExceptionBridging.framework; sourceTree = "<group>"; };
@@ -68,7 +65,6 @@
 		B99356E722A9553A00BA08AB /* MockSerialPort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSerialPort.swift; sourceTree = "<group>"; };
 		B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCPaymentTableViewCell.swift; sourceTree = "<group>"; };
 		B9CB7C0C22AD65A40059433E /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
-		B9CD1D8C22A51AAD00170082 /* Differ.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Differ.framework; path = Carthage/Build/iOS/Differ.framework; sourceTree = "<group>"; };
 		B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationCenter.swift; sourceTree = "<group>"; };
 		B9CD1D9122A535A200170082 /* Affirmative.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Affirmative.wav; sourceTree = "<group>"; };
 		B9DB8E5422D7A410003E4BD8 /* Dash.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Dash.xcdatamodel; sourceTree = "<group>"; };
@@ -97,7 +93,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B9CD1D8D22A51AAD00170082 /* Differ.framework in Frameworks */,
 				B95BE8E222B8A8BE004C1CC0 /* XCGLogger.framework in Frameworks */,
 				B95BE8E322B8A8BE004C1CC0 /* ObjcExceptionBridging.framework in Frameworks */,
 			);
@@ -116,7 +111,6 @@
 		B9CD1D8B22A51AAD00170082 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B9CD1D8C22A51AAD00170082 /* Differ.framework */,
 				B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */,
 				B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */,
 			);
@@ -171,7 +165,6 @@
 				B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */,
 				B90255C622AB9CA7003D91C6 /* UIViewExtension.swift */,
 				B9CB7C0C22AD65A40059433E /* UITableViewCellExtension.swift */,
-				B942554922B95A4C008B053B /* DifferExtension.swift */,
 				B942553C22B8C3E2008B053B /* Logger.swift */,
 				B9DB8E5322D7A410003E4BD8 /* Dash.xcdatamodeld */,
 				B9DC5B2A229D59BE00B645D5 /* Main.storyboard */,
@@ -333,7 +326,6 @@
 				B9CB7C0D22AD65A40059433E /* UITableViewCellExtension.swift in Sources */,
 				B9DB8E5522D7A410003E4BD8 /* Dash.xcdatamodeld in Sources */,
 				B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */,
-				B942554A22B95A4C008B053B /* DifferExtension.swift in Sources */,
 				B9DC5B3F229D9E4F00B645D5 /* BLERemotePeripheralManager.swift in Sources */,
 				B9DC5B39229D5D8100B645D5 /* ETCDeviceClient.swift in Sources */,
 				B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */,
