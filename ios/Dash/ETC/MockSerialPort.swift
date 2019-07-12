@@ -57,6 +57,8 @@ class MockSerialPort: NSObject, SerialPort {
         case ETCMessageFromClient.handshakeRequest.data:
             simulateReceive(ETCMessageFromDevice.HandshakeAcknowledgement.makeMockMessage())
             simulateReceive(ETCMessageFromDevice.HandshakeRequest.makeMockMessage())
+        case ETCMessageFromClient.cardExistenceRequest.data:
+            simulateReceive(ETCMessageFromDevice.CardExistenceResponse.makeMockMessage())
         case ETCMessageFromClient.initialPaymentRecordRequest.data:
             if paymentRecordPayloadIterator == nil {
                 paymentRecordPayloadIterator = paymentRecordResponsePayloads.makeIterator()
