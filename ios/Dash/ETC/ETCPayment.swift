@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ETCPayment: NSObject {
+struct ETCPayment {
     var amount: Int32
     var date: Date
     var entranceTollboothID: String
@@ -30,11 +30,6 @@ class ETCPayment: NSObject {
         self.entranceTollboothID = entranceTollboothID
         self.exitTollboothID = exitTollboothID
         self.vehicleClassification = vehicleClassification
-    }
-
-    override func isEqual(_ object: Any?) -> Bool {
-        guard let payment = object as? ETCPayment else { return false }
-        return date == payment.date
     }
 }
 
