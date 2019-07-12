@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, ETCDeviceManagerDelegate, ETCDeviceClientDelegate {
-    let persistentContainer = NSPersistentContainer(name: "Dash")
+    let paymentDatabase = ETCPaymentDatabase(name: "Dash")
     var fetchedResultsController: NSFetchedResultsController<ETCPaymentManagedObject>?
 
     var detailNavigationController: UINavigationController!
@@ -30,34 +30,21 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // TODO: Load asynchronously with NSPersistentStoreDescription.shouldAddStoreAsynchronously
-        persistentContainer.loadPersistentStores { (persistentStoreDescription, error) in
+        paymentDatabase.loadPersistantStores { [unowned self] (persistentStoreDescription, error) in
             if let error = error {
                 logger.severe(error)
                 fatalError()
             }
+
+            self.setupFetchedResultsController()
+            self.setupDeviceManager()
         }
-        persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
-
-        let fetchRequest: NSFetchRequest<ETCPaymentManagedObject> = ETCPaymentManagedObject.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-
-        fetchedResultsController = NSFetchedResultsController(
-            fetchRequest: fetchRequest,
-            managedObjectContext: persistentContainer.viewContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil
-        )
-        fetchedResultsController?.delegate = self
-        try! fetchedResultsController?.performFetch()
 
         detailNavigationController = (splitViewController!.viewControllers.last as! UINavigationController)
         detailViewController = (detailNavigationController.topViewController as! ETCPaymentDetailViewController)
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: connectionStatusImageView)
         updateConnectionStatusView()
-
-        deviceManager = ETCDeviceManager(delegate: self)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -65,13 +52,30 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         super.viewWillAppear(animated)
     }
 
-    // MARK: - ETCDeviceManagerDelegate
+    func setupFetchedResultsController() {
+        let fetchRequest = paymentDatabase.makeFetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
 
-    func deviceManager(_ deviceManager: ETCDeviceManager, didUpdateAvailability available: Bool) {
-        if available {
-            deviceManager.startDiscovering()
-        }
+        fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: paymentDatabase.persistentContainer.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+
+        fetchedResultsController!.delegate = self
+
+        try! fetchedResultsController!.performFetch()
+
+        tableView.reloadData()
     }
+
+    func setupDeviceManager() {
+        deviceManager = ETCDeviceManager(delegate: self)
+        deviceManager!.startDiscovering()
+    }
+
+    // MARK: - ETCDeviceManagerDelegate
 
     func deviceManager(_ deviceManager: ETCDeviceManager, didConnectToDevice deviceClient: ETCDeviceClient) {
         self.deviceClient = deviceClient
@@ -83,6 +87,8 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         self.deviceClient = nil
         updateConnectionStatusView()
     }
+
+    // MARK: - ETCDeviceClientDelegate
 
     func deviceClientDidFinishPreparation(_ deviceClient: ETCDeviceClient, error: Error?) {
         updateConnectionStatusView()
@@ -102,11 +108,9 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
             try! deviceClient.send(ETCMessageFromClient.initialPaymentRecordRequest)
         case let paymentRecordResponse as ETCMessageFromDevice.PaymentRecordResponse:
             if let payment = paymentRecordResponse.payment {
-                persistentContainer.performBackgroundTask { (context) in
-                    let fetchRequest: NSFetchRequest<ETCPaymentManagedObject> = ETCPaymentManagedObject.fetchRequest()
-                    fetchRequest.predicate = NSPredicate(format: "date == %@", payment.date as NSDate)
-                    if try! context.count(for: fetchRequest) == 0 {
-                        _ = ETCPaymentManagedObject.insertNewObject(from: payment, into: context)
+                paymentDatabase.performBackgroundTask { [unowned self] (context) in
+                    let managedObject = try! self.paymentDatabase.insert(payment: payment, unlessExistsIn: context)
+                    if managedObject != nil {
                         try! context.save()
                         try! deviceClient.send(ETCMessageFromClient.nextPaymentRecordRequest)
                     }
@@ -160,6 +164,8 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
             })
         }
     }
+
+    // MARK: - NSFetchedResultsControllerDelegate
 
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()

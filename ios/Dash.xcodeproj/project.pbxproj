@@ -24,6 +24,7 @@
 		B9CB7C0D22AD65A40059433E /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB7C0C22AD65A40059433E /* UITableViewCellExtension.swift */; };
 		B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */; };
 		B9CD1D9222A535A200170082 /* Affirmative.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9CD1D9122A535A200170082 /* Affirmative.wav */; };
+		B9CEA76622D89A400055C9A3 /* ETCPaymentDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76522D89A400055C9A3 /* ETCPaymentDatabase.swift */; };
 		B9DB8E5522D7A410003E4BD8 /* Dash.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B9DB8E5322D7A410003E4BD8 /* Dash.xcdatamodeld */; };
 		B9DB8E5922D7A481003E4BD8 /* ETCPaymentManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DB8E5722D7A481003E4BD8 /* ETCPaymentManagedObject.swift */; };
 		B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B24229D59BE00B645D5 /* AppDelegate.swift */; };
@@ -67,6 +68,7 @@
 		B9CB7C0C22AD65A40059433E /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
 		B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationCenter.swift; sourceTree = "<group>"; };
 		B9CD1D9122A535A200170082 /* Affirmative.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Affirmative.wav; sourceTree = "<group>"; };
+		B9CEA76522D89A400055C9A3 /* ETCPaymentDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentDatabase.swift; sourceTree = "<group>"; };
 		B9DB8E5422D7A410003E4BD8 /* Dash.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Dash.xcdatamodel; sourceTree = "<group>"; };
 		B9DB8E5722D7A481003E4BD8 /* ETCPaymentManagedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentManagedObject.swift; sourceTree = "<group>"; };
 		B9DC5B21229D59BE00B645D5 /* Dash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dash.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -157,6 +159,7 @@
 				B99356E522A9525C00BA08AB /* ETCMessage.swift */,
 				B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */,
 				B9DB8E5722D7A481003E4BD8 /* ETCPaymentManagedObject.swift */,
+				B9CEA76522D89A400055C9A3 /* ETCPaymentDatabase.swift */,
 				B9DC5B49229EDA0000B645D5 /* SerialPort.swift */,
 				B99356E322A94D6900BA08AB /* BLESerialPort.swift */,
 				B99356E722A9553A00BA08AB /* MockSerialPort.swift */,
@@ -319,6 +322,7 @@
 				B9DC5B46229EB8B200B645D5 /* ETCDeviceManager.swift in Sources */,
 				B9E96CC822A4EF1300C2E009 /* ETCPayment.swift in Sources */,
 				B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */,
+				B9CEA76622D89A400055C9A3 /* ETCPaymentDatabase.swift in Sources */,
 				B9DC5B29229D59BE00B645D5 /* ETCPaymentDetailViewController.swift in Sources */,
 				B90255C722AB9CA7003D91C6 /* UIViewExtension.swift in Sources */,
 				B942555022BAA5D1008B053B /* UserNotification.swift in Sources */,
