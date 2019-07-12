@@ -20,7 +20,7 @@ class ETCPaymentManagedObject: NSManagedObject {
         managedObject.date = payment.date as NSDate
         managedObject.entranceTollboothID = payment.entranceTollboothID
         managedObject.exitTollboothID = payment.exitTollboothID
-        managedObject.vehicleClassification = payment.vehicleClassification.rawValue
+        managedObject.vehicleClassification = payment.vehicleClassification
         return managedObject
     }
 
@@ -36,7 +36,26 @@ class ETCPaymentManagedObject: NSManagedObject {
     @NSManaged var date: NSDate
     @NSManaged var entranceTollboothID: String
     @NSManaged var exitTollboothID: String
-    @NSManaged var vehicleClassification: Int16
+
+    var vehicleClassification: VehicleClassification {
+        get {
+            return VehicleClassification(rawValue: vehicleClassificationRawValue)!
+        }
+
+        set {
+            vehicleClassificationRawValue = newValue.rawValue
+        }
+    }
+
+    private var vehicleClassificationRawValue: Int16 {
+        get {
+            return primitiveValue(forKey: "vehicleClassification") as! Int16
+        }
+
+        set {
+            setPrimitiveValue(newValue, forKey: "vehicleClassification")
+        }
+    }
 
     lazy var entranceTollbooth: Tollbooth? = Tollbooth.findTollbooth(id: entranceTollboothID)
     lazy var exitTollbooth: Tollbooth? = Tollbooth.findTollbooth(id: exitTollboothID)
