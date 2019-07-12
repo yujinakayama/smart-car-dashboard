@@ -30,6 +30,8 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
         return serialPort.isAvailable && handshakeStatus == .complete
     }
 
+    var isCardInserted = false
+
     private var handshakeStatus = ETCDeviceClientHandshakeStatus.incomplete
     private let handshakeTimeoutTimeInterval: TimeInterval = 1
     private var handshakeTimeoutTimer: Timer?
@@ -125,9 +127,13 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
             // the device sends us a handshake request without asking.
             handshakeStatus = .incomplete
         case is ETCMessageFromDevice.CardEjectionNotification:
+            isCardInserted = false
             delegate?.deviceClientDidDetectCardEjection(self)
         case is ETCMessageFromDevice.CardExistenceResponse:
+            isCardInserted = true
             delegate?.deviceClientDidDetectCardInsertion(self)
+        case is ETCMessageFromDevice.CardNonExistenceResponse:
+            isCardInserted = false
         case is ETCMessageFromDevice.InitialPaymentRecordExistenceResponse:
             try! send(ETCMessageFromClient.initialPaymentRecordRequest)
         default:

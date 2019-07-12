@@ -24,6 +24,15 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         return view
     }()
 
+    lazy var cardStatusImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "card")
+        view.contentMode = .scaleAspectFit
+        view.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        view.widthAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        return view
+    }()
+
     var deviceManager: ETCDeviceManager?
     var deviceClient: ETCDeviceClient?
 
@@ -43,8 +52,13 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         detailNavigationController = (splitViewController!.viewControllers.last as! UINavigationController)
         detailViewController = (detailNavigationController.topViewController as! ETCPaymentDetailViewController)
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: connectionStatusImageView)
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(customView: connectionStatusImageView),
+            UIBarButtonItem(customView: cardStatusImageView)
+        ]
+
         updateConnectionStatusView()
+        updateCardStatusView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -86,6 +100,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     func deviceManager(_ deviceManager: ETCDeviceManager, didDisconnectToDevice deviceClient: ETCDeviceClient) {
         self.deviceClient = nil
         updateConnectionStatusView()
+        updateCardStatusView()
     }
 
     // MARK: - ETCDeviceClientDelegate
@@ -95,10 +110,12 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     }
 
     func deviceClientDidDetectCardInsertion(_ deviceClient: ETCDeviceClient) {
+        updateCardStatusView()
         try! deviceClient.send(ETCMessageFromClient.initialPaymentRecordRequest)
     }
 
     func deviceClientDidDetectCardEjection(_ deviceClient: ETCDeviceClient) {
+        updateCardStatusView()
     }
 
     func deviceClient(_ deviceClient: ETCDeviceClient, didReceiveMessage message: ETCMessageFromDeviceProtocol) {
@@ -134,6 +151,14 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         } else {
             connectionStatusImageView.image = UIImage(named: "bolt-slash")
             connectionStatusImageView.tintColor = UIColor.lightGray
+        }
+    }
+
+    func updateCardStatusView() {
+        if deviceClient?.isCardInserted == true {
+            cardStatusImageView.tintColor = UIColor(hue: 263 / 360, saturation: 0.8, brightness: 1, alpha: 1)
+        } else {
+            cardStatusImageView.tintColor = UIColor.lightGray
         }
     }
 
