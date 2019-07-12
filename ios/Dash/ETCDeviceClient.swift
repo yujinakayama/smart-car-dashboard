@@ -19,18 +19,10 @@ enum ETCDeviceClientHandshakeStatus {
     case complete
 }
 
-// Using NSObject intead of struct for KVO
-class ETCDeviceAttributes: NSObject {
-    @objc dynamic var deviceName: String?
-    @objc dynamic var payments: [ETCPayment] = []
-}
-
 class ETCDeviceClient: NSObject, SerialPortDelegate {
     let serialPort: SerialPort
 
     weak var delegate: ETCDeviceClientDelegate?
-
-    let deviceAttributes = ETCDeviceAttributes()
 
     var isAvailable: Bool {
         return serialPort.isAvailable && handshakeStatus == .complete
@@ -116,20 +108,8 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
             if handshakeStatus == .incomplete {
                 startHandshake()
             }
-        case let response as ETCMessageFromDevice.DeviceNameResponse:
-            deviceAttributes.deviceName = response.deviceName
         case is ETCMessageFromDevice.InitialPaymentRecordExistenceResponse:
             try! send(ETCMessageFromClient.initialPaymentRecordRequest)
-        case let response as ETCMessageFromDevice.PaymentRecordResponse:
-            // TODO: ETCDeviceClient should focus only on communication and should not handle state management.
-            // FIXME: Inefficient. Use Set or Core Data.
-            if let payment = response.payment, !deviceAttributes.payments.contains(payment) {
-                deviceAttributes.payments.append(payment)
-                deviceAttributes.payments.sort { (a, b) in a.date > b.date }
-                try! send(ETCMessageFromClient.nextPaymentRecordRequest)
-            }
-        case is ETCMessageFromDevice.CardEjectionNotification:
-            deviceAttributes.payments.removeAll()
         default:
             break
         }

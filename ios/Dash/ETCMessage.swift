@@ -274,11 +274,11 @@ enum ETCMessageFromDevice {
         var payment: ETCPayment? {
             do {
                 return ETCPayment(
+                    amount: try amount(),
+                    date: try date(),
                     entranceTollboothID: try entranceTollboothID(),
                     exitTollboothID: try exitTollboothID(),
-                    date: try date(),
-                    vehicleClassification: try vehicleClassification(),
-                    amount: try amount()
+                    vehicleClassification: try vehicleClassification()
                 )
             } catch {
                 return nil
@@ -318,15 +318,16 @@ enum ETCMessageFromDevice {
         func vehicleClassification() throws -> VehicleClassification {
             let integer = try extractIntegerFromPayload(in: 32...34)
 
-            if let vehicleClassification = VehicleClassification(rawValue: integer) {
+            if let vehicleClassification = VehicleClassification(rawValue: Int16(integer)) {
                 return vehicleClassification
             } else {
                 throw ETCMessageError.unknownVehicleClassification
             }
         }
 
-        func amount() throws -> Int {
-            return try extractIntegerFromPayload(in: 35...40)
+        func amount() throws -> Int32 {
+            let integer = try extractIntegerFromPayload(in: 35...40)
+            return Int32(integer)
         }
     }
 
