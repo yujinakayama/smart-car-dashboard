@@ -9,28 +9,27 @@
 import Foundation
 
 class ETCPayment: NSObject {
+    var amount: Int32
+    var date: Date
     var entranceTollboothID: String
     var exitTollboothID: String
-    var date: Date
     var vehicleClassification: VehicleClassification
-    var amount: Int
 
     lazy var entranceTollbooth: Tollbooth? = Tollbooth.findTollbooth(id: entranceTollboothID)
-
     lazy var exitTollbooth: Tollbooth? = Tollbooth.findTollbooth(id: exitTollboothID)
 
     init(
+        amount: Int32,
+        date: Date,
         entranceTollboothID: String,
         exitTollboothID: String,
-        date: Date,
-        vehicleClassification: VehicleClassification,
-        amount: Int
+        vehicleClassification: VehicleClassification
     ) {
+        self.amount = amount
+        self.date = date
         self.entranceTollboothID = entranceTollboothID
         self.exitTollboothID = exitTollboothID
-        self.date = date
         self.vehicleClassification = vehicleClassification
-        self.amount = amount
     }
 
     override func isEqual(_ object: Any?) -> Bool {
@@ -132,7 +131,7 @@ struct Road: Equatable {
 }
 
 // https://global.c-nexco.co.jp/en/navi/classifying/
-enum VehicleClassification: Int {
+enum VehicleClassification: Int16 {
     case light      = 5
     case standard   = 1
     case midSize    = 4

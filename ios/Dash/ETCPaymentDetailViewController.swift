@@ -12,7 +12,7 @@ import MapKit
 class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
 
-    var payment: ETCPayment? {
+    var payment: ETCPaymentManagedObject? {
         didSet {
             configureView()
         }

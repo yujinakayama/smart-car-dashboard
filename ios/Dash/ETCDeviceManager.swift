@@ -9,7 +9,6 @@
 import Foundation
 
 protocol ETCDeviceManagerDelegate: NSObjectProtocol {
-    func deviceManager(_ deviceManager: ETCDeviceManager, didUpdateAvailability available: Bool)
     func deviceManager(_ deviceManager: ETCDeviceManager, didConnectToDevice deviceClient: ETCDeviceClient)
     func deviceManager(_ deviceManager: ETCDeviceManager, didDisconnectToDevice deviceClient: ETCDeviceClient)
 }
@@ -28,15 +27,6 @@ class ETCDeviceManager: NSObject, BLERemotePeripheralManagerDelegate {
     init(delegate: ETCDeviceManagerDelegate) {
         self.delegate = delegate
         super.init()
-
-        #if targetEnvironment(simulator)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-            guard let self = self else { return }
-            delegate.deviceManager(self, didUpdateAvailability: true)
-        }
-        #else
-        _ = peripheralManager
-        #endif
     }
 
     func startDiscovering() {
@@ -48,7 +38,7 @@ class ETCDeviceManager: NSObject, BLERemotePeripheralManagerDelegate {
             self.delegate?.deviceManager(self, didConnectToDevice: deviceClient)
         }
         #else
-        peripheralManager.startDiscovering()
+        _ = peripheralManager
         #endif
     }
 
@@ -56,7 +46,10 @@ class ETCDeviceManager: NSObject, BLERemotePeripheralManagerDelegate {
 
     func peripheralManager(_ peripheralManager: BLERemotePeripheralManager, didUpdateAvailability available: Bool) {
         logger.info(available)
-        delegate?.deviceManager(self, didUpdateAvailability: available)
+
+        if (available) {
+            peripheralManager.startDiscovering()
+        }
     }
 
     func peripheralManager(_ peripheralManager: BLERemotePeripheralManager, didDiscoverPeripheral peripheral: BLERemotePeripheral) {

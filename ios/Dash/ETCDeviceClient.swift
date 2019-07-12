@@ -10,6 +10,8 @@ import Foundation
 
 protocol ETCDeviceClientDelegate: NSObjectProtocol {
     func deviceClientDidFinishPreparation(_ deviceClient: ETCDeviceClient, error: Error?)
+    func deviceClientDidDetectCardInsertion(_ deviceClient: ETCDeviceClient)
+    func deviceClientDidDetectCardEjection(_ deviceClient: ETCDeviceClient)
     func deviceClient(_ deviceClient: ETCDeviceClient, didReceiveMessage message: ETCMessageFromDeviceProtocol)
 }
 
@@ -19,26 +21,22 @@ enum ETCDeviceClientHandshakeStatus {
     case complete
 }
 
-// Using NSObject intead of struct for KVO
-class ETCDeviceAttributes: NSObject {
-    @objc dynamic var deviceName: String?
-    @objc dynamic var payments: [ETCPayment] = []
-}
-
 class ETCDeviceClient: NSObject, SerialPortDelegate {
     let serialPort: SerialPort
 
     weak var delegate: ETCDeviceClientDelegate?
 
-    let deviceAttributes = ETCDeviceAttributes()
-
     var isAvailable: Bool {
         return serialPort.isAvailable && handshakeStatus == .complete
     }
 
+    var isCardInserted = false
+
     private var handshakeStatus = ETCDeviceClientHandshakeStatus.incomplete
     private let handshakeTimeoutTimeInterval: TimeInterval = 1
     private var handshakeTimeoutTimer: Timer?
+
+    private var hasFinishedPreparationOnce = false
 
     init(serialPort: SerialPort) {
         self.serialPort = serialPort
@@ -71,10 +69,17 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
 
     private func completeHandshake() {
         logger.info()
+
         handshakeStatus = .complete
         handshakeTimeoutTimer?.invalidate()
         handshakeTimeoutTimer = nil
-        delegate?.deviceClientDidFinishPreparation(self, error: nil)
+
+        if (!hasFinishedPreparationOnce) {
+            delegate?.deviceClientDidFinishPreparation(self, error: nil)
+            hasFinishedPreparationOnce = true
+        }
+
+        try! send(ETCMessageFromClient.cardExistenceRequest)
     }
 
     func send(_ message: ETCMessageFromClientProtocol) throws {
@@ -116,20 +121,21 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
             if handshakeStatus == .incomplete {
                 startHandshake()
             }
-        case let response as ETCMessageFromDevice.DeviceNameResponse:
-            deviceAttributes.deviceName = response.deviceName
+        case is ETCMessageFromDevice.CardInsertionNotification:
+            // When a card is inserted, the device requires handshake again.
+            // However, in this case, we don't need to request handshake from ourselves;
+            // the device sends us a handshake request without asking.
+            handshakeStatus = .incomplete
+        case is ETCMessageFromDevice.CardEjectionNotification:
+            isCardInserted = false
+            delegate?.deviceClientDidDetectCardEjection(self)
+        case is ETCMessageFromDevice.CardExistenceResponse:
+            isCardInserted = true
+            delegate?.deviceClientDidDetectCardInsertion(self)
+        case is ETCMessageFromDevice.CardNonExistenceResponse:
+            isCardInserted = false
         case is ETCMessageFromDevice.InitialPaymentRecordExistenceResponse:
             try! send(ETCMessageFromClient.initialPaymentRecordRequest)
-        case let response as ETCMessageFromDevice.PaymentRecordResponse:
-            // TODO: ETCDeviceClient should focus only on communication and should not handle state management.
-            // FIXME: Inefficient. Use Set or Core Data.
-            if let payment = response.payment, !deviceAttributes.payments.contains(payment) {
-                deviceAttributes.payments.append(payment)
-                deviceAttributes.payments.sort { (a, b) in a.date > b.date }
-                try! send(ETCMessageFromClient.nextPaymentRecordRequest)
-            }
-        case is ETCMessageFromDevice.CardEjectionNotification:
-            deviceAttributes.payments.removeAll()
         default:
             break
         }
@@ -137,7 +143,7 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
         if message.requiresAcknowledgement {
             try! send(ETCMessageFromClient.acknowledgement)
 
-            if handshakeStatus == .trying && message is ETCMessageFromDevice.HandshakeRequest {
+            if handshakeStatus != .complete && message is ETCMessageFromDevice.HandshakeRequest {
                 completeHandshake()
             }
         }

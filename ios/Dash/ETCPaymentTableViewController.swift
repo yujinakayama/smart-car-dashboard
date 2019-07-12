@@ -7,9 +7,12 @@
 //
 
 import UIKit
-import Differ
+import CoreData
 
-class ETCPaymentTableViewController: UITableViewController, ETCDeviceManagerDelegate, ETCDeviceClientDelegate {
+class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, ETCDeviceManagerDelegate, ETCDeviceClientDelegate {
+    let paymentDatabase = ETCPaymentDatabase(name: "Dash")
+    var fetchedResultsController: NSFetchedResultsController<ETCPaymentManagedObject>?
+
     var detailNavigationController: UINavigationController!
     var detailViewController: ETCPaymentDetailViewController!
 
@@ -21,20 +24,41 @@ class ETCPaymentTableViewController: UITableViewController, ETCDeviceManagerDele
         return view
     }()
 
+    lazy var cardStatusImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "card")
+        view.contentMode = .scaleAspectFit
+        view.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        view.widthAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        return view
+    }()
+
     var deviceManager: ETCDeviceManager?
     var deviceClient: ETCDeviceClient?
-    var observations: [NSKeyValueObservation] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        paymentDatabase.loadPersistantStores { [unowned self] (persistentStoreDescription, error) in
+            if let error = error {
+                logger.severe(error)
+                fatalError()
+            }
+
+            self.setupFetchedResultsController()
+            self.setupDeviceManager()
+        }
+
         detailNavigationController = (splitViewController!.viewControllers.last as! UINavigationController)
         detailViewController = (detailNavigationController.topViewController as! ETCPaymentDetailViewController)
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: connectionStatusImageView)
-        updateConnectionStatusView()
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(customView: connectionStatusImageView),
+            UIBarButtonItem(customView: cardStatusImageView)
+        ]
 
-        deviceManager = ETCDeviceManager(delegate: self)
+        updateConnectionStatusView()
+        updateCardStatusView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -42,30 +66,56 @@ class ETCPaymentTableViewController: UITableViewController, ETCDeviceManagerDele
         super.viewWillAppear(animated)
     }
 
-    // MARK: - ETCDeviceManagerDelegate
+    func setupFetchedResultsController() {
+        let fetchRequest = paymentDatabase.makeFetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
 
-    func deviceManager(_ deviceManager: ETCDeviceManager, didUpdateAvailability available: Bool) {
-        if available {
-            deviceManager.startDiscovering()
-        }
+        fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: paymentDatabase.persistentContainer.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+
+        fetchedResultsController!.delegate = self
+
+        try! fetchedResultsController!.performFetch()
+
+        tableView.reloadData()
     }
+
+    func setupDeviceManager() {
+        deviceManager = ETCDeviceManager(delegate: self)
+        deviceManager!.startDiscovering()
+    }
+
+    // MARK: - ETCDeviceManagerDelegate
 
     func deviceManager(_ deviceManager: ETCDeviceManager, didConnectToDevice deviceClient: ETCDeviceClient) {
         self.deviceClient = deviceClient
         deviceClient.delegate = self
-        startObservingDeviceAttributes(deviceClient.deviceAttributes)
         deviceClient.startPreparation()
     }
 
     func deviceManager(_ deviceManager: ETCDeviceManager, didDisconnectToDevice deviceClient: ETCDeviceClient) {
         self.deviceClient = nil
         updateConnectionStatusView()
-        tableView.reloadData() // TODO: Persist payment history in Core Data
+        updateCardStatusView()
     }
+
+    // MARK: - ETCDeviceClientDelegate
 
     func deviceClientDidFinishPreparation(_ deviceClient: ETCDeviceClient, error: Error?) {
         updateConnectionStatusView()
+    }
+
+    func deviceClientDidDetectCardInsertion(_ deviceClient: ETCDeviceClient) {
+        updateCardStatusView()
         try! deviceClient.send(ETCMessageFromClient.initialPaymentRecordRequest)
+    }
+
+    func deviceClientDidDetectCardEjection(_ deviceClient: ETCDeviceClient) {
+        updateCardStatusView()
     }
 
     func deviceClient(_ deviceClient: ETCDeviceClient, didReceiveMessage message: ETCMessageFromDeviceProtocol) {
@@ -79,23 +129,19 @@ class ETCPaymentTableViewController: UITableViewController, ETCDeviceManagerDele
                 UserNotificationCenter.shared.requestDelivery(PaymentNotification(amount: amount))
             }
             try! deviceClient.send(ETCMessageFromClient.initialPaymentRecordRequest)
-        case is ETCMessageFromDevice.CardInsertionNotification:
-            try! deviceClient.send(ETCMessageFromClient.initialPaymentRecordRequest)
+        case let paymentRecordResponse as ETCMessageFromDevice.PaymentRecordResponse:
+            if let payment = paymentRecordResponse.payment {
+                paymentDatabase.performBackgroundTask { [unowned self] (context) in
+                    let managedObject = try! self.paymentDatabase.insert(payment: payment, unlessExistsIn: context)
+                    if managedObject != nil {
+                        try! context.save()
+                        try! deviceClient.send(ETCMessageFromClient.nextPaymentRecordRequest)
+                    }
+                }
+            }
         default:
             break
         }
-    }
-
-    func startObservingDeviceAttributes(_ attributes: ETCDeviceAttributes) {
-        let observation = attributes.observe(\.payments, options: [.old, .new]) { [unowned self] (attributes, change) in
-            self.tableView.animateRowChangesWithoutMoves(
-                oldData: change.oldValue!,
-                newData: change.newValue!,
-                deletionAnimation: .fade,
-                insertionAnimation: .left
-            )
-        }
-        observations.append(observation)
     }
 
     func updateConnectionStatusView() {
@@ -108,26 +154,34 @@ class ETCPaymentTableViewController: UITableViewController, ETCDeviceManagerDele
         }
     }
 
+    func updateCardStatusView() {
+        if deviceClient?.isCardInserted == true {
+            cardStatusImageView.tintColor = UIColor(hue: 263 / 360, saturation: 0.8, brightness: 1, alpha: 1)
+        } else {
+            cardStatusImageView.tintColor = UIColor.lightGray
+        }
+    }
+
     // MARK: - Table View
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return fetchedResultsController?.sections?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return deviceClient?.deviceAttributes.payments.count ?? 0
+        return fetchedResultsController?.sections?[section].numberOfObjects ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ETCPaymentTableViewCell
 
-        let payment = deviceClient!.deviceAttributes.payments[indexPath.row]
+        let payment = fetchedResultsController?.object(at: indexPath)
         cell.payment = payment
         return cell
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let payment = deviceClient!.deviceAttributes.payments[indexPath.row]
+        let payment = fetchedResultsController?.object(at: indexPath)
         detailViewController!.payment = payment
         showDetailViewController(detailNavigationController, sender: self)
 
@@ -138,6 +192,46 @@ class ETCPaymentTableViewController: UITableViewController, ETCDeviceManagerDele
                 self.splitViewController!.preferredDisplayMode = .automatic
             })
         }
+    }
+
+    // MARK: - NSFetchedResultsControllerDelegate
+
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        switch type {
+        case .insert:
+            tableView.insertSections(IndexSet(integer: sectionIndex), with: .left)
+        case .delete:
+            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+        case .move:
+            break
+        case .update:
+            break
+        @unknown default:
+            break
+        }
+    }
+
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .left)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+        case .update:
+            tableView.reloadRows(at: [indexPath!], with: .fade)
+        case .move:
+            tableView.moveRow(at: indexPath!, to: newIndexPath!)
+        @unknown default:
+            break
+        }
+    }
+
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
     }
 }
 
