@@ -178,6 +178,7 @@ extension Checksummed {
 enum ETCMessageFromClient {
     static let handshakeRequest = PlainMessage(headerBytes: [0xFA])
     static let acknowledgement = ChecksummedMessage(headerBytes: [0x02, 0xC0])
+    static let cardExistenceRequest = ChecksummedMessage(headerBytes: [0x01, 0xC6, byte(of: "G")])
     static let deviceNameRequest = ChecksummedMessage(headerBytes: [0x01, 0xC6, byte(of: "K")])
     static let initialPaymentRecordRequest = ChecksummedMessage(headerBytes: [0x01, 0xC6, byte(of: "L")])
     static let nextPaymentRecordRequest = ChecksummedMessage(headerBytes: [0x01, 0xC6, byte(of: "M")])
@@ -208,6 +209,8 @@ enum ETCMessageFromDevice {
         HeartBeat.self,
         HandshakeAcknowledgement.self,
         HandshakeRequest.self,
+        CardExistenceResponse.self,
+        CardNonExistenceResponse.self,
         DeviceNameResponse.self,
         InitialPaymentRecordExistenceResponse.self,
         InitialPaymentRecordNonExistenceResponse.self,
@@ -234,6 +237,18 @@ enum ETCMessageFromDevice {
 
     struct HandshakeRequest: ETCMessageFromDeviceProtocol, Checksummed {
         static let headerBytes: [UInt8] = [0x01, 0xC2, byte(of: "0")]
+        static let payloadLength = 0
+        let data: Data
+    }
+
+    struct CardExistenceResponse: ETCMessageFromDeviceProtocol, Checksummed {
+        static let headerBytes: [UInt8] = [0x02, 0xCD, 0x01]
+        static let payloadLength = 0
+        let data: Data
+    }
+
+    struct CardNonExistenceResponse: ETCMessageFromDeviceProtocol, Checksummed {
+        static let headerBytes: [UInt8] = [0x02, 0xCD, 0x00]
         static let payloadLength = 0
         let data: Data
     }

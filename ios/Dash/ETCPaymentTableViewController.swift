@@ -92,7 +92,13 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
 
     func deviceClientDidFinishPreparation(_ deviceClient: ETCDeviceClient, error: Error?) {
         updateConnectionStatusView()
+    }
+
+    func deviceClientDidDetectCardInsertion(_ deviceClient: ETCDeviceClient) {
         try! deviceClient.send(ETCMessageFromClient.initialPaymentRecordRequest)
+    }
+
+    func deviceClientDidDetectCardEjection(_ deviceClient: ETCDeviceClient) {
     }
 
     func deviceClient(_ deviceClient: ETCDeviceClient, didReceiveMessage message: ETCMessageFromDeviceProtocol) {
@@ -116,8 +122,6 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
                     }
                 }
             }
-        case is ETCMessageFromDevice.CardInsertionNotification:
-            try! deviceClient.send(ETCMessageFromClient.initialPaymentRecordRequest)
         default:
             break
         }
