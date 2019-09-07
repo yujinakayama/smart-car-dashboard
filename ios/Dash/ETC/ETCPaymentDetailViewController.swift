@@ -21,7 +21,7 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
     var entranceMapItem: MKMapItem?
     var exitMapItem: MKMapItem?
 
-    let activityIndicator = UIActivityIndicatorView(style: .gray)
+    let activityIndicator = UIActivityIndicatorView(style: .medium)
 
     let annotationViewIdentifier = "AnnotationView"
     var hasInitiallyZoomedToUserLocation = false
