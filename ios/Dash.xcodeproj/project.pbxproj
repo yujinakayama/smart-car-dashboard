@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B90255C722AB9CA7003D91C6 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90255C622AB9CA7003D91C6 /* UIViewExtension.swift */; };
+		B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93321ED2323C9D500BFAB21 /* BorderedView.swift */; };
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
 		B942554522B8ED10008B053B /* ETCMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554422B8ED10008B053B /* ETCMessageTests.swift */; };
 		B942555022BAA5D1008B053B /* UserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554F22BAA5D1008B053B /* UserNotification.swift */; };
@@ -52,7 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		B90255C622AB9CA7003D91C6 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		B93321ED2323C9D500BFAB21 /* BorderedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedView.swift; sourceTree = "<group>"; };
 		B942553C22B8C3E2008B053B /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B942554422B8ED10008B053B /* ETCMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCMessageTests.swift; sourceTree = "<group>"; };
 		B942554F22BAA5D1008B053B /* UserNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotification.swift; sourceTree = "<group>"; };
@@ -152,7 +152,6 @@
 		B9CEA76922D8F1F50055C9A3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				B90255C622AB9CA7003D91C6 /* UIViewExtension.swift */,
 				B9CB7C0C22AD65A40059433E /* UITableViewCellExtension.swift */,
 			);
 			path = Extensions;
@@ -194,6 +193,7 @@
 				B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */,
 				B942554F22BAA5D1008B053B /* UserNotification.swift */,
 				B942553C22B8C3E2008B053B /* Logger.swift */,
+				B93321ED2323C9D500BFAB21 /* BorderedView.swift */,
 				B9CEA76922D8F1F50055C9A3 /* Extensions */,
 				B9CEA76A22D8F2380055C9A3 /* Storyboards */,
 				B9CD1D9322A535A900170082 /* Sounds */,
@@ -349,7 +349,7 @@
 				B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */,
 				B9CEA76622D89A400055C9A3 /* ETCPaymentDatabase.swift in Sources */,
 				B9DC5B29229D59BE00B645D5 /* ETCPaymentDetailViewController.swift in Sources */,
-				B90255C722AB9CA7003D91C6 /* UIViewExtension.swift in Sources */,
+				B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */,
 				B942555022BAA5D1008B053B /* UserNotification.swift in Sources */,
 				B9DC5B27229D59BE00B645D5 /* ETCPaymentTableViewController.swift in Sources */,
 				B9CB7C0D22AD65A40059433E /* UITableViewCellExtension.swift in Sources */,
