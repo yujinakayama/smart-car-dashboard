@@ -13,8 +13,11 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     let paymentDatabase = ETCPaymentDatabase(name: "Dash")
     var fetchedResultsController: NSFetchedResultsController<ETCPaymentManagedObject>?
 
-    var detailNavigationController: UINavigationController!
-    var detailViewController: ETCPaymentDetailViewController!
+    var detailViewController: ETCPaymentDetailViewController?
+
+    var detailNavigationController: UINavigationController? {
+        return detailViewController?.navigationController
+    }
 
     lazy var connectionStatusImageView: UIImageView = {
         let view = UIImageView()
@@ -49,8 +52,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
             self.setupDeviceManager()
         }
 
-        detailNavigationController = (splitViewController!.viewControllers.last as! UINavigationController)
-        detailViewController = (detailNavigationController.topViewController as! ETCPaymentDetailViewController)
+        assignDetailViewControllerIfExists()
 
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(customView: connectionStatusImageView),
@@ -87,6 +89,11 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     func setupDeviceManager() {
         deviceManager = ETCDeviceManager(delegate: self)
         deviceManager!.startDiscovering()
+    }
+
+    func assignDetailViewControllerIfExists() {
+        guard let navigationController = splitViewController!.viewControllers.last as? UINavigationController else { return }
+        detailViewController = navigationController.topViewController as? ETCPaymentDetailViewController
     }
 
     // MARK: - ETCDeviceManagerDelegate
@@ -162,6 +169,46 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         }
     }
 
+    // MARK: - Segues
+
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier == "showDetail" {
+            if detailNavigationController == nil {
+                return true
+            } else {
+                if let indexPath = tableView.indexPathForSelectedRow {
+                    let payment = fetchedResultsController?.object(at: indexPath)
+                    showPayment(payment)
+                    showDetailViewController(detailNavigationController!, sender: self)
+                }
+                return false
+            }
+        } else {
+            return true
+        }
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetail", let indexPath = tableView.indexPathForSelectedRow {
+            let navigationController = segue.destination as! UINavigationController
+            detailViewController = (navigationController.topViewController as! ETCPaymentDetailViewController)
+            let payment = fetchedResultsController?.object(at: indexPath)
+            showPayment(payment)
+        }
+    }
+
+    func showPayment(_ payment: ETCPaymentManagedObject?) {
+        detailViewController?.payment = payment
+
+        if splitViewController!.displayMode == .primaryOverlay {
+            UIView.animate(withDuration: 0.25, animations: { [unowned self] in
+                self.splitViewController!.preferredDisplayMode = .primaryHidden
+            }, completion: { (completed) in
+                self.splitViewController!.preferredDisplayMode = .automatic
+            })
+        }
+    }
+
     // MARK: - Table View
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -178,20 +225,6 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         let payment = fetchedResultsController?.object(at: indexPath)
         cell.payment = payment
         return cell
-    }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let payment = fetchedResultsController?.object(at: indexPath)
-        detailViewController!.payment = payment
-        showDetailViewController(detailNavigationController, sender: self)
-
-        if splitViewController!.displayMode == .primaryOverlay {
-            UIView.animate(withDuration: 0.25, animations: { [unowned self] in
-                self.splitViewController!.preferredDisplayMode = .primaryHidden
-            }, completion: { (completed) in
-                self.splitViewController!.preferredDisplayMode = .automatic
-            })
-        }
     }
 
     // MARK: - NSFetchedResultsControllerDelegate
