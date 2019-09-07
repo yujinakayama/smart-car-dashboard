@@ -10,17 +10,21 @@ import XCTest
 
 class ETCPaymentTests: XCTestCase {
     func testPayment() {
-        let payment =  ETCPayment(
+        var dateComponents = DateComponents()
+        dateComponents.calendar = Calendar(identifier: .gregorian)
+        dateComponents.year = 2019
+        dateComponents.month = 5
+        dateComponents.day = 31
+        dateComponents.hour = 1
+        dateComponents.minute = 23
+        dateComponents.second = 56
+
+        var payment = ETCPayment(
+            amount: 650,
+            date: dateComponents.date!,
             entranceTollboothID: "12-137",
             exitTollboothID: "12-585",
-            year: 2019,
-            month: 5,
-            day: 31,
-            hour: 1,
-            minute: 23,
-            second: 56,
-            vehicleClassification: VehicleClassification(rawValue: 1),
-            amount: 650
+            vehicleClassification: VehicleClassification(rawValue: 1)!
         )
 
         XCTAssertEqual(payment.entranceTollbooth?.road.name, "首都高速道路")
@@ -29,7 +33,7 @@ class ETCPaymentTests: XCTestCase {
         XCTAssertEqual(payment.entranceTollbooth?.name, "五反田")
         XCTAssertEqual(payment.exitTollbooth?.road.name, "首都高速道路")
         XCTAssertEqual(payment.exitTollbooth?.name, "台場")
-        XCTAssertEqual(iso8601(payment.date!), "2019-05-31T01:23:56+09:00")
+        XCTAssertEqual(iso8601(payment.date), "2019-05-31T01:23:56+09:00")
         XCTAssertEqual(payment.vehicleClassification, .standard)
     }
 

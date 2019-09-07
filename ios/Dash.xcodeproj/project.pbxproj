@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
+		B91BD8092323FD820064D2B5 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
 		B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93321ED2323C9D500BFAB21 /* BorderedView.swift */; };
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
 		B942554522B8ED10008B053B /* ETCMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554422B8ED10008B053B /* ETCMessageTests.swift */; };
@@ -371,8 +373,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */,
 				B942554522B8ED10008B053B /* ETCMessageTests.swift in Sources */,
 				B99356DB22A9484700BA08AB /* ETCPaymentTests.swift in Sources */,
+				B91BD8092323FD820064D2B5 /* ETCPayment.swift in Sources */,
 				B9E96CBB22A3CE7500C2E009 /* DashTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
