@@ -43,20 +43,14 @@ class BorderedView: UIView {
     private var _borderColor: UIColor?
 
     private func applyBorderColor() {
-        if #available(iOS 13.0, *) {
-            layer.borderColor = _borderColor?.resolvedColor(with: traitCollection).cgColor
-        } else {
-            layer.borderColor = _borderColor?.cgColor
-        }
+        layer.borderColor = _borderColor?.resolvedColor(with: traitCollection).cgColor
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
-        if #available(iOS 13.0, *) {
-            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                applyBorderColor()
-            }
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            applyBorderColor()
         }
     }
 }
