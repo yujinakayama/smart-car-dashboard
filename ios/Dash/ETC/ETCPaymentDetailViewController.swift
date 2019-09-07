@@ -60,8 +60,14 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
         activityIndicator.startAnimating()
         fetchEntranceAndExitLocation { [weak self] (entrance, exit) in
             guard let self = self else { return }
+
             self.activityIndicator.stopAnimating()
-            guard entrance != nil && exit != nil else { return }
+
+            guard entrance != nil && exit != nil else {
+                self.clearMapView()
+                return
+            }
+
             self.showRoute(source: entrance!, destination: exit!)
         }
     }
