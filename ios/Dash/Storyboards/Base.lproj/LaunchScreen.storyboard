@@ -28,16 +28,32 @@
         <scene sceneID="UF5-wi-CWf">
             <objects>
                 <tableViewController clearsSelectionOnViewWillAppear="NO" id="O7a-us-8ed" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Nej-UM-nLE">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Nej-UM-nLE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <sections>
+                            <tableViewSection id="7gb-S9-7i9">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="101" id="y6R-bu-58p">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="101"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="y6R-bu-58p" id="swf-vz-Rpn">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="101"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
                         <connections>
                             <outlet property="dataSource" destination="O7a-us-8ed" id="r24-hc-56m"/>
                             <outlet property="delegate" destination="O7a-us-8ed" id="hA6-0h-nNp"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="ETC" id="2tp-GK-kS5"/>
+                    <navigationItem key="navigationItem" title="ETC" id="2tp-GK-kS5">
+                        <barButtonItem key="rightBarButtonItem" id="nG7-Eg-WTi"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0VG-TE-0Zd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
