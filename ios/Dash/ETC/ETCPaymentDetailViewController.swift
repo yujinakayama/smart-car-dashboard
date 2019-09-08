@@ -9,8 +9,14 @@
 import UIKit
 import MapKit
 
+enum MapTypeSegmentedControlIndex: Int {
+    case standard = 0
+    case satellite
+}
+
 class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var mapTypeSegmentedControl: UISegmentedControl!
 
     var payment: ETCPaymentManagedObject? {
         didSet {
@@ -31,6 +37,9 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
 
         mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: annotationViewIdentifier)
+
+        // TODO: Persist last selected map type
+        mapTypeSegmentedControl.selectedSegmentIndex = MapTypeSegmentedControlIndex.standard.rawValue
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicator)
 
@@ -209,6 +218,17 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
         renderer.lineWidth = 10
         renderer.strokeColor = UIColor(red: 73/255, green: 163/255, blue: 249/255, alpha: 1)
         return renderer
+    }
+
+    @IBAction func mapTypeSegmentedControlDidChange() {
+        let selectedMapType = MapTypeSegmentedControlIndex(rawValue: mapTypeSegmentedControl.selectedSegmentIndex)!
+
+        switch selectedMapType {
+        case .standard:
+            mapView.mapType = .standard
+        case .satellite:
+            mapView.mapType = .satellite
+        }
     }
 }
 
