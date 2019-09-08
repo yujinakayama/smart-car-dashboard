@@ -9,8 +9,34 @@
 import UIKit
 import MapKit
 
+enum MapTypeSegmentedControlIndex: Int {
+    case standard = 0
+    case satellite
+
+    init?(_ mapType: MKMapType) {
+        switch mapType {
+        case .standard:
+            self = .standard
+        case .satellite:
+            self = .satellite
+        default:
+            return nil
+        }
+    }
+
+    var mapType: MKMapType {
+        switch self {
+        case .standard:
+            return .standard
+        case .satellite:
+            return .satellite
+        }
+    }
+}
+
 class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var mapTypeSegmentedControl: UISegmentedControl!
 
     var payment: ETCPaymentManagedObject? {
         didSet {
@@ -34,6 +60,8 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicator)
 
+        restoreMapType()
+
         configureView()
     }
 
@@ -52,6 +80,17 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
             mapView.showsUserLocation = false
         }
         super.viewDidDisappear(animated)
+    }
+
+    func restoreMapType() {
+        if let previousMapType = Defaults.shared.mapType {
+            let index = MapTypeSegmentedControlIndex(previousMapType)!
+            mapTypeSegmentedControl.selectedSegmentIndex = index.rawValue
+        } else {
+            mapTypeSegmentedControl.selectedSegmentIndex = MapTypeSegmentedControlIndex.standard.rawValue
+        }
+
+        mapTypeSegmentedControlDidChange()
     }
 
     func configureView() {
@@ -209,6 +248,12 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
         renderer.lineWidth = 10
         renderer.strokeColor = UIColor(red: 73/255, green: 163/255, blue: 249/255, alpha: 1)
         return renderer
+    }
+
+    @IBAction func mapTypeSegmentedControlDidChange() {
+        let index = MapTypeSegmentedControlIndex(rawValue: mapTypeSegmentedControl.selectedSegmentIndex)!
+        mapView.mapType = index.mapType
+        Defaults.shared.mapType = index.mapType
     }
 }
 

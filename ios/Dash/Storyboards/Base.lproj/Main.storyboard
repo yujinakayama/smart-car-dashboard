@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14865.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="H1p-Uh-vWS">
     <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14819.2"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -36,9 +35,25 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" pitchEnabled="NO" showsUserLocation="YES" showsScale="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gCy-yW-GVk">
                                 <rect key="frame" x="0.0" y="50" width="990.5" height="974"/>
                             </mapView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="PSg-N3-wKj">
+                                <rect key="frame" x="770.5" y="70" width="200" height="32"/>
+                                <color key="backgroundColor" name="Map Type Segmented Control Background Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="qyI-Dq-mjx"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="マップ"/>
+                                    <segment title="航空写真"/>
+                                </segments>
+                                <connections>
+                                    <action selector="mapTypeSegmentedControlDidChange" destination="JEX-9P-axG" eventType="valueChanged" id="4ba-Zs-ucH"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="PSg-N3-wKj" firstAttribute="top" secondItem="VUw-jc-0yf" secondAttribute="top" constant="20" id="2mv-U7-lYL"/>
+                            <constraint firstAttribute="rightMargin" secondItem="PSg-N3-wKj" secondAttribute="right" id="87D-cE-ICl"/>
                             <constraint firstAttribute="bottom" secondItem="gCy-yW-GVk" secondAttribute="bottom" id="GNl-7R-3iL"/>
                             <constraint firstAttribute="trailing" secondItem="gCy-yW-GVk" secondAttribute="trailing" id="Hmd-rP-k3B"/>
                             <constraint firstItem="gCy-yW-GVk" firstAttribute="top" secondItem="VUw-jc-0yf" secondAttribute="top" id="a0u-mP-tlk"/>
@@ -49,12 +64,13 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Detail" largeTitleDisplayMode="never" id="mOI-FS-AaM"/>
                     <connections>
+                        <outlet property="mapTypeSegmentedControl" destination="PSg-N3-wKj" id="ppy-dO-KGt"/>
                         <outlet property="mapView" destination="gCy-yW-GVk" id="lkg-Re-VNw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="709" y="129"/>
+            <point key="canvasLocation" x="708.93118594436305" y="128.90625"/>
         </scene>
         <!--Payment Split View Controller-->
         <scene sceneID="Nki-YV-4Qg">
@@ -138,7 +154,7 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="首都高速" textAlignment="natural" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CtC-aV-rx7">
                                                             <rect key="frame" x="5" y="2" width="45" height="13.5"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
-                                                            <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -150,7 +166,7 @@
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                            <color key="value" systemColor="secondaryLabelColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="value" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                             <real key="value" value="1"/>
@@ -193,7 +209,7 @@
                                                             <real key="value" value="4"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                            <color key="value" systemColor="secondaryLabelColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="value" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                             <real key="value" value="1"/>
@@ -271,8 +287,11 @@
         </scene>
     </scenes>
     <resources>
+        <namedColor name="Map Type Segmented Control Background Color">
+            <color white="1" alpha="0.75" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </namedColor>
         <namedColor name="Payment Amount Background Color">
-            <color red="0.41176470588235292" green="0.16078431372549018" blue="0.81176470588235294" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.41200000047683716" green="0.16099999845027924" blue="0.81199997663497925" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="Table View Selected Color">
             <color red="0.89411764705882357" green="0.89411764705882357" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
