@@ -31,23 +31,13 @@ extension UserNotificationProtocol {
     }
 }
 
-struct TollgateEntranceNotification: UserNotificationProtocol {
-    let title: String? = "ETC"
-    let body: String? = "入口を通過しました。"
+struct TollgatePassingThroughNotification: UserNotificationProtocol {
+    let title: String? = nil
+    let body: String? = "ETCゲートを通過しました。"
     let sound: UNNotificationSound? = UNNotificationSound(named: UNNotificationSoundName("Affirmative.wav"))
 
     func shouldBeDelivered(history: LatestUserNotificationHistory) -> Bool {
-        return !history.contains { $0 is TollgateEntranceNotification || $0 is TollgateExitNotification }
-    }
-}
-
-struct TollgateExitNotification: UserNotificationProtocol {
-    let title: String? = "ETC"
-    let body: String? = "出口を通過しました。"
-    let sound: UNNotificationSound? = UNNotificationSound(named: UNNotificationSoundName("Affirmative.wav"))
-
-    func shouldBeDelivered(history: LatestUserNotificationHistory) -> Bool {
-        return !history.contains { $0 is TollgateEntranceNotification || $0 is TollgateEntranceNotification }
+        return !history.contains { $0 is TollgatePassingThroughNotification }
     }
 }
 

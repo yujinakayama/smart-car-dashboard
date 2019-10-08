@@ -130,10 +130,8 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     // TODO: Extract to another class
     func deviceClient(_ deviceClient: ETCDeviceClient, didReceiveMessage message: ETCMessageFromDeviceProtocol) {
         switch message {
-        case is ETCMessageFromDevice.GateEntranceNotification:
-            UserNotificationCenter.shared.requestDelivery(TollgateEntranceNotification())
-        case is ETCMessageFromDevice.GateExitNotification:
-            UserNotificationCenter.shared.requestDelivery(TollgateExitNotification())
+        case is ETCMessageFromDevice.GateEntranceNotification, is ETCMessageFromDevice.GateExitNotification:
+            UserNotificationCenter.shared.requestDelivery(TollgatePassingThroughNotification())
         case is ETCMessageFromDevice.PaymentNotification:
             lastPaymentNotificationTime = Date()
             try! deviceClient.send(ETCMessageFromClient.initialPaymentRecordRequest)
