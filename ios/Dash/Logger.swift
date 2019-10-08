@@ -12,16 +12,21 @@ import XCGLogger
 let logger: XCGLogger = {
     let fileManager = FileManager.default
 
-    let applicationSupportDirectoryURL = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-    if !fileManager.fileExists(atPath: applicationSupportDirectoryURL.absoluteString) {
-        try! fileManager.createDirectory(at: applicationSupportDirectoryURL, withIntermediateDirectories: true)
+    let documentsDirectoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+    let logsDirectoryURL = documentsDirectoryURL.appendingPathComponent("Logs")
+    if !fileManager.fileExists(atPath: logsDirectoryURL.absoluteString) {
+        try! fileManager.createDirectory(at: logsDirectoryURL, withIntermediateDirectories: true)
     }
-
-    let logFileURL = applicationSupportDirectoryURL.appendingPathComponent("log.txt")
-    let destination = FileDestination(writeToFile: logFileURL, shouldAppend: true)
+    let logFileURL = logsDirectoryURL.appendingPathComponent("log.txt")
+    let fileDestination = AutoRotatingFileDestination(
+        writeToFile: logFileURL,
+        shouldAppend: true,
+        maxTimeInterval: 60 * 60 * 24,
+        targetMaxLogFiles: 100
+    )
 
     let logger = XCGLogger(identifier: "default", includeDefaultDestinations: true)
-    logger.add(destination: destination)
+    logger.add(destination: fileDestination)
     logger.setup(level: .debug, fileLevel: .debug)
     return logger
 }()
