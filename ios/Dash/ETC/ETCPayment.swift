@@ -33,7 +33,7 @@ struct ETCPayment {
     }
 }
 
-struct Tollbooth: Equatable {
+class Tollbooth {
     static var all: [String: Tollbooth] = {
         var tollbooths: [String: Tollbooth] = [:]
 
@@ -79,7 +79,13 @@ struct Tollbooth: Equatable {
     }
 }
 
-struct Road: Equatable {
+extension Tollbooth: Equatable {
+    static func == (lhs: Tollbooth, rhs: Tollbooth) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
+
+class Road {
     static let irregularAbbreviations = [
         "東名高速道路": "東名",
         "新東名高速道路": "新東名",
@@ -95,13 +101,13 @@ struct Road: Equatable {
     let name: String
     let routeName: String?
 
-    var abbreviatedName: String {
+    lazy var abbreviatedName: String = {
         if let irregularAbbreviation = Road.irregularAbbreviations[name] {
             return irregularAbbreviation
         } else {
             return regularAbbreviation
         }
-    }
+    }()
 
     init(name: String, routeName: String? = nil) {
         self.name = name
@@ -122,6 +128,12 @@ struct Road: Equatable {
             .replacingOccurrences(of: "有料", with: "")
 
         return abbreviation
+    }
+}
+
+extension Road: Equatable {
+    static func == (lhs: Road, rhs: Road) -> Bool {
+        return lhs.name == rhs.name && lhs.routeName == rhs.routeName
     }
 }
 
