@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ETCPayment {
+struct ETCPayment: ETCPaymentProtocol {
     var amount: Int32
     var date: Date
     var entranceTollboothID: String

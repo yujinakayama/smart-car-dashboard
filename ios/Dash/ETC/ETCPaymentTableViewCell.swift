@@ -33,7 +33,7 @@ class ETCPaymentTableViewCell: UITableViewCell {
     @IBOutlet weak var exitRoadLabel: UILabel!
     @IBOutlet weak var exitTollboothLabel: UILabel!
 
-    var payment: ETCPaymentManagedObject? {
+    var payment: ETCPaymentProtocol? {
         didSet {
             updateViews()
         }

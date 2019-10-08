@@ -49,7 +49,7 @@ class ETCPaymentDatabase {
     func insert(payment: ETCPayment, into context: NSManagedObjectContext) -> ETCPaymentManagedObject {
         let managedObject = insertNewETCPayment(into: context)
         managedObject.amount = payment.amount
-        managedObject.date = payment.date as NSDate
+        managedObject.date = payment.date
         managedObject.entranceTollboothID = payment.entranceTollboothID
         managedObject.exitTollboothID = payment.exitTollboothID
         managedObject.vehicleClassification = payment.vehicleClassification

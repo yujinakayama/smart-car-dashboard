@@ -11,11 +11,11 @@ import Foundation
 import CoreData
 
 @objc(ETCPaymentManagedObject)
-class ETCPaymentManagedObject: NSManagedObject {
+class ETCPaymentManagedObject: NSManagedObject, ETCPaymentProtocol {
     static let entityName = "ETCPayment"
 
     @NSManaged var amount: Int32
-    @NSManaged var date: NSDate
+    @NSManaged var date: Date
     @NSManaged var entranceTollboothID: String
     @NSManaged var exitTollboothID: String
 

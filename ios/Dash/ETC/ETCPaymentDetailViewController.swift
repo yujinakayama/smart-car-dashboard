@@ -38,7 +38,7 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mapTypeSegmentedControl: UISegmentedControl!
 
-    var payment: ETCPaymentManagedObject? {
+    var payment: ETCPaymentProtocol? {
         didSet {
             configureView()
         }

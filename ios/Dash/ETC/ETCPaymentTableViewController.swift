@@ -197,7 +197,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         }
     }
 
-    func showPayment(_ payment: ETCPaymentManagedObject?) {
+    func showPayment(_ payment: ETCPaymentProtocol?) {
         detailViewController?.payment = payment
 
         if splitViewController!.displayMode == .primaryOverlay {
