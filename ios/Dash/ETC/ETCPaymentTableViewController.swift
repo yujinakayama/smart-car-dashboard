@@ -39,6 +39,8 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     var deviceManager: ETCDeviceManager?
     var deviceClient: ETCDeviceClient?
 
+    var lastPaymentNotificationTime: Date?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -125,19 +127,22 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         updateCardStatusView()
     }
 
+    // TODO: Extract to another class
     func deviceClient(_ deviceClient: ETCDeviceClient, didReceiveMessage message: ETCMessageFromDeviceProtocol) {
         switch message {
         case is ETCMessageFromDevice.GateEntranceNotification:
             UserNotificationCenter.shared.requestDelivery(TollgateEntranceNotification())
         case is ETCMessageFromDevice.GateExitNotification:
             UserNotificationCenter.shared.requestDelivery(TollgateExitNotification())
-        case let paymentNotification as ETCMessageFromDevice.PaymentNotification:
-            if let amount = paymentNotification.amount {
-                UserNotificationCenter.shared.requestDelivery(PaymentNotification(amount: amount))
-            }
+        case is ETCMessageFromDevice.PaymentNotification:
+            lastPaymentNotificationTime = Date()
             try! deviceClient.send(ETCMessageFromClient.initialPaymentRecordRequest)
         case let paymentRecordResponse as ETCMessageFromDevice.PaymentRecordResponse:
             if let payment = paymentRecordResponse.payment {
+                if justReceivedPaymentNotification {
+                    UserNotificationCenter.shared.requestDelivery(PaymentNotification(payment: payment))
+                }
+
                 paymentDatabase.performBackgroundTask { [unowned self] (context) in
                     let managedObject = try! self.paymentDatabase.insert(payment: payment, unlessExistsIn: context)
                     if managedObject != nil {
@@ -148,6 +153,14 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
             }
         default:
             break
+        }
+    }
+
+    var justReceivedPaymentNotification: Bool {
+        if let lastPaymentNotificationTime = lastPaymentNotificationTime {
+            return Date().timeIntervalSince(lastPaymentNotificationTime) < 3
+        } else {
+            return false
         }
     }
 

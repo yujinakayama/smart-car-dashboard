@@ -15,8 +15,13 @@ struct ETCPayment: ETCPaymentProtocol {
     var exitTollboothID: String
     var vehicleClassification: VehicleClassification
 
-    lazy var entranceTollbooth: Tollbooth? = Tollbooth.findTollbooth(id: entranceTollboothID)
-    lazy var exitTollbooth: Tollbooth? = Tollbooth.findTollbooth(id: exitTollboothID)
+    var entranceTollbooth: Tollbooth? {
+        return Tollbooth.findTollbooth(id: entranceTollboothID)
+    }
+
+    var exitTollbooth: Tollbooth? {
+        return Tollbooth.findTollbooth(id: exitTollboothID)
+    }
 
     init(
         amount: Int32,

@@ -10,7 +10,8 @@ import Foundation
 import UserNotifications
 
 protocol UserNotificationProtocol {
-    var body: String { get }
+    var title: String? { get }
+    var body: String? { get }
     var sound: UNNotificationSound? { get }
     func shouldBeDelivered(history: LatestUserNotificationHistory) -> Bool
 }
@@ -18,8 +19,8 @@ protocol UserNotificationProtocol {
 extension UserNotificationProtocol {
     func makeRequest() -> UNNotificationRequest {
         let content = UNMutableNotificationContent()
-        content.title = "ETC"
-        content.body = body
+        content.title = title ?? ""
+        content.body = body ?? ""
         content.sound = sound
 
         return UNNotificationRequest(
@@ -31,8 +32,8 @@ extension UserNotificationProtocol {
 }
 
 struct TollgateEntranceNotification: UserNotificationProtocol {
-    let body = "入口を通過しました。"
-
+    let title: String? = "ETC"
+    let body: String? = "入口を通過しました。"
     let sound: UNNotificationSound? = UNNotificationSound(named: UNNotificationSoundName("Affirmative.wav"))
 
     func shouldBeDelivered(history: LatestUserNotificationHistory) -> Bool {
@@ -41,20 +42,28 @@ struct TollgateEntranceNotification: UserNotificationProtocol {
 }
 
 struct TollgateExitNotification: UserNotificationProtocol {
-    let body = "出口を通過しました。"
-
+    let title: String? = "ETC"
+    let body: String? = "出口を通過しました。"
     let sound: UNNotificationSound? = UNNotificationSound(named: UNNotificationSoundName("Affirmative.wav"))
 
     func shouldBeDelivered(history: LatestUserNotificationHistory) -> Bool {
-        return !history.contains { $0 is TollgateEntranceNotification || $0 is TollgateExitNotification }
+        return !history.contains { $0 is TollgateEntranceNotification || $0 is TollgateEntranceNotification }
     }
 }
 
 struct PaymentNotification: UserNotificationProtocol {
-    let amount: Int
+    var payment: ETCPaymentProtocol
 
-    var body: String {
-        return "料金は ¥\(amount) です。"
+    var title: String? {
+        if payment.entranceTollbooth == payment.exitTollbooth {
+            return payment.entranceTollbooth?.name
+        } else {
+            return "\(payment.entranceTollbooth?.name ?? "不明な料金所") → \(payment.exitTollbooth?.name ?? "不明な料金所")"
+        }
+    }
+
+    var body: String? {
+        return "ETC料金は ¥\(payment.amount) です。"
     }
 
     let sound: UNNotificationSound? = nil
