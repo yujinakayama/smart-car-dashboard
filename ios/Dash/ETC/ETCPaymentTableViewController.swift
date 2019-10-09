@@ -138,6 +138,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         case let paymentRecordResponse as ETCMessageFromDevice.PaymentRecordResponse:
             if let payment = paymentRecordResponse.payment {
                 if justReceivedPaymentNotification {
+                    lastPaymentNotificationTime = nil
                     UserNotificationCenter.shared.requestDelivery(PaymentNotification(payment: payment))
                 }
 
