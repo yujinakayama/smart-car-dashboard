@@ -34,7 +34,7 @@ extension UserNotificationProtocol {
 struct TollgatePassingThroughNotification: UserNotificationProtocol {
     let title: String? = nil
     let body: String? = "ETCゲートを通過しました。"
-    let sound: UNNotificationSound? = UNNotificationSound(named: UNNotificationSoundName("Affirmative.wav"))
+    let sound: UNNotificationSound? = UNNotificationSound(named: UNNotificationSoundName("TollgatePassingThrough.wav"))
 
     func shouldBeDelivered(history: LatestUserNotificationHistory) -> Bool {
         return !history.contains { $0 is TollgatePassingThroughNotification }
