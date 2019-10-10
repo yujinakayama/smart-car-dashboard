@@ -56,7 +56,7 @@ struct PaymentNotification: UserNotificationProtocol {
         return "ETC料金は ¥\(payment.amount) です。"
     }
 
-    let sound: UNNotificationSound? = nil
+    let sound: UNNotificationSound? = UNNotificationSound(named: UNNotificationSoundName("Payment.wav"))
 
     func shouldBeDelivered(history: LatestUserNotificationHistory) -> Bool {
         return true
