@@ -19,7 +19,7 @@ class ETCPaymentTests: XCTestCase {
         dateComponents.minute = 23
         dateComponents.second = 56
 
-        var payment = ETCPayment(
+        let payment = ETCPayment(
             amount: 650,
             date: dateComponents.date!,
             entranceTollboothID: "12-137",

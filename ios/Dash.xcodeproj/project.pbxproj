@@ -22,6 +22,7 @@
 		B99356E622A9525C00BA08AB /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
 		B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E722A9553A00BA08AB /* MockSerialPort.swift */; };
 		B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */; };
+		B9BA819E2350931A00657DEB /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
 		B9BC920923250A0A006F22FC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BC920823250A0A006F22FC /* Defaults.swift */; };
 		B9CB7C0D22AD65A40059433E /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB7C0C22AD65A40059433E /* UITableViewCellExtension.swift */; };
 		B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */; };
@@ -386,6 +387,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */,
+				B9BA819E2350931A00657DEB /* ETCPaymentProtocol.swift in Sources */,
 				B942554522B8ED10008B053B /* ETCMessageTests.swift in Sources */,
 				B99356DB22A9484700BA08AB /* ETCPaymentTests.swift in Sources */,
 				B91BD8092323FD820064D2B5 /* ETCPayment.swift in Sources */,
