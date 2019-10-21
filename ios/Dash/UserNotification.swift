@@ -45,15 +45,27 @@ struct PaymentNotification: UserNotificationProtocol {
     var payment: ETCPaymentProtocol
 
     var title: String? {
-        if payment.entranceTollbooth == payment.exitTollbooth {
-            return payment.entranceTollbooth?.name
+        let entrance = payment.entranceTollbooth
+        let exit = payment.exitTollbooth
+
+        if entrance == exit {
+            return [
+                entrance?.road.abbreviatedName,
+                entrance?.name ?? "不明な料金所"
+            ].compactMap { $0 }.joined(separator: " ")
         } else {
-            return "\(payment.entranceTollbooth?.name ?? "不明な料金所") → \(payment.exitTollbooth?.name ?? "不明な料金所")"
+            return [
+                entrance?.road.abbreviatedName,
+                entrance?.name ?? "不明な料金所",
+                "→",
+                entrance?.road.name == exit?.road.name ? nil : exit?.road.abbreviatedName,
+                exit?.name ?? "不明な料金所"
+            ].compactMap { $0 }.joined(separator: " ")
         }
     }
 
     var body: String? {
-        return "ETC料金は ¥\(payment.amount) です。"
+        return "ETC料金 ¥\(payment.amount) を支払いました。"
     }
 
     let sound: UNNotificationSound? = UNNotificationSound(named: UNNotificationSoundName("Payment.wav"))
