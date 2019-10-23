@@ -42,6 +42,13 @@ struct TollgatePassingThroughNotification: UserNotificationProtocol {
 }
 
 struct PaymentNotification: UserNotificationProtocol {
+    static let amountNumberFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = "JPY"
+        return formatter
+    }()
+
     var payment: ETCPaymentProtocol
 
     var title: String? {
@@ -65,12 +72,17 @@ struct PaymentNotification: UserNotificationProtocol {
     }
 
     var body: String? {
-        return "ETC料金 ¥\(payment.amount) を支払いました。"
+        return "\(jpyAmount) を支払いました。"
     }
 
     let sound: UNNotificationSound? = UNNotificationSound(named: UNNotificationSoundName("Payment.wav"))
 
     func shouldBeDelivered(history: LatestUserNotificationHistory) -> Bool {
         return true
+    }
+
+    var jpyAmount: String {
+        let number = NSNumber(value: payment.amount)
+        return PaymentNotification.amountNumberFormatter.string(from: number)!
     }
 }
