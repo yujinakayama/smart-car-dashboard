@@ -149,9 +149,9 @@ extension ETCMessageFromDeviceProtocol {
     // TODO: Add validation for terminal bytes
 }
 
-protocol Plain where Self: ETCMessageFromDeviceProtocol {}
+protocol PlainMessageProtocol where Self: ETCMessageFromDeviceProtocol {}
 
-extension Plain {
+extension PlainMessageProtocol {
     static func validTerminalBytes(payloadBytes: [UInt8]) -> [UInt8] {
         return [terminalByte]
     }
@@ -161,9 +161,9 @@ extension Plain {
     }
 }
 
-protocol Checksummed where Self: ETCMessageFromDeviceProtocol  {}
+protocol ChecksummedMessageProtocol where Self: ETCMessageFromDeviceProtocol  {}
 
-extension Checksummed {
+extension ChecksummedMessageProtocol {
     static func validTerminalBytes(payloadBytes: [UInt8]) -> [UInt8] {
         return checksum(of: headerBytes + payloadBytes) + [terminalByte]
     }
@@ -223,37 +223,37 @@ enum ETCMessageFromDevice {
         CardEjectionNotification.self
     ]
 
-    struct HeartBeat: ETCMessageFromDeviceProtocol, Plain {
+    struct HeartBeat: ETCMessageFromDeviceProtocol, PlainMessageProtocol {
         static let headerBytes: [UInt8] = [byte(of: "U")]
         static let payloadLength = 0
         let data: Data
     }
 
-    struct HandshakeAcknowledgement: ETCMessageFromDeviceProtocol, Plain {
+    struct HandshakeAcknowledgement: ETCMessageFromDeviceProtocol, PlainMessageProtocol {
         static let headerBytes: [UInt8] = [0xF0]
         static let payloadLength = 0
         let data: Data
     }
 
-    struct HandshakeRequest: ETCMessageFromDeviceProtocol, Checksummed {
+    struct HandshakeRequest: ETCMessageFromDeviceProtocol, ChecksummedMessageProtocol {
         static let headerBytes: [UInt8] = [0x01, 0xC2, byte(of: "0")]
         static let payloadLength = 0
         let data: Data
     }
 
-    struct CardExistenceResponse: ETCMessageFromDeviceProtocol, Checksummed {
+    struct CardExistenceResponse: ETCMessageFromDeviceProtocol, ChecksummedMessageProtocol {
         static let headerBytes: [UInt8] = [0x02, 0xCD, 0x01]
         static let payloadLength = 0
         let data: Data
     }
 
-    struct CardNonExistenceResponse: ETCMessageFromDeviceProtocol, Checksummed {
+    struct CardNonExistenceResponse: ETCMessageFromDeviceProtocol, ChecksummedMessageProtocol {
         static let headerBytes: [UInt8] = [0x02, 0xCD, 0x00]
         static let payloadLength = 0
         let data: Data
     }
 
-    struct DeviceNameResponse: ETCMessageFromDeviceProtocol, Checksummed {
+    struct DeviceNameResponse: ETCMessageFromDeviceProtocol, ChecksummedMessageProtocol {
         static let headerBytes: [UInt8] = [0x02, 0xE2]
         static let payloadLength = 8
         let data: Data
@@ -263,25 +263,25 @@ enum ETCMessageFromDevice {
         }
     }
 
-    struct InitialPaymentRecordExistenceResponse: ETCMessageFromDeviceProtocol, Checksummed {
+    struct InitialPaymentRecordExistenceResponse: ETCMessageFromDeviceProtocol, ChecksummedMessageProtocol {
         static let headerBytes: [UInt8] = [0x02, 0xC1, byte(of: "7")]
         static let payloadLength = 0
         let data: Data
     }
 
-    struct InitialPaymentRecordNonExistenceResponse: ETCMessageFromDeviceProtocol, Checksummed {
+    struct InitialPaymentRecordNonExistenceResponse: ETCMessageFromDeviceProtocol, ChecksummedMessageProtocol {
         static let headerBytes: [UInt8] = [0x02, 0xC1, byte(of: "5")]
         static let payloadLength = 0
         let data: Data
     }
 
-    struct NextPaymentRecordNonExistenceResponse: ETCMessageFromDeviceProtocol, Checksummed {
+    struct NextPaymentRecordNonExistenceResponse: ETCMessageFromDeviceProtocol, ChecksummedMessageProtocol {
         static let headerBytes: [UInt8] = [0x02, 0xC1, byte(of: "8")]
         static let payloadLength = 0
         let data: Data
     }
 
-    struct PaymentRecordResponse: ETCMessageFromDeviceProtocol, Checksummed {
+    struct PaymentRecordResponse: ETCMessageFromDeviceProtocol, ChecksummedMessageProtocol {
         static let headerBytes: [UInt8] = [0x02, 0xE5]
         static let payloadLength = 41
         let data: Data
@@ -346,19 +346,19 @@ enum ETCMessageFromDevice {
         }
     }
 
-    struct GateEntranceNotification: ETCMessageFromDeviceProtocol, Checksummed {
+    struct GateEntranceNotification: ETCMessageFromDeviceProtocol, ChecksummedMessageProtocol {
         static let headerBytes: [UInt8] = [0x01, 0xC7, byte(of: "a")]
         static let payloadLength = 0
         let data: Data
     }
 
-    struct GateExitNotification: ETCMessageFromDeviceProtocol, Checksummed {
+    struct GateExitNotification: ETCMessageFromDeviceProtocol, ChecksummedMessageProtocol {
         static let headerBytes: [UInt8] = [0x01, 0xC7, byte(of: "A")]
         static let payloadLength = 0
         let data: Data
     }
 
-    struct PaymentNotification: ETCMessageFromDeviceProtocol, Checksummed {
+    struct PaymentNotification: ETCMessageFromDeviceProtocol, ChecksummedMessageProtocol {
         static let headerBytes: [UInt8] = [0x01, 0xC5]
         static let payloadLength = 6
         let data: Data
@@ -368,19 +368,19 @@ enum ETCMessageFromDevice {
         }
     }
 
-    struct CardInsertionNotification: ETCMessageFromDeviceProtocol, Checksummed {
+    struct CardInsertionNotification: ETCMessageFromDeviceProtocol, ChecksummedMessageProtocol {
         static let headerBytes: [UInt8] = [0x01, 0xC2, byte(of: "D")]
         static let payloadLength = 0
         let data: Data
     }
 
-    struct CardEjectionNotification: ETCMessageFromDeviceProtocol, Checksummed {
+    struct CardEjectionNotification: ETCMessageFromDeviceProtocol, ChecksummedMessageProtocol {
         static let headerBytes: [UInt8] = [0x01, 0xC2, byte(of: "E")]
         static let payloadLength = 0
         let data: Data
     }
 
-    struct Unknown: ETCMessageFromDeviceProtocol, Plain {
+    struct Unknown: ETCMessageFromDeviceProtocol, PlainMessageProtocol {
         static let headerBytes: [UInt8] = []
         static let payloadLength = 0
         static let terminalLength = 0
