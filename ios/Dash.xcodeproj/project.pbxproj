@@ -13,6 +13,7 @@
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
 		B942554522B8ED10008B053B /* ETCMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554422B8ED10008B053B /* ETCMessageTests.swift */; };
 		B942555022BAA5D1008B053B /* UserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554F22BAA5D1008B053B /* UserNotification.swift */; };
+		B9588B5D23CC997400711C0C /* ETCPaymentDebugInformationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationController.swift */; };
 		B95BE8E222B8A8BE004C1CC0 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */; };
 		B95BE8E322B8A8BE004C1CC0 /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */; };
 		B98E936A234C94C7004AE50F /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
@@ -62,6 +63,7 @@
 		B942553C22B8C3E2008B053B /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B942554422B8ED10008B053B /* ETCMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCMessageTests.swift; sourceTree = "<group>"; };
 		B942554F22BAA5D1008B053B /* UserNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotification.swift; sourceTree = "<group>"; };
+		B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentDebugInformationController.swift; sourceTree = "<group>"; };
 		B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCGLogger.framework; path = Carthage/Build/iOS/XCGLogger.framework; sourceTree = "<group>"; };
 		B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjcExceptionBridging.framework; path = Carthage/Build/iOS/ObjcExceptionBridging.framework; sourceTree = "<group>"; };
 		B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentProtocol.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				B9CEA76D22D911140055C9A3 /* ETCPaymentSplitViewController.swift */,
 				B9DC5B26229D59BE00B645D5 /* ETCPaymentTableViewController.swift */,
 				B9DC5B28229D59BE00B645D5 /* ETCPaymentDetailViewController.swift */,
+				B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationController.swift */,
 				B9CEA76522D89A400055C9A3 /* ETCPaymentDatabase.swift */,
 				B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */,
 				B9DB8E5722D7A481003E4BD8 /* ETCPaymentManagedObject.swift */,
@@ -363,6 +366,7 @@
 				B9CEA76622D89A400055C9A3 /* ETCPaymentDatabase.swift in Sources */,
 				B9DC5B29229D59BE00B645D5 /* ETCPaymentDetailViewController.swift in Sources */,
 				B98E936A234C94C7004AE50F /* ETCPaymentProtocol.swift in Sources */,
+				B9588B5D23CC997400711C0C /* ETCPaymentDebugInformationController.swift in Sources */,
 				B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */,
 				B942555022BAA5D1008B053B /* UserNotification.swift in Sources */,
 				B9DC5B27229D59BE00B645D5 /* ETCPaymentTableViewController.swift in Sources */,

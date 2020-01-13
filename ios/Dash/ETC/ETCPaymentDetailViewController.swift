@@ -38,6 +38,8 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mapTypeSegmentedControl: UISegmentedControl!
 
+    var infoBarButtonItem: UIBarButtonItem!
+
     var payment: ETCPaymentProtocol? {
         didSet {
             configureView()
@@ -46,8 +48,6 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
 
     var entranceMapItem: MKMapItem?
     var exitMapItem: MKMapItem?
-
-    let activityIndicator = UIActivityIndicatorView(style: .medium)
 
     let annotationViewIdentifier = "AnnotationView"
     var hasInitiallyZoomedToUserLocation = false
@@ -58,7 +58,9 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
         mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: annotationViewIdentifier)
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicator)
+        let infoButton = UIButton(type: .infoLight)
+        infoButton.addTarget(self, action: #selector(infoButtonDidTouchUpInside), for: .touchUpInside)
+        infoBarButtonItem = UIBarButtonItem(customView: infoButton)
 
         restoreMapType()
 
@@ -96,11 +98,10 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
     func configureView() {
         showNavigationTitle()
 
-        activityIndicator.startAnimating()
+        navigationItem.rightBarButtonItem = payment != nil ? infoBarButtonItem : nil
+
         fetchEntranceAndExitLocation { [weak self] (entrance, exit) in
             guard let self = self else { return }
-
-            self.activityIndicator.stopAnimating()
 
             guard entrance != nil && exit != nil else {
                 self.clearMapView()
@@ -254,6 +255,17 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
         let index = MapTypeSegmentedControlIndex(rawValue: mapTypeSegmentedControl.selectedSegmentIndex)!
         mapView.mapType = index.mapType
         Defaults.shared.mapType = index.mapType
+    }
+
+    @IBAction func infoButtonDidTouchUpInside(button: UIButton) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let debugInformationViewController = storyboard.instantiateViewController(identifier: "ETCPaymentDebugInformationViewController") as ETCPaymentDebugInformationViewController
+
+        debugInformationViewController.payment = payment
+
+        debugInformationViewController.modalPresentationStyle = .popover
+        debugInformationViewController.popoverPresentationController?.barButtonItem = infoBarButtonItem
+        present(debugInformationViewController, animated: true)
     }
 }
 
