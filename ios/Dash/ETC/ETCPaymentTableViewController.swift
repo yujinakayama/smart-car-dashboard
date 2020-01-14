@@ -29,7 +29,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
 
     lazy var cardStatusImageView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "card")
+        view.image = UIImage(systemName: "creditcard.fill")
         view.contentMode = .scaleAspectFit
         view.heightAnchor.constraint(equalToConstant: 24).isActive = true
         view.widthAnchor.constraint(equalTo: view.heightAnchor).isActive = true
@@ -165,10 +165,10 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
 
     func updateConnectionStatusView() {
         if deviceClient?.isAvailable == true {
-            connectionStatusImageView.image = UIImage(named: "bolt")
+            connectionStatusImageView.image = UIImage(systemName: "bolt.fill")
             connectionStatusImageView.tintColor = UIColor(hue: 263 / 360, saturation: 0.8, brightness: 1, alpha: 1)
         } else {
-            connectionStatusImageView.image = UIImage(named: "bolt-slash")
+            connectionStatusImageView.image = UIImage(systemName: "bolt.slash.fill")
             connectionStatusImageView.tintColor = UIColor.lightGray
         }
     }
