@@ -337,4 +337,5 @@
     <inferredMetricsTieBreakers>
         <segue reference="6S0-TO-JiA"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" name="Global Tint Color"/>
 </document>

@@ -166,7 +166,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     func updateConnectionStatusView() {
         if deviceClient?.isAvailable == true {
             connectionStatusImageView.image = UIImage(systemName: "bolt.fill")
-            connectionStatusImageView.tintColor = UIColor(hue: 263 / 360, saturation: 0.8, brightness: 1, alpha: 1)
+            connectionStatusImageView.tintColor = nil
         } else {
             connectionStatusImageView.image = UIImage(systemName: "bolt.slash.fill")
             connectionStatusImageView.tintColor = UIColor.lightGray
@@ -175,7 +175,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
 
     func updateCardStatusView() {
         if deviceClient?.isCardInserted == true {
-            cardStatusImageView.tintColor = UIColor(hue: 263 / 360, saturation: 0.8, brightness: 1, alpha: 1)
+            cardStatusImageView.tintColor = nil
         } else {
             cardStatusImageView.tintColor = UIColor.lightGray
         }
