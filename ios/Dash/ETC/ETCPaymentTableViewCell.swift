@@ -28,7 +28,7 @@ class ETCPaymentTableViewCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var roadLabel: UILabel!
     @IBOutlet weak var tollboothLabel: UILabel!
-    @IBOutlet weak var dashLabel: UILabel!
+    @IBOutlet weak var arrowView: UIImageView!
     @IBOutlet weak var exitRoadView: UIView!
     @IBOutlet weak var exitRoadLabel: UILabel!
     @IBOutlet weak var exitTollboothLabel: UILabel!
@@ -67,11 +67,11 @@ class ETCPaymentTableViewCell: UITableViewCell {
             tollboothLabel.text = entrance.name
 
             if entrance == exit {
-                dashLabel.isHidden = true
+                arrowView.isHidden = true
                 exitRoadView.isHidden = true
                 exitTollboothLabel.isHidden = true
             } else {
-                dashLabel.isHidden = false
+                arrowView.isHidden = false
 
                 if entrance.road.name == exit.road.name {
                     exitRoadView.isHidden = true
