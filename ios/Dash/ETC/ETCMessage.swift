@@ -183,6 +183,7 @@ enum ETCMessageFromClient {
     static let deviceNameRequest = ChecksummedMessage(headerBytes: [0x01, 0xC6, byte(of: "K")])
     static let initialPaymentRecordRequest = ChecksummedMessage(headerBytes: [0x01, 0xC6, byte(of: "L")])
     static let nextPaymentRecordRequest = ChecksummedMessage(headerBytes: [0x01, 0xC6, byte(of: "M")])
+    static let uniqueCardDataRequest = ChecksummedMessage(headerBytes: [0x01, 0xC6, byte(of: "R")])
 
     struct PlainMessage: ETCMessageFromClientProtocol {
         let headerBytes: [UInt8]
@@ -222,6 +223,7 @@ enum ETCMessageFromDevice {
         PaymentNotification.self,
         CardInsertionNotification.self,
         CardEjectionNotification.self,
+        UniqueCardDataResponse.self,
         Unknown.self
     ]
 
@@ -389,6 +391,13 @@ enum ETCMessageFromDevice {
     struct CardEjectionNotification: ETCMessageFromDeviceProtocol, ChecksummedMessageProtocol {
         static let headerBytes: [UInt8] = [0x01, 0xC2, byte(of: "E")]
         static let payloadLength = 0
+        let data: Data
+    }
+
+    // We don't know what the data is for, but it's unique to each card and fixed regardless of the payment history.
+    struct UniqueCardDataResponse: ETCMessageFromDeviceProtocol, ChecksummedMessageProtocol {
+        static let headerBytes: [UInt8] = [0x02, 0xB6, 0x80]
+        static let payloadLength = 128
         let data: Data
     }
 
