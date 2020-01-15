@@ -41,4 +41,12 @@ class ETCPaymentManagedObject: NSManagedObject, ETCPaymentProtocol {
 
     lazy var entranceTollbooth: Tollbooth? = Tollbooth.findTollbooth(id: entranceTollboothID)
     lazy var exitTollbooth: Tollbooth? = Tollbooth.findTollbooth(id: exitTollboothID)
+
+    @objc var sectionIdentifier: Date {
+        var components = Calendar.current.dateComponents(in: TimeZone.current, from: date)
+        components.hour = nil
+        components.minute = nil
+        components.second = nil
+        return components.date!
+    }
 }
