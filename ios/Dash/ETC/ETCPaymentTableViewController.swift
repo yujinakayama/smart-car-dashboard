@@ -252,6 +252,11 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         return cell
     }
 
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let headerView = view as! UITableViewHeaderFooterView
+        headerView.textLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    }
+
     // MARK: - NSFetchedResultsControllerDelegate
 
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

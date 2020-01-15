@@ -17,7 +17,6 @@ class ETCPaymentTableViewCell: UITableViewCell {
 
     static var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
         dateFormatter.timeStyle = .short
         return dateFormatter
     }()
@@ -25,7 +24,7 @@ class ETCPaymentTableViewCell: UITableViewCell {
     @IBOutlet weak var yenLabel: UILabel!
     @IBOutlet weak var amountView: UIView!
     @IBOutlet weak var amountLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var roadLabel: UILabel!
     @IBOutlet weak var tollboothLabel: UILabel!
     @IBOutlet weak var arrowView: UIImageView!
@@ -60,7 +59,7 @@ class ETCPaymentTableViewCell: UITableViewCell {
     private func updateViews() {
         amountLabel.text = payment.map { ETCPaymentTableViewCell.numberFormatter.string(from: NSNumber(value: $0.amount))! }
 
-        dateLabel.text = payment.map { ETCPaymentTableViewCell.dateFormatter.string(from: $0.date as Date) }
+        timeLabel.text = payment.map { ETCPaymentTableViewCell.dateFormatter.string(from: $0.date as Date) }
 
         if let entrance = payment?.entranceTollbooth, let exit = payment?.exitTollbooth {
             roadLabel.text = entrance.road.abbreviatedName

@@ -281,11 +281,11 @@
                                     <outlet property="amountLabel" destination="ukE-X2-gHW" id="bys-ax-zyE"/>
                                     <outlet property="amountView" destination="yXL-mj-wgO" id="164-06-0Jz"/>
                                     <outlet property="arrowView" destination="uB5-qW-VsK" id="Hq1-HE-dgR"/>
-                                    <outlet property="dateLabel" destination="1Lp-b1-rnx" id="m5q-Ov-7ll"/>
                                     <outlet property="exitRoadLabel" destination="mrm-PV-omm" id="oqj-jg-yiu"/>
                                     <outlet property="exitRoadView" destination="Rko-mV-7BI" id="sIc-GS-n8I"/>
                                     <outlet property="exitTollboothLabel" destination="Flp-ga-yBP" id="voM-Ba-YeK"/>
                                     <outlet property="roadLabel" destination="CtC-aV-rx7" id="VEH-pW-shN"/>
+                                    <outlet property="timeLabel" destination="1Lp-b1-rnx" id="m5q-Ov-7ll"/>
                                     <outlet property="tollboothLabel" destination="ElS-Fh-95g" id="a6q-bF-N5u"/>
                                     <outlet property="yenLabel" destination="6wB-E0-moo" id="JaW-EC-5zD"/>
                                     <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" id="6S0-TO-JiA"/>
