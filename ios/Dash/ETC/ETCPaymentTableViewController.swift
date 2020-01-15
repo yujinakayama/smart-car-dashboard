@@ -41,6 +41,13 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
 
     var lastPaymentNotificationTime: Date?
 
+    let sectionHeaderDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ja_JP")
+        formatter.dateStyle = .full
+        return formatter
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -77,7 +84,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         fetchedResultsController = NSFetchedResultsController(
             fetchRequest: fetchRequest,
             managedObjectContext: paymentDatabase.persistentContainer.viewContext,
-            sectionNameKeyPath: nil,
+            sectionNameKeyPath: "sectionIdentifier",
             cacheName: nil
         )
 
@@ -229,6 +236,12 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fetchedResultsController?.sections?[section].numberOfObjects ?? 0
+    }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let sectionInfo = fetchedResultsController?.sections?[section]
+        let payment = sectionInfo?.objects?.first as? ETCPaymentManagedObject
+        return sectionHeaderDateFormatter.string(from: payment!.date)
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
