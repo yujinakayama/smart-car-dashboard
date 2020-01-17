@@ -26,6 +26,8 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
 
     weak var delegate: ETCDeviceClientDelegate?
 
+    var unprocessedData = Data()
+
     var isAvailable: Bool {
         return serialPort.isAvailable && handshakeStatus == .complete
     }
@@ -89,27 +91,15 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
     }
 
     private func handleReceivedData(_ data: Data) {
-        logger.debug("\(data.count) bytes: \(data.map { String(format: "%02X", $0) }.joined(separator: " "))")
+        logger.debug("Newly received: \(data.count) bytes (\(data.map { String(format: "%02X", $0) }.joined(separator: " ")))")
 
-        var matchingResult: (message: ETCMessageFromDeviceProtocol, unconsumedData: Data)?
+        unprocessedData += data
 
-        _ = ETCMessageFromDevice.knownTypes.first { (type) in
-            if let result = type.makeMessageIfMatches(data: data) {
-                matchingResult = result
-                return true
-            } else {
-                return false
-            }
-        }
+        logger.debug("Unprocessed data: \(unprocessedData.count) bytes (\(unprocessedData.map { String(format: "%02X", $0) }.joined(separator: " ")))")
 
-        if let matchingResult = matchingResult {
-            handleReceivedMessage(matchingResult.message)
-            if !matchingResult.unconsumedData.isEmpty {
-                handleReceivedData(matchingResult.unconsumedData)
-            }
-        } else {
-            let message = ETCMessageFromDevice.Unknown(data: data)
-            handleReceivedMessage(message)
+        while let result = ETCMessageFromDevice.parse(unprocessedData) {
+            unprocessedData = result.unconsumedData
+            handleReceivedMessage(result.message)
         }
     }
 

@@ -62,6 +62,8 @@ extension ETCMessageFromClientProtocol {
 }
 
 protocol ETCMessageFromDeviceProtocol: ETCMessageProtocol {
+    typealias ParsingResult = (message: ETCMessageFromDeviceProtocol, unconsumedData: Data)?
+    static func parse(_ data: Data) -> ParsingResult
     static func validTerminalBytes(payloadBytes: [UInt8]) -> [UInt8]
     static var headerBytes: [UInt8] { get }
     static var length: Int { get }
@@ -73,14 +75,14 @@ protocol ETCMessageFromDeviceProtocol: ETCMessageProtocol {
 }
 
 extension ETCMessageFromDeviceProtocol {
-    static func makeMessageIfMatches(data: Data) -> (message: ETCMessageFromDeviceProtocol, unconsumedData: Data)? {
-        guard matches(data: data) else { return nil }
+    static func parse(_ data: Data) -> ParsingResult {
+        guard matches(data) else { return nil }
         let consumedData = data[..<length]
         let unconsumedData = Data(data[length...]) // Re-instantiate as Data since the sliced Data starts from non-zero index
         return (Self(data: consumedData), unconsumedData)
     }
 
-    static func matches(data: Data) -> Bool {
+    static func matches(_ data: Data) -> Bool {
         return data.count >= length && [UInt8](data.prefix(headerLength)) == headerBytes
     }
 
@@ -95,7 +97,6 @@ extension ETCMessageFromDeviceProtocol {
         let data = Data(headerBytes + payloadBytes + terminalBytes)
         return Self(data: data)
     }
-
 
     static var length: Int {
         return headerLength + payloadLength + terminalLength
@@ -205,7 +206,7 @@ enum ETCMessageFromClient {
 }
 
 enum ETCMessageFromDevice {
-    static let knownTypes: [ETCMessageFromDeviceProtocol.Type] = [
+    static let types: [ETCMessageFromDeviceProtocol.Type] = [
         HeartBeat.self,
         HandshakeAcknowledgement.self,
         HandshakeRequest.self,
@@ -220,8 +221,19 @@ enum ETCMessageFromDevice {
         GateExitNotification.self,
         PaymentNotification.self,
         CardInsertionNotification.self,
-        CardEjectionNotification.self
+        CardEjectionNotification.self,
+        Unknown.self
     ]
+
+    static func parse(_ data: Data) -> ETCMessageFromDeviceProtocol.ParsingResult {
+        for type in types {
+            if let result = type.parse(data) {
+                return result
+            }
+        }
+
+        return nil
+    }
 
     struct HeartBeat: ETCMessageFromDeviceProtocol, PlainMessageProtocol {
         static let headerBytes: [UInt8] = [byte(of: "U")]
@@ -385,5 +397,12 @@ enum ETCMessageFromDevice {
         static let payloadLength = 0
         static let terminalLength = 0
         let data: Data
+
+        static func parse(_ data: Data) -> ParsingResult {
+            guard let terminalIndex = data.firstIndex(of: terminalByte) else { return nil }
+            let consumedData = data[...terminalIndex]
+            let unconsumedData = Data(data[(terminalIndex + 1)...]) // Re-instantiate as Data since the sliced Data starts from non-zero index
+            return (Self(data: consumedData), unconsumedData)
+        }
     }
 }
