@@ -66,7 +66,7 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
             self.handshakeTimeoutTimer = nil
         }
 
-        try! send(ETCMessageFromClient.handshakeRequest)
+        try! send(ETCMessageToDevice.handshakeRequest)
     }
 
     private func completeHandshake() {
@@ -81,10 +81,10 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
             hasFinishedPreparationOnce = true
         }
 
-        try! send(ETCMessageFromClient.cardExistenceRequest)
+        try! send(ETCMessageToDevice.cardExistenceRequest)
     }
 
-    func send(_ message: ETCMessageFromClientProtocol) throws {
+    func send(_ message: ETCMessageToDeviceProtocol) throws {
         logger.debug(message)
         assert(!message.requiresPreliminaryHandshake || handshakeStatus == .complete)
         try serialPort.transmit(message.data)
@@ -125,13 +125,13 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
         case is ETCMessageFromDevice.CardNonExistenceResponse:
             isCardInserted = false
         case is ETCMessageFromDevice.InitialPaymentRecordExistenceResponse:
-            try! send(ETCMessageFromClient.initialPaymentRecordRequest)
+            try! send(ETCMessageToDevice.initialPaymentRecordRequest)
         default:
             break
         }
 
         if message.requiresAcknowledgement {
-            try! send(ETCMessageFromClient.acknowledgement)
+            try! send(ETCMessageToDevice.acknowledgement)
 
             if handshakeStatus != .complete && message is ETCMessageFromDevice.HandshakeRequest {
                 completeHandshake()

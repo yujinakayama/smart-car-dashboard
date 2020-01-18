@@ -131,7 +131,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     }
 
     func deviceConnectionDidDetectCardInsertion(_ deviceConnection: ETCDeviceConnection) {
-        try! deviceConnection.send(ETCMessageFromClient.uniqueCardDataRequest)
+        try! deviceConnection.send(ETCMessageToDevice.uniqueCardDataRequest)
         updateCardStatusView()
     }
 
@@ -147,7 +147,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
             UserNotificationCenter.shared.requestDelivery(TollgatePassingThroughNotification())
         case is ETCMessageFromDevice.PaymentNotification:
             lastPaymentNotificationTime = Date()
-            try! deviceConnection.send(ETCMessageFromClient.initialPaymentRecordRequest)
+            try! deviceConnection.send(ETCMessageToDevice.initialPaymentRecordRequest)
         case let uniqueCardDataResponse as ETCMessageFromDevice.UniqueCardDataResponse:
             let cardUUID = UUID(version: .v5, namespace: cardUUIDNamespace, name: Data(uniqueCardDataResponse.payloadBytes))
             paymentDatabase.performBackgroundTask { [unowned self] (context) in
@@ -155,10 +155,10 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
                 if card != nil {
                     try! context.save()
                     self.paymentDatabase.currentCard = card
-                    try! deviceConnection.send(ETCMessageFromClient.initialPaymentRecordRequest)
+                    try! deviceConnection.send(ETCMessageToDevice.initialPaymentRecordRequest)
                 }
             }
-            try! deviceConnection.send(ETCMessageFromClient.initialPaymentRecordRequest)
+            try! deviceConnection.send(ETCMessageToDevice.initialPaymentRecordRequest)
         case let paymentRecordResponse as ETCMessageFromDevice.PaymentRecordResponse:
             if let payment = paymentRecordResponse.payment {
                 if justReceivedPaymentNotification {
@@ -170,7 +170,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
                     let managedObject = try! self.paymentDatabase.insert(payment: payment, unlessExistsIn: context)
                     if managedObject != nil {
                         try! context.save()
-                        try! deviceConnection.send(ETCMessageFromClient.nextPaymentRecordRequest)
+                        try! deviceConnection.send(ETCMessageToDevice.nextPaymentRecordRequest)
                     }
                 }
             }
