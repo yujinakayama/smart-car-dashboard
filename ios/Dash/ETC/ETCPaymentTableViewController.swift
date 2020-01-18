@@ -52,6 +52,8 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         super.viewDidLoad()
 
         paymentDatabase.loadPersistantStores { [unowned self] (persistentStoreDescription, error) in
+            logger.debug(persistentStoreDescription)
+
             if let error = error {
                 logger.severe(error)
                 fatalError()
