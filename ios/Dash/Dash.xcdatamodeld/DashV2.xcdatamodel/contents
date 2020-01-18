@@ -17,6 +17,9 @@
         <attribute name="exitTollboothID" attributeType="String"/>
         <attribute name="vehicleClassification" attributeType="Integer 16" usesScalarValueType="YES"/>
         <relationship name="card" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ETCCard" inverseName="payments" inverseEntity="ETCCard"/>
+        <fetchIndex name="CardIndex">
+            <fetchIndexElement property="card" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <elements>
         <element name="ETCCard" positionX="-27" positionY="54" width="128" height="88"/>
