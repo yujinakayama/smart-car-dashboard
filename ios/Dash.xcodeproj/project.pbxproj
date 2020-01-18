@@ -28,7 +28,7 @@
 		B9BC920923250A0A006F22FC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BC920823250A0A006F22FC /* Defaults.swift */; };
 		B9CB7C0D22AD65A40059433E /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB7C0C22AD65A40059433E /* UITableViewCellExtension.swift */; };
 		B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */; };
-		B9CEA76622D89A400055C9A3 /* ETCPaymentDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76522D89A400055C9A3 /* ETCPaymentDatabase.swift */; };
+		B9CEA76622D89A400055C9A3 /* ETCDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */; };
 		B9CEA76E22D911140055C9A3 /* ETCPaymentSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76D22D911140055C9A3 /* ETCPaymentSplitViewController.swift */; };
 		B9D8E43823D345940078A057 /* ETCCardManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43723D345940078A057 /* ETCCardManagedObject.swift */; };
 		B9D8E43A23D345D70078A057 /* UUIDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43923D345D70078A057 /* UUIDExtension.swift */; };
@@ -80,7 +80,7 @@
 		B9BC920823250A0A006F22FC /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		B9CB7C0C22AD65A40059433E /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
 		B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationCenter.swift; sourceTree = "<group>"; };
-		B9CEA76522D89A400055C9A3 /* ETCPaymentDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentDatabase.swift; sourceTree = "<group>"; };
+		B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDataStore.swift; sourceTree = "<group>"; };
 		B9CEA76D22D911140055C9A3 /* ETCPaymentSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCPaymentSplitViewController.swift; sourceTree = "<group>"; };
 		B9D8E43723D345940078A057 /* ETCCardManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCCardManagedObject.swift; sourceTree = "<group>"; };
 		B9D8E43923D345D70078A057 /* UUIDExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUIDExtension.swift; sourceTree = "<group>"; };
@@ -154,7 +154,7 @@
 				B9DC5B28229D59BE00B645D5 /* ETCPaymentDetailViewController.swift */,
 				B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */,
 				B931C4FE23D369760020DF13 /* ETCDevice.swift */,
-				B9CEA76522D89A400055C9A3 /* ETCPaymentDatabase.swift */,
+				B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */,
 				B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */,
 				B9DB8E5722D7A481003E4BD8 /* ETCPaymentManagedObject.swift */,
 				B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */,
@@ -373,7 +373,7 @@
 				B9DC5B46229EB8B200B645D5 /* SerialPortManager.swift in Sources */,
 				B9E96CC822A4EF1300C2E009 /* ETCPayment.swift in Sources */,
 				B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */,
-				B9CEA76622D89A400055C9A3 /* ETCPaymentDatabase.swift in Sources */,
+				B9CEA76622D89A400055C9A3 /* ETCDataStore.swift in Sources */,
 				B931C4FF23D369760020DF13 /* ETCDevice.swift in Sources */,
 				B9DC5B29229D59BE00B645D5 /* ETCPaymentDetailViewController.swift in Sources */,
 				B98E936A234C94C7004AE50F /* ETCPaymentProtocol.swift in Sources */,

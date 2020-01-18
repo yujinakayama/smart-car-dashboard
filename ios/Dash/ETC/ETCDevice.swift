@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 extension Notification.Name {
-    static let ETCDeviceDidFinishDatabasePreparation = Notification.Name("ETCDeviceDidFinishDatabasePreparation")
+    static let ETCDeviceDidFinishDataStorePreparation = Notification.Name("ETCDeviceDidFinishDataStorePreparation")
     static let ETCDeviceDidConnect = Notification.Name("ETCDeviceDidConnect")
     static let ETCDeviceDidDetectCardInsertion = Notification.Name("ETCDeviceDidDetectCardInsertion")
     static let ETCDeviceDidDetectCardEjection = Notification.Name("ETCDeviceDidDetectCardEjection")
@@ -19,7 +19,7 @@ extension Notification.Name {
 class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegate {
     static let cardUUIDNamespace = UUID(uuidString: "AE12B12B-2DD8-4FAB-9AD3-67FB3A15E12C")!
 
-    let database = ETCPaymentDatabase(name: "Dash")
+    let dataStore = ETCDataStore(name: "Dash")
     var serialPortManager: SerialPortManager?
     var connection: ETCDeviceConnection?
 
@@ -29,7 +29,7 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
 
     var currentCard: ETCCardManagedObject? {
         didSet {
-            database.currentCard = currentCard
+            dataStore.currentCard = currentCard
         }
     }
 
@@ -58,7 +58,7 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
     }
 
     func startPreparation() {
-        database.loadPersistantStores { [unowned self] (persistentStoreDescription, error) in
+        dataStore.loadPersistantStores { [unowned self] (persistentStoreDescription, error) in
             logger.debug(persistentStoreDescription)
 
             if let error = error {
@@ -66,7 +66,7 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
                 fatalError()
             }
 
-            self.notificationCenter.post(name: .ETCDeviceDidFinishDatabasePreparation, object: self)
+            self.notificationCenter.post(name: .ETCDeviceDidFinishDataStorePreparation, object: self)
 
             self.setupSerialPortManager()
         }
@@ -127,8 +127,8 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
         let cardData = Data(response.payloadBytes)
         let cardUUID = UUID(version: .v5, namespace: ETCDevice.cardUUIDNamespace, name: cardData)
 
-        database.performBackgroundTask { [unowned self] (context) in
-            let card = try! self.database.findOrInsertCard(uuid: cardUUID, in: context)
+        dataStore.performBackgroundTask { [unowned self] (context) in
+            let card = try! self.dataStore.findOrInsertCard(uuid: cardUUID, in: context)
             try! context.save()
             self.currentCard = card
             self.notificationCenter.post(name: .ETCDeviceDidDetectCardInsertion, object: self)
@@ -144,8 +144,8 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
             UserNotificationCenter.shared.requestDelivery(PaymentNotification(payment: payment))
         }
 
-        database.performBackgroundTask { [unowned self] (context) in
-            let managedObject = try! self.database.insert(payment: payment, unlessExistsIn: context)
+        dataStore.performBackgroundTask { [unowned self] (context) in
+            let managedObject = try! self.dataStore.insert(payment: payment, unlessExistsIn: context)
             if managedObject != nil {
                 try! context.save()
                 try! self.connection!.send(ETCMessageToDevice.nextPaymentRecordRequest)

@@ -18,7 +18,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
 
         let controller = NSFetchedResultsController(
             fetchRequest: request,
-            managedObjectContext: device.database.viewContext,
+            managedObjectContext: device.dataStore.viewContext,
             sectionNameKeyPath: "sectionIdentifier",
             cacheName: nil
         )
@@ -84,7 +84,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     func setupNotificationObservations() {
         let notificationCenter = NotificationCenter.default
 
-        notificationCenter.addObserver(forName: .ETCDeviceDidFinishDatabasePreparation, object: device, queue: .main) { (notification) in
+        notificationCenter.addObserver(forName: .ETCDeviceDidFinishDataStorePreparation, object: device, queue: .main) { (notification) in
             try! self.fetchedResultsController.performFetch()
             self.tableView.reloadData()
         }

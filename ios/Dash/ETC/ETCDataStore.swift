@@ -1,5 +1,5 @@
 //
-//  ETCPaymentDatabase.swift
+//  ETCDataStore.swift
 //  Dash
 //
 //  Created by Yuji Nakayama on 2019/07/12.
@@ -9,11 +9,11 @@
 import Foundation
 import CoreData
 
-enum ETCPaymentDatabaseError: Error {
+enum ETCDataStoreError: Error {
     case currentCardMustBeSet
 }
 
-class ETCPaymentDatabase {
+class ETCDataStore {
     let persistentContainer: NSPersistentContainer
 
     var viewContext: NSManagedObjectContext {
@@ -54,7 +54,7 @@ class ETCPaymentDatabase {
 
     func insert(payment: ETCPayment, into context: NSManagedObjectContext) throws -> ETCPaymentManagedObject {
         guard let card = currentCard else {
-            throw ETCPaymentDatabaseError.currentCardMustBeSet
+            throw ETCDataStoreError.currentCardMustBeSet
         }
 
         let managedObject = insertNewPayment(into: context)
