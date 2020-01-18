@@ -9,8 +9,8 @@
 import Foundation
 
 protocol SerialPortManagerDelegate: NSObjectProtocol {
-    func serialPortManager(_ serialPortManager: SerialPortManager, didConnectToDevice deviceConnection: ETCDeviceConnection)
-    func serialPortManager(_ serialPortManager: SerialPortManager, didDisconnectToDevice deviceConnection: ETCDeviceConnection)
+    func serialPortManager(_ serialPortManager: SerialPortManager, didFindSerialPort serialPort: SerialPort)
+    func serialPortManager(_ serialPortManager: SerialPortManager, didLoseSerialPort serialPort: SerialPort)
 }
 
 class SerialPortManager: NSObject, BLERemotePeripheralManagerDelegate {
@@ -22,7 +22,7 @@ class SerialPortManager: NSObject, BLERemotePeripheralManagerDelegate {
         return peripheralManager
     }()
 
-    private var connections = [BLERemotePeripheral: ETCDeviceConnection]()
+    private var connectedSerialPorts = [BLERemotePeripheral: SerialPort]()
 
     init(delegate: SerialPortManagerDelegate) {
         self.delegate = delegate
@@ -34,8 +34,7 @@ class SerialPortManager: NSObject, BLERemotePeripheralManagerDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
             guard let self = self else { return }
             let serialPort = MockSerialPort()
-            let deviceConnection = ETCDeviceConnection(serialPort: serialPort)
-            self.delegate?.serialPortManager(self, didConnectToDevice: deviceConnection)
+            self.delegate?.serialPortManager(self, didFindSerialPort: serialPort)
         }
         #else
         _ = peripheralManager
@@ -61,9 +60,8 @@ class SerialPortManager: NSObject, BLERemotePeripheralManagerDelegate {
     func peripheralManager(_ peripheralManager: BLERemotePeripheralManager, didConnectToPeripheral peripheral: BLERemotePeripheral) {
         logger.info(peripheral)
         let serialPort = BLESerialPort(peripheral: peripheral)
-        let deviceConnection = ETCDeviceConnection(serialPort: serialPort)
-        connections[peripheral] = deviceConnection
-        delegate?.serialPortManager(self, didConnectToDevice: deviceConnection)
+        connectedSerialPorts[peripheral] = serialPort
+        delegate?.serialPortManager(self, didFindSerialPort: serialPort)
     }
 
     func peripheralManager(_ peripheralManager: BLERemotePeripheralManager, didFailToConnectToPeripheral peripheral: BLERemotePeripheral, error: Error?) {
@@ -74,9 +72,9 @@ class SerialPortManager: NSObject, BLERemotePeripheralManagerDelegate {
     func peripheralManager(_ peripheralManager: BLERemotePeripheralManager, didDisconnectToPeripheral peripheral: BLERemotePeripheral, error: Error?) {
         logger.info((peripheral, error))
 
-        if let deviceConnection = connections[peripheral] {
-            delegate?.serialPortManager(self, didDisconnectToDevice: deviceConnection)
-            connections.removeValue(forKey: peripheral)
+        if let serialPort = connectedSerialPorts[peripheral] {
+            delegate?.serialPortManager(self, didLoseSerialPort: serialPort)
+            connectedSerialPorts.removeValue(forKey: peripheral)
         }
 
         peripheralManager.connect(to: peripheral)

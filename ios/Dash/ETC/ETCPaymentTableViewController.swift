@@ -112,13 +112,13 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
 
     // MARK: - ETCserialPortManagerDelegate
 
-    func serialPortManager(_ serialPortManager: SerialPortManager, didConnectToDevice deviceConnection: ETCDeviceConnection) {
-        self.deviceConnection = deviceConnection
-        deviceConnection.delegate = self
-        deviceConnection.startPreparation()
+    func serialPortManager(_ serialPortManager: SerialPortManager, didFindSerialPort serialPort: SerialPort) {
+        self.deviceConnection = ETCDeviceConnection(serialPort: serialPort)
+        deviceConnection!.delegate = self
+        deviceConnection!.startPreparation()
     }
 
-    func serialPortManager(_ serialPortManager: SerialPortManager, didDisconnectToDevice deviceConnection: ETCDeviceConnection) {
+    func serialPortManager(_ serialPortManager: SerialPortManager, didLoseSerialPort serialPort: SerialPort) {
         self.deviceConnection = nil
         updateConnectionStatusView()
         updateCardStatusView()
