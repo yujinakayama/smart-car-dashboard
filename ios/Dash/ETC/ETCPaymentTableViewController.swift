@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, ETCDeviceManagerDelegate, ETCDeviceConnectionDelegate {
+class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, SerialPortManagerDelegate, ETCDeviceConnectionDelegate {
     let paymentDatabase = ETCPaymentDatabase(name: "Dash")
 
     let cardUUIDNamespace = UUID(uuidString: "AE12B12B-2DD8-4FAB-9AD3-67FB3A15E12C")!
@@ -39,7 +39,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         return view
     }()
 
-    var deviceManager: ETCDeviceManager?
+    var serialPortManager: SerialPortManager?
     var deviceConnection: ETCDeviceConnection?
 
     var lastPaymentNotificationTime: Date?
@@ -63,7 +63,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
             }
 
             self.setupFetchedResultsController()
-            self.setupDeviceManager()
+            self.setupserialPortManager()
         }
 
         assignDetailViewControllerIfExists()
@@ -100,9 +100,9 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         tableView.reloadData()
     }
 
-    func setupDeviceManager() {
-        deviceManager = ETCDeviceManager(delegate: self)
-        deviceManager!.startDiscovering()
+    func setupserialPortManager() {
+        serialPortManager = SerialPortManager(delegate: self)
+        serialPortManager!.startDiscovering()
     }
 
     func assignDetailViewControllerIfExists() {
@@ -110,15 +110,15 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         detailViewController = navigationController.topViewController as? ETCPaymentDetailViewController
     }
 
-    // MARK: - ETCDeviceManagerDelegate
+    // MARK: - ETCserialPortManagerDelegate
 
-    func deviceManager(_ deviceManager: ETCDeviceManager, didConnectToDevice deviceConnection: ETCDeviceConnection) {
+    func serialPortManager(_ serialPortManager: SerialPortManager, didConnectToDevice deviceConnection: ETCDeviceConnection) {
         self.deviceConnection = deviceConnection
         deviceConnection.delegate = self
         deviceConnection.startPreparation()
     }
 
-    func deviceManager(_ deviceManager: ETCDeviceManager, didDisconnectToDevice deviceConnection: ETCDeviceConnection) {
+    func serialPortManager(_ serialPortManager: SerialPortManager, didDisconnectToDevice deviceConnection: ETCDeviceConnection) {
         self.deviceConnection = nil
         updateConnectionStatusView()
         updateCardStatusView()

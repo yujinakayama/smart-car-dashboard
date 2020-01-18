@@ -42,7 +42,7 @@
 		B9DC5B39229D5D8100B645D5 /* ETCDeviceConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B38229D5D8100B645D5 /* ETCDeviceConnection.swift */; };
 		B9DC5B3D229D9E0C00B645D5 /* BLERemotePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B3C229D9E0C00B645D5 /* BLERemotePeripheral.swift */; };
 		B9DC5B3F229D9E4F00B645D5 /* BLERemotePeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B3E229D9E4F00B645D5 /* BLERemotePeripheralManager.swift */; };
-		B9DC5B46229EB8B200B645D5 /* ETCDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B45229EB8B200B645D5 /* ETCDeviceManager.swift */; };
+		B9DC5B46229EB8B200B645D5 /* SerialPortManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B45229EB8B200B645D5 /* SerialPortManager.swift */; };
 		B9DC5B4A229EDA0000B645D5 /* SerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B49229EDA0000B645D5 /* SerialPort.swift */; };
 		B9E6CC9C234F65A000E18603 /* TollgatePassingThrough.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9E6CC9B234F65A000E18603 /* TollgatePassingThrough.wav */; };
 		B9E6CCA1234F69B800E18603 /* Payment.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9E6CCA0234F69B800E18603 /* Payment.wav */; };
@@ -96,7 +96,7 @@
 		B9DC5B38229D5D8100B645D5 /* ETCDeviceConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceConnection.swift; sourceTree = "<group>"; };
 		B9DC5B3C229D9E0C00B645D5 /* BLERemotePeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLERemotePeripheral.swift; sourceTree = "<group>"; };
 		B9DC5B3E229D9E4F00B645D5 /* BLERemotePeripheralManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLERemotePeripheralManager.swift; sourceTree = "<group>"; };
-		B9DC5B45229EB8B200B645D5 /* ETCDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceManager.swift; sourceTree = "<group>"; };
+		B9DC5B45229EB8B200B645D5 /* SerialPortManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerialPortManager.swift; sourceTree = "<group>"; };
 		B9DC5B49229EDA0000B645D5 /* SerialPort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerialPort.swift; sourceTree = "<group>"; };
 		B9E6CC9B234F65A000E18603 /* TollgatePassingThrough.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = TollgatePassingThrough.wav; sourceTree = "<group>"; };
 		B9E6CCA0234F69B800E18603 /* Payment.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Payment.wav; sourceTree = "<group>"; };
@@ -156,7 +156,7 @@
 				B9DB8E5722D7A481003E4BD8 /* ETCPaymentManagedObject.swift */,
 				B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */,
 				B9D8E43723D345940078A057 /* ETCCardManagedObject.swift */,
-				B9DC5B45229EB8B200B645D5 /* ETCDeviceManager.swift */,
+				B9DC5B45229EB8B200B645D5 /* SerialPortManager.swift */,
 				B9DC5B38229D5D8100B645D5 /* ETCDeviceConnection.swift */,
 				B99356E522A9525C00BA08AB /* ETCMessage.swift */,
 				B9DC5B49229EDA0000B645D5 /* SerialPort.swift */,
@@ -367,7 +367,7 @@
 			files = (
 				B9DB8E5922D7A481003E4BD8 /* ETCPaymentManagedObject.swift in Sources */,
 				B99356E622A9525C00BA08AB /* ETCMessage.swift in Sources */,
-				B9DC5B46229EB8B200B645D5 /* ETCDeviceManager.swift in Sources */,
+				B9DC5B46229EB8B200B645D5 /* SerialPortManager.swift in Sources */,
 				B9E96CC822A4EF1300C2E009 /* ETCPayment.swift in Sources */,
 				B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */,
 				B9CEA76622D89A400055C9A3 /* ETCPaymentDatabase.swift in Sources */,

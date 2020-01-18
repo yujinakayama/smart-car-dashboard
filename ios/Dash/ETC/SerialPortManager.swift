@@ -1,5 +1,5 @@
 //
-//  ETCDeviceManager.swift
+//  ETCserialPortManager.swift
 //  ETC
 //
 //  Created by Yuji Nakayama on 2019/05/29.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-protocol ETCDeviceManagerDelegate: NSObjectProtocol {
-    func deviceManager(_ deviceManager: ETCDeviceManager, didConnectToDevice deviceConnection: ETCDeviceConnection)
-    func deviceManager(_ deviceManager: ETCDeviceManager, didDisconnectToDevice deviceConnection: ETCDeviceConnection)
+protocol SerialPortManagerDelegate: NSObjectProtocol {
+    func serialPortManager(_ serialPortManager: SerialPortManager, didConnectToDevice deviceConnection: ETCDeviceConnection)
+    func serialPortManager(_ serialPortManager: SerialPortManager, didDisconnectToDevice deviceConnection: ETCDeviceConnection)
 }
 
-class ETCDeviceManager: NSObject, BLERemotePeripheralManagerDelegate {
-    weak var delegate: ETCDeviceManagerDelegate?
+class SerialPortManager: NSObject, BLERemotePeripheralManagerDelegate {
+    weak var delegate: SerialPortManagerDelegate?
 
     lazy var peripheralManager: BLERemotePeripheralManager = {
         let peripheralManager = BLERemotePeripheralManager(delegate: self, serviceUUID: BLESerialPort.serviceUUID)
@@ -24,7 +24,7 @@ class ETCDeviceManager: NSObject, BLERemotePeripheralManagerDelegate {
 
     private var connections = [BLERemotePeripheral: ETCDeviceConnection]()
 
-    init(delegate: ETCDeviceManagerDelegate) {
+    init(delegate: SerialPortManagerDelegate) {
         self.delegate = delegate
         super.init()
     }
@@ -35,7 +35,7 @@ class ETCDeviceManager: NSObject, BLERemotePeripheralManagerDelegate {
             guard let self = self else { return }
             let serialPort = MockSerialPort()
             let deviceConnection = ETCDeviceConnection(serialPort: serialPort)
-            self.delegate?.deviceManager(self, didConnectToDevice: deviceConnection)
+            self.delegate?.serialPortManager(self, didConnectToDevice: deviceConnection)
         }
         #else
         _ = peripheralManager
@@ -63,7 +63,7 @@ class ETCDeviceManager: NSObject, BLERemotePeripheralManagerDelegate {
         let serialPort = BLESerialPort(peripheral: peripheral)
         let deviceConnection = ETCDeviceConnection(serialPort: serialPort)
         connections[peripheral] = deviceConnection
-        delegate?.deviceManager(self, didConnectToDevice: deviceConnection)
+        delegate?.serialPortManager(self, didConnectToDevice: deviceConnection)
     }
 
     func peripheralManager(_ peripheralManager: BLERemotePeripheralManager, didFailToConnectToPeripheral peripheral: BLERemotePeripheral, error: Error?) {
@@ -75,7 +75,7 @@ class ETCDeviceManager: NSObject, BLERemotePeripheralManagerDelegate {
         logger.info((peripheral, error))
 
         if let deviceConnection = connections[peripheral] {
-            delegate?.deviceManager(self, didDisconnectToDevice: deviceConnection)
+            delegate?.serialPortManager(self, didDisconnectToDevice: deviceConnection)
             connections.removeValue(forKey: peripheral)
         }
 
