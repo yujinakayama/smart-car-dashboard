@@ -16,6 +16,10 @@ enum ETCPaymentDatabaseError: Error {
 class ETCPaymentDatabase {
     let persistentContainer: NSPersistentContainer
 
+    var viewContext: NSManagedObjectContext {
+        return persistentContainer.viewContext
+    }
+
     lazy var backgroundContext = persistentContainer.newBackgroundContext()
 
     var currentCard: ETCCardManagedObject?
@@ -38,10 +42,6 @@ class ETCPaymentDatabase {
         backgroundContext.perform { [unowned self] in
             block(self.backgroundContext)
         }
-    }
-
-    func makeFetchRequest() -> NSFetchRequest<ETCPaymentManagedObject> {
-        return NSFetchRequest<ETCPaymentManagedObject>(entityName: ETCPaymentManagedObject.entityName)
     }
 
     func insert(payment: ETCPayment, unlessExistsIn context: NSManagedObjectContext) throws -> ETCPaymentManagedObject? {
@@ -72,12 +72,12 @@ class ETCPaymentDatabase {
     }
 
     func checkExistence(of payment: ETCPayment, in context: NSManagedObjectContext) throws -> Bool {
-        let fetchRequest = makeFetchRequest()
+        let fetchRequest: NSFetchRequest<ETCPaymentManagedObject> = ETCPaymentManagedObject.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "date == %@", payment.date as NSDate)
         return try context.count(for: fetchRequest) > 0
     }
 
-    func findOrInsertCard(uuid: UUID, in context: NSManagedObjectContext) throws -> ETCCardManagedObject? {
+    func findOrInsertCard(uuid: UUID, in context: NSManagedObjectContext) throws -> ETCCardManagedObject {
         if let card = try findCard(uuid: uuid, in: context) {
             return card
         }
@@ -88,7 +88,7 @@ class ETCPaymentDatabase {
     }
 
     func findCard(uuid: UUID, in context: NSManagedObjectContext) throws -> ETCCardManagedObject? {
-        let request = NSFetchRequest<ETCCardManagedObject>(entityName: ETCCardManagedObject.entityName)
+        let request: NSFetchRequest<ETCCardManagedObject> = ETCCardManagedObject.fetchRequest()
         request.predicate = NSPredicate(format: "uuid == %@", uuid as CVarArg)
         request.fetchLimit = 1
         let cards = try context.fetch(request)

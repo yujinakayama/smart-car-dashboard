@@ -9,12 +9,24 @@
 import UIKit
 import CoreData
 
-class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, SerialPortManagerDelegate, ETCDeviceConnectionDelegate {
-    let paymentDatabase = ETCPaymentDatabase(name: "Dash")
+class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+    let device = ETCDevice()
 
-    let cardUUIDNamespace = UUID(uuidString: "AE12B12B-2DD8-4FAB-9AD3-67FB3A15E12C")!
+    lazy var fetchedResultsController: NSFetchedResultsController<ETCPaymentManagedObject> = {
+        let request: NSFetchRequest<ETCPaymentManagedObject> = ETCPaymentManagedObject.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
 
-    var fetchedResultsController: NSFetchedResultsController<ETCPaymentManagedObject>?
+        let controller = NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: device.database.viewContext,
+            sectionNameKeyPath: "sectionIdentifier",
+            cacheName: nil
+        )
+
+        controller.delegate = self
+
+        return controller
+    }()
 
     var detailViewController: ETCPaymentDetailViewController?
 
@@ -39,11 +51,6 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         return view
     }()
 
-    var serialPortManager: SerialPortManager?
-    var deviceConnection: ETCDeviceConnection?
-
-    var lastPaymentNotificationTime: Date?
-
     let sectionHeaderDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ja_JP")
@@ -54,17 +61,9 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        paymentDatabase.loadPersistantStores { [unowned self] (persistentStoreDescription, error) in
-            logger.debug(persistentStoreDescription)
+        setupNotificationObservations()
 
-            if let error = error {
-                logger.severe(error)
-                fatalError()
-            }
-
-            self.setupFetchedResultsController()
-            self.setupserialPortManager()
-        }
+        device.startPreparation()
 
         assignDetailViewControllerIfExists()
 
@@ -82,27 +81,25 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         super.viewWillAppear(animated)
     }
 
-    func setupFetchedResultsController() {
-        let fetchRequest = paymentDatabase.makeFetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+    func setupNotificationObservations() {
+        let notificationCenter = NotificationCenter.default
 
-        fetchedResultsController = NSFetchedResultsController(
-            fetchRequest: fetchRequest,
-            managedObjectContext: paymentDatabase.persistentContainer.viewContext,
-            sectionNameKeyPath: "sectionIdentifier",
-            cacheName: nil
-        )
+        notificationCenter.addObserver(forName: .ETCDeviceDidFinishDatabasePreparation, object: device, queue: .main) { (notification) in
+            try! self.fetchedResultsController.performFetch()
+            self.tableView.reloadData()
+        }
 
-        fetchedResultsController!.delegate = self
+        notificationCenter.addObserver(forName: .ETCDeviceDidConnect, object: device, queue: .main) { (notification) in
+            self.updateConnectionStatusView()
+        }
 
-        try! fetchedResultsController!.performFetch()
+        notificationCenter.addObserver(forName: .ETCDeviceDidDetectCardInsertion, object: device, queue: .main) { (notification) in
+            self.updateCardStatusView()
+        }
 
-        tableView.reloadData()
-    }
-
-    func setupserialPortManager() {
-        serialPortManager = SerialPortManager(delegate: self)
-        serialPortManager!.startDiscovering()
+        notificationCenter.addObserver(forName: .ETCDeviceDidDetectCardInsertion, object: device, queue: .main) { (notification) in
+            self.updateCardStatusView()
+        }
     }
 
     func assignDetailViewControllerIfExists() {
@@ -110,85 +107,8 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         detailViewController = navigationController.topViewController as? ETCPaymentDetailViewController
     }
 
-    // MARK: - ETCserialPortManagerDelegate
-
-    func serialPortManager(_ serialPortManager: SerialPortManager, didFindSerialPort serialPort: SerialPort) {
-        self.deviceConnection = ETCDeviceConnection(serialPort: serialPort)
-        deviceConnection!.delegate = self
-        deviceConnection!.startPreparation()
-    }
-
-    func serialPortManager(_ serialPortManager: SerialPortManager, didLoseSerialPort serialPort: SerialPort) {
-        self.deviceConnection = nil
-        updateConnectionStatusView()
-        updateCardStatusView()
-    }
-
-    // MARK: - ETCDeviceClientDelegate
-
-    func deviceConnectionDidFinishPreparation(_ deviceConnection: ETCDeviceConnection, error: Error?) {
-        updateConnectionStatusView()
-    }
-
-    func deviceConnectionDidDetectCardInsertion(_ deviceConnection: ETCDeviceConnection) {
-        try! deviceConnection.send(ETCMessageToDevice.uniqueCardDataRequest)
-        updateCardStatusView()
-    }
-
-    func deviceConnectionDidDetectCardEjection(_ deviceConnection: ETCDeviceConnection) {
-        paymentDatabase.currentCard = nil
-        updateCardStatusView()
-    }
-
-    // TODO: Extract to another class
-    func deviceConnection(_ deviceConnection: ETCDeviceConnection, didReceiveMessage message: ETCMessageFromDeviceProtocol) {
-        switch message {
-        case is ETCMessageFromDevice.GateEntranceNotification, is ETCMessageFromDevice.GateExitNotification:
-            UserNotificationCenter.shared.requestDelivery(TollgatePassingThroughNotification())
-        case is ETCMessageFromDevice.PaymentNotification:
-            lastPaymentNotificationTime = Date()
-            try! deviceConnection.send(ETCMessageToDevice.initialPaymentRecordRequest)
-        case let uniqueCardDataResponse as ETCMessageFromDevice.UniqueCardDataResponse:
-            let cardUUID = UUID(version: .v5, namespace: cardUUIDNamespace, name: Data(uniqueCardDataResponse.payloadBytes))
-            paymentDatabase.performBackgroundTask { [unowned self] (context) in
-                let card = try! self.paymentDatabase.findOrInsertCard(uuid: cardUUID, in: context)
-                if card != nil {
-                    try! context.save()
-                    self.paymentDatabase.currentCard = card
-                    try! deviceConnection.send(ETCMessageToDevice.initialPaymentRecordRequest)
-                }
-            }
-            try! deviceConnection.send(ETCMessageToDevice.initialPaymentRecordRequest)
-        case let paymentRecordResponse as ETCMessageFromDevice.PaymentRecordResponse:
-            if let payment = paymentRecordResponse.payment {
-                if justReceivedPaymentNotification {
-                    lastPaymentNotificationTime = nil
-                    UserNotificationCenter.shared.requestDelivery(PaymentNotification(payment: payment))
-                }
-
-                paymentDatabase.performBackgroundTask { [unowned self] (context) in
-                    let managedObject = try! self.paymentDatabase.insert(payment: payment, unlessExistsIn: context)
-                    if managedObject != nil {
-                        try! context.save()
-                        try! deviceConnection.send(ETCMessageToDevice.nextPaymentRecordRequest)
-                    }
-                }
-            }
-        default:
-            break
-        }
-    }
-
-    var justReceivedPaymentNotification: Bool {
-        if let lastPaymentNotificationTime = lastPaymentNotificationTime {
-            return Date().timeIntervalSince(lastPaymentNotificationTime) < 3
-        } else {
-            return false
-        }
-    }
-
     func updateConnectionStatusView() {
-        if deviceConnection?.isAvailable == true {
+        if device.isConnected {
             connectionStatusImageView.image = UIImage(systemName: "bolt.fill")
             connectionStatusImageView.tintColor = nil
         } else {
@@ -198,7 +118,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     }
 
     func updateCardStatusView() {
-        if deviceConnection?.isCardInserted == true {
+        if device.currentCard != nil {
             cardStatusImageView.tintColor = nil
         } else {
             cardStatusImageView.tintColor = UIColor.lightGray
@@ -213,7 +133,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
                 return true
             } else {
                 if let indexPath = tableView.indexPathForSelectedRow {
-                    let payment = fetchedResultsController?.object(at: indexPath)
+                    let payment = fetchedResultsController.object(at: indexPath)
                     showPayment(payment)
                     showDetailViewController(detailNavigationController!, sender: self)
                 }
@@ -228,7 +148,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         if segue.identifier == "showDetail", let indexPath = tableView.indexPathForSelectedRow {
             let navigationController = segue.destination as! UINavigationController
             detailViewController = (navigationController.topViewController as! ETCPaymentDetailViewController)
-            let payment = fetchedResultsController?.object(at: indexPath)
+            let payment = fetchedResultsController.object(at: indexPath)
             showPayment(payment)
         }
     }
@@ -245,18 +165,18 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         }
     }
 
-    // MARK: - Table View
+    // MARK: - UITableViewDataSource
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return fetchedResultsController?.sections?.count ?? 0
+        return fetchedResultsController.sections?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchedResultsController?.sections?[section].numberOfObjects ?? 0
+        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let sectionInfo = fetchedResultsController?.sections?[section]
+        let sectionInfo = fetchedResultsController.sections?[section]
         let payment = sectionInfo?.objects?.first as? ETCPaymentManagedObject
         return sectionHeaderDateFormatter.string(from: payment!.date)
     }
@@ -264,7 +184,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ETCPaymentTableViewCell
 
-        let payment = fetchedResultsController?.object(at: indexPath)
+        let payment = fetchedResultsController.object(at: indexPath)
         cell.payment = payment
         return cell
     }

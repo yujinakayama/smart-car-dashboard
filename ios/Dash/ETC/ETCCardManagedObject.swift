@@ -14,6 +14,10 @@ import CoreData
 class ETCCardManagedObject: NSManagedObject {
     static let entityName = "ETCCard"
 
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<ETCCardManagedObject> {
+        return NSFetchRequest<ETCCardManagedObject>(entityName: entityName)
+    }
+
     @NSManaged public var uuid: UUID
     @NSManaged public var name: String
     @NSManaged public var payments: NSSet

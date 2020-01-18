@@ -10,8 +10,6 @@ import Foundation
 
 protocol ETCDeviceConnectionDelegate: NSObjectProtocol {
     func deviceConnectionDidFinishPreparation(_ deviceConnection: ETCDeviceConnection, error: Error?)
-    func deviceConnectionDidDetectCardInsertion(_ deviceConnection: ETCDeviceConnection)
-    func deviceConnectionDidDetectCardEjection(_ deviceConnection: ETCDeviceConnection)
     func deviceConnection(_ deviceConnection: ETCDeviceConnection, didReceiveMessage message: ETCMessageFromDeviceProtocol)
 }
 
@@ -31,8 +29,6 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
     var isAvailable: Bool {
         return serialPort.isAvailable && handshakeStatus == .complete
     }
-
-    var isCardInserted = false
 
     private var handshakeStatus = ETCDeviceConnectionHandshakeStatus.incomplete
     private let handshakeTimeoutTimeInterval: TimeInterval = 1
@@ -80,8 +76,6 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
             delegate?.deviceConnectionDidFinishPreparation(self, error: nil)
             hasFinishedPreparationOnce = true
         }
-
-        try! send(ETCMessageToDevice.cardExistenceRequest)
     }
 
     func send(_ message: ETCMessageToDeviceProtocol) throws {
@@ -116,16 +110,6 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
             // However, in this case, we don't need to request handshake from ourselves;
             // the device sends us a handshake request without asking.
             handshakeStatus = .incomplete
-        case is ETCMessageFromDevice.CardEjectionNotification:
-            isCardInserted = false
-            delegate?.deviceConnectionDidDetectCardEjection(self)
-        case is ETCMessageFromDevice.CardExistenceResponse:
-            isCardInserted = true
-            delegate?.deviceConnectionDidDetectCardInsertion(self)
-        case is ETCMessageFromDevice.CardNonExistenceResponse:
-            isCardInserted = false
-        case is ETCMessageFromDevice.InitialPaymentRecordExistenceResponse:
-            try! send(ETCMessageToDevice.initialPaymentRecordRequest)
         default:
             break
         }
