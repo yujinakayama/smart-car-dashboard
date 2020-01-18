@@ -29,6 +29,8 @@
 		B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */; };
 		B9CEA76622D89A400055C9A3 /* ETCPaymentDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76522D89A400055C9A3 /* ETCPaymentDatabase.swift */; };
 		B9CEA76E22D911140055C9A3 /* ETCPaymentSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76D22D911140055C9A3 /* ETCPaymentSplitViewController.swift */; };
+		B9D8E43823D345940078A057 /* ETCCardManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43723D345940078A057 /* ETCCardManagedObject.swift */; };
+		B9D8E43A23D345D70078A057 /* UUIDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43923D345D70078A057 /* UUIDExtension.swift */; };
 		B9DB8E5522D7A410003E4BD8 /* Dash.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B9DB8E5322D7A410003E4BD8 /* Dash.xcdatamodeld */; };
 		B9DB8E5922D7A481003E4BD8 /* ETCPaymentManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DB8E5722D7A481003E4BD8 /* ETCPaymentManagedObject.swift */; };
 		B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B24229D59BE00B645D5 /* AppDelegate.swift */; };
@@ -78,6 +80,9 @@
 		B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationCenter.swift; sourceTree = "<group>"; };
 		B9CEA76522D89A400055C9A3 /* ETCPaymentDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentDatabase.swift; sourceTree = "<group>"; };
 		B9CEA76D22D911140055C9A3 /* ETCPaymentSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCPaymentSplitViewController.swift; sourceTree = "<group>"; };
+		B9D8E43723D345940078A057 /* ETCCardManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCCardManagedObject.swift; sourceTree = "<group>"; };
+		B9D8E43923D345D70078A057 /* UUIDExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUIDExtension.swift; sourceTree = "<group>"; };
+		B9D8E43B23D345EC0078A057 /* DashV2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DashV2.xcdatamodel; sourceTree = "<group>"; };
 		B9DB8E5422D7A410003E4BD8 /* Dash.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Dash.xcdatamodel; sourceTree = "<group>"; };
 		B9DB8E5722D7A481003E4BD8 /* ETCPaymentManagedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentManagedObject.swift; sourceTree = "<group>"; };
 		B9DC5B21229D59BE00B645D5 /* Dash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dash.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,6 +155,7 @@
 				B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */,
 				B9DB8E5722D7A481003E4BD8 /* ETCPaymentManagedObject.swift */,
 				B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */,
+				B9D8E43723D345940078A057 /* ETCCardManagedObject.swift */,
 				B9DC5B45229EB8B200B645D5 /* ETCDeviceManager.swift */,
 				B9DC5B38229D5D8100B645D5 /* ETCDeviceClient.swift */,
 				B99356E522A9525C00BA08AB /* ETCMessage.swift */,
@@ -167,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				B9CB7C0C22AD65A40059433E /* UITableViewCellExtension.swift */,
+				B9D8E43923D345D70078A057 /* UUIDExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -375,11 +382,13 @@
 				B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */,
 				B9DC5B3F229D9E4F00B645D5 /* BLERemotePeripheralManager.swift in Sources */,
 				B9DC5B39229D5D8100B645D5 /* ETCDeviceClient.swift in Sources */,
+				B9D8E43823D345940078A057 /* ETCCardManagedObject.swift in Sources */,
 				B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */,
 				B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */,
 				B942553D22B8C3E2008B053B /* Logger.swift in Sources */,
 				B9BC920923250A0A006F22FC /* Defaults.swift in Sources */,
 				B9DC5B3D229D9E0C00B645D5 /* BLERemotePeripheral.swift in Sources */,
+				B9D8E43A23D345D70078A057 /* UUIDExtension.swift in Sources */,
 				B9CEA76E22D911140055C9A3 /* ETCPaymentSplitViewController.swift in Sources */,
 				B99356E422A94D6900BA08AB /* BLESerialPort.swift in Sources */,
 				B9DC5B4A229EDA0000B645D5 /* SerialPort.swift in Sources */,
@@ -669,9 +678,10 @@
 		B9DB8E5322D7A410003E4BD8 /* Dash.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				B9D8E43B23D345EC0078A057 /* DashV2.xcdatamodel */,
 				B9DB8E5422D7A410003E4BD8 /* Dash.xcdatamodel */,
 			);
-			currentVersion = B9DB8E5422D7A410003E4BD8 /* Dash.xcdatamodel */;
+			currentVersion = B9D8E43B23D345EC0078A057 /* DashV2.xcdatamodel */;
 			path = Dash.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
