@@ -39,7 +39,7 @@
 		B9DC5B2C229D59BE00B645D5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9DC5B2A229D59BE00B645D5 /* Main.storyboard */; };
 		B9DC5B2E229D59BF00B645D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9DC5B2D229D59BF00B645D5 /* Assets.xcassets */; };
 		B9DC5B31229D59BF00B645D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9DC5B2F229D59BF00B645D5 /* LaunchScreen.storyboard */; };
-		B9DC5B39229D5D8100B645D5 /* ETCDeviceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B38229D5D8100B645D5 /* ETCDeviceClient.swift */; };
+		B9DC5B39229D5D8100B645D5 /* ETCDeviceConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B38229D5D8100B645D5 /* ETCDeviceConnection.swift */; };
 		B9DC5B3D229D9E0C00B645D5 /* BLERemotePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B3C229D9E0C00B645D5 /* BLERemotePeripheral.swift */; };
 		B9DC5B3F229D9E4F00B645D5 /* BLERemotePeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B3E229D9E4F00B645D5 /* BLERemotePeripheralManager.swift */; };
 		B9DC5B46229EB8B200B645D5 /* ETCDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B45229EB8B200B645D5 /* ETCDeviceManager.swift */; };
@@ -93,7 +93,7 @@
 		B9DC5B2D229D59BF00B645D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B9DC5B30229D59BF00B645D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B9DC5B32229D59BF00B645D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B9DC5B38229D5D8100B645D5 /* ETCDeviceClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceClient.swift; sourceTree = "<group>"; };
+		B9DC5B38229D5D8100B645D5 /* ETCDeviceConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceConnection.swift; sourceTree = "<group>"; };
 		B9DC5B3C229D9E0C00B645D5 /* BLERemotePeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLERemotePeripheral.swift; sourceTree = "<group>"; };
 		B9DC5B3E229D9E4F00B645D5 /* BLERemotePeripheralManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLERemotePeripheralManager.swift; sourceTree = "<group>"; };
 		B9DC5B45229EB8B200B645D5 /* ETCDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceManager.swift; sourceTree = "<group>"; };
@@ -157,7 +157,7 @@
 				B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */,
 				B9D8E43723D345940078A057 /* ETCCardManagedObject.swift */,
 				B9DC5B45229EB8B200B645D5 /* ETCDeviceManager.swift */,
-				B9DC5B38229D5D8100B645D5 /* ETCDeviceClient.swift */,
+				B9DC5B38229D5D8100B645D5 /* ETCDeviceConnection.swift */,
 				B99356E522A9525C00BA08AB /* ETCMessage.swift */,
 				B9DC5B49229EDA0000B645D5 /* SerialPort.swift */,
 				B99356E322A94D6900BA08AB /* BLESerialPort.swift */,
@@ -381,7 +381,7 @@
 				B9DB8E5522D7A410003E4BD8 /* Dash.xcdatamodeld in Sources */,
 				B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */,
 				B9DC5B3F229D9E4F00B645D5 /* BLERemotePeripheralManager.swift in Sources */,
-				B9DC5B39229D5D8100B645D5 /* ETCDeviceClient.swift in Sources */,
+				B9DC5B39229D5D8100B645D5 /* ETCDeviceConnection.swift in Sources */,
 				B9D8E43823D345940078A057 /* ETCCardManagedObject.swift in Sources */,
 				B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */,
 				B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */,

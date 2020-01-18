@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, ETCDeviceManagerDelegate, ETCDeviceClientDelegate {
+class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, ETCDeviceManagerDelegate, ETCDeviceConnectionDelegate {
     let paymentDatabase = ETCPaymentDatabase(name: "Dash")
 
     let cardUUIDNamespace = UUID(uuidString: "AE12B12B-2DD8-4FAB-9AD3-67FB3A15E12C")!
@@ -40,7 +40,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     }()
 
     var deviceManager: ETCDeviceManager?
-    var deviceClient: ETCDeviceClient?
+    var deviceConnection: ETCDeviceConnection?
 
     var lastPaymentNotificationTime: Date?
 
@@ -112,42 +112,42 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
 
     // MARK: - ETCDeviceManagerDelegate
 
-    func deviceManager(_ deviceManager: ETCDeviceManager, didConnectToDevice deviceClient: ETCDeviceClient) {
-        self.deviceClient = deviceClient
-        deviceClient.delegate = self
-        deviceClient.startPreparation()
+    func deviceManager(_ deviceManager: ETCDeviceManager, didConnectToDevice deviceConnection: ETCDeviceConnection) {
+        self.deviceConnection = deviceConnection
+        deviceConnection.delegate = self
+        deviceConnection.startPreparation()
     }
 
-    func deviceManager(_ deviceManager: ETCDeviceManager, didDisconnectToDevice deviceClient: ETCDeviceClient) {
-        self.deviceClient = nil
+    func deviceManager(_ deviceManager: ETCDeviceManager, didDisconnectToDevice deviceConnection: ETCDeviceConnection) {
+        self.deviceConnection = nil
         updateConnectionStatusView()
         updateCardStatusView()
     }
 
     // MARK: - ETCDeviceClientDelegate
 
-    func deviceClientDidFinishPreparation(_ deviceClient: ETCDeviceClient, error: Error?) {
+    func deviceConnectionDidFinishPreparation(_ deviceConnection: ETCDeviceConnection, error: Error?) {
         updateConnectionStatusView()
     }
 
-    func deviceClientDidDetectCardInsertion(_ deviceClient: ETCDeviceClient) {
-        try! deviceClient.send(ETCMessageFromClient.uniqueCardDataRequest)
+    func deviceConnectionDidDetectCardInsertion(_ deviceConnection: ETCDeviceConnection) {
+        try! deviceConnection.send(ETCMessageFromClient.uniqueCardDataRequest)
         updateCardStatusView()
     }
 
-    func deviceClientDidDetectCardEjection(_ deviceClient: ETCDeviceClient) {
+    func deviceConnectionDidDetectCardEjection(_ deviceConnection: ETCDeviceConnection) {
         paymentDatabase.currentCard = nil
         updateCardStatusView()
     }
 
     // TODO: Extract to another class
-    func deviceClient(_ deviceClient: ETCDeviceClient, didReceiveMessage message: ETCMessageFromDeviceProtocol) {
+    func deviceConnection(_ deviceConnection: ETCDeviceConnection, didReceiveMessage message: ETCMessageFromDeviceProtocol) {
         switch message {
         case is ETCMessageFromDevice.GateEntranceNotification, is ETCMessageFromDevice.GateExitNotification:
             UserNotificationCenter.shared.requestDelivery(TollgatePassingThroughNotification())
         case is ETCMessageFromDevice.PaymentNotification:
             lastPaymentNotificationTime = Date()
-            try! deviceClient.send(ETCMessageFromClient.initialPaymentRecordRequest)
+            try! deviceConnection.send(ETCMessageFromClient.initialPaymentRecordRequest)
         case let uniqueCardDataResponse as ETCMessageFromDevice.UniqueCardDataResponse:
             let cardUUID = UUID(version: .v5, namespace: cardUUIDNamespace, name: Data(uniqueCardDataResponse.payloadBytes))
             paymentDatabase.performBackgroundTask { [unowned self] (context) in
@@ -155,10 +155,10 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
                 if card != nil {
                     try! context.save()
                     self.paymentDatabase.currentCard = card
-                    try! deviceClient.send(ETCMessageFromClient.initialPaymentRecordRequest)
+                    try! deviceConnection.send(ETCMessageFromClient.initialPaymentRecordRequest)
                 }
             }
-            try! deviceClient.send(ETCMessageFromClient.initialPaymentRecordRequest)
+            try! deviceConnection.send(ETCMessageFromClient.initialPaymentRecordRequest)
         case let paymentRecordResponse as ETCMessageFromDevice.PaymentRecordResponse:
             if let payment = paymentRecordResponse.payment {
                 if justReceivedPaymentNotification {
@@ -170,7 +170,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
                     let managedObject = try! self.paymentDatabase.insert(payment: payment, unlessExistsIn: context)
                     if managedObject != nil {
                         try! context.save()
-                        try! deviceClient.send(ETCMessageFromClient.nextPaymentRecordRequest)
+                        try! deviceConnection.send(ETCMessageFromClient.nextPaymentRecordRequest)
                     }
                 }
             }
@@ -188,7 +188,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     }
 
     func updateConnectionStatusView() {
-        if deviceClient?.isAvailable == true {
+        if deviceConnection?.isAvailable == true {
             connectionStatusImageView.image = UIImage(systemName: "bolt.fill")
             connectionStatusImageView.tintColor = nil
         } else {
@@ -198,7 +198,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     }
 
     func updateCardStatusView() {
-        if deviceClient?.isCardInserted == true {
+        if deviceConnection?.isCardInserted == true {
             cardStatusImageView.tintColor = nil
         } else {
             cardStatusImageView.tintColor = UIColor.lightGray

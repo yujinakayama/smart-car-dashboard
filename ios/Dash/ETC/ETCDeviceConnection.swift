@@ -8,23 +8,23 @@
 
 import Foundation
 
-protocol ETCDeviceClientDelegate: NSObjectProtocol {
-    func deviceClientDidFinishPreparation(_ deviceClient: ETCDeviceClient, error: Error?)
-    func deviceClientDidDetectCardInsertion(_ deviceClient: ETCDeviceClient)
-    func deviceClientDidDetectCardEjection(_ deviceClient: ETCDeviceClient)
-    func deviceClient(_ deviceClient: ETCDeviceClient, didReceiveMessage message: ETCMessageFromDeviceProtocol)
+protocol ETCDeviceConnectionDelegate: NSObjectProtocol {
+    func deviceConnectionDidFinishPreparation(_ deviceConnection: ETCDeviceConnection, error: Error?)
+    func deviceConnectionDidDetectCardInsertion(_ deviceConnection: ETCDeviceConnection)
+    func deviceConnectionDidDetectCardEjection(_ deviceConnection: ETCDeviceConnection)
+    func deviceConnection(_ deviceConnection: ETCDeviceConnection, didReceiveMessage message: ETCMessageFromDeviceProtocol)
 }
 
-enum ETCDeviceClientHandshakeStatus {
+enum ETCDeviceConnectionHandshakeStatus {
     case incomplete
     case trying
     case complete
 }
 
-class ETCDeviceClient: NSObject, SerialPortDelegate {
+class ETCDeviceConnection: NSObject, SerialPortDelegate {
     let serialPort: SerialPort
 
-    weak var delegate: ETCDeviceClientDelegate?
+    weak var delegate: ETCDeviceConnectionDelegate?
 
     var unprocessedData = Data()
 
@@ -34,7 +34,7 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
 
     var isCardInserted = false
 
-    private var handshakeStatus = ETCDeviceClientHandshakeStatus.incomplete
+    private var handshakeStatus = ETCDeviceConnectionHandshakeStatus.incomplete
     private let handshakeTimeoutTimeInterval: TimeInterval = 1
     private var handshakeTimeoutTimer: Timer?
 
@@ -77,7 +77,7 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
         handshakeTimeoutTimer = nil
 
         if (!hasFinishedPreparationOnce) {
-            delegate?.deviceClientDidFinishPreparation(self, error: nil)
+            delegate?.deviceConnectionDidFinishPreparation(self, error: nil)
             hasFinishedPreparationOnce = true
         }
 
@@ -118,10 +118,10 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
             handshakeStatus = .incomplete
         case is ETCMessageFromDevice.CardEjectionNotification:
             isCardInserted = false
-            delegate?.deviceClientDidDetectCardEjection(self)
+            delegate?.deviceConnectionDidDetectCardEjection(self)
         case is ETCMessageFromDevice.CardExistenceResponse:
             isCardInserted = true
-            delegate?.deviceClientDidDetectCardInsertion(self)
+            delegate?.deviceConnectionDidDetectCardInsertion(self)
         case is ETCMessageFromDevice.CardNonExistenceResponse:
             isCardInserted = false
         case is ETCMessageFromDevice.InitialPaymentRecordExistenceResponse:
@@ -139,7 +139,7 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
         }
 
         if !(message is ETCMessageFromDevice.Unknown) {
-            delegate?.deviceClient(self, didReceiveMessage: message)
+            delegate?.deviceConnection(self, didReceiveMessage: message)
         }
     }
 
@@ -151,7 +151,7 @@ class ETCDeviceClient: NSObject, SerialPortDelegate {
         if error == nil {
             startHandshake()
         } else {
-            delegate?.deviceClientDidFinishPreparation(self, error: error)
+            delegate?.deviceConnectionDidFinishPreparation(self, error: error)
         }
     }
 
