@@ -45,9 +45,9 @@ extension ETCMessageProtocol {
     }
 }
 
-protocol ETCMessageFromClientProtocol: ETCMessageProtocol {}
+protocol ETCMessageToDeviceProtocol: ETCMessageProtocol {}
 
-extension ETCMessageFromClientProtocol {
+extension ETCMessageToDeviceProtocol {
     var bytes: [UInt8] {
         return headerBytes + payloadBytes + terminalBytes
     }
@@ -176,7 +176,7 @@ extension ChecksummedMessageProtocol {
     // TODO: Add checksum validation
 }
 
-enum ETCMessageFromClient {
+enum ETCMessageToDevice {
     static let handshakeRequest = PlainMessage(headerBytes: [0xFA])
     static let acknowledgement = ChecksummedMessage(headerBytes: [0x02, 0xC0])
     static let cardExistenceRequest = ChecksummedMessage(headerBytes: [0x01, 0xC6, byte(of: "G")])
@@ -185,13 +185,13 @@ enum ETCMessageFromClient {
     static let nextPaymentRecordRequest = ChecksummedMessage(headerBytes: [0x01, 0xC6, byte(of: "M")])
     static let uniqueCardDataRequest = ChecksummedMessage(headerBytes: [0x01, 0xC6, byte(of: "R")])
 
-    struct PlainMessage: ETCMessageFromClientProtocol {
+    struct PlainMessage: ETCMessageToDeviceProtocol {
         let headerBytes: [UInt8]
         let payloadBytes: [UInt8] = []
         let terminalBytes: [UInt8] = [PlainMessage.terminalByte]
     }
 
-    struct ChecksummedMessage: ETCMessageFromClientProtocol {
+    struct ChecksummedMessage: ETCMessageToDeviceProtocol {
         let headerBytes: [UInt8]
 
         let payloadBytes: [UInt8] = []

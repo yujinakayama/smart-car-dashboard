@@ -14,6 +14,10 @@ import CoreData
 class ETCPaymentManagedObject: NSManagedObject, ETCPaymentProtocol {
     static let entityName = "ETCPayment"
 
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<ETCPaymentManagedObject> {
+        return NSFetchRequest<ETCPaymentManagedObject>(entityName: entityName)
+    }
+
     @NSManaged var amount: Int32
     @NSManaged var date: Date
     @NSManaged var entranceTollboothID: String

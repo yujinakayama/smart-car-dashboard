@@ -54,22 +54,22 @@ class MockSerialPort: NSObject, SerialPort {
 
     func transmit(_ data: Data) throws {
         switch data {
-        case ETCMessageFromClient.handshakeRequest.data:
+        case ETCMessageToDevice.handshakeRequest.data:
             simulateReceive(ETCMessageFromDevice.HandshakeAcknowledgement.makeMockMessage())
             simulateReceive(ETCMessageFromDevice.HandshakeRequest.makeMockMessage())
-        case ETCMessageFromClient.cardExistenceRequest.data:
+        case ETCMessageToDevice.cardExistenceRequest.data:
             simulateReceive(ETCMessageFromDevice.CardExistenceResponse.makeMockMessage())
-        case ETCMessageFromClient.uniqueCardDataRequest.data:
+        case ETCMessageToDevice.uniqueCardDataRequest.data:
             let cardData = [UInt8](repeating: 0, count: ETCMessageFromDevice.UniqueCardDataResponse.payloadLength)
             simulateReceive(ETCMessageFromDevice.UniqueCardDataResponse.makeMockMessage(payloadBytes: cardData))
-        case ETCMessageFromClient.initialPaymentRecordRequest.data:
+        case ETCMessageToDevice.initialPaymentRecordRequest.data:
             if paymentRecordPayloadIterator == nil {
                 paymentRecordPayloadIterator = paymentRecordResponsePayloads.makeIterator()
                 simulateReceive(ETCMessageFromDevice.InitialPaymentRecordExistenceResponse.makeMockMessage())
             } else if let payload = paymentRecordPayloadIterator!.next() {
                 simulateReceive(ETCMessageFromDevice.PaymentRecordResponse.makeMockMessage(payload: payload))
             }
-        case ETCMessageFromClient.nextPaymentRecordRequest.data:
+        case ETCMessageToDevice.nextPaymentRecordRequest.data:
             if let payload = paymentRecordPayloadIterator?.next() {
                 simulateReceive(ETCMessageFromDevice.PaymentRecordResponse.makeMockMessage(payload: payload))
             } else {
