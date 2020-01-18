@@ -18,6 +18,7 @@ class ETCPaymentManagedObject: NSManagedObject, ETCPaymentProtocol {
     @NSManaged var date: Date
     @NSManaged var entranceTollboothID: String
     @NSManaged var exitTollboothID: String
+    @NSManaged var card: ETCCardManagedObject?
 
     var vehicleClassification: VehicleClassification {
         get {

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19C57" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ETCCard" representedClassName="ETCCardManagedObject" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="payments" toMany="YES" deletionRule="Cascade" destinationEntity="ETCPayment" inverseName="card" inverseEntity="ETCPayment"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="uuid"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="ETCPayment" representedClassName="ETCPaymentManagedObject" syncable="YES">
+        <attribute name="amount" attributeType="Integer 32" usesScalarValueType="YES"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="entranceTollboothID" attributeType="String"/>
+        <attribute name="exitTollboothID" attributeType="String"/>
+        <attribute name="vehicleClassification" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <relationship name="card" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ETCCard" inverseName="payments" inverseEntity="ETCCard"/>
+    </entity>
+    <elements>
+        <element name="ETCCard" positionX="-27" positionY="54" width="128" height="88"/>
+        <element name="ETCPayment" positionX="-45" positionY="0" width="128" height="133"/>
+    </elements>
+</model>

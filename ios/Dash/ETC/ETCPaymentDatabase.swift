@@ -9,10 +9,16 @@
 import Foundation
 import CoreData
 
+enum ETCPaymentDatabaseError: Error {
+    case currentCardMustBeSet
+}
+
 class ETCPaymentDatabase {
     let persistentContainer: NSPersistentContainer
 
-    var available = false
+    lazy var backgroundContext = persistentContainer.newBackgroundContext()
+
+    var currentCard: ETCCardManagedObject?
 
     init(name: String) {
         persistentContainer = NSPersistentContainer(name: name)
@@ -29,7 +35,9 @@ class ETCPaymentDatabase {
     }
 
     func performBackgroundTask(block: @escaping (NSManagedObjectContext) -> Void) {
-        persistentContainer.performBackgroundTask(block)
+        backgroundContext.perform { [unowned self] in
+            block(self.backgroundContext)
+        }
     }
 
     func makeFetchRequest() -> NSFetchRequest<ETCPaymentManagedObject> {
@@ -41,22 +49,25 @@ class ETCPaymentDatabase {
             return nil
         }
 
-        let managedObject = insert(payment: payment, into: context)
-        try context.save()
-        return managedObject
+        return try insert(payment: payment, into: context)
     }
 
-    func insert(payment: ETCPayment, into context: NSManagedObjectContext) -> ETCPaymentManagedObject {
-        let managedObject = insertNewETCPayment(into: context)
+    func insert(payment: ETCPayment, into context: NSManagedObjectContext) throws -> ETCPaymentManagedObject {
+        guard let card = currentCard else {
+            throw ETCPaymentDatabaseError.currentCardMustBeSet
+        }
+
+        let managedObject = insertNewPayment(into: context)
         managedObject.amount = payment.amount
         managedObject.date = payment.date
         managedObject.entranceTollboothID = payment.entranceTollboothID
         managedObject.exitTollboothID = payment.exitTollboothID
         managedObject.vehicleClassification = payment.vehicleClassification
+        managedObject.card = card
         return managedObject
     }
 
-    func insertNewETCPayment(into context: NSManagedObjectContext) -> ETCPaymentManagedObject {
+    func insertNewPayment(into context: NSManagedObjectContext) -> ETCPaymentManagedObject {
         return NSEntityDescription.insertNewObject(forEntityName: ETCPaymentManagedObject.entityName, into: context) as! ETCPaymentManagedObject
     }
 
@@ -66,9 +77,25 @@ class ETCPaymentDatabase {
         return try context.count(for: fetchRequest) > 0
     }
 
-    func deleteAll() throws {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: ETCPaymentManagedObject.entityName)
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        try persistentContainer.viewContext.execute(deleteRequest)
+    func findOrInsertCard(uuid: UUID, in context: NSManagedObjectContext) throws -> ETCCardManagedObject? {
+        if let card = try findCard(uuid: uuid, in: context) {
+            return card
+        }
+
+        let card = insertNewCard(into: context)
+        card.uuid = uuid
+        return card
+    }
+
+    func findCard(uuid: UUID, in context: NSManagedObjectContext) throws -> ETCCardManagedObject? {
+        let request = NSFetchRequest<ETCCardManagedObject>(entityName: ETCCardManagedObject.entityName)
+        request.predicate = NSPredicate(format: "uuid == %@", uuid as CVarArg)
+        request.fetchLimit = 1
+        let cards = try context.fetch(request)
+        return cards.first
+    }
+
+    func insertNewCard(into context: NSManagedObjectContext) -> ETCCardManagedObject {
+        return NSEntityDescription.insertNewObject(forEntityName: ETCCardManagedObject.entityName, into: context) as! ETCCardManagedObject
     }
 }

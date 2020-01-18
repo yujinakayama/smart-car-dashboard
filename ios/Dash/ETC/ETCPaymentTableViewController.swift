@@ -11,6 +11,9 @@ import CoreData
 
 class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, ETCDeviceManagerDelegate, ETCDeviceClientDelegate {
     let paymentDatabase = ETCPaymentDatabase(name: "Dash")
+
+    let cardUUIDNamespace = UUID(uuidString: "AE12B12B-2DD8-4FAB-9AD3-67FB3A15E12C")!
+
     var fetchedResultsController: NSFetchedResultsController<ETCPaymentManagedObject>?
 
     var detailViewController: ETCPaymentDetailViewController?
@@ -128,11 +131,12 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     }
 
     func deviceClientDidDetectCardInsertion(_ deviceClient: ETCDeviceClient) {
+        try! deviceClient.send(ETCMessageFromClient.uniqueCardDataRequest)
         updateCardStatusView()
-        try! deviceClient.send(ETCMessageFromClient.initialPaymentRecordRequest)
     }
 
     func deviceClientDidDetectCardEjection(_ deviceClient: ETCDeviceClient) {
+        paymentDatabase.currentCard = nil
         updateCardStatusView()
     }
 
@@ -143,6 +147,17 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
             UserNotificationCenter.shared.requestDelivery(TollgatePassingThroughNotification())
         case is ETCMessageFromDevice.PaymentNotification:
             lastPaymentNotificationTime = Date()
+            try! deviceClient.send(ETCMessageFromClient.initialPaymentRecordRequest)
+        case let uniqueCardDataResponse as ETCMessageFromDevice.UniqueCardDataResponse:
+            let cardUUID = UUID(version: .v5, namespace: cardUUIDNamespace, name: Data(uniqueCardDataResponse.payloadBytes))
+            paymentDatabase.performBackgroundTask { [unowned self] (context) in
+                let card = try! self.paymentDatabase.findOrInsertCard(uuid: cardUUID, in: context)
+                if card != nil {
+                    try! context.save()
+                    self.paymentDatabase.currentCard = card
+                    try! deviceClient.send(ETCMessageFromClient.initialPaymentRecordRequest)
+                }
+            }
             try! deviceClient.send(ETCMessageFromClient.initialPaymentRecordRequest)
         case let paymentRecordResponse as ETCMessageFromDevice.PaymentRecordResponse:
             if let payment = paymentRecordResponse.payment {
