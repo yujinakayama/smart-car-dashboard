@@ -82,7 +82,7 @@ class MockSerialPort: NSObject, SerialPort {
     }
 
     private func simulateReceive(_ message: ETCMessageFromDeviceProtocol) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
             guard let self = self else { return }
             self.delegate?.serialPort(self, didReceiveData: message.data)
         }
