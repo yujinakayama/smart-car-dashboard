@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ETCPaymentSplitViewController: UISplitViewController, UISplitViewControllerDelegate {
+class ETCSplitViewController: UISplitViewController, UISplitViewControllerDelegate {
     var masterNavigationController: UINavigationController {
         return viewControllers.first as! UINavigationController
     }
