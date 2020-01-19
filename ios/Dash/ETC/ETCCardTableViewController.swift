@@ -35,11 +35,16 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
 
         tableView.tableFooterView = UIView()
 
-        navigationItem.rightBarButtonItems = deviceStatusBar.items
+        setUpNavigationBar()
 
         startObservingNotifications()
 
         device.startPreparation()
+    }
+
+    func setUpNavigationBar() {
+        navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.rightBarButtonItems = deviceStatusBar.items
     }
 
     func startObservingNotifications() {
@@ -77,6 +82,37 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
         let card = fetchedResultsController.object(at: indexPath)
         cell.card = card
         return cell
+    }
+
+    // MARK: - UITableViewDelegate
+
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
+    }
+
+    // UITableViewCell.shouldIndentWhileEditing does not work with UITableView.Style.insetGrouped
+    // but this does work.
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        let card = fetchedResultsController.object(at: indexPath)
+
+        let alertController = UIAlertController(title: "Card Name", message: nil, preferredStyle: .alert)
+
+        alertController.addTextField { (textField) in
+            textField.text = card.name
+        }
+
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+            card.name = alertController.textFields!.first!.text
+            try! card.managedObjectContext?.save()
+        }))
+
+        present(alertController, animated: true)
     }
 
     // MARK: - NSFetchedResultsControllerDelegate
