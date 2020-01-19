@@ -80,13 +80,13 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
     // MARK: - ETCSerialPortManagerDelegate
 
     func serialPortManager(_ serialPortManager: SerialPortManager, didFindSerialPort serialPort: SerialPort) {
-        self.connection = ETCDeviceConnection(serialPort: serialPort)
+        connection = ETCDeviceConnection(serialPort: serialPort)
         connection!.delegate = self
         connection!.startPreparation()
     }
 
     func serialPortManager(_ serialPortManager: SerialPortManager, didLoseSerialPort serialPort: SerialPort) {
-        self.connection = nil
+        connection = nil
     }
 
     // MARK: - ETCDeviceConnectionDelegate
