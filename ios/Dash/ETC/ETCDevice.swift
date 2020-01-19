@@ -12,6 +12,7 @@ import CoreData
 extension Notification.Name {
     static let ETCDeviceDidFinishDataStorePreparation = Notification.Name("ETCDeviceDidFinishDataStorePreparation")
     static let ETCDeviceDidConnect = Notification.Name("ETCDeviceDidConnect")
+    static let ETCDeviceDidDisconnect = Notification.Name("ETCDeviceDidDisconnect")
     static let ETCDeviceDidDetectCardInsertion = Notification.Name("ETCDeviceDidDetectCardInsertion")
     static let ETCDeviceDidDetectCardEjection = Notification.Name("ETCDeviceDidDetectCardEjection")
 }
@@ -87,6 +88,7 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
 
     func serialPortManager(_ serialPortManager: SerialPortManager, didLoseSerialPort serialPort: SerialPort) {
         connection = nil
+        notificationCenter.post(name: .ETCDeviceDidDisconnect, object: self)
     }
 
     // MARK: - ETCDeviceConnectionDelegate
