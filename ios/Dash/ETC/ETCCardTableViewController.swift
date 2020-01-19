@@ -30,6 +30,10 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
         return controller
     }()
 
+    var isVisible: Bool {
+        return isViewLoaded && view.window != nil
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -54,6 +58,18 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
             try! self.fetchedResultsController.performFetch()
             self.tableView.reloadData()
         }
+
+        notificationCenter.addObserver(forName: .ETCDeviceDidDetectCardInsertion, object: device, queue: .main) { (notification) in
+            guard self.isVisible else { return }
+            self.showPaymentsForCurrentCard()
+        }
+    }
+
+    func showPaymentsForCurrentCard() {
+        let currentCard = try! device.dataStore.viewContext.existingObject(with: device.currentCard!.objectID) as! ETCCardManagedObject
+        let indexPath = fetchedResultsController.indexPath(forObject: currentCard)
+        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+        performSegue(withIdentifier: "show", sender: self)
     }
 
     // MARK: - Segues
