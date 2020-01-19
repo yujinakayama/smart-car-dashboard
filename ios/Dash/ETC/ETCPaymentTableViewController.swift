@@ -101,7 +101,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
             self.updateCardStatusView()
         }
 
-        notificationCenter.addObserver(forName: .ETCDeviceDidDetectCardInsertion, object: device, queue: .main) { (notification) in
+        notificationCenter.addObserver(forName: .ETCDeviceDidDetectCardEjection, object: device, queue: .main) { (notification) in
             self.updateCardStatusView()
         }
     }
