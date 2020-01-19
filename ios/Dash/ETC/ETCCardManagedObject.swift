@@ -19,6 +19,6 @@ class ETCCardManagedObject: NSManagedObject {
     }
 
     @NSManaged public var uuid: UUID
-    @NSManaged public var name: String
-    @NSManaged public var payments: NSSet
+    @NSManaged public var name: String?
+    @NSManaged public var payments: Set<ETCPaymentManagedObject>
 }
