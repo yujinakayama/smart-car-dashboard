@@ -35,6 +35,7 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
     private var handshakeTimeoutTimer: Timer?
 
     private var hasFinishedPreparationOnce = false
+    private var pendingMessagesToSend: [ETCMessageToDeviceProtocol] = []
 
     init(serialPort: SerialPort) {
         self.serialPort = serialPort
@@ -76,12 +77,27 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
             delegate?.deviceConnectionDidFinishPreparation(self, error: nil)
             hasFinishedPreparationOnce = true
         }
+
+        sendPendingMessages()
     }
 
     func send(_ message: ETCMessageToDeviceProtocol) throws {
         logger.debug(message)
-        assert(!message.requiresPreliminaryHandshake || handshakeStatus == .complete)
-        try serialPort.transmit(message.data)
+
+        if !message.requiresPreliminaryHandshake || handshakeStatus == .complete {
+            try serialPort.transmit(message.data)
+        } else {
+            logger.debug("Enqueueing the message to pending message list since handshake is not yet completed")
+            pendingMessagesToSend.append(message)
+        }
+    }
+
+    private func sendPendingMessages() {
+        for message in pendingMessagesToSend {
+            logger.debug("Sending pending message")
+            try! send(message)
+        }
+        pendingMessagesToSend.removeAll()
     }
 
     private func handleReceivedData(_ data: Data) {

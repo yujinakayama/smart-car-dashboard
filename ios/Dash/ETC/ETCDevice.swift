@@ -115,6 +115,8 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
         case is ETCMessageFromDevice.PaymentNotification:
             justReceivedPaymentNotification = true
             try! connection.send(ETCMessageToDevice.initialPaymentRecordRequest)
+        case is ETCMessageFromDevice.CardInsertionNotification:
+            try! connection.send(ETCMessageToDevice.cardExistenceRequest)
         case is ETCMessageFromDevice.CardEjectionNotification:
             currentCard = nil
             notificationCenter.post(name: .ETCDeviceDidDetectCardEjection, object: self)
