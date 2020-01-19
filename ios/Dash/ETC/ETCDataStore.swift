@@ -44,15 +44,15 @@ class ETCDataStore {
         }
     }
 
-    func insert(payment: ETCPayment, unlessExistsIn context: NSManagedObjectContext) throws -> ETCPaymentManagedObject? {
-        if try checkExistence(of: payment, in: context) {
-            return nil
-        }
-
-        return try insert(payment: payment, into: context)
+    func find(_ payment: ETCPayment, in context: NSManagedObjectContext) throws -> ETCPaymentManagedObject? {
+        let request: NSFetchRequest<ETCPaymentManagedObject> = ETCPaymentManagedObject.fetchRequest()
+        request.predicate = NSPredicate(format: "date == %@", payment.date as NSDate)
+        request.fetchLimit = 1
+        let managedObjects = try context.fetch(request)
+        return managedObjects.first
     }
 
-    func insert(payment: ETCPayment, into context: NSManagedObjectContext) throws -> ETCPaymentManagedObject {
+    func insert(_ payment: ETCPayment, into context: NSManagedObjectContext) throws -> ETCPaymentManagedObject {
         guard let card = currentCard else {
             throw ETCDataStoreError.currentCardMustBeSet
         }
@@ -69,12 +69,6 @@ class ETCDataStore {
 
     func insertNewPayment(into context: NSManagedObjectContext) -> ETCPaymentManagedObject {
         return NSEntityDescription.insertNewObject(forEntityName: ETCPaymentManagedObject.entityName, into: context) as! ETCPaymentManagedObject
-    }
-
-    func checkExistence(of payment: ETCPayment, in context: NSManagedObjectContext) throws -> Bool {
-        let fetchRequest: NSFetchRequest<ETCPaymentManagedObject> = ETCPaymentManagedObject.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "date == %@", payment.date as NSDate)
-        return try context.count(for: fetchRequest) > 0
     }
 
     func findOrInsertCard(uuid: UUID, in context: NSManagedObjectContext) throws -> ETCCardManagedObject {
