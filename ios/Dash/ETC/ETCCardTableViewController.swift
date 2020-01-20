@@ -37,6 +37,7 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        tableView.contentInset.top += 12
         tableView.tableFooterView = UIView()
 
         setUpNavigationBar()
