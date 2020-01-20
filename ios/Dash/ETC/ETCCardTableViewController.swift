@@ -60,9 +60,19 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
         }
 
         notificationCenter.addObserver(forName: .ETCDeviceDidDetectCardInsertion, object: device, queue: .main) { (notification) in
-            guard self.isVisible else { return }
-            self.showPaymentsForCurrentCard()
+            self.indicateCurrentCard()
+            if self.isVisible {
+                self.showPaymentsForCurrentCard()
+            }
         }
+
+        notificationCenter.addObserver(forName: .ETCDeviceDidDetectCardEjection, object: device, queue: .main) { (notification) in
+            self.indicateCurrentCard()
+        }
+    }
+
+    func indicateCurrentCard() {
+        tableView.reloadSections(IndexSet(integer: 0), with: .none)
     }
 
     func showPaymentsForCurrentCard() {
@@ -97,6 +107,7 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
         let cell = tableView.dequeueReusableCell(withIdentifier: "ETCCardTableViewCell", for: indexPath) as! ETCCardTableViewCell
         let card = fetchedResultsController.object(at: indexPath)
         cell.card = card
+        cell.isCurrentCard = card.objectID == device.currentCard?.objectID
         return cell
     }
 
