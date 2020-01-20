@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
 		B91BD8092323FD820064D2B5 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
+		B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */; };
 		B931C4FF23D369760020DF13 /* ETCDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B931C4FE23D369760020DF13 /* ETCDevice.swift */; };
 		B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93321ED2323C9D500BFAB21 /* BorderedView.swift */; };
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
@@ -17,6 +18,7 @@
 		B9588B5D23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */; };
 		B95BE8E222B8A8BE004C1CC0 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */; };
 		B95BE8E322B8A8BE004C1CC0 /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */; };
+		B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */; };
 		B98E936A234C94C7004AE50F /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
 		B99356D922A9483F00BA08AB /* japan_etc_tollbooths.csv in Resources */ = {isa = PBXBuildFile; fileRef = B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */; };
 		B99356DB22A9484700BA08AB /* ETCPaymentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356DA22A9484700BA08AB /* ETCPaymentTests.swift */; };
@@ -25,6 +27,7 @@
 		B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E722A9553A00BA08AB /* MockSerialPort.swift */; };
 		B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */; };
 		B9BA819E2350931A00657DEB /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
+		B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */; };
 		B9BC920923250A0A006F22FC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BC920823250A0A006F22FC /* Defaults.swift */; };
 		B9CB7C0D22AD65A40059433E /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB7C0C22AD65A40059433E /* UITableViewCellExtension.swift */; };
 		B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */; };
@@ -62,6 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewController.swift; sourceTree = "<group>"; };
 		B931C4FE23D369760020DF13 /* ETCDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDevice.swift; sourceTree = "<group>"; };
 		B93321ED2323C9D500BFAB21 /* BorderedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedView.swift; sourceTree = "<group>"; };
 		B942553C22B8C3E2008B053B /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -70,6 +74,7 @@
 		B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentDebugInformationViewController.swift; sourceTree = "<group>"; };
 		B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCGLogger.framework; path = Carthage/Build/iOS/XCGLogger.framework; sourceTree = "<group>"; };
 		B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjcExceptionBridging.framework; path = Carthage/Build/iOS/ObjcExceptionBridging.framework; sourceTree = "<group>"; };
+		B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceStatusBar.swift; sourceTree = "<group>"; };
 		B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentProtocol.swift; sourceTree = "<group>"; };
 		B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = japan_etc_tollbooths.csv; sourceTree = "<group>"; };
 		B99356DA22A9484700BA08AB /* ETCPaymentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCPaymentTests.swift; sourceTree = "<group>"; };
@@ -77,6 +82,7 @@
 		B99356E522A9525C00BA08AB /* ETCMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCMessage.swift; sourceTree = "<group>"; };
 		B99356E722A9553A00BA08AB /* MockSerialPort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSerialPort.swift; sourceTree = "<group>"; };
 		B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCPaymentTableViewCell.swift; sourceTree = "<group>"; };
+		B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewCell.swift; sourceTree = "<group>"; };
 		B9BC920823250A0A006F22FC /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		B9CB7C0C22AD65A40059433E /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
 		B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationCenter.swift; sourceTree = "<group>"; };
@@ -150,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				B9CEA76D22D911140055C9A3 /* ETCSplitViewController.swift */,
+				B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */,
 				B9DC5B26229D59BE00B645D5 /* ETCPaymentTableViewController.swift */,
 				B9DC5B28229D59BE00B645D5 /* ETCPaymentDetailViewController.swift */,
 				B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */,
@@ -167,7 +174,9 @@
 				B99356E722A9553A00BA08AB /* MockSerialPort.swift */,
 				B9DC5B3E229D9E4F00B645D5 /* BLERemotePeripheralManager.swift */,
 				B9DC5B3C229D9E0C00B645D5 /* BLERemotePeripheral.swift */,
+				B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */,
 				B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */,
+				B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */,
 			);
 			path = ETC;
 			sourceTree = "<group>";
@@ -370,7 +379,10 @@
 			files = (
 				B9DB8E5922D7A481003E4BD8 /* ETCPaymentManagedObject.swift in Sources */,
 				B99356E622A9525C00BA08AB /* ETCMessage.swift in Sources */,
+				B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */,
 				B9DC5B46229EB8B200B645D5 /* SerialPortManager.swift in Sources */,
+				B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBar.swift in Sources */,
+				B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */,
 				B9E96CC822A4EF1300C2E009 /* ETCPayment.swift in Sources */,
 				B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */,
 				B9CEA76622D89A400055C9A3 /* ETCDataStore.swift in Sources */,

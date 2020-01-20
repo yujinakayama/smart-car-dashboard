@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wa3-nU-FcL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wa3-nU-FcL">
     <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Detail-->
         <scene sceneID="TTc-lu-WiD">
             <objects>
-                <viewController id="Zf3-MZ-GwI" sceneMemberID="viewController">
+                <viewController id="Zf3-MZ-GwI" userLabel="Detail" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5Gd-9s-uf9">
                         <rect key="frame" x="0.0" y="0.0" width="990.5" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <viewLayoutGuide key="safeArea" id="a6A-AN-UOd"/>
                     </view>
                     <navigationItem key="navigationItem" id="lF2-vK-CFA"/>
@@ -23,7 +23,7 @@
             </objects>
             <point key="canvasLocation" x="528.84333821376276" y="740.625"/>
         </scene>
-        <!--ETC-->
+        <!--ETC Cards-->
         <scene sceneID="UF5-wi-CWf">
             <objects>
                 <tableViewController clearsSelectionOnViewWillAppear="NO" id="O7a-us-8ed" sceneMemberID="viewController">
@@ -36,18 +36,16 @@
                             <outlet property="delegate" destination="O7a-us-8ed" id="hA6-0h-nNp"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="ETC" id="2tp-GK-kS5">
-                        <barButtonItem key="rightBarButtonItem" id="nG7-Eg-WTi"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="ETC Cards" id="2tp-GK-kS5"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0VG-TE-0Zd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="531" y="98"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Master Navigation Controller-->
         <scene sceneID="R7t-Rh-SOK">
             <objects>
-                <navigationController id="ZtO-86-A2n" sceneMemberID="viewController">
+                <navigationController id="ZtO-86-A2n" userLabel="Master Navigation Controller" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="EfA-Vu-Guj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -73,10 +71,10 @@
             </objects>
             <point key="canvasLocation" x="-862" y="420"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Detail Navigation Controller-->
         <scene sceneID="uwa-d6-154">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sXK-wD-Dbo" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sXK-wD-Dbo" userLabel="Detail Navigation Controller" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="mqc-jB-MRi">
                         <rect key="frame" x="0.0" y="0.0" width="990.5" height="50"/>

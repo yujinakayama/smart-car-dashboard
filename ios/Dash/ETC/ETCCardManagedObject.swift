@@ -21,4 +21,8 @@ class ETCCardManagedObject: NSManagedObject {
     @NSManaged public var uuid: UUID
     @NSManaged public var name: String?
     @NSManaged public var payments: Set<ETCPaymentManagedObject>
+
+    var tentativeName: String {
+        return name ?? "Unnamed Card"
+    }
 }

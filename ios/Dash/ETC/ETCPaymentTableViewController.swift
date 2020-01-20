@@ -10,11 +10,16 @@ import UIKit
 import CoreData
 
 class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
-    let device = ETCDevice()
+    var device: ETCDevice!
+
+    var card: ETCCardManagedObject!
+
+    lazy var deviceStatusBar = ETCDeviceStatusBar(device: device)
 
     lazy var fetchedResultsController: NSFetchedResultsController<ETCPaymentManagedObject> = {
         let request: NSFetchRequest<ETCPaymentManagedObject> = ETCPaymentManagedObject.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+        request.predicate = NSPredicate(format: "card == %@", card)
 
         let controller = NSFetchedResultsController(
             fetchRequest: request,
@@ -34,23 +39,6 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         return detailViewController?.navigationController
     }
 
-    lazy var connectionStatusImageView: UIImageView = {
-        let view = UIImageView()
-        view.contentMode = .scaleAspectFit
-        view.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        view.widthAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-        return view
-    }()
-
-    lazy var cardStatusImageView: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(systemName: "creditcard.fill")
-        view.contentMode = .scaleAspectFit
-        view.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        view.widthAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-        return view
-    }()
-
     let sectionHeaderDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ja_JP")
@@ -61,19 +49,13 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupNotificationObservations()
+        try! fetchedResultsController.performFetch()
 
-        device.startPreparation()
+        setUpNavigationBar()
+
+        startObservingNotifications()
 
         assignDetailViewControllerIfExists()
-
-        navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(customView: connectionStatusImageView),
-            UIBarButtonItem(customView: cardStatusImageView)
-        ]
-
-        updateConnectionStatusView()
-        updateCardStatusView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -81,52 +63,23 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         super.viewWillAppear(animated)
     }
 
-    func setupNotificationObservations() {
+    func setUpNavigationBar() {
+        navigationItem.title = card.tentativeName
+        navigationItem.rightBarButtonItems = deviceStatusBar.items
+    }
+
+    func startObservingNotifications() {
         let notificationCenter = NotificationCenter.default
 
         notificationCenter.addObserver(forName: .ETCDeviceDidFinishDataStorePreparation, object: device, queue: .main) { (notification) in
             try! self.fetchedResultsController.performFetch()
             self.tableView.reloadData()
         }
-
-        notificationCenter.addObserver(forName: .ETCDeviceDidConnect, object: device, queue: .main) { (notification) in
-            self.updateConnectionStatusView()
-        }
-
-        notificationCenter.addObserver(forName: .ETCDeviceDidDisconnect, object: device, queue: .main) { (notification) in
-            self.updateConnectionStatusView()
-        }
-
-        notificationCenter.addObserver(forName: .ETCDeviceDidDetectCardInsertion, object: device, queue: .main) { (notification) in
-            self.updateCardStatusView()
-        }
-
-        notificationCenter.addObserver(forName: .ETCDeviceDidDetectCardEjection, object: device, queue: .main) { (notification) in
-            self.updateCardStatusView()
-        }
     }
 
     func assignDetailViewControllerIfExists() {
         guard let navigationController = splitViewController!.viewControllers.last as? UINavigationController else { return }
         detailViewController = navigationController.topViewController as? ETCPaymentDetailViewController
-    }
-
-    func updateConnectionStatusView() {
-        if device.isConnected {
-            connectionStatusImageView.image = UIImage(systemName: "bolt.fill")
-            connectionStatusImageView.tintColor = nil
-        } else {
-            connectionStatusImageView.image = UIImage(systemName: "bolt.slash.fill")
-            connectionStatusImageView.tintColor = UIColor.lightGray
-        }
-    }
-
-    func updateCardStatusView() {
-        if device.currentCard != nil {
-            cardStatusImageView.tintColor = nil
-        } else {
-            cardStatusImageView.tintColor = UIColor.lightGray
-        }
     }
 
     // MARK: - Segues
@@ -186,7 +139,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ETCPaymentTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ETCPaymentTableViewCell", for: indexPath) as! ETCPaymentTableViewCell
 
         let payment = fetchedResultsController.object(at: indexPath)
         cell.payment = payment
