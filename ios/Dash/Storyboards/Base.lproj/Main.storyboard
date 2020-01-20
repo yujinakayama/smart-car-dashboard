@@ -40,36 +40,38 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="HKU-bN-sRN">
-                                            <rect key="frame" x="15" y="19" width="286" height="38.5"/>
+                                            <rect key="frame" x="23" y="19" width="278" height="38.5"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="creditcard.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="VeO-7B-4kV">
                                                     <rect key="frame" x="0.0" y="2.5" width="38" height="34"/>
-                                                    <color key="tintColor" red="0.49999999999999989" green="0.375" blue="0.75" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="38" id="X6V-Rl-8SY"/>
                                                         <constraint firstAttribute="height" constant="38" id="nZJ-9Q-dJP"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Card" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wLH-Uf-nlx">
-                                                    <rect key="frame" x="50" y="9" width="204" height="20.5"/>
+                                                    <rect key="frame" x="50" y="9" width="196" height="20.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="8Xi-A0-0wU">
-                                                    <rect key="frame" x="266" y="10" width="20" height="19"/>
+                                                    <rect key="frame" x="258" y="10" width="20" height="19"/>
+                                                    <color key="tintColor" red="0.52688173277575157" green="0.22999999999999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </imageView>
                                             </subviews>
                                         </stackView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" secondItem="HKU-bN-sRN" secondAttribute="trailing" constant="8" id="V3v-wz-MBh"/>
-                                        <constraint firstItem="HKU-bN-sRN" firstAttribute="leading" secondItem="UN9-2d-DFc" secondAttribute="leadingMargin" id="YNV-RT-bYz"/>
+                                        <constraint firstItem="HKU-bN-sRN" firstAttribute="leading" secondItem="UN9-2d-DFc" secondAttribute="leadingMargin" constant="8" id="YNV-RT-bYz"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="HKU-bN-sRN" secondAttribute="bottom" constant="4" id="Zz4-LW-sGK"/>
                                         <constraint firstItem="HKU-bN-sRN" firstAttribute="top" secondItem="UN9-2d-DFc" secondAttribute="topMargin" constant="4" id="eCo-Wx-Pbh"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                <inset key="separatorInset" minX="25" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
                                     <outlet property="checkmarkImageView" destination="8Xi-A0-0wU" id="AwH-bN-LGZ"/>
                                     <outlet property="nameLabel" destination="wLH-Uf-nlx" id="E3q-HX-7Qu"/>
