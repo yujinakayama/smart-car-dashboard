@@ -351,6 +351,7 @@
                                     <outlet property="exitRoadView" destination="Rko-mV-7BI" id="sIc-GS-n8I"/>
                                     <outlet property="exitTollboothLabel" destination="Flp-ga-yBP" id="voM-Ba-YeK"/>
                                     <outlet property="roadLabel" destination="CtC-aV-rx7" id="VEH-pW-shN"/>
+                                    <outlet property="roadView" destination="EML-DI-UKx" id="Com-ip-fb2"/>
                                     <outlet property="timeLabel" destination="1Lp-b1-rnx" id="m5q-Ov-7ll"/>
                                     <outlet property="tollboothLabel" destination="ElS-Fh-95g" id="a6q-bF-N5u"/>
                                     <outlet property="yenLabel" destination="6wB-E0-moo" id="JaW-EC-5zD"/>

@@ -25,6 +25,7 @@ class ETCPaymentTableViewCell: UITableViewCell {
     @IBOutlet weak var amountView: UIView!
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var roadView: UIView!
     @IBOutlet weak var roadLabel: UILabel!
     @IBOutlet weak var tollboothLabel: UILabel!
     @IBOutlet weak var arrowView: UIImageView!
@@ -61,18 +62,27 @@ class ETCPaymentTableViewCell: UITableViewCell {
 
         timeLabel.text = ETCPaymentTableViewCell.dateFormatter.string(from: payment.date)
 
-        if let entrance = payment.entranceTollbooth, let exit = payment.exitTollbooth {
+        let entrance = payment.entranceTollbooth
+        let exit = payment.exitTollbooth
+
+        if let entrance = entrance {
+            roadView.isHidden = false
             roadLabel.text = entrance.road.abbreviatedName
             tollboothLabel.text = entrance.name
+        } else {
+            roadView.isHidden = true
+            tollboothLabel.text = "不明な料金所"
+        }
 
-            if entrance == exit {
+        if let exit = exit {
+            if exit == entrance {
                 arrowView.isHidden = true
                 exitRoadView.isHidden = true
                 exitTollboothLabel.isHidden = true
             } else {
                 arrowView.isHidden = false
 
-                if entrance.road.name == exit.road.name {
+                if exit.road.name == entrance?.road.name {
                     exitRoadView.isHidden = true
                 } else {
                     exitRoadView.isHidden = false
@@ -83,10 +93,10 @@ class ETCPaymentTableViewCell: UITableViewCell {
                 exitTollboothLabel.text = exit.name
             }
         } else {
-            roadLabel.text = nil
-            tollboothLabel.text = nil
-            exitRoadLabel.text = nil
-            exitRoadLabel.text = nil
+            arrowView.isHidden = false
+            exitRoadView.isHidden = true
+            exitTollboothLabel.isHidden = false
+            exitTollboothLabel.text = "不明な料金所"
         }
     }
 
