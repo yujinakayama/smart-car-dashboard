@@ -31,6 +31,12 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
     var currentCard: ETCCardManagedObject? {
         didSet {
             dataStore.currentCard = currentCard
+
+            if oldValue == nil && currentCard != nil {
+                notificationCenter.post(name: .ETCDeviceDidDetectCardInsertion, object: self)
+            } else if oldValue != nil && currentCard == nil {
+                notificationCenter.post(name: .ETCDeviceDidDetectCardEjection, object: self)
+            }
         }
     }
 
@@ -88,6 +94,7 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
 
     func serialPortManager(_ serialPortManager: SerialPortManager, didLoseSerialPort serialPort: SerialPort) {
         connection = nil
+        currentCard = nil
         notificationCenter.post(name: .ETCDeviceDidDisconnect, object: self)
     }
 
@@ -119,7 +126,6 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
             try! connection.send(ETCMessageToDevice.cardExistenceRequest)
         case is ETCMessageFromDevice.CardEjectionNotification:
             currentCard = nil
-            notificationCenter.post(name: .ETCDeviceDidDetectCardEjection, object: self)
         default:
             break
         }
@@ -135,7 +141,6 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
             let card = try! self.dataStore.findOrInsertCard(uuid: cardUUID, in: context)
             try! context.save()
             self.currentCard = card
-            self.notificationCenter.post(name: .ETCDeviceDidDetectCardInsertion, object: self)
             try! self.connection!.send(ETCMessageToDevice.initialPaymentRecordRequest)
         }
     }
