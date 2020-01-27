@@ -47,4 +47,8 @@ class ETCSplitViewController: UISplitViewController, UISplitViewControllerDelega
         // because basically we want to see the payment list rather than the map in the compact size class.
         return true
     }
+
+    func splitViewController(_ splitViewController: UISplitViewController, separateSecondaryFrom primaryViewController: UIViewController) -> UIViewController? {
+        return detailNavigationController
+    }
 }
