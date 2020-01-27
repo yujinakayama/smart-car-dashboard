@@ -14,15 +14,28 @@ class ETCSplitViewController: UISplitViewController, UISplitViewControllerDelega
     }
 
     var detailNavigationController: UINavigationController? {
-        if viewControllers.count == 2 {
-            return (viewControllers.last! as! UINavigationController)
-        } else {
-            return nil
+        get {
+            if _detailNavigationController != nil {
+                return _detailNavigationController
+            } else if viewControllers.count == 2 {
+                _detailNavigationController = (viewControllers.last! as! UINavigationController)
+                return _detailNavigationController
+            } else {
+                return nil
+            }
+        }
+
+        set {
+            _detailNavigationController = newValue
         }
     }
 
+    private weak var _detailNavigationController: UINavigationController?
+
     override func awakeFromNib() {
         delegate = self
+
+        _ = detailNavigationController // Assign _detailNavigationController
 
         let detailNavigationItem = detailNavigationController?.topViewController?.navigationItem
         detailNavigationItem?.leftBarButtonItem = displayModeButtonItem

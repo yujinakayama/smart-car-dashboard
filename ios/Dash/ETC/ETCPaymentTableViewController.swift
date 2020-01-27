@@ -33,10 +33,8 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         return controller
     }()
 
-    var detailViewController: ETCPaymentDetailViewController?
-
-    var detailNavigationController: UINavigationController? {
-        return detailViewController?.navigationController
+    override var splitViewController: ETCSplitViewController {
+        return super.splitViewController as! ETCSplitViewController
     }
 
     let sectionHeaderDateFormatter: DateFormatter = {
@@ -54,8 +52,6 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         setUpNavigationBar()
 
         startObservingNotifications()
-
-        assignDetailViewControllerIfExists()
     }
 
     func setUpNavigationBar() {
@@ -72,24 +68,19 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         }
     }
 
-    func assignDetailViewControllerIfExists() {
-        guard let navigationController = splitViewController!.viewControllers.last as? UINavigationController else { return }
-        detailViewController = navigationController.topViewController as? ETCPaymentDetailViewController
-    }
-
     // MARK: - Segues
 
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "showDetail" {
-            if detailNavigationController == nil {
-                return true
-            } else {
+            if let detailNavigationController = splitViewController.detailNavigationController {
                 if let indexPath = tableView.indexPathForSelectedRow {
                     let payment = fetchedResultsController.object(at: indexPath)
-                    showPayment(payment)
-                    showDetailViewController(detailNavigationController!, sender: self)
+                    showPayment(payment, in: detailNavigationController.topViewController as! ETCPaymentDetailViewController)
+                    showDetailViewController(detailNavigationController, sender: self)
                 }
                 return false
+            } else {
+                return true
             }
         } else {
             return true
@@ -99,20 +90,20 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail", let indexPath = tableView.indexPathForSelectedRow {
             let navigationController = segue.destination as! UINavigationController
-            detailViewController = (navigationController.topViewController as! ETCPaymentDetailViewController)
+            splitViewController.detailNavigationController = navigationController
             let payment = fetchedResultsController.object(at: indexPath)
-            showPayment(payment)
+            showPayment(payment, in: navigationController.topViewController as! ETCPaymentDetailViewController)
         }
     }
 
-    func showPayment(_ payment: ETCPaymentProtocol?) {
-        detailViewController?.payment = payment
+    func showPayment(_ payment: ETCPaymentProtocol?, in detailViewController: ETCPaymentDetailViewController) {
+        detailViewController.payment = payment
 
-        if splitViewController!.displayMode == .primaryOverlay {
+        if splitViewController.displayMode == .primaryOverlay {
             UIView.animate(withDuration: 0.25, animations: { [unowned self] in
-                self.splitViewController!.preferredDisplayMode = .primaryHidden
+                self.splitViewController.preferredDisplayMode = .primaryHidden
             }, completion: { (completed) in
-                self.splitViewController!.preferredDisplayMode = .automatic
+                self.splitViewController.preferredDisplayMode = .automatic
             })
         }
     }
