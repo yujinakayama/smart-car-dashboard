@@ -58,11 +58,6 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         assignDetailViewControllerIfExists()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
-        super.viewWillAppear(animated)
-    }
-
     func setUpNavigationBar() {
         navigationItem.title = card.tentativeName
         navigationItem.rightBarButtonItems = deviceStatusBar.items

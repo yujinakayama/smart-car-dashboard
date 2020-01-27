@@ -30,12 +30,8 @@ class ETCSplitViewController: UISplitViewController, UISplitViewControllerDelega
     }
 
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
-        guard let secondaryAsNavController = secondaryViewController as? UINavigationController else { return false }
-        guard let topAsDetailController = secondaryAsNavController.topViewController as? ETCPaymentDetailViewController else { return false }
-        if topAsDetailController.payment == nil {
-            // Return true to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
-            return true
-        }
-        return false
+        // Prevent primary UINavigationController from pushing the secondary map view onto itself
+        // because basically we want to see the payment list rather than the map in the compact size class.
+        return true
     }
 }
