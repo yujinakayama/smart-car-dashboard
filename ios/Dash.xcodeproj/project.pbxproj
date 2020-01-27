@@ -20,6 +20,7 @@
 		B95BE8E222B8A8BE004C1CC0 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */; };
 		B95BE8E322B8A8BE004C1CC0 /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */; };
 		B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */; };
+		B9741F7523DF200600F061E7 /* SharedItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */; };
 		B98E936A234C94C7004AE50F /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
 		B99356D922A9483F00BA08AB /* japan_etc_tollbooths.csv in Resources */ = {isa = PBXBuildFile; fileRef = B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */; };
 		B99356DB22A9484700BA08AB /* ETCPaymentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356DA22A9484700BA08AB /* ETCPaymentTests.swift */; };
@@ -79,6 +80,7 @@
 		B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCGLogger.framework; path = Carthage/Build/iOS/XCGLogger.framework; sourceTree = "<group>"; };
 		B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjcExceptionBridging.framework; path = Carthage/Build/iOS/ObjcExceptionBridging.framework; sourceTree = "<group>"; };
 		B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceStatusBar.swift; sourceTree = "<group>"; };
+		B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemTableViewController.swift; sourceTree = "<group>"; };
 		B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentProtocol.swift; sourceTree = "<group>"; };
 		B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = japan_etc_tollbooths.csv; sourceTree = "<group>"; };
 		B99356DA22A9484700BA08AB /* ETCPaymentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCPaymentTests.swift; sourceTree = "<group>"; };
@@ -139,6 +141,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B9741F7623DF201A00F061E7 /* Share */ = {
+			isa = PBXGroup;
+			children = (
+				B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */,
+			);
+			path = Share;
+			sourceTree = "<group>";
+		};
 		B9CD1D8B22A51AAD00170082 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -230,6 +240,7 @@
 			children = (
 				B9DC5B24229D59BE00B645D5 /* AppDelegate.swift */,
 				B9CEA76822D8F1990055C9A3 /* ETC */,
+				B9741F7623DF201A00F061E7 /* Share */,
 				B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */,
 				B942554F22BAA5D1008B053B /* UserNotification.swift */,
 				B9BC920823250A0A006F22FC /* Defaults.swift */,
@@ -263,7 +274,6 @@
 				65F9B1D0D0A161701D17D301 /* Pods-Dash.debug.xcconfig */,
 				72213498BBC555CC69C079AD /* Pods-Dash.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -482,6 +492,7 @@
 				B9DC5B3D229D9E0C00B645D5 /* BLERemotePeripheral.swift in Sources */,
 				B9D8E43A23D345D70078A057 /* UUIDExtension.swift in Sources */,
 				B9CEA76E22D911140055C9A3 /* ETCSplitViewController.swift in Sources */,
+				B9741F7523DF200600F061E7 /* SharedItemTableViewController.swift in Sources */,
 				B99356E422A94D6900BA08AB /* BLESerialPort.swift in Sources */,
 				B9DC5B4A229EDA0000B645D5 /* SerialPort.swift in Sources */,
 			);
