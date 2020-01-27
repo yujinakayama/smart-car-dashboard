@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreLocation
+import Firebase
+import GoogleSignIn
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -17,7 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UserNotificationCenter.shared.requestAuthorization()
+
         locationManager.requestWhenInUseAuthorization()
+
+        FirebaseApp.configure()
+
+        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+
         return true
     }
 
@@ -42,5 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-}
 
+    func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+        return GIDSignIn.sharedInstance().handle(url)
+    }
+}

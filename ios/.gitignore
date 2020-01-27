@@ -84,3 +84,6 @@ iOSInjectionProject/
 
 # Copyrighted materials
 /Dash/Sounds
+
+# Firebase
+GoogleService-Info.plist

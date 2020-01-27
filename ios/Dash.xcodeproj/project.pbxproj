@@ -20,6 +20,7 @@
 		B95BE8E222B8A8BE004C1CC0 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */; };
 		B95BE8E322B8A8BE004C1CC0 /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */; };
 		B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */; };
+		B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */; };
 		B9741F7523DF200600F061E7 /* SharedItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */; };
 		B98E936A234C94C7004AE50F /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
 		B99356D922A9483F00BA08AB /* japan_etc_tollbooths.csv in Resources */ = {isa = PBXBuildFile; fileRef = B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */; };
@@ -54,6 +55,8 @@
 		B9E6CCA1234F69B800E18603 /* Payment.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9E6CCA0234F69B800E18603 /* Payment.wav */; };
 		B9E96CBB22A3CE7500C2E009 /* DashTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CBA22A3CE7500C2E009 /* DashTests.swift */; };
 		B9E96CC822A4EF1300C2E009 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
+		B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */; };
+		B9EF566123DF3D61000D0CB2 /* GoogleSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +83,7 @@
 		B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCGLogger.framework; path = Carthage/Build/iOS/XCGLogger.framework; sourceTree = "<group>"; };
 		B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjcExceptionBridging.framework; path = Carthage/Build/iOS/ObjcExceptionBridging.framework; sourceTree = "<group>"; };
 		B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceStatusBar.swift; sourceTree = "<group>"; };
+		B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemTableViewController.swift; sourceTree = "<group>"; };
 		B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentProtocol.swift; sourceTree = "<group>"; };
 		B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = japan_etc_tollbooths.csv; sourceTree = "<group>"; };
@@ -118,6 +122,8 @@
 		B9E96CBA22A3CE7500C2E009 /* DashTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashTests.swift; sourceTree = "<group>"; };
 		B9E96CBC22A3CE7500C2E009 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPayment.swift; sourceTree = "<group>"; };
+		B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
+		B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */,
+				B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */,
 			);
 			path = Share;
 			sourceTree = "<group>";
@@ -246,11 +253,13 @@
 				B9BC920823250A0A006F22FC /* Defaults.swift */,
 				B942553C22B8C3E2008B053B /* Logger.swift */,
 				B93321ED2323C9D500BFAB21 /* BorderedView.swift */,
+				B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */,
 				B9CEA76922D8F1F50055C9A3 /* Extensions */,
 				B9CEA76A22D8F2380055C9A3 /* Storyboards */,
 				B9CD1D9322A535A900170082 /* Sounds */,
 				B9DC5B2D229D59BF00B645D5 /* Assets.xcassets */,
 				B9DB8E5322D7A410003E4BD8 /* Dash.xcdatamodeld */,
+				B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */,
 				B9DC5B32229D59BF00B645D5 /* Info.plist */,
 				B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */,
 			);
@@ -285,6 +294,7 @@
 			buildConfigurationList = B9DC5B35229D59BF00B645D5 /* Build configuration list for PBXNativeTarget "Dash" */;
 			buildPhases = (
 				D1976B69B2C9268348B831AA /* [CP] Check Pods Manifest.lock */,
+				B9A3C09823E1A4E400EF1C4A /* Modify Info.plist */,
 				B9DC5B1D229D59BE00B645D5 /* Sources */,
 				B9DC5B1E229D59BE00B645D5 /* Frameworks */,
 				B9DC5B1F229D59BE00B645D5 /* Resources */,
@@ -368,6 +378,7 @@
 				B9DC5B2E229D59BF00B645D5 /* Assets.xcassets in Resources */,
 				B9E6CC9C234F65A000E18603 /* TollgatePassingThrough.wav in Resources */,
 				B9DC5B2C229D59BE00B645D5 /* Main.storyboard in Resources */,
+				B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,6 +408,25 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dash/Pods-Dash-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		B9A3C09823E1A4E400EF1C4A /* Modify Info.plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${TEMP_DIR}/Preprocessed-Info.plist",
+			);
+			name = "Modify Info.plist";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = "/usr/bin/env ruby";
+			shellScript = "# This script is avoiding exposure of my Firebase project ID on GitHub\n\ngoogle_info = File.read('Dash/GoogleService-Info.plist')\nreverse_client_id = google_info.scan(/com\\.googleusercontent\\.apps\\.[^<]+/).first || raise\n\ninfo_path = ENV['SCRIPT_INPUT_FILE_0']\ninfo = File.read(info_path)\ninfo.sub!('YOUR_FIREBASE_URL_SCHEME', reverse_client_id)\nFile.write(info_path, info)\n";
 		};
 		B9CD1D8E22A51AB300170082 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -480,6 +510,7 @@
 				B942555022BAA5D1008B053B /* UserNotification.swift in Sources */,
 				B9DC5B27229D59BE00B645D5 /* ETCPaymentTableViewController.swift in Sources */,
 				B9CB7C0D22AD65A40059433E /* UITableViewCellExtension.swift in Sources */,
+				B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */,
 				B9DB8E5522D7A410003E4BD8 /* Dash.xcdatamodeld in Sources */,
 				B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */,
 				B9DC5B3F229D9E4F00B645D5 /* BLERemotePeripheralManager.swift in Sources */,
@@ -492,6 +523,7 @@
 				B9DC5B3D229D9E0C00B645D5 /* BLERemotePeripheral.swift in Sources */,
 				B9D8E43A23D345D70078A057 /* UUIDExtension.swift in Sources */,
 				B9CEA76E22D911140055C9A3 /* ETCSplitViewController.swift in Sources */,
+				B9EF566123DF3D61000D0CB2 /* GoogleSignInViewController.swift in Sources */,
 				B9741F7523DF200600F061E7 /* SharedItemTableViewController.swift in Sources */,
 				B99356E422A94D6900BA08AB /* BLESerialPort.swift in Sources */,
 				B9DC5B4A229EDA0000B645D5 /* SerialPort.swift in Sources */,
@@ -670,6 +702,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Dash/Info.plist;
+				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -695,6 +728,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Dash/Info.plist;
+				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

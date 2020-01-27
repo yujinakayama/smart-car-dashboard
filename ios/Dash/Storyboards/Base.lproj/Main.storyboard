@@ -426,10 +426,59 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Shared Items" id="08c-tQ-1d0"/>
+                    <connections>
+                        <segue destination="1MV-T3-y4O" kind="presentation" identifier="showSignIn" animates="NO" id="bw5-MR-F3K"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TrC-0c-WtB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-162.07906295754026" y="2377.734375"/>
+        </scene>
+        <!--Google Sign In View Controller-->
+        <scene sceneID="8w7-6e-CcP">
+            <objects>
+                <viewController modalPresentationStyle="currentContext" id="1MV-T3-y4O" customClass="GoogleSignInViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="QRj-M3-7CO">
+                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3d5-rM-KEm" customClass="BorderedButton" customModule="Dash" customModuleProvider="target">
+                                <rect key="frame" x="588" y="493" width="190" height="38"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <inset key="contentEdgeInsets" minX="18" minY="8" maxX="18" maxY="9"/>
+                                <state key="normal" title="Sign in with Google">
+                                    <color key="titleColor" name="Global Tint Color"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="12"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" name="Global Tint Color"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="highlightedBackgroundColor">
+                                        <color key="value" red="0.50666666850447695" green="0.20000000298023224" blue="1" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="signInWithGoogleButtonDidTap:" destination="1MV-T3-y4O" eventType="touchUpInside" id="xnf-2l-tM4"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="3d5-rM-KEm" firstAttribute="centerX" secondItem="QRj-M3-7CO" secondAttribute="centerX" id="0dC-F9-rLR"/>
+                            <constraint firstItem="3d5-rM-KEm" firstAttribute="centerY" secondItem="QRj-M3-7CO" secondAttribute="centerY" id="ssZ-X8-HQ0"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="zvD-Rf-gSK"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oex-Fs-seX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="603" y="2378"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="JrH-as-C6C">
