@@ -20,6 +20,12 @@
 		B95BE8E222B8A8BE004C1CC0 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */; };
 		B95BE8E322B8A8BE004C1CC0 /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */; };
 		B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */; };
+		B964BCC323E066FF00288E0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B964BCC223E066FF00288E0D /* AppDelegate.swift */; };
+		B964BCC523E066FF00288E0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B964BCC423E066FF00288E0D /* SceneDelegate.swift */; };
+		B964BCC723E066FF00288E0D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B964BCC623E066FF00288E0D /* ViewController.swift */; };
+		B964BCCA23E066FF00288E0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B964BCC823E066FF00288E0D /* Main.storyboard */; };
+		B964BCCC23E0670100288E0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B964BCCB23E0670100288E0D /* Assets.xcassets */; };
+		B964BCCF23E0670100288E0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B964BCCD23E0670100288E0D /* LaunchScreen.storyboard */; };
 		B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */; };
 		B9741F7523DF200600F061E7 /* SharedItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */; };
 		B98E936A234C94C7004AE50F /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
@@ -84,6 +90,14 @@
 		B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCGLogger.framework; path = Carthage/Build/iOS/XCGLogger.framework; sourceTree = "<group>"; };
 		B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjcExceptionBridging.framework; path = Carthage/Build/iOS/ObjcExceptionBridging.framework; sourceTree = "<group>"; };
 		B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceStatusBar.swift; sourceTree = "<group>"; };
+		B964BCC023E066FF00288E0D /* DashRemote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DashRemote.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B964BCC223E066FF00288E0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B964BCC423E066FF00288E0D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		B964BCC623E066FF00288E0D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B964BCC923E066FF00288E0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B964BCCB23E0670100288E0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B964BCCE23E0670100288E0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B964BCD023E0670100288E0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemTableViewController.swift; sourceTree = "<group>"; };
 		B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentProtocol.swift; sourceTree = "<group>"; };
@@ -128,6 +142,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B964BCBD23E066FF00288E0D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B9DC5B1E229D59BE00B645D5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -148,6 +169,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B964BCC123E066FF00288E0D /* DashRemote */ = {
+			isa = PBXGroup;
+			children = (
+				B964BCC223E066FF00288E0D /* AppDelegate.swift */,
+				B964BCC423E066FF00288E0D /* SceneDelegate.swift */,
+				B964BCC623E066FF00288E0D /* ViewController.swift */,
+				B964BCC823E066FF00288E0D /* Main.storyboard */,
+				B964BCCB23E0670100288E0D /* Assets.xcassets */,
+				B964BCCD23E0670100288E0D /* LaunchScreen.storyboard */,
+				B964BCD023E0670100288E0D /* Info.plist */,
+			);
+			path = DashRemote;
+			sourceTree = "<group>";
+		};
 		B9741F7623DF201A00F061E7 /* Share */ = {
 			isa = PBXGroup;
 			children = (
@@ -228,6 +263,7 @@
 			children = (
 				B9DC5B23229D59BE00B645D5 /* Dash */,
 				B9E96CB922A3CE7500C2E009 /* DashTests */,
+				B964BCC123E066FF00288E0D /* DashRemote */,
 				B9DC5B22229D59BE00B645D5 /* Products */,
 				B9CD1D8B22A51AAD00170082 /* Frameworks */,
 				FC2BACFC9EC4F82C9699C39B /* Pods */,
@@ -239,6 +275,7 @@
 			children = (
 				B9DC5B21229D59BE00B645D5 /* Dash.app */,
 				B9E96CB822A3CE7500C2E009 /* DashTests.xctest */,
+				B964BCC023E066FF00288E0D /* DashRemote.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -291,6 +328,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B964BCBF23E066FF00288E0D /* DashRemote */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B964BCD323E0670100288E0D /* Build configuration list for PBXNativeTarget "DashRemote" */;
+			buildPhases = (
+				B964BCBC23E066FF00288E0D /* Sources */,
+				B964BCBD23E066FF00288E0D /* Frameworks */,
+				B964BCBE23E066FF00288E0D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DashRemote;
+			productName = DashRemote;
+			productReference = B964BCC023E066FF00288E0D /* DashRemote.app */;
+			productType = "com.apple.product-type.application";
+		};
 		B9DC5B20229D59BE00B645D5 /* Dash */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B9DC5B35229D59BF00B645D5 /* Build configuration list for PBXNativeTarget "Dash" */;
@@ -337,10 +391,13 @@
 		B9DC5B19229D59BE00B645D5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
+				LastSwiftUpdateCheck = 1130;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Yuji Nakayama";
 				TargetAttributes = {
+					B964BCBF23E066FF00288E0D = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
 					B9DC5B20229D59BE00B645D5 = {
 						CreatedOnToolsVersion = 10.2.1;
 					};
@@ -365,11 +422,22 @@
 			targets = (
 				B9DC5B20229D59BE00B645D5 /* Dash */,
 				B9E96CB722A3CE7500C2E009 /* DashTests */,
+				B964BCBF23E066FF00288E0D /* DashRemote */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B964BCBE23E066FF00288E0D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B964BCCF23E0670100288E0D /* LaunchScreen.storyboard in Resources */,
+				B964BCCC23E0670100288E0D /* Assets.xcassets in Resources */,
+				B964BCCA23E066FF00288E0D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B9DC5B1F229D59BE00B645D5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -491,6 +559,16 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B964BCBC23E066FF00288E0D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B964BCC723E066FF00288E0D /* ViewController.swift in Sources */,
+				B964BCC323E066FF00288E0D /* AppDelegate.swift in Sources */,
+				B964BCC523E066FF00288E0D /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B9DC5B1D229D59BE00B645D5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -556,6 +634,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		B964BCC823E066FF00288E0D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B964BCC923E066FF00288E0D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B964BCCD23E0670100288E0D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B964BCCE23E0670100288E0D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		B9DC5B2A229D59BE00B645D5 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -575,6 +669,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B964BCD123E0670100288E0D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8LSN3WQC77;
+				INFOPLIST_FILE = DashRemote/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.DashRemote;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B964BCD223E0670100288E0D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8LSN3WQC77;
+				INFOPLIST_FILE = DashRemote/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.DashRemote;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		B9DC5B33229D59BF00B645D5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -788,6 +920,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B964BCD323E0670100288E0D /* Build configuration list for PBXNativeTarget "DashRemote" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B964BCD123E0670100288E0D /* Debug */,
+				B964BCD223E0670100288E0D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B9DC5B1C229D59BE00B645D5 /* Build configuration list for PBXProject "Dash" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
