@@ -10,7 +10,7 @@ import UIKit
 import UserNotifications
 import FirebaseMessaging
 
-class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
+class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, MessagingDelegate {
     static let shared = UserNotificationCenter()
 
     let authorizationOptions: UNAuthorizationOptions = [.sound, .alert]
@@ -25,6 +25,7 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
     override init() {
         super.init()
         notificationCenter.delegate = self
+        Messaging.messaging().delegate = self
     }
 
     func setUp() {
@@ -70,6 +71,11 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
                 return
             }
         }
+    }
+
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        logger.debug(fcmToken)
+        Messaging.messaging().subscribe(toTopic: "Dash")
     }
 }
 

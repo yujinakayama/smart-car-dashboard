@@ -1,8 +1,28 @@
 import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+admin.initializeApp();
+
+export const notify = functions.firestore.document('items/{itemId}').onCreate(async (snapshot, context) => {
+    const item = snapshot.data();
+
+    if (!item) {
+        return;
+    }
+
+    const message = {
+        topic: 'Dash',
+        notification: {
+            body: item.url
+        },
+        apns: {
+            payload: {
+                aps: {
+                    sound: 'default'
+                }
+            }
+        }
+    };
+
+    await admin.messaging().send(message);
+});
