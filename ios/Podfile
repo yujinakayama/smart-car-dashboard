@@ -1,10 +1,20 @@
 platform :ios, '13.0'
 
-target 'Dash' do
-  use_frameworks!
+use_frameworks!
 
+abstract_target 'iOS' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
-  pod 'Firebase/Messaging'
-  pod 'GoogleSignIn'
+  pod 'Firebase/Firestore'
+  pod 'FirebaseFirestoreSwift'
+
+  target 'Dash' do
+    pod 'Firebase/Messaging'
+    pod 'GoogleSignIn'
+  end
+
+  target 'DashRemote' do
+    target 'ShareExtension' do
+    end
+  end
 end
