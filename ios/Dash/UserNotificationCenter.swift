@@ -6,8 +6,9 @@
 //  Copyright © 2019 Yuji Nakayama. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import UserNotifications
+import FirebaseMessaging
 
 class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
     static let shared = UserNotificationCenter()
@@ -24,6 +25,11 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
     override init() {
         super.init()
         notificationCenter.delegate = self
+    }
+
+    func setUp() {
+        requestAuthorization()
+        UIApplication.shared.registerForRemoteNotifications()
     }
 
     func requestAuthorization() {
@@ -51,6 +57,10 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        logger.info(notification)
+
+        Messaging.messaging().appDidReceiveMessage(notification.request.content.userInfo)
+
         notificationCenter.getNotificationSettings { [unowned self] (settings) in
             switch settings.authorizationStatus {
             case .authorized, .provisional:

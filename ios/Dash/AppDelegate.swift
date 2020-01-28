@@ -8,7 +8,8 @@
 
 import UIKit
 import CoreLocation
-import Firebase
+import FirebaseCore
+import FirebaseMessaging
 import GoogleSignIn
 
 @UIApplicationMain
@@ -18,13 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     let locationManager = CLLocationManager()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        UserNotificationCenter.shared.requestAuthorization()
-
-        locationManager.requestWhenInUseAuthorization()
-
         FirebaseApp.configure()
 
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+
+        UserNotificationCenter.shared.setUp()
+
+        locationManager.requestWhenInUseAuthorization()
 
         return true
     }
@@ -53,5 +54,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
         return GIDSignIn.sharedInstance().handle(url)
+    }
+
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Messaging.messaging().apnsToken = deviceToken
     }
 }
