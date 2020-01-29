@@ -105,7 +105,7 @@
                                 <rect key="frame" x="770.5" y="70" width="200" height="32"/>
                                 <color key="backgroundColor" name="Map Type Segmented Control Background Color"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="qyI-Dq-mjx"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="qyI-Dq-mjx"/>
                                 </constraints>
                                 <segments>
                                     <segment title="マップ"/>
@@ -119,6 +119,7 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="PSg-N3-wKj" firstAttribute="top" secondItem="VUw-jc-0yf" secondAttribute="top" constant="20" id="2mv-U7-lYL"/>
+                            <constraint firstItem="PSg-N3-wKj" firstAttribute="left" relation="greaterThanOrEqual" secondItem="svH-Pt-448" secondAttribute="leftMargin" priority="250" id="4KQ-Ki-Niq"/>
                             <constraint firstAttribute="rightMargin" secondItem="PSg-N3-wKj" secondAttribute="right" id="87D-cE-ICl"/>
                             <constraint firstAttribute="bottom" secondItem="gCy-yW-GVk" secondAttribute="bottom" id="GNl-7R-3iL"/>
                             <constraint firstAttribute="trailing" secondItem="gCy-yW-GVk" secondAttribute="trailing" id="Hmd-rP-k3B"/>
