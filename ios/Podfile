@@ -18,3 +18,11 @@ abstract_target 'iOS' do
     end
   end
 end
+
+# Suppress warning "Conversion to Swift 5 is available" from FirebaseFirestoreSwift
+post_install do |installer|
+  # This removes the warning about swift conversion, hopefuly forever!
+  installer.pods_project.root_object.attributes['LastSwiftMigration'] = 9999
+  installer.pods_project.root_object.attributes['LastSwiftUpdateCheck'] = 9999
+  installer.pods_project.root_object.attributes['LastUpgradeCheck'] = 9999
+end
