@@ -126,7 +126,11 @@ class ShareViewController: UIViewController {
     }
 
     func createItemOnFirestore(document: [String: Any], completionHandler: @escaping (Error?) -> Void) {
-        let entireDocument = ["raw": document]
+        let entireDocument: [String: Any] = [
+            "raw": document,
+            "creationTime": Timestamp()
+        ]
+
         Firestore.firestore().collection("items").addDocument(data: entireDocument, completion: completionHandler)
     }
 }
