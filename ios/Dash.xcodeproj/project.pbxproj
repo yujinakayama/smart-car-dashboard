@@ -38,6 +38,7 @@
 		B99356E622A9525C00BA08AB /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
 		B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E722A9553A00BA08AB /* MockSerialPort.swift */; };
 		B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */; };
+		B9A3C09523E163F500EF1C4A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9A3C09423E163F500EF1C4A /* GoogleService-Info.plist */; };
 		B9BA819E2350931A00657DEB /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
 		B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */; };
 		B9BC920923250A0A006F22FC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BC920823250A0A006F22FC /* Defaults.swift */; };
@@ -139,6 +140,7 @@
 		B99356E522A9525C00BA08AB /* ETCMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCMessage.swift; sourceTree = "<group>"; };
 		B99356E722A9553A00BA08AB /* MockSerialPort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSerialPort.swift; sourceTree = "<group>"; };
 		B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCPaymentTableViewCell.swift; sourceTree = "<group>"; };
+		B9A3C09423E163F500EF1C4A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewCell.swift; sourceTree = "<group>"; };
 		B9BC920823250A0A006F22FC /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		B9CB7C0C22AD65A40059433E /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 			children = (
 				B964BCDA23E067EB00288E0D /* ShareViewController.swift */,
 				B964BCDC23E067EB00288E0D /* MainInterface.storyboard */,
+				B9A3C09423E163F500EF1C4A /* GoogleService-Info.plist */,
 				B964BCDF23E067EB00288E0D /* Info.plist */,
 			);
 			path = ShareExtension;
@@ -532,6 +535,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B964BCDE23E067EB00288E0D /* MainInterface.storyboard in Resources */,
+				B9A3C09523E163F500EF1C4A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,25 +7,71 @@
 //
 
 import UIKit
-import Social
+import FirebaseCore
+import FirebaseFirestore
 
-class ShareViewController: SLComposeServiceViewController {
+enum ShareError: Error {
+    case noURLAttachmentIsAvailable
+    case unknown
+}
 
-    override func isContentValid() -> Bool {
-        // Do validation of contentText and/or NSExtensionContext attachments here
-        return true
+class ShareViewController: UIViewController {
+    let urlTypeIdentifier = "public.url"
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        FirebaseApp.configure()
+
+        share()
     }
 
-    override func didSelectPost() {
-        // This is called after the user selects Post. Do the upload of contentText and/or NSExtensionContext attachments.
-    
-        // Inform the host that we're done, so it un-blocks its UI. Note: Alternatively you could call super's -didSelectPost, which will similarly complete the extension context.
-        self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
+    func share() {
+        guard let items = extensionContext!.inputItems as? [NSExtensionItem], let item = items.first else {
+            extensionContext!.cancelRequest(withError: ShareError.noURLAttachmentIsAvailable)
+            return
+        }
+
+        loadURL(from: item) { (result) in
+            switch result {
+            case .success(let url):
+                self.createItemOnFirestore(url: url) { [weak self] (error) in
+                    guard let extensionContext = self?.extensionContext else { return }
+
+                    if let error = error {
+                        extensionContext.cancelRequest(withError: error)
+                    } else {
+                        extensionContext.completeRequest(returningItems: nil)
+                    }
+                }
+            case .failure(let error):
+                self.extensionContext!.cancelRequest(withError: error)
+            }
+        }
     }
 
-    override func configurationItems() -> [Any]! {
-        // To add configuration options via table cells at the bottom of the sheet, return an array of SLComposeSheetConfigurationItem here.
-        return []
+    func loadURL(from item: NSExtensionItem, completionHandler: @escaping (Result<URL, Error>) -> Void) {
+        let urlAttachment = item.attachments?.first { (attachment) in attachment.hasItemConformingToTypeIdentifier(urlTypeIdentifier) }
+
+        guard let attachment = urlAttachment else {
+            completionHandler(.failure(ShareError.noURLAttachmentIsAvailable))
+            return
+        }
+
+        _ = attachment.loadObject(ofClass: URL.self) { (url, error) in
+            if let error = error {
+                completionHandler(.failure(error))
+            }
+
+            completionHandler(.success(url!))
+        }
     }
 
+    func createItemOnFirestore(url: URL, completionHandler: @escaping (Error?) -> Void) {
+        let document = [
+            "url": url.absoluteString
+        ]
+
+        Firestore.firestore().collection("items").addDocument(data: document, completion: completionHandler)
+    }
 }
