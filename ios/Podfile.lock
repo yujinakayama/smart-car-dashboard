@@ -313,6 +313,7 @@ DEPENDENCIES:
   - Firebase/Messaging
   - FirebaseFirestoreSwift
   - GoogleSignIn
+  - GTMSessionFetcher
 
 SPEC REPOS:
   trunk:
@@ -373,6 +374,6 @@ SPEC CHECKSUMS:
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
 
-PODFILE CHECKSUM: 6486d7b3bda9a5447b8015289f1f6a434895892c
+PODFILE CHECKSUM: f9d0cd456ff1eafd4a5e33c91f02bf3c65a2574d
 
 COCOAPODS: 1.8.4
