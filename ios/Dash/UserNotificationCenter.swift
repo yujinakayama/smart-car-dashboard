@@ -8,6 +8,7 @@
 
 import UIKit
 import UserNotifications
+import MapKit
 import FirebaseMessaging
 
 class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, MessagingDelegate {
@@ -60,7 +61,7 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, Messag
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         logger.info(notification)
 
-        Messaging.messaging().appDidReceiveMessage(notification.request.content.userInfo)
+        process(notification)
 
         notificationCenter.getNotificationSettings { [unowned self] (settings) in
             switch settings.authorizationStatus {
@@ -70,6 +71,34 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, Messag
             default:
                 return
             }
+        }
+
+        Messaging.messaging().appDidReceiveMessage(notification.request.content.userInfo)
+    }
+
+    func process(_ notification: UNNotification) {
+        let userInfo = notification.request.content.userInfo
+
+        guard let notificationType = userInfo["notificationType"] as? String, notificationType == "item" else { return }
+
+        guard let item = userInfo["item"] as? [String: Any], let itemType = item["type"] as? String else { return }
+
+        switch itemType {
+        case "location":
+            let coordinateItem = item["coordinate"] as! [String: Double]
+            let coordinate = CLLocationCoordinate2D(
+                latitude: CLLocationDegrees(coordinateItem["latitude"]!),
+                longitude: CLLocationDegrees(coordinateItem["longitude"]!)
+            )
+            let placemark = MKPlacemark(coordinate: coordinate)
+            let mapItem = MKMapItem(placemark: placemark)
+            mapItem.name = item["name"] as? String
+            mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+        case "webpage":
+            let url = URL(string: item["url"] as! String)!
+            UIApplication.shared.open(url, options: [:])
+        default:
+            break
         }
     }
 
