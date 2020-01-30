@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import FirebaseCore
-import FirebaseFirestore
 import MapKit
 
 enum ShareError: Error {
@@ -19,8 +17,6 @@ enum ShareError: Error {
 class ShareViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        FirebaseApp.configure()
 
         share()
     }

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		185B6000441654E387FEA42C /* Pods_iOS_DashRemote_ShareExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82D1AC3AD4702A98D90699DE /* Pods_iOS_DashRemote_ShareExtension.framework */; };
+		01861A4B14032E6339D8E511 /* Pods_Dash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 125AA3B115ABAB0DD3288056 /* Pods_Dash.framework */; };
 		B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
 		B91BD8092323FD820064D2B5 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
 		B92451D423E30ACE007556D5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B92451D323E30ACE007556D5 /* Settings.bundle */; };
@@ -69,8 +69,6 @@
 		B9E96CC822A4EF1300C2E009 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
 		B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */; };
 		B9EF566123DF3D61000D0CB2 /* GoogleSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */; };
-		E02D8A99ABD0BBEFC47B8C54 /* Pods_iOS_DashRemote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD3C09B7EC6E9520A00EE770 /* Pods_iOS_DashRemote.framework */; };
-		F59049BCB43065EB435930FF /* Pods_iOS_Dash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E3A35F9E81FFAFEE060D037 /* Pods_iOS_Dash.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,11 +103,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0E3A35F9E81FFAFEE060D037 /* Pods_iOS_Dash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_Dash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		17DE0EB688E82CB50E60D92B /* Pods-iOS-Dash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-Dash.release.xcconfig"; path = "Target Support Files/Pods-iOS-Dash/Pods-iOS-Dash.release.xcconfig"; sourceTree = "<group>"; };
-		6852E55840020327BBD17BA0 /* Pods-iOS-DashRemote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-DashRemote.release.xcconfig"; path = "Target Support Files/Pods-iOS-DashRemote/Pods-iOS-DashRemote.release.xcconfig"; sourceTree = "<group>"; };
-		82D1AC3AD4702A98D90699DE /* Pods_iOS_DashRemote_ShareExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_DashRemote_ShareExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9945C3ED5F1D4B82CB7580A7 /* Pods-iOS-DashRemote-ShareExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-DashRemote-ShareExtension.debug.xcconfig"; path = "Target Support Files/Pods-iOS-DashRemote-ShareExtension/Pods-iOS-DashRemote-ShareExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		125AA3B115ABAB0DD3288056 /* Pods_Dash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		869C973AA26AD90E148028FB /* Pods-Dash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dash.release.xcconfig"; path = "Target Support Files/Pods-Dash/Pods-Dash.release.xcconfig"; sourceTree = "<group>"; };
 		B92451D323E30ACE007556D5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B92451D523E3204D007556D5 /* GoogleServieInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleServieInfo.swift; sourceTree = "<group>"; };
 		B9253D7923E015A80037E156 /* Dash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dash.entitlements; sourceTree = "<group>"; };
@@ -177,10 +172,7 @@
 		B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPayment.swift; sourceTree = "<group>"; };
 		B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInViewController.swift; sourceTree = "<group>"; };
-		CD3C09B7EC6E9520A00EE770 /* Pods_iOS_DashRemote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_DashRemote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D07364740727C3F0DCFDA0F3 /* Pods-iOS-Dash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-Dash.debug.xcconfig"; path = "Target Support Files/Pods-iOS-Dash/Pods-iOS-Dash.debug.xcconfig"; sourceTree = "<group>"; };
-		EF87F5558C6100A8FCC3411E /* Pods-iOS-DashRemote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-DashRemote.debug.xcconfig"; path = "Target Support Files/Pods-iOS-DashRemote/Pods-iOS-DashRemote.debug.xcconfig"; sourceTree = "<group>"; };
-		F38184E43E384ED57FA57EE9 /* Pods-iOS-DashRemote-ShareExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-DashRemote-ShareExtension.release.xcconfig"; path = "Target Support Files/Pods-iOS-DashRemote-ShareExtension/Pods-iOS-DashRemote-ShareExtension.release.xcconfig"; sourceTree = "<group>"; };
+		FDB9D0E23106CE353F300B76 /* Pods-Dash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dash.debug.xcconfig"; path = "Target Support Files/Pods-Dash/Pods-Dash.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,7 +180,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E02D8A99ABD0BBEFC47B8C54 /* Pods_iOS_DashRemote.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,7 +187,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				185B6000441654E387FEA42C /* Pods_iOS_DashRemote_ShareExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,7 +196,7 @@
 			files = (
 				B95BE8E222B8A8BE004C1CC0 /* XCGLogger.framework in Frameworks */,
 				B95BE8E322B8A8BE004C1CC0 /* ObjcExceptionBridging.framework in Frameworks */,
-				F59049BCB43065EB435930FF /* Pods_iOS_Dash.framework in Frameworks */,
+				01861A4B14032E6339D8E511 /* Pods_Dash.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,9 +250,7 @@
 			children = (
 				B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */,
 				B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */,
-				0E3A35F9E81FFAFEE060D037 /* Pods_iOS_Dash.framework */,
-				CD3C09B7EC6E9520A00EE770 /* Pods_iOS_DashRemote.framework */,
-				82D1AC3AD4702A98D90699DE /* Pods_iOS_DashRemote_ShareExtension.framework */,
+				125AA3B115ABAB0DD3288056 /* Pods_Dash.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -387,12 +375,8 @@
 		FC2BACFC9EC4F82C9699C39B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				D07364740727C3F0DCFDA0F3 /* Pods-iOS-Dash.debug.xcconfig */,
-				17DE0EB688E82CB50E60D92B /* Pods-iOS-Dash.release.xcconfig */,
-				EF87F5558C6100A8FCC3411E /* Pods-iOS-DashRemote.debug.xcconfig */,
-				6852E55840020327BBD17BA0 /* Pods-iOS-DashRemote.release.xcconfig */,
-				9945C3ED5F1D4B82CB7580A7 /* Pods-iOS-DashRemote-ShareExtension.debug.xcconfig */,
-				F38184E43E384ED57FA57EE9 /* Pods-iOS-DashRemote-ShareExtension.release.xcconfig */,
+				FDB9D0E23106CE353F300B76 /* Pods-Dash.debug.xcconfig */,
+				869C973AA26AD90E148028FB /* Pods-Dash.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -404,12 +388,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B964BCD323E0670100288E0D /* Build configuration list for PBXNativeTarget "DashRemote" */;
 			buildPhases = (
-				8E3D7B9F745A54900FB8725A /* [CP] Check Pods Manifest.lock */,
 				B964BCBC23E066FF00288E0D /* Sources */,
 				B964BCBD23E066FF00288E0D /* Frameworks */,
 				B964BCBE23E066FF00288E0D /* Resources */,
 				B964BCE623E067EB00288E0D /* Embed App Extensions */,
-				D1825E2C6D553D3A23C8D570 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -425,7 +407,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B964BCE323E067EB00288E0D /* Build configuration list for PBXNativeTarget "ShareExtension" */;
 			buildPhases = (
-				A9BB7CC1FD1AFC4B874C492D /* [CP] Check Pods Manifest.lock */,
 				B964BCD423E067EB00288E0D /* Sources */,
 				B964BCD523E067EB00288E0D /* Frameworks */,
 				B964BCD623E067EB00288E0D /* Resources */,
@@ -450,7 +431,7 @@
 				B9DC5B1F229D59BE00B645D5 /* Resources */,
 				B9CD1D8E22A51AB300170082 /* ShellScript */,
 				BCC6DA0CF269B8E30DEAAA76 /* [CP] Embed Pods Frameworks */,
-				AF2578F4EDB8C694989D1410 /* [CP] Copy Pods Resources */,
+				E91B1395BB80F0EC9C3C912C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -570,67 +551,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8E3D7B9F745A54900FB8725A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iOS-DashRemote-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A9BB7CC1FD1AFC4B874C492D /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iOS-DashRemote-ShareExtension-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AF2578F4EDB8C694989D1410 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-iOS-Dash/Pods-iOS-Dash-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-iOS-Dash/Pods-iOS-Dash-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iOS-Dash/Pods-iOS-Dash-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		B9A3C09823E1A4E400EF1C4A /* Modify Info.plist */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -675,32 +595,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-iOS-Dash/Pods-iOS-Dash-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Dash/Pods-Dash-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-iOS-Dash/Pods-iOS-Dash-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Dash/Pods-Dash-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iOS-Dash/Pods-iOS-Dash-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D1825E2C6D553D3A23C8D570 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-iOS-DashRemote/Pods-iOS-DashRemote-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-iOS-DashRemote/Pods-iOS-DashRemote-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iOS-DashRemote/Pods-iOS-DashRemote-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dash/Pods-Dash-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D1976B69B2C9268348B831AA /* [CP] Check Pods Manifest.lock */ = {
@@ -718,11 +621,28 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iOS-Dash-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Dash-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E91B1395BB80F0EC9C3C912C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Dash/Pods-Dash-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Dash/Pods-Dash-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dash/Pods-Dash-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -862,7 +782,6 @@
 /* Begin XCBuildConfiguration section */
 		B964BCD123E0670100288E0D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EF87F5558C6100A8FCC3411E /* Pods-iOS-DashRemote.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -882,7 +801,6 @@
 		};
 		B964BCD223E0670100288E0D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6852E55840020327BBD17BA0 /* Pods-iOS-DashRemote.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -902,7 +820,6 @@
 		};
 		B964BCE423E067EB00288E0D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9945C3ED5F1D4B82CB7580A7 /* Pods-iOS-DashRemote-ShareExtension.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8LSN3WQC77;
@@ -923,7 +840,6 @@
 		};
 		B964BCE523E067EB00288E0D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F38184E43E384ED57FA57EE9 /* Pods-iOS-DashRemote-ShareExtension.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8LSN3WQC77;
@@ -1060,7 +976,7 @@
 		};
 		B9DC5B36229D59BF00B645D5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D07364740727C3F0DCFDA0F3 /* Pods-iOS-Dash.debug.xcconfig */;
+			baseConfigurationReference = FDB9D0E23106CE353F300B76 /* Pods-Dash.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Dash/Dash.entitlements;
@@ -1087,7 +1003,7 @@
 		};
 		B9DC5B37229D59BF00B645D5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 17DE0EB688E82CB50E60D92B /* Pods-iOS-Dash.release.xcconfig */;
+			baseConfigurationReference = 869C973AA26AD90E148028FB /* Pods-Dash.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Dash/Dash.entitlements;
