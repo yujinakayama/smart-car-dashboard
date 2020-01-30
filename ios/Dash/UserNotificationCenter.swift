@@ -85,21 +85,51 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, Messag
 
         switch itemType {
         case "location":
-            let coordinateItem = item["coordinate"] as! [String: Double]
-            let coordinate = CLLocationCoordinate2D(
-                latitude: CLLocationDegrees(coordinateItem["latitude"]!),
-                longitude: CLLocationDegrees(coordinateItem["longitude"]!)
-            )
-            let placemark = MKPlacemark(coordinate: coordinate)
-            let mapItem = MKMapItem(placemark: placemark)
-            mapItem.name = item["name"] as? String
-            mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+            openInMaps(item: item)
         case "webpage":
             let url = URL(string: item["url"] as! String)!
             UIApplication.shared.open(url, options: [:])
         default:
             break
         }
+    }
+
+    func openInMaps(item: [String: Any]) {
+        let coordinateItem = item["coordinate"] as! [String: Double]
+        let coordinate = CLLocationCoordinate2D(
+            latitude: CLLocationDegrees(coordinateItem["latitude"]!),
+            longitude: CLLocationDegrees(coordinateItem["longitude"]!)
+        )
+        let placemark = MKPlacemark(coordinate: coordinate)
+
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = item["name"] as? String
+
+        if Defaults.shared.snapReceivedLocationToPointOfInterest {
+            findPointOfInterest(for: mapItem) { (pointOfInterest) in
+                if let pointOfInterest = pointOfInterest {
+                    self.openDirectionsInMaps(to: pointOfInterest)
+                } else {
+                    self.openDirectionsInMaps(to: mapItem)
+                }
+            }
+        } else {
+            openDirectionsInMaps(to: mapItem)
+        }
+    }
+
+    func findPointOfInterest(for mapItem: MKMapItem, completionHandler: @escaping (MKMapItem?) -> Void) {
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = mapItem.name
+        request.region = MKCoordinateRegion(center: mapItem.placemark.coordinate, latitudinalMeters: 50, longitudinalMeters: 50)
+
+        MKLocalSearch(request: request).start { (response, error) in
+            completionHandler(response?.mapItems.first)
+        }
+    }
+
+    func openDirectionsInMaps(to mapItem: MKMapItem) {
+        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
     }
 
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {

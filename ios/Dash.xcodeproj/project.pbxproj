@@ -10,6 +10,7 @@
 		185B6000441654E387FEA42C /* Pods_iOS_DashRemote_ShareExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82D1AC3AD4702A98D90699DE /* Pods_iOS_DashRemote_ShareExtension.framework */; };
 		B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
 		B91BD8092323FD820064D2B5 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
+		B92451D423E30ACE007556D5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B92451D323E30ACE007556D5 /* Settings.bundle */; };
 		B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */; };
 		B931C4FF23D369760020DF13 /* ETCDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B931C4FE23D369760020DF13 /* ETCDevice.swift */; };
 		B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93321ED2323C9D500BFAB21 /* BorderedView.swift */; };
@@ -108,6 +109,7 @@
 		6852E55840020327BBD17BA0 /* Pods-iOS-DashRemote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-DashRemote.release.xcconfig"; path = "Target Support Files/Pods-iOS-DashRemote/Pods-iOS-DashRemote.release.xcconfig"; sourceTree = "<group>"; };
 		82D1AC3AD4702A98D90699DE /* Pods_iOS_DashRemote_ShareExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_DashRemote_ShareExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9945C3ED5F1D4B82CB7580A7 /* Pods-iOS-DashRemote-ShareExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-DashRemote-ShareExtension.debug.xcconfig"; path = "Target Support Files/Pods-iOS-DashRemote-ShareExtension/Pods-iOS-DashRemote-ShareExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		B92451D323E30ACE007556D5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B9253D7923E015A80037E156 /* Dash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dash.entitlements; sourceTree = "<group>"; };
 		B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewController.swift; sourceTree = "<group>"; };
 		B931C4FE23D369760020DF13 /* ETCDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDevice.swift; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 				B9CEA76922D8F1F50055C9A3 /* Extensions */,
 				B9CEA76A22D8F2380055C9A3 /* Storyboards */,
 				B9CD1D9322A535A900170082 /* Sounds */,
+				B92451D323E30ACE007556D5 /* Settings.bundle */,
 				B9DC5B2D229D59BF00B645D5 /* Assets.xcassets */,
 				B9DB8E5322D7A410003E4BD8 /* Dash.xcdatamodeld */,
 				B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */,
@@ -543,6 +546,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B92451D423E30ACE007556D5 /* Settings.bundle in Resources */,
 				B9DC5B31229D59BF00B645D5 /* LaunchScreen.storyboard in Resources */,
 				B9E6CCA1234F69B800E18603 /* Payment.wav in Resources */,
 				B99356D922A9483F00BA08AB /* japan_etc_tollbooths.csv in Resources */,
