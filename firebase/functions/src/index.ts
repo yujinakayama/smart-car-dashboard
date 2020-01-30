@@ -4,8 +4,6 @@ import * as maps from '@google/maps';
 import * as https from 'https';
 import { URL } from 'url';
 
-import { DocumentSnapshot } from 'firebase-functions/lib/providers/firestore';
-
 interface RawData {
     'public.url': string;
     'public.plain-text'?: string;
@@ -21,39 +19,76 @@ interface RawData {
     };
 }
 
+interface BaseNormalizedData {
+    type: string;
+    url: string;
+}
+
+interface LocationData extends BaseNormalizedData {
+    type: 'location';
+    coordinate: {
+        latitude: number;
+        longitude: number;
+    };
+    name?: string;
+    url: string;
+    webpageURL?: string;
+}
+
+interface WebpageData extends BaseNormalizedData {
+    type: 'webpage';
+    url: string;
+}
+
+type NormalizedData = LocationData | WebpageData;
+
+// We want to extend NormalizedData but it's not allowed
+interface Item extends BaseNormalizedData {
+    raw: RawData;
+}
+
 admin.initializeApp();
 
-export const normalizeItemAndNotify = functions.region('asia-northeast1').firestore.document('items/{itemId}').onCreate(async (snapshot, context) => {
-    await normalize(snapshot);
-    await notify(snapshot.ref);
+export const notifyAndAddItem = functions.region('asia-northeast1').https.onRequest(async (request, response) => {
+    const rawData = request.body as RawData;
+
+    const normalizedData = await normalize(rawData);
+
+    const item = {
+        raw: rawData,
+        ...normalizedData
+    };
+
+    await notify(item);
+
+    await addItemToFirestore(item);
+
+    response.sendStatus(200);
 });
 
-const normalize = (snapshot: DocumentSnapshot): Promise<any> => {
-    const document = snapshot.ref;
-    const rawData = snapshot.get('raw') as RawData;
-
+const normalize = (rawData: RawData): Promise<NormalizedData> => {
     if (rawData['com.apple.mapkit.map-item']) {
-        return normalizeAppleMapsLocation(document, rawData);
+        return normalizeAppleMapsLocation(rawData);
     } else if (rawData['public.url'].startsWith('https://goo.gl/maps/')) {
-        return normalizeGoogleMapsLocation(document, rawData);
+        return normalizeGoogleMapsLocation(rawData);
     } else {
-        return normalizeWebpage(document, rawData);
+        return normalizeWebpage(rawData);
     }
 };
 
-const normalizeAppleMapsLocation = (document: FirebaseFirestore.DocumentReference, rawData: RawData): Promise<any> => {
+const normalizeAppleMapsLocation = async (rawData: RawData): Promise<LocationData> => {
     const mapItem = rawData['com.apple.mapkit.map-item']!;
 
-    return document.update({
+    return {
         type: 'location',
         coordinate: mapItem.coordinate,
         name: mapItem.name,
         webpageURL: mapItem.url,
         url: rawData['public.url']
-    });
+    };
 };
 
-const normalizeGoogleMapsLocation = async (document: FirebaseFirestore.DocumentReference, rawData: RawData): Promise<any> => {
+const normalizeGoogleMapsLocation = async (rawData: RawData): Promise<LocationData> => {
     const url: URL = await new Promise((resolve, reject) => {
         https.get(rawData['public.url'], (response) => {
             if (response.headers.location) {
@@ -73,15 +108,15 @@ const normalizeGoogleMapsLocation = async (document: FirebaseFirestore.DocumentR
     const coordinate = query.match(/^([\d\.]+),([\d\.]+)$/)
 
     if (coordinate) {
-        return document.update({
+        return {
             type: 'location',
             coordinate: {
                 latitude: parseFloat(coordinate[1]),
                 longitude: parseFloat(coordinate[2])
             },
             name: rawData['public.plain-text'],
-            url: rawData['public.url']
-        });
+            url: url.toString()
+        };
     } else {
         const client = maps.createClient({ key: functions.config().googlemaps.api_key, Promise: Promise });
 
@@ -98,28 +133,26 @@ const normalizeGoogleMapsLocation = async (document: FirebaseFirestore.DocumentR
             throw new Error('Found no place from Google Maps URL');
         }
 
-        return document.update({
+        return {
             type: 'location',
             coordinate: {
-                latitude: place.geometry?.location.lat,
-                longitude: place.geometry?.location.lng
+                latitude: place.geometry!.location.lat,
+                longitude: place.geometry!.location.lng
             },
             name: place.name,
-            url: rawData['public.url']
-        });
+            url: url.toString()
+        };
     }
 };
 
-const normalizeWebpage = (document: FirebaseFirestore.DocumentReference, rawData: RawData): Promise<any> => {
-    return document.update({
+const normalizeWebpage = async (rawData: RawData): Promise<WebpageData> => {
+    return {
         type: 'webpage',
         url: rawData['public.url']
-    });
+    };
 };
 
-const notify = async (document: FirebaseFirestore.DocumentReference): Promise<any> => {
-    const snapshot = await document.get();
-
+const notify = (item: Item): Promise<any> => {
     const message = {
         topic: 'Dash',
         apns: {
@@ -129,10 +162,19 @@ const notify = async (document: FirebaseFirestore.DocumentReference): Promise<an
                 },
                 // admin.messaging.ApnsPayload type requires `object` value for custom keys but it's wrong
                 notificationType: 'item',
-                item: snapshot.data()
+                item: item
             } as any
         }
     };
 
     return admin.messaging().send(message);
 };
+
+const addItemToFirestore = async (item: Item): Promise<any> => {
+    const document = {
+        creationTime: admin.firestore.FieldValue.serverTimestamp(),
+        ...item
+    };
+
+    return admin.firestore().collection('items').add(document);
+}

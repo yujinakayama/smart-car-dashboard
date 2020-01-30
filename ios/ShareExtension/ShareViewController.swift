@@ -36,7 +36,7 @@ class ShareViewController: UIViewController {
         aggregate(attachments: attachments) { (result) in
             switch result {
             case .success(let document):
-                self.createItemOnFirestore(document: document) { (error) in
+                self.send(document) { (error) in
                     if let error = error {
                         extContext.cancelRequest(withError: error)
                     } else {
@@ -125,12 +125,24 @@ class ShareViewController: UIViewController {
         ]
     }
 
-    func createItemOnFirestore(document: [String: Any], completionHandler: @escaping (Error?) -> Void) {
-        let entireDocument: [String: Any] = [
-            "raw": document,
-            "creationTime": Timestamp()
-        ]
+    func send(_ document: [String: Any], completionHandler: @escaping (Error?) -> Void) {
+        let googleServiceInfo = GoogleServiceInfo(path: Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")!)
+        let endPointURLString = "https://asia-northeast1-\(googleServiceInfo.projectID).cloudfunctions.net/notifyAndAddItem"
 
-        Firestore.firestore().collection("items").addDocument(data: entireDocument, completion: completionHandler)
+        var request = URLRequest(url: URL(string: endPointURLString)!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: document)
+        } catch {
+            completionHandler(error)
+        }
+
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            completionHandler(error)
+        }
+
+        task.resume()
     }
 }
