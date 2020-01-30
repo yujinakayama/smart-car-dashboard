@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import SVProgressHUD
 
 enum ShareError: Error {
     case noAttachmentIsAvailable
@@ -18,14 +19,18 @@ class ShareViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        SVProgressHUD.setViewForExtension(view)
+        SVProgressHUD.setMinimumSize(CGSize(width: 120, height: 120))
+        SVProgressHUD.setHapticsEnabled(true)
+
         share()
     }
 
     func share() {
-        let extContext = extensionContext!
+        SVProgressHUD.show(withStatus: "Sending")
 
-        guard let items = extContext.inputItems as? [NSExtensionItem], let attachments = items.first?.attachments else {
-            extensionContext!.cancelRequest(withError: ShareError.noAttachmentIsAvailable)
+        guard let items = extensionContext?.inputItems as? [NSExtensionItem], let attachments = items.first?.attachments else {
+            cancelRequest(withError: ShareError.noAttachmentIsAvailable)
             return
         }
 
@@ -34,14 +39,30 @@ class ShareViewController: UIViewController {
             case .success(let document):
                 self.send(document) { (error) in
                     if let error = error {
-                        extContext.cancelRequest(withError: error)
+                        self.cancelRequest(withError: error)
                     } else {
-                        extContext.completeRequest(returningItems: nil)
+                        self.completeRequest()
                     }
                 }
             case .failure(let error):
-                extContext.cancelRequest(withError: error)
+                self.cancelRequest(withError: error)
             }
+        }
+    }
+
+    func completeRequest() {
+        SVProgressHUD.showSuccess(withStatus: "Sent")
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.extensionContext!.completeRequest(returningItems: nil)
+        }
+    }
+
+    func cancelRequest(withError error: Error) {
+        SVProgressHUD.showError(withStatus: "Failed")
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.extensionContext!.cancelRequest(withError: error)
         }
     }
 
