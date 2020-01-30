@@ -125,7 +125,7 @@
 		B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCGLogger.framework; path = Carthage/Build/iOS/XCGLogger.framework; sourceTree = "<group>"; };
 		B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjcExceptionBridging.framework; path = Carthage/Build/iOS/ObjcExceptionBridging.framework; sourceTree = "<group>"; };
 		B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceStatusBar.swift; sourceTree = "<group>"; };
-		B964BCC023E066FF00288E0D /* DashRemote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DashRemote.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B964BCC023E066FF00288E0D /* Dash Remote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dash Remote.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B964BCC223E066FF00288E0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B964BCC423E066FF00288E0D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B964BCC623E066FF00288E0D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -341,7 +341,7 @@
 			children = (
 				B9DC5B21229D59BE00B645D5 /* Dash.app */,
 				B9E96CB822A3CE7500C2E009 /* DashTests.xctest */,
-				B964BCC023E066FF00288E0D /* DashRemote.app */,
+				B964BCC023E066FF00288E0D /* Dash Remote.app */,
 				B964BCD823E067EB00288E0D /* ShareExtension.appex */,
 			);
 			name = Products;
@@ -418,7 +418,7 @@
 			);
 			name = DashRemote;
 			productName = DashRemote;
-			productReference = B964BCC023E066FF00288E0D /* DashRemote.app */;
+			productReference = B964BCC023E066FF00288E0D /* Dash Remote.app */;
 			productType = "com.apple.product-type.application";
 		};
 		B964BCD723E067EB00288E0D /* ShareExtension */ = {
@@ -874,7 +874,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.DashRemote;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Dash Remote";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -894,7 +894,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.DashRemote;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Dash Remote";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
