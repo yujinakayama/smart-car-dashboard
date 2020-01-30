@@ -23,7 +23,7 @@ interface RawData {
 
 admin.initializeApp();
 
-export const normalizeItemAndNotify = functions.firestore.document('items/{itemId}').onCreate(async (snapshot, context) => {
+export const normalizeItemAndNotify = functions.region('asia-northeast1').firestore.document('items/{itemId}').onCreate(async (snapshot, context) => {
     await normalize(snapshot);
     await notify(snapshot.ref);
 });
