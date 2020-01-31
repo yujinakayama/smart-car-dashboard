@@ -15,6 +15,7 @@
 		B92451D423E30ACE007556D5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B92451D323E30ACE007556D5 /* Settings.bundle */; };
 		B92451D623E3204D007556D5 /* GoogleServieInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92451D523E3204D007556D5 /* GoogleServieInfo.swift */; };
 		B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */; };
+		B92E2AFA23E3EE3700BB4C0E /* InputItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92E2AF923E3EE3700BB4C0E /* InputItem.swift */; };
 		B931C4FF23D369760020DF13 /* ETCDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B931C4FE23D369760020DF13 /* ETCDevice.swift */; };
 		B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93321ED2323C9D500BFAB21 /* BorderedView.swift */; };
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
@@ -115,6 +116,7 @@
 		B92451D523E3204D007556D5 /* GoogleServieInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleServieInfo.swift; sourceTree = "<group>"; };
 		B9253D7923E015A80037E156 /* Dash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dash.entitlements; sourceTree = "<group>"; };
 		B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewController.swift; sourceTree = "<group>"; };
+		B92E2AF923E3EE3700BB4C0E /* InputItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputItem.swift; sourceTree = "<group>"; };
 		B931C4FE23D369760020DF13 /* ETCDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDevice.swift; sourceTree = "<group>"; };
 		B93321ED2323C9D500BFAB21 /* BorderedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedView.swift; sourceTree = "<group>"; };
 		B941AEADBC8F07DBE594C95A /* Pods_DashRemote_ShareExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DashRemote_ShareExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -238,6 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				B964BCDA23E067EB00288E0D /* ShareViewController.swift */,
+				B92E2AF923E3EE3700BB4C0E /* InputItem.swift */,
 				B92451D523E3204D007556D5 /* GoogleServieInfo.swift */,
 				B964BCDC23E067EB00288E0D /* MainInterface.storyboard */,
 				B9A3C09423E163F500EF1C4A /* GoogleService-Info.plist */,
@@ -744,6 +747,7 @@
 			files = (
 				B92451D623E3204D007556D5 /* GoogleServieInfo.swift in Sources */,
 				B964BCDB23E067EB00288E0D /* ShareViewController.swift in Sources */,
+				B92E2AFA23E3EE3700BB4C0E /* InputItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
