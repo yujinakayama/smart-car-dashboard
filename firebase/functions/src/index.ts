@@ -39,6 +39,7 @@ interface LocationData extends BaseNormalizedData {
 
 interface WebpageData extends BaseNormalizedData {
     type: 'webpage';
+    title?: string;
     url: string;
 }
 
@@ -150,6 +151,7 @@ const normalizeGoogleMapsLocation = async (rawData: RawData): Promise<LocationDa
 const normalizeWebpage = async (rawData: RawData): Promise<WebpageData> => {
     return {
         type: 'webpage',
+        title: rawData.title || rawData.contentText,
         url: rawData['public.url']
     };
 };
