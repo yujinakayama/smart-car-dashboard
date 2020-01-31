@@ -157,13 +157,13 @@ const normalizeWebpage = async (rawData: RawData): Promise<WebpageData> => {
 };
 
 const notify = (item: Item): Promise<any> => {
+    const notification = makeNotification(item);
+
     const message = {
         topic: 'Dash',
         apns: {
             payload: {
-                aps: {
-                    sound: 'default'
-                },
+                aps: notification,
                 // admin.messaging.ApnsPayload type requires `object` value for custom keys but it's wrong
                 notificationType: 'item',
                 item: item
@@ -173,6 +173,32 @@ const notify = (item: Item): Promise<any> => {
 
     return admin.messaging().send(message);
 };
+
+const makeNotification = (item: Item): admin.messaging.Aps => {
+    const normalizedData = item as NormalizedData;
+
+    let alert: admin.messaging.ApsAlert
+
+    switch (normalizedData.type) {
+        case 'location':
+            alert = {
+                title: '目的地',
+                body: normalizedData.name
+            }
+            break;
+        case 'webpage':
+            alert = {
+                title: 'Webサイト',
+                body: normalizedData.title || normalizedData.url
+            }
+            break;
+    }
+
+    return {
+        alert: alert,
+        sound: 'default'
+    }
+}
 
 const addItemToFirestore = async (item: Item): Promise<any> => {
     const document = {
