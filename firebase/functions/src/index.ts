@@ -5,6 +5,8 @@ import * as https from 'https';
 import { URL } from 'url';
 
 interface RawData {
+    title?: string;
+    contentText?: string;
     'public.url': string;
     'public.plain-text'?: string;
     'com.apple.mapkit.map-item'?: {

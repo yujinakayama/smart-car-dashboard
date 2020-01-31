@@ -40,7 +40,10 @@ class InputItem {
     }
 
     func encode(completionHandler: @escaping ([String: Any]) -> Void) {
-        var dictionary: [String: Any] = [:]
+        var dictionary: [String: Any] = [
+            "title": item.attributedTitle?.string as Any,
+            "contentText": item.attributedContentText?.string as Any
+        ]
 
         let serialQueue = DispatchQueue(label: "exclusive-dictionary-modification")
         let dispatchGroup = DispatchGroup()
