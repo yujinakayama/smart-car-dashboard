@@ -120,7 +120,7 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, Messag
     func findPointOfInterest(for mapItem: MKMapItem, completionHandler: @escaping (MKMapItem?) -> Void) {
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = mapItem.name
-        request.region = MKCoordinateRegion(center: mapItem.placemark.coordinate, latitudinalMeters: 50, longitudinalMeters: 50)
+        request.region = MKCoordinateRegion(center: mapItem.placemark.coordinate, latitudinalMeters: 20, longitudinalMeters: 20)
 
         MKLocalSearch(request: request).start { (response, error) in
             completionHandler(response?.mapItems.first)
