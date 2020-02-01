@@ -69,7 +69,11 @@ admin.initializeApp();
 export const notifyAndAddItem = functions.region('asia-northeast1').https.onRequest(async (request, response) => {
     const rawData = request.body as RawData;
 
+    console.log('rawData:', rawData);
+
     const normalizedData = await normalize(rawData);
+
+    console.log('normalizedData:', normalizedData);
 
     const item = {
         raw: rawData,
