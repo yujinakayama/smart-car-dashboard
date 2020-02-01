@@ -54,7 +54,7 @@ interface NotificationPayload {
     aps: admin.messaging.Aps;
     foregroundPresentationOptions: UNNotificationPresentationOptions;
     item: Item;
-    notificationType: 'item';
+    notificationType: 'share';
 }
 
 enum UNNotificationPresentationOptions {
@@ -66,7 +66,7 @@ enum UNNotificationPresentationOptions {
 
 admin.initializeApp();
 
-export const notifyAndAddItem = functions.region('asia-northeast1').https.onRequest(async (request, response) => {
+export const share = functions.region('asia-northeast1').https.onRequest(async (request, response) => {
     const rawData = request.body as RawData;
 
     console.log('rawData:', rawData);
@@ -181,7 +181,7 @@ const notify = (item: Item): Promise<any> => {
         aps: content,
         foregroundPresentationOptions: UNNotificationPresentationOptions.sound,
         item: item,
-        notificationType: 'item'
+        notificationType: 'share'
     };
 
     const message = {

@@ -11,7 +11,7 @@ import DictionaryCoding
 
 struct RemoteNotification {
     enum NotificationType: String {
-        case item
+        case share
     }
 
     let userInfo: [AnyHashable: Any]
@@ -23,8 +23,8 @@ struct RemoteNotification {
 
     func process() throws {
         switch type {
-        case .item:
-            try ItemNotification(userInfo: userInfo).process()
+        case .share:
+            try ShareNotification(userInfo: userInfo).process()
         default:
             break
         }
@@ -35,7 +35,7 @@ enum ItemNotificationError: Error {
     case unexpectedUserInfoStructure
 }
 
-struct ItemNotification {
+struct ShareNotification {
     enum ItemType: String {
         case location
         case webpage

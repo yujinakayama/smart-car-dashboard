@@ -70,7 +70,7 @@ class ShareViewController: UIViewController {
 
     func send(_ document: [String: Any], completionHandler: @escaping (Error?) -> Void) {
         let googleServiceInfo = GoogleServiceInfo(path: Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")!)
-        let endPointURLString = "https://asia-northeast1-\(googleServiceInfo.projectID).cloudfunctions.net/notifyAndAddItem"
+        let endPointURLString = "https://asia-northeast1-\(googleServiceInfo.projectID).cloudfunctions.net/share"
 
         var request = URLRequest(url: URL(string: endPointURLString)!)
         request.httpMethod = "POST"
