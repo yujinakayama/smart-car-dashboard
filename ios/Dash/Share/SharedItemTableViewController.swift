@@ -8,34 +8,127 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class SharedItemTableViewController: UITableViewController {
     var authStateListener: AuthStateDidChangeListenerHandle?
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    var querySnapshotListener: ListenerRegistration?
+
+    var items: [[String: Any]] = []
+
+    lazy var firestoreQuery: Query = Firestore.firestore().collection("items").order(by: "creationTime", descending: true)
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        authStateDidChange()
 
         authStateListener = Auth.auth().addStateDidChangeListener { [weak self] (auth, user) in
             guard let self = self else { return }
-            self.showSignInViewIfNeeded()
+            self.authStateDidChange()
         }
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-
+    deinit {
         if let authStateListener = authStateListener {
             Auth.auth().removeStateDidChangeListener(authStateListener)
+            self.authStateListener = nil
         }
+
+        endLoadingItems()
     }
 
-    func showSignInViewIfNeeded() {
+    func authStateDidChange() {
         let firebaseUser = Auth.auth().currentUser
 
         logger.info("Current Firebase user: \(firebaseUser?.email as String?)")
 
-        if firebaseUser == nil {
-            self.performSegue(withIdentifier: "showSignIn", sender: self)
+        if firebaseUser != nil {
+            self.startLoadingItems()
+        } else {
+            self.showSignInView()
+        }
+    }
+
+    func startLoadingItems() {
+        guard querySnapshotListener == nil else { return }
+
+        querySnapshotListener = firestoreQuery.addSnapshotListener { [weak self] (snapshot, error) in
+            guard let self = self else { return }
+
+            if let error = error {
+                logger.error(error)
+                return
+            }
+
+            guard let snapshot = snapshot else { return }
+
+            let initialLoad = self.items.isEmpty
+            self.items = snapshot.documents.map { (snapshot) in snapshot.data() }
+
+            if initialLoad {
+                self.tableView.reloadData()
+            } else {
+                self.itemCollectionDidChange(changes: snapshot.documentChanges)
+            }
+        }
+    }
+
+    func endLoadingItems() {
+        guard let querySnapshotListener = querySnapshotListener else { return }
+
+        querySnapshotListener.remove()
+        self.querySnapshotListener = nil
+    }
+
+    func showSignInView() {
+        self.performSegue(withIdentifier: "showSignIn", sender: self)
+    }
+
+    // MARK: - UITableViewDataSource
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return items.count
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SharedItem", for: indexPath)
+
+        let item = items[indexPath.row]
+        cell.textLabel?.text = item["url"] as? String
+        return cell
+    }
+
+    func itemCollectionDidChange(changes: [DocumentChange]) {
+        tableView.beginUpdates()
+
+        for change in changes {
+            itemDidChange(change: change)
+        }
+
+        tableView.endUpdates()
+    }
+
+    func itemDidChange(change: DocumentChange) {
+        let oldIndexPath = IndexPath(row: Int(change.oldIndex), section: 0)
+        let newIndexPath = IndexPath(row: Int(change.newIndex), section: 0)
+
+        switch change.type {
+        case .added:
+            tableView.insertRows(at: [newIndexPath], with: .left)
+        case .removed:
+            tableView.deleteRows(at: [oldIndexPath], with: .fade)
+        case .modified:
+            if oldIndexPath == newIndexPath {
+                tableView.reloadRows(at: [oldIndexPath], with: .none)
+            } else {
+                tableView.moveRow(at: oldIndexPath, to: newIndexPath)
+            }
         }
     }
 }
