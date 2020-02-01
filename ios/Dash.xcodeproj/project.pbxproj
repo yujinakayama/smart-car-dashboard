@@ -21,7 +21,7 @@
 		B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93321ED2323C9D500BFAB21 /* BorderedView.swift */; };
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
 		B942554522B8ED10008B053B /* ETCMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554422B8ED10008B053B /* ETCMessageTests.swift */; };
-		B942555022BAA5D1008B053B /* UserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554F22BAA5D1008B053B /* UserNotification.swift */; };
+		B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554F22BAA5D1008B053B /* LocalNotification.swift */; };
 		B9588B5D23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */; };
 		B95BE8E222B8A8BE004C1CC0 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */; };
 		B95BE8E322B8A8BE004C1CC0 /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */; };
@@ -125,7 +125,7 @@
 		B941AEADBC8F07DBE594C95A /* Pods_DashRemote_ShareExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DashRemote_ShareExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B942553C22B8C3E2008B053B /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B942554422B8ED10008B053B /* ETCMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCMessageTests.swift; sourceTree = "<group>"; };
-		B942554F22BAA5D1008B053B /* UserNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotification.swift; sourceTree = "<group>"; };
+		B942554F22BAA5D1008B053B /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentDebugInformationViewController.swift; sourceTree = "<group>"; };
 		B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCGLogger.framework; path = Carthage/Build/iOS/XCGLogger.framework; sourceTree = "<group>"; };
 		B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjcExceptionBridging.framework; path = Carthage/Build/iOS/ObjcExceptionBridging.framework; sourceTree = "<group>"; };
@@ -363,7 +363,7 @@
 				B9CEA76822D8F1990055C9A3 /* ETC */,
 				B9741F7623DF201A00F061E7 /* Share */,
 				B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */,
-				B942554F22BAA5D1008B053B /* UserNotification.swift */,
+				B942554F22BAA5D1008B053B /* LocalNotification.swift */,
 				B9BC920823250A0A006F22FC /* Defaults.swift */,
 				B942553C22B8C3E2008B053B /* Logger.swift */,
 				B93321ED2323C9D500BFAB21 /* BorderedView.swift */,
@@ -776,7 +776,7 @@
 				B98E936A234C94C7004AE50F /* ETCPaymentProtocol.swift in Sources */,
 				B9588B5D23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift in Sources */,
 				B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */,
-				B942555022BAA5D1008B053B /* UserNotification.swift in Sources */,
+				B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */,
 				B9DC5B27229D59BE00B645D5 /* ETCPaymentTableViewController.swift in Sources */,
 				B9CB7C0D22AD65A40059433E /* UITableViewCellExtension.swift in Sources */,
 				B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */,

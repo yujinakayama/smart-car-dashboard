@@ -20,7 +20,7 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, Messag
         return UNUserNotificationCenter.current()
     }
 
-    let notificationHistory = LatestUserNotificationHistory()
+    let localNotificationHistory = LatestLocalNotificationHistory()
 
     override init() {
         super.init()
@@ -39,13 +39,13 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, Messag
         }
     }
 
-    func requestDelivery(_ notification: UserNotificationProtocol) {
+    func requestDelivery(_ notification: LocalNotificationProtocol) {
         logger.info(notification)
-        guard notification.shouldBeDelivered(history: notificationHistory) else { return }
+        guard notification.shouldBeDelivered(history: localNotificationHistory) else { return }
         deliver(notification)
     }
 
-    private func deliver(_ notification: UserNotificationProtocol) {
+    private func deliver(_ notification: LocalNotificationProtocol) {
         logger.info(notification)
 
         UNUserNotificationCenter.current().add(notification.makeRequest()) { (error) in
@@ -54,7 +54,7 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, Messag
             }
         }
 
-        notificationHistory.append(notification)
+        localNotificationHistory.append(notification)
     }
 
     // User tapped received notification either in foreground or background
@@ -137,12 +137,12 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, Messag
     }
 }
 
-class LatestUserNotificationHistory {
+class LatestLocalNotificationHistory {
     let dropOutTimeInterval: TimeInterval = 5
 
-    private var notifications: [UserNotificationProtocol] = []
+    private var notifications: [LocalNotificationProtocol] = []
 
-    func append(_ notification: UserNotificationProtocol) {
+    func append(_ notification: LocalNotificationProtocol) {
         notifications.append(notification)
 
         Timer.scheduledTimer(withTimeInterval: dropOutTimeInterval, repeats: false) { [weak self] (timer) in
@@ -151,7 +151,7 @@ class LatestUserNotificationHistory {
         }
     }
 
-    func contains(where predicate: (UserNotificationProtocol) -> Bool) -> Bool {
+    func contains(where predicate: (LocalNotificationProtocol) -> Bool) -> Bool {
         return notifications.contains(where: predicate)
     }
 }
