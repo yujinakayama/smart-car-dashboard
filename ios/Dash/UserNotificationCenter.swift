@@ -15,7 +15,6 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, Messag
     static let shared = UserNotificationCenter()
 
     let authorizationOptions: UNAuthorizationOptions = [.sound, .alert]
-    let presentationOptions: UNNotificationPresentationOptions = [.sound, .alert]
 
     var notificationCenter: UNUserNotificationCenter {
         return UNUserNotificationCenter.current()
@@ -58,22 +57,22 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, Messag
         notificationHistory.append(notification)
     }
 
+    // User tapped received notification either in foreground or background
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        logger.info(response.notification.request.content)
+
+        process(response.notification)
+    }
+
+    // Received notification in foreground
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         logger.info(notification)
 
+        Messaging.messaging().appDidReceiveMessage(notification.request.content.userInfo)
+
         process(notification)
 
-        notificationCenter.getNotificationSettings { [unowned self] (settings) in
-            switch settings.authorizationStatus {
-            case .authorized, .provisional:
-                // Show the stock notification UI even when this app is in the foreground
-                completionHandler(self.presentationOptions)
-            default:
-                return
-            }
-        }
-
-        Messaging.messaging().appDidReceiveMessage(notification.request.content.userInfo)
+        completionHandler(notification.request.content.foregroundPresentationOptions)
     }
 
     func process(_ notification: UNNotification) {
