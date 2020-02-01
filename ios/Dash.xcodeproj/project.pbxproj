@@ -26,6 +26,10 @@
 		B95BE8E222B8A8BE004C1CC0 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */; };
 		B95BE8E322B8A8BE004C1CC0 /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */; };
 		B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */; };
+		B95F514623E5A8540063CB3D /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514523E5A8540063CB3D /* Location.swift */; };
+		B95F514A23E5B2C10063CB3D /* Webpage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514923E5B2C10063CB3D /* Webpage.swift */; };
+		B95F514C23E5B53F0063CB3D /* RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */; };
+		B95F514E23E5BBF70063CB3D /* SharedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514D23E5BBF70063CB3D /* SharedItem.swift */; };
 		B964BCC323E066FF00288E0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B964BCC223E066FF00288E0D /* AppDelegate.swift */; };
 		B964BCC523E066FF00288E0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B964BCC423E066FF00288E0D /* SceneDelegate.swift */; };
 		B964BCC723E066FF00288E0D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B964BCC623E066FF00288E0D /* ViewController.swift */; };
@@ -130,6 +134,10 @@
 		B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCGLogger.framework; path = Carthage/Build/iOS/XCGLogger.framework; sourceTree = "<group>"; };
 		B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjcExceptionBridging.framework; path = Carthage/Build/iOS/ObjcExceptionBridging.framework; sourceTree = "<group>"; };
 		B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceStatusBar.swift; sourceTree = "<group>"; };
+		B95F514523E5A8540063CB3D /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		B95F514923E5B2C10063CB3D /* Webpage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Webpage.swift; sourceTree = "<group>"; };
+		B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteNotification.swift; sourceTree = "<group>"; };
+		B95F514D23E5BBF70063CB3D /* SharedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItem.swift; sourceTree = "<group>"; };
 		B964BCC023E066FF00288E0D /* Dash Remote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dash Remote.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B964BCC223E066FF00288E0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B964BCC423E066FF00288E0D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -258,6 +266,9 @@
 			children = (
 				B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */,
 				B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */,
+				B95F514D23E5BBF70063CB3D /* SharedItem.swift */,
+				B95F514523E5A8540063CB3D /* Location.swift */,
+				B95F514923E5B2C10063CB3D /* Webpage.swift */,
 			);
 			path = Share;
 			sourceTree = "<group>";
@@ -364,6 +375,7 @@
 				B9741F7623DF201A00F061E7 /* Share */,
 				B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */,
 				B942554F22BAA5D1008B053B /* LocalNotification.swift */,
+				B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */,
 				B9BC920823250A0A006F22FC /* Defaults.swift */,
 				B942553C22B8C3E2008B053B /* Logger.swift */,
 				B93321ED2323C9D500BFAB21 /* BorderedView.swift */,
@@ -763,11 +775,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9DB8E5922D7A481003E4BD8 /* ETCPaymentManagedObject.swift in Sources */,
+				B95F514A23E5B2C10063CB3D /* Webpage.swift in Sources */,
 				B99356E622A9525C00BA08AB /* ETCMessage.swift in Sources */,
 				B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */,
 				B9DC5B46229EB8B200B645D5 /* SerialPortManager.swift in Sources */,
 				B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBar.swift in Sources */,
 				B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */,
+				B95F514E23E5BBF70063CB3D /* SharedItem.swift in Sources */,
 				B9E96CC822A4EF1300C2E009 /* ETCPayment.swift in Sources */,
 				B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */,
 				B9CEA76622D89A400055C9A3 /* ETCDataStore.swift in Sources */,
@@ -777,6 +791,7 @@
 				B9588B5D23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift in Sources */,
 				B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */,
 				B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */,
+				B95F514C23E5B53F0063CB3D /* RemoteNotification.swift in Sources */,
 				B9DC5B27229D59BE00B645D5 /* ETCPaymentTableViewController.swift in Sources */,
 				B9CB7C0D22AD65A40059433E /* UITableViewCellExtension.swift in Sources */,
 				B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */,
@@ -784,6 +799,7 @@
 				B9DB8E5522D7A410003E4BD8 /* Dash.xcdatamodeld in Sources */,
 				B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */,
 				B9DC5B3F229D9E4F00B645D5 /* BLERemotePeripheralManager.swift in Sources */,
+				B95F514623E5A8540063CB3D /* Location.swift in Sources */,
 				B9DC5B39229D5D8100B645D5 /* ETCDeviceConnection.swift in Sources */,
 				B9D8E43823D345940078A057 /* ETCCardManagedObject.swift in Sources */,
 				B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */,

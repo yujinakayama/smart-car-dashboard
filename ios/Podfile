@@ -3,6 +3,7 @@ platform :ios, '13.0'
 use_frameworks!
 
 target 'Dash' do
+  pod 'DictionaryCoding', inhibit_warnings: true
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
