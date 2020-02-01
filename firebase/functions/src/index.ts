@@ -213,7 +213,7 @@ const makeNotificationContent = (item: Item): admin.messaging.Aps => {
 
     return {
         alert: alert,
-        sound: 'default'
+        sound: 'Share.wav'
     }
 }
 
