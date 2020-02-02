@@ -1,6 +1,8 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as maps from '@google/maps';
+import * as request from 'request-promise';
+import * as libxmljs from 'libxmljs';
 import * as https from 'https';
 import { URL } from 'url';
 
@@ -66,8 +68,8 @@ enum UNNotificationPresentationOptions {
 
 admin.initializeApp();
 
-export const share = functions.region('asia-northeast1').https.onRequest(async (request, response) => {
-    const rawData = request.body as RawData;
+export const share = functions.region('asia-northeast1').https.onRequest(async (functionRequest, functionResponse) => {
+    const rawData = functionRequest.body as RawData;
 
     console.log('rawData:', rawData);
 
@@ -84,7 +86,7 @@ export const share = functions.region('asia-northeast1').https.onRequest(async (
 
     await addItemToFirestore(item);
 
-    response.sendStatus(200);
+    functionResponse.sendStatus(200);
 });
 
 const normalize = (rawData: RawData): Promise<NormalizedData> => {
@@ -167,9 +169,17 @@ const normalizeGoogleMapsLocation = async (rawData: RawData): Promise<LocationDa
 };
 
 const normalizeWebpage = async (rawData: RawData): Promise<WebpageData> => {
+    let title = rawData.title || rawData.contentText;
+
+    if (!title) {
+        const responseBody = await request.get(rawData['public.url']);
+        const document = libxmljs.parseHtml(responseBody);
+        title = document.get('//head/title')?.text().trim();
+    }
+    
     return {
         type: 'webpage',
-        title: rawData.title || rawData.contentText,
+        title: title,
         url: rawData['public.url']
     };
 };
