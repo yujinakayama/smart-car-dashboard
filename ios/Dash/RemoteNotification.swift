@@ -51,27 +51,8 @@ struct ShareNotification {
         self.itemDictionary = itemDictionary
     }
 
-    var type: ItemType? {
-        guard let typeString = itemDictionary["type"] as? String else { return nil }
-        return ItemType(rawValue: typeString)
-    }
-
     func process() throws {
-        if let item = try decodeItem() {
-            item.open()
-        }
-    }
-
-    func decodeItem() throws -> SharedItem? {
-        let decoder = DictionaryDecoder()
-
-        switch type {
-        case .location:
-            return try decoder.decode(Location.self, from: itemDictionary)
-        case .webpage:
-            return try decoder.decode(Webpage.self, from: itemDictionary)
-        default:
-            return nil
-        }
+        let item = try SharedItem.makeItem(dictionary: itemDictionary)
+        item.open()
     }
 }

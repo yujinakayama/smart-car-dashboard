@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct Webpage: SharedItem, Decodable {
+struct Webpage: SharedItemProtocol, Decodable {
     let title: String?
     let url: URL
 

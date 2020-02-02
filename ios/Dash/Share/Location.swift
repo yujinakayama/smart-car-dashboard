@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-struct Location: SharedItem, Decodable {
+struct Location: SharedItemProtocol, Decodable {
     enum CodingKeys: String, CodingKey {
         case coordinate
         case name

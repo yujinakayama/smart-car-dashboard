@@ -15,7 +15,7 @@ class SharedItemTableViewController: UITableViewController {
 
     var querySnapshotListener: ListenerRegistration?
 
-    var items: [[String: Any]] = []
+    var items: [SharedItemProtocol] = []
 
     lazy var firestoreQuery: Query = Firestore.firestore().collection("items").order(by: "creationTime", descending: true)
 
@@ -65,7 +65,8 @@ class SharedItemTableViewController: UITableViewController {
             guard let snapshot = snapshot else { return }
 
             let initialLoad = self.items.isEmpty
-            self.items = snapshot.documents.map { (snapshot) in snapshot.data() }
+
+            self.setItems(from: snapshot)
 
             if initialLoad {
                 self.tableView.reloadData()
@@ -80,6 +81,18 @@ class SharedItemTableViewController: UITableViewController {
 
         querySnapshotListener.remove()
         self.querySnapshotListener = nil
+    }
+
+    func setItems(from snapshot: QuerySnapshot) {
+        items = snapshot.documents.map({ (document) in
+            do {
+                return try SharedItem.makeItem(dictionary: document.data())
+            } catch {
+                logger.error(error)
+                // Fill broken items since skipping them causes index misalignments in itemCollectionDidChange()
+                return BrokenItem()
+            }
+        })
     }
 
     func showSignInView() {
@@ -100,7 +113,19 @@ class SharedItemTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SharedItem", for: indexPath)
 
         let item = items[indexPath.row]
-        cell.textLabel?.text = item["url"] as? String
+
+        switch item {
+        case let location as Location:
+            cell.textLabel?.text = location.name
+            cell.detailTextLabel?.text = location.url.absoluteString
+        case let webpage as Webpage:
+            cell.textLabel?.text = webpage.title
+            cell.detailTextLabel?.text = webpage.url.absoluteString
+        default:
+            cell.textLabel?.text = "Unknown"
+            cell.detailTextLabel?.text = nil
+        }
+
         return cell
     }
 
