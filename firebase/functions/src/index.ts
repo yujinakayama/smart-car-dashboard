@@ -4,12 +4,13 @@ import * as maps from '@google/maps';
 import * as request from 'request-promise';
 import * as libxmljs from 'libxmljs';
 import * as https from 'https';
+import * as urlRegex from 'url-regex';
 import { URL } from 'url';
 
 interface RawData {
     title?: string;
     contentText?: string;
-    'public.url': string;
+    'public.url'?: string;
     'public.plain-text'?: string;
     'com.apple.mapkit.map-item'?: {
         coordinate: {
@@ -68,6 +69,8 @@ enum UNNotificationPresentationOptions {
 
 admin.initializeApp();
 
+const urlPattern = urlRegex({ strict: true });
+
 export const share = functions.region('asia-northeast1').https.onRequest(async (functionRequest, functionResponse) => {
     const rawData = functionRequest.body as RawData;
 
@@ -90,16 +93,44 @@ export const share = functions.region('asia-northeast1').https.onRequest(async (
 });
 
 const normalize = (rawData: RawData): Promise<NormalizedData> => {
+    const url = extractURL(rawData);
+
+    if (!url) {
+        throw new Error('Item has no URL');
+    }
+
     if (rawData['com.apple.mapkit.map-item']) {
-        return normalizeAppleMapsLocation(rawData);
-    } else if (rawData['public.url'].startsWith('https://goo.gl/maps/')) {
-        return normalizeGoogleMapsLocation(rawData);
+        return normalizeAppleMapsLocation(rawData, url);
+    } else if (url.startsWith('https://goo.gl/maps/')) {
+        return normalizeGoogleMapsLocation(rawData, url);
     } else {
-        return normalizeWebpage(rawData);
+        return normalizeWebpage(rawData, url);
     }
 };
 
-const normalizeAppleMapsLocation = async (rawData: RawData): Promise<LocationData> => {
+const extractURL = (rawData: RawData): string | null => {
+    if (rawData['public.url']) {
+        return rawData['public.url']
+    }
+
+    const candidates = [rawData.contentText, rawData['public.plain-text']];
+
+    for (const candidate of candidates) {
+        if (!candidate) {
+            continue;
+        }
+
+        const urls = candidate.match(urlPattern);
+
+        if (urls && urls[0]) {
+            return urls[0];
+        }
+    }
+
+    return null;
+}
+
+const normalizeAppleMapsLocation = async (rawData: RawData, url: string): Promise<LocationData> => {
     const mapItem = rawData['com.apple.mapkit.map-item']!;
 
     return {
@@ -107,13 +138,13 @@ const normalizeAppleMapsLocation = async (rawData: RawData): Promise<LocationDat
         coordinate: mapItem.coordinate,
         name: mapItem.name,
         webpageURL: mapItem.url,
-        url: rawData['public.url']
+        url: url
     };
 };
 
-const normalizeGoogleMapsLocation = async (rawData: RawData): Promise<LocationData> => {
-    const url: URL = await new Promise((resolve, reject) => {
-        https.get(rawData['public.url'], (response) => {
+const normalizeGoogleMapsLocation = async (rawData: RawData, url: string): Promise<LocationData> => {
+    const expandedURL: URL = await new Promise((resolve, reject) => {
+        https.get(url, (response) => {
             if (response.headers.location) {
                 resolve(new URL(response.headers.location));
             } else {
@@ -122,7 +153,7 @@ const normalizeGoogleMapsLocation = async (rawData: RawData): Promise<LocationDa
         });
     });
 
-    const query = url.searchParams.get('q');
+    const query = expandedURL.searchParams.get('q');
 
     if (!query) {
         throw new Error('Missing `q` parameter in Google Maps URL');
@@ -138,7 +169,7 @@ const normalizeGoogleMapsLocation = async (rawData: RawData): Promise<LocationDa
                 longitude: parseFloat(coordinate[2])
             },
             name: rawData['public.plain-text'],
-            url: url.toString()
+            url: expandedURL.toString()
         };
     } else {
         const client = maps.createClient({ key: functions.config().googlemaps.api_key, Promise: Promise });
@@ -163,24 +194,24 @@ const normalizeGoogleMapsLocation = async (rawData: RawData): Promise<LocationDa
                 longitude: place.geometry!.location.lng
             },
             name: place.name,
-            url: url.toString()
+            url: expandedURL.toString()
         };
     }
 };
 
-const normalizeWebpage = async (rawData: RawData): Promise<WebpageData> => {
+const normalizeWebpage = async (rawData: RawData, url: string): Promise<WebpageData> => {
     let title = rawData.title || rawData.contentText;
 
-    if (!title) {
-        const responseBody = await request.get(rawData['public.url']);
+    if (!title || urlPattern.test(title)) {
+        const responseBody = await request.get(url);
         const document = libxmljs.parseHtml(responseBody);
         title = document.get('//head/title')?.text().trim();
     }
-    
+
     return {
         type: 'webpage',
         title: title,
-        url: rawData['public.url']
+        url: url
     };
 };
 

@@ -9,19 +9,11 @@
 import Foundation
 import MapKit
 
-enum InputItemError: Error {
-    case itemMustHaveUrlAttachment
-}
-
 class InputItem {
     let item: NSExtensionItem
 
     init(item: NSExtensionItem) throws {
         self.item = item
-
-        if attachmentsByTypeIdentifier["public.url"] == nil {
-            throw InputItemError.itemMustHaveUrlAttachment
-        }
     }
 
     lazy var attachmentsByTypeIdentifier: [String: NSItemProvider] = {

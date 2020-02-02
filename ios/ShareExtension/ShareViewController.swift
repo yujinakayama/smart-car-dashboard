@@ -11,7 +11,7 @@ import MapKit
 import SVProgressHUD
 
 enum ShareError: Error {
-    case noAttachmentIsAvailable
+    case serverError
     case unknown
 }
 
@@ -83,7 +83,17 @@ class ShareViewController: UIViewController {
         }
 
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            completionHandler(error)
+            if let error = error {
+                completionHandler(error)
+                return
+            }
+
+            if let response = response as? HTTPURLResponse, response.statusCode != 200 {
+                completionHandler(ShareError.serverError)
+                return
+            }
+
+            completionHandler(nil)
         }
 
         task.resume()
