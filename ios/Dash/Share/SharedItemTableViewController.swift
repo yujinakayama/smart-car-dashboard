@@ -129,6 +129,15 @@ class SharedItemTableViewController: UITableViewController {
         return cell
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let item = items[indexPath.row]
+        item.open()
+
+        if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
+        }
+    }
+
     func itemCollectionDidChange(changes: [DocumentChange]) {
         tableView.beginUpdates()
 
