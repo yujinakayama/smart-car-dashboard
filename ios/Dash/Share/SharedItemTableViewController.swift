@@ -110,22 +110,8 @@ class SharedItemTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SharedItem", for: indexPath)
-
-        let item = items[indexPath.row]
-
-        switch item {
-        case let location as Location:
-            cell.textLabel?.text = location.name
-            cell.detailTextLabel?.text = location.url.absoluteString
-        case let webpage as Webpage:
-            cell.textLabel?.text = webpage.title
-            cell.detailTextLabel?.text = webpage.url.absoluteString
-        default:
-            cell.textLabel?.text = "Unknown"
-            cell.detailTextLabel?.text = nil
-        }
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SharedItemTableViewCell", for: indexPath) as! SharedItemTableViewCell
+        cell.item = items[indexPath.row]
         return cell
     }
 
