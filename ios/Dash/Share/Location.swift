@@ -10,35 +10,10 @@ import Foundation
 import MapKit
 
 struct Location: SharedItemProtocol, Decodable {
-    enum CodingKeys: String, CodingKey {
-        case coordinate
-        case name
-        case url
-        case webpageURL
-    }
-
-    enum CoordinateCodingKeys: String, CodingKey {
-        case latitude
-        case longitude
-    }
-
-    let coordinate: CLLocationCoordinate2D
+    let coordinate: Coordinate
     let name: String?
     let url: URL
     let webpageURL: URL?
-
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        name = try values.decodeIfPresent(String.self, forKey: .name)
-        url = try values.decode(URL.self, forKey: .url)
-        webpageURL = try values.decodeIfPresent(URL.self, forKey: .webpageURL)
-
-        let coordinateValues = try values.nestedContainer(keyedBy: CoordinateCodingKeys.self, forKey: .coordinate)
-        coordinate = CLLocationCoordinate2D(
-            latitude: try coordinateValues.decode(Double.self, forKey: .latitude),
-            longitude: try coordinateValues.decode(Double.self, forKey: .longitude)
-        )
-    }
 
     func open() {
         if Defaults.shared.snapReceivedLocationToPointOfInterest {
@@ -57,7 +32,7 @@ struct Location: SharedItemProtocol, Decodable {
     private func findPointOfInterest(completionHandler: @escaping (MKMapItem?) -> Void) {
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = name
-        request.region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 20, longitudinalMeters: 20)
+        request.region = MKCoordinateRegion(center: coordinate.clLocationCoordinate2D, latitudinalMeters: 20, longitudinalMeters: 20)
 
         MKLocalSearch(request: request).start { (response, error) in
             completionHandler(response?.mapItems.first)
@@ -69,10 +44,19 @@ struct Location: SharedItemProtocol, Decodable {
     }
 
     private var mapItem: MKMapItem {
-        let placemark = MKPlacemark(coordinate: coordinate)
+        let placemark = MKPlacemark(coordinate: coordinate.clLocationCoordinate2D)
 
         let mapItem = MKMapItem(placemark: placemark)
         mapItem.name = name
         return mapItem
+    }
+}
+
+struct Coordinate: Decodable {
+    let latitude: CLLocationDegrees
+    let longitude: CLLocationDegrees
+
+    var clLocationCoordinate2D: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 }
