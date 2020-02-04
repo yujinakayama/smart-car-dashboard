@@ -9,11 +9,12 @@
 import Foundation
 import MapKit
 
-struct Location: SharedItemProtocol, Decodable {
+struct Location: SharedItemProtocol {
     let coordinate: Coordinate
     let name: String?
     let url: URL
     let webpageURL: URL?
+    let creationDate: Date?
 
     func open() {
         if Defaults.shared.snapReceivedLocationToPointOfInterest {

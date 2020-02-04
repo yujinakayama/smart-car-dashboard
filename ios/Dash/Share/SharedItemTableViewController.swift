@@ -17,7 +17,7 @@ class SharedItemTableViewController: UITableViewController {
 
     var items: [SharedItemProtocol] = []
 
-    lazy var firestoreQuery: Query = Firestore.firestore().collection("items").order(by: "creationTime", descending: true)
+    lazy var firestoreQuery: Query = Firestore.firestore().collection("items").order(by: "creationDate", descending: true)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,13 +84,12 @@ class SharedItemTableViewController: UITableViewController {
     }
 
     func setItems(from snapshot: QuerySnapshot) {
-        items = snapshot.documents.map({ (document) in
+        items = snapshot.documents.compactMap({ (document) in
             do {
-                return try SharedItem.makeItem(dictionary: document.data())
+                return try SharedItem.makeItem(document: document)
             } catch {
                 logger.error(error)
-                // Fill broken items since skipping them causes index misalignments in itemCollectionDidChange()
-                return BrokenItem()
+                return nil
             }
         })
     }

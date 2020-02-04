@@ -8,9 +8,10 @@
 
 import UIKit
 
-struct Webpage: SharedItemProtocol, Decodable {
+struct Webpage: SharedItemProtocol {
     let title: String?
     let url: URL
+    let creationDate: Date?
 
     func open() {
         UIApplication.shared.open(url, options: [:])

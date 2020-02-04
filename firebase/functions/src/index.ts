@@ -264,7 +264,7 @@ const makeNotificationContent = (item: Item): admin.messaging.Aps => {
 
 const addItemToFirestore = async (item: Item): Promise<any> => {
     const document = {
-        creationTime: admin.firestore.FieldValue.serverTimestamp(),
+        creationDate: admin.firestore.FieldValue.serverTimestamp(),
         ...item
     };
 

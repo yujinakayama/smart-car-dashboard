@@ -8,7 +8,9 @@
 
 import Foundation
 
-struct BrokenItem: SharedItemProtocol {
+struct UnknownItem: SharedItemProtocol {
+    let creationDate: Date?
+
     func open() {
     }
 }

@@ -8,36 +8,59 @@
 
 import Foundation
 import DictionaryCoding
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
-protocol SharedItemProtocol {
+protocol SharedItemProtocol: Decodable {
+    var creationDate: Date? { get }
     func open()
 }
 
 enum SharedItemError: Error {
     case invalidDictionaryStructure
-    case unknownType
 }
 
 struct SharedItem {
     enum ItemType: String {
         case location
         case webpage
+        case unknown
+
+        static func makeType(dictionary: [String: Any]) throws -> ItemType {
+            guard let typeString = dictionary["type"] as? String else {
+                throw SharedItemError.invalidDictionaryStructure
+            }
+
+            return ItemType(rawValue: typeString) ?? .unknown
+        }
     }
 
-    static func makeItem(dictionary: [String: Any]) throws -> SharedItemProtocol {
-        guard let typeString = dictionary["type"] as? String else {
-            throw SharedItemError.invalidDictionaryStructure
-        }
+    static func makeItem(document: QueryDocumentSnapshot) throws -> SharedItemProtocol {
+        let dictionary = document.data()
+        let type = try ItemType.makeType(dictionary: dictionary)
+        let decoder = Firestore.Decoder() // Supports decoding Firestore's Timestamp
 
-        let decoder = DictionaryDecoder()
-
-        switch ItemType(rawValue: typeString) {
+        switch type {
         case .location:
             return try decoder.decode(Location.self, from: dictionary)
         case .webpage:
             return try decoder.decode(Webpage.self, from: dictionary)
-        default:
-            throw SharedItemError.unknownType
+        case .unknown:
+            return try decoder.decode(UnknownItem.self, from: dictionary)
+        }
+    }
+
+    static func makeItem(dictionary: [String: Any]) throws -> SharedItemProtocol {
+        let type = try ItemType.makeType(dictionary: dictionary)
+        let decoder = DictionaryDecoder()
+
+        switch type {
+        case .location:
+            return try decoder.decode(Location.self, from: dictionary)
+        case .webpage:
+            return try decoder.decode(Webpage.self, from: dictionary)
+        case .unknown:
+            return try decoder.decode(UnknownItem.self, from: dictionary)
         }
     }
 }
