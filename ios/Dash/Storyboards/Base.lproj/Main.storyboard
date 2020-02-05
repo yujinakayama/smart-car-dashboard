@@ -477,7 +477,7 @@
                                         </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottomMargin" secondItem="hrG-N5-epA" secondAttribute="bottom" id="5gV-k1-3pV"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="hrG-N5-epA" secondAttribute="bottom" priority="999" id="5gV-k1-3pV"/>
                                         <constraint firstAttribute="trailing" secondItem="4Of-Fm-eCE" secondAttribute="trailing" constant="20" symbolic="YES" id="AcQ-JW-XrU"/>
                                         <constraint firstItem="hrG-N5-epA" firstAttribute="top" secondItem="gcV-k7-M3G" secondAttribute="topMargin" id="HWZ-bO-gPo"/>
                                         <constraint firstItem="hrG-N5-epA" firstAttribute="leading" secondItem="gcV-k7-M3G" secondAttribute="leadingMargin" id="gxc-a2-YHY"/>
