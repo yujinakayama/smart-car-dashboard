@@ -9,19 +9,21 @@
 import Foundation
 import UserNotifications
 
-protocol UserNotificationProtocol {
+protocol LocalNotificationProtocol {
     var title: String? { get }
     var body: String? { get }
     var sound: UNNotificationSound? { get }
-    func shouldBeDelivered(history: LatestUserNotificationHistory) -> Bool
+    var foregroundPresentationOptions: UNNotificationPresentationOptions { get }
+    func shouldBeDelivered(history: LatestLocalNotificationHistory) -> Bool
 }
 
-extension UserNotificationProtocol {
+extension LocalNotificationProtocol {
     func makeRequest() -> UNNotificationRequest {
         let content = UNMutableNotificationContent()
         content.title = title ?? ""
         content.body = body ?? ""
         content.sound = sound
+        content.foregroundPresentationOptions = foregroundPresentationOptions
 
         return UNNotificationRequest(
             identifier: String(describing: type(of: self)),
@@ -31,17 +33,18 @@ extension UserNotificationProtocol {
     }
 }
 
-struct TollgatePassingThroughNotification: UserNotificationProtocol {
+struct TollgatePassingThroughNotification: LocalNotificationProtocol {
     let title: String? = nil
     let body: String? = "ETCゲートを通過しました。"
     let sound: UNNotificationSound? = UNNotificationSound(named: UNNotificationSoundName("TollgatePassingThrough.wav"))
+    let foregroundPresentationOptions: UNNotificationPresentationOptions = [.alert, .sound]
 
-    func shouldBeDelivered(history: LatestUserNotificationHistory) -> Bool {
+    func shouldBeDelivered(history: LatestLocalNotificationHistory) -> Bool {
         return !history.contains { $0 is TollgatePassingThroughNotification }
     }
 }
 
-struct PaymentNotification: UserNotificationProtocol {
+struct PaymentNotification: LocalNotificationProtocol {
     static let amountNumberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
@@ -77,7 +80,9 @@ struct PaymentNotification: UserNotificationProtocol {
 
     let sound: UNNotificationSound? = UNNotificationSound(named: UNNotificationSoundName("Payment.wav"))
 
-    func shouldBeDelivered(history: LatestUserNotificationHistory) -> Bool {
+    let foregroundPresentationOptions: UNNotificationPresentationOptions = [.alert, .sound]
+
+    func shouldBeDelivered(history: LatestLocalNotificationHistory) -> Bool {
         return true
     }
 

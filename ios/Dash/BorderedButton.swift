@@ -1,14 +1,28 @@
 //
-//  BorderedView.swift
+//  BorderedButton.swift
 //  Dash
 //
-//  Created by Yuji Nakayama on 2019/09/07.
-//  Copyright © 2019 Yuji Nakayama. All rights reserved.
+//  Created by Yuji Nakayama on 2020/01/28.
+//  Copyright © 2020 Yuji Nakayama. All rights reserved.
 //
 
 import UIKit
 
-@IBDesignable class BorderedView: UIView {
+@IBDesignable class BorderedButton: UIButton {
+    @IBInspectable var normalBackgroundColor: UIColor?
+
+    @IBInspectable var highlightedBackgroundColor: UIColor?
+
+    override var isHighlighted: Bool {
+        didSet {
+            if isHighlighted {
+                backgroundColor = highlightedBackgroundColor
+            } else {
+                backgroundColor = normalBackgroundColor
+            }
+        }
+    }
+
     @IBInspectable var borderColor: UIColor? {
         get {
             return _borderColor

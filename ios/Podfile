@@ -1,0 +1,43 @@
+platform :ios, '13.0'
+
+use_frameworks!
+
+target 'Dash' do
+  pod 'DictionaryCoding', inhibit_warnings: true
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Firestore'
+  pod 'FirebaseFirestoreSwift'
+  pod 'Firebase/Messaging'
+  pod 'GoogleSignIn'
+
+  # Work around for a warning:
+  # Multiple targets match implicit dependency for linker flags '-framework GTMSessionFetcher'. Consider adding an explicit dependency on the intended target to resolve this ambiguity. (in target 'Dash' from project 'Dash')
+  #   Target 'GTMSessionFetcher-Core' (in project 'Pods')
+  #   Target 'GTMSessionFetcher.default-Core' (in project 'Pods')
+  pod 'GTMSessionFetcher'
+end
+
+target 'DashRemote' do
+  target 'ShareExtension' do
+    pod 'SVProgressHUD'
+  end
+end
+
+# Suppress warning "Conversion to Swift 5 is available" from FirebaseFirestoreSwift
+post_install do |installer|
+  # This removes the warning about swift conversion, hopefuly forever!
+  installer.pods_project.root_object.attributes['LastSwiftMigration'] = 9999
+  installer.pods_project.root_object.attributes['LastSwiftUpdateCheck'] = 9999
+  installer.pods_project.root_object.attributes['LastUpgradeCheck'] = 9999
+
+  share_extension_pods_target = installer.pods_project.targets.find do |target|
+    target.name == 'SVProgressHUD'
+  end
+
+  # https://github.com/SVProgressHUD/SVProgressHUD#app-extensions
+  share_extension_pods_target.build_configurations.each do |config|
+    config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)']
+    config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << 'SV_APP_EXTENSIONS'
+  end
+end

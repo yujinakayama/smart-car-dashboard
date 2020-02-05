@@ -16,6 +16,7 @@ struct Defaults {
 
     private struct Key {
         static let mapType = "mapType"
+        static let snapReceivedLocationToPointOfInterest = "snapReceivedLocationToPointOfInterest"
     }
 
     var mapType: MKMapType? {
@@ -26,6 +27,12 @@ struct Defaults {
 
         set {
             userDefaults.set(newValue?.rawValue, forKey: Key.mapType)
+        }
+    }
+
+    var snapReceivedLocationToPointOfInterest: Bool {
+        get {
+            return userDefaults.bool(forKey: Key.snapReceivedLocationToPointOfInterest)
         }
     }
 }

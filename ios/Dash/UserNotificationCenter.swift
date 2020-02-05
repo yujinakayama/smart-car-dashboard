@@ -6,24 +6,31 @@
 //  Copyright © 2019 Yuji Nakayama. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import UserNotifications
+import MapKit
+import FirebaseMessaging
 
-class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
+class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, MessagingDelegate {
     static let shared = UserNotificationCenter()
 
     let authorizationOptions: UNAuthorizationOptions = [.sound, .alert]
-    let presentationOptions: UNNotificationPresentationOptions = [.sound, .alert]
 
     var notificationCenter: UNUserNotificationCenter {
         return UNUserNotificationCenter.current()
     }
 
-    let notificationHistory = LatestUserNotificationHistory()
+    let localNotificationHistory = LatestLocalNotificationHistory()
 
     override init() {
         super.init()
         notificationCenter.delegate = self
+        Messaging.messaging().delegate = self
+    }
+
+    func setUp() {
+        requestAuthorization()
+        UIApplication.shared.registerForRemoteNotifications()
     }
 
     func requestAuthorization() {
@@ -32,13 +39,13 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
         }
     }
 
-    func requestDelivery(_ notification: UserNotificationProtocol) {
+    func requestDelivery(_ notification: LocalNotificationProtocol) {
         logger.info(notification)
-        guard notification.shouldBeDelivered(history: notificationHistory) else { return }
+        guard notification.shouldBeDelivered(history: localNotificationHistory) else { return }
         deliver(notification)
     }
 
-    private func deliver(_ notification: UserNotificationProtocol) {
+    private func deliver(_ notification: LocalNotificationProtocol) {
         logger.info(notification)
 
         UNUserNotificationCenter.current().add(notification.makeRequest()) { (error) in
@@ -47,28 +54,48 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
             }
         }
 
-        notificationHistory.append(notification)
+        localNotificationHistory.append(notification)
     }
 
+    // User tapped received notification either in foreground or background
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        logger.info(response.notification.request.content)
+
+        process(response.notification)
+    }
+
+    // Received notification in foreground
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        notificationCenter.getNotificationSettings { [unowned self] (settings) in
-            switch settings.authorizationStatus {
-            case .authorized, .provisional:
-                // Show the stock notification UI even when this app is in the foreground
-                completionHandler(self.presentationOptions)
-            default:
-                return
-            }
+        logger.info(notification)
+
+        Messaging.messaging().appDidReceiveMessage(notification.request.content.userInfo)
+
+        process(notification)
+
+        completionHandler(notification.request.content.foregroundPresentationOptions)
+    }
+
+    func process(_ notification: UNNotification) {
+        do {
+            let remoteNotification = RemoteNotification(userInfo: notification.request.content.userInfo)
+            try remoteNotification.process()
+        } catch {
+            logger.error(error)
         }
+    }
+
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        logger.debug(fcmToken)
+        Messaging.messaging().subscribe(toTopic: "Dash")
     }
 }
 
-class LatestUserNotificationHistory {
+class LatestLocalNotificationHistory {
     let dropOutTimeInterval: TimeInterval = 5
 
-    private var notifications: [UserNotificationProtocol] = []
+    private var notifications: [LocalNotificationProtocol] = []
 
-    func append(_ notification: UserNotificationProtocol) {
+    func append(_ notification: LocalNotificationProtocol) {
         notifications.append(notification)
 
         Timer.scheduledTimer(withTimeInterval: dropOutTimeInterval, repeats: false) { [weak self] (timer) in
@@ -77,7 +104,7 @@ class LatestUserNotificationHistory {
         }
     }
 
-    func contains(where predicate: (UserNotificationProtocol) -> Bool) -> Bool {
+    func contains(where predicate: (LocalNotificationProtocol) -> Bool) -> Bool {
         return notifications.contains(where: predicate)
     }
 }
