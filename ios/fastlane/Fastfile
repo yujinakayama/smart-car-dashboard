@@ -18,7 +18,6 @@ default_platform(:ios)
 platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
-    increment_build_number(xcodeproj: "Dash.xcodeproj")
     build_app(scheme: "Dash")
     upload_to_testflight
   end
