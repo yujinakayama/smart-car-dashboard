@@ -10,6 +10,8 @@
 		01861A4B14032E6339D8E511 /* Pods_Dash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 125AA3B115ABAB0DD3288056 /* Pods_Dash.framework */; };
 		0B41F2C816E331BA2FB139A3 /* Pods_DashRemote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A188A66685EA4375D4818F /* Pods_DashRemote.framework */; };
 		412025EE69F3FE2D953808D6 /* Pods_DashRemote_ShareExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B941AEADBC8F07DBE594C95A /* Pods_DashRemote_ShareExtension.framework */; };
+		B90265A923EB34D800B2EF6B /* SharedItemTableViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90265A823EB34D800B2EF6B /* SharedItemTableViewData.swift */; };
+		B90265AB23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90265AA23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift */; };
 		B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
 		B91BD8092323FD820064D2B5 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
 		B92451D423E30ACE007556D5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B92451D323E30ACE007556D5 /* Settings.bundle */; };
@@ -120,6 +122,8 @@
 		79A188A66685EA4375D4818F /* Pods_DashRemote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DashRemote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		869C973AA26AD90E148028FB /* Pods-Dash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dash.release.xcconfig"; path = "Target Support Files/Pods-Dash/Pods-Dash.release.xcconfig"; sourceTree = "<group>"; };
 		A383EF13705DD2A97098F1F8 /* Pods-DashRemote-ShareExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote-ShareExtension.release.xcconfig"; path = "Target Support Files/Pods-DashRemote-ShareExtension/Pods-DashRemote-ShareExtension.release.xcconfig"; sourceTree = "<group>"; };
+		B90265A823EB34D800B2EF6B /* SharedItemTableViewData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedItemTableViewData.swift; sourceTree = "<group>"; };
+		B90265AA23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemTableViewDataSource.swift; sourceTree = "<group>"; };
 		B92451D323E30ACE007556D5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B92451D523E3204D007556D5 /* GoogleServieInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleServieInfo.swift; sourceTree = "<group>"; };
 		B9253D7923E015A80037E156 /* Dash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dash.entitlements; sourceTree = "<group>"; };
@@ -269,6 +273,8 @@
 			isa = PBXGroup;
 			children = (
 				B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */,
+				B90265AA23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift */,
+				B90265A823EB34D800B2EF6B /* SharedItemTableViewData.swift */,
 				B92FB3BF23E95BE900EA702C /* SharedItemTableViewCell.swift */,
 				B95F514D23E5BBF70063CB3D /* SharedItem.swift */,
 				B95F514523E5A8540063CB3D /* Location.swift */,
@@ -782,6 +788,7 @@
 			files = (
 				B9DB8E5922D7A481003E4BD8 /* ETCPaymentManagedObject.swift in Sources */,
 				B95F514A23E5B2C10063CB3D /* Webpage.swift in Sources */,
+				B90265A923EB34D800B2EF6B /* SharedItemTableViewData.swift in Sources */,
 				B99356E622A9525C00BA08AB /* ETCMessage.swift in Sources */,
 				B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */,
 				B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */,
@@ -815,6 +822,7 @@
 				B9BC920923250A0A006F22FC /* Defaults.swift in Sources */,
 				B9DC5B3D229D9E0C00B645D5 /* BLERemotePeripheral.swift in Sources */,
 				B9D8E43A23D345D70078A057 /* UUIDExtension.swift in Sources */,
+				B90265AB23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift in Sources */,
 				B9CEA76E22D911140055C9A3 /* ETCSplitViewController.swift in Sources */,
 				B9EF566123DF3D61000D0CB2 /* GoogleSignInViewController.swift in Sources */,
 				B9741F7523DF200600F061E7 /* SharedItemTableViewController.swift in Sources */,

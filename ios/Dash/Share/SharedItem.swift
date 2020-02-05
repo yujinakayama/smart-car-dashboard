@@ -12,8 +12,16 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 protocol SharedItemProtocol: Decodable {
+    var identifier: SharedItem.Identifier { get }
+    var url: URL { get }
     var creationDate: Date? { get }
     func open()
+}
+
+extension SharedItemProtocol {
+    var identifier: SharedItem.Identifier {
+        return SharedItem.Identifier(url: url, creationDate: creationDate)
+    }
 }
 
 enum SharedItemError: Error {
@@ -21,6 +29,11 @@ enum SharedItemError: Error {
 }
 
 struct SharedItem {
+    struct Identifier: Hashable {
+        let url: URL
+        let creationDate: Date?
+    }
+
     enum ItemType: String {
         case location
         case webpage

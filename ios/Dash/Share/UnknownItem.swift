@@ -9,6 +9,7 @@
 import Foundation
 
 struct UnknownItem: SharedItemProtocol {
+    let url: URL
     let creationDate: Date?
 
     func open() {

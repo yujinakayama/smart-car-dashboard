@@ -11,16 +11,31 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class SharedItemTableViewController: UITableViewController {
+    // We don't directly store SharedItemProtocol object in the data source
+    // because doing so requires SharedItemProtocol to conform to Hashable and Equatable,
+    // which force the protocol to depend on `Self`, and it makes impossible to create an array of SharedItemProtocol.
+    var dataSource: SharedItemTableViewDataSource!
+
+    var data = SharedItemTableViewData()
+
     var authStateListener: AuthStateDidChangeListenerHandle?
 
     var querySnapshotListener: ListenerRegistration?
 
-    var items: [SharedItemProtocol] = []
-
     lazy var firestoreQuery: Query = Firestore.firestore().collection("items").order(by: "creationDate", descending: true)
+
+    let sectionHeaderDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ja_JP")
+        formatter.dateStyle = .full
+        return formatter
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        dataSource = makeDataSource()
+        tableView.dataSource = dataSource
 
         authStateDidChange()
 
@@ -37,6 +52,21 @@ class SharedItemTableViewController: UITableViewController {
         }
 
         endLoadingItems()
+    }
+
+    func makeDataSource() -> SharedItemTableViewDataSource {
+        let dataSource = SharedItemTableViewDataSource(tableView: tableView) { (tableView, indexPath, itemIdentifier) in
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SharedItemTableViewCell") as! SharedItemTableViewCell
+            cell.item = self.data.item(for: itemIdentifier)
+            return cell
+        }
+
+        dataSource.titleForHeaderInSection = { [unowned self] (tableView, index) in
+            let section = self.data.sections[index]
+            return self.sectionHeaderDateFormatter.string(from: section.date)
+        }
+
+        return dataSource
     }
 
     func authStateDidChange() {
@@ -64,14 +94,10 @@ class SharedItemTableViewController: UITableViewController {
 
             guard let snapshot = snapshot else { return }
 
-            let initialLoad = self.items.isEmpty
-
-            self.setItems(from: snapshot)
-
-            if initialLoad {
-                self.tableView.reloadData()
+            if self.data.sections.isEmpty {
+                self.updateData(firestoreSnapshot: snapshot, animatingDifferences: false)
             } else {
-                self.itemCollectionDidChange(changes: snapshot.documentChanges)
+                self.updateData(firestoreSnapshot: snapshot, animatingDifferences: true)
             }
         }
     }
@@ -83,71 +109,41 @@ class SharedItemTableViewController: UITableViewController {
         self.querySnapshotListener = nil
     }
 
-    func setItems(from snapshot: QuerySnapshot) {
-        items = snapshot.documents.compactMap({ (document) in
-            do {
-                return try SharedItem.makeItem(document: document)
-            } catch {
-                logger.error(error)
-                return nil
-            }
-        })
+    func updateData(firestoreSnapshot: QuerySnapshot, animatingDifferences: Bool) {
+        DispatchQueue.global().async {
+            self.data = SharedItemTableViewData(firestoreSnapshot: firestoreSnapshot)
+            let dataSourceSnapshot = self.makeDataSourceSnapshot(from: self.data)
+            self.dataSource.apply(dataSourceSnapshot, animatingDifferences: animatingDifferences)
+        }
+    }
+
+    func makeDataSourceSnapshot(from data: SharedItemTableViewData) -> NSDiffableDataSourceSnapshot<Date, SharedItem.Identifier> {
+        var snapshot = NSDiffableDataSourceSnapshot<Date, SharedItem.Identifier>()
+
+        snapshot.appendSections(data.sections.map { $0.date })
+
+        for section in data.sections {
+            snapshot.appendItems(section.items.map { $0.identifier }, toSection: section.date)
+        }
+
+        return snapshot
     }
 
     func showSignInView() {
         self.performSegue(withIdentifier: "showSignIn", sender: self)
     }
 
-    // MARK: - UITableViewDataSource
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SharedItemTableViewCell", for: indexPath) as! SharedItemTableViewCell
-        cell.item = items[indexPath.row]
-        return cell
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let headerView = view as! UITableViewHeaderFooterView
+        headerView.textLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = items[indexPath.row]
+        let item = data.item(for: indexPath)
         item.open()
 
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
-        }
-    }
-
-    func itemCollectionDidChange(changes: [DocumentChange]) {
-        tableView.beginUpdates()
-
-        for change in changes {
-            itemDidChange(change: change)
-        }
-
-        tableView.endUpdates()
-    }
-
-    func itemDidChange(change: DocumentChange) {
-        let oldIndexPath = IndexPath(row: Int(change.oldIndex), section: 0)
-        let newIndexPath = IndexPath(row: Int(change.newIndex), section: 0)
-
-        switch change.type {
-        case .added:
-            tableView.insertRows(at: [newIndexPath], with: .left)
-        case .removed:
-            tableView.deleteRows(at: [oldIndexPath], with: .fade)
-        case .modified:
-            if oldIndexPath == newIndexPath {
-                tableView.reloadRows(at: [oldIndexPath], with: .none)
-            } else {
-                tableView.moveRow(at: oldIndexPath, to: newIndexPath)
-            }
         }
     }
 }

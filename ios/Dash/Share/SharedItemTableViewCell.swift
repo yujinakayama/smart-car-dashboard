@@ -13,7 +13,7 @@ class SharedItemTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
 
-    var item: SharedItemProtocol! {
+    var item: SharedItemProtocol? {
         didSet {
             switch item {
             case let location as Location:
