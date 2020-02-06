@@ -62,6 +62,8 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, Messag
         logger.info(response.notification.request.content)
 
         process(response.notification)
+
+        completionHandler()
     }
 
     // Received notification in foreground
