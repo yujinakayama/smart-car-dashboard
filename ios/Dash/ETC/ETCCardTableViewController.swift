@@ -86,11 +86,20 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
     // MARK: - Segues
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "show", let indexPath = tableView.indexPathForSelectedRow {
-            let paymentTableViewController = segue.destination as! ETCPaymentTableViewController
-            paymentTableViewController.device = device
-            let card = fetchedResultsController.object(at: indexPath)
-            paymentTableViewController.card = card
+        switch segue.identifier {
+        case "show":
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let paymentTableViewController = segue.destination as! ETCPaymentTableViewController
+                paymentTableViewController.device = device
+                let card = fetchedResultsController.object(at: indexPath)
+                paymentTableViewController.card = card
+            }
+        case "edit":
+            let navigationController = segue.destination as! UINavigationController
+            let cardEditViewController = navigationController.topViewController as! ETCCardEditViewController
+            cardEditViewController.card = (sender as! ETCCardManagedObject)
+        default:
+            break
         }
     }
 
@@ -126,21 +135,7 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
 
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         let card = fetchedResultsController.object(at: indexPath)
-
-        let alertController = UIAlertController(title: "Card Name", message: nil, preferredStyle: .alert)
-
-        alertController.addTextField { (textField) in
-            textField.text = card.name
-        }
-
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-
-        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
-            card.name = alertController.textFields!.first!.text
-            try! card.managedObjectContext?.save()
-        }))
-
-        present(alertController, animated: true)
+        performSegue(withIdentifier: "edit", sender: card)
     }
 
     // MARK: - NSFetchedResultsControllerDelegate
