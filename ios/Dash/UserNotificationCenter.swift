@@ -78,12 +78,8 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, Messag
     }
 
     func process(_ notification: UNNotification) {
-        do {
-            let remoteNotification = RemoteNotification(userInfo: notification.request.content.userInfo)
-            try remoteNotification.process()
-        } catch {
-            logger.error(error)
-        }
+        let remoteNotification = RemoteNotification(userInfo: notification.request.content.userInfo)
+        remoteNotification.process()
     }
 
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {

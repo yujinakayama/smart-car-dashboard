@@ -21,18 +21,14 @@ struct RemoteNotification {
         return NotificationType(rawValue: string)
     }
 
-    func process() throws {
+    func process() {
         switch type {
         case .share:
-            try ShareNotification(userInfo: userInfo).process()
+            ShareNotification(userInfo: userInfo)?.process()
         default:
             break
         }
     }
-}
-
-enum ItemNotificationError: Error {
-    case unexpectedUserInfoStructure
 }
 
 struct ShareNotification {
@@ -43,16 +39,26 @@ struct ShareNotification {
 
     let itemDictionary: [String: Any]
 
-    init(userInfo: [AnyHashable: Any]) throws {
+    init?(userInfo: [AnyHashable: Any]) {
         guard let itemDictionary = userInfo["item"] as? [String: Any] else {
-            throw ItemNotificationError.unexpectedUserInfoStructure
+            logger.error(userInfo)
+            return nil
         }
 
         self.itemDictionary = itemDictionary
     }
 
-    func process() throws {
-        let item = try SharedItem.makeItem(dictionary: itemDictionary)
-        item.open()
+    func process() {
+        // It seems executing UIApplication.shared.open()
+        // on userNotificationCenter(center:willPresent:withCompletionHandler completionHandler:)
+        // causes freeze in a few seconds
+        DispatchQueue.main.async {
+            do {
+                let item = try SharedItem.makeItem(dictionary: self.itemDictionary)
+                item.open()
+            } catch {
+                logger.error(error)
+            }
+        }
     }
 }
