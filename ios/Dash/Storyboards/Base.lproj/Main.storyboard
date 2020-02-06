@@ -812,7 +812,7 @@
             <color red="0.89411764705882357" green="0.89411764705882357" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="Visa Background Color">
-            <color red="0.062745098039215685" green="0.20784313725490194" blue="0.49411764705882355" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.011764705882352941" green="0.30196078431372547" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
