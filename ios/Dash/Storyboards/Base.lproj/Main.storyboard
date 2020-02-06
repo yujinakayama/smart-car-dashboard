@@ -28,37 +28,45 @@
         <scene sceneID="UzF-l4-l0z">
             <objects>
                 <tableViewController id="jqf-qq-fTP" userLabel="Card Table View Controller" customClass="ETCCardTableViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="rBj-BB-kSy">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="rBj-BB-kSy">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="ETCCardTableViewCell" editingAccessoryType="detailButton" id="2sj-lq-fub" customClass="ETCCardTableViewCell" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="16" y="55.5" width="343" height="76.5"/>
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="82.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2sj-lq-fub" id="UN9-2d-DFc">
-                                    <rect key="frame" x="0.0" y="0.0" width="317" height="76.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="348" height="82.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="HKU-bN-sRN">
-                                            <rect key="frame" x="23" y="19" width="278" height="38.5"/>
+                                            <rect key="frame" x="24" y="23" width="308" height="36.5"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="creditcard.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="VeO-7B-4kV">
-                                                    <rect key="frame" x="0.0" y="2.5" width="38" height="34"/>
-                                                    <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LY5-DH-FYh" customClass="ETCCardView" customModule="Dash" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.5" width="57" height="36"/>
+                                                    <color key="backgroundColor" name="Visa Background Color"/>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="38" id="X6V-Rl-8SY"/>
-                                                        <constraint firstAttribute="height" constant="38" id="nZJ-9Q-dJP"/>
+                                                        <constraint firstAttribute="height" constant="36" id="Eb8-1N-NCE"/>
+                                                        <constraint firstAttribute="width" secondItem="LY5-DH-FYh" secondAttribute="height" multiplier="8560:5398" placeholder="YES" id="tDH-6p-59O"/>
                                                     </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Card" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wLH-Uf-nlx">
-                                                    <rect key="frame" x="50" y="9" width="196" height="20.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="image" keyPath="image" value="Visa"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="4"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="My Card" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wLH-Uf-nlx">
+                                                    <rect key="frame" x="69" y="7" width="207.5" height="23"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="8Xi-A0-0wU">
-                                                    <rect key="frame" x="258" y="10" width="20" height="19"/>
-                                                    <color key="tintColor" name="Active Checkmark Color"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="checkmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="8Xi-A0-0wU">
+                                                    <rect key="frame" x="288.5" y="10" width="19.5" height="17"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="semibold"/>
                                                 </imageView>
                                             </subviews>
                                         </stackView>
@@ -66,13 +74,14 @@
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" secondItem="HKU-bN-sRN" secondAttribute="trailing" constant="8" id="V3v-wz-MBh"/>
                                         <constraint firstItem="HKU-bN-sRN" firstAttribute="leading" secondItem="UN9-2d-DFc" secondAttribute="leadingMargin" constant="8" id="YNV-RT-bYz"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="HKU-bN-sRN" secondAttribute="bottom" constant="4" id="Zz4-LW-sGK"/>
-                                        <constraint firstItem="HKU-bN-sRN" firstAttribute="top" secondItem="UN9-2d-DFc" secondAttribute="topMargin" constant="4" id="eCo-Wx-Pbh"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="HKU-bN-sRN" secondAttribute="bottom" constant="8" id="Zz4-LW-sGK"/>
+                                        <constraint firstItem="HKU-bN-sRN" firstAttribute="top" secondItem="UN9-2d-DFc" secondAttribute="topMargin" constant="8" id="eCo-Wx-Pbh"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                 <inset key="separatorInset" minX="25" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
+                                    <outlet property="cardView" destination="LY5-DH-FYh" id="Nn4-5g-7GN"/>
                                     <outlet property="checkmarkImageView" destination="8Xi-A0-0wU" id="AwH-bN-LGZ"/>
                                     <outlet property="nameLabel" destination="wLH-Uf-nlx" id="E3q-HX-7Qu"/>
                                     <segue destination="7bK-jq-Zjz" kind="show" identifier="show" id="ZuQ-m0-CKt"/>
@@ -85,10 +94,13 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="ETC Cards" id="dgH-Z0-R0U"/>
+                    <connections>
+                        <segue destination="LHg-0V-zMa" kind="presentation" identifier="edit" id="iFs-D4-qCS"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yGh-KL-oO3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="744" y="-884"/>
+            <point key="canvasLocation" x="743.63103953147868" y="-884.1796875"/>
         </scene>
         <!--Payment Detail View Controller-->
         <scene sceneID="yUG-lL-AsK">
@@ -429,10 +441,10 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hrG-N5-epA" customClass="BorderedView" customModule="Dash" customModuleProvider="target">
-                                            <rect key="frame" x="15" y="15" width="50" height="50.5"/>
+                                            <rect key="frame" x="15" y="15" width="50" height="50"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="mappin" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="e2J-Vy-GEc">
-                                                    <rect key="frame" x="11" y="10.5" width="28" height="28.5"/>
+                                                    <rect key="frame" x="11" y="10.5" width="28" height="28"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
@@ -459,7 +471,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="4Of-Fm-eCE">
-                                            <rect key="frame" x="77" y="21" width="1229" height="39"/>
+                                            <rect key="frame" x="77" y="20.5" width="1229" height="39"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東京国際空港ターミナル羽田空港国際線駐車場" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yap-Es-0Pb">
                                                     <rect key="frame" x="0.0" y="0.0" width="1229" height="20.5"/>
@@ -573,17 +585,220 @@
             </objects>
             <point key="canvasLocation" x="-856.07613469985347" y="2377.734375"/>
         </scene>
+        <!--Card Edit View Controller-->
+        <scene sceneID="5yX-ML-NsD">
+            <objects>
+                <viewController id="96E-ai-xPk" customClass="ETCCardEditViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XUH-yd-mga">
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gOb-iA-RhU">
+                                <rect key="frame" x="0.0" y="116" width="540" height="259"/>
+                                <subviews>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rof-6K-Skn">
+                                        <rect key="frame" x="0.0" y="0.0" width="540" height="150"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="Uag-PD-cIq">
+                                                <rect key="frame" x="0.0" y="0.0" width="1620" height="150"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M2I-bT-ZNM">
+                                                        <rect key="frame" x="0.0" y="0.0" width="540" height="150"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cdf-Se-c1w" customClass="ETCCardView" customModule="Dash" customModuleProvider="target">
+                                                                <rect key="frame" x="151" y="0.0" width="238" height="150"/>
+                                                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" secondItem="cdf-Se-c1w" secondAttribute="height" multiplier="8560:5398" placeholder="YES" id="Lmo-5k-8yr"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="signature" catalog="system"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="cdf-Se-c1w" firstAttribute="centerY" secondItem="M2I-bT-ZNM" secondAttribute="centerY" id="0ve-hh-Wrf"/>
+                                                            <constraint firstItem="cdf-Se-c1w" firstAttribute="centerX" secondItem="M2I-bT-ZNM" secondAttribute="centerX" id="CqG-dC-fFf"/>
+                                                            <constraint firstItem="cdf-Se-c1w" firstAttribute="height" secondItem="M2I-bT-ZNM" secondAttribute="height" id="YF5-YH-uq6"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6kp-gv-fen">
+                                                        <rect key="frame" x="540" y="0.0" width="540" height="150"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xbO-Ow-AKe" customClass="ETCCardView" customModule="Dash" customModuleProvider="target">
+                                                                <rect key="frame" x="151" y="0.0" width="238" height="150"/>
+                                                                <color key="backgroundColor" name="Visa Background Color"/>
+                                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" secondItem="xbO-Ow-AKe" secondAttribute="height" multiplier="8560:5398" placeholder="YES" id="HXd-Pt-FBT"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="Visa"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="xbO-Ow-AKe" firstAttribute="centerX" secondItem="6kp-gv-fen" secondAttribute="centerX" id="FmP-4u-4mK"/>
+                                                            <constraint firstItem="xbO-Ow-AKe" firstAttribute="height" secondItem="6kp-gv-fen" secondAttribute="height" id="fl2-1T-Qgj"/>
+                                                            <constraint firstItem="xbO-Ow-AKe" firstAttribute="centerY" secondItem="6kp-gv-fen" secondAttribute="centerY" id="r9W-vz-YSj"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sqt-Pp-v1x">
+                                                        <rect key="frame" x="1080" y="0.0" width="540" height="150"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NGu-fv-djK" customClass="ETCCardView" customModule="Dash" customModuleProvider="target">
+                                                                <rect key="frame" x="151" y="0.0" width="238" height="150"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" secondItem="NGu-fv-djK" secondAttribute="height" multiplier="8560:5398" placeholder="YES" id="ors-gY-rWp"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="Mastercard"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="NGu-fv-djK" firstAttribute="centerX" secondItem="sqt-Pp-v1x" secondAttribute="centerX" id="4eH-Fr-MvO"/>
+                                                            <constraint firstItem="NGu-fv-djK" firstAttribute="height" secondItem="sqt-Pp-v1x" secondAttribute="height" id="Oq0-vU-QmI"/>
+                                                            <constraint firstItem="NGu-fv-djK" firstAttribute="centerY" secondItem="sqt-Pp-v1x" secondAttribute="centerY" id="tvK-ph-9NE"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="M2I-bT-ZNM" secondAttribute="width" multiplier="3" id="1Cb-md-SwX"/>
+                                                    <constraint firstAttribute="width" secondItem="sqt-Pp-v1x" secondAttribute="width" multiplier="3" id="9Qe-5E-5mw"/>
+                                                    <constraint firstAttribute="width" secondItem="6kp-gv-fen" secondAttribute="width" multiplier="3" id="f5w-FB-mT6"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="Uag-PD-cIq" firstAttribute="leading" secondItem="obp-T5-irN" secondAttribute="leading" id="Vsn-Ce-0hd"/>
+                                            <constraint firstAttribute="height" constant="150" id="XgL-bG-kwV"/>
+                                            <constraint firstItem="Uag-PD-cIq" firstAttribute="width" secondItem="upj-Eq-ZrM" secondAttribute="width" multiplier="3" id="ZLb-Kw-INM"/>
+                                            <constraint firstItem="Uag-PD-cIq" firstAttribute="trailing" secondItem="obp-T5-irN" secondAttribute="trailing" id="ZTx-t1-2I6"/>
+                                            <constraint firstItem="Uag-PD-cIq" firstAttribute="top" secondItem="obp-T5-irN" secondAttribute="top" id="fMt-S8-DVr"/>
+                                            <constraint firstItem="Uag-PD-cIq" firstAttribute="height" secondItem="upj-Eq-ZrM" secondAttribute="height" id="hRj-e7-X3i"/>
+                                            <constraint firstItem="obp-T5-irN" firstAttribute="bottom" secondItem="Uag-PD-cIq" secondAttribute="bottom" id="rul-if-Yt2"/>
+                                        </constraints>
+                                        <viewLayoutGuide key="contentLayoutGuide" id="obp-T5-irN"/>
+                                        <viewLayoutGuide key="frameLayoutGuide" id="upj-Eq-ZrM"/>
+                                    </scrollView>
+                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Ulq-xj-oh3">
+                                        <rect key="frame" x="250.5" y="154" width="39" height="37"/>
+                                        <color key="pageIndicatorTintColor" systemColor="tertiaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="currentPageIndicatorTintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <connections>
+                                            <action selector="cardPageControlValueDidChange" destination="96E-ai-xPk" eventType="valueChanged" id="HYF-vn-hAY"/>
+                                        </connections>
+                                    </pageControl>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1hM-dG-4Id" customClass="BorderedView" customModule="Dash" customModuleProvider="target">
+                                        <rect key="frame" x="130" y="215" width="280" height="44"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="My Card" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Y80-qh-69F">
+                                                <rect key="frame" x="10" y="10" width="260" height="24"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="260" id="W8t-Ji-PF4"/>
+                                                    <constraint firstAttribute="height" constant="24" id="rv9-mU-BbC"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="Y80-qh-69F" firstAttribute="leading" secondItem="1hM-dG-4Id" secondAttribute="leadingMargin" constant="2" id="QUi-0I-Awp"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="Y80-qh-69F" secondAttribute="trailing" constant="2" id="iW2-D5-sPo"/>
+                                            <constraint firstItem="Y80-qh-69F" firstAttribute="top" secondItem="1hM-dG-4Id" secondAttribute="topMargin" constant="2" id="sHc-Jr-hfr"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="Y80-qh-69F" secondAttribute="bottom" constant="2" id="x5B-Wj-gar"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="1hM-dG-4Id" secondAttribute="bottom" id="3zJ-Um-lRe"/>
+                                    <constraint firstItem="1hM-dG-4Id" firstAttribute="top" secondItem="Ulq-xj-oh3" secondAttribute="bottom" constant="24" id="HDx-1R-qU5"/>
+                                    <constraint firstAttribute="trailing" secondItem="Rof-6K-Skn" secondAttribute="trailing" id="MiF-Uv-Wvl"/>
+                                    <constraint firstItem="Ulq-xj-oh3" firstAttribute="centerX" secondItem="gOb-iA-RhU" secondAttribute="centerX" id="Pur-Ok-zAi"/>
+                                    <constraint firstItem="Rof-6K-Skn" firstAttribute="top" secondItem="gOb-iA-RhU" secondAttribute="top" id="qOd-ci-ybW"/>
+                                    <constraint firstItem="1hM-dG-4Id" firstAttribute="centerX" secondItem="gOb-iA-RhU" secondAttribute="centerX" id="uAN-WG-6o5"/>
+                                    <constraint firstItem="Ulq-xj-oh3" firstAttribute="top" secondItem="Rof-6K-Skn" secondAttribute="bottom" constant="4" id="yki-Ek-NQW"/>
+                                    <constraint firstItem="Rof-6K-Skn" firstAttribute="leading" secondItem="gOb-iA-RhU" secondAttribute="leading" id="zbM-XC-4ly"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="YJ2-lw-TcU" firstAttribute="trailing" secondItem="gOb-iA-RhU" secondAttribute="trailing" id="IcZ-xS-HWB"/>
+                            <constraint firstItem="gOb-iA-RhU" firstAttribute="leading" secondItem="YJ2-lw-TcU" secondAttribute="leading" id="PTD-AQ-j0h"/>
+                            <constraint firstItem="gOb-iA-RhU" firstAttribute="top" secondItem="YJ2-lw-TcU" secondAttribute="top" constant="60" id="c0G-7J-fz4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="YJ2-lw-TcU"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="DJD-Pe-9Q7">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ROS-4T-VEZ">
+                            <connections>
+                                <action selector="cancelButtonDidTap:" destination="96E-ai-xPk" id="hiq-yZ-9De"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="6TJ-Kl-xp8">
+                            <connections>
+                                <action selector="doneButtonDidTap:" destination="96E-ai-xPk" id="Te7-7M-XJN"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="nameTextField" destination="Y80-qh-69F" id="P69-nU-iW8"/>
+                        <outlet property="pageControl" destination="Ulq-xj-oh3" id="g4H-xj-ibA"/>
+                        <outlet property="pageScrollView" destination="Rof-6K-Skn" id="jD9-cW-KR7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y4z-wr-QIm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2186.96925329429" y="-1748.4375"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="736-tj-O9Z">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="formSheet" id="LHg-0V-zMa" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="WOh-Yx-mUj">
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="96E-ai-xPk" kind="relationship" relationship="rootViewController" id="nGW-2v-cGT"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YNJ-hb-0dB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1492.9721815519765" y="-1748.4375"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="Mastercard" width="117" height="73"/>
+        <image name="Visa" width="496" height="161"/>
         <image name="arrow.right" catalog="system" width="64" height="48"/>
-        <image name="checkmark.circle.fill" catalog="system" width="64" height="60"/>
-        <image name="creditcard.fill" catalog="system" width="64" height="44"/>
+        <image name="checkmark" catalog="system" width="64" height="56"/>
         <image name="mappin" catalog="system" width="52" height="64"/>
+        <image name="signature" catalog="system" width="64" height="44"/>
         <image name="square.and.arrow.down.fill" catalog="system" width="60" height="64"/>
         <image name="yensign.square.fill" catalog="system" width="64" height="56"/>
-        <namedColor name="Active Checkmark Color">
-            <color red="0.15294117647058825" green="0.77254901960784317" blue="0.17254901960784313" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
         <namedColor name="Global Tint Color">
             <color red="0.50700002908706665" green="0.20000000298023224" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
@@ -595,6 +810,9 @@
         </namedColor>
         <namedColor name="Table View Selected Color">
             <color red="0.89411764705882357" green="0.89411764705882357" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="Visa Background Color">
+            <color red="0.011764705882352941" green="0.30196078431372547" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>

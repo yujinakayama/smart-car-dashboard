@@ -28,6 +28,8 @@
 		B9588B5D23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */; };
 		B95BE8E222B8A8BE004C1CC0 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */; };
 		B95BE8E322B8A8BE004C1CC0 /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */; };
+		B95BF23823EBF43900A30DE0 /* ETCCardEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95BF23723EBF43900A30DE0 /* ETCCardEditViewController.swift */; };
+		B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95BF23B23EBFFE300A30DE0 /* ETCCardView.swift */; };
 		B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */; };
 		B95F514623E5A8540063CB3D /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514523E5A8540063CB3D /* Location.swift */; };
 		B95F514A23E5B2C10063CB3D /* Webpage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514923E5B2C10063CB3D /* Webpage.swift */; };
@@ -133,6 +135,7 @@
 		B92FB3BF23E95BE900EA702C /* SharedItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedItemTableViewCell.swift; sourceTree = "<group>"; };
 		B931C4FE23D369760020DF13 /* ETCDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDevice.swift; sourceTree = "<group>"; };
 		B93321ED2323C9D500BFAB21 /* BorderedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedView.swift; sourceTree = "<group>"; };
+		B939F0CF23EC5C7F00AA3E8E /* DashV3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DashV3.xcdatamodel; sourceTree = "<group>"; };
 		B941AEADBC8F07DBE594C95A /* Pods_DashRemote_ShareExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DashRemote_ShareExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B942553C22B8C3E2008B053B /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B942554422B8ED10008B053B /* ETCMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCMessageTests.swift; sourceTree = "<group>"; };
@@ -140,6 +143,8 @@
 		B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentDebugInformationViewController.swift; sourceTree = "<group>"; };
 		B95BE8E022B8A8BE004C1CC0 /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCGLogger.framework; path = Carthage/Build/iOS/XCGLogger.framework; sourceTree = "<group>"; };
 		B95BE8E122B8A8BE004C1CC0 /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjcExceptionBridging.framework; path = Carthage/Build/iOS/ObjcExceptionBridging.framework; sourceTree = "<group>"; };
+		B95BF23723EBF43900A30DE0 /* ETCCardEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCCardEditViewController.swift; sourceTree = "<group>"; };
+		B95BF23B23EBFFE300A30DE0 /* ETCCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardView.swift; sourceTree = "<group>"; };
 		B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceStatusBar.swift; sourceTree = "<group>"; };
 		B95F514523E5A8540063CB3D /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		B95F514923E5B2C10063CB3D /* Webpage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Webpage.swift; sourceTree = "<group>"; };
@@ -312,6 +317,7 @@
 			children = (
 				B9CEA76D22D911140055C9A3 /* ETCSplitViewController.swift */,
 				B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */,
+				B95BF23723EBF43900A30DE0 /* ETCCardEditViewController.swift */,
 				B9DC5B26229D59BE00B645D5 /* ETCPaymentTableViewController.swift */,
 				B9DC5B28229D59BE00B645D5 /* ETCPaymentDetailViewController.swift */,
 				B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */,
@@ -330,6 +336,7 @@
 				B9DC5B3E229D9E4F00B645D5 /* BLERemotePeripheralManager.swift */,
 				B9DC5B3C229D9E0C00B645D5 /* BLERemotePeripheral.swift */,
 				B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */,
+				B95BF23B23EBFFE300A30DE0 /* ETCCardView.swift */,
 				B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */,
 				B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */,
 			);
@@ -803,12 +810,14 @@
 				B9DC5B29229D59BE00B645D5 /* ETCPaymentDetailViewController.swift in Sources */,
 				B98E936A234C94C7004AE50F /* ETCPaymentProtocol.swift in Sources */,
 				B9588B5D23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift in Sources */,
+				B95BF23823EBF43900A30DE0 /* ETCCardEditViewController.swift in Sources */,
 				B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */,
 				B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */,
 				B95F514C23E5B53F0063CB3D /* RemoteNotification.swift in Sources */,
 				B9DC5B27229D59BE00B645D5 /* ETCPaymentTableViewController.swift in Sources */,
 				B9CB7C0D22AD65A40059433E /* UITableViewCellExtension.swift in Sources */,
 				B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */,
+				B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */,
 				B92E2AFC23E4958200BB4C0E /* UNNotificationContentExtension.swift in Sources */,
 				B9DB8E5522D7A410003E4BD8 /* Dash.xcdatamodeld in Sources */,
 				B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */,
@@ -1250,10 +1259,11 @@
 		B9DB8E5322D7A410003E4BD8 /* Dash.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				B939F0CF23EC5C7F00AA3E8E /* DashV3.xcdatamodel */,
 				B9D8E43B23D345EC0078A057 /* DashV2.xcdatamodel */,
 				B9DB8E5422D7A410003E4BD8 /* Dash.xcdatamodel */,
 			);
-			currentVersion = B9D8E43B23D345EC0078A057 /* DashV2.xcdatamodel */;
+			currentVersion = B939F0CF23EC5C7F00AA3E8E /* DashV3.xcdatamodel */;
 			path = Dash.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

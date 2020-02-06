@@ -22,7 +22,33 @@ class ETCCardManagedObject: NSManagedObject {
     @NSManaged public var name: String?
     @NSManaged public var payments: Set<ETCPaymentManagedObject>
 
+    var brand: ETCCardBrand {
+        get {
+            return ETCCardBrand(rawValue: brandRawValue)!
+        }
+
+        set {
+            brandRawValue = newValue.rawValue
+        }
+    }
+
+    private var brandRawValue: Int16 {
+        get {
+            return primitiveValue(forKey: "brand") as! Int16
+        }
+
+        set {
+            setPrimitiveValue(newValue, forKey: "brand")
+        }
+    }
+
     var tentativeName: String {
         return name ?? "Unnamed Card"
     }
+}
+
+enum ETCCardBrand: Int16 {
+    case unknown = 0
+    case visa
+    case mastercard
 }
