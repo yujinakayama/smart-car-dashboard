@@ -200,7 +200,7 @@ const normalizeGoogleMapsLocation = async (rawData: RawData, url: string): Promi
 };
 
 const normalizeWebpage = async (rawData: RawData, url: string): Promise<WebpageData> => {
-    let title = rawData.title || rawData.contentText;
+    let title = rawData.contentText;
 
     if (!title || urlPattern.test(title)) {
         const responseBody = await request.get(url);
