@@ -135,6 +135,7 @@
 		B92FB3BF23E95BE900EA702C /* SharedItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedItemTableViewCell.swift; sourceTree = "<group>"; };
 		B931C4FE23D369760020DF13 /* ETCDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDevice.swift; sourceTree = "<group>"; };
 		B93321ED2323C9D500BFAB21 /* BorderedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedView.swift; sourceTree = "<group>"; };
+		B939F0CF23EC5C7F00AA3E8E /* DashV3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DashV3.xcdatamodel; sourceTree = "<group>"; };
 		B941AEADBC8F07DBE594C95A /* Pods_DashRemote_ShareExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DashRemote_ShareExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B942553C22B8C3E2008B053B /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B942554422B8ED10008B053B /* ETCMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCMessageTests.swift; sourceTree = "<group>"; };
@@ -1258,10 +1259,11 @@
 		B9DB8E5322D7A410003E4BD8 /* Dash.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				B939F0CF23EC5C7F00AA3E8E /* DashV3.xcdatamodel */,
 				B9D8E43B23D345EC0078A057 /* DashV2.xcdatamodel */,
 				B9DB8E5422D7A410003E4BD8 /* Dash.xcdatamodel */,
 			);
-			currentVersion = B9D8E43B23D345EC0078A057 /* DashV2.xcdatamodel */;
+			currentVersion = B939F0CF23EC5C7F00AA3E8E /* DashV3.xcdatamodel */;
 			path = Dash.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
