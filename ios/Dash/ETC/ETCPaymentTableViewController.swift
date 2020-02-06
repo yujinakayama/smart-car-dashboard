@@ -12,14 +12,17 @@ import CoreData
 class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     var device: ETCDevice!
 
-    var card: ETCCardManagedObject!
+    var card: ETCCardManagedObject?
 
     lazy var deviceStatusBar = ETCDeviceStatusBar(device: device)
 
     lazy var fetchedResultsController: NSFetchedResultsController<ETCPaymentManagedObject> = {
         let request: NSFetchRequest<ETCPaymentManagedObject> = ETCPaymentManagedObject.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-        request.predicate = NSPredicate(format: "card == %@", card)
+
+        if let card = card {
+            request.predicate = NSPredicate(format: "card == %@", card)
+        }
 
         let controller = NSFetchedResultsController(
             fetchRequest: request,
@@ -55,7 +58,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     }
 
     func setUpNavigationBar() {
-        navigationItem.title = card.tentativeName
+        navigationItem.title = card?.tentativeName ?? "All Payments"
         navigationItem.rightBarButtonItems = deviceStatusBar.items
     }
 

@@ -10,6 +10,27 @@ import UIKit
 import CoreData
 
 class ETCCardTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+    enum Section: Int, CaseIterable {
+        case allPayments = 0
+        case cards
+
+        init?(_ sectionIndex: Int) {
+            if let section = Section(rawValue: sectionIndex) {
+                self = section
+            } else {
+                return nil
+            }
+        }
+
+        init?(_ indexPath: IndexPath) {
+            if let section = Section(rawValue: indexPath.section) {
+                self = section
+            } else {
+                return nil
+            }
+        }
+    }
+
     let device = ETCDevice()
 
     lazy var deviceStatusBar = ETCDeviceStatusBar(device: device)
@@ -73,7 +94,7 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
     }
 
     func indicateCurrentCard() {
-        tableView.reloadSections(IndexSet(integer: 0), with: .none)
+        tableView.reloadSections(IndexSet(integer: Section.cards.rawValue), with: .none)
     }
 
     func showPaymentsForCurrentCard() {
@@ -91,8 +112,13 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
             if let indexPath = tableView.indexPathForSelectedRow {
                 let paymentTableViewController = segue.destination as! ETCPaymentTableViewController
                 paymentTableViewController.device = device
-                let card = fetchedResultsController.object(at: indexPath)
-                paymentTableViewController.card = card
+
+                switch Section(indexPath)! {
+                case .allPayments:
+                    paymentTableViewController.card = nil
+                case .cards:
+                    paymentTableViewController.card = fetchedResultsController.object(at: indexPath.adding(section: -1))
+                }
             }
         case "edit":
             let navigationController = segue.destination as! UINavigationController
@@ -106,19 +132,38 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
     // MARK: - UITableViewDataSource
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return fetchedResultsController.sections?.count ?? 0
+        return Section.allCases.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
+        switch Section(section)! {
+        case .allPayments:
+            return 1
+        case .cards:
+            return fetchedResultsController.sections?.first?.numberOfObjects ?? 0
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch Section(section)! {
+        case .allPayments:
+            return nil
+        case .cards:
+            return "Cards"
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ETCCardTableViewCell", for: indexPath) as! ETCCardTableViewCell
-        let card = fetchedResultsController.object(at: indexPath)
-        cell.card = card
-        cell.isCurrentCard = card.objectID == device.currentCard?.objectID
-        return cell
+        switch Section(indexPath)! {
+        case .allPayments:
+            return tableView.dequeueReusableCell(withIdentifier: "AllPaymentsCell", for: indexPath)
+        case .cards:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ETCCardTableViewCell", for: indexPath) as! ETCCardTableViewCell
+            let card = fetchedResultsController.object(at: indexPath.adding(section: -1))
+            cell.card = card
+            cell.isCurrentCard = card.objectID == device.currentCard?.objectID
+            return cell
+        }
     }
 
     // MARK: - UITableViewDelegate
@@ -134,7 +179,8 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
     }
 
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        let card = fetchedResultsController.object(at: indexPath)
+        guard Section(indexPath)! == .cards else { return }
+        let card = fetchedResultsController.object(at: indexPath.adding(section: -1))
         performSegue(withIdentifier: "edit", sender: card)
     }
 
@@ -145,6 +191,8 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
     }
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        let sectionIndex = sectionIndex + 1
+
         switch type {
         case .insert:
             tableView.insertSections(IndexSet(integer: sectionIndex), with: .left)
@@ -160,6 +208,9 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
     }
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        let indexPath = indexPath?.adding(section: 1)
+        let newIndexPath = newIndexPath?.adding(section: 1)
+
         switch type {
         case .insert:
             tableView.insertRows(at: [newIndexPath!], with: .left)
