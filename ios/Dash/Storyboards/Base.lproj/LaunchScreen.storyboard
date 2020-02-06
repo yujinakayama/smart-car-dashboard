@@ -23,7 +23,7 @@
             </objects>
             <point key="canvasLocation" x="528.84333821376276" y="740.625"/>
         </scene>
-        <!--ETC-->
+        <!--All Payments-->
         <scene sceneID="UF5-wi-CWf">
             <objects>
                 <tableViewController clearsSelectionOnViewWillAppear="NO" id="O7a-us-8ed" sceneMemberID="viewController">
@@ -36,7 +36,7 @@
                             <outlet property="delegate" destination="O7a-us-8ed" id="hA6-0h-nNp"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="ETC" id="2tp-GK-kS5"/>
+                    <navigationItem key="navigationItem" title="All Payments" id="2tp-GK-kS5"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0VG-TE-0Zd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

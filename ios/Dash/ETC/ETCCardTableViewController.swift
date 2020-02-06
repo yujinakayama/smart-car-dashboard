@@ -51,10 +51,6 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
         return controller
     }()
 
-    var isVisible: Bool {
-        return isViewLoaded && view.window != nil
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -66,6 +62,9 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
         startObservingNotifications()
 
         device.startPreparation()
+
+        // Show "All Payments" immediately on launch
+        performSegue(withIdentifier: "initialShow", sender: nil)
     }
 
     func setUpNavigationBar() {
@@ -83,9 +82,6 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
 
         notificationCenter.addObserver(forName: .ETCDeviceDidDetectCardInsertion, object: device, queue: .main) { (notification) in
             self.indicateCurrentCard()
-            if self.isVisible {
-                self.showPaymentsForCurrentCard()
-            }
         }
 
         notificationCenter.addObserver(forName: .ETCDeviceDidDetectCardEjection, object: device, queue: .main) { (notification) in
@@ -97,17 +93,13 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
         tableView.reloadSections(IndexSet(integer: Section.cards.rawValue), with: .none)
     }
 
-    func showPaymentsForCurrentCard() {
-        let currentCard = try! device.dataStore.viewContext.existingObject(with: device.currentCard!.objectID) as! ETCCardManagedObject
-        let indexPath = fetchedResultsController.indexPath(forObject: currentCard)
-        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
-        performSegue(withIdentifier: "show", sender: self)
-    }
-
     // MARK: - Segues
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
+        case "initialShow":
+            let paymentTableViewController = segue.destination as! ETCPaymentTableViewController
+            paymentTableViewController.device = device
         case "show":
             if let indexPath = tableView.indexPathForSelectedRow {
                 let paymentTableViewController = segue.destination as! ETCPaymentTableViewController

@@ -127,6 +127,7 @@
                     <navigationItem key="navigationItem" title="ETC" id="dgH-Z0-R0U"/>
                     <connections>
                         <segue destination="LHg-0V-zMa" kind="presentation" identifier="edit" id="iFs-D4-qCS"/>
+                        <segue destination="7bK-jq-Zjz" kind="show" identifier="initialShow" animates="NO" id="FxZ-L2-3vE"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yGh-KL-oO3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -848,7 +849,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Tll-UG-LXB"/>
-        <segue reference="b9h-uL-1yN"/>
+        <segue reference="FxZ-L2-3vE"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
 </document>
