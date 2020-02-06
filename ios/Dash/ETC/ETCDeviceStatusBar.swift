@@ -63,18 +63,18 @@ class ETCDeviceStatusBar {
     private func updateConnectionStatusView() {
         if device.isConnected {
             connectionStatusImageView.image = UIImage(systemName: "bolt.fill")
-            connectionStatusImageView.tintColor = nil
+            connectionStatusImageView.tintColor = UIColor.label
         } else {
             connectionStatusImageView.image = UIImage(systemName: "bolt.slash.fill")
-            connectionStatusImageView.tintColor = UIColor.lightGray
+            connectionStatusImageView.tintColor = UIColor(named: "Inactive Bar Item Color")
         }
     }
 
     private func updateCardStatusView() {
         if device.currentCard != nil {
-            cardStatusImageView.tintColor = nil
+            cardStatusImageView.tintColor = UIColor.label
         } else {
-            cardStatusImageView.tintColor = UIColor.lightGray
+            cardStatusImageView.tintColor = UIColor(named: "Inactive Bar Item Color")
         }
     }
 
