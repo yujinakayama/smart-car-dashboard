@@ -336,9 +336,9 @@
 				B9DC5B3E229D9E4F00B645D5 /* BLERemotePeripheralManager.swift */,
 				B9DC5B3C229D9E0C00B645D5 /* BLERemotePeripheral.swift */,
 				B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */,
+				B95BF23B23EBFFE300A30DE0 /* ETCCardView.swift */,
 				B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */,
 				B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */,
-				B95BF23B23EBFFE300A30DE0 /* ETCCardView.swift */,
 			);
 			path = ETC;
 			sourceTree = "<group>";
