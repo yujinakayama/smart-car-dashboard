@@ -7,29 +7,29 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Dash_Remote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="Dash_Remote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currently Only for Share Extension" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eBE-7s-t17">
-                                <rect key="frame" x="69" y="437.5" width="276" height="21"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HTS-8g-YUt">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="eBE-7s-t17" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="9sc-nN-drZ"/>
-                            <constraint firstItem="eBE-7s-t17" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ia9-lJ-cyM"/>
+                            <constraint firstItem="HTS-8g-YUt" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="YXO-aE-BaV"/>
+                            <constraint firstItem="HTS-8g-YUt" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="fHE-E0-Bms"/>
+                            <constraint firstAttribute="trailing" secondItem="HTS-8g-YUt" secondAttribute="trailing" id="hUS-bS-1OQ"/>
+                            <constraint firstAttribute="bottom" secondItem="HTS-8g-YUt" secondAttribute="bottom" id="jqd-i0-M2j"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="mapView" destination="HTS-8g-YUt" id="SgG-hG-wGx"/>
                         <segue destination="pQK-Ah-sn9" kind="presentation" identifier="signInWithApple" animates="NO" id="KtU-Q2-8au"/>
                     </connections>
                 </viewController>
