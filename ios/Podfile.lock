@@ -299,6 +299,7 @@ PODS:
   - GTMSessionFetcher/Core (1.3.1)
   - GTMSessionFetcher/Full (1.3.1):
     - GTMSessionFetcher/Core (= 1.3.1)
+  - KeychainAccess (4.1.0)
   - leveldb-library (1.22)
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
@@ -317,6 +318,7 @@ DEPENDENCIES:
   - FirebaseFirestoreSwift
   - GoogleSignIn
   - GTMSessionFetcher
+  - KeychainAccess
   - SVProgressHUD
 
 SPEC REPOS:
@@ -346,6 +348,7 @@ SPEC REPOS:
     - gRPC-Core
     - GTMAppAuth
     - GTMSessionFetcher
+    - KeychainAccess
     - leveldb-library
     - nanopb
     - Protobuf
@@ -377,11 +380,12 @@ SPEC CHECKSUMS:
   gRPC-Core: c9aef9a261a1247e881b18059b84d597293c9947
   GTMAppAuth: 4deac854479704f348309e7b66189e604cf5e01e
   GTMSessionFetcher: cea130bbfe5a7edc8d06d3f0d17288c32ffe9925
+  KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: 474df3b59c701ff5423238f4e6c12dfa58e06034
+PODFILE CHECKSUM: c04d3bfdd67ef9603b59ebc2c7205cc4d56898e5
 
 COCOAPODS: 1.8.4
