@@ -29,10 +29,57 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <segue destination="pQK-Ah-sn9" kind="presentation" identifier="signInWithApple" animates="NO" id="KtU-Q2-8au"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="139" y="113"/>
         </scene>
+        <!--Sign In With Apple View Controller-->
+        <scene sceneID="NJU-5X-rcj">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="pQK-Ah-sn9" customClass="SignInWithAppleViewController" customModule="Dash_Remote" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="PJk-Gb-VH1">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="80" translatesAutoresizingMaskIntoConstraints="NO" id="enh-6S-Cma">
+                                <rect key="frame" x="57" y="343" width="300" height="210"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon" translatesAutoresizingMaskIntoConstraints="NO" id="AQu-Kd-1Fo" customClass="AppIconImageView" customModule="Dash_Remote" customModuleProvider="target">
+                                        <rect key="frame" x="45" y="0.0" width="210" height="210"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="AQu-Kd-1Fo" secondAttribute="height" multiplier="1:1" id="PWW-N1-wMd"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="AQu-Kd-1Fo" firstAttribute="width" secondItem="enh-6S-Cma" secondAttribute="width" multiplier="0.7" id="MIV-OY-xGc"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="wWX-R1-7pZ"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="rKe-0w-0pe" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="enh-6S-Cma" secondAttribute="trailing" constant="40" id="Lvc-S4-CKt"/>
+                            <constraint firstItem="enh-6S-Cma" firstAttribute="centerX" secondItem="PJk-Gb-VH1" secondAttribute="centerX" id="Vtf-kw-SNZ"/>
+                            <constraint firstItem="enh-6S-Cma" firstAttribute="centerY" secondItem="PJk-Gb-VH1" secondAttribute="centerY" id="sJD-ta-TmC"/>
+                            <constraint firstItem="enh-6S-Cma" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rKe-0w-0pe" secondAttribute="leading" constant="40" id="vCM-BZ-I4J"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="rKe-0w-0pe"/>
+                    </view>
+                    <connections>
+                        <outlet property="verticalStackView" destination="enh-6S-Cma" id="60E-v8-LbF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j4e-xL-SS8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1240.5797101449277" y="112.5"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="Icon" width="1024" height="1024"/>
+    </resources>
 </document>

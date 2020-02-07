@@ -12,9 +12,11 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
+        Account.default.checkSignInState { (signedIn) in
+            if !signedIn {
+                self.performSegue(withIdentifier: "signInWithApple", sender: nil)
+            }
+        }
     }
-
-
 }
-
