@@ -17,19 +17,70 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HTS-8g-YUt">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="goS-TR-UZ1"/>
+                                </connections>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BIf-6G-XGM" customClass="FloatButton" customModule="Dash_Remote" customModuleProvider="target">
+                                <rect key="frame" x="62" y="787" width="290" height="51"/>
+                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="contentEdgeInsets" minX="32" minY="13" maxX="32" maxY="16"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="12" maxY="0.0"/>
+                                <state key="normal" title="ここへ来てもらう" image="car.fill" catalog="system">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                </state>
+                                <state key="highlighted" image="car.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="25.5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="spinnerColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="disabledBackgroundColor">
+                                        <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                        <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.20000000000000001"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="highlightedBackgroundColor">
+                                        <color key="value" red="0.0" green="0.38274509800000023" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="pickUpButtonDidTap" destination="BYZ-38-t0r" eventType="touchUpInside" id="32S-nJ-ak1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="HTS-8g-YUt" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="YXO-aE-BaV"/>
                             <constraint firstItem="HTS-8g-YUt" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="fHE-E0-Bms"/>
+                            <constraint firstItem="BIf-6G-XGM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fWx-zW-XEs"/>
                             <constraint firstAttribute="trailing" secondItem="HTS-8g-YUt" secondAttribute="trailing" id="hUS-bS-1OQ"/>
                             <constraint firstAttribute="bottom" secondItem="HTS-8g-YUt" secondAttribute="bottom" id="jqd-i0-M2j"/>
+                            <constraint firstItem="BIf-6G-XGM" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.7" id="rLf-j2-7TQ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="BIf-6G-XGM" secondAttribute="bottom" constant="24" id="yS7-Sc-PlW"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="mapView" destination="HTS-8g-YUt" id="SgG-hG-wGx"/>
+                        <outlet property="pickUpButton" destination="BIf-6G-XGM" id="2kA-wL-CXN"/>
                         <segue destination="pQK-Ah-sn9" kind="presentation" identifier="signInWithApple" animates="NO" id="KtU-Q2-8au"/>
                     </connections>
                 </viewController>
@@ -81,5 +132,6 @@
     </scenes>
     <resources>
         <image name="Icon" width="1024" height="1024"/>
+        <image name="car.fill" catalog="system" width="64" height="46"/>
     </resources>
 </document>

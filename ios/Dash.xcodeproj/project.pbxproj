@@ -64,11 +64,14 @@
 		B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E722A9553A00BA08AB /* MockSerialPort.swift */; };
 		B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */; };
 		B9989E3E23E8752100FAFD06 /* Share.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9989E3D23E8752100FAFD06 /* Share.wav */; };
+		B9B18DD323EDFFF40096D603 /* DashShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; };
+		B9B18DD423EDFFF40096D603 /* DashShareKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B717DD23E6B26900A47207 /* UnknownItem.swift */; };
 		B9BA819E2350931A00657DEB /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
 		B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */; };
 		B9BC920923250A0A006F22FC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BC920823250A0A006F22FC /* Defaults.swift */; };
 		B9C2455F23EDA2EA00E00523 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
+		B9C2456523EDBB4800E00523 /* FloatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C2456423EDBB4800E00523 /* FloatButton.swift */; };
 		B9CB7C0D22AD65A40059433E /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB7C0C22AD65A40059433E /* UITableViewCellExtension.swift */; };
 		B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */; };
 		B9CEA76622D89A400055C9A3 /* ETCDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */; };
@@ -118,6 +121,13 @@
 			remoteGlobalIDString = B98B783223ED4C3F00A5102F;
 			remoteInfo = DashShareKit;
 		};
+		B9B18DD523EDFFF40096D603 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B98B783223ED4C3F00A5102F;
+			remoteInfo = DashShareKit;
+		};
 		B9E96CBD22A3CE7500C2E009 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
@@ -157,6 +167,17 @@
 			dstSubfolderSpec = 10;
 			files = (
 				B98B784723ED4F1200A5102F /* DashShareKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9B18DD723EDFFF60096D603 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B9B18DD423EDFFF40096D603 /* DashShareKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -231,6 +252,7 @@
 		B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewCell.swift; sourceTree = "<group>"; };
 		B9BC920823250A0A006F22FC /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		B9C2455E23EDA2EA00E00523 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		B9C2456423EDBB4800E00523 /* FloatButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatButton.swift; sourceTree = "<group>"; };
 		B9CB7C0C22AD65A40059433E /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
 		B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationCenter.swift; sourceTree = "<group>"; };
 		B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDataStore.swift; sourceTree = "<group>"; };
@@ -272,6 +294,7 @@
 			files = (
 				B9C2455F23EDA2EA00E00523 /* MapKit.framework in Frameworks */,
 				0B41F2C816E331BA2FB139A3 /* Pods_DashRemote.framework in Frameworks */,
+				B9B18DD323EDFFF40096D603 /* DashShareKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +344,7 @@
 				B98B784C23ED530E00A5102F /* SignInWithAppleViewController.swift */,
 				B91B5DD423ED7886003F4AEF /* Account.swift */,
 				B98B784E23ED583600A5102F /* AppIconImageView.swift */,
+				B9C2456423EDBB4800E00523 /* FloatButton.swift */,
 				B964BCC823E066FF00288E0D /* Main.storyboard */,
 				B964BCCB23E0670100288E0D /* Assets.xcassets */,
 				B964BCCD23E0670100288E0D /* LaunchScreen.storyboard */,
@@ -543,11 +567,13 @@
 				B964BCBE23E066FF00288E0D /* Resources */,
 				B964BCE623E067EB00288E0D /* Embed App Extensions */,
 				A773838481E7D6113B54F30A /* [CP] Embed Pods Frameworks */,
+				B9B18DD723EDFFF60096D603 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				B964BCE123E067EB00288E0D /* PBXTargetDependency */,
+				B9B18DD623EDFFF40096D603 /* PBXTargetDependency */,
 			);
 			name = DashRemote;
 			productName = DashRemote;
@@ -902,6 +928,7 @@
 			files = (
 				B91B5DD523ED7886003F4AEF /* Account.swift in Sources */,
 				B964BCC723E066FF00288E0D /* MapViewController.swift in Sources */,
+				B9C2456523EDBB4800E00523 /* FloatButton.swift in Sources */,
 				B964BCC323E066FF00288E0D /* AppDelegate.swift in Sources */,
 				B964BCC523E066FF00288E0D /* SceneDelegate.swift in Sources */,
 				B98B784D23ED530E00A5102F /* SignInWithAppleViewController.swift in Sources */,
@@ -1009,6 +1036,11 @@
 			isa = PBXTargetDependency;
 			target = B98B783223ED4C3F00A5102F /* DashShareKit */;
 			targetProxy = B98B784823ED4F1200A5102F /* PBXContainerItemProxy */;
+		};
+		B9B18DD623EDFFF40096D603 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B98B783223ED4C3F00A5102F /* DashShareKit */;
+			targetProxy = B9B18DD523EDFFF40096D603 /* PBXContainerItemProxy */;
 		};
 		B9E96CBE22A3CE7500C2E009 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

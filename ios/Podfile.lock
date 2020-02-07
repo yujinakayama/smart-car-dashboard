@@ -308,6 +308,7 @@ PODS:
   - nanopb/encode (0.3.9011)
   - Protobuf (3.11.2)
   - SVProgressHUD (2.2.5)
+  - TransitionButton (0.5.2)
 
 DEPENDENCIES:
   - DictionaryCoding
@@ -320,6 +321,7 @@ DEPENDENCIES:
   - GTMSessionFetcher
   - KeychainAccess
   - SVProgressHUD
+  - TransitionButton
 
 SPEC REPOS:
   trunk:
@@ -353,6 +355,7 @@ SPEC REPOS:
     - nanopb
     - Protobuf
     - SVProgressHUD
+    - TransitionButton
 
 SPEC CHECKSUMS:
   abseil: 18063d773f5366ff8736a050fe035a28f635fd27
@@ -385,7 +388,8 @@ SPEC CHECKSUMS:
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  TransitionButton: fb271583d9c9e4bb116b97103047e5157653f233
 
-PODFILE CHECKSUM: c04d3bfdd67ef9603b59ebc2c7205cc4d56898e5
+PODFILE CHECKSUM: dc74c9562c725bd5399b8e4f7ede91f9fd942c8e
 
 COCOAPODS: 1.8.4

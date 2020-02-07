@@ -44,17 +44,19 @@ public class SharingItem {
         }
 
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                completionHandler(error)
-                return
-            }
+            DispatchQueue.main.async {
+                if let error = error {
+                    completionHandler(error)
+                    return
+                }
 
-            if let response = response as? HTTPURLResponse, response.statusCode != 200 {
-                completionHandler(SharingItemError.serverError)
-                return
-            }
+                if let response = response as? HTTPURLResponse, response.statusCode != 200 {
+                    completionHandler(SharingItemError.serverError)
+                    return
+                }
 
-            completionHandler(nil)
+                completionHandler(nil)
+            }
         }
 
         task.resume()
