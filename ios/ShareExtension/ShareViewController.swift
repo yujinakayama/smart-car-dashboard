@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MapKit
+import DashShareKit
 import SVProgressHUD
 
 enum ShareError: Error {
@@ -29,28 +29,20 @@ class ShareViewController: UIViewController {
     func share() {
         SVProgressHUD.show(withStatus: "Sending")
 
-        let items = extensionContext!.inputItems as! [NSExtensionItem]
-        let item = items.first!
-
-        var inputItem: InputItem!
-
-        do {
-            inputItem = try InputItem(item: item)
-        } catch {
-            cancelRequest(withError: error)
-            return
-        }
-
-        inputItem.encode { (dictionary) in
-            self.send(dictionary) { (error) in
-                if let error = error {
-                    self.cancelRequest(withError: error)
-                } else {
-                    self.completeRequest()
-                }
+        sharingItem.share { (error) in
+            if let error = error {
+                self.cancelRequest(withError: error)
+            } else {
+                self.completeRequest()
             }
         }
     }
+
+    lazy var sharingItem: SharingItem = {
+        let extensionItems = self.extensionContext!.inputItems as! [NSExtensionItem]
+        let encoder = SharingItem.ExtensionItemEncoder(extensionItem: extensionItems.first!)
+        return SharingItem(encoder: encoder)
+    }()
 
     func completeRequest() {
         SVProgressHUD.showSuccess(withStatus: "Sent")
@@ -66,36 +58,5 @@ class ShareViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.extensionContext!.cancelRequest(withError: error)
         }
-    }
-
-    func send(_ document: [String: Any], completionHandler: @escaping (Error?) -> Void) {
-        let googleServiceInfo = GoogleServiceInfo(path: Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")!)
-        let endPointURLString = "https://asia-northeast1-\(googleServiceInfo.projectID).cloudfunctions.net/share"
-
-        var request = URLRequest(url: URL(string: endPointURLString)!)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: document)
-        } catch {
-            completionHandler(error)
-        }
-
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                completionHandler(error)
-                return
-            }
-
-            if let response = response as? HTTPURLResponse, response.statusCode != 200 {
-                completionHandler(ShareError.serverError)
-                return
-            }
-
-            completionHandler(nil)
-        }
-
-        task.resume()
     }
 }
