@@ -53,7 +53,6 @@
 		B98B784223ED4C5A00A5102F /* GoogleServieInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92451D523E3204D007556D5 /* GoogleServieInfo.swift */; };
 		B98B784323ED4C6600A5102F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9A3C09423E163F500EF1C4A /* GoogleService-Info.plist */; };
 		B98B784623ED4F1200A5102F /* DashShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; };
-		B98B784723ED4F1200A5102F /* DashShareKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B98B784D23ED530E00A5102F /* SignInWithAppleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98B784C23ED530E00A5102F /* SignInWithAppleViewController.swift */; };
 		B98B784F23ED583600A5102F /* AppIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98B784E23ED583600A5102F /* AppIconImageView.swift */; };
 		B98E936A234C94C7004AE50F /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
@@ -168,7 +167,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B98B784723ED4F1200A5102F /* DashShareKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
