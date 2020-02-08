@@ -19,6 +19,9 @@ target 'Dash' do
 end
 
 target 'DashRemote' do
+  pod 'KeychainAccess'
+  pod 'TransitionButton', inhibit_warnings: true
+
   target 'ShareExtension' do
     pod 'SVProgressHUD'
   end

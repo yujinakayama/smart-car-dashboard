@@ -7,32 +7,165 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Dash_Remote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="Dash_Remote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currently Only for Share Extension" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eBE-7s-t17">
-                                <rect key="frame" x="69" y="437.5" width="276" height="21"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HTS-8g-YUt">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="goS-TR-UZ1"/>
+                                </connections>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BIf-6G-XGM" customClass="FloatButton" customModule="Dash_Remote" customModuleProvider="target">
+                                <rect key="frame" x="62" y="787" width="290" height="51"/>
+                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="contentEdgeInsets" minX="32" minY="13" maxX="32" maxY="16"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="12" maxY="0.0"/>
+                                <state key="normal" title="ここへ来てもらう" image="car.fill" catalog="system">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                </state>
+                                <state key="highlighted" image="car.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="25.5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="spinnerColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="disabledBackgroundColor">
+                                        <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                        <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.20000000000000001"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="highlightedBackgroundColor">
+                                        <color key="value" red="0.0" green="0.38274509800000023" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="pickUpButtonDidTap" destination="BYZ-38-t0r" eventType="touchUpInside" id="32S-nJ-ak1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="eBE-7s-t17" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="9sc-nN-drZ"/>
-                            <constraint firstItem="eBE-7s-t17" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ia9-lJ-cyM"/>
+                            <constraint firstItem="HTS-8g-YUt" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="YXO-aE-BaV"/>
+                            <constraint firstItem="HTS-8g-YUt" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="fHE-E0-Bms"/>
+                            <constraint firstItem="BIf-6G-XGM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fWx-zW-XEs"/>
+                            <constraint firstAttribute="trailing" secondItem="HTS-8g-YUt" secondAttribute="trailing" id="hUS-bS-1OQ"/>
+                            <constraint firstAttribute="bottom" secondItem="HTS-8g-YUt" secondAttribute="bottom" id="jqd-i0-M2j"/>
+                            <constraint firstItem="BIf-6G-XGM" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.7" id="rLf-j2-7TQ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="BIf-6G-XGM" secondAttribute="bottom" constant="24" id="yS7-Sc-PlW"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="HTS-8g-YUt" id="SgG-hG-wGx"/>
+                        <outlet property="pickUpButton" destination="BIf-6G-XGM" id="2kA-wL-CXN"/>
+                        <segue destination="pQK-Ah-sn9" kind="presentation" identifier="signInWithApple" animates="NO" id="KtU-Q2-8au"/>
+                        <segue destination="6ag-Zw-1wE" kind="presentation" identifier="success" animates="NO" id="O7O-0q-687"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="139" y="113"/>
         </scene>
+        <!--Sign In With Apple View Controller-->
+        <scene sceneID="NJU-5X-rcj">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="pQK-Ah-sn9" customClass="SignInWithAppleViewController" customModule="Dash_Remote" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="PJk-Gb-VH1">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="80" translatesAutoresizingMaskIntoConstraints="NO" id="enh-6S-Cma">
+                                <rect key="frame" x="57" y="343" width="300" height="210"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon" translatesAutoresizingMaskIntoConstraints="NO" id="AQu-Kd-1Fo" customClass="AppIconImageView" customModule="Dash_Remote" customModuleProvider="target">
+                                        <rect key="frame" x="45" y="0.0" width="210" height="210"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="AQu-Kd-1Fo" secondAttribute="height" multiplier="1:1" id="PWW-N1-wMd"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="AQu-Kd-1Fo" firstAttribute="width" secondItem="enh-6S-Cma" secondAttribute="width" multiplier="0.7" id="MIV-OY-xGc"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="wWX-R1-7pZ"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="rKe-0w-0pe" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="enh-6S-Cma" secondAttribute="trailing" constant="40" id="Lvc-S4-CKt"/>
+                            <constraint firstItem="enh-6S-Cma" firstAttribute="centerX" secondItem="PJk-Gb-VH1" secondAttribute="centerX" id="Vtf-kw-SNZ"/>
+                            <constraint firstItem="enh-6S-Cma" firstAttribute="centerY" secondItem="PJk-Gb-VH1" secondAttribute="centerY" id="sJD-ta-TmC"/>
+                            <constraint firstItem="enh-6S-Cma" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rKe-0w-0pe" secondAttribute="leading" constant="40" id="vCM-BZ-I4J"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="rKe-0w-0pe"/>
+                    </view>
+                    <connections>
+                        <outlet property="verticalStackView" destination="enh-6S-Cma" id="60E-v8-LbF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j4e-xL-SS8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1533" y="-299"/>
+        </scene>
+        <!--Success View Controller-->
+        <scene sceneID="IVQ-GC-2zq">
+            <objects>
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="6ag-Zw-1wE" customClass="SuccessViewController" customModule="Dash_Remote" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ja3-hg-5TB">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cxa-K3-nVh" customClass="SuccessCheckmarkView" customModule="Dash_Remote" customModuleProvider="target">
+                                <rect key="frame" x="107" y="348" width="200" height="200"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="aMx-Qv-yWu"/>
+                                    <constraint firstAttribute="width" secondItem="cxa-K3-nVh" secondAttribute="height" multiplier="1:1" id="z3G-CY-GSz"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="cxa-K3-nVh" firstAttribute="centerY" secondItem="ja3-hg-5TB" secondAttribute="centerY" id="FWa-2Q-GNb"/>
+                            <constraint firstItem="cxa-K3-nVh" firstAttribute="centerX" secondItem="ja3-hg-5TB" secondAttribute="centerX" id="mBh-ng-eAR"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="xWw-3x-xSo"/>
+                    </view>
+                    <connections>
+                        <outlet property="checkmarkView" destination="cxa-K3-nVh" id="mm1-LW-K22"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="C34-NT-CzV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1532" y="587"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="Icon" width="1024" height="1024"/>
+        <image name="car.fill" catalog="system" width="64" height="46"/>
+    </resources>
 </document>

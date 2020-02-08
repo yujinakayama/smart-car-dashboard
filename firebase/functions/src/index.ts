@@ -8,8 +8,6 @@ import * as urlRegex from 'url-regex';
 import { URL } from 'url';
 
 interface RawData {
-    title?: string;
-    contentText?: string;
     'public.url'?: string;
     'public.plain-text'?: string;
     'com.apple.mapkit.map-item'?: {
@@ -113,14 +111,8 @@ const extractURL = (rawData: RawData): string | null => {
         return rawData['public.url']
     }
 
-    const candidates = [rawData.contentText, rawData['public.plain-text']];
-
-    for (const candidate of candidates) {
-        if (!candidate) {
-            continue;
-        }
-
-        const urls = candidate.match(urlPattern);
+    if (rawData['public.plain-text']) {
+        const urls = rawData['public.plain-text'].match(urlPattern);
 
         if (urls && urls[0]) {
             return urls[0];
@@ -200,7 +192,7 @@ const normalizeGoogleMapsLocation = async (rawData: RawData, url: string): Promi
 };
 
 const normalizeWebpage = async (rawData: RawData, url: string): Promise<WebpageData> => {
-    let title = rawData.title || rawData.contentText;
+    let title = rawData['public.plain-text'];
 
     if (!title || urlPattern.test(title)) {
         const responseBody = await request.get(url);
