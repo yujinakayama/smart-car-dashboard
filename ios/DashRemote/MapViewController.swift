@@ -70,7 +70,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, SignInWithAppleVie
             if error != nil {
                 self.pickUpButton.stopAnimation(animationStyle: .shake, revertAfterDelay: 1)
             } else {
-                self.pickUpButton.stopAnimation()
+                self.pickUpButton.stopAnimation(animationStyle: .expand, revertAfterDelay: 1.5) {
+                    self.performSegue(withIdentifier: "success", sender: nil)
+                }
             }
         }
     }
