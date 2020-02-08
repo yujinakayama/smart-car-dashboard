@@ -25,7 +25,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, SignInWithAppleVie
             if signedIn {
                 self.setUpMapView()
             } else {
-                self.performSegue(withIdentifier: "signInWithApple", sender: nil)
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "signInWithApple", sender: nil)
+                }
             }
         }
     }
