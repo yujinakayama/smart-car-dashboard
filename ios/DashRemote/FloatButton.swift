@@ -57,7 +57,7 @@ import TransitionButton
 
     override var isHighlighted: Bool {
         didSet {
-            if isHighlighted {
+            if isHighlighted, let highlightedBackgroundColor = highlightedBackgroundColor {
                 backgroundColor = highlightedBackgroundColor
             } else {
                 backgroundColor = normalBackgroundColor

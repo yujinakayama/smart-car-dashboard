@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -65,9 +66,52 @@
                                     <action selector="pickUpButtonDidTap" destination="BYZ-38-t0r" eventType="touchUpInside" id="32S-nJ-ak1"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Szy-qw-dMC" customClass="FloatButton" customModule="Dash_Remote" customModuleProvider="target">
+                                <rect key="frame" x="350" y="64" width="44" height="44"/>
+                                <color key="backgroundColor" name="Current Location Button Background Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Szy-qw-dMC" secondAttribute="height" multiplier="1:1" id="ANB-xz-HsE"/>
+                                    <constraint firstAttribute="width" constant="44" id="jnq-Ee-dNO"/>
+                                </constraints>
+                                <color key="tintColor" name="Current Location Button Tint Color"/>
+                                <state key="normal" image="location" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                </state>
+                                <state key="highlighted" image="location.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.25"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                        <color key="value" name="Shadow Color"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="0.29999999999999999"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="currentLocationButtonDidTap" destination="BYZ-38-t0r" eventType="touchUpInside" id="fk0-2e-se5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="right" secondItem="Szy-qw-dMC" secondAttribute="right" constant="20" id="CzE-GL-FVt"/>
+                            <constraint firstItem="Szy-qw-dMC" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="Mkt-Ap-c6Y"/>
                             <constraint firstItem="HTS-8g-YUt" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="YXO-aE-BaV"/>
                             <constraint firstItem="HTS-8g-YUt" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="fHE-E0-Bms"/>
                             <constraint firstItem="BIf-6G-XGM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fWx-zW-XEs"/>
@@ -167,5 +211,16 @@
     <resources>
         <image name="Icon" width="1024" height="1024"/>
         <image name="car.fill" catalog="system" width="64" height="46"/>
+        <image name="location" catalog="system" width="64" height="56"/>
+        <image name="location.fill" catalog="system" width="64" height="56"/>
+        <namedColor name="Current Location Button Background Color">
+            <color red="1" green="0.99993687868118286" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="Current Location Button Tint Color">
+            <color red="0.0" green="0.47843137254901957" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="Shadow Color">
+            <color white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </namedColor>
     </resources>
 </document>

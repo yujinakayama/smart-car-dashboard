@@ -62,10 +62,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, SignInWithAppleVie
 
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         guard !hasInitiallyZoomedToUserLocation else { return }
-
-        let region = MKCoordinateRegion(center: userLocation.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
-        mapView.region = region
+        moveToCurrentLocation(animated: false)
         hasInitiallyZoomedToUserLocation = true
+    }
+
+    @IBAction func currentLocationButtonDidTap() {
+        moveToCurrentLocation(animated: true)
+    }
+
+    func moveToCurrentLocation(animated: Bool) {
+        let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
+        mapView.setRegion(region, animated: animated)
     }
 
     @IBAction func pickUpButtonDidTap() {
