@@ -10,6 +10,10 @@ import Foundation
 import KeychainAccess
 import AuthenticationServices
 
+protocol AccountDelegate: NSObjectProtocol {
+    func accountDidSignOut(_ account: Account)
+}
+
 class Account {
     enum Key: String {
         case userID
@@ -19,6 +23,8 @@ class Account {
     }
 
     static let `default` = Account()
+
+    weak var delegate: AccountDelegate?
 
     let keychain = Keychain()
 
@@ -36,6 +42,12 @@ class Account {
 
     var familyName: String? {
         return get(.familyName)
+    }
+
+    init() {
+        NotificationCenter.default.addObserver(forName: ASAuthorizationAppleIDProvider.credentialRevokedNotification, object: nil, queue: nil) { (notification) in
+            self.delegate?.accountDidSignOut(self)
+        }
     }
 
     func checkSignInState(completionHandler: @escaping (Bool) -> Void) {

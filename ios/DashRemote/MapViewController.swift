@@ -11,7 +11,7 @@ import MapKit
 import TransitionButton
 import DashShareKit
 
-class MapViewController: UIViewController, MKMapViewDelegate, SignInWithAppleViewControllerDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, SignInWithAppleViewControllerDelegate, AccountDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var pickUpButton: TransitionButton!
 
@@ -21,13 +21,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, SignInWithAppleVie
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        Account.default.delegate = self
+
         Account.default.checkSignInState { (signedIn) in
             if signedIn {
                 self.setUpMapView()
             } else {
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "signInWithApple", sender: nil)
-                }
+                self.showSignInWithApple()
             }
         }
     }
@@ -44,6 +44,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, SignInWithAppleVie
 
     func signInWithAppleViewControllerDidCompleteAuthorization(_ viewController: SignInWithAppleViewController) {
         setUpMapView()
+    }
+
+    func accountDidSignOut(_ account: Account) {
+        showSignInWithApple()
+    }
+
+    func showSignInWithApple() {
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "signInWithApple", sender: nil)
+        }
     }
 
     func setUpMapView() {
