@@ -20,6 +20,8 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>MKDirectionsApplicationSupportedModes</key>
+	<array/>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>

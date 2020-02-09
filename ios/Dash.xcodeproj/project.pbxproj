@@ -65,6 +65,7 @@
 		B9989E3E23E8752100FAFD06 /* Share.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9989E3D23E8752100FAFD06 /* Share.wav */; };
 		B9A481FE23EF01DB00AA7590 /* SuccessCheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */; };
 		B9A4820023EF025200AA7590 /* SuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FF23EF025200AA7590 /* SuccessViewController.swift */; };
+		B9A4820123EFCEC200AA7590 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
 		B9B18DD323EDFFF40096D603 /* DashShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; };
 		B9B18DD423EDFFF40096D603 /* DashShareKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B717DD23E6B26900A47207 /* UnknownItem.swift */; };
@@ -305,6 +306,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				412025EE69F3FE2D953808D6 /* Pods_DashRemote_ShareExtension.framework in Frameworks */,
+				B9A4820123EFCEC200AA7590 /* MapKit.framework in Frameworks */,
 				B98B784623ED4F1200A5102F /* DashShareKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
