@@ -7,8 +7,11 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 struct UnknownItem: SharedItemProtocol {
+    var firebaseDocument: DocumentReference?
+
     let url: URL
     let creationDate: Date?
 

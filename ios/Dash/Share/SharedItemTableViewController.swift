@@ -37,6 +37,8 @@ class SharedItemTableViewController: UITableViewController {
         dataSource = makeDataSource()
         tableView.dataSource = dataSource
 
+        navigationItem.leftBarButtonItem = editButtonItem
+
         authStateDidChange()
 
         authStateListener = Auth.auth().addStateDidChangeListener { [weak self] (auth, user) in
@@ -64,6 +66,11 @@ class SharedItemTableViewController: UITableViewController {
         dataSource.titleForHeaderInSection = { [unowned self] (tableView, index) in
             let section = self.data.sections[index]
             return self.sectionHeaderDateFormatter.string(from: section.date)
+        }
+
+        dataSource.commitForRowAt = { (editingStyle, indexPath) in
+            let item = self.data.item(for: indexPath)
+            item.delete()
         }
 
         return dataSource

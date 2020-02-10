@@ -8,8 +8,11 @@
 
 import Foundation
 import MapKit
+import FirebaseFirestore
 
 struct Location: SharedItemProtocol {
+    var firebaseDocument: DocumentReference?
+
     let coordinate: Coordinate
     let name: String?
     let url: URL

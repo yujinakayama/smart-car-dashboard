@@ -24,7 +24,9 @@ class SharedItemTableViewData {
     init(firestoreSnapshot: QuerySnapshot) {
         let items: [SharedItemProtocol] = firestoreSnapshot.documents.compactMap({ (document) in
             do {
-                return try SharedItem.makeItem(document: document)
+                var item = try SharedItem.makeItem(document: document)
+                item.firebaseDocument = document.reference
+                return item
             } catch {
                 logger.error(error)
                 return nil

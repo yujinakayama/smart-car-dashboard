@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 struct Webpage: SharedItemProtocol {
+    var firebaseDocument: DocumentReference?
+
     let title: String?
     let url: URL
     let creationDate: Date?

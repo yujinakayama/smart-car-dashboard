@@ -12,6 +12,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 protocol SharedItemProtocol: Decodable {
+    var firebaseDocument: DocumentReference? { get set }
     var identifier: SharedItem.Identifier { get }
     var url: URL { get }
     var creationDate: Date? { get }
@@ -21,6 +22,16 @@ protocol SharedItemProtocol: Decodable {
 extension SharedItemProtocol {
     var identifier: SharedItem.Identifier {
         return SharedItem.Identifier(url: url, creationDate: creationDate)
+    }
+
+    func delete() {
+        guard let firebaseDocument = firebaseDocument else { return }
+
+        firebaseDocument.delete { (error) in
+            if let error = error {
+                logger.error(error)
+            }
+        }
     }
 }
 
