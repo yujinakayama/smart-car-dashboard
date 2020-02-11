@@ -10,6 +10,7 @@ target 'Dash' do
   pod 'FirebaseFirestoreSwift'
   pod 'Firebase/Messaging'
   pod 'GoogleSignIn'
+  pod 'XCGLogger'
 
   # Work around for a warning:
   # Multiple targets match implicit dependency for linker flags '-framework GTMSessionFetcher'. Consider adding an explicit dependency on the intended target to resolve this ambiguity. (in target 'Dash' from project 'Dash')

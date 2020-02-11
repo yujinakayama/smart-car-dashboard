@@ -633,7 +633,6 @@
 				B9DC5B1D229D59BE00B645D5 /* Sources */,
 				B9DC5B1E229D59BE00B645D5 /* Frameworks */,
 				B9DC5B1F229D59BE00B645D5 /* Resources */,
-				B9CD1D8E22A51AB300170082 /* ShellScript */,
 				BCC6DA0CF269B8E30DEAAA76 /* [CP] Embed Pods Frameworks */,
 				E91B1395BB80F0EC9C3C912C /* [CP] Copy Pods Resources */,
 				B98B783C23ED4C3F00A5102F /* Embed Frameworks */,
@@ -827,25 +826,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "/usr/bin/env ruby";
 			shellScript = "# This script is avoiding exposure of my Firebase project ID on GitHub\n\ngoogle_info = File.read('Dash/GoogleService-Info.plist')\nreverse_client_id = google_info.scan(/com\\.googleusercontent\\.apps\\.[^<]+/).first || raise\n\ninfo_path = ENV['SCRIPT_INPUT_FILE_0']\ninfo = File.read(info_path)\ninfo.sub!('YOUR_FIREBASE_URL_SCHEME', reverse_client_id)\nFile.write(info_path, info)\n";
-		};
-		B9CD1D8E22A51AB300170082 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"$(SRCROOT)/Carthage/input.xcfilelist",
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-				"$(SRCROOT)/Carthage/output.xcfilelist",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
 		BCC6DA0CF269B8E30DEAAA76 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
