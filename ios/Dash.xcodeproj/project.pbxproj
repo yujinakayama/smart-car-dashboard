@@ -825,7 +825,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "/usr/bin/env ruby";
-			shellScript = "# This script is avoiding exposure of my Firebase project ID on GitHub\n\ngoogle_info = File.read('Dash/GoogleService-Info.plist')\nreverse_client_id = google_info.scan(/com\\.googleusercontent\\.apps\\.[^<]+/).first || raise\n\ninfo_path = ENV['SCRIPT_INPUT_FILE_0']\ninfo = File.read(info_path)\ninfo.sub!('YOUR_FIREBASE_URL_SCHEME', reverse_client_id)\nFile.write(info_path, info)\n";
+			shellScript = "# This script is to avoid exposure of my Firebase project ID on GitHub\n\ngoogle_info = File.read('Dash/GoogleService-Info.plist')\nreverse_client_id = google_info.scan(/com\\.googleusercontent\\.apps\\.[^<]+/).first || raise\n\ninfo_path = ENV['SCRIPT_INPUT_FILE_0']\ninfo = File.read(info_path)\ninfo.sub!('YOUR_FIREBASE_URL_SCHEME', reverse_client_id)\nFile.write(info_path, info)\n";
 		};
 		BCC6DA0CF269B8E30DEAAA76 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
