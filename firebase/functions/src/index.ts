@@ -217,8 +217,9 @@ const getIconURL = (document: libxmljs.Document, pageURL: string): string | null
         let size = link.attr('sizes')?.value().split('x')[0];
 
         return {
-            url: url,
-            size: size ? parseInt(size) : undefined
+            size: size ? parseInt(size) : null,
+            type: link.attr('rel')!.value(),
+            url: url
         }
     });
 
@@ -227,6 +228,14 @@ const getIconURL = (document: libxmljs.Document, pageURL: string): string | null
     }
 
     const icon = icons.reduce((best, current) => {
+        if (current.type.includes('apple') && !best.type.includes('apple')) {
+            return current;
+        }
+
+        if (!current.type.includes('apple') && best.type.includes('apple')) {
+            return best;
+        }
+
         if (!current.size || !best.size) {
             return best;
         }
