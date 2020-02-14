@@ -286,7 +286,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" name="Payment Amount Background Color"/>
+                                                    <color key="backgroundColor" systemColor="systemIndigoColor" red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="ukE-X2-gHW" firstAttribute="bottom" secondItem="6wB-E0-moo" secondAttribute="bottom" id="Dk9-7e-ZeE"/>
                                                         <constraint firstItem="ukE-X2-gHW" firstAttribute="top" secondItem="yXL-mj-wgO" secondAttribute="top" constant="2" id="XCG-zL-WAG"/>
@@ -834,9 +834,6 @@
         </namedColor>
         <namedColor name="Map Type Segmented Control Background Color">
             <color white="1" alpha="0.75" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </namedColor>
-        <namedColor name="Payment Amount Background Color">
-            <color red="0.41200000047683716" green="0.16099999845027924" blue="0.81199997663497925" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="Table View Selected Color">
             <color red="0.89411764705882357" green="0.89411764705882357" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
