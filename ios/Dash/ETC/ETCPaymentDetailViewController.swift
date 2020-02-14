@@ -245,9 +245,13 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
     }
 
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
-        renderer.lineWidth = 10
-        renderer.strokeColor = UIColor(red: 73/255, green: 163/255, blue: 249/255, alpha: 1)
+        let renderer = GradientPathRenderer(
+            polyline: overlay as! MKPolyline,
+            colors: [UIColor(named: "Route Line Color")!],
+            showsBorder: true,
+            borderColor: UIColor(named: "Route Border Color")!
+        )
+        renderer.lineWidth = 8
         return renderer
     }
 

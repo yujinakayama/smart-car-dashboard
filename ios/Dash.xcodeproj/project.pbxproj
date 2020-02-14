@@ -72,6 +72,7 @@
 		B9BA819E2350931A00657DEB /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
 		B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */; };
 		B9BC920923250A0A006F22FC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BC920823250A0A006F22FC /* Defaults.swift */; };
+		B9BF2F0523F6946100967316 /* GradientPathRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BF2F0423F6946100967316 /* GradientPathRenderer.swift */; };
 		B9C2455F23EDA2EA00E00523 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
 		B9C2456523EDBB4800E00523 /* FloatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C2456423EDBB4800E00523 /* FloatButton.swift */; };
 		B9CB7C0D22AD65A40059433E /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB7C0C22AD65A40059433E /* UITableViewCellExtension.swift */; };
@@ -254,6 +255,7 @@
 		B9B717DD23E6B26900A47207 /* UnknownItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownItem.swift; sourceTree = "<group>"; };
 		B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewCell.swift; sourceTree = "<group>"; };
 		B9BC920823250A0A006F22FC /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		B9BF2F0423F6946100967316 /* GradientPathRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientPathRenderer.swift; sourceTree = "<group>"; };
 		B9C2455E23EDA2EA00E00523 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		B9C2456423EDBB4800E00523 /* FloatButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatButton.swift; sourceTree = "<group>"; };
 		B9CB7C0C22AD65A40059433E /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
@@ -398,6 +400,14 @@
 			path = DashShareKit;
 			sourceTree = "<group>";
 		};
+		B9BF2F0323F6946100967316 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				B9BF2F0423F6946100967316 /* GradientPathRenderer.swift */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
 		B9CD1D8B22A51AAD00170082 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -512,6 +522,7 @@
 				B93321ED2323C9D500BFAB21 /* BorderedView.swift */,
 				B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */,
 				B9CEA76922D8F1F50055C9A3 /* Extensions */,
+				B9BF2F0323F6946100967316 /* Vendor */,
 				B9CEA76A22D8F2380055C9A3 /* Storyboards */,
 				B9CD1D9322A535A900170082 /* Sounds */,
 				B92451D323E30ACE007556D5 /* Settings.bundle */,
@@ -967,6 +978,7 @@
 				B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */,
 				B95F514C23E5B53F0063CB3D /* RemoteNotification.swift in Sources */,
 				B9DC5B27229D59BE00B645D5 /* ETCPaymentTableViewController.swift in Sources */,
+				B9BF2F0523F6946100967316 /* GradientPathRenderer.swift in Sources */,
 				B9CB7C0D22AD65A40059433E /* UITableViewCellExtension.swift in Sources */,
 				B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */,
 				B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */,
