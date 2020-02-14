@@ -15,10 +15,10 @@ interface RawData {
             latitude: number;
             longitude: number;
         };
-        name?: string;
-        phoneNumber?: string;
-        pointOfInterestCategory?: string;
-        url?: string;
+        name: string | null;
+        phoneNumber: string | null;
+        pointOfInterestCategory: string | null;
+        url: string | null;
     };
 }
 
@@ -27,22 +27,21 @@ interface BaseNormalizedData {
     url: string;
 }
 
+// Firebase doesn't allow `undefined` values
 interface LocationData extends BaseNormalizedData {
     type: 'location';
     coordinate: {
         latitude: number;
         longitude: number;
     };
-    name?: string;
-    url: string;
-    webpageURL?: string;
+    name: string | null;
+    webpageURL: string | null;
 }
 
 interface WebpageData extends BaseNormalizedData {
     type: 'webpage';
     iconURL: string | null;
-    title?: string;
-    url: string;
+    title: string | null;
 }
 
 type NormalizedData = LocationData | WebpageData;
@@ -161,8 +160,9 @@ const normalizeGoogleMapsLocation = async (rawData: RawData, url: string): Promi
                 latitude: parseFloat(coordinate[1]),
                 longitude: parseFloat(coordinate[2])
             },
-            name: rawData['public.plain-text'],
-            url: expandedURL.toString()
+            name: rawData['public.plain-text'] || null,
+            url: expandedURL.toString(),
+            webpageURL: null
         };
     } else {
         const client = maps.createClient({ key: functions.config().googlemaps.api_key, Promise: Promise });
@@ -186,8 +186,9 @@ const normalizeGoogleMapsLocation = async (rawData: RawData, url: string): Promi
                 latitude: place.geometry!.location.lat,
                 longitude: place.geometry!.location.lng
             },
-            name: place.name,
-            url: expandedURL.toString()
+            name: place.name || null,
+            url: expandedURL.toString(),
+            webpageURL: null
         };
     }
 };
@@ -201,7 +202,7 @@ const normalizeWebpage = async (rawData: RawData, url: string): Promise<WebpageD
     return {
         type: 'webpage',
         iconURL: getIconURL(document, url),
-        title: title,
+        title: title || null,
         url: url
     };
 };
@@ -276,7 +277,7 @@ const makeNotificationContent = (item: Item): admin.messaging.Aps => {
         case 'location':
             alert = {
                 title: '目的地',
-                body: normalizedData.name
+                body: normalizedData.name || undefined
             }
             break;
         case 'webpage':
