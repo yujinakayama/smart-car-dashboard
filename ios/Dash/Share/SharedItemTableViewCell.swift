@@ -9,6 +9,7 @@
 import UIKit
 
 class SharedItemTableViewCell: UITableViewCell {
+    @IBOutlet weak var iconBackgroundView: UIView!
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
@@ -18,17 +19,17 @@ class SharedItemTableViewCell: UITableViewCell {
             switch item {
             case let location as Location:
                 iconImageView.image = UIImage(systemName: "mappin")
-                iconImageView.tintColor = UIColor(named: "Location Icon Color")
+                iconBackgroundView.backgroundColor = UIColor(named: "Location Icon Color")
                 nameLabel.text = location.name
                 detailLabel.text = location.url.absoluteString
             case let webpage as Webpage:
-                iconImageView.image = UIImage(systemName: "link")
-                iconImageView.tintColor = UIColor.link
+                iconImageView.image = UIImage(systemName: "safari.fill")
+                iconBackgroundView.backgroundColor = .systemBlue
                 nameLabel.text = webpage.title
                 detailLabel.text = webpage.url.absoluteString
             default:
                 iconImageView.image = UIImage(systemName: "questionmark")
-                iconImageView.tintColor = .lightGray
+                iconBackgroundView.backgroundColor = .gray
                 nameLabel.text = "不明なアイテム"
                 detailLabel.text = nil
             }

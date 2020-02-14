@@ -461,53 +461,47 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SharedItemTableViewCell" id="Rqd-2m-ZMZ" customClass="SharedItemTableViewCell" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="20" y="55.5" width="1326" height="80.5"/>
+                                <rect key="frame" x="20" y="55.5" width="1326" height="76.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Rqd-2m-ZMZ" id="gcV-k7-M3G">
-                                    <rect key="frame" x="0.0" y="0.0" width="1326" height="80.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="1326" height="76.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hrG-N5-epA" customClass="BorderedView" customModule="Dash" customModuleProvider="target">
-                                            <rect key="frame" x="15" y="15" width="50" height="50"/>
+                                            <rect key="frame" x="15" y="15" width="46" height="46"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="mappin" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="e2J-Vy-GEc">
-                                                    <rect key="frame" x="11" y="10.5" width="28" height="28"/>
+                                                    <rect key="frame" x="10" y="9.5" width="26" height="26"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <color key="tintColor" name="Location Icon Color"/>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="systemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" name="Location Icon Color"/>
                                             <constraints>
-                                                <constraint firstItem="e2J-Vy-GEc" firstAttribute="leading" secondItem="hrG-N5-epA" secondAttribute="leading" constant="11" id="40F-dI-Tpq"/>
-                                                <constraint firstAttribute="trailing" secondItem="e2J-Vy-GEc" secondAttribute="trailing" constant="11" id="6Tc-gg-7gn"/>
-                                                <constraint firstItem="e2J-Vy-GEc" firstAttribute="top" secondItem="hrG-N5-epA" secondAttribute="top" constant="11" id="793-fe-RyX"/>
-                                                <constraint firstAttribute="width" constant="50" id="Ep7-wP-WFR"/>
-                                                <constraint firstAttribute="bottom" secondItem="e2J-Vy-GEc" secondAttribute="bottom" constant="11" id="ExI-pv-WeE"/>
-                                                <constraint firstAttribute="height" constant="50" id="Ly8-il-zJX"/>
+                                                <constraint firstItem="e2J-Vy-GEc" firstAttribute="leading" secondItem="hrG-N5-epA" secondAttribute="leading" constant="10" id="40F-dI-Tpq"/>
+                                                <constraint firstAttribute="trailing" secondItem="e2J-Vy-GEc" secondAttribute="trailing" constant="10" id="6Tc-gg-7gn"/>
+                                                <constraint firstItem="e2J-Vy-GEc" firstAttribute="top" secondItem="hrG-N5-epA" secondAttribute="top" constant="10" id="793-fe-RyX"/>
+                                                <constraint firstAttribute="width" constant="46" id="Ep7-wP-WFR"/>
+                                                <constraint firstAttribute="bottom" secondItem="e2J-Vy-GEc" secondAttribute="bottom" constant="10" id="ExI-pv-WeE"/>
+                                                <constraint firstAttribute="width" secondItem="hrG-N5-epA" secondAttribute="height" multiplier="1:1" id="gzK-0h-dip"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <real key="value" value="8"/>
-                                                </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                    <real key="value" value="0.5"/>
-                                                </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                    <color key="value" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <real key="value" value="6"/>
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="4Of-Fm-eCE">
-                                            <rect key="frame" x="77" y="20.5" width="1229" height="39"/>
+                                            <rect key="frame" x="73" y="18.5" width="1233" height="39"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東京国際空港ターミナル羽田空港国際線駐車場" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yap-Es-0Pb">
-                                                    <rect key="frame" x="0.0" y="0.0" width="1229" height="20.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="1233" height="20.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IAv-oZ-xVj">
-                                                    <rect key="frame" x="0.0" y="24.5" width="1229" height="14.5"/>
+                                                    <rect key="frame" x="0.0" y="24.5" width="1233" height="14.5"/>
                                                     <string key="text">https://maps.apple.com/?address=6-5,%20Hanedakuko%202-Ch%C5%8Dme,%20Ota-Ku,%20Tokyo,%20Japan%20144-0041&amp;auid=1766020603320378222&amp;ll=35.543247,139.767672&amp;lsp=9902&amp;q=Tokyo%20International%20Airport%20International%20Flight%20Parking%20Lot&amp;_ext=ChgKBAgEEAoKBAgFEAMKBAgGEBMKBAgKEAASJik8pd6fSMVBQDGHh2Wsa3hhQDm6egT8bsZBQEGt3xcexnhhQFAE&amp;t=m</string>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                     <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
@@ -528,6 +522,7 @@
                                 <inset key="separatorInset" minX="76" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
                                     <outlet property="detailLabel" destination="IAv-oZ-xVj" id="rYU-GF-BQT"/>
+                                    <outlet property="iconBackgroundView" destination="hrG-N5-epA" id="27y-Wl-dSL"/>
                                     <outlet property="iconImageView" destination="e2J-Vy-GEc" id="YEW-ZM-za2"/>
                                     <outlet property="nameLabel" destination="Yap-Es-0Pb" id="xJu-ch-ISo"/>
                                 </connections>
@@ -830,7 +825,7 @@
             <color red="0.50700002908706665" green="0.20000000298023224" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="Location Icon Color">
-            <color red="1" green="0.067000001668930054" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.92549019607843142" green="0.40392156862745099" blue="0.31764705882352939" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="Map Type Segmented Control Background Color">
             <color white="1" alpha="0.75" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
