@@ -471,25 +471,37 @@
                                             <rect key="frame" x="15" y="15" width="46" height="46"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="mappin" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="e2J-Vy-GEc">
-                                                    <rect key="frame" x="10" y="9.5" width="26" height="26"/>
+                                                    <rect key="frame" x="9" y="8.5" width="28" height="28"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" name="Location Icon Color"/>
                                             <constraints>
-                                                <constraint firstItem="e2J-Vy-GEc" firstAttribute="leading" secondItem="hrG-N5-epA" secondAttribute="leading" constant="10" id="40F-dI-Tpq"/>
-                                                <constraint firstAttribute="trailing" secondItem="e2J-Vy-GEc" secondAttribute="trailing" constant="10" id="6Tc-gg-7gn"/>
-                                                <constraint firstItem="e2J-Vy-GEc" firstAttribute="top" secondItem="hrG-N5-epA" secondAttribute="top" constant="10" id="793-fe-RyX"/>
+                                                <constraint firstItem="e2J-Vy-GEc" firstAttribute="top" secondItem="hrG-N5-epA" secondAttribute="top" id="1wF-IR-I3b"/>
+                                                <constraint firstAttribute="right" secondItem="e2J-Vy-GEc" secondAttribute="right" id="5Yy-dh-x3e"/>
+                                                <constraint firstItem="e2J-Vy-GEc" firstAttribute="height" secondItem="hrG-N5-epA" secondAttribute="height" multiplier="0.6" id="7Tq-kY-ICs"/>
                                                 <constraint firstAttribute="width" constant="46" id="Ep7-wP-WFR"/>
-                                                <constraint firstAttribute="bottom" secondItem="e2J-Vy-GEc" secondAttribute="bottom" constant="10" id="ExI-pv-WeE"/>
+                                                <constraint firstItem="e2J-Vy-GEc" firstAttribute="centerX" secondItem="hrG-N5-epA" secondAttribute="centerX" id="f87-Px-MQc"/>
                                                 <constraint firstAttribute="width" secondItem="hrG-N5-epA" secondAttribute="height" multiplier="1:1" id="gzK-0h-dip"/>
+                                                <constraint firstItem="e2J-Vy-GEc" firstAttribute="left" secondItem="hrG-N5-epA" secondAttribute="left" id="j1V-NJ-v5B"/>
+                                                <constraint firstItem="e2J-Vy-GEc" firstAttribute="width" secondItem="hrG-N5-epA" secondAttribute="width" multiplier="0.6" id="vIV-eO-ucr"/>
+                                                <constraint firstAttribute="bottom" secondItem="e2J-Vy-GEc" secondAttribute="bottom" id="wJs-hz-7GB"/>
+                                                <constraint firstItem="e2J-Vy-GEc" firstAttribute="centerY" secondItem="hrG-N5-epA" secondAttribute="centerY" id="zEm-57-iC7"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <real key="value" value="6"/>
+                                                    <real key="value" value="8"/>
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="1wF-IR-I3b"/>
+                                                    <exclude reference="5Yy-dh-x3e"/>
+                                                    <exclude reference="j1V-NJ-v5B"/>
+                                                    <exclude reference="wJs-hz-7GB"/>
+                                                </mask>
+                                            </variation>
                                         </view>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="4Of-Fm-eCE">
                                             <rect key="frame" x="73" y="18.5" width="1233" height="39"/>
@@ -524,7 +536,13 @@
                                     <outlet property="detailLabel" destination="IAv-oZ-xVj" id="rYU-GF-BQT"/>
                                     <outlet property="iconBackgroundView" destination="hrG-N5-epA" id="27y-Wl-dSL"/>
                                     <outlet property="iconImageView" destination="e2J-Vy-GEc" id="YEW-ZM-za2"/>
+                                    <outlet property="iconImageViewSmallHeightConstraint" destination="7Tq-kY-ICs" id="h2t-hO-nLu"/>
+                                    <outlet property="iconImageViewSmallWidthConstraint" destination="vIV-eO-ucr" id="Icu-la-W15"/>
                                     <outlet property="nameLabel" destination="Yap-Es-0Pb" id="xJu-ch-ISo"/>
+                                    <outletCollection property="iconImageViewNoMarginConstraints" destination="1wF-IR-I3b" collectionClass="NSMutableArray" id="9kd-XS-m1t"/>
+                                    <outletCollection property="iconImageViewNoMarginConstraints" destination="5Yy-dh-x3e" collectionClass="NSMutableArray" id="SyL-0S-yzU"/>
+                                    <outletCollection property="iconImageViewNoMarginConstraints" destination="j1V-NJ-v5B" collectionClass="NSMutableArray" id="GnR-0T-dGS"/>
+                                    <outletCollection property="iconImageViewNoMarginConstraints" destination="wJs-hz-7GB" collectionClass="NSMutableArray" id="EV2-T7-M77"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -825,7 +843,7 @@
             <color red="0.50700002908706665" green="0.20000000298023224" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="Location Icon Color">
-            <color red="0.92549019607843142" green="0.40392156862745099" blue="0.31764705882352939" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.92500001192092896" green="0.40400001406669617" blue="0.31799998879432678" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="Map Type Segmented Control Background Color">
             <color white="1" alpha="0.75" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

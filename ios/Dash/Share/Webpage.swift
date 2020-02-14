@@ -12,6 +12,7 @@ import FirebaseFirestore
 struct Webpage: SharedItemProtocol {
     var firebaseDocument: DocumentReference?
 
+    let iconURL: URL?
     let title: String?
     let url: URL
     let creationDate: Date?

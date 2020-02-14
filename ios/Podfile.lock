@@ -309,6 +309,21 @@ PODS:
   - ObjcExceptionBridging (1.0.1):
     - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
   - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
+  - PINCache (3.0.1-beta.8):
+    - PINCache/Arc-exception-safe (= 3.0.1-beta.8)
+    - PINCache/Core (= 3.0.1-beta.8)
+  - PINCache/Arc-exception-safe (3.0.1-beta.8):
+    - PINCache/Core
+  - PINCache/Core (3.0.1-beta.8):
+    - PINOperation (~> 1.1.1)
+  - PINOperation (1.1.2)
+  - PINRemoteImage (3.0.0):
+    - PINRemoteImage/PINCache (= 3.0.0)
+  - PINRemoteImage/Core (3.0.0):
+    - PINOperation
+  - PINRemoteImage/PINCache (3.0.0):
+    - PINCache (= 3.0.1-beta.8)
+    - PINRemoteImage/Core
   - Protobuf (3.11.2)
   - SVProgressHUD (2.2.5)
   - TransitionButton (0.5.2)
@@ -327,6 +342,7 @@ DEPENDENCIES:
   - GoogleSignIn
   - GTMSessionFetcher
   - KeychainAccess
+  - PINRemoteImage
   - SVProgressHUD
   - TransitionButton
   - XCGLogger
@@ -362,6 +378,9 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - ObjcExceptionBridging
+    - PINCache
+    - PINOperation
+    - PINRemoteImage
     - Protobuf
     - SVProgressHUD
     - TransitionButton
@@ -397,11 +416,14 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
+  PINCache: 534fd41d358d828dfdf227a0d327f3673a65e20b
+  PINOperation: 24b774353ca248fcf87d67b2d61eef42087c125a
+  PINRemoteImage: e2b89e19fb6e77ffc099f9d9f3b3fe1745e3f9f9
   Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   TransitionButton: fb271583d9c9e4bb116b97103047e5157653f233
   XCGLogger: 1943831ef907df55108b0b18657953f868de973b
 
-PODFILE CHECKSUM: 3b7737297cc14e9990b88a6337df570043695829
+PODFILE CHECKSUM: ba3a1d0cb0e83c921386d8773c12195ce0ac52d1
 
 COCOAPODS: 1.8.4

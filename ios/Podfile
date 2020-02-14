@@ -10,6 +10,7 @@ target 'Dash' do
   pod 'FirebaseFirestoreSwift'
   pod 'Firebase/Messaging'
   pod 'GoogleSignIn'
+  pod 'PINRemoteImage'
   pod 'XCGLogger'
 
   # Work around for a warning:

@@ -40,6 +40,7 @@ interface LocationData extends BaseNormalizedData {
 
 interface WebpageData extends BaseNormalizedData {
     type: 'webpage';
+    iconURL: string | null;
     title?: string;
     url: string;
 }
@@ -192,19 +193,48 @@ const normalizeGoogleMapsLocation = async (rawData: RawData, url: string): Promi
 };
 
 const normalizeWebpage = async (rawData: RawData, url: string): Promise<WebpageData> => {
-    let title = rawData['public.plain-text'];
+    const responseBody = await request.get(url);
+    const document = libxmljs.parseHtml(responseBody);
 
-    if (!title || urlPattern.test(title)) {
-        const responseBody = await request.get(url);
-        const document = libxmljs.parseHtml(responseBody);
-        title = document.get('//head/title')?.text().trim();
-    }
+    const title = document.get('//head/title')?.text().trim() || rawData['public.plain-text'];
 
     return {
         type: 'webpage',
+        iconURL: getIconURL(document, url),
         title: title,
         url: url
     };
+};
+
+const getIconURL = (document: libxmljs.Document, pageURL: string): string | null => {
+    const icons = document.find('//head/link[(@rel="apple-touch-icon" or @rel="apple-touch-icon-precomposed" or @rel="icon") and @href]').map((link) => {
+        let url = link.attr('href')!.value();
+
+        if (url) {
+            url = new URL(url, pageURL).toString();
+        }
+
+        let size = link.attr('sizes')?.value().split('x')[0];
+
+        return {
+            url: url,
+            size: size ? parseInt(size) : undefined
+        }
+    });
+
+    if (icons.length == 0) {
+        return null;
+    }
+
+    const icon = icons.reduce((best, current) => {
+        if (!current.size || !best.size) {
+            return best;
+        }
+
+        return current.size > best.size ? current : best;
+    });
+
+    return icon.url;
 };
 
 const notify = (item: Item): Promise<any> => {
@@ -229,7 +259,7 @@ const notify = (item: Item): Promise<any> => {
 };
 
 const makeNotificationContent = (item: Item): admin.messaging.Aps => {
-    const normalizedData = item as NormalizedData;
+    const normalizedData = item as unknown as NormalizedData;
 
     let alert: admin.messaging.ApsAlert
 
