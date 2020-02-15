@@ -9,6 +9,7 @@
 import Foundation
 import SwiftSoup
 import PINCache
+import CommonCrypto
 
 enum WebsiteIconError: Error {
     case invalidWebsiteURL
@@ -39,17 +40,30 @@ class WebsiteIcon {
 
     private (set) var url: URL? {
         get {
-            return WebsiteIcon.cache.object(forKey: websiteURL.absoluteString) as? URL
+            return WebsiteIcon.cache.object(forKey: cacheKey) as? URL
         }
 
         set {
-            WebsiteIcon.cache.setObjectAsync(newValue as Any, forKey: websiteURL.absoluteString, withAgeLimit: cacheAgeLimit)
+            WebsiteIcon.cache.setObjectAsync(newValue as Any, forKey: cacheKey, withAgeLimit: cacheAgeLimit)
         }
     }
 
     var isCached: Bool {
-        WebsiteIcon.cache.containsObject(forKey: websiteURL.absoluteString)
+        WebsiteIcon.cache.containsObject(forKey: cacheKey)
     }
+
+    private lazy var cacheKey: String = {
+        let websiteURLData = websiteURL.absoluteString.data(using: .utf8)!
+        var digest = [UInt8](repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
+
+        _ = websiteURLData.withUnsafeBytes { (dataPointer) in
+            CC_SHA1(dataPointer.baseAddress, CC_LONG(websiteURLData.count), &digest)
+        }
+
+        let hexDigest = digest.map { String(format: "%02x", $0) }.joined()
+
+        return hexDigest
+    }()
 
     private let cacheAgeLimit: TimeInterval = 60 * 60 * 24 * 30 // 30 days
 
