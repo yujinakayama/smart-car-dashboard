@@ -11,6 +11,7 @@ target 'Dash' do
   pod 'Firebase/Messaging'
   pod 'GoogleSignIn'
   pod 'PINRemoteImage'
+  pod 'SwiftSoup'
   pod 'XCGLogger'
 
   # Work around for a warning:

@@ -9,13 +9,14 @@
 import UIKit
 import FirebaseFirestore
 
-struct Website: SharedItemProtocol {
+class Website: SharedItemProtocol {
     var firebaseDocument: DocumentReference?
 
-    let iconURL: URL?
     let title: String?
     let url: URL
     let creationDate: Date?
+
+    lazy var icon = WebsiteIcon(websiteURL: url)
 
     func open() {
         UIApplication.shared.open(url, options: [:])

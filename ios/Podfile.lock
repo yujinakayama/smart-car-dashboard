@@ -326,6 +326,7 @@ PODS:
     - PINRemoteImage/Core
   - Protobuf (3.11.2)
   - SVProgressHUD (2.2.5)
+  - SwiftSoup (2.3.0)
   - TransitionButton (0.5.2)
   - XCGLogger (7.0.1):
     - XCGLogger/Core (= 7.0.1)
@@ -344,6 +345,7 @@ DEPENDENCIES:
   - KeychainAccess
   - PINRemoteImage
   - SVProgressHUD
+  - SwiftSoup
   - TransitionButton
   - XCGLogger
 
@@ -383,6 +385,7 @@ SPEC REPOS:
     - PINRemoteImage
     - Protobuf
     - SVProgressHUD
+    - SwiftSoup
     - TransitionButton
     - XCGLogger
 
@@ -421,9 +424,10 @@ SPEC CHECKSUMS:
   PINRemoteImage: e2b89e19fb6e77ffc099f9d9f3b3fe1745e3f9f9
   Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  SwiftSoup: d78683f7ea0ae5733225a9e1d3bee5b256449df4
   TransitionButton: fb271583d9c9e4bb116b97103047e5157653f233
   XCGLogger: 1943831ef907df55108b0b18657953f868de973b
 
-PODFILE CHECKSUM: ba3a1d0cb0e83c921386d8773c12195ce0ac52d1
+PODFILE CHECKSUM: f083210b542adca5cc1fcad11e166196a7b71249
 
 COCOAPODS: 1.8.4

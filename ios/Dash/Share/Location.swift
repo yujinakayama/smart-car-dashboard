@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 import FirebaseFirestore
 
-struct Location: SharedItemProtocol {
+class Location: SharedItemProtocol {
     var firebaseDocument: DocumentReference?
 
     let coordinate: Coordinate

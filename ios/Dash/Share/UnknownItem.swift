@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct UnknownItem: SharedItemProtocol {
+class UnknownItem: SharedItemProtocol {
     var firebaseDocument: DocumentReference?
 
     let url: URL
