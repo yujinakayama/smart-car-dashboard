@@ -40,7 +40,6 @@ interface LocationData extends BaseNormalizedData {
 
 interface WebsiteData extends BaseNormalizedData {
     type: 'website';
-    iconURL: string | null;
     title: string | null;
 }
 
@@ -194,57 +193,19 @@ const normalizeGoogleMapsLocation = async (rawData: RawData, url: string): Promi
 };
 
 const normalizeWebpage = async (rawData: RawData, url: string): Promise<WebsiteData> => {
-    const responseBody = await request.get(url);
-    const document = libxmljs.parseHtml(responseBody);
+    let title = rawData['public.plain-text'];
 
-    const title = document.get('//head/title')?.text().trim() || rawData['public.plain-text'];
+    if (!title || urlPattern.test(title)) {
+        const responseBody = await request.get(url);
+        const document = libxmljs.parseHtml(responseBody);
+        title = document.get('//head/title')?.text().trim();
+    }
 
     return {
         type: 'website',
-        iconURL: getIconURL(document, url),
         title: title || null,
         url: url
     };
-};
-
-const getIconURL = (document: libxmljs.Document, pageURL: string): string | null => {
-    const icons = document.find('//head/link[(@rel="apple-touch-icon" or @rel="apple-touch-icon-precomposed" or @rel="icon") and @href]').map((link) => {
-        let url = link.attr('href')!.value();
-
-        if (url) {
-            url = new URL(url, pageURL).toString();
-        }
-
-        let size = link.attr('sizes')?.value().split('x')[0];
-
-        return {
-            size: size ? parseInt(size) : null,
-            type: link.attr('rel')!.value(),
-            url: url
-        }
-    });
-
-    if (icons.length == 0) {
-        return null;
-    }
-
-    const icon = icons.reduce((best, current) => {
-        if (current.type.includes('apple') && !best.type.includes('apple')) {
-            return current;
-        }
-
-        if (!current.type.includes('apple') && best.type.includes('apple')) {
-            return best;
-        }
-
-        if (!current.size || !best.size) {
-            return best;
-        }
-
-        return current.size > best.size ? current : best;
-    });
-
-    return icon.url;
 };
 
 const notify = (item: Item): Promise<any> => {
