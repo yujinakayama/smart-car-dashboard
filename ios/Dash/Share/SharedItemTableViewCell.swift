@@ -49,17 +49,11 @@ class SharedItemTableViewCell: UITableViewCell {
                 nameLabel.text = location.name
                 detailLabel.text = location.url.absoluteString
             case let website as Website:
-                if let iconURL = website.icon.url {
-                    setRemoteImage(url: iconURL)
-                } else {
-                    iconType = .template
-                    iconImageView.image = UIImage(systemName: "safari.fill")
-                    iconBackgroundView.backgroundColor = .systemBlue
+                setGenericWebsiteIcon()
 
-                    website.icon.getURL { (iconURL) in
-                        if let iconURL = iconURL {
-                            self.setRemoteImage(url: iconURL)
-                        }
+                website.icon.getURL { (iconURL) in
+                    if let iconURL = iconURL {
+                        self.setRemoteImage(url: iconURL)
                     }
                 }
 
@@ -75,11 +69,21 @@ class SharedItemTableViewCell: UITableViewCell {
         }
     }
 
+    func setGenericWebsiteIcon() {
+        iconType = .template
+        iconImageView.image = UIImage(systemName: "safari.fill")
+        iconBackgroundView.backgroundColor = .systemBlue
+    }
+
     func setRemoteImage(url: URL) {
         DispatchQueue.main.async {
             self.iconImageView.pin_setImage(from: url) { (result) in
-                self.iconType = .image
-                self.iconBackgroundView.backgroundColor = .white
+                if result.error == nil {
+                    self.iconType = .image
+                    self.iconBackgroundView.backgroundColor = .white
+                } else {
+                    self.setGenericWebsiteIcon()
+                }
             }
         }
     }
