@@ -33,6 +33,12 @@ class SharedItemTableViewCell: UITableViewCell {
         }
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        // The unintentional constraints reset also happens when changing to dark mode
+        setNeedsUpdateConstraints()
+    }
+
     var item: SharedItemProtocol? {
         didSet {
             switch item {
