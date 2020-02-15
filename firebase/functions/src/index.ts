@@ -294,7 +294,7 @@ const normalizeGoogleMapsLocationWithCoordinate = async (expandedURL: URL, rawDa
             latitude: place.geometry.location.lat,
             longitude: place.geometry.location.lng
         },
-        name: rawData['public.plain-text'] || null,
+        name: convertAlphanumericsToAscii(rawData['public.plain-text']),
         url: expandedURL.toString(),
         websiteURL: null
     };
@@ -352,7 +352,7 @@ const normalizeGoogleMapsLocationWithIdentifier = async (id: { placeid?: string,
             latitude: place.geometry.location.lat,
             longitude: place.geometry.location.lng
         },
-        name: place.name,
+        name: convertAlphanumericsToAscii(place.name),
         url: expandedURL.toString(),
         websiteURL: place.website || null
     };
@@ -362,7 +362,7 @@ const normalizeGoogleMapsAddressComponents = (rawAddressComponents: object[]): A
     const components: GoogleMapsAddressComponents = rawAddressComponents.reverse().reduce((object: any, rawComponent: any) => {
         const key = rawComponent.types.find((type: string) => googleMapsAddressComponentKeys.includes(type))
         if (!object[key]) {
-            object[key] = rawComponent.long_name;
+            object[key] = convertAlphanumericsToAscii(rawComponent.long_name);
         }
         return object;
     }, {});
@@ -454,3 +454,15 @@ const addItemToFirestore = async (item: Item): Promise<any> => {
 
     return admin.firestore().collection('items').add(document);
 }
+
+const convertAlphanumericsToAscii = (text: string | null | undefined): string | null => {
+    if (!text) {
+        return null;
+    }
+
+    const replaced = text.replace(/[Ａ-Ｚａ-ｚ０-９]/g, (character) => {
+        return String.fromCharCode(character.charCodeAt(0) - 65248);
+    });
+
+    return replaced.replace(/−/g, '-');
+};
