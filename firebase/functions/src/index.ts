@@ -159,17 +159,18 @@ const normalizeGoogleMapsLocation = async (rawData: RawData, url: string): Promi
 
     let locationData: LocationData | null;
 
-    locationData = normalizeGoogleMapsLocationWithCoordinate(rawData, expandedURL);
+    locationData = await normalizeGoogleMapsLocationWithFtid(expandedURL);
     if (locationData) {
         return locationData;
     }
 
-    locationData = await normalizeGoogleMapsLocationWithFtid(rawData, expandedURL);
+
+    locationData = await normalizeGoogleMapsLocationWithCoordinate(expandedURL, rawData);
     if (locationData) {
         return locationData;
     }
 
-    locationData = await normalizeGoogleMapsLocationWithQuery(rawData, expandedURL);
+    locationData = await normalizeGoogleMapsLocationWithQuery(expandedURL);
     if (locationData) {
         return locationData;
     }
@@ -177,25 +178,45 @@ const normalizeGoogleMapsLocation = async (rawData: RawData, url: string): Promi
     throw new Error('Cannot find details for the Google Maps URL');
 };
 
-// No address location (e.g. Dropped pin)
-const normalizeGoogleMapsLocationWithCoordinate = (rawData: RawData, expandedURL: URL): LocationData | null => {
+// Point of Interests
+// https://stackoverflow.com/a/47042514/784241
+const normalizeGoogleMapsLocationWithFtid = async (expandedURL: URL): Promise<LocationData | null> => {
+    const ftid = expandedURL.searchParams.get('ftid');
+
+    if (!ftid) {
+        return null;
+    }
+    
+    return normalizeGoogleMapsLocationWithIdentifier({ ftid: ftid }, expandedURL);
+};
+
+const normalizeGoogleMapsLocationWithCoordinate = async (expandedURL: URL, rawData: RawData): Promise<LocationData | null> => {
     const query = expandedURL.searchParams.get('q');
 
     if (!query) {
         return null;
     }
 
-    const coordinate = query.match(/^([\d\.]+),([\d\.]+)$/)
+    if (!query.match(/^[\d\.]+,[\d\.]+$/)) {
+        return null;
+    }
 
-    if (!coordinate) {
+    const response = await googleMapsClient.reverseGeocode({
+        latlng: query,
+        language: 'ja'
+    }).asPromise()
+
+    const place = response.json.results[0];
+
+    if (!place) {
         return null;
     }
 
     return {
         type: 'location',
         coordinate: {
-            latitude: parseFloat(coordinate[1]),
-            longitude: parseFloat(coordinate[2])
+            latitude: place.geometry.location.lat,
+            longitude: place.geometry.location.lng
         },
         name: rawData['public.plain-text'] || null,
         url: expandedURL.toString(),
@@ -203,23 +224,48 @@ const normalizeGoogleMapsLocationWithCoordinate = (rawData: RawData, expandedURL
     };
 };
 
-// Point of Interests
-// https://stackoverflow.com/a/47042514/784241
-const normalizeGoogleMapsLocationWithFtid = async (rawData: RawData, expandedURL: URL): Promise<LocationData | null> => {
-    const ftid = expandedURL.searchParams.get('ftid');
+// Last resort
+const normalizeGoogleMapsLocationWithQuery = async (expandedURL: URL): Promise<LocationData | null> => {
+    const query = expandedURL.searchParams.get('q');
 
-    if (!ftid) {
+    if (!query) {
         return null;
     }
-    
+
+    const response = await googleMapsClient.findPlace({
+        input: query,
+        inputtype: 'textquery',
+        language: 'ja'
+    }).asPromise();
+
+    const place = response.json.candidates[0]
+
+    if (!place) {
+        return null;
+    }
+
+    return normalizeGoogleMapsLocationWithIdentifier({ placeid: place.place_id }, expandedURL);
+}
+
+const normalizeGoogleMapsLocationWithIdentifier = async (id: { placeid?: string, ftid?: string }, expandedURL: URL): Promise<LocationData | null> => {
+    if (!id.placeid && !id.ftid) {
+        throw new Error('Either placeid or ftid must be given');
+    }
+
     const requestParameters: maps.PlaceDetailsRequest = {
-        placeid: '',
-        fields: ['geometry', 'name', 'website'],
+        placeid: id.placeid || '',
+        fields: ['address_component', 'geometry', 'name', 'website'],
         language: 'ja'
     }
 
+    let customParameters: any = {}
+
+    if (id.ftid) {
+        customParameters['ftid'] = id.ftid
+    }
+
     // @ts-ignore
-    const response = await googleMapsClient.place(requestParameters, null, { ftid: ftid }).asPromise();
+    const response = await googleMapsClient.place(requestParameters, null, customParameters).asPromise();
 
     const place = response.json.result;
 
@@ -233,40 +279,7 @@ const normalizeGoogleMapsLocationWithFtid = async (rawData: RawData, expandedURL
         url: expandedURL.toString(),
         websiteURL: place.website
     };
-};
-
-// Last resort
-const normalizeGoogleMapsLocationWithQuery = async (rawData: RawData, expandedURL: URL): Promise<LocationData | null> => {
-    const query = expandedURL.searchParams.get('q');
-
-    if (!query) {
-        return null;
-    }
-
-    const response = await googleMapsClient.findPlace({
-        input: query,
-        inputtype: 'textquery',
-        fields: ['geometry', 'name'],
-        language: 'ja'
-    }).asPromise();
-
-    const place = response.json.candidates[0]
-
-    if (!place) {
-        return null;
-    }
-
-    return {
-        type: 'location',
-        coordinate: {
-            latitude: place.geometry!.location.lat,
-            longitude: place.geometry!.location.lng
-        },
-        name: place.name || null,
-        url: expandedURL.toString(),
-        websiteURL: null
-    };
-};
+}
 
 const normalizeWebpage = async (rawData: RawData, url: string): Promise<WebsiteData> => {
     let title = rawData['public.plain-text'];
