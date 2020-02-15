@@ -56,12 +56,9 @@ class SharedItemTableViewCell: UITableViewCell {
                     iconImageView.image = UIImage(systemName: "safari.fill")
                     iconBackgroundView.backgroundColor = .systemBlue
 
-                    website.icon.getURL { (result) in
-                        switch result {
-                        case .success(let url):
-                            self.setRemoteImage(url: url)
-                        default:
-                            break
+                    website.icon.getURL { (iconURL) in
+                        if let iconURL = iconURL {
+                            self.setRemoteImage(url: iconURL)
                         }
                     }
                 }

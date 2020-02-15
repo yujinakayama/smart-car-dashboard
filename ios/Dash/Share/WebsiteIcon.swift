@@ -39,20 +39,16 @@ class WebsiteIcon {
 
     private (set) var url: URL? {
         get {
-            return cache.object(forKey: websiteURL.absoluteString) as? URL
+            return WebsiteIcon.cache.object(forKey: websiteURL.absoluteString) as? URL
         }
 
         set {
-            if let url = newValue {
-                cache.setObjectAsync(url, forKey: websiteURL.absoluteString, withAgeLimit: cacheAgeLimit)
-            } else {
-                cache.removeObject(forKeyAsync: websiteURL.absoluteString)
-            }
+            WebsiteIcon.cache.setObjectAsync(newValue as Any, forKey: websiteURL.absoluteString, withAgeLimit: cacheAgeLimit)
         }
     }
 
-    private var cache: PINCache {
-        return WebsiteIcon.cache
+    var isCached: Bool {
+        WebsiteIcon.cache.containsObject(forKey: websiteURL.absoluteString)
     }
 
     private let cacheAgeLimit: TimeInterval = 60 * 60 * 24 * 30 // 30 days
@@ -61,16 +57,22 @@ class WebsiteIcon {
         self.websiteURL = websiteURL
     }
 
-    func getURL(completionHandler: @escaping (Result<URL, Error>) -> Void) {
-        if let url = url {
-            completionHandler(.success(url))
-        } else {
-            fetchIconURL { (result) in
-                if case .success(let url) = result {
-                    self.url = url
-                }
+    func getURL(completionHandler: @escaping (URL?) -> Void) {
+        if isCached {
+            completionHandler(url)
+            return
+        }
 
-                completionHandler(result)
+        fetchIconURL { (result) in
+            switch result {
+            case .success(let url):
+                self.url = url
+                completionHandler(url)
+            case .failure(let error) where error is WebsiteIconError:
+                self.url = nil // Cache the fact there's no icon
+                completionHandler(nil)
+            default:
+                completionHandler(nil)
             }
         }
     }
