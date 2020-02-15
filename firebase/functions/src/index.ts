@@ -41,12 +41,22 @@ interface BaseNormalizedData {
 // Firebase doesn't allow `undefined` values
 interface LocationData extends BaseNormalizedData {
     type: 'location';
+    address: Address;
     coordinate: {
         latitude: number;
         longitude: number;
     };
     name: string | null;
     websiteURL: string | null;
+}
+
+interface Address {
+    country: string | null; // 国
+    prefecture: string | null; // 都道府県
+    distinct: string | null; // 郡
+    locality: string | null; // 市区町村
+    subLocality: string | null; // 大字・字・丁目
+    houseNumber: string | null; // 番地
 }
 
 interface WebsiteData extends BaseNormalizedData {
@@ -74,6 +84,63 @@ enum UNNotificationPresentationOptions {
     sound = 1 << 1,
     alert = 1 << 2
 }
+
+// https://developers.google.com/maps/documentation/geocoding/intro#Types
+interface GoogleMapsAddressComponents {
+    street_address?: string;
+    route?: string;
+    intersection?: string;
+    political?: string;
+    country?: string;
+    administrative_area_level_1?: string;
+    administrative_area_level_2?: string;
+    administrative_area_level_3?: string;
+    administrative_area_level_4?: string;
+    administrative_area_level_5?: string;
+    colloquial_area?: string;
+    locality?: string;
+    sublocality_level_1?: string;
+    sublocality_level_2?: string;
+    sublocality_level_3?: string;
+    sublocality_level_4?: string;
+    sublocality_level_5?: string;
+    neighborhood?: string;
+    premise?: string;
+    subpremise?: string;
+    postal_code?: string;
+    natural_feature?: string;
+    airport?: string;
+    park?: string;
+    point_of_interest?: string;
+}
+
+const googleMapsAddressComponentKeys = [
+    'street_addres',
+    'route',
+    'intersection',
+    'political',
+    'country',
+    'administrative_area_level_1',
+    'administrative_area_level_2',
+    'administrative_area_level_3',
+    'administrative_area_level_4',
+    'administrative_area_level_5',
+    'colloquial_area',
+    'locality',
+    'sublocality_level_1',
+    'sublocality_level_2',
+    'sublocality_level_3',
+    'sublocality_level_4',
+    'sublocality_level_5',
+    'neighborhood',
+    'premise',
+    'subpremise',
+    'postal_code',
+    'natural_feature',
+    'airport',
+    'park',
+    'point_of_interest'
+];
 
 admin.initializeApp();
 
@@ -139,6 +206,14 @@ const normalizeAppleMapsLocation = async (rawData: RawData, url: string): Promis
 
     return {
         type: 'location',
+        address: {
+            country: mapItem.placemark.country,
+            prefecture: mapItem.placemark.administrativeArea,
+            distinct: null,
+            locality: mapItem.placemark.locality,
+            subLocality: mapItem.placemark.thoroughfare,
+            houseNumber: mapItem.placemark.subThoroughfare
+        },
         coordinate: mapItem.placemark.coordinate,
         name: mapItem.name,
         websiteURL: mapItem.url,
@@ -214,6 +289,7 @@ const normalizeGoogleMapsLocationWithCoordinate = async (expandedURL: URL, rawDa
 
     return {
         type: 'location',
+        address: normalizeGoogleMapsAddressComponents(place.address_components),
         coordinate: {
             latitude: place.geometry.location.lat,
             longitude: place.geometry.location.lng
@@ -258,7 +334,7 @@ const normalizeGoogleMapsLocationWithIdentifier = async (id: { placeid?: string,
         language: 'ja'
     }
 
-    let customParameters: any = {}
+    const customParameters: any = {}
 
     if (id.ftid) {
         customParameters['ftid'] = id.ftid
@@ -271,13 +347,39 @@ const normalizeGoogleMapsLocationWithIdentifier = async (id: { placeid?: string,
 
     return {
         type: 'location',
+        address: normalizeGoogleMapsAddressComponents(place.address_components),
         coordinate: {
             latitude: place.geometry.location.lat,
             longitude: place.geometry.location.lng
         },
         name: place.name,
         url: expandedURL.toString(),
-        websiteURL: place.website
+        websiteURL: place.website || null
+    };
+}
+
+const normalizeGoogleMapsAddressComponents = (rawAddressComponents: object[]): Address => {
+    const components: GoogleMapsAddressComponents = rawAddressComponents.reverse().reduce((object: any, rawComponent: any) => {
+        const key = rawComponent.types.find((type: string) => googleMapsAddressComponentKeys.includes(type))
+        if (!object[key]) {
+            object[key] = rawComponent.long_name;
+        }
+        return object;
+    }, {});
+
+    return {
+        country: components.country || null,
+        prefecture: components.administrative_area_level_1 || null,
+        distinct: components.administrative_area_level_2 || null,
+        locality: components.locality || null,
+        subLocality: [
+            components.sublocality_level_1,
+            components.sublocality_level_2,
+            components.sublocality_level_3,
+            components.sublocality_level_4,
+            components.sublocality_level_5
+        ].filter((e) => e).join('') || null,
+        houseNumber: components.premise || null
     };
 }
 
