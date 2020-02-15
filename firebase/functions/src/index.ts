@@ -68,6 +68,8 @@ admin.initializeApp();
 
 const urlPattern = urlRegex({ strict: true });
 
+const googleMapsClient = maps.createClient({ key: functions.config().googlemaps.api_key, Promise: Promise });
+
 export const share = functions.region('asia-northeast1').https.onRequest(async (functionRequest, functionResponse) => {
     const rawData = functionRequest.body as RawData;
 
@@ -144,52 +146,115 @@ const normalizeGoogleMapsLocation = async (rawData: RawData, url: string): Promi
         });
     });
 
+    let locationData: LocationData | null;
+
+    locationData = normalizeGoogleMapsLocationWithCoordinate(rawData, expandedURL);
+    if (locationData) {
+        return locationData;
+    }
+
+    locationData = await normalizeGoogleMapsLocationWithFtid(rawData, expandedURL);
+    if (locationData) {
+        return locationData;
+    }
+
+    locationData = await normalizeGoogleMapsLocationWithQuery(rawData, expandedURL);
+    if (locationData) {
+        return locationData;
+    }
+
+    throw new Error('Cannot find details for the Google Maps URL');
+};
+
+// No address location (e.g. Dropped pin)
+const normalizeGoogleMapsLocationWithCoordinate = (rawData: RawData, expandedURL: URL): LocationData | null => {
     const query = expandedURL.searchParams.get('q');
 
     if (!query) {
-        throw new Error('Missing `q` parameter in Google Maps URL');
+        return null;
     }
 
     const coordinate = query.match(/^([\d\.]+),([\d\.]+)$/)
 
-    if (coordinate) {
-        return {
-            type: 'location',
-            coordinate: {
-                latitude: parseFloat(coordinate[1]),
-                longitude: parseFloat(coordinate[2])
-            },
-            name: rawData['public.plain-text'] || null,
-            url: expandedURL.toString(),
-            websiteURL: null
-        };
-    } else {
-        const client = maps.createClient({ key: functions.config().googlemaps.api_key, Promise: Promise });
-
-        const response = await client.findPlace({
-            input: query,
-            inputtype: 'textquery',
-            fields: ['geometry', 'name'],
-            language: 'ja'
-        }).asPromise();
-
-        const place = response.json.candidates[0]
-
-        if (!place) {
-            throw new Error('Found no place from Google Maps URL');
-        }
-
-        return {
-            type: 'location',
-            coordinate: {
-                latitude: place.geometry!.location.lat,
-                longitude: place.geometry!.location.lng
-            },
-            name: place.name || null,
-            url: expandedURL.toString(),
-            websiteURL: null
-        };
+    if (!coordinate) {
+        return null;
     }
+
+    return {
+        type: 'location',
+        coordinate: {
+            latitude: parseFloat(coordinate[1]),
+            longitude: parseFloat(coordinate[2])
+        },
+        name: rawData['public.plain-text'] || null,
+        url: expandedURL.toString(),
+        websiteURL: null
+    };
+};
+
+// Point of Interests
+// https://stackoverflow.com/a/47042514/784241
+const normalizeGoogleMapsLocationWithFtid = async (rawData: RawData, expandedURL: URL): Promise<LocationData | null> => {
+    const ftid = expandedURL.searchParams.get('ftid');
+
+    if (!ftid) {
+        return null;
+    }
+    
+    const requestParameters: maps.PlaceDetailsRequest = {
+        placeid: '',
+        fields: ['geometry', 'name'],
+        language: 'ja'
+    }
+
+    // @ts-ignore
+    const response = await googleMapsClient.place(requestParameters, null, { ftid: ftid }).asPromise();
+
+    const place = response.json.result;
+
+    return {
+        type: 'location',
+        coordinate: {
+            latitude: place.geometry.location.lat,
+            longitude: place.geometry.location.lng
+        },
+        name: place.name,
+        url: expandedURL.toString(),
+        websiteURL: null
+    };
+};
+
+// Last resort
+const normalizeGoogleMapsLocationWithQuery = async (rawData: RawData, expandedURL: URL): Promise<LocationData | null> => {
+    const query = expandedURL.searchParams.get('q');
+
+    if (!query) {
+        return null;
+    }
+
+    const response = await googleMapsClient.findPlace({
+        input: query,
+        inputtype: 'textquery',
+        fields: ['geometry', 'name'],
+        language: 'ja'
+    }).asPromise();
+
+    const place = response.json.candidates[0]
+
+    if (!place) {
+        return null;
+    }
+
+    return {
+        type: 'location',
+        coordinate: {
+            latitude: place.geometry!.location.lat,
+            longitude: place.geometry!.location.lng
+        },
+        name: place.name || null,
+        url: expandedURL.toString(),
+        websiteURL: null
+    };
 };
 
 const normalizeWebpage = async (rawData: RawData, url: string): Promise<WebsiteData> => {
