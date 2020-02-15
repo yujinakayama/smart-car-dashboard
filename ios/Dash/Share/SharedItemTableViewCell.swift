@@ -47,7 +47,7 @@ class SharedItemTableViewCell: UITableViewCell {
                 iconImageView.image = UIImage(systemName: "mappin")
                 iconBackgroundView.backgroundColor = UIColor(named: "Location Icon Color")
                 nameLabel.text = location.name
-                detailLabel.text = location.url.absoluteString
+                detailLabel.text = location.formattedAddress ?? location.address.country
             case let website as Website:
                 setGenericWebsiteIcon()
 

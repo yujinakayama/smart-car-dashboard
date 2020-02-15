@@ -13,11 +13,14 @@ import FirebaseFirestore
 class Location: SharedItemProtocol {
     var firebaseDocument: DocumentReference?
 
+    let address: Address
     let coordinate: Coordinate
     let name: String?
     let url: URL
     let websiteURL: URL?
     let creationDate: Date?
+
+    lazy var formattedAddress = address.format()
 
     func open() {
         if Defaults.shared.snapReceivedLocationToPointOfInterest {
@@ -53,6 +56,36 @@ class Location: SharedItemProtocol {
         let mapItem = MKMapItem(placemark: placemark)
         mapItem.name = name
         return mapItem
+    }
+}
+
+struct Address: Decodable {
+    let country: String?
+    let prefecture: String?
+    let distinct: String?
+    let locality: String?
+    let subLocality: String?
+    let houseNumber: String?
+
+    func format() -> String? {
+        let components = [
+            prefecture,
+            distinct,
+            locality,
+            subLocality,
+            houseNumber
+        ].compactMap { $0 }
+
+        guard !components.isEmpty else { return nil }
+
+        return components.reduce(into: [] as [String]) { (components, component) in
+            if components.last?.last?.isNumber ?? false && component.first?.isNumber ?? false {
+                components.append("-")
+            } else {
+                components.append(" ")
+            }
+            components.append(component)
+        }.joined()
     }
 }
 
