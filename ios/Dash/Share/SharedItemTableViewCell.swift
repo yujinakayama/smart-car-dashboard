@@ -42,8 +42,8 @@ class SharedItemTableViewCell: UITableViewCell {
                 iconBackgroundView.backgroundColor = UIColor(named: "Location Icon Color")
                 nameLabel.text = location.name
                 detailLabel.text = location.url.absoluteString
-            case let webpage as Webpage:
-                if let iconURL = webpage.iconURL {
+            case let website as Website:
+                if let iconURL = website.iconURL {
                     iconType = .image
                     iconImageView.pin_setImage(from: iconURL)
                     iconBackgroundView.backgroundColor = .white
@@ -52,8 +52,8 @@ class SharedItemTableViewCell: UITableViewCell {
                     iconImageView.image = UIImage(systemName: "safari.fill")
                     iconBackgroundView.backgroundColor = .systemBlue
                 }
-                nameLabel.text = webpage.title
-                detailLabel.text = webpage.url.absoluteString
+                nameLabel.text = website.title
+                detailLabel.text = website.url.absoluteString
             default:
                 iconType = .template
                 iconImageView.image = UIImage(systemName: "questionmark")

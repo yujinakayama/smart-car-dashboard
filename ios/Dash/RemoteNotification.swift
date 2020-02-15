@@ -32,11 +32,6 @@ struct RemoteNotification {
 }
 
 struct ShareNotification {
-    enum ItemType: String {
-        case location
-        case webpage
-    }
-
     let itemDictionary: [String: Any]
 
     init?(userInfo: [AnyHashable: Any]) {

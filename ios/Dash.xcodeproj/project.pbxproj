@@ -32,7 +32,7 @@
 		B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95BF23B23EBFFE300A30DE0 /* ETCCardView.swift */; };
 		B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */; };
 		B95F514623E5A8540063CB3D /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514523E5A8540063CB3D /* Location.swift */; };
-		B95F514A23E5B2C10063CB3D /* Webpage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514923E5B2C10063CB3D /* Webpage.swift */; };
+		B95F514A23E5B2C10063CB3D /* Website.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514923E5B2C10063CB3D /* Website.swift */; };
 		B95F514C23E5B53F0063CB3D /* RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */; };
 		B95F514E23E5BBF70063CB3D /* SharedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514D23E5BBF70063CB3D /* SharedItem.swift */; };
 		B964BCC323E066FF00288E0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B964BCC223E066FF00288E0D /* AppDelegate.swift */; };
@@ -217,7 +217,7 @@
 		B95BF23B23EBFFE300A30DE0 /* ETCCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardView.swift; sourceTree = "<group>"; };
 		B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceStatusBar.swift; sourceTree = "<group>"; };
 		B95F514523E5A8540063CB3D /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
-		B95F514923E5B2C10063CB3D /* Webpage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Webpage.swift; sourceTree = "<group>"; };
+		B95F514923E5B2C10063CB3D /* Website.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Website.swift; sourceTree = "<group>"; };
 		B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteNotification.swift; sourceTree = "<group>"; };
 		B95F514D23E5BBF70063CB3D /* SharedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItem.swift; sourceTree = "<group>"; };
 		B964BCC023E066FF00288E0D /* Dash Remote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dash Remote.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -381,7 +381,7 @@
 				B92FB3BF23E95BE900EA702C /* SharedItemTableViewCell.swift */,
 				B95F514D23E5BBF70063CB3D /* SharedItem.swift */,
 				B95F514523E5A8540063CB3D /* Location.swift */,
-				B95F514923E5B2C10063CB3D /* Webpage.swift */,
+				B95F514923E5B2C10063CB3D /* Website.swift */,
 				B9B717DD23E6B26900A47207 /* UnknownItem.swift */,
 				B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */,
 			);
@@ -957,7 +957,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9DB8E5922D7A481003E4BD8 /* ETCPaymentManagedObject.swift in Sources */,
-				B95F514A23E5B2C10063CB3D /* Webpage.swift in Sources */,
+				B95F514A23E5B2C10063CB3D /* Website.swift in Sources */,
 				B90265A923EB34D800B2EF6B /* SharedItemTableViewData.swift in Sources */,
 				B99356E622A9525C00BA08AB /* ETCMessage.swift in Sources */,
 				B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */,

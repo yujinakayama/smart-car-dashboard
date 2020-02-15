@@ -16,7 +16,7 @@ struct Location: SharedItemProtocol {
     let coordinate: Coordinate
     let name: String?
     let url: URL
-    let webpageURL: URL?
+    let websiteURL: URL?
     let creationDate: Date?
 
     func open() {

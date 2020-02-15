@@ -47,7 +47,7 @@ struct SharedItem {
 
     enum ItemType: String {
         case location
-        case webpage
+        case website
         case unknown
 
         static func makeType(dictionary: [String: Any]) throws -> ItemType {
@@ -67,8 +67,8 @@ struct SharedItem {
         switch type {
         case .location:
             return try decoder.decode(Location.self, from: dictionary)
-        case .webpage:
-            return try decoder.decode(Webpage.self, from: dictionary)
+        case .website:
+            return try decoder.decode(Website.self, from: dictionary)
         case .unknown:
             return try decoder.decode(UnknownItem.self, from: dictionary)
         }
@@ -81,8 +81,8 @@ struct SharedItem {
         switch type {
         case .location:
             return try decoder.decode(Location.self, from: dictionary)
-        case .webpage:
-            return try decoder.decode(Webpage.self, from: dictionary)
+        case .website:
+            return try decoder.decode(Website.self, from: dictionary)
         case .unknown:
             return try decoder.decode(UnknownItem.self, from: dictionary)
         }

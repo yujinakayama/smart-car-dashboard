@@ -35,16 +35,16 @@ interface LocationData extends BaseNormalizedData {
         longitude: number;
     };
     name: string | null;
-    webpageURL: string | null;
+    websiteURL: string | null;
 }
 
-interface WebpageData extends BaseNormalizedData {
-    type: 'webpage';
+interface WebsiteData extends BaseNormalizedData {
+    type: 'website';
     iconURL: string | null;
     title: string | null;
 }
 
-type NormalizedData = LocationData | WebpageData;
+type NormalizedData = LocationData | WebsiteData;
 
 // We want to extend NormalizedData but it's not allowed
 interface Item extends BaseNormalizedData {
@@ -129,7 +129,7 @@ const normalizeAppleMapsLocation = async (rawData: RawData, url: string): Promis
         type: 'location',
         coordinate: mapItem.coordinate,
         name: mapItem.name,
-        webpageURL: mapItem.url,
+        websiteURL: mapItem.url,
         url: url
     };
 };
@@ -162,7 +162,7 @@ const normalizeGoogleMapsLocation = async (rawData: RawData, url: string): Promi
             },
             name: rawData['public.plain-text'] || null,
             url: expandedURL.toString(),
-            webpageURL: null
+            websiteURL: null
         };
     } else {
         const client = maps.createClient({ key: functions.config().googlemaps.api_key, Promise: Promise });
@@ -188,19 +188,19 @@ const normalizeGoogleMapsLocation = async (rawData: RawData, url: string): Promi
             },
             name: place.name || null,
             url: expandedURL.toString(),
-            webpageURL: null
+            websiteURL: null
         };
     }
 };
 
-const normalizeWebpage = async (rawData: RawData, url: string): Promise<WebpageData> => {
+const normalizeWebpage = async (rawData: RawData, url: string): Promise<WebsiteData> => {
     const responseBody = await request.get(url);
     const document = libxmljs.parseHtml(responseBody);
 
     const title = document.get('//head/title')?.text().trim() || rawData['public.plain-text'];
 
     return {
-        type: 'webpage',
+        type: 'website',
         iconURL: getIconURL(document, url),
         title: title || null,
         url: url
@@ -280,7 +280,7 @@ const makeNotificationContent = (item: Item): admin.messaging.Aps => {
                 body: normalizedData.name || undefined
             }
             break;
-        case 'webpage':
+        case 'website':
             alert = {
                 title: 'Webサイト',
                 body: normalizedData.title || normalizedData.url

@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseFirestore
 
-struct Webpage: SharedItemProtocol {
+struct Website: SharedItemProtocol {
     var firebaseDocument: DocumentReference?
 
     let iconURL: URL?
