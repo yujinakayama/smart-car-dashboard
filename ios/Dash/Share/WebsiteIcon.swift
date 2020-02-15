@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftSoup
+import PINCache
 
 enum WebsiteIconError: Error {
     case htmlEncodingError
@@ -22,9 +23,37 @@ class WebsiteIcon {
         case generic
     }
 
+    private static let cache = PINCache(
+        name: "WebsiteIcon",
+        rootPath: NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!,
+        serializer: nil,
+        deserializer: nil,
+        keyEncoder: nil,
+        keyDecoder: nil,
+        ttlCache: true
+    )
+
     let websiteURL: URL
 
-    var url: URL?
+    private (set) var url: URL? {
+        get {
+            return cache.object(forKey: websiteURL.absoluteString) as? URL
+        }
+
+        set {
+            if let url = newValue {
+                cache.setObjectAsync(url, forKey: websiteURL.absoluteString, withAgeLimit: cacheAgeLimit)
+            } else {
+                cache.removeObject(forKeyAsync: websiteURL.absoluteString)
+            }
+        }
+    }
+
+    private var cache: PINCache {
+        return WebsiteIcon.cache
+    }
+
+    private let cacheAgeLimit: TimeInterval = 60 * 60 * 24 * 30 // 30 days
 
     init(websiteURL: URL) {
         self.websiteURL = websiteURL
