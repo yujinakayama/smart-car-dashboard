@@ -203,7 +203,7 @@ const normalizeGoogleMapsLocationWithFtid = async (rawData: RawData, expandedURL
     
     const requestParameters: maps.PlaceDetailsRequest = {
         placeid: '',
-        fields: ['geometry', 'name'],
+        fields: ['geometry', 'name', 'website'],
         language: 'ja'
     }
 
@@ -220,7 +220,7 @@ const normalizeGoogleMapsLocationWithFtid = async (rawData: RawData, expandedURL
         },
         name: place.name,
         url: expandedURL.toString(),
-        websiteURL: null
+        websiteURL: place.website
     };
 };
 
