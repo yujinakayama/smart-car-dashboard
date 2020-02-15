@@ -11,8 +11,10 @@ import SwiftSoup
 import PINCache
 
 enum WebsiteIconError: Error {
+    case invalidWebsiteURL
     case htmlEncodingError
     case iconNotFound
+    case unknown
 }
 
 class WebsiteIcon {
@@ -23,7 +25,7 @@ class WebsiteIcon {
         case generic
     }
 
-    private static let cache = PINCache(
+    static let cache = PINCache(
         name: "WebsiteIcon",
         rootPath: NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!,
         serializer: nil,
@@ -63,7 +65,7 @@ class WebsiteIcon {
         if let url = url {
             completionHandler(.success(url))
         } else {
-            fetchURL { (result) in
+            fetchIconURL { (result) in
                 if case .success(let url) = result {
                     self.url = url
                 }
@@ -73,7 +75,52 @@ class WebsiteIcon {
         }
     }
 
-    private func fetchURL(completionHandler: @escaping (Result<URL, Error>) -> Void) {
+    private func fetchIconURL(completionHandler: @escaping (Result<URL, Error>) -> Void) {
+        checkFixedIconURL { (result) in
+            switch result {
+            case .success:
+                completionHandler(result)
+            case .failure:
+                self.fetchAndExtractIconURLFromHTMLDocument(completionHandler: completionHandler)
+            }
+        }
+    }
+
+    private func checkFixedIconURL(completionHandler: @escaping (Result<URL, Error>) -> Void) {
+        guard var urlComponents = URLComponents(url: websiteURL, resolvingAgainstBaseURL: false) else {
+            completionHandler(.failure(WebsiteIconError.invalidWebsiteURL))
+            return
+        }
+
+        urlComponents.path = "/apple-touch-icon.png"
+
+        let url = urlComponents.url!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "HEAD"
+
+        let task = URLSession.shared.dataTask(with: urlComponents.url!) { (data, response, error) in
+            if let error = error {
+                completionHandler(.failure(error))
+                return
+            }
+
+            guard let response = response as? HTTPURLResponse else {
+                completionHandler(.failure(WebsiteIconError.unknown))
+                return
+            }
+
+            if response.isSuccessful {
+                completionHandler(.success(url))
+            } else {
+                completionHandler(.failure(WebsiteIconError.iconNotFound))
+            }
+        }
+
+        task.resume()
+    }
+
+    private func fetchAndExtractIconURLFromHTMLDocument(completionHandler: @escaping (Result<URL, Error>) -> Void) {
         let task = URLSession.shared.dataTask(with: websiteURL) { (data, response, error) in
             if let error = error {
                 completionHandler(.failure(error))
@@ -81,7 +128,7 @@ class WebsiteIcon {
             }
 
             do {
-                if let url = try self.extractURL(from: data!) {
+                if let url = try self.extractIconURL(from: data!) {
                     completionHandler(.success(url))
                 } else {
                     completionHandler(.failure(WebsiteIconError.iconNotFound))
@@ -94,7 +141,7 @@ class WebsiteIcon {
         task.resume()
     }
 
-    private func extractURL(from data: Data) throws -> URL? {
+    private func extractIconURL(from data: Data) throws -> URL? {
         let icons = try extractIcons(from: data)
 
         guard !icons.isEmpty else { return nil }
@@ -147,5 +194,12 @@ class WebsiteIcon {
 
             return (type, iconURL, size)
         }
+    }
+}
+
+private extension HTTPURLResponse {
+    var isSuccessful: Bool {
+        let classNumber = statusCode / 100
+        return classNumber == 2
     }
 }
