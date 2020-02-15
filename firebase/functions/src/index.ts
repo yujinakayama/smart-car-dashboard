@@ -59,12 +59,17 @@ interface Address {
     houseNumber: string | null; // 番地
 }
 
+interface MusicItemData extends BaseNormalizedData {
+    type: 'musicItem';
+    title: string | null;
+}
+
 interface WebsiteData extends BaseNormalizedData {
     type: 'website';
     title: string | null;
 }
 
-type NormalizedData = LocationData | WebsiteData;
+type NormalizedData = LocationData | MusicItemData | WebsiteData;
 
 // We want to extend NormalizedData but it's not allowed
 interface Item extends BaseNormalizedData {
@@ -180,6 +185,8 @@ const normalize = (rawData: RawData): Promise<NormalizedData> => {
         return normalizeAppleMapsLocation(rawData, url);
     } else if (url.startsWith('https://goo.gl/maps/')) {
         return normalizeGoogleMapsLocation(rawData, url);
+    } else if (url.startsWith('https://music.apple.com/')) {
+        return normalizeAppleMusicItem(rawData, url);
     } else {
         return normalizeWebpage(rawData, url);
     }
@@ -383,6 +390,22 @@ const normalizeGoogleMapsAddressComponents = (rawAddressComponents: object[]): A
     };
 }
 
+const normalizeAppleMusicItem = async (rawData: RawData, url: string): Promise<MusicItemData> => {
+    let title = rawData['public.plain-text'];
+
+    if (!title) {
+        const responseBody = await request.get(url);
+        const document = libxmljs.parseHtml(responseBody);
+        title = document.get('//head/title')?.text().trim();
+    }
+
+    return {
+        type: 'musicItem',
+        title: title || null,
+        url: url
+    };
+};
+
 const normalizeWebpage = async (rawData: RawData, url: string): Promise<WebsiteData> => {
     let title = rawData['public.plain-text'];
 
@@ -430,6 +453,12 @@ const makeNotificationContent = (item: Item): admin.messaging.Aps => {
             alert = {
                 title: '目的地',
                 body: normalizedData.name || undefined
+            }
+            break;
+        case 'musicItem':
+            alert = {
+                title: '音楽',
+                body: normalizedData.title || normalizedData.url
             }
             break;
         case 'website':

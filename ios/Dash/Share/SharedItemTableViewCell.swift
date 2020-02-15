@@ -48,6 +48,12 @@ class SharedItemTableViewCell: UITableViewCell {
                 iconBackgroundView.backgroundColor = UIColor(named: "Location Icon Color")
                 nameLabel.text = location.name
                 detailLabel.text = location.formattedAddress ?? location.address.country
+            case let musicItem as MusicItem:
+                iconType = .template
+                iconImageView.image = UIImage(systemName: "music.note")
+                iconBackgroundView.backgroundColor = .systemPink
+                nameLabel.text = musicItem.title
+                detailLabel.text = musicItem.url.absoluteString
             case let website as Website:
                 setGenericWebsiteIcon()
 

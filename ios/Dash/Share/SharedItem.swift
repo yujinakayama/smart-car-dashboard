@@ -47,6 +47,7 @@ struct SharedItem {
 
     enum ItemType: String {
         case location
+        case musicItem
         case website
         case unknown
 
@@ -67,6 +68,8 @@ struct SharedItem {
         switch type {
         case .location:
             return try decoder.decode(Location.self, from: dictionary)
+        case .musicItem:
+            return try decoder.decode(MusicItem.self, from: dictionary)
         case .website:
             return try decoder.decode(Website.self, from: dictionary)
         case .unknown:
@@ -81,6 +84,8 @@ struct SharedItem {
         switch type {
         case .location:
             return try decoder.decode(Location.self, from: dictionary)
+        case .musicItem:
+            return try decoder.decode(MusicItem.self, from: dictionary)
         case .website:
             return try decoder.decode(Website.self, from: dictionary)
         case .unknown:

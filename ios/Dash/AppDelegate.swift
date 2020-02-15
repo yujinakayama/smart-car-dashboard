@@ -11,6 +11,7 @@ import CoreLocation
 import FirebaseCore
 import FirebaseMessaging
 import GoogleSignIn
+import StoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -26,6 +27,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         UserNotificationCenter.shared.setUp()
 
         locationManager.requestWhenInUseAuthorization()
+
+        SKCloudServiceController.requestAuthorization { (authorizationStatus) in
+            logger.info(authorizationStatus)
+        }
 
         return true
     }
