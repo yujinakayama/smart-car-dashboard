@@ -11,9 +11,20 @@ interface RawData {
     'public.url'?: string;
     'public.plain-text'?: string;
     'com.apple.mapkit.map-item'?: {
-        coordinate: {
-            latitude: number;
-            longitude: number;
+        placemark: {
+            coordinate: {
+                latitude: number;
+                longitude: number;
+            };
+            isoCountryCode: string | null;
+            country: string | null;
+            postalCode: string | null;
+            administrativeArea: string | null;
+            subAdministrativeArea: string | null;
+            locality: string | null;
+            subLocality: string | null;
+            thoroughfare: string | null;
+            subThoroughfare: string | null;
         };
         name: string | null;
         phoneNumber: string | null;
@@ -128,7 +139,7 @@ const normalizeAppleMapsLocation = async (rawData: RawData, url: string): Promis
 
     return {
         type: 'location',
-        coordinate: mapItem.coordinate,
+        coordinate: mapItem.placemark.coordinate,
         name: mapItem.name,
         websiteURL: mapItem.url,
         url: url

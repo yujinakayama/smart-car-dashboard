@@ -103,9 +103,20 @@ extension SharingItem {
 
         public func add(_ mapItem: MKMapItem) {
             let dictionary = [
-                "coordinate": [
-                    "latitude": mapItem.placemark.coordinate.latitude,
-                    "longitude": mapItem.placemark.coordinate.longitude
+                "placemark": [
+                    "coordinate": [
+                        "latitude": mapItem.placemark.coordinate.latitude,
+                        "longitude": mapItem.placemark.coordinate.longitude
+                    ],
+                    "isoCountryCode": mapItem.placemark.isoCountryCode as Any,
+                    "country": mapItem.placemark.country as Any,
+                    "postalCode": mapItem.placemark.postalCode as Any,
+                    "administrativeArea": mapItem.placemark.administrativeArea as Any,
+                    "subAdministrativeArea": mapItem.placemark.subAdministrativeArea as Any,
+                    "locality": mapItem.placemark.locality as Any,
+                    "subLocality": mapItem.placemark.subLocality as Any,
+                    "thoroughfare": mapItem.placemark.thoroughfare as Any,
+                    "subThoroughfare": mapItem.placemark.subThoroughfare as Any
                 ],
                 "name": mapItem.name as Any,
                 "phoneNumber": mapItem.phoneNumber as Any,
