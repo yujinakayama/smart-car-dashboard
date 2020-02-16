@@ -78,13 +78,25 @@ class MapViewController: UIViewController, MKMapViewDelegate, SignInWithAppleVie
     @IBAction func pickUpButtonDidTap() {
         pickUpButton.startAnimation()
 
-        let currentUserLocation = mapView.userLocation
+        let location = Location(coordinate: mapView.userLocation.coordinate, name: Account.default.givenName)
 
+        location.mapItem { (result) in
+            switch result {
+            case .success(let mapItem):
+                self.share(mapItem: mapItem, url: location.appleMapsURL)
+            case .failure:
+                self.pickUpButton.stopAnimation(animationStyle: .shake, revertAfterDelay: 1)
+            }
+        }
+    }
+
+    func share(mapItem: MKMapItem, url: URL) {
         let encoder = SharingItem.Encoder()
-        encoder.add(mapItem(for: currentUserLocation))
-        encoder.add(appleMapsURL(for: currentUserLocation, name: Account.default.givenName))
+        encoder.add(mapItem)
+        encoder.add(url)
 
         let sharingItem = SharingItem(encoder: encoder)
+
         sharingItem.share { (error) in
             if error != nil {
                 self.pickUpButton.stopAnimation(animationStyle: .shake, revertAfterDelay: 1)
@@ -94,28 +106,5 @@ class MapViewController: UIViewController, MKMapViewDelegate, SignInWithAppleVie
                 }
             }
         }
-    }
-
-    func mapItem(for userLocation: MKUserLocation) -> MKMapItem {
-        let placemark = MKPlacemark(coordinate: userLocation.coordinate)
-        let mapItem = MKMapItem(placemark: placemark)
-        mapItem.name = Account.default.givenName
-        return mapItem
-    }
-
-    func appleMapsURL(for userLocation: MKUserLocation, name: String?) -> URL {
-        let coordinate = userLocation.coordinate
-
-        var components = URLComponents(string: "https://maps.apple.com/")!
-
-        var queryItems = [URLQueryItem(name: "ll", value: "\(coordinate.latitude),\(coordinate.longitude)")]
-
-        if let name = name {
-            queryItems.append(URLQueryItem(name: "q", value: name))
-        }
-
-        components.queryItems = queryItems
-
-        return components.url!
     }
 }
