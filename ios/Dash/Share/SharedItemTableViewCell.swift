@@ -85,7 +85,7 @@ class SharedItemTableViewCell: UITableViewCell {
         }
 
         nameLabel.text = musicItem.name
-        detailLabel.text = musicItem.url.host
+        detailLabel.text = musicItem.creator
     }
 
     private func configureView(for website: Website) {

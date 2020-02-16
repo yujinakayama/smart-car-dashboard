@@ -14,6 +14,7 @@ class MusicItem: SharedItemProtocol {
     var firebaseDocument: DocumentReference?
 
     let artworkURLTemplate: String?
+    let creator: String?
     let id: String?
     let name: String?
     let url: URL

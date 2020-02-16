@@ -90,6 +90,7 @@ export async function normalizeAppleMusicItem(inputData: InputData): Promise<Mus
     const data: MusicItemData = {
         type: 'musicItem',
         artworkURLTemplate: null,
+        creator: null,
         id: null,
         name: null,
         url: inputData.url
@@ -106,6 +107,7 @@ export async function normalizeAppleMusicItem(inputData: InputData): Promise<Mus
 
 interface AppleMusicData {
     artworkURLTemplate: string | null,
+    creator: string | null;
     id: string,
     name: string
 }
@@ -124,6 +126,7 @@ async function fetchDataFromAppleMusic(webURL: string): Promise<AppleMusicData |
         const song = (await client.songs.get(songID, storefront)).data[0];
         return {
             artworkURLTemplate: song.attributes!.artwork.url,
+            creator: song.attributes!.artistName,
             id: song.id,
             name: song.attributes!.name
         };
@@ -134,6 +137,7 @@ async function fetchDataFromAppleMusic(webURL: string): Promise<AppleMusicData |
             const album = (await client.albums.get(id, storefront)).data[0];
             return {
                 artworkURLTemplate: album.attributes!.artwork?.url || null,
+                creator: album.attributes!.artistName,
                 id: album.id,
                 name: album.attributes!.name
             };
@@ -141,6 +145,7 @@ async function fetchDataFromAppleMusic(webURL: string): Promise<AppleMusicData |
             const artist = (await client.artists.get(id, storefront)).data[0];
             return {
                 artworkURLTemplate: null,
+                creator: null,
                 id: artist.id,
                 name: artist.attributes!.name
             };
@@ -148,6 +153,7 @@ async function fetchDataFromAppleMusic(webURL: string): Promise<AppleMusicData |
             const musicVideo = (await client.musicVideos.get(id, storefront)).data[0];
             return {
                 artworkURLTemplate: musicVideo.attributes!.artwork.url,
+                creator: musicVideo.attributes!.artistName,
                 id: musicVideo.id,
                 name: musicVideo.attributes!.name
             };
@@ -156,6 +162,7 @@ async function fetchDataFromAppleMusic(webURL: string): Promise<AppleMusicData |
             console.log(playlist);
             return {
                 artworkURLTemplate: playlist.attributes!.artwork?.url || null,
+                creator: playlist.attributes!.curatorName || null,
                 id: playlist.id,
                 name: playlist.attributes!.name
             };
@@ -163,6 +170,7 @@ async function fetchDataFromAppleMusic(webURL: string): Promise<AppleMusicData |
             const station = (await client.stations.get(id, storefront)).data[0];
             return {
                 artworkURLTemplate: station.attributes!.artwork.url,
+                creator: null,
                 id: station.id,
                 name: station.attributes!.name
             };
