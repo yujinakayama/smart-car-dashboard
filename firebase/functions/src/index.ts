@@ -423,14 +423,7 @@ const normalizeWebpage = async (rawData: RawData, url: string): Promise<WebsiteD
 };
 
 const notify = (item: Item): Promise<any> => {
-    const content = makeNotificationContent(item);
-
-    const payload: NotificationPayload = {
-        aps: content,
-        foregroundPresentationOptions: UNNotificationPresentationOptions.sound,
-        item: item,
-        notificationType: 'share'
-    };
+    const payload = makeNotificationPayload(item);
 
     const message = {
         topic: 'Dash',
@@ -443,10 +436,11 @@ const notify = (item: Item): Promise<any> => {
     return admin.messaging().send(message);
 };
 
-const makeNotificationContent = (item: Item): admin.messaging.Aps => {
+const makeNotificationPayload = (item: Item): NotificationPayload => {
     const normalizedData = item as unknown as NormalizedData;
 
-    let alert: admin.messaging.ApsAlert
+    let alert: admin.messaging.ApsAlert;
+    let foregroundPresentationOptions: UNNotificationPresentationOptions;
 
     switch (normalizedData.type) {
         case 'location':
@@ -454,25 +448,33 @@ const makeNotificationContent = (item: Item): admin.messaging.Aps => {
                 title: '目的地',
                 body: normalizedData.name || undefined
             }
+            foregroundPresentationOptions = UNNotificationPresentationOptions.sound;
             break;
         case 'musicItem':
             alert = {
                 title: '音楽',
                 body: normalizedData.title || normalizedData.url
             }
+            foregroundPresentationOptions = UNNotificationPresentationOptions.sound | UNNotificationPresentationOptions.alert;
             break;
         case 'website':
             alert = {
                 title: 'Webサイト',
                 body: normalizedData.title || normalizedData.url
             }
+            foregroundPresentationOptions = UNNotificationPresentationOptions.sound;
             break;
     }
 
     return {
-        alert: alert,
-        sound: 'Share.wav'
-    }
+        aps: {
+            alert: alert,
+            sound: 'Share.wav'
+        },
+        foregroundPresentationOptions: foregroundPresentationOptions,
+        item: item,
+        notificationType: 'share'
+    };
 }
 
 const addItemToFirestore = async (item: Item): Promise<any> => {
