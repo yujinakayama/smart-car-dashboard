@@ -19,7 +19,7 @@ enum UNNotificationPresentationOptions {
     alert = 1 << 2
 }
 
-export const notify = (item: Item): Promise<any> => {
+export function notify(item: Item): Promise<any> {
     const payload = makeNotificationPayload(item);
 
     const message = {
@@ -31,9 +31,9 @@ export const notify = (item: Item): Promise<any> => {
     };
 
     return admin.messaging().send(message);
-};
+}
 
-const makeNotificationPayload = (item: Item): NotificationPayload => {
+function makeNotificationPayload(item: Item): NotificationPayload {
     const normalizedData = item as unknown as NormalizedData;
 
     let alert: admin.messaging.ApsAlert;

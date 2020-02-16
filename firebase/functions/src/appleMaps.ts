@@ -1,7 +1,7 @@
 import { InputData } from './inputData';
 import { LocationData } from './normalizedData';
 
-export const normalizeAppleMapsLocation = async (inputData: InputData): Promise<LocationData> => {
+export async function normalizeAppleMapsLocation(inputData: InputData): Promise<LocationData> {
     const mapItem = inputData.rawData['com.apple.mapkit.map-item']!;
 
     return {
@@ -19,4 +19,4 @@ export const normalizeAppleMapsLocation = async (inputData: InputData): Promise<
         websiteURL: mapItem.url,
         url: inputData.url
     };
-};
+}

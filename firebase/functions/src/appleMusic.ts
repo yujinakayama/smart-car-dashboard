@@ -4,7 +4,7 @@ import * as libxmljs from 'libxmljs';
 import { InputData } from './inputData';
 import { MusicItemData } from './normalizedData';
 
-export const normalizeAppleMusicItem = async (inputData: InputData): Promise<MusicItemData> => {
+export async function normalizeAppleMusicItem(inputData: InputData): Promise<MusicItemData> {
     let title = inputData.rawData['public.plain-text'];
 
     if (!title) {
@@ -18,4 +18,4 @@ export const normalizeAppleMusicItem = async (inputData: InputData): Promise<Mus
         title: title || null,
         url: inputData.url
     };
-};
+}

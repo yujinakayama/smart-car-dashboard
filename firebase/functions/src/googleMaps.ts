@@ -67,7 +67,7 @@ const googleMapsAddressComponentKeys = [
 
 const googleMapsClient = maps.createClient({ key: functions.config().googlemaps.api_key, Promise: Promise });
 
-export const normalizeGoogleMapsLocation = async (inputData: InputData): Promise<LocationData> => {
+export async function normalizeGoogleMapsLocation(inputData: InputData): Promise<LocationData> {
     const expandedURL: URL = await new Promise((resolve, reject) => {
         https.get(inputData.url, (response) => {
             if (response.headers.location) {
@@ -96,11 +96,11 @@ export const normalizeGoogleMapsLocation = async (inputData: InputData): Promise
     }
 
     throw new Error('Cannot find details for the Google Maps URL');
-};
+}
 
 // Point of Interests
 // https://stackoverflow.com/a/47042514/784241
-const normalizeGoogleMapsLocationWithFtid = async (expandedURL: URL): Promise<LocationData | null> => {
+async function normalizeGoogleMapsLocationWithFtid(expandedURL: URL): Promise<LocationData | null> {
     const ftid = expandedURL.searchParams.get('ftid');
 
     if (!ftid) {
@@ -108,9 +108,9 @@ const normalizeGoogleMapsLocationWithFtid = async (expandedURL: URL): Promise<Lo
     }
 
     return normalizeGoogleMapsLocationWithIdentifier({ ftid: ftid }, expandedURL);
-};
+}
 
-const normalizeGoogleMapsLocationWithCoordinate = async (expandedURL: URL, inputData: InputData): Promise<LocationData | null> => {
+async function normalizeGoogleMapsLocationWithCoordinate(expandedURL: URL, inputData: InputData): Promise<LocationData | null> {
     const query = expandedURL.searchParams.get('q');
 
     if (!query) {
@@ -143,10 +143,10 @@ const normalizeGoogleMapsLocationWithCoordinate = async (expandedURL: URL, input
         url: expandedURL.toString(),
         websiteURL: null
     };
-};
+}
 
 // Last resort
-const normalizeGoogleMapsLocationWithQuery = async (expandedURL: URL): Promise<LocationData | null> => {
+async function normalizeGoogleMapsLocationWithQuery(expandedURL: URL): Promise<LocationData | null> {
     const query = expandedURL.searchParams.get('q');
 
     if (!query) {
@@ -168,7 +168,7 @@ const normalizeGoogleMapsLocationWithQuery = async (expandedURL: URL): Promise<L
     return normalizeGoogleMapsLocationWithIdentifier({ placeid: place.place_id }, expandedURL);
 }
 
-const normalizeGoogleMapsLocationWithIdentifier = async (id: { placeid?: string, ftid?: string }, expandedURL: URL): Promise<LocationData | null> => {
+async function normalizeGoogleMapsLocationWithIdentifier(id: { placeid?: string, ftid?: string }, expandedURL: URL): Promise<LocationData | null> {
     if (!id.placeid && !id.ftid) {
         throw new Error('Either placeid or ftid must be given');
     }
@@ -203,7 +203,7 @@ const normalizeGoogleMapsLocationWithIdentifier = async (id: { placeid?: string,
     };
 }
 
-const normalizeGoogleMapsAddressComponents = (rawAddressComponents: object[]): Address => {
+function normalizeGoogleMapsAddressComponents(rawAddressComponents: object[]): Address {
     const components: GoogleMapsAddressComponents = rawAddressComponents.reverse().reduce((object: any, rawComponent: any) => {
         const key = rawComponent.types.find((type: string) => googleMapsAddressComponentKeys.includes(type))
         if (!object[key]) {

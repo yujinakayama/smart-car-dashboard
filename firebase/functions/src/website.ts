@@ -5,7 +5,7 @@ import { InputData } from './inputData';
 import { WebsiteData } from './normalizedData';
 import { urlPattern } from './util';
 
-export const normalizeWebpage = async (inputData: InputData): Promise<WebsiteData> => {
+export async function normalizeWebpage(inputData: InputData): Promise<WebsiteData> {
     let title = inputData.rawData['public.plain-text'];
 
     if (!title || urlPattern.test(title)) {
@@ -19,4 +19,4 @@ export const normalizeWebpage = async (inputData: InputData): Promise<WebsiteDat
         title: title || null,
         url: inputData.url
     };
-};
+}

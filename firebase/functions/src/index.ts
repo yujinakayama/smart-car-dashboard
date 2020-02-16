@@ -32,7 +32,7 @@ export const share = functions.region('asia-northeast1').https.onRequest(async (
     functionResponse.sendStatus(200);
 });
 
-const normalize = (inputData: InputData): Promise<NormalizedData> => {
+function normalize(inputData: InputData): Promise<NormalizedData> {
     if (inputData.rawData['com.apple.mapkit.map-item']) {
         return normalizeAppleMapsLocation(inputData);
     } else if (inputData.url.startsWith('https://goo.gl/maps/')) {
@@ -44,7 +44,7 @@ const normalize = (inputData: InputData): Promise<NormalizedData> => {
     }
 };
 
-const addItemToFirestore = async (item: Item): Promise<any> => {
+async function addItemToFirestore(item: Item): Promise<any> {
     const document = {
         creationDate: admin.firestore.FieldValue.serverTimestamp(),
         ...item

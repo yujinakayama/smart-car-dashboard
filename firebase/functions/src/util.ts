@@ -1,6 +1,6 @@
 import * as urlRegex from 'url-regex';
 
-export const convertAlphanumericsToAscii = (text: string | null | undefined): string | null => {
+export function convertAlphanumericsToAscii(text: string | null | undefined): string | null {
     if (!text) {
         return null;
     }
@@ -10,6 +10,6 @@ export const convertAlphanumericsToAscii = (text: string | null | undefined): st
     });
 
     return replaced.replace(/−/g, '-');
-};
+}
 
 export const urlPattern = urlRegex({ strict: true });
