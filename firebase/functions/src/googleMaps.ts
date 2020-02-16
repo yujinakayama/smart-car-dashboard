@@ -67,6 +67,10 @@ const googleMapsAddressComponentKeys = [
 
 const googleMapsClient = maps.createClient({ key: functions.config().googlemaps.api_key, Promise: Promise });
 
+export function isGoogleMapsLocation(inputData: InputData): boolean {
+    return inputData.url.toString().startsWith('https://goo.gl/maps/');
+}
+
 export async function normalizeGoogleMapsLocation(inputData: InputData): Promise<LocationData> {
     const expandedURL: URL = await new Promise((resolve, reject) => {
         https.get(inputData.url, (response) => {

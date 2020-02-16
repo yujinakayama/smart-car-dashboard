@@ -15,6 +15,11 @@ interface AppleMusicData {
 
 const client = new Client(functions.config().apple_music.developer_token)
 
+export function isAppleMusicItem(inputData: InputData): boolean {
+    let url = inputData.url;
+    return url.host == 'music.apple.com' && url.pathname.split('/').length >= 5
+}
+
 export async function normalizeAppleMusicItem(inputData: InputData): Promise<MusicItemData> {
     const data: MusicItemData = {
         type: 'musicItem',
@@ -36,10 +41,6 @@ export async function normalizeAppleMusicItem(inputData: InputData): Promise<Mus
 
 async function fetchDataFromAppleMusic(webURL: URL): Promise<AppleMusicData | null> {
     const [, storefront, type, , id] = webURL.pathname.split('/');
-
-    if (!storefront || !type || !id) {
-        return null;
-    }
 
     const songID = webURL.searchParams.get('i')
 
