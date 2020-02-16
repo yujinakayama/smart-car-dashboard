@@ -1,6 +1,32 @@
 import { urlPattern } from './util';
 
-export interface RawData {
+export class InputData {
+    rawData: RawInputData;
+    url: string;
+
+    constructor(rawData: RawInputData) {
+        this.rawData = rawData;
+        this.url = this.extractURL();
+    }
+
+    private extractURL(): string {
+        if (this.rawData['public.url']) {
+            return this.rawData['public.url'];
+        }
+
+        if (this.rawData['public.plain-text']) {
+            const urls = this.rawData['public.plain-text'].match(urlPattern);
+
+            if (urls && urls[0]) {
+                return urls[0];
+            }
+        }
+
+        throw new Error('RawInputData has no URL');
+    }
+}
+
+export interface RawInputData {
     'public.url'?: string;
     'public.plain-text'?: string;
     'com.apple.mapkit.map-item'?: {
@@ -24,20 +50,4 @@ export interface RawData {
         pointOfInterestCategory: string | null;
         url: string | null;
     };
-}
-
-export const extractURL = (rawData: RawData): string | null => {
-    if (rawData['public.url']) {
-        return rawData['public.url']
-    }
-
-    if (rawData['public.plain-text']) {
-        const urls = rawData['public.plain-text'].match(urlPattern);
-
-        if (urls && urls[0]) {
-            return urls[0];
-        }
-    }
-
-    return null;
 }

@@ -1,8 +1,8 @@
-import { RawData } from './rawData';
+import { InputData } from './inputData';
 import { LocationData } from './normalizedData';
 
-export const normalizeAppleMapsLocation = async (rawData: RawData, url: string): Promise<LocationData> => {
-    const mapItem = rawData['com.apple.mapkit.map-item']!;
+export const normalizeAppleMapsLocation = async (inputData: InputData): Promise<LocationData> => {
+    const mapItem = inputData.rawData['com.apple.mapkit.map-item']!;
 
     return {
         type: 'location',
@@ -17,6 +17,6 @@ export const normalizeAppleMapsLocation = async (rawData: RawData, url: string):
         coordinate: mapItem.placemark.coordinate,
         name: mapItem.name,
         websiteURL: mapItem.url,
-        url: url
+        url: inputData.url
     };
 };

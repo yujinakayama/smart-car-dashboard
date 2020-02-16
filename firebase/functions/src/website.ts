@@ -1,15 +1,15 @@
 import * as request from 'request-promise';
 import * as libxmljs from 'libxmljs';
 
-import { RawData } from './rawData';
+import { InputData } from './inputData';
 import { WebsiteData } from './normalizedData';
 import { urlPattern } from './util';
 
-export const normalizeWebpage = async (rawData: RawData, url: string): Promise<WebsiteData> => {
-    let title = rawData['public.plain-text'];
+export const normalizeWebpage = async (inputData: InputData): Promise<WebsiteData> => {
+    let title = inputData.rawData['public.plain-text'];
 
     if (!title || urlPattern.test(title)) {
-        const responseBody = await request.get(url);
+        const responseBody = await request.get(inputData.url);
         const document = libxmljs.parseHtml(responseBody);
         title = document.get('//head/title')?.text().trim();
     }
@@ -17,6 +17,6 @@ export const normalizeWebpage = async (rawData: RawData, url: string): Promise<W
     return {
         type: 'website',
         title: title || null,
-        url: url
+        url: inputData.url
     };
 };

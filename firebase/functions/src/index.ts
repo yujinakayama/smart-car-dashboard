@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
-import { RawData, extractURL } from './rawData';
+import { RawInputData, InputData } from './inputData';
 import { NormalizedData } from './normalizedData';
 import { Item } from './item';
 import { normalizeAppleMapsLocation } from './appleMaps';
@@ -11,11 +11,12 @@ import { normalizeWebpage } from './website';
 import { notify } from './notification';
 
 export const share = functions.region('asia-northeast1').https.onRequest(async (functionRequest, functionResponse) => {
-    const rawData = functionRequest.body as RawData;
+    const rawData = functionRequest.body as RawInputData;
+    const inputData = new InputData(rawData);
 
     console.log('rawData:', rawData);
 
-    const normalizedData = await normalize(rawData);
+    const normalizedData = await normalize(inputData);
 
     console.log('normalizedData:', normalizedData);
 
@@ -31,21 +32,15 @@ export const share = functions.region('asia-northeast1').https.onRequest(async (
     functionResponse.sendStatus(200);
 });
 
-const normalize = (rawData: RawData): Promise<NormalizedData> => {
-    const url = extractURL(rawData);
-
-    if (!url) {
-        throw new Error('Item has no URL');
-    }
-
-    if (rawData['com.apple.mapkit.map-item']) {
-        return normalizeAppleMapsLocation(rawData, url);
-    } else if (url.startsWith('https://goo.gl/maps/')) {
-        return normalizeGoogleMapsLocation(rawData, url);
-    } else if (url.startsWith('https://music.apple.com/')) {
-        return normalizeAppleMusicItem(rawData, url);
+const normalize = (inputData: InputData): Promise<NormalizedData> => {
+    if (inputData.rawData['com.apple.mapkit.map-item']) {
+        return normalizeAppleMapsLocation(inputData);
+    } else if (inputData.url.startsWith('https://goo.gl/maps/')) {
+        return normalizeGoogleMapsLocation(inputData);
+    } else if (inputData.url.startsWith('https://music.apple.com/')) {
+        return normalizeAppleMusicItem(inputData);
     } else {
-        return normalizeWebpage(rawData, url);
+        return normalizeWebpage(inputData);
     }
 };
 

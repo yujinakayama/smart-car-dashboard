@@ -1,14 +1,14 @@
 import * as request from 'request-promise';
 import * as libxmljs from 'libxmljs';
 
-import { RawData } from './rawData';
+import { InputData } from './inputData';
 import { MusicItemData } from './normalizedData';
 
-export const normalizeAppleMusicItem = async (rawData: RawData, url: string): Promise<MusicItemData> => {
-    let title = rawData['public.plain-text'];
+export const normalizeAppleMusicItem = async (inputData: InputData): Promise<MusicItemData> => {
+    let title = inputData.rawData['public.plain-text'];
 
     if (!title) {
-        const responseBody = await request.get(url);
+        const responseBody = await request.get(inputData.url);
         const document = libxmljs.parseHtml(responseBody);
         title = document.get('//head/title')?.text().trim();
     }
@@ -16,6 +16,6 @@ export const normalizeAppleMusicItem = async (rawData: RawData, url: string): Pr
     return {
         type: 'musicItem',
         title: title || null,
-        url: url
+        url: inputData.url
     };
 };

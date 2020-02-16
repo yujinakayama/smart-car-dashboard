@@ -4,7 +4,7 @@ import * as https from 'https';
 
 import { URL } from 'url';
 
-import { RawData } from './rawData';
+import { InputData } from './inputData';
 import { LocationData, Address } from './normalizedData';
 import { convertAlphanumericsToAscii } from './util'
 
@@ -67,9 +67,9 @@ const googleMapsAddressComponentKeys = [
 
 const googleMapsClient = maps.createClient({ key: functions.config().googlemaps.api_key, Promise: Promise });
 
-export const normalizeGoogleMapsLocation = async (rawData: RawData, url: string): Promise<LocationData> => {
+export const normalizeGoogleMapsLocation = async (inputData: InputData): Promise<LocationData> => {
     const expandedURL: URL = await new Promise((resolve, reject) => {
-        https.get(url, (response) => {
+        https.get(inputData.url, (response) => {
             if (response.headers.location) {
                 resolve(new URL(response.headers.location));
             } else {
@@ -85,7 +85,7 @@ export const normalizeGoogleMapsLocation = async (rawData: RawData, url: string)
         return locationData;
     }
 
-    locationData = await normalizeGoogleMapsLocationWithCoordinate(expandedURL, rawData);
+    locationData = await normalizeGoogleMapsLocationWithCoordinate(expandedURL, inputData);
     if (locationData) {
         return locationData;
     }
@@ -110,7 +110,7 @@ const normalizeGoogleMapsLocationWithFtid = async (expandedURL: URL): Promise<Lo
     return normalizeGoogleMapsLocationWithIdentifier({ ftid: ftid }, expandedURL);
 };
 
-const normalizeGoogleMapsLocationWithCoordinate = async (expandedURL: URL, rawData: RawData): Promise<LocationData | null> => {
+const normalizeGoogleMapsLocationWithCoordinate = async (expandedURL: URL, inputData: InputData): Promise<LocationData | null> => {
     const query = expandedURL.searchParams.get('q');
 
     if (!query) {
@@ -139,7 +139,7 @@ const normalizeGoogleMapsLocationWithCoordinate = async (expandedURL: URL, rawDa
             latitude: place.geometry.location.lat,
             longitude: place.geometry.location.lng
         },
-        name: convertAlphanumericsToAscii(rawData['public.plain-text']),
+        name: convertAlphanumericsToAscii(inputData.rawData['public.plain-text']),
         url: expandedURL.toString(),
         websiteURL: null
     };
