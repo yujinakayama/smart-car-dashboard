@@ -80,17 +80,17 @@ export async function normalizeGoogleMapsLocation(inputData: InputData): Promise
 
     let locationData: LocationData | null;
 
-    locationData = await normalizeGoogleMapsLocationWithFtid(expandedURL);
+    locationData = await normalizeLocationWithFtid(expandedURL);
     if (locationData) {
         return locationData;
     }
 
-    locationData = await normalizeGoogleMapsLocationWithCoordinate(expandedURL, inputData);
+    locationData = await normalizeLocationWithCoordinate(expandedURL, inputData);
     if (locationData) {
         return locationData;
     }
 
-    locationData = await normalizeGoogleMapsLocationWithQuery(expandedURL);
+    locationData = await normalizeLocationWithQuery(expandedURL);
     if (locationData) {
         return locationData;
     }
@@ -100,17 +100,17 @@ export async function normalizeGoogleMapsLocation(inputData: InputData): Promise
 
 // Point of Interests
 // https://stackoverflow.com/a/47042514/784241
-async function normalizeGoogleMapsLocationWithFtid(expandedURL: URL): Promise<LocationData | null> {
+async function normalizeLocationWithFtid(expandedURL: URL): Promise<LocationData | null> {
     const ftid = expandedURL.searchParams.get('ftid');
 
     if (!ftid) {
         return null;
     }
 
-    return normalizeGoogleMapsLocationWithIdentifier({ ftid: ftid }, expandedURL);
+    return normalizeLocationWithIdentifier({ ftid: ftid }, expandedURL);
 }
 
-async function normalizeGoogleMapsLocationWithCoordinate(expandedURL: URL, inputData: InputData): Promise<LocationData | null> {
+async function normalizeLocationWithCoordinate(expandedURL: URL, inputData: InputData): Promise<LocationData | null> {
     const query = expandedURL.searchParams.get('q');
 
     if (!query) {
@@ -134,7 +134,7 @@ async function normalizeGoogleMapsLocationWithCoordinate(expandedURL: URL, input
 
     return {
         type: 'location',
-        address: normalizeGoogleMapsAddressComponents(place.address_components),
+        address: normalizeAddressComponents(place.address_components),
         coordinate: {
             latitude: place.geometry.location.lat,
             longitude: place.geometry.location.lng
@@ -146,7 +146,7 @@ async function normalizeGoogleMapsLocationWithCoordinate(expandedURL: URL, input
 }
 
 // Last resort
-async function normalizeGoogleMapsLocationWithQuery(expandedURL: URL): Promise<LocationData | null> {
+async function normalizeLocationWithQuery(expandedURL: URL): Promise<LocationData | null> {
     const query = expandedURL.searchParams.get('q');
 
     if (!query) {
@@ -165,10 +165,10 @@ async function normalizeGoogleMapsLocationWithQuery(expandedURL: URL): Promise<L
         return null;
     }
 
-    return normalizeGoogleMapsLocationWithIdentifier({ placeid: place.place_id }, expandedURL);
+    return normalizeLocationWithIdentifier({ placeid: place.place_id }, expandedURL);
 }
 
-async function normalizeGoogleMapsLocationWithIdentifier(id: { placeid?: string, ftid?: string }, expandedURL: URL): Promise<LocationData | null> {
+async function normalizeLocationWithIdentifier(id: { placeid?: string, ftid?: string }, expandedURL: URL): Promise<LocationData | null> {
     if (!id.placeid && !id.ftid) {
         throw new Error('Either placeid or ftid must be given');
     }
@@ -192,7 +192,7 @@ async function normalizeGoogleMapsLocationWithIdentifier(id: { placeid?: string,
 
     return {
         type: 'location',
-        address: normalizeGoogleMapsAddressComponents(place.address_components),
+        address: normalizeAddressComponents(place.address_components),
         coordinate: {
             latitude: place.geometry.location.lat,
             longitude: place.geometry.location.lng
@@ -203,7 +203,7 @@ async function normalizeGoogleMapsLocationWithIdentifier(id: { placeid?: string,
     };
 }
 
-function normalizeGoogleMapsAddressComponents(rawAddressComponents: object[]): Address {
+function normalizeAddressComponents(rawAddressComponents: object[]): Address {
     const components: GoogleMapsAddressComponents = rawAddressComponents.reverse().reduce((object: any, rawComponent: any) => {
         const key = rawComponent.types.find((type: string) => googleMapsAddressComponentKeys.includes(type))
         if (!object[key]) {
