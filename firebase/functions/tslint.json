@@ -10,7 +10,7 @@
     "ban-comma-operator": true,
 
     // Do not allow internal modules or namespaces . These are deprecated in favor of ES6 modules.
-    "no-namespace": true,
+    "no-namespace": false,
 
     // Do not allow parameters to be reassigned. To avoid bugs, developers should instead assign new values to new vars.
     "no-parameter-reassignment": true,
@@ -78,7 +78,7 @@
     // understand the warning and wants to deploy anyway.
 
     // Warn when an empty interface is defined. These are generally not useful.
-    "no-empty-interface": {"severity": "warning"},
+    "no-empty-interface": false,
 
     // Warn when an import will have side effects.
     "no-import-side-effect": {"severity": "warning"},

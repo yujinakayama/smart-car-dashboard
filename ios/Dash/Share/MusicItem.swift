@@ -13,29 +13,31 @@ import MediaPlayer
 class MusicItem: SharedItemProtocol {
     var firebaseDocument: DocumentReference?
 
-    let title: String?
+    let artworkURLTemplate: String?
+    let id: String?
+    let name: String?
     let url: URL
     let creationDate: Date?
 
     func open() {
-        guard let itemID = itemID else { return }
+        guard let id = id else { return }
 
         let player = MPMusicPlayerController.systemMusicPlayer
-        player.setQueue(with: MPMusicPlayerStoreQueueDescriptor(storeIDs: [itemID]))
+        player.setQueue(with: MPMusicPlayerStoreQueueDescriptor(storeIDs: [id]))
         player.play()
     }
 
-    var itemID: String? {
-        return songID ?? collectionID
+    func artworkURL(size: CGSize) -> URL? {
+        return artworkURL(width: Int(ceil(size.width)), height: Int(ceil(size.height)))
     }
 
-    var songID: String? {
-        let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
-        let queryItem = urlComponents?.queryItems?.first { $0.name == "i" }
-        return queryItem?.value
-    }
+    func artworkURL(width: Int, height: Int) -> URL? {
+        guard let urlTemplate = artworkURLTemplate else { return nil }
 
-    var collectionID: String? {
-        return url.pathComponents.last
+        let urlString = urlTemplate
+            .replacingOccurrences(of: "{w}", with: String(width))
+            .replacingOccurrences(of: "{h}", with: String(height))
+
+        return URL(string: urlString)
     }
 }

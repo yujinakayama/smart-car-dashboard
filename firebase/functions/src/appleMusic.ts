@@ -1,5 +1,5 @@
+import * as functions from 'firebase-functions';
 import * as request from 'request-promise';
-import * as libxmljs from 'libxmljs';
 
 import { URL } from 'url';
 
@@ -13,22 +13,6 @@ import { SongResponse } from './appleMusic/songResponse';
 import { MusicVideoResponse } from './appleMusic/musicVideoResponse';
 import { PlaylistResponse } from './appleMusic/playlistResponse';
 import { StationResponse } from './appleMusic/stationResponse';
-
-export async function normalizeAppleMusicItem(inputData: InputData): Promise<MusicItemData> {
-    let title = inputData.rawData['public.plain-text'];
-
-    if (!title) {
-        const responseBody = await request.get(inputData.url);
-        const document = libxmljs.parseHtml(responseBody);
-        title = document.get('//head/title')?.text().trim();
-    }
-
-    return {
-        type: 'musicItem',
-        title: title || null,
-        url: inputData.url
-    };
-}
 
 export class Client {
     configuration: ClientConfiguration
@@ -98,4 +82,91 @@ function parseJSONWithDateHandling(json: string) {
             return value;
         }
     });
+}
+
+const client = new Client(functions.config().apple_music.developer_token)
+
+export async function normalizeAppleMusicItem(inputData: InputData): Promise<MusicItemData> {
+    const data: MusicItemData = {
+        type: 'musicItem',
+        artworkURLTemplate: null,
+        id: null,
+        name: null,
+        url: inputData.url
+    };
+
+    const appleMusicData = await fetchDataFromAppleMusic(inputData.url);
+
+    if (!appleMusicData) {
+        return data;
+    }
+
+    return {...data, ...appleMusicData};
+}
+
+interface AppleMusicData {
+    artworkURLTemplate: string | null,
+    id: string,
+    name: string
+}
+
+async function fetchDataFromAppleMusic(webURL: string): Promise<AppleMusicData | null> {
+    const url = new URL(webURL);
+    const [, storefront, type, , id] = url.pathname.split('/');
+
+    if (!storefront || !type || !id) {
+        return null;
+    }
+
+    const songID = url.searchParams.get('i')
+
+    if (songID) {
+        const song = (await client.songs.get(songID, storefront)).data[0];
+        return {
+            artworkURLTemplate: song.attributes!.artwork.url,
+            id: song.id,
+            name: song.attributes!.name
+        };
+    }
+
+    switch (type) {
+        case 'album':
+            const album = (await client.albums.get(id, storefront)).data[0];
+            return {
+                artworkURLTemplate: album.attributes!.artwork?.url || null,
+                id: album.id,
+                name: album.attributes!.name
+            };
+        case 'artist':
+            const artist = (await client.artists.get(id, storefront)).data[0];
+            return {
+                artworkURLTemplate: null,
+                id: artist.id,
+                name: artist.attributes!.name
+            };
+        case 'music-video':
+            const musicVideo = (await client.musicVideos.get(id, storefront)).data[0];
+            return {
+                artworkURLTemplate: musicVideo.attributes!.artwork.url,
+                id: musicVideo.id,
+                name: musicVideo.attributes!.name
+            };
+        case 'playlist':
+            const playlist = (await client.playlists.get(id, storefront)).data[0];
+            console.log(playlist);
+            return {
+                artworkURLTemplate: playlist.attributes!.artwork?.url || null,
+                id: playlist.id,
+                name: playlist.attributes!.name
+            };
+        case 'station':
+            const station = (await client.stations.get(id, storefront)).data[0];
+            return {
+                artworkURLTemplate: station.attributes!.artwork.url,
+                id: station.id,
+                name: station.attributes!.name
+            };
+        default:
+            return null;
+    }
 }

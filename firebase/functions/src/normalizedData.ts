@@ -26,7 +26,9 @@ export interface Address {
 
 export interface MusicItemData extends BaseNormalizedData {
     type: 'musicItem';
-    title: string | null;
+    artworkURLTemplate: string | null;
+    id: string | null;
+    name: string | null;
 }
 
 export interface WebsiteData extends BaseNormalizedData {

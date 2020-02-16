@@ -15,7 +15,9 @@ class SharedItemTableViewCell: UITableViewCell {
         case image
     }
 
-    @IBOutlet weak var iconBackgroundView: UIView!
+    static let screenScale = UIScreen.main.scale
+
+    @IBOutlet weak var iconBackgroundView: BorderedView!
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
@@ -25,7 +27,11 @@ class SharedItemTableViewCell: UITableViewCell {
 
     @IBOutlet var iconImageViewNoMarginConstraints: [NSLayoutConstraint]!
 
+    var defaultIconCornerRadius: CGFloat!
+
     override func awakeFromNib() {
+        defaultIconCornerRadius = iconBackgroundView.cornerRadius
+
         // Not sure why but constraints are reset to Storyboard's state when app goes background and back to foreground
         // https://stackoverflow.com/questions/58376388/constraints-resets-when-app-is-going-in-background-ios-13
         NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { [weak self] (notification) in
@@ -41,6 +47,8 @@ class SharedItemTableViewCell: UITableViewCell {
 
     var item: SharedItemProtocol? {
         didSet {
+            iconBackgroundView.cornerRadius = defaultIconCornerRadius
+
             switch item {
             case let location as Location:
                 configureView(for: location)
@@ -68,12 +76,22 @@ class SharedItemTableViewCell: UITableViewCell {
         iconImageView.image = UIImage(systemName: "music.note")
         iconBackgroundView.backgroundColor = .systemPink
 
-        nameLabel.text = musicItem.title
+        if let artworkURL = musicItem.artworkURL(size: iconImagePixelSize) {
+            setRemoteImage(url: artworkURL) { (error) in
+                if error == nil {
+                    self.iconBackgroundView.cornerRadius = 2
+                }
+            }
+        }
+
+        nameLabel.text = musicItem.name
         detailLabel.text = musicItem.url.host
     }
 
     private func configureView(for website: Website) {
-        setTemplateWebsiteIcon()
+        iconType = .template
+        iconImageView.image = UIImage(systemName: "safari.fill")
+        iconBackgroundView.backgroundColor = .systemBlue
 
         website.icon.getURL { (iconURL) in
             if let iconURL = iconURL {
@@ -94,21 +112,23 @@ class SharedItemTableViewCell: UITableViewCell {
         detailLabel.text = unknownItem?.url.absoluteString
     }
 
-    private func setTemplateWebsiteIcon() {
-        iconType = .template
-        iconImageView.image = UIImage(systemName: "safari.fill")
-        iconBackgroundView.backgroundColor = .systemBlue
-    }
+    private func setRemoteImage(url: URL, completionHandler: ((Error?) -> Void)? = nil) {
+        let originalIconType = iconType
+        let originalImage = iconImageView.image
+        let originalBackgroundColor = iconBackgroundView.backgroundColor
 
-    private func setRemoteImage(url: URL) {
         DispatchQueue.main.async {
             self.iconImageView.pin_setImage(from: url) { (result) in
                 if result.error == nil {
                     self.iconType = .image
                     self.iconBackgroundView.backgroundColor = .white
                 } else {
-                    self.setTemplateWebsiteIcon()
+                    self.iconType = originalIconType
+                    self.iconImageView.image = originalImage
+                    self.iconBackgroundView.backgroundColor = originalBackgroundColor
                 }
+
+                completionHandler?(result.error)
             }
         }
     }
@@ -141,5 +161,14 @@ class SharedItemTableViewCell: UITableViewCell {
         }
 
         super.updateConstraints()
+    }
+
+    var iconImagePixelSize: CGSize {
+        let pointSize = iconBackgroundView.bounds.size
+
+        return CGSize(
+            width: pointSize.width * SharedItemTableViewCell.screenScale,
+            height: pointSize.height * SharedItemTableViewCell.screenScale
+        )
     }
 }

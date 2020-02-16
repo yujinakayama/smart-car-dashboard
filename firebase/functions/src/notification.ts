@@ -50,7 +50,7 @@ function makeNotificationPayload(item: Item): NotificationPayload {
         case 'musicItem':
             alert = {
                 title: '音楽',
-                body: normalizedData.title || normalizedData.url
+                body: normalizedData.name || normalizedData.url
             }
             foregroundPresentationOptions = UNNotificationPresentationOptions.sound | UNNotificationPresentationOptions.alert;
             break;
