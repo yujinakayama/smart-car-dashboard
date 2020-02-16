@@ -69,7 +69,7 @@ class SharedItemTableViewCell: UITableViewCell {
         iconBackgroundView.backgroundColor = .systemPink
 
         nameLabel.text = musicItem.title
-        detailLabel.text = musicItem.url.absoluteString
+        detailLabel.text = musicItem.url.host
     }
 
     private func configureView(for website: Website) {
@@ -82,7 +82,7 @@ class SharedItemTableViewCell: UITableViewCell {
         }
 
         nameLabel.text = website.title
-        detailLabel.text = website.url.absoluteString
+        detailLabel.text = website.url.host
     }
 
     private func configureView(for unknownItem: SharedItemProtocol?) {
