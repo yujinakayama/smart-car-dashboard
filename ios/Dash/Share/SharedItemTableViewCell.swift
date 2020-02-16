@@ -43,58 +43,77 @@ class SharedItemTableViewCell: UITableViewCell {
         didSet {
             switch item {
             case let location as Location:
-                iconType = .template
-                iconImageView.image = UIImage(systemName: "mappin")
-                iconBackgroundView.backgroundColor = UIColor(named: "Location Icon Color")
-                nameLabel.text = location.name
-                detailLabel.text = location.formattedAddress ?? location.address.country
+                configureView(for: location)
             case let musicItem as MusicItem:
-                iconType = .template
-                iconImageView.image = UIImage(systemName: "music.note")
-                iconBackgroundView.backgroundColor = .systemPink
-                nameLabel.text = musicItem.title
-                detailLabel.text = musicItem.url.absoluteString
+                configureView(for: musicItem)
             case let website as Website:
-                setGenericWebsiteIcon()
-
-                website.icon.getURL { (iconURL) in
-                    if let iconURL = iconURL {
-                        self.setRemoteImage(url: iconURL)
-                    }
-                }
-
-                nameLabel.text = website.title
-                detailLabel.text = website.url.absoluteString
+                configureView(for: website)
             default:
-                iconType = .template
-                iconImageView.image = UIImage(systemName: "questionmark")
-                iconBackgroundView.backgroundColor = .gray
-                nameLabel.text = "不明なアイテム"
-                detailLabel.text = nil
+                configureView(for: item)
             }
         }
     }
 
-    func setGenericWebsiteIcon() {
+    private func configureView(for location: Location) {
+        iconType = .template
+        iconImageView.image = UIImage(systemName: "mappin")
+        iconBackgroundView.backgroundColor = UIColor(named: "Location Icon Color")
+
+        nameLabel.text = location.name
+        detailLabel.text = location.formattedAddress ?? location.address.country
+    }
+
+    private func configureView(for musicItem: MusicItem) {
+        iconType = .template
+        iconImageView.image = UIImage(systemName: "music.note")
+        iconBackgroundView.backgroundColor = .systemPink
+
+        nameLabel.text = musicItem.title
+        detailLabel.text = musicItem.url.absoluteString
+    }
+
+    private func configureView(for website: Website) {
+        setTemplateWebsiteIcon()
+
+        website.icon.getURL { (iconURL) in
+            if let iconURL = iconURL {
+                self.setRemoteImage(url: iconURL)
+            }
+        }
+
+        nameLabel.text = website.title
+        detailLabel.text = website.url.absoluteString
+    }
+
+    private func configureView(for unknownItem: SharedItemProtocol?) {
+        iconType = .template
+        iconImageView.image = UIImage(systemName: "questionmark")
+        iconBackgroundView.backgroundColor = .gray
+
+        nameLabel.text = "不明なアイテム"
+        detailLabel.text = unknownItem?.url.absoluteString
+    }
+
+    private func setTemplateWebsiteIcon() {
         iconType = .template
         iconImageView.image = UIImage(systemName: "safari.fill")
         iconBackgroundView.backgroundColor = .systemBlue
     }
 
-    func setRemoteImage(url: URL) {
+    private func setRemoteImage(url: URL) {
         DispatchQueue.main.async {
             self.iconImageView.pin_setImage(from: url) { (result) in
                 if result.error == nil {
                     self.iconType = .image
                     self.iconBackgroundView.backgroundColor = .white
                 } else {
-                    self.setGenericWebsiteIcon()
+                    self.setTemplateWebsiteIcon()
                 }
             }
         }
     }
 
-    var iconType: IconType = .template {
+    private var iconType: IconType = .template {
         didSet {
             switch iconType {
             case .template:
