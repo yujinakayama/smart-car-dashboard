@@ -35,9 +35,9 @@ export const share = functions.region('asia-northeast1').https.onRequest(async (
 function normalize(inputData: InputData): Promise<NormalizedData> {
     if (inputData.rawData['com.apple.mapkit.map-item']) {
         return normalizeAppleMapsLocation(inputData);
-    } else if (inputData.url.startsWith('https://goo.gl/maps/')) {
+    } else if (inputData.url.toString().startsWith('https://goo.gl/maps/')) {
         return normalizeGoogleMapsLocation(inputData);
-    } else if (inputData.url.startsWith('https://music.apple.com/')) {
+    } else if (inputData.url.toString().startsWith('https://music.apple.com/')) {
         return normalizeAppleMusicItem(inputData);
     } else {
         return normalizeWebpage(inputData);

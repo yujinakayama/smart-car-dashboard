@@ -17,6 +17,6 @@ export async function normalizeAppleMapsLocation(inputData: InputData): Promise<
         coordinate: mapItem.placemark.coordinate,
         name: mapItem.name,
         websiteURL: mapItem.url,
-        url: inputData.url
+        url: inputData.url.toString()
     };
 }

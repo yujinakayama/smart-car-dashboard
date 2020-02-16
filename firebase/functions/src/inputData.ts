@@ -1,12 +1,14 @@
+import { URL } from 'url';
+
 import { urlPattern } from './util';
 
 export class InputData {
     rawData: RawInputData;
-    url: string;
+    url: URL;
 
     constructor(rawData: RawInputData) {
         this.rawData = rawData;
-        this.url = this.extractURL();
+        this.url = new URL(this.extractURL());
     }
 
     private extractURL(): string {

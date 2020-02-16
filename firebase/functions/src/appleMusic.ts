@@ -22,7 +22,7 @@ export async function normalizeAppleMusicItem(inputData: InputData): Promise<Mus
         creator: null,
         id: null,
         name: null,
-        url: inputData.url
+        url: inputData.url.toString()
     };
 
     const appleMusicData = await fetchDataFromAppleMusic(inputData.url);
@@ -34,15 +34,14 @@ export async function normalizeAppleMusicItem(inputData: InputData): Promise<Mus
     return {...data, ...appleMusicData};
 }
 
-async function fetchDataFromAppleMusic(webURL: string): Promise<AppleMusicData | null> {
-    const url = new URL(webURL);
-    const [, storefront, type, , id] = url.pathname.split('/');
+async function fetchDataFromAppleMusic(webURL: URL): Promise<AppleMusicData | null> {
+    const [, storefront, type, , id] = webURL.pathname.split('/');
 
     if (!storefront || !type || !id) {
         return null;
     }
 
-    const songID = url.searchParams.get('i')
+    const songID = webURL.searchParams.get('i')
 
     if (songID) {
         const song = (await client.songs.get(songID, storefront)).data[0];
