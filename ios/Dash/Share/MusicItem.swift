@@ -18,14 +18,24 @@ class MusicItem: SharedItemProtocol {
     let creationDate: Date?
 
     func open() {
-        guard let storeID = storeID else { return }
+        guard let itemID = itemID else { return }
 
         let player = MPMusicPlayerController.systemMusicPlayer
-        player.setQueue(with: MPMusicPlayerStoreQueueDescriptor(storeIDs: [storeID]))
+        player.setQueue(with: MPMusicPlayerStoreQueueDescriptor(storeIDs: [itemID]))
         player.play()
     }
 
-    var storeID: String? {
+    var itemID: String? {
+        return songID ?? collectionID
+    }
+
+    var songID: String? {
+        let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        let queryItem = urlComponents?.queryItems?.first { $0.name == "i" }
+        return queryItem?.value
+    }
+
+    var collectionID: String? {
         return url.pathComponents.last
     }
 }
