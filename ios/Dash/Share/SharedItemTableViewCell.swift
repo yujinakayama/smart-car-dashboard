@@ -81,7 +81,7 @@ class SharedItemTableViewCell: UITableViewCell {
             }
         }
 
-        nameLabel.text = website.title
+        nameLabel.text = website.title ?? website.url.absoluteString
         detailLabel.text = website.url.host
     }
 

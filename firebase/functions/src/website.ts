@@ -6,17 +6,30 @@ import { WebsiteData } from './normalizedData';
 import { urlPattern } from './util';
 
 export async function normalizeWebpage(inputData: InputData): Promise<WebsiteData> {
-    let title = inputData.rawData['public.plain-text'];
-
-    if (!title || urlPattern.test(title)) {
-        const responseBody = await request.get(inputData.url);
-        const document = libxmljs.parseHtml(responseBody);
-        title = document.get('//head/title')?.text().trim();
-    }
-
     return {
         type: 'website',
-        title: title || null,
+        title: await getTitle(inputData),
         url: inputData.url
     };
+}
+
+async function getTitle(inputData: InputData): Promise<string | null> {
+    const plainText = inputData.rawData['public.plain-text'];
+
+    if (plainText && !urlPattern.test(plainText)) {
+        return plainText;
+    }
+
+    return fetchTitle(inputData.url);
+}
+
+async function fetchTitle(url: string): Promise<string | null> {
+    try {
+        const responseBody = await request.get(url);
+        const document = libxmljs.parseHtml(responseBody);
+        return document.get('//head/title')?.text().trim() || null;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
 }
