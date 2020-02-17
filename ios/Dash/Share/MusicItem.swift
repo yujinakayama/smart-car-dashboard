@@ -17,15 +17,16 @@ class MusicItem: SharedItemProtocol {
     let creator: String?
     let id: String?
     let name: String?
+    let playParameters: MPMusicPlayerPlayParameters?
     let url: URL
     let creationDate: Date?
 
     func open() {
-        guard let id = id else { return }
-
-        let player = MPMusicPlayerController.systemMusicPlayer
-        player.setQueue(with: MPMusicPlayerStoreQueueDescriptor(storeIDs: [id]))
-        player.play()
+        if let playParameters = playParameters {
+            play(playParameters: playParameters)
+        } else {
+            openInMusicApp()
+        }
     }
 
     func artworkURL(size: CGSize) -> URL? {
@@ -40,5 +41,16 @@ class MusicItem: SharedItemProtocol {
             .replacingOccurrences(of: "{h}", with: String(height))
 
         return URL(string: urlString)
+    }
+
+    private func play(playParameters: MPMusicPlayerPlayParameters) {
+        let player = MPMusicPlayerController.systemMusicPlayer
+        let queueDescriptor = MPMusicPlayerPlayParametersQueueDescriptor(playParametersQueue: [playParameters])
+        player.setQueue(with: queueDescriptor)
+        player.play()
+    }
+
+    private func openInMusicApp() {
+        UIApplication.shared.open(url, options: [:])
     }
 }

@@ -28,8 +28,11 @@ export interface MusicItemData extends BaseNormalizedData {
     type: 'musicItem';
     artworkURLTemplate: string | null;
     creator: string | null;
-    id: string | null;
     name: string | null;
+    playParameters: {
+        id: string;
+        kind: string;
+    } | null;
 }
 
 export interface WebsiteData extends BaseNormalizedData {

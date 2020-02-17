@@ -9,8 +9,11 @@ import { MusicItemData } from './normalizedData';
 interface AppleMusicData {
     artworkURLTemplate: string | null,
     creator: string | null;
-    id: string,
-    name: string
+    name: string,
+    playParameters: {
+        id: string;
+        kind: string;
+    } | null;
 }
 
 const client = new Client(functions.config().apple_music.developer_token)
@@ -25,8 +28,8 @@ export async function normalizeAppleMusicItem(inputData: InputData): Promise<Mus
         type: 'musicItem',
         artworkURLTemplate: null,
         creator: null,
-        id: null,
         name: null,
+        playParameters: null,
         url: inputData.url.toString()
     };
 
@@ -49,8 +52,8 @@ async function fetchDataFromAppleMusic(webURL: URL): Promise<AppleMusicData | nu
         return {
             artworkURLTemplate: song.attributes!.artwork.url,
             creator: song.attributes!.artistName,
-            id: song.id,
-            name: song.attributes!.name
+            name: song.attributes!.name,
+            playParameters: song.attributes!.playParams || null
         };
     }
 
@@ -60,24 +63,24 @@ async function fetchDataFromAppleMusic(webURL: URL): Promise<AppleMusicData | nu
             return {
                 artworkURLTemplate: album.attributes!.artwork?.url || null,
                 creator: album.attributes!.artistName,
-                id: album.id,
-                name: album.attributes!.name
+                name: album.attributes!.name,
+                playParameters: album.attributes!.playParams || null
             };
         case 'artist':
             const artist = (await client.artists.get(id, storefront)).data[0];
             return {
                 artworkURLTemplate: null,
                 creator: null,
-                id: artist.id,
-                name: artist.attributes!.name
+                name: artist.attributes!.name,
+                playParameters: null
             };
         case 'music-video':
             const musicVideo = (await client.musicVideos.get(id, storefront)).data[0];
             return {
                 artworkURLTemplate: musicVideo.attributes!.artwork.url,
                 creator: musicVideo.attributes!.artistName,
-                id: musicVideo.id,
-                name: musicVideo.attributes!.name
+                name: musicVideo.attributes!.name,
+                playParameters: musicVideo.attributes!.playParams || null
             };
         case 'playlist':
             const playlist = (await client.playlists.get(id, storefront)).data[0];
@@ -85,16 +88,16 @@ async function fetchDataFromAppleMusic(webURL: URL): Promise<AppleMusicData | nu
             return {
                 artworkURLTemplate: playlist.attributes!.artwork?.url || null,
                 creator: playlist.attributes!.curatorName || null,
-                id: playlist.id,
-                name: playlist.attributes!.name
+                name: playlist.attributes!.name,
+                playParameters: playlist.attributes!.playParams || null
             };
         case 'station':
             const station = (await client.stations.get(id, storefront)).data[0];
             return {
                 artworkURLTemplate: station.attributes!.artwork.url,
                 creator: null,
-                id: station.id,
-                name: station.attributes!.name
+                name: station.attributes!.name,
+                playParameters: null
             };
         default:
             return null;
