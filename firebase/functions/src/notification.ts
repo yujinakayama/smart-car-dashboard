@@ -48,9 +48,17 @@ function makeNotificationPayload(item: Item): NotificationPayload {
             foregroundPresentationOptions = UNNotificationPresentationOptions.sound;
             break;
         case 'musicItem':
+            let body: string;
+
+            if (normalizedData.name) {
+                body = [normalizedData.name, normalizedData.creator].filter(e => e).join(' - ');
+            } else {
+                body = normalizedData.url;
+            }
+
             alert = {
                 title: '音楽',
-                body: normalizedData.title || normalizedData.url
+                body: body
             }
             foregroundPresentationOptions = UNNotificationPresentationOptions.sound | UNNotificationPresentationOptions.alert;
             break;
