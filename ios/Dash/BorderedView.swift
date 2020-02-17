@@ -20,6 +20,12 @@ import UIKit
         }
     }
 
+    private var _borderColor: UIColor?
+
+    private func applyBorderColor() {
+        layer.borderColor = _borderColor?.resolvedColor(with: traitCollection).cgColor
+    }
+
     @IBInspectable var borderWidth: CGFloat {
         get {
             return layer.borderWidth
@@ -27,6 +33,14 @@ import UIKit
 
         set {
             layer.borderWidth = newValue
+        }
+    }
+
+    @IBInspectable var isHairlineBorderEnabled = false {
+        didSet {
+            if isHairlineBorderEnabled {
+                borderWidth = 1.0 / UIScreen.main.scale
+            }
         }
     }
 
@@ -39,12 +53,6 @@ import UIKit
             layer.cornerRadius = newValue
             layer.masksToBounds = newValue > 0
         }
-    }
-
-    private var _borderColor: UIColor?
-
-    private func applyBorderColor() {
-        layer.borderColor = _borderColor?.resolvedColor(with: traitCollection).cgColor
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

@@ -493,6 +493,10 @@
                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                     <real key="value" value="8"/>
                                                 </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="isHairlineBorderEnabled" value="YES"/>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                    <color key="value" name="Hairline Border Color"/>
+                                                </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -840,6 +844,9 @@
         <image name="yensign.square.fill" catalog="system" width="64" height="56"/>
         <namedColor name="Global Tint Color">
             <color red="0.50700002908706665" green="0.20000000298023224" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="Hairline Border Color">
+            <color white="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </namedColor>
         <namedColor name="Location Icon Color">
             <color red="0.92500001192092896" green="0.40400001406669617" blue="0.31799998879432678" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
