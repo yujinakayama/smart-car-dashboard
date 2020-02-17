@@ -97,7 +97,7 @@ async function fetchDataFromAppleMusic(webURL: URL): Promise<AppleMusicData | nu
                 artworkURLTemplate: station.attributes!.artwork.url,
                 creator: null,
                 name: station.attributes!.name,
-                playParameters: null
+                playParameters: station.attributes!.playParams || null
             };
         default:
             return null;
