@@ -11,6 +11,10 @@ https://www.youtube.com/watch?v=gPj36unAB28
 * ETC integration
     * Notification on passing through ETC gates / payments
     * Payment history management
+* iPhone integration
+    * Send location from iPhone and set as destination automatically [like Tesla](https://youtu.be/Xl81fd1HM7U?t=32)
+    * Send Apple Music item from iPhone and play automatically
+    * Send website from iPhone and open automatically
 * Control iPad's music and audio through steering remote
 
 ## Required Equipments
