@@ -1,4 +1,4 @@
-import * as request from 'request-promise';
+import axios from 'axios';
 import * as libxmljs from 'libxmljs';
 
 import { InputData } from './inputData';
@@ -25,8 +25,8 @@ async function getTitle(inputData: InputData): Promise<string | null> {
 
 async function fetchTitle(url: URL): Promise<string | null> {
     try {
-        const responseBody = await request.get(url.toString());
-        const document = libxmljs.parseHtml(responseBody);
+        const response = await axios.get(url.toString());
+        const document = libxmljs.parseHtml(response.data);
         return document.get('//head/title')?.text().trim() || null;
     } catch (error) {
         console.error(error);
