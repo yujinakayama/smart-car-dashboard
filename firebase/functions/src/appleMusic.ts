@@ -21,8 +21,8 @@ const client = new Client({
 })
 
 export function isAppleMusicItem(inputData: InputData): boolean {
-    let url = inputData.url;
-    return url.host == 'music.apple.com' && url.pathname.split('/').length >= 5
+    const url = inputData.url;
+    return url.host === 'music.apple.com' && url.pathname.split('/').length >= 5
 }
 
 export async function normalizeAppleMusicItem(inputData: InputData): Promise<MusicItemData> {
