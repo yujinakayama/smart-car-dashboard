@@ -2,7 +2,7 @@ import * as functions from 'firebase-functions';
 
 import { URL } from 'url';
 
-import { Client } from './appleMusicClient';
+import { Client } from '@yujinakayama/apple-music';
 import { InputData } from './inputData';
 import { MusicItemData } from './normalizedData';
 
@@ -16,7 +16,9 @@ interface AppleMusicData {
     } | null;
 }
 
-const client = new Client(functions.config().apple_music.developer_token)
+const client = new Client({
+    developerToken: functions.config().apple_music.developer_token
+})
 
 export function isAppleMusicItem(inputData: InputData): boolean {
     let url = inputData.url;
@@ -48,7 +50,7 @@ async function fetchDataFromAppleMusic(webURL: URL): Promise<AppleMusicData | nu
     const songID = webURL.searchParams.get('i')
 
     if (songID) {
-        const song = (await client.songs.get(songID, storefront)).data[0];
+        const song = (await client.songs.get(songID, { storefront })).data[0];
         return {
             artworkURLTemplate: song.attributes!.artwork.url,
             creator: song.attributes!.artistName,
@@ -59,7 +61,7 @@ async function fetchDataFromAppleMusic(webURL: URL): Promise<AppleMusicData | nu
 
     switch (type) {
         case 'album':
-            const album = (await client.albums.get(id, storefront)).data[0];
+            const album = (await client.albums.get(id, { storefront })).data[0];
             return {
                 artworkURLTemplate: album.attributes!.artwork?.url || null,
                 creator: album.attributes!.artistName,
@@ -67,7 +69,7 @@ async function fetchDataFromAppleMusic(webURL: URL): Promise<AppleMusicData | nu
                 playParameters: album.attributes!.playParams || null
             };
         case 'artist':
-            const artist = (await client.artists.get(id, storefront)).data[0];
+            const artist = (await client.artists.get(id, { storefront })).data[0];
             return {
                 artworkURLTemplate: null,
                 creator: null,
@@ -75,7 +77,7 @@ async function fetchDataFromAppleMusic(webURL: URL): Promise<AppleMusicData | nu
                 playParameters: null
             };
         case 'music-video':
-            const musicVideo = (await client.musicVideos.get(id, storefront)).data[0];
+            const musicVideo = (await client.musicVideos.get(id, { storefront })).data[0];
             return {
                 artworkURLTemplate: musicVideo.attributes!.artwork.url,
                 creator: musicVideo.attributes!.artistName,
@@ -83,7 +85,7 @@ async function fetchDataFromAppleMusic(webURL: URL): Promise<AppleMusicData | nu
                 playParameters: musicVideo.attributes!.playParams || null
             };
         case 'playlist':
-            const playlist = (await client.playlists.get(id, storefront)).data[0];
+            const playlist = (await client.playlists.get(id, { storefront })).data[0];
             console.log(playlist);
             return {
                 artworkURLTemplate: playlist.attributes!.artwork?.url || null,
@@ -92,7 +94,7 @@ async function fetchDataFromAppleMusic(webURL: URL): Promise<AppleMusicData | nu
                 playParameters: playlist.attributes!.playParams || null
             };
         case 'station':
-            const station = (await client.stations.get(id, storefront)).data[0];
+            const station = (await client.stations.get(id, { storefront })).data[0];
             return {
                 artworkURLTemplate: station.attributes!.artwork.url,
                 creator: null,
