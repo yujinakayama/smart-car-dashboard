@@ -15,6 +15,7 @@ https://www.youtube.com/watch?v=gPj36unAB28
     * Send location from iPhone and set as destination automatically [like Tesla](https://youtu.be/Xl81fd1HM7U?t=32)
     * Send Apple Music item from iPhone and play automatically
     * Send website from iPhone and open automatically
+    * Send "Pick me up here" request from iPhone like Uber
 * Control iPad's music and audio through steering remote
 
 ## Required Equipments
