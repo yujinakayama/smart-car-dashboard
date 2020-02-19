@@ -7,6 +7,35 @@
 //
 
 import UIKit
+import MediaPlayer
 
 class MusicViewController: UIViewController {
+    @IBOutlet weak var playbackControlView: PlaybackControlView!
+    @IBOutlet weak var volumeView: MPVolumeView!
+
+    var musicPlayer: MPMusicPlayerController {
+        return MPMusicPlayerController.systemMusicPlayer
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        MPMediaLibrary.requestAuthorization { [weak self] (authorizationStatus) in
+            guard authorizationStatus == .authorized else { return }
+
+            DispatchQueue.main.async {
+                self?.setUp()
+            }
+        }
+    }
+
+    func setUp() {
+        playbackControlView.musicPlayer = musicPlayer
+
+        musicPlayer.beginGeneratingPlaybackNotifications()
+    }
+
+    deinit {
+        musicPlayer.endGeneratingPlaybackNotifications()
+    }
 }
