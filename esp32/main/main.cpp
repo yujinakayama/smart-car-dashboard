@@ -132,8 +132,6 @@ static void sendBluetoothCommandForSteeringRemoteInput(SteeringRemoteInput steer
 static void unlockiPad() {
   ESP_LOGI(TAG, "Unlocking the iPad");
   hid->sendInputCode(HIDInputCodeMenu);
-  delay(500);
-  hid->sendInputCode(HIDInputCodeMenu);
 }
 
 static void keepiPadAwake() {
