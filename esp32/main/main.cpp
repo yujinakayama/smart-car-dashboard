@@ -15,7 +15,11 @@ static const int kSteeringRemoteInputPinA = 34; // Connect to the brown-yellow w
 static const int kSteeringRemoteInputPinB = 35; // Connect to the brown-white wire in the car
 static const int kiPadSleepPreventionIntervalMillis = 30 * 1000;
 
+// 16 pin for RX
+// 17 pin for TX
+// https://github.com/espressif/arduino-esp32/blob/1.0.4/cores/esp32/HardwareSerial.cpp#L17-L53
 static HardwareSerial* etcDeviceSerial = &Serial2;
+
 static HID* hid;
 static SerialBLEBridge* serialBLEBridge;
 static SteeringRemote* steeringRemote;
