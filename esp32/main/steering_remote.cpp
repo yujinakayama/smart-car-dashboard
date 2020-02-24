@@ -9,7 +9,7 @@ static const int kAnalogInputMaxValue = 4095;
 static const int kDebounceThresholdMillis = 50;
 
 static bool rateIsAbout(float rate, float referenceRate) {
-  // The voltage tend to be higher when the buttan is contacting
+  // The voltage tends to be higher when the button is contacting
   return (referenceRate - 0.02) < rate && rate < (referenceRate + 0.05);
 }
 
