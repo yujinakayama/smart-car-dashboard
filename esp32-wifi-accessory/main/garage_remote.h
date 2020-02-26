@@ -25,6 +25,14 @@ public:
   GarageRemote(int powerButtonPin, int openButtonPin);
   void registerHomeKitAccessory();
   void registerHomeKitServicesAndCharacteristics();
+
+  TargetDoorState getTargetDoorState();
+  void setTargetDoorState(TargetDoorState state);
+
+  CurrentDoorState getCurrentDoorState();
+
+private:
+  void open();
 };
 
 #endif

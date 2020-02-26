@@ -5,6 +5,7 @@
 #include <esp_event_loop.h>
 #include <nvs_flash.h>
 #include <string.h>
+#include <Arduino.h>
 
 #define ARRAY_SIZE(array) (sizeof(array) / sizeof(array[0]))
 
@@ -14,11 +15,13 @@ static void hapObjectInit(void* context);
 static void* readTargetDoorState(void* context);
 static void writeTargetDoorState(void* context, void* value, int length);
 static void* readCurrentDoorState(void* context);
-static void writeCurrentDoorState(void* context, void* value, int length);
 
 GarageRemote::GarageRemote(int powerButtonPin, int openButtonPin) {
   this->powerButtonPin = powerButtonPin;
   this->openButtonPin = openButtonPin;
+
+  pinMode(powerButtonPin, OUTPUT);
+  pinMode(openButtonPin, OUTPUT);
 
   this->targetDoorState = TargetDoorStateClosed;
   this->currentDoorState = CurrentDoorStateClosed;
@@ -92,22 +95,60 @@ void GarageRemote::registerHomeKitServicesAndCharacteristics() {
   );
 }
 
+TargetDoorState GarageRemote::getTargetDoorState() {
+  TargetDoorState state = this->targetDoorState;
+  ESP_LOGD(TAG, "getTargetDoorState: %i", state);
+  return state;
+}
+
+void GarageRemote::setTargetDoorState(TargetDoorState state) {
+  ESP_LOGD(TAG, "setTargetDoorState: %i", state);
+
+  switch (state) {
+  case TargetDoorStateOpen:
+    this->open();
+    break;
+  case TargetDoorStateClosed:
+    // We cannot close the garage by ourselves; it closed automatically/
+    break;
+  }
+}
+
+CurrentDoorState GarageRemote::getCurrentDoorState() {
+  CurrentDoorState state = this->currentDoorState;
+  ESP_LOGD(TAG, "getCurrentDoorState: %i", state);
+  return state;
+}
+
+void GarageRemote::open() {
+  ESP_LOGD(TAG, "open");
+
+  digitalWrite(this->powerButtonPin, HIGH);
+  delay(100);
+  digitalWrite(this->powerButtonPin, LOW);
+
+  delay(100);
+
+  digitalWrite(this->openButtonPin, HIGH);
+  delay(3000);
+  digitalWrite(this->openButtonPin, LOW);
+}
+
 static void* readTargetDoorState(void* context) {
   GarageRemote* garageRemote = (GarageRemote*)context;
-  ESP_LOGD(TAG, "readTargetDoorState");
-  return (void*)garageRemote->targetDoorState;
+  return (void*)garageRemote->getTargetDoorState();
 }
 
 static void writeTargetDoorState(void* context, void* value, int length) {
   GarageRemote* garageRemote = (GarageRemote*)context;
+
   TargetDoorState state;
   memcpy(&state, &value, sizeof(state));
-  ESP_LOGD(TAG, "writeTargetDoorState %i", state);
-  // FIXME
+
+  garageRemote->setTargetDoorState(state);
 }
 
 static void* readCurrentDoorState(void* context) {
   GarageRemote* garageRemote = (GarageRemote*)context;
-  ESP_LOGD(TAG, "readCurrentDoorState");
-  return (void*)garageRemote->currentDoorState;
+  return (void*)garageRemote->getCurrentDoorState();
 }
