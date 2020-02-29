@@ -3,6 +3,6 @@
 # project subdirectory.
 #
 
-PROJECT_NAME := ipad-car-integration
+PROJECT_NAME := esp32-bluetooth-accessory
 
 include $(IDF_PATH)/make/project.mk
