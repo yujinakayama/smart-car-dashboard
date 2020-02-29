@@ -1,6 +1,6 @@
 import * as maps from '@google/maps';
+import axios from 'axios';
 import * as functions from 'firebase-functions';
-import * as https from 'https';
 
 import { URL } from 'url';
 
@@ -72,15 +72,7 @@ export function isGoogleMapsLocation(inputData: InputData): boolean {
 }
 
 export async function normalizeGoogleMapsLocation(inputData: InputData): Promise<LocationData> {
-    const expandedURL: URL = await new Promise((resolve, reject) => {
-        https.get(inputData.url, (response) => {
-            if (response.headers.location) {
-                resolve(new URL(response.headers.location));
-            } else {
-                reject();
-            }
-        });
-    });
+    const expandedURL = await expandShortenURL(inputData.url);
 
     let locationData: LocationData | null;
 
@@ -100,6 +92,21 @@ export async function normalizeGoogleMapsLocation(inputData: InputData): Promise
     }
 
     throw new Error('Cannot find details for the Google Maps URL');
+}
+
+async function expandShortenURL(shortenURL: URL): Promise<URL> {
+    const response = await axios.get(shortenURL.toString(), {
+        maxRedirects: 0,
+        validateStatus: (statusCode) => true
+    });
+
+    const expandedURLString = response.headers['location'];
+
+    if (expandedURLString) {
+        return new URL(expandedURLString);
+    } else {
+        throw new Error(`Shorten URL could not be expanded: ${shortenURL.toString()}`)
+    }
 }
 
 // Point of Interests
