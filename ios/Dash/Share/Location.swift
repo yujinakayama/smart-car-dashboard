@@ -127,7 +127,12 @@ struct Address: Decodable {
         guard !components.isEmpty else { return nil }
 
         return components.reduce(into: [] as [String]) { (components, component) in
-            if components.last?.last?.isNumber ?? false && component.first?.isNumber ?? false {
+            guard let lastComponent = components.last else {
+                components.append(component)
+                return
+            }
+
+            if lastComponent.last?.isNumber ?? false && component.first?.isNumber ?? false {
                 components.append("-")
             } else {
                 components.append(" ")
