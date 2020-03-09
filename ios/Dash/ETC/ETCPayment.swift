@@ -86,7 +86,7 @@ class Tollbooth {
 
 extension Tollbooth: Equatable {
     static func == (lhs: Tollbooth, rhs: Tollbooth) -> Bool {
-        return lhs.id == rhs.id
+        return lhs.road == rhs.road && lhs.name == rhs.name
     }
 }
 
