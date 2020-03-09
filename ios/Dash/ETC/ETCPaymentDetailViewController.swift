@@ -85,7 +85,7 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
     }
 
     func restoreMapType() {
-        if let previousMapType = Defaults.shared.mapType {
+        if let previousMapType = Defaults.shared.mapTypeForETCRoute {
             let index = MapTypeSegmentedControlIndex(previousMapType)!
             mapTypeSegmentedControl.selectedSegmentIndex = index.rawValue
         } else {
@@ -258,7 +258,7 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
     @IBAction func mapTypeSegmentedControlDidChange() {
         let index = MapTypeSegmentedControlIndex(rawValue: mapTypeSegmentedControl.selectedSegmentIndex)!
         mapView.mapType = index.mapType
-        Defaults.shared.mapType = index.mapType
+        Defaults.shared.mapTypeForETCRoute = index.mapType
     }
 
     @IBAction func infoButtonDidTouchUpInside(button: UIButton) {

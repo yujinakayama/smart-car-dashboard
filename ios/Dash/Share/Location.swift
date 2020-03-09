@@ -47,7 +47,10 @@ class Location: SharedItemProtocol {
     }
 
     private func openDirectionsInMaps(destination: MKMapItem) {
-        destination.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+        destination.openInMaps(launchOptions: [
+            MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,
+            MKLaunchOptionsMapTypeKey: Defaults.shared.mapTypeForDirections?.rawValue ?? MKMapType.standard
+        ])
     }
 
     private var mapItem: MKMapItem {

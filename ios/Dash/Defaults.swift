@@ -15,18 +15,26 @@ struct Defaults {
     private let userDefaults = UserDefaults.standard
 
     private struct Key {
-        static let mapType = "mapType"
+        static let mapTypeForETCRoute = "mapTypeForETCRoute"
+        static let mapTypeForDirections = "mapTypeForDirections"
         static let snapReceivedLocationToPointOfInterest = "snapReceivedLocationToPointOfInterest"
     }
 
-    var mapType: MKMapType? {
+    var mapTypeForETCRoute: MKMapType? {
         get {
-            let integer = userDefaults.integer(forKey: Key.mapType)
+            let integer = userDefaults.integer(forKey: Key.mapTypeForETCRoute)
             return MKMapType(rawValue: UInt(integer))
         }
 
         set {
-            userDefaults.set(newValue?.rawValue, forKey: Key.mapType)
+            userDefaults.set(newValue?.rawValue, forKey: Key.mapTypeForETCRoute)
+        }
+    }
+
+    var mapTypeForDirections: MKMapType? {
+        get {
+            let integer = userDefaults.integer(forKey: Key.mapTypeForDirections)
+            return MKMapType(rawValue: UInt(integer))
         }
     }
 
