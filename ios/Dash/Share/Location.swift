@@ -24,7 +24,7 @@ class Location: SharedItemProtocol {
 
     func open() {
         if Defaults.shared.snapReceivedLocationToPointOfInterest {
-            findPointOfInterest() { (pointOfInterest) in
+            findCorrespondingPointOfInterest() { (pointOfInterest) in
                 if let pointOfInterest = pointOfInterest {
                     self.openDirectionsInMaps(destination: pointOfInterest)
                 } else {
@@ -36,14 +36,14 @@ class Location: SharedItemProtocol {
         }
     }
 
-    private func findPointOfInterest(completionHandler: @escaping (MKMapItem?) -> Void) {
-        let request = MKLocalSearch.Request()
-        request.naturalLanguageQuery = name
-        request.region = MKCoordinateRegion(center: coordinate.clLocationCoordinate2D, latitudinalMeters: 20, longitudinalMeters: 20)
-
-        MKLocalSearch(request: request).start { (response, error) in
-            completionHandler(response?.mapItems.first)
+    private func findCorrespondingPointOfInterest(completionHandler: @escaping (MKMapItem?) -> Void) {
+        guard let name = name else {
+            completionHandler(nil)
+            return
         }
+
+        let finder = PointOfInterestFinder(name: name, coordinate: coordinate.clLocationCoordinate2D, maxDistance: 50)
+        finder.findPointOfInterest(completionHandler: completionHandler)
     }
 
     private func openDirectionsInMaps(destination: MKMapItem) {
@@ -56,6 +56,54 @@ class Location: SharedItemProtocol {
         let mapItem = MKMapItem(placemark: placemark)
         mapItem.name = name
         return mapItem
+    }
+
+    class PointOfInterestFinder {
+        let name: String
+        let coordinate: CLLocationCoordinate2D
+        let maxDistance: CLLocationDistance
+
+        init(name: String, coordinate: CLLocationCoordinate2D, maxDistance: CLLocationDistance) {
+            self.name = name
+            self.coordinate = coordinate
+            self.maxDistance = maxDistance
+        }
+
+        func findPointOfInterest(completionHandler: @escaping (MKMapItem?) -> Void) {
+            MKLocalSearch(request: request).start { (response, error) in
+                guard let pointOfInterest = response?.mapItems.first else {
+                    completionHandler(nil)
+                    return
+                }
+
+                if self.isClose(pointOfInterest) {
+                    completionHandler(pointOfInterest)
+                } else {
+                    completionHandler(nil)
+                }
+            }
+        }
+
+        private var request: MKLocalSearch.Request {
+            let request = MKLocalSearch.Request()
+            request.naturalLanguageQuery = name
+            request.region = MKCoordinateRegion(center: coordinate, latitudinalMeters: maxDistance, longitudinalMeters: maxDistance)
+            return request
+        }
+
+        private func isClose(_ pointOfInterest: MKMapItem) -> Bool {
+            guard let pointOfInterestLocation = pointOfInterest.placemark.location else {
+                return false
+            }
+
+            print(pointOfInterestLocation.distance(from: location))
+
+            return pointOfInterestLocation.distance(from: location) <= maxDistance
+        }
+
+        private var location: CLLocation {
+            return CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        }
     }
 }
 
