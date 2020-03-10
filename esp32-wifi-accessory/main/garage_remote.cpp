@@ -12,6 +12,7 @@
 static const char* TAG = "GarageRemote";
 
 static void hapObjectInit(void* context);
+static void turnOffOpenButton(int pin);
 static void* readTargetDoorState(void* context);
 static void writeTargetDoorState(void* context, void* value, int length);
 static void* readCurrentDoorState(void* context);
@@ -130,8 +131,12 @@ void GarageRemote::open() {
   delay(100);
 
   digitalWrite(this->openButtonPin, HIGH);
-  delay(3000);
-  digitalWrite(this->openButtonPin, LOW);
+  this->ticker.once(3, turnOffOpenButton, this->openButtonPin);
+}
+
+static void turnOffOpenButton(int pin) {
+  ESP_LOGD(TAG, "turnOffOpenButton");
+  digitalWrite(pin, LOW);
 }
 
 static void* readTargetDoorState(void* context) {

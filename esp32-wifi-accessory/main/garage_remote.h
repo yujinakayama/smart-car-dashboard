@@ -1,6 +1,8 @@
 #ifndef IPAD_CAR_INTEGRATION_GARAGE_H_
 #define IPAD_CAR_INTEGRATION_GARAGE_H_
 
+#include <Ticker.h>
+
 typedef enum {
   CurrentDoorStateOpen = 0,
   CurrentDoorStateClosed,
@@ -32,6 +34,7 @@ public:
   CurrentDoorState getCurrentDoorState();
 
 private:
+  Ticker ticker;
   void open();
 };
 
