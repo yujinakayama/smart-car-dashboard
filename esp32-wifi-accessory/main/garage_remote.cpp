@@ -109,7 +109,7 @@ void GarageRemote::setTargetDoorState(TargetDoorState state) {
     this->open();
     break;
   case TargetDoorStateClosed:
-    // We cannot close the garage by ourselves; it closed automatically/
+    // We cannot close the garage by ourselves; it closes automatically/
     break;
   }
 }
