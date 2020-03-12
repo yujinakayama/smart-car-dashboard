@@ -4,7 +4,7 @@ export interface BaseNormalizedData {
 }
 
 // Firebase doesn't allow `undefined` values
-export interface LocationData extends BaseNormalizedData {
+export interface Location extends BaseNormalizedData {
     type: 'location';
     address: Address;
     coordinate: {
@@ -24,7 +24,7 @@ export interface Address {
     houseNumber: string | null; // 番地
 }
 
-export interface MusicItemData extends BaseNormalizedData {
+export interface MusicItem extends BaseNormalizedData {
     type: 'musicItem';
     artworkURLTemplate: string | null;
     creator: string | null;
@@ -35,9 +35,9 @@ export interface MusicItemData extends BaseNormalizedData {
     } | null;
 }
 
-export interface WebsiteData extends BaseNormalizedData {
+export interface Website extends BaseNormalizedData {
     type: 'website';
     title: string | null;
 }
 
-export type NormalizedData = LocationData | MusicItemData | WebsiteData;
+export type NormalizedData = Location | MusicItem | Website;

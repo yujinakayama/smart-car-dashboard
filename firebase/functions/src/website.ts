@@ -2,10 +2,10 @@ import axios from 'axios';
 import * as libxmljs from 'libxmljs';
 
 import { InputData } from './inputData';
-import { WebsiteData } from './normalizedData';
+import { Website } from './normalizedData';
 import { urlPattern } from './util';
 
-export async function normalizeWebpage(inputData: InputData): Promise<WebsiteData> {
+export async function normalizeWebpage(inputData: InputData): Promise<Website> {
     return {
         type: 'website',
         title: await getTitle(inputData),

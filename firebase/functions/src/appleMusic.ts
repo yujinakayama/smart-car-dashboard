@@ -4,7 +4,7 @@ import { URL } from 'url';
 
 import { Client } from '@yujinakayama/apple-music';
 import { InputData } from './inputData';
-import { MusicItemData } from './normalizedData';
+import { MusicItem } from './normalizedData';
 
 interface AppleMusicData {
     artworkURLTemplate: string | null,
@@ -25,8 +25,8 @@ export function isAppleMusicItem(inputData: InputData): boolean {
     return url.host === 'music.apple.com' && url.pathname.split('/').length >= 5
 }
 
-export async function normalizeAppleMusicItem(inputData: InputData): Promise<MusicItemData> {
-    const data: MusicItemData = {
+export async function normalizeAppleMusicItem(inputData: InputData): Promise<MusicItem> {
+    const data: MusicItem = {
         type: 'musicItem',
         artworkURLTemplate: null,
         creator: null,

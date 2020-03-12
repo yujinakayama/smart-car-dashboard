@@ -1,11 +1,11 @@
 import { InputData } from './inputData';
-import { LocationData } from './normalizedData';
+import { Location } from './normalizedData';
 
 export function isAppleMapsLocation(inputData: InputData): boolean {
     return !!inputData.rawData['com.apple.mapkit.map-item'];
 }
 
-export async function normalizeAppleMapsLocation(inputData: InputData): Promise<LocationData> {
+export async function normalizeAppleMapsLocation(inputData: InputData): Promise<Location> {
     const mapItem = inputData.rawData['com.apple.mapkit.map-item']!;
 
     return {

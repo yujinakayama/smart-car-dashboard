@@ -5,7 +5,7 @@ import * as functions from 'firebase-functions';
 import { URL } from 'url';
 
 import { InputData } from './inputData';
-import { LocationData, Address } from './normalizedData';
+import { Location, Address } from './normalizedData';
 import { convertAlphanumericsToAscii } from './util'
 
 // https://developers.google.com/maps/documentation/geocoding/intro#Types
@@ -71,10 +71,10 @@ export function isGoogleMapsLocation(inputData: InputData): boolean {
     return inputData.url.toString().startsWith('https://goo.gl/maps/');
 }
 
-export async function normalizeGoogleMapsLocation(inputData: InputData): Promise<LocationData> {
+export async function normalizeGoogleMapsLocation(inputData: InputData): Promise<Location> {
     const expandedURL = await expandShortenURL(inputData.url);
 
-    let locationData: LocationData | null;
+    let locationData: Location | null;
 
     locationData = await normalizeLocationWithFtid(expandedURL);
     if (locationData) {
@@ -111,7 +111,7 @@ async function expandShortenURL(shortenURL: URL): Promise<URL> {
 
 // Point of Interests
 // https://stackoverflow.com/a/47042514/784241
-async function normalizeLocationWithFtid(expandedURL: URL): Promise<LocationData | null> {
+async function normalizeLocationWithFtid(expandedURL: URL): Promise<Location | null> {
     const ftid = expandedURL.searchParams.get('ftid');
 
     if (!ftid) {
@@ -121,7 +121,7 @@ async function normalizeLocationWithFtid(expandedURL: URL): Promise<LocationData
     return normalizeLocationWithIdentifier({ ftid: ftid }, expandedURL);
 }
 
-async function normalizeLocationWithCoordinate(expandedURL: URL, inputData: InputData): Promise<LocationData | null> {
+async function normalizeLocationWithCoordinate(expandedURL: URL, inputData: InputData): Promise<Location | null> {
     const query = expandedURL.searchParams.get('q');
 
     if (!query) {
@@ -157,7 +157,7 @@ async function normalizeLocationWithCoordinate(expandedURL: URL, inputData: Inpu
 }
 
 // Last resort
-async function normalizeLocationWithQuery(expandedURL: URL): Promise<LocationData | null> {
+async function normalizeLocationWithQuery(expandedURL: URL): Promise<Location | null> {
     const query = expandedURL.searchParams.get('q');
 
     if (!query) {
@@ -179,7 +179,7 @@ async function normalizeLocationWithQuery(expandedURL: URL): Promise<LocationDat
     return normalizeLocationWithIdentifier({ placeid: place.place_id }, expandedURL);
 }
 
-async function normalizeLocationWithIdentifier(id: { placeid?: string, ftid?: string }, expandedURL: URL): Promise<LocationData | null> {
+async function normalizeLocationWithIdentifier(id: { placeid?: string, ftid?: string }, expandedURL: URL): Promise<Location | null> {
     if (!id.placeid && !id.ftid) {
         throw new Error('Either placeid or ftid must be given');
     }
