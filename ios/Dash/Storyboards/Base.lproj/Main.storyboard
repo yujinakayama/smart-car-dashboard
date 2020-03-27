@@ -11,7 +11,7 @@
         <!--Master Navigation Controller-->
         <scene sceneID="pY4-Hu-kfo">
             <objects>
-                <navigationController id="RMx-3f-FxP" userLabel="Master Navigation Controller" sceneMemberID="viewController">
+                <navigationController restorationIdentifier="ETCNavigationController" id="RMx-3f-FxP" userLabel="Master Navigation Controller" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" largeTitles="YES" id="Pmd-2v-anx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -27,7 +27,7 @@
         <!--Card Table View Controller-->
         <scene sceneID="UzF-l4-l0z">
             <objects>
-                <tableViewController id="jqf-qq-fTP" userLabel="Card Table View Controller" customClass="ETCCardTableViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController restorationIdentifier="ETCCardTableViewController" id="jqf-qq-fTP" userLabel="Card Table View Controller" customClass="ETCCardTableViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="rBj-BB-kSy">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -222,7 +222,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="dfb-Fe-CUi">
             <objects>
-                <tabBarController id="3pD-mC-pSF" sceneMemberID="viewController">
+                <tabBarController restorationIdentifier="TabBarController" id="3pD-mC-pSF" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ACU-o3-iqv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -240,7 +240,7 @@
         <!--ETC Split View Controller-->
         <scene sceneID="Nki-YV-4Qg">
             <objects>
-                <splitViewController id="H1p-Uh-vWS" userLabel="ETC Split View Controller" customClass="ETCSplitViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                <splitViewController restorationIdentifier="ETCSplitViewController" id="H1p-Uh-vWS" userLabel="ETC Split View Controller" customClass="ETCSplitViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="ETC" image="yensign.square.fill" catalog="system" id="lhA-Mw-Pck"/>
                     <toolbarItems/>
                     <connections>
@@ -255,7 +255,7 @@
         <!--Payment Table View Controller-->
         <scene sceneID="smW-Zh-WAh">
             <objects>
-                <tableViewController id="7bK-jq-Zjz" userLabel="Payment Table View Controller" customClass="ETCPaymentTableViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController restorationIdentifier="ETCPaymentTableViewController" id="7bK-jq-Zjz" userLabel="Payment Table View Controller" customClass="ETCPaymentTableViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="r7i-6Z-zg0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -455,7 +455,7 @@
         <!--Shared Item Table View Controller-->
         <scene sceneID="p0o-EX-VWk">
             <objects>
-                <tableViewController id="08M-uz-mue" userLabel="Shared Item Table View Controller" customClass="SharedItemTableViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController restorationIdentifier="SharedItemTableViewController" id="08M-uz-mue" userLabel="Shared Item Table View Controller" customClass="SharedItemTableViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5gS-Vr-VFB">
                         <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -612,7 +612,7 @@
         <!--Shared Items-->
         <scene sceneID="JrH-as-C6C">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9rv-x1-HX3" sceneMemberID="viewController">
+                <navigationController restorationIdentifier="SharedItemNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="9rv-x1-HX3" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Shared Items" image="square.and.arrow.down.fill" catalog="system" id="5GI-ot-E7D"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="3Im-5G-ZFk">
