@@ -95,7 +95,9 @@ class SharedItemTableViewCell: UITableViewCell {
 
         website.icon.getURL { (iconURL) in
             if let iconURL = iconURL {
-                self.setRemoteImage(url: iconURL)
+                DispatchQueue.main.async {
+                    self.setRemoteImage(url: iconURL)
+                }
             }
         }
 
