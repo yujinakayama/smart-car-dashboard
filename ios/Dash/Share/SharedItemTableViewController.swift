@@ -38,22 +38,17 @@ class SharedItemTableViewController: UITableViewController {
         tableView.dataSource = dataSource
 
         navigationItem.leftBarButtonItem = editButtonItem
+    }
 
-        authStateDidChange()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
 
-        authStateListener = Auth.auth().addStateDidChangeListener { [weak self] (auth, user) in
-            guard let self = self else { return }
-            self.authStateDidChange()
-        }
+        startObservingAuthState()
     }
 
     deinit {
-        if let authStateListener = authStateListener {
-            Auth.auth().removeStateDidChangeListener(authStateListener)
-            self.authStateListener = nil
-        }
-
         endLoadingItems()
+        endObservingAuthState()
     }
 
     func makeDataSource() -> SharedItemTableViewDataSource {
@@ -76,15 +71,34 @@ class SharedItemTableViewController: UITableViewController {
         return dataSource
     }
 
+    func startObservingAuthState() {
+        guard authStateListener == nil else { return }
+
+        authStateListener = Auth.auth().addStateDidChangeListener { [weak self] (auth, user) in
+            guard let self = self else { return }
+            self.authStateDidChange()
+        }
+    }
+
+    func endObservingAuthState() {
+        guard let authStateListener = authStateListener else { return }
+
+        Auth.auth().removeStateDidChangeListener(authStateListener)
+        self.authStateListener = nil
+    }
+
     func authStateDidChange() {
         let firebaseUser = Auth.auth().currentUser
 
         logger.info("Current Firebase user: \(firebaseUser?.email as String?)")
 
         if firebaseUser != nil {
-            self.startLoadingItems()
+            startLoadingItems()
         } else {
-            self.showSignInView()
+            endLoadingItems()
+            data = SharedItemTableViewData()
+            tableView.reloadData()
+            showSignInView()
         }
     }
 
