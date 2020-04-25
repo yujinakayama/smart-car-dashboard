@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class MapsViewController: UIViewController, UIGestureRecognizerDelegate {
+class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate {
     @IBOutlet weak var mapView: MKMapView!
 
     let gestureRecognizer = UIGestureRecognizer()
@@ -20,6 +20,8 @@ class MapsViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        mapView.delegate = self
+        mapView.register(DirectionalUserLocationAnnotationView.self, forAnnotationViewWithReuseIdentifier: "DirectionalUserLocationAnnotationView")
         mapView.userTrackingMode = .follow
 
         gestureRecognizer.delegate = self
@@ -40,5 +42,18 @@ class MapsViewController: UIViewController, UIGestureRecognizerDelegate {
             self.mapView.setUserTrackingMode(.follow, animated: true)
             self.userTrackingModeRestorationTimer = nil
         }
+    }
+
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return mapView.dequeueReusableAnnotationView(withIdentifier: "DirectionalUserLocationAnnotationView", for: annotation)
+        } else {
+            return nil
+        }
+    }
+
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        guard let userLocationView = mapView.view(for: userLocation) as? DirectionalUserLocationAnnotationView else { return }
+        userLocationView.updateDirection(animated: true)
     }
 }

@@ -81,6 +81,7 @@
 		B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */; };
 		B9CEA76622D89A400055C9A3 /* ETCDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */; };
 		B9CEA76E22D911140055C9A3 /* ETCSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76D22D911140055C9A3 /* ETCSplitViewController.swift */; };
+		B9CEADAD24501FE7006898F8 /* DirectionalUserLocationAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEADAC24501FE7006898F8 /* DirectionalUserLocationAnnotationView.swift */; };
 		B9D8E43823D345940078A057 /* ETCCardManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43723D345940078A057 /* ETCCardManagedObject.swift */; };
 		B9D8E43A23D345D70078A057 /* UUIDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43923D345D70078A057 /* UUIDExtension.swift */; };
 		B9DB8E5522D7A410003E4BD8 /* Dash.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B9DB8E5322D7A410003E4BD8 /* Dash.xcdatamodeld */; };
@@ -266,6 +267,7 @@
 		B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationCenter.swift; sourceTree = "<group>"; };
 		B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDataStore.swift; sourceTree = "<group>"; };
 		B9CEA76D22D911140055C9A3 /* ETCSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCSplitViewController.swift; sourceTree = "<group>"; };
+		B9CEADAC24501FE7006898F8 /* DirectionalUserLocationAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectionalUserLocationAnnotationView.swift; sourceTree = "<group>"; };
 		B9D8E43723D345940078A057 /* ETCCardManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCCardManagedObject.swift; sourceTree = "<group>"; };
 		B9D8E43923D345D70078A057 /* UUIDExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUIDExtension.swift; sourceTree = "<group>"; };
 		B9D8E43B23D345EC0078A057 /* DashV2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DashV2.xcdatamodel; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 			isa = PBXGroup;
 			children = (
 				B904A2A5243968990087BD4A /* MapsViewController.swift */,
+				B9CEADAC24501FE7006898F8 /* DirectionalUserLocationAnnotationView.swift */,
 			);
 			path = Maps;
 			sourceTree = "<group>";
@@ -1006,6 +1009,7 @@
 				B9DC5B39229D5D8100B645D5 /* ETCDeviceConnection.swift in Sources */,
 				B9D8E43823D345940078A057 /* ETCCardManagedObject.swift in Sources */,
 				B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */,
+				B9CEADAD24501FE7006898F8 /* DirectionalUserLocationAnnotationView.swift in Sources */,
 				B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */,
 				B942553D22B8C3E2008B053B /* Logger.swift in Sources */,
 				B9BC920923250A0A006F22FC /* Defaults.swift in Sources */,
