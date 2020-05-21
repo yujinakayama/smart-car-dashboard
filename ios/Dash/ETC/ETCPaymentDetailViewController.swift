@@ -9,31 +9,6 @@
 import UIKit
 import MapKit
 
-enum MapTypeSegmentedControlIndex: Int {
-    case standard = 0
-    case satellite
-
-    init?(_ mapType: MKMapType) {
-        switch mapType {
-        case .standard:
-            self = .standard
-        case .satellite:
-            self = .satellite
-        default:
-            return nil
-        }
-    }
-
-    var mapType: MKMapType {
-        switch self {
-        case .standard:
-            return .standard
-        case .satellite:
-            return .satellite
-        }
-    }
-}
-
 class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mapTypeSegmentedControl: UISegmentedControl!

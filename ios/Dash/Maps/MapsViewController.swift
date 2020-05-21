@@ -11,6 +11,7 @@ import MapKit
 
 class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate {
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var mapTypeSegmentedControl: UISegmentedControl!
 
     let gestureRecognizer = UIGestureRecognizer()
 
@@ -55,5 +56,11 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         guard let userLocationView = mapView.view(for: userLocation) as? DirectionalUserLocationAnnotationView else { return }
         userLocationView.updateDirection(animated: true)
+    }
+
+    @IBAction func mapTypeSegmentedControlDidChange() {
+        let index = MapTypeSegmentedControlIndex(rawValue: mapTypeSegmentedControl.selectedSegmentIndex)!
+        mapView.mapType = index.mapType
+        Defaults.shared.mapTypeForETCRoute = index.mapType
     }
 }

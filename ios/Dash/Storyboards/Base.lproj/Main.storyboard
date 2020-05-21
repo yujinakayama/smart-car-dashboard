@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3pD-mC-pSF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3pD-mC-pSF">
     <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -640,18 +640,37 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" pitchEnabled="NO" showsUserLocation="YES" showsScale="YES" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kbs-HW-7zk">
                                 <rect key="frame" x="0.0" y="0.0" width="1366" height="959"/>
                             </mapView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="uB9-Wf-7JO">
+                                <rect key="frame" x="1146" y="20" width="200" height="32"/>
+                                <color key="backgroundColor" name="Map Type Segmented Control Background Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="LYD-jt-N5P"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="マップ"/>
+                                    <segment title="航空写真"/>
+                                </segments>
+                                <connections>
+                                    <action selector="mapTypeSegmentedControlDidChange" destination="0o8-aQ-xh6" eventType="valueChanged" id="NO1-X0-5Ae"/>
+                                    <action selector="mapTypeSegmentedControlDidChange" destination="JEX-9P-axG" eventType="valueChanged" id="ktt-RA-8Xp"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstAttribute="rightMargin" secondItem="uB9-Wf-7JO" secondAttribute="right" id="MzI-Mm-9iK"/>
                             <constraint firstItem="kbs-HW-7zk" firstAttribute="right" secondItem="RGr-z9-sAj" secondAttribute="right" id="Psr-SA-PCU"/>
+                            <constraint firstItem="uB9-Wf-7JO" firstAttribute="left" relation="greaterThanOrEqual" secondItem="aIe-nH-B5z" secondAttribute="left" id="T2F-BR-3Rd"/>
                             <constraint firstItem="kbs-HW-7zk" firstAttribute="left" secondItem="RGr-z9-sAj" secondAttribute="left" id="j1d-NF-Q2T"/>
                             <constraint firstItem="kbs-HW-7zk" firstAttribute="bottom" secondItem="RGr-z9-sAj" secondAttribute="bottom" constant="-65" id="nCn-wg-1Hu"/>
                             <constraint firstItem="kbs-HW-7zk" firstAttribute="top" secondItem="RGr-z9-sAj" secondAttribute="top" id="r3D-qn-6XC"/>
+                            <constraint firstItem="uB9-Wf-7JO" firstAttribute="top" secondItem="aIe-nH-B5z" secondAttribute="top" constant="20" id="xhc-KO-ISg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="aIe-nH-B5z"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Maps" image="map.fill" catalog="system" id="0TL-LK-2HM"/>
                     <connections>
+                        <outlet property="mapTypeSegmentedControl" destination="uB9-Wf-7JO" id="im0-di-mqh"/>
                         <outlet property="mapView" destination="kbs-HW-7zk" id="Tlp-yt-Ded"/>
                     </connections>
                 </viewController>
