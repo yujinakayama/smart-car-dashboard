@@ -8,6 +8,22 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Music-->
+        <scene sceneID="8uU-kC-YE5">
+            <objects>
+                <viewController id="zuP-Ci-kYP" customClass="MusicViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="B1Y-hT-Lkm">
+                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="vle-wP-uq3"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Music" image="music.note" catalog="system" id="s4e-oe-zlJ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Uei-Iu-VKy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-856" y="-2835"/>
+        </scene>
         <!--Master Navigation Controller-->
         <scene sceneID="pY4-Hu-kfo">
             <objects>
@@ -229,6 +245,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
+                        <segue destination="zuP-Ci-kYP" kind="relationship" relationship="viewControllers" id="uhj-yT-8WV"/>
                         <segue destination="H1p-Uh-vWS" kind="relationship" relationship="viewControllers" id="Yb9-ec-BFu"/>
                         <segue destination="9rv-x1-HX3" kind="relationship" relationship="viewControllers" id="tYp-y0-GC7"/>
                         <segue destination="0o8-aQ-xh6" kind="relationship" relationship="viewControllers" id="eGv-fE-PSG"/>
@@ -894,6 +911,7 @@
         <image name="checkmark" catalog="system" width="128" height="114"/>
         <image name="map.fill" catalog="system" width="128" height="113"/>
         <image name="mappin" catalog="system" width="105" height="128"/>
+        <image name="music.note" catalog="system" width="97" height="128"/>
         <image name="signature" catalog="system" width="128" height="90"/>
         <image name="square.and.arrow.down.fill" catalog="system" width="121" height="128"/>
         <image name="yensign.square.fill" catalog="system" width="128" height="114"/>
