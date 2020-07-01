@@ -10,6 +10,7 @@ import UIKit
 import MediaPlayer
 
 class MusicViewController: UIViewController {
+    @IBOutlet weak var artworkView: ArtworkView!
     @IBOutlet weak var playbackControlView: PlaybackControlView!
     @IBOutlet weak var volumeView: MPVolumeView!
 
@@ -30,6 +31,7 @@ class MusicViewController: UIViewController {
     }
 
     func setUp() {
+        artworkView.musicPlayer = musicPlayer
         playbackControlView.musicPlayer = musicPlayer
 
         musicPlayer.beginGeneratingPlaybackNotifications()
