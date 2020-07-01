@@ -25,8 +25,11 @@
                                             <constraint firstAttribute="width" secondItem="3wq-8X-NTj" secondAttribute="height" multiplier="1:1" id="nRi-l7-2hN"/>
                                         </constraints>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Beu-Kz-v6k" customClass="SongTitleView" customModule="Dash" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="323" width="311" height="128"/>
+                                    </view>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Z51-Ki-eML" customClass="PlaybackControlView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="393" width="311" height="100"/>
+                                        <rect key="frame" x="0.0" y="463" width="311" height="100"/>
                                         <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="2Lr-e8-jfW"/>
@@ -54,6 +57,7 @@
                     <connections>
                         <outlet property="artworkView" destination="3wq-8X-NTj" id="2Aa-Vh-QOj"/>
                         <outlet property="playbackControlView" destination="Z51-Ki-eML" id="CSg-xg-wZE"/>
+                        <outlet property="songTitleView" destination="Beu-Kz-v6k" id="zWt-rx-Y2G"/>
                         <outlet property="volumeView" destination="xiy-BS-1Rf" id="9XC-zY-aRP"/>
                     </connections>
                 </viewController>

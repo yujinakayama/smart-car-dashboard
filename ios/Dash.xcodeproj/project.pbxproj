@@ -21,6 +21,7 @@
 		B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */; };
 		B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */; };
 		B92C6EC324AC2F0A001E9675 /* ArtworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92C6EC224AC2F0A001E9675 /* ArtworkView.swift */; };
+		B92C6EC524AC68B7001E9675 /* SongTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92C6EC424AC68B7001E9675 /* SongTitleView.swift */; };
 		B92E2AFC23E4958200BB4C0E /* UNNotificationContentExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92E2AFB23E4958200BB4C0E /* UNNotificationContentExtension.swift */; };
 		B92FB3C023E95BE900EA702C /* SharedItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92FB3BF23E95BE900EA702C /* SharedItemTableViewCell.swift */; };
 		B931C4FF23D369760020DF13 /* ETCDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B931C4FE23D369760020DF13 /* ETCDevice.swift */; };
@@ -212,6 +213,7 @@
 		B9253D7923E015A80037E156 /* Dash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dash.entitlements; sourceTree = "<group>"; };
 		B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewController.swift; sourceTree = "<group>"; };
 		B92C6EC224AC2F0A001E9675 /* ArtworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkView.swift; sourceTree = "<group>"; };
+		B92C6EC424AC68B7001E9675 /* SongTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongTitleView.swift; sourceTree = "<group>"; };
 		B92E2AFB23E4958200BB4C0E /* UNNotificationContentExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UNNotificationContentExtension.swift; sourceTree = "<group>"; };
 		B92FB3BF23E95BE900EA702C /* SharedItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedItemTableViewCell.swift; sourceTree = "<group>"; };
 		B931C4FE23D369760020DF13 /* ETCDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDevice.swift; sourceTree = "<group>"; };
@@ -369,6 +371,7 @@
 			children = (
 				B944C68F24A9E4C8000D1E99 /* MusicViewController.swift */,
 				B92C6EC224AC2F0A001E9675 /* ArtworkView.swift */,
+				B92C6EC424AC68B7001E9675 /* SongTitleView.swift */,
 				B944C69124A9E647000D1E99 /* PlaybackControlView.swift */,
 				B9CB753524AA1A17008264F5 /* VolumeView.swift */,
 			);
@@ -1031,6 +1034,7 @@
 				B92E2AFC23E4958200BB4C0E /* UNNotificationContentExtension.swift in Sources */,
 				B9DB8E5522D7A410003E4BD8 /* Dash.xcdatamodeld in Sources */,
 				B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */,
+				B92C6EC524AC68B7001E9675 /* SongTitleView.swift in Sources */,
 				B9DC5B3F229D9E4F00B645D5 /* BLERemotePeripheralManager.swift in Sources */,
 				B95F514623E5A8540063CB3D /* Location.swift in Sources */,
 				B9DC5B39229D5D8100B645D5 /* ETCDeviceConnection.swift in Sources */,
