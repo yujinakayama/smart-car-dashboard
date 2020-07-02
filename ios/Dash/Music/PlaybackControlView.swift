@@ -10,6 +10,16 @@ import UIKit
 import MediaPlayer
 
 @IBDesignable class PlaybackControlView: UIStackView {
+    enum Operation {
+        case play
+        case pause
+        case skipToNextItem
+        case skipToBeginning
+        case skipToPreviousItem
+    }
+
+    weak var delegate: PlaybackControlViewDelegate?
+
     var musicPlayer: MPMusicPlayerController! {
         didSet {
             addNotificationObserver()
@@ -98,21 +108,28 @@ import MediaPlayer
     @objc func playPauseButtonDidTap() {
         if musicPlayer.playbackState == .playing {
             musicPlayer.pause()
+            delegate?.playbackControlView(self, didPerformOperation: .pause)
         } else {
             musicPlayer.play()
+            delegate?.playbackControlView(self, didPerformOperation: .play)
         }
     }
 
     @objc func backwardButtonDidTap() {
         if musicPlayer.currentPlaybackTime < 4 {
             musicPlayer.skipToPreviousItem()
+            musicPlayer.skipToBeginning()
+            delegate?.playbackControlView(self, didPerformOperation: .skipToPreviousItem)
         } else {
             musicPlayer.skipToBeginning()
+            delegate?.playbackControlView(self, didPerformOperation: .skipToBeginning)
         }
     }
 
     @objc func forwardButtonDidTap() {
         musicPlayer.skipToNextItem()
+        musicPlayer.skipToBeginning()
+        delegate?.playbackControlView(self, didPerformOperation: .skipToNextItem)
     }
 
     @objc func musicPlayerControllerPlaybackStateDidChange() {
@@ -130,4 +147,8 @@ import MediaPlayer
             }
         }
     }
+}
+
+protocol PlaybackControlViewDelegate: NSObjectProtocol {
+    func playbackControlView(_ playbackControlView: PlaybackControlView, didPerformOperation operation: PlaybackControlView.Operation)
 }

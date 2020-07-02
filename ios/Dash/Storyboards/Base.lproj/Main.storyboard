@@ -16,8 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="sLb-Je-6Yi">
-                                <rect key="frame" x="32" y="69" width="311" height="635"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="sLb-Je-6Yi">
+                                <rect key="frame" x="32" y="69" width="311" height="628"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3wq-8X-NTj" customClass="ArtworkView" customModule="Dash" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="311" height="311"/>
@@ -26,28 +26,41 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Beu-Kz-v6k" customClass="SongTitleView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="323" width="311" height="128"/>
-                                    </view>
-                                    <view contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Z51-Ki-eML" customClass="PlaybackControlView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="463" width="311" height="100"/>
-                                        <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <rect key="frame" x="0.0" y="345.33333333333331" width="311" height="60"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="100" id="2Lr-e8-jfW"/>
+                                            <constraint firstAttribute="height" constant="60" id="jCn-aM-e0h"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xiy-BS-1Rf" customClass="VolumeView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="575" width="311" height="60"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4EW-dl-7rX" customClass="PlaybackProgressView" customModule="Dash" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="439.66666666666669" width="311" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="zIa-hH-lg5"/>
+                                            <constraint firstAttribute="height" constant="30" id="IT5-o9-AQP"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Z51-Ki-eML" customClass="PlaybackControlView" customModule="Dash" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="503.66666666666663" width="311" height="60"/>
+                                        <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="2Lr-e8-jfW"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xiy-BS-1Rf" customClass="VolumeView" customModule="Dash" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="598" width="311" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="zIa-hH-lg5"/>
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="600" id="1dR-eG-ba0"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="sLb-Je-6Yi" firstAttribute="centerX" secondItem="B1Y-hT-Lkm" secondAttribute="centerX" id="EpA-Bf-7oX"/>
                             <constraint firstItem="vle-wP-uq3" firstAttribute="trailing" secondItem="sLb-Je-6Yi" secondAttribute="trailing" constant="32" id="YVI-oF-Get"/>
-                            <constraint firstItem="vle-wP-uq3" firstAttribute="bottom" secondItem="sLb-Je-6Yi" secondAttribute="bottom" constant="25" id="b70-dR-XCh"/>
+                            <constraint firstItem="vle-wP-uq3" firstAttribute="bottom" secondItem="sLb-Je-6Yi" secondAttribute="bottom" constant="32" id="b70-dR-XCh"/>
                             <constraint firstItem="sLb-Je-6Yi" firstAttribute="top" secondItem="vle-wP-uq3" secondAttribute="top" constant="25" id="cXV-9j-f4N"/>
                             <constraint firstItem="sLb-Je-6Yi" firstAttribute="leading" secondItem="vle-wP-uq3" secondAttribute="leading" constant="32" id="xMZ-kT-K0V"/>
                         </constraints>
@@ -57,6 +70,7 @@
                     <connections>
                         <outlet property="artworkView" destination="3wq-8X-NTj" id="2Aa-Vh-QOj"/>
                         <outlet property="playbackControlView" destination="Z51-Ki-eML" id="CSg-xg-wZE"/>
+                        <outlet property="playbackProgressView" destination="4EW-dl-7rX" id="JQa-Dw-sCH"/>
                         <outlet property="songTitleView" destination="Beu-Kz-v6k" id="zWt-rx-Y2G"/>
                         <outlet property="volumeView" destination="xiy-BS-1Rf" id="9XC-zY-aRP"/>
                     </connections>
@@ -332,13 +346,13 @@
                                                 <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="yXL-mj-wgO" customClass="BorderedView" customModule="Dash" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="79.666666666666671" height="29"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" text="1280" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ukE-X2-gHW">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" ambiguous="YES" text="1280" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ukE-X2-gHW">
                                                             <rect key="frame" x="22.333333333333332" y="2" width="49.333333333333343" height="26"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="19"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" text="¥" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6wB-E0-moo">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" ambiguous="YES" text="¥" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6wB-E0-moo">
                                                             <rect key="frame" x="9" y="2" width="12.333333333333336" height="26"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="19"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
