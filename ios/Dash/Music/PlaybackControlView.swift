@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 
-@IBDesignable class PlaybackControlView: UIStackView {
+@IBDesignable class PlaybackControlView: UIView {
     enum Operation {
         case play
         case pause
@@ -33,7 +33,7 @@ import MediaPlayer
         button.addTarget(self, action: #selector(backwardButtonDidTap), for: .touchUpInside)
 
         button.setPreferredSymbolConfiguration(
-            UIImage.SymbolConfiguration(pointSize: 32),
+            UIImage.SymbolConfiguration(pointSize: 31),
             forImageIn: .normal
         )
 
@@ -48,7 +48,7 @@ import MediaPlayer
         button.addTarget(self, action: #selector(playPauseButtonDidTap), for: .touchUpInside)
 
         button.setPreferredSymbolConfiguration(
-            UIImage.SymbolConfiguration(pointSize: 48),
+            UIImage.SymbolConfiguration(pointSize: 46, weight: .heavy),
             forImageIn: .normal
         )
 
@@ -63,7 +63,7 @@ import MediaPlayer
         button.addTarget(self, action: #selector(forwardButtonDidTap), for: .touchUpInside)
 
         button.setPreferredSymbolConfiguration(
-            UIImage.SymbolConfiguration(pointSize: 32),
+            UIImage.SymbolConfiguration(pointSize: 31),
             forImageIn: .normal
         )
 
@@ -72,7 +72,7 @@ import MediaPlayer
         return button
     }()
 
-    required init(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
         setUp()
     }
@@ -87,13 +87,36 @@ import MediaPlayer
     }
 
     func setUp() {
-        axis = .horizontal
-        alignment = .fill
-        distribution = .fillEqually
+        addSubview(backwardButton)
+        addSubview(playPauseButton)
+        addSubview(forwardButton)
 
-        addArrangedSubview(backwardButton)
-        addArrangedSubview(playPauseButton)
-        addArrangedSubview(forwardButton)
+        installLayoutConstraints()
+    }
+
+    func installLayoutConstraints() {
+        for subview in subviews {
+            subview.translatesAutoresizingMaskIntoConstraints = false
+        }
+
+        var constraints: [NSLayoutConstraint] = []
+
+        constraints.append(contentsOf: [
+            playPauseButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            playPauseButton.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
+
+        constraints.append(contentsOf: [
+            playPauseButton.leftAnchor.constraint(equalTo: backwardButton.rightAnchor, constant: 60),
+            backwardButton.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
+
+        constraints.append(contentsOf: [
+            forwardButton.leftAnchor.constraint(equalTo: playPauseButton.rightAnchor, constant: 60),
+            forwardButton.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
+
+        NSLayoutConstraint.activate(constraints)
     }
 
     func addNotificationObserver() {
