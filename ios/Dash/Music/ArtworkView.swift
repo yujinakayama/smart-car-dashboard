@@ -114,13 +114,6 @@ import MediaPlayer
             rightAnchor.constraint(equalTo: shadowView.rightAnchor, constant: 1),
         ])
 
-        constraints.append(contentsOf: [
-            visualEffectView.topAnchor.constraint(equalTo: topAnchor, constant: -10000),
-            bottomAnchor.constraint(equalTo: visualEffectView.bottomAnchor, constant: -10000),
-            visualEffectView.leftAnchor.constraint(equalTo: leftAnchor, constant: -10000),
-            rightAnchor.constraint(equalTo: visualEffectView.rightAnchor, constant: -10000),
-        ])
-
         blurredImageViewTopAnchorConstraint = blurredImageView.topAnchor.constraint(equalTo: topAnchor)
 
         constraints.append(contentsOf: [
@@ -131,6 +124,19 @@ import MediaPlayer
         ])
 
         NSLayoutConstraint.activate(constraints)
+    }
+
+    override func didMoveToWindow() {
+        guard let window = window else { return }
+
+        NSLayoutConstraint.deactivate(visualEffectView.constraints)
+
+        NSLayoutConstraint.activate([
+            visualEffectView.topAnchor.constraint(equalTo: window.topAnchor),
+            window.bottomAnchor.constraint(equalTo: visualEffectView.bottomAnchor),
+            visualEffectView.leftAnchor.constraint(equalTo: window.leftAnchor),
+            window.rightAnchor.constraint(equalTo: visualEffectView.rightAnchor),
+        ])
     }
 
     override func layoutSubviews() {
