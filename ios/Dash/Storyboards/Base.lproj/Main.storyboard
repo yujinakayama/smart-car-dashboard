@@ -27,34 +27,64 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3wq-8X-NTj" customClass="ArtworkView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="36.666666666666686" width="311" height="311"/>
+                                        <rect key="frame" x="0.0" y="27.333333333333314" width="311" height="311"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="3wq-8X-NTj" secondAttribute="height" multiplier="1:1" id="nRi-l7-2hN"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Beu-Kz-v6k" customClass="SongTitleView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="384" width="311" height="52"/>
+                                        <rect key="frame" x="0.0" y="365.66666666666669" width="311" height="52"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="52" id="jCn-aM-e0h"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4EW-dl-7rX" customClass="PlaybackProgressView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="472.66666666666663" width="311" height="24"/>
+                                        <rect key="frame" x="0.0" y="445" width="311" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="IT5-o9-AQP"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Z51-Ki-eML" customClass="PlaybackControlView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="533" width="311" height="60"/>
+                                        <rect key="frame" x="0.0" y="496" width="311" height="60"/>
                                         <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="2Lr-e8-jfW"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xiy-BS-1Rf" customClass="VolumeView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="629.66666666666663" width="311" height="19"/>
+                                        <rect key="frame" x="0.0" y="583.33333333333337" width="311" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="19" id="zIa-hH-lg5"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hV1-RD-Cct">
+                                        <rect key="frame" x="0.0" y="629.66666666666663" width="311" height="28"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfV-vr-luy" customClass="PlaybackModeSwitch" customModule="Dash" customModuleProvider="target">
+                                                <rect key="frame" x="37.666666666666671" y="0.0" width="28" height="28"/>
+                                                <state key="normal" image="shuffle" catalog="system"/>
+                                            </button>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="02J-uc-aWb" customClass="AVRoutePickerView">
+                                                <rect key="frame" x="141.66666666666666" y="0.0" width="28" height="28"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="02J-uc-aWb" secondAttribute="height" multiplier="1:1" id="Wgn-tv-jgF"/>
+                                                    <constraint firstAttribute="width" constant="28" id="fWj-93-0pu"/>
+                                                </constraints>
+                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TAK-Hz-Kv5" customClass="PlaybackModeSwitch" customModule="Dash" customModuleProvider="target">
+                                                <rect key="frame" x="245.66666666666669" y="0.0" width="28" height="28"/>
+                                                <state key="normal" image="repeat" catalog="system"/>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="TAK-Hz-Kv5" firstAttribute="centerY" secondItem="hV1-RD-Cct" secondAttribute="centerY" id="8s1-Xm-rmk"/>
+                                            <constraint firstItem="TAK-Hz-Kv5" firstAttribute="leading" secondItem="02J-uc-aWb" secondAttribute="trailing" constant="76" id="LS8-rL-hBH"/>
+                                            <constraint firstAttribute="height" constant="28" id="N26-0C-r4X"/>
+                                            <constraint firstItem="02J-uc-aWb" firstAttribute="centerY" secondItem="hV1-RD-Cct" secondAttribute="centerY" id="POr-0o-vkS"/>
+                                            <constraint firstItem="02J-uc-aWb" firstAttribute="leading" secondItem="mfV-vr-luy" secondAttribute="trailing" constant="76" id="R6O-ZP-uYJ"/>
+                                            <constraint firstItem="02J-uc-aWb" firstAttribute="centerX" secondItem="hV1-RD-Cct" secondAttribute="centerX" id="VPs-9r-xFd"/>
+                                            <constraint firstItem="mfV-vr-luy" firstAttribute="centerY" secondItem="hV1-RD-Cct" secondAttribute="centerY" id="pPk-Do-WBP"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="not-0R-tgj">
@@ -85,6 +115,9 @@
                         <outlet property="artworkView" destination="3wq-8X-NTj" id="2Aa-Vh-QOj"/>
                         <outlet property="playbackControlView" destination="Z51-Ki-eML" id="CSg-xg-wZE"/>
                         <outlet property="playbackProgressView" destination="4EW-dl-7rX" id="JQa-Dw-sCH"/>
+                        <outlet property="repeatModeSwitch" destination="TAK-Hz-Kv5" id="9K8-3K-4lK"/>
+                        <outlet property="routePickerView" destination="02J-uc-aWb" id="cg5-Uf-NQ8"/>
+                        <outlet property="shuffleModeSwitch" destination="mfV-vr-luy" id="eje-LU-FiO"/>
                         <outlet property="songTitleView" destination="Beu-Kz-v6k" id="zWt-rx-Y2G"/>
                         <outlet property="volumeView" destination="xiy-BS-1Rf" id="9XC-zY-aRP"/>
                     </connections>
@@ -981,6 +1014,8 @@
         <image name="map.fill" catalog="system" width="128" height="113"/>
         <image name="mappin" catalog="system" width="105" height="128"/>
         <image name="music.note" catalog="system" width="97" height="128"/>
+        <image name="repeat" catalog="system" width="128" height="99"/>
+        <image name="shuffle" catalog="system" width="128" height="93"/>
         <image name="signature" catalog="system" width="128" height="90"/>
         <image name="square.and.arrow.down.fill" catalog="system" width="121" height="128"/>
         <image name="yensign.square.fill" catalog="system" width="128" height="114"/>

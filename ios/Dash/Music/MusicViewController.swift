@@ -8,6 +8,7 @@
 
 import UIKit
 import MediaPlayer
+import AVKit
 
 class MusicViewController: UIViewController, PlaybackControlViewDelegate {
     @IBOutlet weak var artworkView: ArtworkView!
@@ -15,6 +16,9 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
     @IBOutlet weak var playbackProgressView: PlaybackProgressView!
     @IBOutlet weak var playbackControlView: PlaybackControlView!
     @IBOutlet weak var volumeView: MPVolumeView!
+    @IBOutlet weak var shuffleModeSwitch: PlaybackModeSwitch!
+    @IBOutlet weak var routePickerView: AVRoutePickerView!
+    @IBOutlet weak var repeatModeSwitch: PlaybackModeSwitch!
 
     var musicPlayer: MPMusicPlayerController {
         return MPMusicPlayerController.systemMusicPlayer
@@ -41,6 +45,23 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
         playbackControlView.musicPlayer = musicPlayer
 
         musicPlayer.beginGeneratingPlaybackNotifications()
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(applicationWillEnterForeground),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
+
+        shuffleModeSwitch.addTarget(self, action: #selector(shuffleModeSwitchValueDidChange), for: .valueChanged)
+        repeatModeSwitch.addTarget(self, action: #selector(repeatModeSwitchValueDidChange), for: .valueChanged)
+
+        updatePlaybackModeSwitches()
+    }
+
+    func updatePlaybackModeSwitches() {
+        shuffleModeSwitch.isOn = (musicPlayer.shuffleMode != .off)
+        repeatModeSwitch.isOn = (musicPlayer.repeatMode != .none)
     }
 
     deinit {
@@ -54,5 +75,17 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
         default:
             break
         }
+    }
+
+    @objc func applicationWillEnterForeground() {
+        updatePlaybackModeSwitches()
+    }
+
+    @IBAction func shuffleModeSwitchValueDidChange() {
+        musicPlayer.shuffleMode = shuffleModeSwitch.isOn ? .songs : .off
+    }
+
+    @IBAction func repeatModeSwitchValueDidChange() {
+        musicPlayer.repeatMode = repeatModeSwitch.isOn ? .all : .none
     }
 }
