@@ -31,7 +31,7 @@ import MediaPlayer
     let blurredImageView: UIImageView = {
         let blurredImageView = UIImageView()
         blurredImageView.layer.masksToBounds = true
-        blurredImageView.alpha = 0.5
+        blurredImageView.alpha = 0.6
         return blurredImageView
     }()
 
@@ -119,8 +119,8 @@ import MediaPlayer
         constraints.append(contentsOf: [
             blurredImageViewTopAnchorConstraint,
             blurredImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            blurredImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.85),
-            blurredImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.85),
+            blurredImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.87),
+            blurredImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.87),
         ])
 
         NSLayoutConstraint.activate(constraints)
@@ -141,7 +141,7 @@ import MediaPlayer
 
     override func layoutSubviews() {
         shadowView.layer.shadowRadius = bounds.height * 0.065
-        blurredImageViewTopAnchorConstraint.constant = bounds.height * 0.22
+        blurredImageViewTopAnchorConstraint.constant = bounds.height * 0.2
 
         super.layoutSubviews()
     }
