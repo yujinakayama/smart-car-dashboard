@@ -22,7 +22,6 @@ import MediaPlayer
         shadowView.layer.masksToBounds = false
         shadowView.layer.shadowColor = UIColor.black.cgColor
         shadowView.layer.shadowOffset = .zero
-        shadowView.layer.shadowOpacity = 0.3
         return shadowView
     }()
 
@@ -31,7 +30,6 @@ import MediaPlayer
     let blurredImageView: UIImageView = {
         let blurredImageView = UIImageView()
         blurredImageView.layer.masksToBounds = true
-        blurredImageView.alpha = 0.6
         return blurredImageView
     }()
 
@@ -85,9 +83,13 @@ import MediaPlayer
         imageView.layer.borderColor = UIColor.label.withAlphaComponent(0.15).cgColor
 
         if traitCollection.userInterfaceStyle == .dark {
+            shadowView.layer.shadowOpacity = 0.6
             visualEffectView.effect = UIBlurEffect(style: .dark)
+            blurredImageView.alpha = 0.8
         } else {
+            shadowView.layer.shadowOpacity = 0.3
             visualEffectView.effect = UIBlurEffect(style: .light)
+            blurredImageView.alpha = 0.6
         }
     }
 
