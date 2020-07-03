@@ -46,7 +46,8 @@ class MusicItem: SharedItemProtocol {
     private func play(playParameters: MPMusicPlayerPlayParameters) {
         let player = MPMusicPlayerController.systemMusicPlayer
         let queueDescriptor = MPMusicPlayerPlayParametersQueueDescriptor(playParametersQueue: [playParameters])
-        player.setQueue(with: queueDescriptor)
+        player.prepend(queueDescriptor)
+        player.skipToNextItem()
         player.play()
     }
 
