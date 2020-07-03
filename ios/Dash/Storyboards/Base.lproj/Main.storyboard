@@ -110,7 +110,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vle-wP-uq3"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Music" image="music.note" catalog="system" id="s4e-oe-zlJ"/>
+                    <tabBarItem key="tabBarItem" title="Music" image="music.note.beamed" id="s4e-oe-zlJ"/>
                     <connections>
                         <outlet property="artworkView" destination="3wq-8X-NTj" id="2Aa-Vh-QOj"/>
                         <outlet property="playbackControlView" destination="Z51-Ki-eML" id="CSg-xg-wZE"/>
@@ -1013,7 +1013,7 @@
         <image name="checkmark" catalog="system" width="128" height="114"/>
         <image name="map.fill" catalog="system" width="128" height="113"/>
         <image name="mappin" catalog="system" width="105" height="128"/>
-        <image name="music.note" catalog="system" width="97" height="128"/>
+        <image name="music.note.beamed" width="19" height="24"/>
         <image name="repeat" catalog="system" width="128" height="99"/>
         <image name="shuffle" catalog="system" width="128" height="93"/>
         <image name="signature" catalog="system" width="128" height="90"/>
