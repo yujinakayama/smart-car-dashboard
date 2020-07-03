@@ -39,6 +39,22 @@
             </objects>
             <point key="canvasLocation" x="-213" y="875"/>
         </scene>
+        <!--Music-->
+        <scene sceneID="Hsj-OS-Yh5">
+            <objects>
+                <viewController id="xrf-X8-9c0" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3Ge-ae-grq">
+                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="E9n-i4-Rue"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Music" image="music.note.beamed" id="5MN-5g-w6L"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xFQ-xk-DP7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-213" y="-1372"/>
+        </scene>
         <!--ETC-->
         <scene sceneID="Yaa-69-PHr">
             <objects>
@@ -65,6 +81,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
+                        <segue destination="xrf-X8-9c0" kind="relationship" relationship="viewControllers" id="CnN-20-4Ee"/>
                         <segue destination="10H-vQ-v3K" kind="relationship" relationship="viewControllers" id="QHP-Aw-9dV"/>
                         <segue destination="e9v-gZ-EPK" kind="relationship" relationship="viewControllers" id="gnc-zQ-ulB"/>
                         <segue destination="Ang-Dq-mBe" kind="relationship" relationship="viewControllers" id="NbG-ce-Roh"/>
@@ -72,11 +89,12 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9M6-E1-2Tf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1203" y="107"/>
+            <point key="canvasLocation" x="-1604" y="-248"/>
         </scene>
     </scenes>
     <resources>
         <image name="map.fill" catalog="system" width="128" height="113"/>
+        <image name="music.note.beamed" width="19" height="24"/>
         <image name="square.and.arrow.down.fill" catalog="system" width="121" height="128"/>
         <image name="yensign.square.fill" catalog="system" width="128" height="114"/>
     </resources>
