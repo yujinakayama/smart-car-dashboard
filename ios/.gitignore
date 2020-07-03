@@ -85,5 +85,7 @@ iOSInjectionProject/
 # Copyrighted materials
 /Dash/Sounds
 
-# Firebase
+# Secrets
+/Secrets
+apple_music_developer_token.txt
 GoogleService-Info.plist

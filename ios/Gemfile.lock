@@ -240,6 +240,8 @@ PLATFORMS
 DEPENDENCIES
   cocoapods
   fastlane
+  jwt
+  rake
 
 BUNDLED WITH
    2.1.4

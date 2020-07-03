@@ -1,0 +1,34 @@
+namespace :apple_music do
+  # https://developer.apple.com/documentation/applemusicapi/getting_keys_and_creating_tokens
+  task :generate_developer_token do
+    require 'jwt'
+    require 'time'
+    require 'openssl'
+
+    key = OpenSSL::PKey::EC.new(File.read('Secrets/musickit_private_key.p8'))
+
+    max_valid_duration = 15_777_000
+    current_time = Time.now
+    expiration_time = current_time + max_valid_duration
+
+    payload = {
+      iss: File.read('Secrets/apple_developer_team_id.txt').chomp,
+      iat: current_time.to_i,
+      exp: expiration_time.to_i
+    }
+
+    algorithm = 'ES256'
+
+    headers = {
+      alg: algorithm,
+      kid: File.read('Secrets/musickit_key_id.txt').chomp
+    }
+
+    developer_token = JWT.encode(payload, key, algorithm, headers)
+
+    file_path = 'Dash/apple_music_developer_token.txt'
+    File.write(file_path, developer_token)
+
+    puts "Generated #{file_path.inspect}."
+  end
+end
