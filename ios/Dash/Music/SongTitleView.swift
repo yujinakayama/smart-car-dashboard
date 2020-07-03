@@ -43,6 +43,8 @@ import MediaPlayer
 
     override func prepareForInterfaceBuilder() {
         commonInit()
+        songLabel.text = "Lorem ipsum dolor sit amet"
+        artistLabel.text = "John Appleseed"
     }
 
     func commonInit() {
