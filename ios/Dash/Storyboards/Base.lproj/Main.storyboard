@@ -102,10 +102,12 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="vle-wP-uq3" firstAttribute="trailing" secondItem="sLb-Je-6Yi" secondAttribute="trailing" priority="750" constant="32" id="3kl-kx-wYZ"/>
                             <constraint firstItem="sLb-Je-6Yi" firstAttribute="centerX" secondItem="B1Y-hT-Lkm" secondAttribute="centerX" id="EpA-Bf-7oX"/>
                             <constraint firstItem="vle-wP-uq3" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sLb-Je-6Yi" secondAttribute="trailing" constant="32" id="YVI-oF-Get"/>
                             <constraint firstItem="vle-wP-uq3" firstAttribute="bottom" secondItem="sLb-Je-6Yi" secondAttribute="bottom" id="b70-dR-XCh"/>
                             <constraint firstItem="sLb-Je-6Yi" firstAttribute="top" secondItem="vle-wP-uq3" secondAttribute="top" id="cXV-9j-f4N"/>
+                            <constraint firstItem="sLb-Je-6Yi" firstAttribute="leading" secondItem="vle-wP-uq3" secondAttribute="leading" priority="750" constant="32" id="pL5-sW-1LF"/>
                             <constraint firstItem="sLb-Je-6Yi" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vle-wP-uq3" secondAttribute="leading" constant="32" id="xMZ-kT-K0V"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vle-wP-uq3"/>
