@@ -80,7 +80,7 @@ import MediaPlayer
     }
 
     func updateColorAppearance() {
-        imageView.layer.borderColor = UIColor.label.withAlphaComponent(0.15).cgColor
+        imageView.layer.borderColor = UIColor.label.withAlphaComponent(0.1).cgColor
 
         if traitCollection.userInterfaceStyle == .dark {
             shadowView.layer.shadowOpacity = 0.6
