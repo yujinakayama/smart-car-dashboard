@@ -14,7 +14,8 @@ import MediaPlayer
         let slider = UISlider()
         slider.addTarget(self, action: #selector(sliderValueDidChange), for: .valueChanged)
         slider.isContinuous = true
-        slider.minimumTrackTintColor = UIColor(named: "Music Player Slider Minimum Track Tint Color")
+        slider.minimumTrackTintColor = UIColor(named: "Music Player Progress Slider Minimum Track Tint Color")
+        slider.maximumTrackTintColor = UIColor(named: "Music Player Progress Slider Maximum Track Tint Color")
         return slider
     }()
 
@@ -22,7 +23,7 @@ import MediaPlayer
         let elapsedTimeLabel = UILabel()
         elapsedTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: .medium)
         elapsedTimeLabel.textAlignment = .left
-        elapsedTimeLabel.textColor = UIColor(named: "Music Player Slider Minimum Track Tint Color")
+        elapsedTimeLabel.textColor = UIColor(named: "Music Player Progress Slider Minimum Track Tint Color")
         return elapsedTimeLabel
     }()
 
@@ -30,7 +31,7 @@ import MediaPlayer
         let remainingTimeLabel = UILabel()
         remainingTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: .medium)
         remainingTimeLabel.textAlignment = .right
-        remainingTimeLabel.textColor = UIColor(named: "Music Player Slider Minimum Track Tint Color")
+        remainingTimeLabel.textColor = UIColor(named: "Music Player Progress Slider Minimum Track Tint Color")
         return remainingTimeLabel
     }()
 
@@ -254,7 +255,7 @@ import MediaPlayer
     }
 
     var thumbImage: UIImage {
-        let color = UIColor(named: "Music Player Slider Minimum Track Tint Color") ?? UIColor.gray
+        let color = UIColor(named: "Music Player Progress Slider Minimum Track Tint Color") ?? UIColor.gray
         let radius: CGFloat = 3
         let padding: CGFloat = 1
 

@@ -42,7 +42,7 @@ class VolumeView: UIStackView {
         distribution = .fill
         spacing = 6
 
-        tintColor = UIColor(named: "Music Player Slider Minimum Track Tint Color")!
+        tintColor = UIColor(named: "Music Player Volume Slider Minimum Track Tint Color")!
 
         let minimumImage = UIImage(systemName: "speaker.fill", withConfiguration: symbolConfiguration)
         addArrangedSubview(UIImageView(image: minimumImage))
@@ -126,7 +126,7 @@ class VolumeView: UIStackView {
     }
 
     var minimumVolumeSliderImage: UIImage {
-        let color = UIColor(named: "Music Player Slider Minimum Track Tint Color")!
+        let color = UIColor(named: "Music Player Volume Slider Minimum Track Tint Color")!
 
         let leftPadding: CGFloat = 5
         let height: CGFloat = 3
@@ -163,7 +163,7 @@ class VolumeView: UIStackView {
     }
 
     var maximumVolumeSliderImage: UIImage {
-        let color = UIColor(named: "Music Player Slider Maximum Track Tint Color")!
+        let color = UIColor(named: "Music Player Volume Slider Maximum Track Tint Color")!
 
         let rightPadding: CGFloat = 5
         let height: CGFloat = 3
