@@ -1,0 +1,15 @@
+name: Test
+on: [push, pull_request]
+jobs:
+  dash_tests:
+    name: iOS
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: ios
+    steps:
+      - uses: actions/checkout@v2
+      - run: bundle install
+      - run: pod install
+      - run: touch Dash/GoogleService-Info.plist ShareExtension/GoogleService-Info.plist
+      - run: bundle exec rake test
