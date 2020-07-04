@@ -23,5 +23,5 @@ jobs:
             ${{ runner.os }}-pods-
       - run: bundle install --path vendor/bundle
       - run: pod install
-      - run: bundle exec rake generate_dummy_secret_files
+      - run: bundle exec rake generate_dummy_resources
       - run: bundle exec rake test

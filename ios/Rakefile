@@ -11,10 +11,19 @@ task :test do
   test.run(xcpretty: true)
 end
 
-desc 'Generate dummy secret files required for build'
-task :generate_dummy_secret_files do
+desc 'Generate dummy files that are not checked into Git repository but required for build'
+task :generate_dummy_resources do
+  require 'fileutils'
+
   ['Dash/GoogleService-Info.plist', 'ShareExtension/GoogleService-Info.plist'].each do |path|
+    next if File.exist?(path)
     system('/usr/libexec/PlistBuddy', '-c', 'Save', path)
+  end
+
+  ['Dash/Sounds/TollgatePassingThrough.wav', 'Dash/Sounds/Share.wav'].each do |path|
+    next if File.exist?(path)
+    FileUtils.mkdir_p(File.dirname(path))
+    File.write(path, '')
   end
 end
 
