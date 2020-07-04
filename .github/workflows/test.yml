@@ -23,6 +23,5 @@ jobs:
             ${{ runner.os }}-pods-
       - run: bundle install --path vendor/bundle
       - run: pod install
-      - run: /usr/libexec/PlistBuddy -c 'Save' test Dash/GoogleService-Info.plist
-      - run: /usr/libexec/PlistBuddy -c 'Save' test ShareExtension/GoogleService-Info.plist
+      - run: bundle exec rake generate_dummy_secret_files
       - run: bundle exec rake test
