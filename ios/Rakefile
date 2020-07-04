@@ -11,6 +11,13 @@ task :test do
   test.run(xcpretty: true)
 end
 
+desc 'Generate dummy secret files required for build'
+task :generate_dummy_secret_files do
+  ['Dash/GoogleService-Info.plist', 'ShareExtension/GoogleService-Info.plist'].each do |path|
+    system('/usr/libexec/PlistBuddy', '-c', 'Save', path)
+  end
+end
+
 XcodeTest = Struct.new(:scheme, :device, :ios_version, keyword_init: true) do
   def run(xcpretty: true)
     command = build_command.shelljoin
