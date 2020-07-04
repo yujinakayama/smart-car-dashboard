@@ -240,6 +240,7 @@ PLATFORMS
 DEPENDENCIES
   cocoapods
   fastlane
+  rake
 
 BUNDLED WITH
    2.1.4

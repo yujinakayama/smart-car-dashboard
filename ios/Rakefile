@@ -1,0 +1,47 @@
+require 'shellwords'
+
+desc 'Run tests with Xcode'
+task :test do
+  test = XcodeTest.new(
+    scheme: 'Dash',
+    device: 'iPad Pro (12.9-inch) (4th generation)',
+    ios_version: '13.5'
+  )
+
+  test.run(xcpretty: true)
+end
+
+XcodeTest = Struct.new(:scheme, :device, :ios_version, keyword_init: true) do
+  def run(xcpretty: true)
+    command = build_command.shelljoin
+
+    if xcpretty
+      command = "set -o pipefail && #{command} | xcpretty --color"
+    end
+
+    system(command) || exit(Process.last_status.exitstatus)
+  end
+
+  private
+
+  def build_command
+    command = ['xcodebuild']
+    command.concat(['-workspace', workspace])
+    command.concat(['-scheme', scheme])
+    command.concat(['-destination', destination.map { |key, value| "#{key}=#{value}" }.join(',')])
+    command << 'test'
+    command
+  end
+
+  def workspace
+    Dir['*.xcworkspace'].first
+  end
+
+  def destination
+    {
+      platform: 'iOS Simulator',
+          name: device,
+            OS: ios_version
+    }
+  end
+end
