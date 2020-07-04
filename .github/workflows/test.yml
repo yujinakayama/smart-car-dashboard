@@ -9,7 +9,19 @@ jobs:
         working-directory: ios
     steps:
       - uses: actions/checkout@v2
-      - run: bundle install
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      - uses: actions/cache@v2
+        with:
+          path: Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+      - run: bundle install --path vendor/bundle
       - run: pod install
       - run: touch Dash/GoogleService-Info.plist ShareExtension/GoogleService-Info.plist
       - run: bundle exec rake test
