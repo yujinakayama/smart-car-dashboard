@@ -39,6 +39,11 @@ class SharedItemTableViewCell: UITableViewCell {
         }
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        iconImageView.pin_cancelImageDownload()
+    }
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         // The unintentional constraints reset also happens when changing to dark mode
