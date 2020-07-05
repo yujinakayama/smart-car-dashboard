@@ -117,7 +117,6 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
         let repeatingTimerInterval = longerAnimationDuration + holdDuration
 
         animationTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { [weak self] (initialTimer) in
-            print("initial fire")
             guard let self = self else { return }
 
             self.labels.forEach { $0.triggerScrollStart() }
