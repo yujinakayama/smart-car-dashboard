@@ -406,7 +406,7 @@ DEPENDENCIES:
   - GoogleSignIn
   - GTMSessionFetcher
   - KeychainAccess
-  - MarqueeLabel
+  - MarqueeLabel (from `https://github.com/yujinakayama/MarqueeLabel`, branch `fix-triggerScrollStart`)
   - PINCache (>= 3.0.1-beta.8)
   - PINRemoteImage (~> 3.0)
   - SVProgressHUD
@@ -441,7 +441,6 @@ SPEC REPOS:
     - GTMSessionFetcher
     - KeychainAccess
     - leveldb-library
-    - MarqueeLabel
     - nanopb
     - ObjcExceptionBridging
     - PINCache
@@ -453,6 +452,16 @@ SPEC REPOS:
     - SwiftSoup
     - TransitionButton
     - XCGLogger
+
+EXTERNAL SOURCES:
+  MarqueeLabel:
+    :branch: fix-triggerScrollStart
+    :git: https://github.com/yujinakayama/MarqueeLabel
+
+CHECKOUT OPTIONS:
+  MarqueeLabel:
+    :commit: afc7b18f3bead1d9e6bba4fd07c6e72d3bc5d47f
+    :git: https://github.com/yujinakayama/MarqueeLabel
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -493,6 +502,6 @@ SPEC CHECKSUMS:
   TransitionButton: 36283346e17c64775a1b3bc3a7a72940a367de1f
   XCGLogger: 1943831ef907df55108b0b18657953f868de973b
 
-PODFILE CHECKSUM: 87741f549f5f8f0803d4e522d74ca1614933756b
+PODFILE CHECKSUM: e4fc59fdc5a8cbbddbaef484535edaf541f4519d
 
 COCOAPODS: 1.9.3
