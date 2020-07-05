@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreLocation
 import FirebaseCore
 import FirebaseMessaging
 import GoogleSignIn
@@ -16,8 +15,6 @@ import StoreKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
     var window: UIWindow?
-
-    let locationManager = CLLocationManager()
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
@@ -29,8 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
 
         UserNotificationCenter.shared.setUp()
-
-        locationManager.requestWhenInUseAuthorization()
 
         SKCloudServiceController.requestAuthorization { (authorizationStatus) in
             logger.info(authorizationStatus)

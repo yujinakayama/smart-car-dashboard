@@ -13,6 +13,8 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mapTypeSegmentedControl: UISegmentedControl!
 
+    let locationManager = CLLocationManager()
+
     var infoBarButtonItem: UIBarButtonItem!
 
     var payment: ETCPaymentProtocol? {
@@ -29,6 +31,8 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        locationManager.requestWhenInUseAuthorization()
 
         mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: annotationViewIdentifier)

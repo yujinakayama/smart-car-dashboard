@@ -13,6 +13,8 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mapTypeSegmentedControl: UISegmentedControl!
 
+    let locationManager = CLLocationManager()
+
     let gestureRecognizer = UIGestureRecognizer()
 
     let userTrackingModeRestorationInterval: TimeInterval = 10
@@ -20,6 +22,8 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        locationManager.requestWhenInUseAuthorization()
 
         mapView.delegate = self
         mapView.register(DirectionalUserLocationAnnotationView.self, forAnnotationViewWithReuseIdentifier: "DirectionalUserLocationAnnotationView")
