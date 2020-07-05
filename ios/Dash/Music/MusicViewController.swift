@@ -38,6 +38,11 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
         }
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        songTitleView.setUpAnimationIfNeeded()
+    }
+
     func setUp() {
         artworkView.musicPlayer = musicPlayer
         songTitleView.musicPlayer = musicPlayer
