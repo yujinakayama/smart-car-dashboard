@@ -97,6 +97,11 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
         setUpAnimationIfNeeded()
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setUpAnimationIfNeeded()
+    }
+
     func setUpAnimationIfNeeded() {
         animationTimer?.invalidate()
         animationTimer = nil
