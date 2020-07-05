@@ -36,7 +36,7 @@
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>This app needs to access to your music library to play shared music items.</string>
+	<string>This app needs to access to your music library to play music.</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>This app needs to use Bluetooth to communicate with ETC devices.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
