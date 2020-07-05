@@ -9,6 +9,7 @@
 import UIKit
 import MediaPlayer
 import AVKit
+import StoreKit
 
 class MusicViewController: UIViewController, PlaybackControlViewDelegate {
     @IBOutlet weak var artworkView: ArtworkView!
@@ -29,11 +30,19 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
 
         playbackControlView.delegate = self
 
-        MPMediaLibrary.requestAuthorization { [weak self] (authorizationStatus) in
-            guard authorizationStatus == .authorized else { return }
+        MPMediaLibrary.requestAuthorization { [weak self] (mediaPlayerAuthorizationStatus) in
+            logger.info(mediaPlayerAuthorizationStatus)
 
-            DispatchQueue.main.async {
-                self?.setUp()
+            guard mediaPlayerAuthorizationStatus == .authorized else { return }
+
+            SKCloudServiceController.requestAuthorization { [weak self] (cloudServiceAuthorizationStatus) in
+                logger.info(cloudServiceAuthorizationStatus)
+
+                guard cloudServiceAuthorizationStatus == .authorized else { return }
+
+                DispatchQueue.main.async {
+                    self?.setUp()
+                }
             }
         }
     }

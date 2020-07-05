@@ -10,7 +10,6 @@ import UIKit
 import FirebaseCore
 import FirebaseMessaging
 import GoogleSignIn
-import StoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -26,10 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
 
         UserNotificationCenter.shared.setUp()
-
-        SKCloudServiceController.requestAuthorization { (authorizationStatus) in
-            logger.info(authorizationStatus)
-        }
 
         return true
     }

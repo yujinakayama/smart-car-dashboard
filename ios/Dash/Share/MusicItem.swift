@@ -9,6 +9,7 @@
 import Foundation
 import FirebaseFirestore
 import MediaPlayer
+import StoreKit
 
 class MusicItem: SharedItemProtocol {
     var firebaseDocument: DocumentReference?
@@ -41,6 +42,16 @@ class MusicItem: SharedItemProtocol {
             .replacingOccurrences(of: "{h}", with: String(height))
 
         return URL(string: urlString)
+    }
+
+    private func tryPlaying(playParameters: MPMusicPlayerPlayParameters) {
+        SKCloudServiceController.requestAuthorization { [weak self] (authorizationStatus) in
+            logger.info(authorizationStatus)
+
+            if authorizationStatus == .authorized {
+                self?.play(playParameters: playParameters)
+            }
+        }
     }
 
     private func play(playParameters: MPMusicPlayerPlayParameters) {
