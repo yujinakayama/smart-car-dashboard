@@ -362,6 +362,7 @@ PODS:
     - GTMSessionFetcher/Core (= 1.4.0)
   - KeychainAccess (4.2.0)
   - leveldb-library (1.22)
+  - MarqueeLabel (4.0.2)
   - nanopb (1.30905.0):
     - nanopb/decode (= 1.30905.0)
     - nanopb/encode (= 1.30905.0)
@@ -405,6 +406,7 @@ DEPENDENCIES:
   - GoogleSignIn
   - GTMSessionFetcher
   - KeychainAccess
+  - MarqueeLabel (from `https://github.com/yujinakayama/MarqueeLabel`, branch `fix-triggerScrollStart`)
   - PINCache (>= 3.0.1-beta.8)
   - PINRemoteImage (~> 3.0)
   - SVProgressHUD
@@ -451,6 +453,16 @@ SPEC REPOS:
     - TransitionButton
     - XCGLogger
 
+EXTERNAL SOURCES:
+  MarqueeLabel:
+    :branch: fix-triggerScrollStart
+    :git: https://github.com/yujinakayama/MarqueeLabel
+
+CHECKOUT OPTIONS:
+  MarqueeLabel:
+    :commit: afc7b18f3bead1d9e6bba4fd07c6e72d3bc5d47f
+    :git: https://github.com/yujinakayama/MarqueeLabel
+
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
@@ -477,6 +489,7 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
   KeychainAccess: 3f760109aa99b05d0f231e28b22642da7153e38a
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
+  MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
   PINCache: 534fd41d358d828dfdf227a0d327f3673a65e20b
@@ -489,6 +502,6 @@ SPEC CHECKSUMS:
   TransitionButton: 36283346e17c64775a1b3bc3a7a72940a367de1f
   XCGLogger: 1943831ef907df55108b0b18657953f868de973b
 
-PODFILE CHECKSUM: 6f6a7725756ed2235a5ef477725272c6f4ebd87b
+PODFILE CHECKSUM: e4fc59fdc5a8cbbddbaef484535edaf541f4519d
 
 COCOAPODS: 1.9.3
