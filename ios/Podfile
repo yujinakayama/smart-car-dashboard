@@ -11,6 +11,7 @@ target 'Dash' do
   pod 'FirebaseFirestoreSwift'
   pod 'Firebase/Messaging'
   pod 'GoogleSignIn'
+  pod 'MarqueeLabel'
   pod 'PINCache', '>= 3.0.1-beta.8'
   pod 'PINRemoteImage', '~> 3.0'
   pod 'SwiftSoup'
