@@ -1,4 +1,4 @@
-import * as maps from '@google/maps';
+import { Client, Language, PlaceDetailsRequest, PlaceInputType } from "@googlemaps/google-maps-services-js";
 import axios from 'axios';
 import * as functions from 'firebase-functions';
 
@@ -65,7 +65,8 @@ const googleMapsAddressComponentKeys = [
     'point_of_interest'
 ];
 
-const googleMapsClient = maps.createClient({ key: functions.config().googlemaps.api_key, Promise: Promise });
+const googleMapsClient = new Client();
+const googleMapsAPIKey = functions.config().googlemaps.api_key;
 
 export function isGoogleMapsLocation(inputData: InputData): boolean {
     return inputData.url.toString().startsWith('https://goo.gl/maps/');
@@ -133,11 +134,14 @@ async function normalizeLocationWithCoordinate(expandedURL: URL, inputData: Inpu
     }
 
     const response = await googleMapsClient.reverseGeocode({
-        latlng: query,
-        language: 'ja'
-    }).asPromise()
+        params: {
+            latlng: query,
+            language: Language.ja,
+            key: googleMapsAPIKey
+        }
+    });
 
-    const place = response.json.results[0];
+    const place = response.data.results[0];
 
     if (!place) {
         return null;
@@ -164,13 +168,16 @@ async function normalizeLocationWithQuery(expandedURL: URL): Promise<Location | 
         return null;
     }
 
-    const response = await googleMapsClient.findPlace({
-        input: query,
-        inputtype: 'textquery',
-        language: 'ja'
-    }).asPromise();
+    const response = await googleMapsClient.findPlaceFromText({
+        params: {
+            input: query,
+            inputtype: PlaceInputType.textQuery,
+            language: Language.ja,
+            key: googleMapsAPIKey
+        }
+    });
 
-    const place = response.json.candidates[0]
+    const place = response.data.candidates[0]
 
     if (!place) {
         return null;
@@ -184,22 +191,27 @@ async function normalizeLocationWithIdentifier(id: { placeid?: string, ftid?: st
         throw new Error('Either placeid or ftid must be given');
     }
 
-    const requestParameters: maps.PlaceDetailsRequest = {
-        placeid: id.placeid || '',
-        fields: ['address_component', 'geometry', 'name', 'website'],
-        language: 'ja'
+    const requestParameters: PlaceDetailsRequest = {
+        params: {
+            place_id: id.placeid || '',
+            fields: ['address_component', 'geometry', 'name', 'website'],
+            language: Language.ja,
+            key: googleMapsAPIKey
+        }
     }
-
-    const customParameters: any = {}
 
     if (id.ftid) {
-        customParameters['ftid'] = id.ftid
+        // @ts-ignore
+        requestParameters.params.ftid = id.ftid
     }
 
-    // @ts-ignore
-    const response = await googleMapsClient.place(requestParameters, null, customParameters).asPromise();
+    const response = await googleMapsClient.placeDetails(requestParameters);
 
-    const place = response.json.result;
+    const place = response.data.result;
+
+    if (!place.geometry || !place.address_components) {
+        return null;
+    }
 
     return {
         type: 'location',
