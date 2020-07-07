@@ -60,7 +60,7 @@
                                         <rect key="frame" x="0.0" y="864.5" width="311" height="28"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfV-vr-luy" customClass="PlaybackModeSwitch" customModule="Dash" customModuleProvider="target">
-                                                <rect key="frame" x="37.5" y="0.0" width="28" height="28"/>
+                                                <rect key="frame" x="41.5" y="3" width="24" height="22"/>
                                                 <state key="normal" image="shuffle" catalog="system"/>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="02J-uc-aWb" customClass="AVRoutePickerView">
@@ -71,7 +71,7 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TAK-Hz-Kv5" customClass="PlaybackModeSwitch" customModule="Dash" customModuleProvider="target">
-                                                <rect key="frame" x="245.5" y="0.0" width="28" height="28"/>
+                                                <rect key="frame" x="245.5" y="3" width="22.5" height="22"/>
                                                 <state key="normal" image="repeat" catalog="system"/>
                                             </button>
                                         </subviews>
