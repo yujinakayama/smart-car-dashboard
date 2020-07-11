@@ -15,10 +15,20 @@ import GoogleSignIn
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
     var window: UIWindow?
 
-    let bluetoothAudioDevice = BluetoothAudioDevice()
+    var tabBarController: UITabBarController {
+        return window?.rootViewController as! UITabBarController
+    }
+
+    let vehicle = Vehicle()
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
+
+        for viewController in tabBarController.viewControllers! {
+            if let etcSplitViewController = viewController as? ETCSplitViewController {
+                etcSplitViewController.device = vehicle.etcDevice
+            }
+        }
 
         return true
     }
@@ -27,6 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
 
         UserNotificationCenter.shared.setUp()
+
+        vehicle.connect()
 
         return true
     }

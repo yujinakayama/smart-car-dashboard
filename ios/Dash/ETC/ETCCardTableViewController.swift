@@ -31,7 +31,7 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
         }
     }
 
-    let device = ETCDevice()
+    var device: ETCDevice!
 
     lazy var deviceStatusBar = ETCDeviceStatusBar(device: device)
 
@@ -60,8 +60,6 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
         setUpNavigationBar()
 
         startObservingNotifications()
-
-        device.startPreparation()
 
         // Show "All Payments" immediately on launch
         performSegue(withIdentifier: "initialShow", sender: nil)
