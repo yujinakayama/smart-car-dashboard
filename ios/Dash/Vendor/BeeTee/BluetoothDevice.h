@@ -24,7 +24,7 @@
 - (BOOL)connected;
 - (unsigned int)connectedServices;
 - (unsigned int)connectedServicesCount;
-- (id)copyWithZone:(struct _NSZone { }*)arg1;
+- (id)copyWithZone:(id)arg1;
 - (void)dealloc;
 - (id)description;
 - (struct BTDeviceImpl*)device;
@@ -33,7 +33,7 @@
 - (void)endVoiceCommand;
 - (id)getServiceSetting:(unsigned int)arg1 key:(id)arg2;
 - (BOOL)inEarDetectEnabled;
-- (id)initWithDevice:(struct BTDeviceImpl { }*)arg1 address:(id)arg2;
+- (id)initWithDevice:(id)arg1 address:(id)arg2;
 - (BOOL)isAccessory;
 - (BOOL)isAppleAudioDevice;
 - (BOOL)isServiceSupported:(unsigned int)arg1;
@@ -46,7 +46,7 @@
 - (BOOL)paired;
 - (unsigned int)productId;
 - (id)scoUID;
-- (void)setDevice:(struct BTDeviceImpl { }*)arg1;
+- (void)setDevice:(id)arg1;
 - (BOOL)setDoubleTapAction:(unsigned int)arg1;
 - (BOOL)setInEarDetectEnabled:(BOOL)arg1;
 - (BOOL)setMicMode:(unsigned int)arg1;
