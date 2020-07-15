@@ -22,7 +22,7 @@ public enum BeeTeeNotification: String {
 
 
 
-public protocol BeeTeeDelegate {
+public protocol BeeTeeDelegate: NSObjectProtocol {
     func receivedBeeTeeNotification(notification: BeeTeeNotification)
 }
 
@@ -30,7 +30,7 @@ public protocol BeeTeeDelegate {
 
 public class BeeTee {
     
-    public var delegate: BeeTeeDelegate? = nil
+    public weak var delegate: BeeTeeDelegate? = nil
     public var availableDevices: [BeeTeeDevice] {
         get {
             return Array(_availableDevices)
