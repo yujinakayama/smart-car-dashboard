@@ -8,31 +8,48 @@
 
 @interface BluetoothDeviceHandler ()
 
-@property (strong, nonatomic, readwrite) NSString* name;
-@property (strong, nonatomic, readwrite) NSString* address;
-@property (assign, nonatomic, readwrite) NSUInteger majorClass;
-@property (assign, nonatomic, readwrite) NSUInteger minorClass;
-@property (assign, nonatomic, readwrite) NSInteger type;
-@property (assign, nonatomic, readwrite) BOOL supportsBatteryLevel;
+@property (strong, nonatomic, readwrite) BluetoothDevice* device;
 
 @end
 
-
 @implementation BluetoothDeviceHandler
 
-- (instancetype)initWithNotification:(NSNotification*) notification {
-    BluetoothDevice *bluetoothDevice = [notification object];
-    
+- (instancetype)initWithNotification:(NSNotification*)notification {
+    return [self initWithDevice:notification.object];
+}
+
+- (instancetype)initWithDevice:(BluetoothDevice*)device {
     self = [super init];
+
     if (self) {
-        self.name = bluetoothDevice.name;
-        self.address = bluetoothDevice.address;
-        self.majorClass = bluetoothDevice.majorClass;
-        self.minorClass = bluetoothDevice.minorClass;
-        self.type = bluetoothDevice.type;
-        self.supportsBatteryLevel = bluetoothDevice.supportsBatteryLevel;
+        self.device = device;
     }
+
     return self;
+}
+
+- (NSString*)name {
+    return self.device.name;
+}
+
+- (NSString*)address {
+    return self.device.address;
+}
+
+- (NSUInteger)majorClass {
+    return self.device.majorClass;
+}
+
+- (NSUInteger)minorClass {
+    return self.device.minorClass;
+}
+
+- (NSInteger)type {
+    return self.device.type;
+}
+
+- (BOOL)supportsBatteryLevel {
+    return self.device.supportsBatteryLevel;
 }
 
 @end

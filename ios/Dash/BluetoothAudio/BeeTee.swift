@@ -50,10 +50,10 @@ public class BeeTee {
                 let beeTeeNotification = BeeTeeNotification.init(rawValue: notification.name.rawValue)!
                 switch beeTeeNotification {
                 case .DeviceDiscovered:
-                    let beeTeeDevice = self.extractBeeTeeDevice(from: notification)
+                    let beeTeeDevice = BeeTeeDevice(notification: notification)
                     self._availableDevices.insert(beeTeeDevice)
                 case .DeviceRemoved:
-                    let beeTeeDevice = self.extractBeeTeeDevice(from: notification)
+                    let beeTeeDevice = BeeTeeDevice(notification: notification)
                     self._availableDevices.remove(beeTeeDevice)
                 default:
                     break
@@ -115,12 +115,6 @@ public class BeeTee {
     
     private func resetAvailableDevices() {
         _availableDevices.removeAll()
-    }
-    
-    private func extractBeeTeeDevice(from notification: Notification) -> BeeTeeDevice {
-        let bluetoothDevice = BluetoothDeviceHandler(notification: notification)!
-        let beeTeeDevice = BeeTeeDevice(name: bluetoothDevice.name, address: bluetoothDevice.address, majorClass: bluetoothDevice.majorClass, minorClass: bluetoothDevice.minorClass, type: bluetoothDevice.type, supportsBatteryLevel: bluetoothDevice.supportsBatteryLevel, detectingDate: Date())
-        return beeTeeDevice
     }
 }
 

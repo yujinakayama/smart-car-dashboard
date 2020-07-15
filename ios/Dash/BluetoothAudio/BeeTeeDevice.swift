@@ -6,29 +6,43 @@ import Foundation
 
 
 public class BeeTeeDevice: Hashable, CustomStringConvertible {
-    let name: String
-    let address: String
-    let majorClass: UInt
-    let minorCass: UInt
-    let type: Int
-    let supportsBatteryLevel: Bool
+    let device: BluetoothDeviceHandler
     let detectingDate: Date
-    
+
     convenience init(notification: Notification) {
-        let bluetoothDevice = BluetoothDeviceHandler(notification: notification)!
-        self.init(name: bluetoothDevice.name, address: bluetoothDevice.address, majorClass: bluetoothDevice.majorClass, minorClass: bluetoothDevice.minorClass, type: bluetoothDevice.type, supportsBatteryLevel: bluetoothDevice.supportsBatteryLevel, detectingDate: Date())
+        let device = BluetoothDeviceHandler(notification: notification)!
+        self.init(device: device)
     }
     
-    init(name: String, address: String, majorClass: UInt, minorClass: UInt, type: Int, supportsBatteryLevel: Bool, detectingDate: Date) {
-        self.name = name
-        self.address = address
-        self.majorClass = majorClass
-        self.minorCass = minorClass
-        self.type = type
-        self.supportsBatteryLevel = supportsBatteryLevel
+    init(device: BluetoothDeviceHandler, detectingDate: Date = Date()) {
+        self.device = device
         self.detectingDate = detectingDate
     }
-    
+
+    var name: String {
+        return device.name
+    }
+
+    var address: String {
+        return device.address
+    }
+
+    var majorClass: UInt {
+        return device.majorClass
+    }
+
+    var minorCass: UInt {
+        return device.minorClass
+    }
+
+    var type: Int {
+        return device.type
+    }
+
+    var supportsBatteryLevel: Bool {
+        return device.supportsBatteryLevel
+    }
+
     public var description: String {
         return "\(name) (\(address)) @ \(detectingDate))"
     }
