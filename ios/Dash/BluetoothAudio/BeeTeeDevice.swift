@@ -32,11 +32,11 @@ public class BeeTeeDevice: Hashable, CustomStringConvertible {
     public var description: String {
         return "\(name) (\(address)) @ \(detectingDate))"
     }
-    
-    public var hashValue: Int {
-        return address.hashValue
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(address)
     }
-    
+
     public static func ==(lhs: BeeTeeDevice, rhs: BeeTeeDevice) -> Bool {
         return lhs.address == rhs.address
     }
