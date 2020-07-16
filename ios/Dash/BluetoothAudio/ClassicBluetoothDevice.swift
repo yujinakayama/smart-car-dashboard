@@ -5,7 +5,7 @@
 import Foundation
 
 
-public class BeeTeeDevice: Hashable, CustomStringConvertible {
+public class ClassicBluetoothDevice: Hashable, CustomStringConvertible {
     let device: BluetoothDeviceHandler
     let detectingDate: Date
 
@@ -59,7 +59,7 @@ public class BeeTeeDevice: Hashable, CustomStringConvertible {
         hasher.combine(address)
     }
 
-    public static func ==(lhs: BeeTeeDevice, rhs: BeeTeeDevice) -> Bool {
+    public static func ==(lhs: ClassicBluetoothDevice, rhs: ClassicBluetoothDevice) -> Bool {
         return lhs.address == rhs.address
     }
 }

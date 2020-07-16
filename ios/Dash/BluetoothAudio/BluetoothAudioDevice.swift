@@ -8,28 +8,28 @@
 
 import Foundation
 
-class BluetoothAudioDevice: NSObject, BeeTeeDelegate {
-    let beeTee = BeeTee()
+class BluetoothAudioDevice: NSObject, ClassicBluetoothManagerDelegate {
+    let bluetoothManager = ClassicBluetoothManager()
 
     let audioDeviceName = "Olasonic NA-BTR1"
 
     override init() {
         super.init()
-        beeTee.delegate = self
+        bluetoothManager.delegate = self
     }
 
-    func beeTeeDidChangeAvailability(_ beeTee: BeeTee) {
+    func classicBluetoothManagerDidChangeAvailability(_ beeTee: ClassicBluetoothManager) {
         logger.debug(beeTee.isAvailable)
         connectIfPossible()
     }
 
     func connectIfPossible() {
-        guard beeTee.isConnectable else { return }
+        guard bluetoothManager.isConnectable else { return }
         guard let audioDevice = audioDevice else { return }
         audioDevice.connect()
     }
 
-    var audioDevice: BeeTeeDevice? {
-        return beeTee.pairedDevices.first { $0.name == audioDeviceName }
+    var audioDevice: ClassicBluetoothDevice? {
+        return bluetoothManager.pairedDevices.first { $0.name == audioDeviceName }
     }
 }

@@ -17,17 +17,17 @@ extension Notification.Name {
     static let BluetoothDeviceDisconnectSuccess = Notification.Name("BluetoothDeviceDisconnectSuccessNotification")
 }
 
-public protocol BeeTeeDelegate: NSObjectProtocol {
-    func beeTeeDidChangeAvailability(_ beeTee: BeeTee)
+public protocol ClassicBluetoothManagerDelegate: NSObjectProtocol {
+    func classicBluetoothManagerDidChangeAvailability(_ manager: ClassicBluetoothManager)
 }
 
-public class BeeTee {
-    public weak var delegate: BeeTeeDelegate? = nil
+public class ClassicBluetoothManager {
+    public weak var delegate: ClassicBluetoothManagerDelegate? = nil
 
     private let bluetoothManagerHandler = BluetoothManagerHandler.sharedInstance()!
 
-    public var pairedDevices: [BeeTeeDevice] {
-        return bluetoothManagerHandler.pairedDevices().map { BeeTeeDevice(device: $0) }
+    public var pairedDevices: [ClassicBluetoothDevice] {
+        return bluetoothManagerHandler.pairedDevices().map { ClassicBluetoothDevice(device: $0) }
     }
 
     public var isAvailable: Bool {
@@ -45,7 +45,7 @@ public class BeeTee {
     private func addNotificationObserver() {
         NotificationCenter.default.addObserver(forName: .BluetoothAvailabilityChanged, object: nil, queue: nil) { [weak self] (notification) in
             guard let self = self else { return }
-            self.delegate?.beeTeeDidChangeAvailability(self)
+            self.delegate?.classicBluetoothManagerDidChangeAvailability(self)
         }
     }
 
