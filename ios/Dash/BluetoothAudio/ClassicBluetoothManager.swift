@@ -19,12 +19,15 @@ extension Notification.Name {
 
 public protocol ClassicBluetoothManagerDelegate: NSObjectProtocol {
     func classicBluetoothManagerDidChangeAvailability(_ manager: ClassicBluetoothManager)
+    func classicBluetoothManager(_ manager: ClassicBluetoothManager, didConnectToDevice device: ClassicBluetoothDevice)
 }
 
 public class ClassicBluetoothManager {
     public weak var delegate: ClassicBluetoothManagerDelegate? = nil
 
     private let bluetoothManagerHandler = BluetoothManagerHandler.sharedInstance()!
+
+    private let latestNotificationHistory = LatestNotificationHistory()
 
     public var pairedDevices: [ClassicBluetoothDevice] {
         return bluetoothManagerHandler.pairedDevices().map { ClassicBluetoothDevice(device: $0) }
@@ -39,13 +42,33 @@ public class ClassicBluetoothManager {
     }
 
     public init() {
-        addNotificationObserver()
+        addNotificationObservers()
     }
 
-    private func addNotificationObserver() {
-        NotificationCenter.default.addObserver(forName: .BluetoothAvailabilityChanged, object: nil, queue: nil) { [weak self] (notification) in
-            guard let self = self else { return }
-            self.delegate?.classicBluetoothManagerDidChangeAvailability(self)
+    private func addNotificationObservers() {
+        let notificationCenter = NotificationCenter.default
+
+        notificationCenter.addObserver(self, selector: #selector(sendMessageToDelegateWithThrottle), name: .BluetoothAvailabilityChanged, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(sendMessageToDelegateWithThrottle), name: .BluetoothDeviceConnectSuccess, object: nil)
+    }
+
+    @objc private func sendMessageToDelegateWithThrottle(notification: Notification) {
+        if !latestNotificationHistory.contains(where: { $0.name == notification.name }) {
+            sendMessageToDelegate(notification: notification)
+        }
+
+        latestNotificationHistory.append(notification)
+    }
+
+    private func sendMessageToDelegate(notification: Notification) {
+        switch notification.name {
+        case .BluetoothAvailabilityChanged:
+            delegate?.classicBluetoothManagerDidChangeAvailability(self)
+        case .BluetoothDeviceConnectSuccess:
+            let device = BluetoothDeviceHandler(notification: notification)!
+            delegate?.classicBluetoothManager(self, didConnectToDevice: ClassicBluetoothDevice(device: device))
+        default:
+            break
         }
     }
 
@@ -63,5 +86,26 @@ public class ClassicBluetoothManager {
                                         nil,
                                         nil,
                                         .deliverImmediately)
+    }
+}
+
+extension ClassicBluetoothManager {
+    class LatestNotificationHistory {
+        let dropOutTimeInterval: TimeInterval = 0.1
+
+        private var notifications: [Notification] = []
+
+        func append(_ notification: Notification) {
+            notifications.append(notification)
+
+            Timer.scheduledTimer(withTimeInterval: dropOutTimeInterval, repeats: false) { [weak self] (timer) in
+                guard let self = self else { return }
+                self.notifications.removeFirst()
+            }
+        }
+
+        func contains(where predicate: (Notification) -> Bool) -> Bool {
+            return notifications.contains(where: predicate)
+        }
     }
 }

@@ -7,11 +7,18 @@
 //
 
 import Foundation
+import MediaPlayer
 
 class BluetoothAudioDevice: NSObject, ClassicBluetoothManagerDelegate {
     let bluetoothManager = ClassicBluetoothManager()
 
+    let autoPlayDelay: TimeInterval = 3
+
     let audioDeviceName = "Olasonic NA-BTR1"
+
+    var audioDevice: ClassicBluetoothDevice? {
+        return bluetoothManager.pairedDevices.first { $0.name == audioDeviceName }
+    }
 
     override init() {
         super.init()
@@ -25,11 +32,17 @@ class BluetoothAudioDevice: NSObject, ClassicBluetoothManagerDelegate {
 
     func connectIfPossible() {
         guard bluetoothManager.isConnectable else { return }
-        guard let audioDevice = audioDevice else { return }
+        guard let audioDevice = audioDevice, !audioDevice.isConnected else { return }
         audioDevice.connect()
     }
 
-    var audioDevice: ClassicBluetoothDevice? {
-        return bluetoothManager.pairedDevices.first { $0.name == audioDeviceName }
+    func classicBluetoothManager(_ manager: ClassicBluetoothManager, didConnectToDevice device: ClassicBluetoothDevice) {
+        Timer.scheduledTimer(timeInterval: autoPlayDelay, target: self, selector: #selector(startPlayingMusic), userInfo: nil, repeats: false)
+    }
+
+    @objc func startPlayingMusic() {
+        let musicPlayer = MPMusicPlayerController.systemMusicPlayer
+        musicPlayer.skipToBeginning()
+        musicPlayer.play()
     }
 }
