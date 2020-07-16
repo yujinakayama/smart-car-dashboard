@@ -54,6 +54,7 @@
 		B964BCE223E067EB00288E0D /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B964BCD823E067EB00288E0D /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */; };
 		B9741F7523DF200600F061E7 /* SharedItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */; };
+		B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97BAE6124B61DB100AE7D13 /* Vehicle.swift */; };
 		B98B783723ED4C3F00A5102F /* DashShareKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B98B783523ED4C3F00A5102F /* DashShareKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B98B783A23ED4C3F00A5102F /* DashShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; };
 		B98B783B23ED4C3F00A5102F /* DashShareKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -71,6 +72,7 @@
 		B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E722A9553A00BA08AB /* MockSerialPort.swift */; };
 		B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */; };
 		B9989E3E23E8752100FAFD06 /* Share.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9989E3D23E8752100FAFD06 /* Share.wav */; };
+		B99D4F2824C0526200647A10 /* BluetoothAudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99D4F2724C0526200647A10 /* BluetoothAudioDevice.swift */; };
 		B9A481FE23EF01DB00AA7590 /* SuccessCheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */; };
 		B9A4820023EF025200AA7590 /* SuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FF23EF025200AA7590 /* SuccessViewController.swift */; };
 		B9A4820123EFCEC200AA7590 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
@@ -89,6 +91,10 @@
 		B9CEA76622D89A400055C9A3 /* ETCDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */; };
 		B9CEA76E22D911140055C9A3 /* ETCSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76D22D911140055C9A3 /* ETCSplitViewController.swift */; };
 		B9CEADAD24501FE7006898F8 /* DirectionalUserLocationAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEADAC24501FE7006898F8 /* DirectionalUserLocationAnnotationView.swift */; };
+		B9D0260E24BF7704005C03B1 /* BluetoothDeviceHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B9D0260524BF7704005C03B1 /* BluetoothDeviceHandler.m */; };
+		B9D0260F24BF7704005C03B1 /* ClassicBluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D0260624BF7704005C03B1 /* ClassicBluetoothManager.swift */; };
+		B9D0261024BF7704005C03B1 /* ClassicBluetoothDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D0260A24BF7704005C03B1 /* ClassicBluetoothDevice.swift */; };
+		B9D0261124BF7704005C03B1 /* BluetoothManagerHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B9D0260D24BF7704005C03B1 /* BluetoothManagerHandler.m */; };
 		B9D8E43823D345940078A057 /* ETCCardManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43723D345940078A057 /* ETCCardManagedObject.swift */; };
 		B9D8E43A23D345D70078A057 /* UUIDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43923D345D70078A057 /* UUIDExtension.swift */; };
 		B9DB8E5522D7A410003E4BD8 /* Dash.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B9DB8E5322D7A410003E4BD8 /* Dash.xcdatamodeld */; };
@@ -253,6 +259,7 @@
 		B964BCDF23E067EB00288E0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemTableViewController.swift; sourceTree = "<group>"; };
+		B97BAE6124B61DB100AE7D13 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		B98B783323ED4C3F00A5102F /* DashShareKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DashShareKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B98B783523ED4C3F00A5102F /* DashShareKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DashShareKit.h; sourceTree = "<group>"; };
 		B98B783623ED4C3F00A5102F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -268,6 +275,7 @@
 		B99356E722A9553A00BA08AB /* MockSerialPort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSerialPort.swift; sourceTree = "<group>"; };
 		B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCPaymentTableViewCell.swift; sourceTree = "<group>"; };
 		B9989E3D23E8752100FAFD06 /* Share.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Share.wav; sourceTree = "<group>"; };
+		B99D4F2724C0526200647A10 /* BluetoothAudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothAudioDevice.swift; sourceTree = "<group>"; };
 		B9A3C09423E163F500EF1C4A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../ShareExtension/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessCheckmarkView.swift; sourceTree = "<group>"; };
 		B9A481FF23EF025200AA7590 /* SuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessViewController.swift; sourceTree = "<group>"; };
@@ -283,6 +291,15 @@
 		B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDataStore.swift; sourceTree = "<group>"; };
 		B9CEA76D22D911140055C9A3 /* ETCSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCSplitViewController.swift; sourceTree = "<group>"; };
 		B9CEADAC24501FE7006898F8 /* DirectionalUserLocationAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectionalUserLocationAnnotationView.swift; sourceTree = "<group>"; };
+		B9D0260524BF7704005C03B1 /* BluetoothDeviceHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothDeviceHandler.m; sourceTree = "<group>"; };
+		B9D0260624BF7704005C03B1 /* ClassicBluetoothManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicBluetoothManager.swift; sourceTree = "<group>"; };
+		B9D0260724BF7704005C03B1 /* BluetoothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothManager.h; sourceTree = "<group>"; };
+		B9D0260824BF7704005C03B1 /* BluetoothManagerHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothManagerHandler.h; sourceTree = "<group>"; };
+		B9D0260924BF7704005C03B1 /* BluetoothDeviceHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothDeviceHandler.h; sourceTree = "<group>"; };
+		B9D0260A24BF7704005C03B1 /* ClassicBluetoothDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicBluetoothDevice.swift; sourceTree = "<group>"; };
+		B9D0260B24BF7704005C03B1 /* BeeTee-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BeeTee-Bridging-Header.h"; sourceTree = "<group>"; };
+		B9D0260C24BF7704005C03B1 /* BluetoothDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothDevice.h; sourceTree = "<group>"; };
+		B9D0260D24BF7704005C03B1 /* BluetoothManagerHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothManagerHandler.m; sourceTree = "<group>"; };
 		B9D8E43723D345940078A057 /* ETCCardManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCCardManagedObject.swift; sourceTree = "<group>"; };
 		B9D8E43923D345D70078A057 /* UUIDExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUIDExtension.swift; sourceTree = "<group>"; };
 		B9D8E43B23D345EC0078A057 /* DashV2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DashV2.xcdatamodel; sourceTree = "<group>"; };
@@ -434,6 +451,21 @@
 			path = Share;
 			sourceTree = "<group>";
 		};
+		B97B0D8724C040A9006B675B /* BluetoothAudio */ = {
+			isa = PBXGroup;
+			children = (
+				B99D4F2724C0526200647A10 /* BluetoothAudioDevice.swift */,
+				B9D0260624BF7704005C03B1 /* ClassicBluetoothManager.swift */,
+				B9D0260A24BF7704005C03B1 /* ClassicBluetoothDevice.swift */,
+				B9D0260B24BF7704005C03B1 /* BeeTee-Bridging-Header.h */,
+				B9D0260824BF7704005C03B1 /* BluetoothManagerHandler.h */,
+				B9D0260D24BF7704005C03B1 /* BluetoothManagerHandler.m */,
+				B9D0260924BF7704005C03B1 /* BluetoothDeviceHandler.h */,
+				B9D0260524BF7704005C03B1 /* BluetoothDeviceHandler.m */,
+			);
+			path = BluetoothAudio;
+			sourceTree = "<group>";
+		};
 		B98B783423ED4C3F00A5102F /* DashShareKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -450,6 +482,7 @@
 			isa = PBXGroup;
 			children = (
 				B9BF2F0423F6946100967316 /* GradientPathRenderer.swift */,
+				B9D0260424BF7704005C03B1 /* BluetoothManager */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -526,6 +559,15 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
+		B9D0260424BF7704005C03B1 /* BluetoothManager */ = {
+			isa = PBXGroup;
+			children = (
+				B9D0260724BF7704005C03B1 /* BluetoothManager.h */,
+				B9D0260C24BF7704005C03B1 /* BluetoothDevice.h */,
+			);
+			path = BluetoothManager;
+			sourceTree = "<group>";
+		};
 		B9DC5B18229D59BE00B645D5 = {
 			isa = PBXGroup;
 			children = (
@@ -560,6 +602,8 @@
 				B9CEA76822D8F1990055C9A3 /* ETC */,
 				B9741F7623DF201A00F061E7 /* Share */,
 				B904A2A4243968840087BD4A /* Maps */,
+				B97B0D8724C040A9006B675B /* BluetoothAudio */,
+				B97BAE6124B61DB100AE7D13 /* Vehicle.swift */,
 				B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */,
 				B942554F22BAA5D1008B053B /* LocalNotification.swift */,
 				B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */,
@@ -1022,25 +1066,31 @@
 				B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */,
 				B9CEA76622D89A400055C9A3 /* ETCDataStore.swift in Sources */,
 				B931C4FF23D369760020DF13 /* ETCDevice.swift in Sources */,
+				B9D0261124BF7704005C03B1 /* BluetoothManagerHandler.m in Sources */,
 				B904A2A6243968990087BD4A /* MapsViewController.swift in Sources */,
 				B9DC5B29229D59BE00B645D5 /* ETCPaymentDetailViewController.swift in Sources */,
 				B98E936A234C94C7004AE50F /* ETCPaymentProtocol.swift in Sources */,
 				B9588B5D23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift in Sources */,
 				B92C6EC724AC77B2001E9675 /* PlaybackProgressView.swift in Sources */,
+				B9D0260E24BF7704005C03B1 /* BluetoothDeviceHandler.m in Sources */,
 				B95BF23823EBF43900A30DE0 /* ETCCardEditViewController.swift in Sources */,
+				B9D0261024BF7704005C03B1 /* ClassicBluetoothDevice.swift in Sources */,
 				B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */,
 				B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */,
 				B95F514C23E5B53F0063CB3D /* RemoteNotification.swift in Sources */,
 				B9DC5B27229D59BE00B645D5 /* ETCPaymentTableViewController.swift in Sources */,
 				B9BF2F0523F6946100967316 /* GradientPathRenderer.swift in Sources */,
+				B9D0260F24BF7704005C03B1 /* ClassicBluetoothManager.swift in Sources */,
 				B9CB7C0D22AD65A40059433E /* UITableViewCellExtension.swift in Sources */,
 				B90666DE247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift in Sources */,
 				B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */,
 				B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */,
+				B99D4F2824C0526200647A10 /* BluetoothAudioDevice.swift in Sources */,
 				B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */,
 				B9FB33E124AE2ACD00FEB782 /* PlaybackModeSwitch.swift in Sources */,
 				B92E2AFC23E4958200BB4C0E /* UNNotificationContentExtension.swift in Sources */,
 				B9DB8E5522D7A410003E4BD8 /* Dash.xcdatamodeld in Sources */,
+				B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */,
 				B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */,
 				B92C6EC524AC68B7001E9675 /* SongTitleView.swift in Sources */,
 				B9DC5B3F229D9E4F00B645D5 /* BLERemotePeripheralManager.swift in Sources */,
@@ -1445,6 +1495,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Dash/BluetoothAudio/BeeTee-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1471,6 +1522,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Dash/BluetoothAudio/BeeTee-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
