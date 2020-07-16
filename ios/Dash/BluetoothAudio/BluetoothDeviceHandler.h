@@ -3,6 +3,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "BluetoothDevice.h"
 
 @interface BluetoothDeviceHandler : NSObject
 
@@ -12,7 +13,11 @@
 @property (assign, nonatomic, readonly) NSUInteger minorClass;
 @property (assign, nonatomic, readonly) NSInteger type;
 @property (assign, nonatomic, readonly) BOOL supportsBatteryLevel;
+@property (assign, nonatomic, readonly) BOOL isConnected;
 
-- (instancetype)initWithNotification:(NSNotification*) notification;
+- (instancetype)initWithNotification:(NSNotification*)notification;
+- (instancetype)initWithDevice:(BluetoothDevice*)device;
+
+- (void)connect;
 
 @end

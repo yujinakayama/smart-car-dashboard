@@ -43,8 +43,16 @@ public class BeeTeeDevice: Hashable, CustomStringConvertible {
         return device.supportsBatteryLevel
     }
 
+    var isConnected: Bool {
+        return device.isConnected
+    }
+
     public var description: String {
         return "\(name) (\(address)) @ \(detectingDate))"
+    }
+
+    public func connect() {
+        device.connect()
     }
 
     public func hash(into hasher: inout Hasher) {

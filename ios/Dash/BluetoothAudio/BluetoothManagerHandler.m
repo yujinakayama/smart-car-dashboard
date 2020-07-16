@@ -27,6 +27,14 @@ static BluetoothManagerHandler *_handler = nil;
 }
 
 
+- (bool) available {
+    return [_bluetoothManager available];
+}
+
+- (bool) connectable {
+    return [_bluetoothManager connectable];
+}
+
 - (bool) powered {
     return [_bluetoothManager powered];
 }
@@ -63,6 +71,18 @@ static BluetoothManagerHandler *_handler = nil;
 
 - (void)enable {
     [_bluetoothManager setEnabled:true];
+}
+
+- (NSArray<BluetoothDeviceHandler*>*)pairedDevices {
+    NSArray<BluetoothDevice*>* devices = [_bluetoothManager pairedDevices];
+    NSMutableArray<BluetoothDeviceHandler*>* handlers = [[NSMutableArray alloc] initWithCapacity:devices.count];
+
+    for (BluetoothDevice* device in devices) {
+        BluetoothDeviceHandler* handler = [[BluetoothDeviceHandler alloc] initWithDevice:device];
+        [handlers addObject:handler];
+    }
+
+    return handlers;
 }
 
 @end

@@ -3,12 +3,14 @@
  */
 
 #import <Foundation/Foundation.h>
-
+#import "BluetoothDeviceHandler.h"
 
 @interface BluetoothManagerHandler : NSObject
 
 + (BluetoothManagerHandler*) sharedInstance;
 
+- (bool) available;
+- (bool) connectable;
 - (bool) powered;
 - (void) setPower: (bool)powerStatus;
 - (void) startScan;
@@ -17,5 +19,6 @@
 - (bool) enabled;
 - (void) disable;
 - (void) enable;
+- (NSArray<BluetoothDeviceHandler*>*)pairedDevices;
 
 @end

@@ -71,6 +71,7 @@
 		B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E722A9553A00BA08AB /* MockSerialPort.swift */; };
 		B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */; };
 		B9989E3E23E8752100FAFD06 /* Share.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9989E3D23E8752100FAFD06 /* Share.wav */; };
+		B99D4F2824C0526200647A10 /* BluetoothAudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99D4F2724C0526200647A10 /* BluetoothAudioDevice.swift */; };
 		B9A481FE23EF01DB00AA7590 /* SuccessCheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */; };
 		B9A4820023EF025200AA7590 /* SuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FF23EF025200AA7590 /* SuccessViewController.swift */; };
 		B9A4820123EFCEC200AA7590 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
@@ -272,6 +273,7 @@
 		B99356E722A9553A00BA08AB /* MockSerialPort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSerialPort.swift; sourceTree = "<group>"; };
 		B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCPaymentTableViewCell.swift; sourceTree = "<group>"; };
 		B9989E3D23E8752100FAFD06 /* Share.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Share.wav; sourceTree = "<group>"; };
+		B99D4F2724C0526200647A10 /* BluetoothAudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothAudioDevice.swift; sourceTree = "<group>"; };
 		B9A3C09423E163F500EF1C4A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../ShareExtension/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessCheckmarkView.swift; sourceTree = "<group>"; };
 		B9A481FF23EF025200AA7590 /* SuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessViewController.swift; sourceTree = "<group>"; };
@@ -450,6 +452,7 @@
 		B97B0D8724C040A9006B675B /* BluetoothAudio */ = {
 			isa = PBXGroup;
 			children = (
+				B99D4F2724C0526200647A10 /* BluetoothAudioDevice.swift */,
 				B9D0260624BF7704005C03B1 /* BeeTee.swift */,
 				B9D0260A24BF7704005C03B1 /* BeeTeeDevice.swift */,
 				B9D0260B24BF7704005C03B1 /* BeeTee-Bridging-Header.h */,
@@ -1079,6 +1082,7 @@
 				B90666DE247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift in Sources */,
 				B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */,
 				B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */,
+				B99D4F2824C0526200647A10 /* BluetoothAudioDevice.swift in Sources */,
 				B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */,
 				B9FB33E124AE2ACD00FEB782 /* PlaybackModeSwitch.swift in Sources */,
 				B92E2AFC23E4958200BB4C0E /* UNNotificationContentExtension.swift in Sources */,

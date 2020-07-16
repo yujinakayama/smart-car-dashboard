@@ -4,45 +4,48 @@
 
 import Foundation
 
-
-public enum BeeTeeNotification: String {
-    case PowerChanged               = "BluetoothPowerChangedNotification"
-    case AvailabilityChanged        = "BluetoothAvailabilityChangedNotification"
-    case DeviceDiscovered           = "BluetoothDeviceDiscoveredNotification"
-    case DeviceRemoved              = "BluetoothDeviceRemovedNotification"
-    case ConnectabilityChanged      = "BluetoothConnectabilityChangedNotification"
-    case DeviceUpdated              = "BluetoothDeviceUpdatedNotification"
-    case DiscoveryStateChanged      = "BluetoothDiscoveryStateChangedNotification"
-    case DeviceConnectSuccess       = "BluetoothDeviceConnectSuccessNotification"
-    case ConnectionStatusChanged    = "BluetoothConnectionStatusChangedNotification"
-    case DeviceDisconnectSuccess    = "BluetoothDeviceDisconnectSuccessNotification"
-    
-    public static let allNotifications: [BeeTeeNotification] = [.PowerChanged, .AvailabilityChanged, .DeviceDiscovered, .DeviceRemoved, .ConnectabilityChanged, .DeviceUpdated, .DiscoveryStateChanged, .DeviceConnectSuccess, .ConnectionStatusChanged, .DeviceDisconnectSuccess]
+extension Notification.Name {
+    static let BluetoothPowerChanged            = Notification.Name("BluetoothPowerChangedNotification")
+    static let BluetoothAvailabilityChanged     = Notification.Name("BluetoothAvailabilityChangedNotification")
+    static let BluetoothDeviceDiscovered        = Notification.Name("BluetoothDeviceDiscoveredNotification")
+    static let BluetoothDeviceRemoved           = Notification.Name("BluetoothDeviceRemovedNotification")
+    static let BluetoothConnectabilityChanged   = Notification.Name("BluetoothConnectabilityChangedNotification")
+    static let BluetoothDeviceUpdated           = Notification.Name("BluetoothDeviceUpdatedNotification")
+    static let BluetoothDiscoveryStateChanged   = Notification.Name("BluetoothDiscoveryStateChangedNotification")
+    static let BluetoothDeviceConnectSuccess    = Notification.Name("BluetoothDeviceConnectSuccessNotification")
+    static let BluetoothConnectionStatusChanged = Notification.Name("BluetoothConnectionStatusChangedNotification")
+    static let BluetoothDeviceDisconnectSuccess = Notification.Name("BluetoothDeviceDisconnectSuccessNotification")
 }
-
-
 
 public protocol BeeTeeDelegate: NSObjectProtocol {
-    func receivedBeeTeeNotification(notification: BeeTeeNotification)
+    func beeTeeDidChangeAvailability(_ beeTee: BeeTee)
 }
-
-
 
 public class BeeTee {
     public weak var delegate: BeeTeeDelegate? = nil
+
     private let bluetoothManagerHandler = BluetoothManagerHandler.sharedInstance()!
 
-    public init() {
-        for beeTeeNotification in BeeTeeNotification.allNotifications {
-            print("Registered \(beeTeeNotification)")
-            
-            NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: beeTeeNotification.rawValue), object: nil, queue: OperationQueue.main) { [unowned self] (notification) in
-                let beeTeeNotification = BeeTeeNotification.init(rawValue: notification.name.rawValue)!
+    public var pairedDevices: [BeeTeeDevice] {
+        return bluetoothManagerHandler.pairedDevices().map { BeeTeeDevice(device: $0) }
+    }
 
-                if (self.delegate != nil) {
-                    self.delegate?.receivedBeeTeeNotification(notification: beeTeeNotification)
-                }
-            }
+    public var isAvailable: Bool {
+        return bluetoothManagerHandler.available()
+    }
+
+    public var isConnectable: Bool {
+        return bluetoothManagerHandler.connectable()
+    }
+
+    public init() {
+        addNotificationObserver()
+    }
+
+    private func addNotificationObserver() {
+        NotificationCenter.default.addObserver(forName: .BluetoothAvailabilityChanged, object: nil, queue: nil) { [weak self] (notification) in
+            guard let self = self else { return }
+            self.delegate?.beeTeeDidChangeAvailability(self)
         }
     }
 

@@ -3,8 +3,6 @@
  */
 
 #import "BluetoothDeviceHandler.h"
-#import "BluetoothDevice.h"
-
 
 @interface BluetoothDeviceHandler ()
 
@@ -26,6 +24,10 @@
     }
 
     return self;
+}
+
+- (void)connect {
+    [self.device connect];
 }
 
 - (NSString*)name {
@@ -50,6 +52,10 @@
 
 - (BOOL)supportsBatteryLevel {
     return self.device.supportsBatteryLevel;
+}
+
+- (BOOL)isConnected {
+    return self.device.connected;
 }
 
 @end
