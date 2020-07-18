@@ -91,7 +91,7 @@ public class ClassicBluetoothManager {
 
 extension ClassicBluetoothManager {
     class LatestNotificationHistory {
-        let dropOutTimeInterval: TimeInterval = 0.1
+        let dropOutTimeInterval: TimeInterval = 0.5
 
         private var notifications: [Notification] = []
 
