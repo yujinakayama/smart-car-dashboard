@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3pD-mC-pSF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3pD-mC-pSF">
     <device id="ipad12_9rounded" orientation="landscape" layout="splitview1_3" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -56,33 +56,37 @@
                                             <constraint firstAttribute="height" constant="19" id="zIa-hH-lg5"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hV1-RD-Cct">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uIo-P9-NkS">
                                         <rect key="frame" x="0.0" y="864.5" width="311" height="28"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfV-vr-luy" customClass="PlaybackModeSwitch" customModule="Dash" customModuleProvider="target">
-                                                <rect key="frame" x="41.5" y="3" width="24" height="22"/>
-                                                <state key="normal" image="shuffle" catalog="system"/>
-                                            </button>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="02J-uc-aWb" customClass="AVRoutePickerView">
-                                                <rect key="frame" x="141.5" y="0.0" width="28" height="28"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hV1-RD-Cct">
+                                                <rect key="frame" x="37.5" y="0.0" width="236" height="28"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfV-vr-luy" customClass="PlaybackModeSwitch" customModule="Dash" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
+                                                        <state key="normal" image="shuffle" catalog="system"/>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TAK-Hz-Kv5" customClass="PlaybackModeSwitch" customModule="Dash" customModuleProvider="target">
+                                                        <rect key="frame" x="208" y="0.0" width="28" height="28"/>
+                                                        <state key="normal" image="repeat" catalog="system"/>
+                                                    </button>
+                                                </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="02J-uc-aWb" secondAttribute="height" multiplier="1:1" id="Wgn-tv-jgF"/>
-                                                    <constraint firstAttribute="width" constant="28" id="fWj-93-0pu"/>
+                                                    <constraint firstItem="TAK-Hz-Kv5" firstAttribute="centerY" secondItem="hV1-RD-Cct" secondAttribute="centerY" id="8s1-Xm-rmk"/>
+                                                    <constraint firstItem="TAK-Hz-Kv5" firstAttribute="leading" secondItem="mfV-vr-luy" secondAttribute="trailing" constant="180" id="LWw-iu-yaB"/>
+                                                    <constraint firstAttribute="height" constant="28" id="N26-0C-r4X"/>
+                                                    <constraint firstItem="mfV-vr-luy" firstAttribute="leading" secondItem="hV1-RD-Cct" secondAttribute="leading" id="lSj-1F-cCP"/>
+                                                    <constraint firstItem="mfV-vr-luy" firstAttribute="centerY" secondItem="hV1-RD-Cct" secondAttribute="centerY" id="pPk-Do-WBP"/>
+                                                    <constraint firstAttribute="trailing" secondItem="TAK-Hz-Kv5" secondAttribute="trailing" id="swa-Cv-GBo"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TAK-Hz-Kv5" customClass="PlaybackModeSwitch" customModule="Dash" customModuleProvider="target">
-                                                <rect key="frame" x="245.5" y="3" width="22.5" height="22"/>
-                                                <state key="normal" image="repeat" catalog="system"/>
-                                            </button>
                                         </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstItem="TAK-Hz-Kv5" firstAttribute="centerY" secondItem="hV1-RD-Cct" secondAttribute="centerY" id="8s1-Xm-rmk"/>
-                                            <constraint firstItem="TAK-Hz-Kv5" firstAttribute="leading" secondItem="02J-uc-aWb" secondAttribute="trailing" constant="76" id="LS8-rL-hBH"/>
-                                            <constraint firstAttribute="height" constant="28" id="N26-0C-r4X"/>
-                                            <constraint firstItem="02J-uc-aWb" firstAttribute="centerY" secondItem="hV1-RD-Cct" secondAttribute="centerY" id="POr-0o-vkS"/>
-                                            <constraint firstItem="02J-uc-aWb" firstAttribute="leading" secondItem="mfV-vr-luy" secondAttribute="trailing" constant="76" id="R6O-ZP-uYJ"/>
-                                            <constraint firstItem="02J-uc-aWb" firstAttribute="centerX" secondItem="hV1-RD-Cct" secondAttribute="centerX" id="VPs-9r-xFd"/>
-                                            <constraint firstItem="mfV-vr-luy" firstAttribute="centerY" secondItem="hV1-RD-Cct" secondAttribute="centerY" id="pPk-Do-WBP"/>
+                                            <constraint firstAttribute="height" constant="28" id="Qpj-v8-7wv"/>
+                                            <constraint firstItem="hV1-RD-Cct" firstAttribute="top" secondItem="uIo-P9-NkS" secondAttribute="top" id="UUn-0x-GaS"/>
+                                            <constraint firstItem="hV1-RD-Cct" firstAttribute="centerX" secondItem="uIo-P9-NkS" secondAttribute="centerX" id="iIm-xl-5vt"/>
+                                            <constraint firstAttribute="bottom" secondItem="hV1-RD-Cct" secondAttribute="bottom" id="tFb-9q-Cj7"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="not-0R-tgj">
@@ -115,7 +119,6 @@
                         <outlet property="playbackControlView" destination="Z51-Ki-eML" id="CSg-xg-wZE"/>
                         <outlet property="playbackProgressView" destination="4EW-dl-7rX" id="JQa-Dw-sCH"/>
                         <outlet property="repeatModeSwitch" destination="TAK-Hz-Kv5" id="9K8-3K-4lK"/>
-                        <outlet property="routePickerView" destination="02J-uc-aWb" id="cg5-Uf-NQ8"/>
                         <outlet property="shuffleModeSwitch" destination="mfV-vr-luy" id="eje-LU-FiO"/>
                         <outlet property="songTitleView" destination="Beu-Kz-v6k" id="zWt-rx-Y2G"/>
                         <outlet property="volumeView" destination="xiy-BS-1Rf" id="9XC-zY-aRP"/>

@@ -18,7 +18,6 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
     @IBOutlet weak var playbackControlView: PlaybackControlView!
     @IBOutlet weak var volumeView: VolumeView!
     @IBOutlet weak var shuffleModeSwitch: PlaybackModeSwitch!
-    @IBOutlet weak var routePickerView: AVRoutePickerView!
     @IBOutlet weak var repeatModeSwitch: PlaybackModeSwitch!
 
     var musicPlayer: MPMusicPlayerController {
