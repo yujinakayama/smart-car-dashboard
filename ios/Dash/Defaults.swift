@@ -18,6 +18,7 @@ struct Defaults {
         static let mapTypeForETCRoute = "mapTypeForETCRoute"
         static let mapTypeForDirections = "mapTypeForDirections"
         static let snapReceivedLocationToPointOfInterest = "snapReceivedLocationToPointOfInterest"
+        static let verboseLogging = "verboseLogging"
     }
 
     var mapTypeForETCRoute: MKMapType? {
@@ -41,6 +42,12 @@ struct Defaults {
     var snapReceivedLocationToPointOfInterest: Bool {
         get {
             return userDefaults.bool(forKey: Key.snapReceivedLocationToPointOfInterest)
+        }
+    }
+
+    var verboseLogging: Bool {
+        get {
+            return userDefaults.bool(forKey: Key.verboseLogging)
         }
     }
 }
