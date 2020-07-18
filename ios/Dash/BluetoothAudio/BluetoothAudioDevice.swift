@@ -27,7 +27,6 @@ class BluetoothAudioDevice: NSObject, ClassicBluetoothManagerDelegate {
 
     func classicBluetoothManagerDidChangeAvailability(_ beeTee: ClassicBluetoothManager) {
         logger.debug(beeTee.isAvailable)
-        connectIfPossible()
     }
 
     func connectIfPossible() {
