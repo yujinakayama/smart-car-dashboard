@@ -26,7 +26,7 @@ class BluetoothAudioDevice: NSObject, ClassicBluetoothManagerDelegate {
     }
 
     func classicBluetoothManagerDidChangeAvailability(_ beeTee: ClassicBluetoothManager) {
-        logger.debug(beeTee.isAvailable)
+        logger.info(beeTee.isAvailable)
     }
 
     func connectIfPossible() {
@@ -36,6 +36,7 @@ class BluetoothAudioDevice: NSObject, ClassicBluetoothManagerDelegate {
     }
 
     func classicBluetoothManager(_ manager: ClassicBluetoothManager, didConnectToDevice device: ClassicBluetoothDevice) {
+        logger.info(device.name)
         Timer.scheduledTimer(timeInterval: autoPlayDelay, target: self, selector: #selector(startPlayingMusic), userInfo: nil, repeats: false)
     }
 

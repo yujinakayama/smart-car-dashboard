@@ -29,6 +29,7 @@ class Vehicle {
     }
 
     @objc func etcDeviceDidConnect() {
+        logger.info()
         bluetoothAudioDevice.connectIfPossible()
     }
 }
