@@ -10,14 +10,14 @@ import MapKit
 
 enum MapTypeSegmentedControlIndex: Int {
     case standard = 0
-    case satellite
+    case hybrid
 
     init?(_ mapType: MKMapType) {
         switch mapType {
         case .standard:
             self = .standard
-        case .satellite:
-            self = .satellite
+        case .hybrid:
+            self = .hybrid
         default:
             return nil
         }
@@ -27,8 +27,8 @@ enum MapTypeSegmentedControlIndex: Int {
         switch self {
         case .standard:
             return .standard
-        case .satellite:
-            return .satellite
+        case .hybrid:
+            return .hybrid
         }
     }
 }
