@@ -65,6 +65,5 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
     @IBAction func mapTypeSegmentedControlDidChange() {
         let index = MapTypeSegmentedControlIndex(rawValue: mapTypeSegmentedControl.selectedSegmentIndex)!
         mapView.mapType = index.mapType
-        Defaults.shared.mapTypeForETCRoute = index.mapType
     }
 }
