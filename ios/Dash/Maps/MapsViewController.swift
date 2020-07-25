@@ -31,6 +31,8 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
 
         gestureRecognizer.delegate = self
         mapView.addGestureRecognizer(gestureRecognizer)
+
+        updatePointOfInterestFilter()
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
@@ -65,5 +67,41 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
     @IBAction func mapTypeSegmentedControlDidChange() {
         let index = MapTypeSegmentedControlIndex(rawValue: mapTypeSegmentedControl.selectedSegmentIndex)!
         mapView.mapType = index.mapType
+        updatePointOfInterestFilter()
+    }
+
+    func updatePointOfInterestFilter() {
+        mapView.pointOfInterestFilter = pointOfInterestFilter(for: mapView.mapType)
+    }
+
+    // TODO: Make customizable on UI
+    func pointOfInterestFilter(for mapType: MKMapType) -> MKPointOfInterestFilter? {
+        switch mapType {
+        case .standard:
+            return nil
+        case .hybrid:
+            return MKPointOfInterestFilter(including: [
+                .airport,
+                .amusementPark,
+                .aquarium,
+                .beach,
+                .brewery,
+                .campground,
+                .hotel,
+                .library,
+                .marina,
+                .movieTheater,
+                .museum,
+                .nationalPark,
+                .park,
+                .publicTransport,
+                .stadium,
+                .theater,
+                .winery,
+                .zoo
+            ])
+        default:
+            return nil
+        }
     }
 }
