@@ -342,7 +342,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="dfb-Fe-CUi">
             <objects>
-                <tabBarController restorationIdentifier="TabBarController" id="3pD-mC-pSF" sceneMemberID="viewController">
+                <tabBarController restorationIdentifier="TabBarController" id="3pD-mC-pSF" customClass="TabBarController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ACU-o3-iqv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

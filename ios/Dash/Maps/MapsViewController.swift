@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate {
+class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate, TabSelectionRespondable {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mapTypeSegmentedControl: UISegmentedControl!
 
@@ -33,6 +33,10 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         mapView.addGestureRecognizer(gestureRecognizer)
 
         updatePointOfInterestFilter()
+    }
+
+    func tabDidSelect() {
+        mapView.setUserTrackingMode(.follow, animated: false)
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
