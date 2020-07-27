@@ -34,19 +34,15 @@ class OriginalLanguageSongTitleFetcher {
         appleMusicClient = AppleMusic(storefront: storefront, developerToken: developerToken)
     }
 
-    func originalLanguageSong(id: String, completionHandler: @escaping (Result<OriginalLanguageSong, Error>) -> Void) {
-        if let cachedSong = cachedSong(id: id) {
-            logger.debug(cachedSong)
-            completionHandler(.success(cachedSong))
-            return
-        }
-
-        fetchOriginalLanguageSong(id: id, completionHandler: completionHandler)
+    func cachedOriginalLanguageSong(id: String) -> OriginalLanguageSong? {
+        return OriginalLanguageSongTitleFetcher.cache.object(forKey: id) as? OriginalLanguageSong
     }
 
-    private func fetchOriginalLanguageSong(id: String, in language: LanguageTag? = nil, completionHandler: @escaping (Result<OriginalLanguageSong, Error>) -> Void) {
-        let requestLanguage = language ?? LanguageTag.enUS
+    func fetchOriginalLanguageSong(id: String, completionHandler: @escaping (Result<OriginalLanguageSong, Error>) -> Void) {
+        fetchOriginalLanguageSong(id: id, requestLanguage: .enUS, completionHandler: completionHandler)
+    }
 
+    private func fetchOriginalLanguageSong(id: String, requestLanguage: LanguageTag, completionHandler: @escaping (Result<OriginalLanguageSong, Error>) -> Void) {
         fetchSong(id: id, in: requestLanguage) { [weak self] (result) in
             guard let self = self else { return }
 
@@ -61,7 +57,7 @@ class OriginalLanguageSongTitleFetcher {
                     self.cache(song: song, for: id)
                     completionHandler(.success(song))
                 } else {
-                    self.fetchOriginalLanguageSong(id: id, in: originalLanguage, completionHandler: completionHandler)
+                    self.fetchOriginalLanguageSong(id: id, requestLanguage: originalLanguage, completionHandler: completionHandler)
                 }
             case .failure(let error):
                 completionHandler(.failure(error))
@@ -80,10 +76,6 @@ class OriginalLanguageSongTitleFetcher {
                 completionHandler(.success(songAttributes))
             }
         }
-    }
-
-    private func cachedSong(id: String) -> OriginalLanguageSong? {
-        return OriginalLanguageSongTitleFetcher.cache.object(forKey: id) as? OriginalLanguageSong
     }
 
     private func cache(song: OriginalLanguageSong, for id: String) {

@@ -98,18 +98,26 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
     }
 
     func tryUpdatingLabelsWithOriginalLanguageTitle() {
+        guard let songID = musicPlayer.nowPlayingItem?.playbackStoreID else {
+            updateLabels(title: nil, artist: nil)
+            return
+        }
+
+        if let originalLanguageSong = originalLanguageSongTitleFetcher.cachedOriginalLanguageSong(id: songID) {
+            updateLabels(title: originalLanguageSong.title, artist: originalLanguageSong.artist)
+            return
+        }
+
         let mediaItem = self.musicPlayer.nowPlayingItem
         updateLabels(title: mediaItem?.title, artist: mediaItem?.artist)
 
-        guard let songID = musicPlayer.nowPlayingItem?.playbackStoreID else { return }
-
-        originalLanguageSongTitleFetcher.originalLanguageSong(id: songID) { [weak self] (result) in
+        originalLanguageSongTitleFetcher.fetchOriginalLanguageSong(id: songID) { [weak self] (result) in
             guard let self = self else { return }
 
             switch result {
             case .success(let originalLanguageSong):
                 DispatchQueue.main.async { [weak self] in
-                    self?.updateLabels(title: originalLanguageSong.title, artist: originalLanguageSong.artist)
+                    self?.updateLabels(title: originalLanguageSong.title, artist: originalLanguageSong.artist, animated: true)
                 }
             case .failure(let error):
                 logger.error(error)
@@ -117,9 +125,21 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
         }
     }
 
-    func updateLabels(title: String?, artist: String?) {
-        songLabel.text = title
-        artistLabel.text = artist
+    func updateLabels(title: String?, artist: String?, animated: Bool = false) {
+        if animated {
+            let duration = 0.5
+
+            UIView.transition(with: songLabel, duration: duration, options: .transitionCrossDissolve, animations: { [weak self] in
+                self?.songLabel.text = title
+            })
+
+            UIView.transition(with: artistLabel, duration: duration, options: .transitionCrossDissolve, animations: { [weak self] in
+                self?.artistLabel.text = artist
+            })
+        } else {
+            songLabel.text = title
+            artistLabel.text = artist
+        }
 
         setUpAnimationIfNeeded()
     }
