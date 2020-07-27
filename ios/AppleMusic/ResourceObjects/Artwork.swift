@@ -1,6 +1,6 @@
 //
 //  Artwork.swift
-//  HMV
+//  AppleMusic
 //
 
 import Foundation

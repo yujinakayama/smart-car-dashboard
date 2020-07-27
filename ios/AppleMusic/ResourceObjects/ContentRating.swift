@@ -1,6 +1,6 @@
 //
 //  ContentRating.swift
-//  HMV
+//  AppleMusic
 //
 
 import Foundation

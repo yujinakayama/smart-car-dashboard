@@ -1,6 +1,6 @@
 //
 //  SearchResults.swift
-//  HMV
+//  AppleMusic
 //
 
 import Foundation

@@ -1,6 +1,6 @@
 //
 //  Genre.swift
-//  HMV
+//  AppleMusic
 //
 
 import Foundation

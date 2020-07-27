@@ -1,6 +1,6 @@
 //
 //  Resource.swift
-//  HMV
+//  AppleMusic
 //
 
 import Foundation

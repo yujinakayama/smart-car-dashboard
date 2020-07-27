@@ -1,6 +1,6 @@
 //
 //  ResponseRoot.swift
-//  HMV
+//  AppleMusic
 //
 
 import Foundation

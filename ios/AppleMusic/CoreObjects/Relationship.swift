@@ -1,6 +1,6 @@
 //
 //  Relationship.swift
-//  HMV
+//  AppleMusic
 //
 
 import Foundation

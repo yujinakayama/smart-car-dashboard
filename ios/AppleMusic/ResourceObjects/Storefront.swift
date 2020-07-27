@@ -1,6 +1,6 @@
 //
 //  Storefront.swift
-//  HMV
+//  AppleMusic
 //
 
 import Foundation

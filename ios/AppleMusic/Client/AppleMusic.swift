@@ -1,12 +1,12 @@
 //
-//  HMV.swift
-//  HMV
+//  AppleMusic.swift
+//  AppleMusic
 //
 
 import Foundation
 
 /// A client for submitting requests to the Apple Music API.
-public struct HMV {
+public struct AppleMusic {
     private let urlBuilder: UrlBuilder
     private let fetcher: UrlFetcher
 
@@ -23,21 +23,21 @@ public struct HMV {
 
     // MARK: Initialization
 
-    init(urlBuilder: UrlBuilder, urlFetcher: UrlFetcher = HMV.defaultURLFetcher) {
+    init(urlBuilder: UrlBuilder, urlFetcher: UrlFetcher = AppleMusic.defaultURLFetcher) {
         self.urlBuilder = urlBuilder
         self.fetcher = urlFetcher
     }
 
     /**
-     Initialize a `HMV`
+     Initialize a `AppleMusic`
 
      - parameters:
        - storefront: The `Storefront` to submit requests to.
        - developerToken: The Apple Music developer token to use in requests.
        - urlFetcher: The `UrlFetcher` to use for processing requests. Defaults to a `URLSession` with the default `URLSessionConfiguration`.
      */
-    public init(storefront: Storefront, developerToken: String, urlFetcher: UrlFetcher = HMV.defaultURLFetcher) {
-        let urlBuilder = HMVUrlBuilder(storefront: storefront, developerToken: developerToken)
+    public init(storefront: Storefront, developerToken: String, urlFetcher: UrlFetcher = AppleMusic.defaultURLFetcher) {
+        let urlBuilder = AppleMusicUrlBuilder(storefront: storefront, developerToken: developerToken)
         self.init(urlBuilder: urlBuilder, urlFetcher: urlFetcher)
     }
 

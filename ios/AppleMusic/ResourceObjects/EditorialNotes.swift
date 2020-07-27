@@ -1,6 +1,6 @@
 //
 //  EditorialNotes.swift
-//  HMV
+//  AppleMusic
 //
 
 import Foundation

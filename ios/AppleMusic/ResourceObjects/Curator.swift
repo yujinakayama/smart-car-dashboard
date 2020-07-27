@@ -1,6 +1,6 @@
 //
 //  Curator.swift
-//  HMV
+//  AppleMusic
 //
 
 import Foundation

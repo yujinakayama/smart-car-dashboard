@@ -28,8 +28,8 @@
 		B929FB1D24CECAE700BC773A /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B929FB0524CECAE700BC773A /* Resource.swift */; };
 		B929FB1E24CECAE700BC773A /* Relationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = B929FB0624CECAE700BC773A /* Relationship.swift */; };
 		B929FB1F24CECAE700BC773A /* ResponseRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B929FB0724CECAE700BC773A /* ResponseRoot.swift */; };
-		B929FB2024CECAE700BC773A /* HMV.swift in Sources */ = {isa = PBXBuildFile; fileRef = B929FB0924CECAE700BC773A /* HMV.swift */; };
-		B929FB2124CECAE700BC773A /* HMVUrlBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B929FB0A24CECAE700BC773A /* HMVUrlBuilder.swift */; };
+		B929FB2024CECAE700BC773A /* AppleMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B929FB0924CECAE700BC773A /* AppleMusic.swift */; };
+		B929FB2124CECAE700BC773A /* AppleMusicUrlBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B929FB0A24CECAE700BC773A /* AppleMusicUrlBuilder.swift */; };
 		B929FB2224CECAE700BC773A /* Include.swift in Sources */ = {isa = PBXBuildFile; fileRef = B929FB0B24CECAE700BC773A /* Include.swift */; };
 		B929FB2324CECAE700BC773A /* UrlFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B929FB0C24CECAE700BC773A /* UrlFetcher.swift */; };
 		B929FB2424CECAE700BC773A /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = B929FB0E24CECAE700BC773A /* Track.swift */; };
@@ -263,8 +263,8 @@
 		B929FB0524CECAE700BC773A /* Resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 		B929FB0624CECAE700BC773A /* Relationship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Relationship.swift; sourceTree = "<group>"; };
 		B929FB0724CECAE700BC773A /* ResponseRoot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseRoot.swift; sourceTree = "<group>"; };
-		B929FB0924CECAE700BC773A /* HMV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMV.swift; sourceTree = "<group>"; };
-		B929FB0A24CECAE700BC773A /* HMVUrlBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMVUrlBuilder.swift; sourceTree = "<group>"; };
+		B929FB0924CECAE700BC773A /* AppleMusic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleMusic.swift; sourceTree = "<group>"; };
+		B929FB0A24CECAE700BC773A /* AppleMusicUrlBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleMusicUrlBuilder.swift; sourceTree = "<group>"; };
 		B929FB0B24CECAE700BC773A /* Include.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Include.swift; sourceTree = "<group>"; };
 		B929FB0C24CECAE700BC773A /* UrlFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlFetcher.swift; sourceTree = "<group>"; };
 		B929FB0E24CECAE700BC773A /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
@@ -484,8 +484,8 @@
 		B929FB0824CECAE700BC773A /* Client */ = {
 			isa = PBXGroup;
 			children = (
-				B929FB0924CECAE700BC773A /* HMV.swift */,
-				B929FB0A24CECAE700BC773A /* HMVUrlBuilder.swift */,
+				B929FB0924CECAE700BC773A /* AppleMusic.swift */,
+				B929FB0A24CECAE700BC773A /* AppleMusicUrlBuilder.swift */,
 				B929FB0B24CECAE700BC773A /* Include.swift */,
 				B929FB0C24CECAE700BC773A /* UrlFetcher.swift */,
 			);
@@ -1210,10 +1210,10 @@
 				B929FB1C24CECAE700BC773A /* SearchResults.swift in Sources */,
 				B929FB2C24CECAE700BC773A /* ContentRating.swift in Sources */,
 				B929FB1F24CECAE700BC773A /* ResponseRoot.swift in Sources */,
-				B929FB2024CECAE700BC773A /* HMV.swift in Sources */,
+				B929FB2024CECAE700BC773A /* AppleMusic.swift in Sources */,
 				B929FB2E24CECAE700BC773A /* Artwork.swift in Sources */,
 				B929FB2224CECAE700BC773A /* Include.swift in Sources */,
-				B929FB2124CECAE700BC773A /* HMVUrlBuilder.swift in Sources */,
+				B929FB2124CECAE700BC773A /* AppleMusicUrlBuilder.swift in Sources */,
 				B929FB1B24CECAE700BC773A /* AppleMusicAPIError.swift in Sources */,
 				B929FB2524CECAE700BC773A /* MusicVideo.swift in Sources */,
 				B929FB2A24CECAE700BC773A /* MediaType.swift in Sources */,

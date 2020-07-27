@@ -1,6 +1,6 @@
 //
 //  MediaType.swift
-//  HMV
+//  AppleMusic
 //
 
 import Foundation

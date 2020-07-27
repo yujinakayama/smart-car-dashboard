@@ -1,6 +1,6 @@
 //
 //  PlayParameters.swift
-//  HMV
+//  AppleMusic
 //
 
 import Foundation

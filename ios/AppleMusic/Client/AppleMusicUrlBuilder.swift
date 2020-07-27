@@ -1,6 +1,6 @@
 //
-//  HMVUrlBuilder.swift
-//  HMV
+//  AppleMusicUrlBuilder.swift
+//  AppleMusic
 //
 
 import Foundation
@@ -12,7 +12,7 @@ protocol UrlBuilder {
     func relationshipRequest(path: String, limit: Int?, offset: Int?) -> URLRequest
 }
 
-public enum HMVUrlBuilderError: Error {
+public enum AppleMusicUrlBuilderError: Error {
     case noUserToken
 }
 
@@ -41,7 +41,7 @@ private struct AppleMusicApi {
 
 // MARK: - UrlBuilder
 
-struct HMVUrlBuilder: UrlBuilder {
+struct AppleMusicUrlBuilder: UrlBuilder {
 
     // MARK: Inputs
 
@@ -166,7 +166,7 @@ struct HMVUrlBuilder: UrlBuilder {
     // TODO: Make this private once we add a request that needs it and can test via that vector.
     func addUserToken(request: URLRequest) throws -> URLRequest {
         guard let userToken = userToken else {
-            throw HMVUrlBuilderError.noUserToken
+            throw AppleMusicUrlBuilderError.noUserToken
         }
 
         var request = request
