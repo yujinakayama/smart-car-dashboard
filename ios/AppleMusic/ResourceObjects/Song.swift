@@ -15,6 +15,7 @@ public struct SongAttributes: Codable {
     public let discNumber: Int?
     public let durationInMillis: Int?
     public let genreNames: [String]
+    public let isrc: String
     public let movementCount: Int? // Classical music only
     public let movementName: String? // Classical music only
     public let movementNumber: Int? // Classical music only
