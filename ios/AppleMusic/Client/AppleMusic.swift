@@ -108,9 +108,9 @@ public struct AppleMusic {
        - include: The relationships to include in the lookup.
        - completion: The handler to call with the results.
      */
-    public func song(id: String, include: [Include]? = nil, language: String? = nil, completion: ((Track?, Error?) -> Void)?) {
+    public func song(id: String, include: [Include]? = nil, language: String? = nil, completion: ((Song?, Error?) -> Void)?) {
         let request = urlBuilder.fetchRequest(mediaType: .songs, id: id, include: include, language: language)
-        fetch(request) { (results: ResponseRoot<Track>?, error) in completion?(results?.data?.first, error) }
+        fetch(request) { (results: ResponseRoot<Song>?, error) in completion?(results?.data?.first, error) }
     }
 
     /**

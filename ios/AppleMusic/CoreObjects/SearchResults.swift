@@ -18,7 +18,7 @@ public struct SearchResults: Codable {
     public let artists: ResponseRoot<Artist>?
     public let musicVideos: ResponseRoot<MusicVideo>?
     public let playlists: ResponseRoot<Playlist>?
-    public let songs: ResponseRoot<Track>?
+    public let songs: ResponseRoot<Song>?
 }
 
 // MARK: - SearchHints

@@ -32,7 +32,7 @@
 		B929FB2124CECAE700BC773A /* AppleMusicUrlBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B929FB0A24CECAE700BC773A /* AppleMusicUrlBuilder.swift */; };
 		B929FB2224CECAE700BC773A /* Include.swift in Sources */ = {isa = PBXBuildFile; fileRef = B929FB0B24CECAE700BC773A /* Include.swift */; };
 		B929FB2324CECAE700BC773A /* UrlFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B929FB0C24CECAE700BC773A /* UrlFetcher.swift */; };
-		B929FB2424CECAE700BC773A /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = B929FB0E24CECAE700BC773A /* Track.swift */; };
+		B929FB2424CECAE700BC773A /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = B929FB0E24CECAE700BC773A /* Song.swift */; };
 		B929FB2524CECAE700BC773A /* MusicVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B929FB0F24CECAE700BC773A /* MusicVideo.swift */; };
 		B929FB2624CECAE700BC773A /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = B929FB1024CECAE700BC773A /* Genre.swift */; };
 		B929FB2724CECAE700BC773A /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = B929FB1124CECAE700BC773A /* Album.swift */; };
@@ -267,7 +267,7 @@
 		B929FB0A24CECAE700BC773A /* AppleMusicUrlBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleMusicUrlBuilder.swift; sourceTree = "<group>"; };
 		B929FB0B24CECAE700BC773A /* Include.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Include.swift; sourceTree = "<group>"; };
 		B929FB0C24CECAE700BC773A /* UrlFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlFetcher.swift; sourceTree = "<group>"; };
-		B929FB0E24CECAE700BC773A /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		B929FB0E24CECAE700BC773A /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		B929FB0F24CECAE700BC773A /* MusicVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicVideo.swift; sourceTree = "<group>"; };
 		B929FB1024CECAE700BC773A /* Genre.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
 		B929FB1124CECAE700BC773A /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
@@ -495,7 +495,7 @@
 		B929FB0D24CECAE700BC773A /* ResourceObjects */ = {
 			isa = PBXGroup;
 			children = (
-				B929FB0E24CECAE700BC773A /* Track.swift */,
+				B929FB0E24CECAE700BC773A /* Song.swift */,
 				B929FB0F24CECAE700BC773A /* MusicVideo.swift */,
 				B929FB1024CECAE700BC773A /* Genre.swift */,
 				B929FB1124CECAE700BC773A /* Album.swift */,
@@ -1203,7 +1203,7 @@
 			files = (
 				B929FB2724CECAE700BC773A /* Album.swift in Sources */,
 				B929FB2324CECAE700BC773A /* UrlFetcher.swift in Sources */,
-				B929FB2424CECAE700BC773A /* Track.swift in Sources */,
+				B929FB2424CECAE700BC773A /* Song.swift in Sources */,
 				B929FB1D24CECAE700BC773A /* Resource.swift in Sources */,
 				B929FB2D24CECAE700BC773A /* Playlist.swift in Sources */,
 				B929FB2624CECAE700BC773A /* Genre.swift in Sources */,

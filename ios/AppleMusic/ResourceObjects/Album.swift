@@ -26,5 +26,5 @@ public struct AlbumAttributes: Codable {
 public struct AlbumRelationships: Codable {
     public let artists: Relationship<Artist>
     public let genres: Relationship<Genre>?
-    public let tracks: Relationship<Track>
+    public let tracks: Relationship<Song>
 }
