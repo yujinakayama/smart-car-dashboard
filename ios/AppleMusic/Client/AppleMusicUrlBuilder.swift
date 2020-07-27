@@ -6,10 +6,10 @@
 import Foundation
 
 protocol UrlBuilder {
-    func searchRequest(term: String, limit: Int?, offset: Int?, types: [MediaType]?) -> URLRequest
-    func searchHintsRequest(term: String, limit: Int?, types: [MediaType]?) -> URLRequest
-    func fetchRequest(mediaType: MediaType, id: String, include: [Include]?) -> URLRequest
-    func relationshipRequest(path: String, limit: Int?, offset: Int?) -> URLRequest
+    func searchRequest(term: String, limit: Int?, offset: Int?, types: [MediaType]?, language: String?) -> URLRequest
+    func searchHintsRequest(term: String, limit: Int?, types: [MediaType]?, language: String?) -> URLRequest
+    func fetchRequest(mediaType: MediaType, id: String, include: [Include]?, language: String?) -> URLRequest
+    func relationshipRequest(path: String, limit: Int?, offset: Int?, language: String?) -> URLRequest
 }
 
 public enum AppleMusicUrlBuilderError: Error {
@@ -33,6 +33,7 @@ private struct AppleMusicApi {
     static let limitParameter = "limit"
     static let offsetParameter = "offset"
     static let typesParameter = "types"
+    static let languageTagParameter = "l"
 
     // Fetch
     static let fetchPath = "v1/catalog/{storefront}/{mediaType}/{id}"
@@ -69,7 +70,7 @@ struct AppleMusicUrlBuilder: UrlBuilder {
 
     // MARK: Construct urls
 
-    private func seachUrl(term: String, limit: Int?, offset: Int?, types: [MediaType]?) -> URL {
+    private func seachUrl(term: String, limit: Int?, offset: Int?, types: [MediaType]?, language: String?) -> URL {
 
         // Construct url path
 
@@ -82,12 +83,13 @@ struct AppleMusicUrlBuilder: UrlBuilder {
         components.apply(limit: limit)
         components.apply(offset: offset)
         components.apply(mediaTypes: types)
+        components.apply(language: language)
 
         // Construct final url
         return components.url(relativeTo: baseApiUrl)!
     }
 
-    private func searchHintsUrl(term: String, limit: Int?, types: [MediaType]?) -> URL {
+    private func searchHintsUrl(term: String, limit: Int?, types: [MediaType]?, language: String?) -> URL {
 
         // Construct url path
 
@@ -99,49 +101,52 @@ struct AppleMusicUrlBuilder: UrlBuilder {
         components.apply(searchTerm: term)
         components.apply(limit: limit)
         components.apply(mediaTypes: types)
+        components.apply(language: language)
 
         // Construct final url
         return components.url(relativeTo: baseApiUrl)!
     }
 
-    private func fetchUrl(mediaType: MediaType, id: String, include: [Include]?) -> URL {
+    private func fetchUrl(mediaType: MediaType, id: String, include: [Include]?, language: String?) -> URL {
         var components = URLComponents()
 
         components.path = AppleMusicApi.fetchPath.addStorefront(storefront).addMediaType(mediaType).addId(id)
         components.apply(include: include)
+        components.apply(language: language)
 
         return components.url(relativeTo: baseApiUrl)!.absoluteURL
     }
 
-    private func relationshipUrl(path: String, limit: Int?, offset: Int?) -> URL {
+    private func relationshipUrl(path: String, limit: Int?, offset: Int?, language: String?) -> URL {
         var components = URLComponents()
 
         components.path = path
         components.apply(limit: limit)
         components.apply(offset: offset)
+        components.apply(language: language)
 
         return components.url(relativeTo: baseApiUrl)!.absoluteURL
     }
 
     // MARK: Construct requests
 
-    func searchRequest(term: String, limit: Int?, offset: Int?, types: [MediaType]?) -> URLRequest {
-        let url = seachUrl(term: term, limit: limit, offset: offset, types: types)
+    func searchRequest(term: String, limit: Int?, offset: Int?, types: [MediaType]?, language: String?) -> URLRequest {
+        let url = seachUrl(term: term, limit: limit, offset: offset, types: types, language: language)
         return constructRequest(url: url)
     }
 
-    func searchHintsRequest(term: String, limit: Int?, types: [MediaType]?) -> URLRequest {
-        let url = searchHintsUrl(term: term, limit: limit, types: types)
+    func searchHintsRequest(term: String, limit: Int?, types: [MediaType]?, language: String?) -> URLRequest {
+        let url = searchHintsUrl(term: term, limit: limit, types: types, language: language)
         return constructRequest(url: url)
     }
 
-    func fetchRequest(mediaType: MediaType, id: String, include: [Include]?) -> URLRequest {
-        let url = fetchUrl(mediaType: mediaType, id: id, include: include)
+    func fetchRequest(mediaType: MediaType, id: String, include: [Include]?, language: String?) -> URLRequest {
+        let url = fetchUrl(mediaType: mediaType, id: id, include: include, language: language)
         return constructRequest(url: url)
     }
 
-    func relationshipRequest(path: String, limit: Int?, offset: Int?) -> URLRequest {
-        let url = relationshipUrl(path: path, limit: limit, offset: offset)
+    func relationshipRequest(path: String, limit: Int?, offset: Int?, language: String?) -> URLRequest {
+        let url = relationshipUrl(path: path, limit: limit, offset: offset, language: language)
         return constructRequest(url: url)
     }
 
@@ -234,5 +239,12 @@ private extension URLComponents {
 
         createQueryItemsIfNeeded()
         queryItems?.append(URLQueryItem(name: AppleMusicApi.fetchInclude, value: include.map { $0.rawValue }.joined(separator: ",")))
+    }
+
+    mutating func apply(language: String?) {
+        guard let language = language else { return }
+
+        createQueryItemsIfNeeded()
+        queryItems?.append(URLQueryItem(name: AppleMusicApi.languageTagParameter, value: language))
     }
 }

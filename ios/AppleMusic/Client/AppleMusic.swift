@@ -53,8 +53,8 @@ public struct AppleMusic {
        - types: The `MediaType`s to limit the search to.
        - completion: The completion handler to call with the results of the search.
      */
-    public func search(term: String, limit: Int? = nil, offset: Int? = nil, types: [MediaType]? = nil, completion: ((SearchResults?, Error?) -> Void)?) {
-        let request = urlBuilder.searchRequest(term: term, limit: limit, offset: offset, types: types)
+    public func search(term: String, limit: Int? = nil, offset: Int? = nil, types: [MediaType]? = nil, language: String? = nil, completion: ((SearchResults?, Error?) -> Void)?) {
+        let request = urlBuilder.searchRequest(term: term, limit: limit, offset: offset, types: types, language: language)
         fetch(request) { (results: ResponseRoot<SearchResults>?, error) in completion?(results?.results, error) }
     }
 
@@ -67,8 +67,8 @@ public struct AppleMusic {
        - types: The `MediaType`s to limit the search to.
        - completion: The completion handler to call with the results of the search hints.
      */
-    public func searchHints(term: String, limit: Int? = nil, types: [MediaType]? = nil, completion: ((SearchHints?, Error?) -> Void)?) {
-        let request = urlBuilder.searchHintsRequest(term: term, limit: limit, types: types)
+    public func searchHints(term: String, limit: Int? = nil, types: [MediaType]? = nil, language: String? = nil, completion: ((SearchHints?, Error?) -> Void)?) {
+        let request = urlBuilder.searchHintsRequest(term: term, limit: limit, types: types, language: language)
         fetch(request) { (results: ResponseRoot<SearchHints>?, error) in completion?(results?.results, error) }
     }
 
@@ -82,8 +82,8 @@ public struct AppleMusic {
        - include: The relationships to include in the lookup.
        - completion: The handler to call with the results.
      */
-    public func artist(id: String, include: [Include]? = nil, completion: ((Artist?, Error?) -> Void)?) {
-        let request = urlBuilder.fetchRequest(mediaType: .artists, id: id, include: include)
+    public func artist(id: String, include: [Include]? = nil, language: String? = nil, completion: ((Artist?, Error?) -> Void)?) {
+        let request = urlBuilder.fetchRequest(mediaType: .artists, id: id, include: include, language: language)
         fetch(request) { (results: ResponseRoot<Artist>?, error) in completion?(results?.data?.first, error) }
     }
 
@@ -95,8 +95,8 @@ public struct AppleMusic {
        - include: The relationships to include in the lookup.
        - completion: The handler to call with the results.
      */
-    public func album(id: String, include: [Include]? = nil, completion: ((Album?, Error?) -> Void)?) {
-        let request = urlBuilder.fetchRequest(mediaType: .albums, id: id, include: include)
+    public func album(id: String, include: [Include]? = nil, language: String? = nil, completion: ((Album?, Error?) -> Void)?) {
+        let request = urlBuilder.fetchRequest(mediaType: .albums, id: id, include: include, language: language)
         fetch(request) { (results: ResponseRoot<Album>?, error) in completion?(results?.data?.first, error) }
     }
 
@@ -108,8 +108,8 @@ public struct AppleMusic {
        - include: The relationships to include in the lookup.
        - completion: The handler to call with the results.
      */
-    public func song(id: String, include: [Include]? = nil, completion: ((Track?, Error?) -> Void)?) {
-        let request = urlBuilder.fetchRequest(mediaType: .songs, id: id, include: include)
+    public func song(id: String, include: [Include]? = nil, language: String? = nil, completion: ((Track?, Error?) -> Void)?) {
+        let request = urlBuilder.fetchRequest(mediaType: .songs, id: id, include: include, language: language)
         fetch(request) { (results: ResponseRoot<Track>?, error) in completion?(results?.data?.first, error) }
     }
 
@@ -121,8 +121,8 @@ public struct AppleMusic {
        - include: The relationships to include in the lookup.
        - completion: The handler to call with the results.
      */
-    public func playlist(id: String, include: [Include]? = nil, completion: ((Playlist?, Error?) -> Void)?) {
-        let request = urlBuilder.fetchRequest(mediaType: .playlists, id: id, include: include)
+    public func playlist(id: String, include: [Include]? = nil, language: String? = nil, completion: ((Playlist?, Error?) -> Void)?) {
+        let request = urlBuilder.fetchRequest(mediaType: .playlists, id: id, include: include, language: language)
         fetch(request) { (results: ResponseRoot<Playlist>?, error) in completion?(results?.data?.first, error) }
     }
 
@@ -134,8 +134,8 @@ public struct AppleMusic {
        - include: The relationships to include in the lookup.
        - completion: The handler to call with the results.
      */
-    public func musicVideo(id: String, include: [Include]? = nil, completion: ((MusicVideo?, Error?) -> Void)?) {
-        let request = urlBuilder.fetchRequest(mediaType: .musicVideos, id: id, include: include)
+    public func musicVideo(id: String, include: [Include]? = nil, language: String? = nil, completion: ((MusicVideo?, Error?) -> Void)?) {
+        let request = urlBuilder.fetchRequest(mediaType: .musicVideos, id: id, include: include, language: language)
         fetch(request) { (results: ResponseRoot<MusicVideo>?, error) in completion?(results?.data?.first, error) }
     }
 
@@ -147,8 +147,8 @@ public struct AppleMusic {
        - include: The relationships to include in the lookup.
        - completion: The handler to call with the results.
      */
-    public func curator(id: String, include: [Include]? = nil, completion: ((Curator?, Error?) -> Void)?) {
-        let request = urlBuilder.fetchRequest(mediaType: .curators, id: id, include: include)
+    public func curator(id: String, include: [Include]? = nil, language: String? = nil, completion: ((Curator?, Error?) -> Void)?) {
+        let request = urlBuilder.fetchRequest(mediaType: .curators, id: id, include: include, language: language)
         fetch(request) { (results: ResponseRoot<Curator>?, error) in completion?(results?.data?.first, error) }
     }
 
@@ -163,9 +163,9 @@ public struct AppleMusic {
        - offset: The offset to use for pagination.
        - completion: The handler to call with the results.
      */
-    public func get<T>(related: Relationship<T>, limit: Int? = nil, offset: Int? = nil, completion: (([T]?, Error?) -> Void)?) {
+    public func get<T>(related: Relationship<T>, limit: Int? = nil, offset: Int? = nil, language: String? = nil, completion: (([T]?, Error?) -> Void)?) {
         let path = related.href
-        let request = urlBuilder.relationshipRequest(path: path, limit: limit, offset: offset)
+        let request = urlBuilder.relationshipRequest(path: path, limit: limit, offset: offset, language: language)
         fetch(request) { (results: ResponseRoot<T>?, error) in completion?(results?.data, error) }
     }
 
