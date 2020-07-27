@@ -9,6 +9,7 @@
 import UIKit
 import MediaPlayer
 import MarqueeLabel
+import AppleMusic
 
 fileprivate func makeMarqueeLabel() -> MarqueeLabel {
     let label = MarqueeLabel()
@@ -52,9 +53,15 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
     var musicPlayer: MPMusicPlayerController! {
         didSet {
             addNotificationObserver()
-            updateLabels()
+            tryUpdatingLabelsWithOriginalLanguageTitle()
         }
     }
+
+    lazy var originalLanguageSongTitleFetcher: OriginalLanguageSongTitleFetcher = {
+        let path = Bundle.main.path(forResource: "apple_music_developer_token", ofType: "txt")!
+        let developerToken = try! String(contentsOfFile: path)
+        return OriginalLanguageSongTitleFetcher(storefront: .japan, developerToken: developerToken)
+    }()
 
     required init(coder: NSCoder) {
         super.init(coder: coder)
@@ -90,9 +97,29 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
         )
     }
 
-    func updateLabels() {
-        songLabel.text = musicPlayer.nowPlayingItem?.title
-        artistLabel.text = musicPlayer.nowPlayingItem?.artist
+    func tryUpdatingLabelsWithOriginalLanguageTitle() {
+        let mediaItem = self.musicPlayer.nowPlayingItem
+        updateLabels(title: mediaItem?.title, artist: mediaItem?.artist)
+
+        guard let songID = musicPlayer.nowPlayingItem?.playbackStoreID else { return }
+
+        originalLanguageSongTitleFetcher.originalLanguageSong(id: songID) { [weak self] (result) in
+            guard let self = self else { return }
+
+            switch result {
+            case .success(let originalLanguageSong):
+                DispatchQueue.main.async { [weak self] in
+                    self?.updateLabels(title: originalLanguageSong.title, artist: originalLanguageSong.artist)
+                }
+            case .failure(let error):
+                logger.error(error)
+            }
+        }
+    }
+
+    func updateLabels(title: String?, artist: String?) {
+        songLabel.text = title
+        artistLabel.text = artist
 
         setUpAnimationIfNeeded()
     }
@@ -128,6 +155,6 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
     }
 
     @objc func musicPlayerControllerNowPlayingItemDidChange() {
-        updateLabels()
+        tryUpdatingLabelsWithOriginalLanguageTitle()
     }
 }
