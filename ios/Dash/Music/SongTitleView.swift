@@ -103,8 +103,13 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
             return
         }
 
-        if let originalLanguageSong = originalLanguageSongTitleFetcher.cachedOriginalLanguageSong(id: songID) {
-            updateLabels(title: originalLanguageSong.title, artist: originalLanguageSong.artist)
+        if originalLanguageSongTitleFetcher.hasCachedOriginalLanguageSong(id: songID) {
+            if let originalLanguageSong = originalLanguageSongTitleFetcher.cachedOriginalLanguageSong(id: songID) {
+                updateLabels(title: originalLanguageSong.title, artist: originalLanguageSong.artist)
+            } else {
+                let mediaItem = self.musicPlayer.nowPlayingItem
+                updateLabels(title: mediaItem?.title, artist: mediaItem?.artist)
+            }
             return
         }
 

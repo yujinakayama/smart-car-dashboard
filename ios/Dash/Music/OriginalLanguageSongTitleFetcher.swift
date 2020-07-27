@@ -34,6 +34,10 @@ class OriginalLanguageSongTitleFetcher {
         appleMusicClient = AppleMusic(storefront: storefront, developerToken: developerToken)
     }
 
+    func hasCachedOriginalLanguageSong(id: String) -> Bool {
+        return OriginalLanguageSongTitleFetcher.cache.containsObject(forKey: id)
+    }
+
     func cachedOriginalLanguageSong(id: String) -> OriginalLanguageSong? {
         return OriginalLanguageSongTitleFetcher.cache.object(forKey: id) as? OriginalLanguageSong
     }
@@ -60,6 +64,9 @@ class OriginalLanguageSongTitleFetcher {
                     self.fetchOriginalLanguageSong(id: id, requestLanguage: originalLanguage, completionHandler: completionHandler)
                 }
             case .failure(let error):
+                if let error = error as? AppleMusicAPIError, error.status == "404" {
+                    self.cache(song: nil, for: id)
+                }
                 completionHandler(.failure(error))
             }
         }
@@ -78,8 +85,8 @@ class OriginalLanguageSongTitleFetcher {
         }
     }
 
-    private func cache(song: OriginalLanguageSong, for id: String) {
-        OriginalLanguageSongTitleFetcher.cache.setObjectAsync(song, forKey: id, withAgeLimit: cacheAgeLimit)
+    private func cache(song: OriginalLanguageSong?, for id: String) {
+        OriginalLanguageSongTitleFetcher.cache.setObjectAsync(song ?? NSNull(), forKey: id, withAgeLimit: cacheAgeLimit)
     }
 
     private func originalLanguage(of song: SongAttributes) -> LanguageTag {
