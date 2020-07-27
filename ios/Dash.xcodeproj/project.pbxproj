@@ -20,6 +20,9 @@
 		B91BD8092323FD820064D2B5 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
 		B92451D423E30ACE007556D5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B92451D323E30ACE007556D5 /* Settings.bundle */; };
 		B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */; };
+		B929FAFA24CECAC800BC773A /* AppleMusic.h in Headers */ = {isa = PBXBuildFile; fileRef = B929FAF824CECAC800BC773A /* AppleMusic.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B929FAFD24CECAC800BC773A /* AppleMusic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B929FAF624CECAC800BC773A /* AppleMusic.framework */; };
+		B929FAFE24CECAC800BC773A /* AppleMusic.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B929FAF624CECAC800BC773A /* AppleMusic.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */; };
 		B92C6EC324AC2F0A001E9675 /* ArtworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92C6EC224AC2F0A001E9675 /* ArtworkView.swift */; };
 		B92C6EC524AC68B7001E9675 /* SongTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92C6EC424AC68B7001E9675 /* SongTitleView.swift */; };
@@ -122,6 +125,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B929FAFB24CECAC800BC773A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B929FAF524CECAC800BC773A;
+			remoteInfo = AppleMusic;
+		};
 		B964BCE023E067EB00288E0D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
@@ -178,6 +188,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				B98B783B23ED4C3F00A5102F /* DashShareKit.framework in Embed Frameworks */,
+				B929FAFE24CECAC800BC773A /* AppleMusic.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -222,6 +233,9 @@
 		B92451D523E3204D007556D5 /* GoogleServieInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleServieInfo.swift; sourceTree = "<group>"; };
 		B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexPathExtension.swift; sourceTree = "<group>"; };
 		B9253D7923E015A80037E156 /* Dash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dash.entitlements; sourceTree = "<group>"; };
+		B929FAF624CECAC800BC773A /* AppleMusic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AppleMusic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B929FAF824CECAC800BC773A /* AppleMusic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppleMusic.h; sourceTree = "<group>"; };
+		B929FAF924CECAC800BC773A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewController.swift; sourceTree = "<group>"; };
 		B92C6EC224AC2F0A001E9675 /* ArtworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkView.swift; sourceTree = "<group>"; };
 		B92C6EC424AC68B7001E9675 /* SongTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongTitleView.swift; sourceTree = "<group>"; };
@@ -336,6 +350,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B929FAF324CECAC800BC773A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B964BCBD23E066FF00288E0D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -367,6 +388,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B929FAFD24CECAC800BC773A /* AppleMusic.framework in Frameworks */,
 				B98B783A23ED4C3F00A5102F /* DashShareKit.framework in Frameworks */,
 				01861A4B14032E6339D8E511 /* Pods_Dash.framework in Frameworks */,
 			);
@@ -389,6 +411,15 @@
 				B9CEADAC24501FE7006898F8 /* DirectionalUserLocationAnnotationView.swift */,
 			);
 			path = Maps;
+			sourceTree = "<group>";
+		};
+		B929FAF724CECAC800BC773A /* AppleMusic */ = {
+			isa = PBXGroup;
+			children = (
+				B929FAF824CECAC800BC773A /* AppleMusic.h */,
+				B929FAF924CECAC800BC773A /* Info.plist */,
+			);
+			path = AppleMusic;
 			sourceTree = "<group>";
 		};
 		B944C68E24A9E4C8000D1E99 /* Music */ = {
@@ -580,6 +611,7 @@
 				B964BCC123E066FF00288E0D /* DashRemote */,
 				B964BCD923E067EB00288E0D /* ShareExtension */,
 				B98B783423ED4C3F00A5102F /* DashShareKit */,
+				B929FAF724CECAC800BC773A /* AppleMusic */,
 				B9DC5B22229D59BE00B645D5 /* Products */,
 				B9CD1D8B22A51AAD00170082 /* Frameworks */,
 				FC2BACFC9EC4F82C9699C39B /* Pods */,
@@ -594,6 +626,7 @@
 				B964BCC023E066FF00288E0D /* Dash Remote.app */,
 				B964BCD823E067EB00288E0D /* ShareExtension.appex */,
 				B98B783323ED4C3F00A5102F /* DashShareKit.framework */,
+				B929FAF624CECAC800BC773A /* AppleMusic.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -660,6 +693,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		B929FAF124CECAC800BC773A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B929FAFA24CECAC800BC773A /* AppleMusic.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B98B782E23ED4C3F00A5102F /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -671,6 +712,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		B929FAF524CECAC800BC773A /* AppleMusic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B929FB0124CECAC800BC773A /* Build configuration list for PBXNativeTarget "AppleMusic" */;
+			buildPhases = (
+				B929FAF124CECAC800BC773A /* Headers */,
+				B929FAF224CECAC800BC773A /* Sources */,
+				B929FAF324CECAC800BC773A /* Frameworks */,
+				B929FAF424CECAC800BC773A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AppleMusic;
+			productName = AppleMusic;
+			productReference = B929FAF624CECAC800BC773A /* AppleMusic.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		B964BCBF23E066FF00288E0D /* DashRemote */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B964BCD323E0670100288E0D /* Build configuration list for PBXNativeTarget "DashRemote" */;
@@ -750,6 +809,7 @@
 			);
 			dependencies = (
 				B98B783923ED4C3F00A5102F /* PBXTargetDependency */,
+				B929FAFC24CECAC800BC773A /* PBXTargetDependency */,
 			);
 			name = Dash;
 			productName = ETC;
@@ -781,9 +841,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1160;
 				ORGANIZATIONNAME = "Yuji Nakayama";
 				TargetAttributes = {
+					B929FAF524CECAC800BC773A = {
+						CreatedOnToolsVersion = 11.6;
+					};
 					B964BCBF23E066FF00288E0D = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
@@ -821,11 +884,19 @@
 				B964BCBF23E066FF00288E0D /* DashRemote */,
 				B964BCD723E067EB00288E0D /* ShareExtension */,
 				B98B783223ED4C3F00A5102F /* DashShareKit */,
+				B929FAF524CECAC800BC773A /* AppleMusic */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B929FAF424CECAC800BC773A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B964BCBE23E066FF00288E0D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1036,6 +1107,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B929FAF224CECAC800BC773A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B964BCBC23E066FF00288E0D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1159,6 +1237,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B929FAFC24CECAC800BC773A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B929FAF524CECAC800BC773A /* AppleMusic */;
+			targetProxy = B929FAFB24CECAC800BC773A /* PBXContainerItemProxy */;
+		};
 		B964BCE123E067EB00288E0D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B964BCD723E067EB00288E0D /* ShareExtension */;
@@ -1230,6 +1313,64 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B929FAFF24CECAC800BC773A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8LSN3WQC77;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = AppleMusic/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.AppleMusic;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		B929FB0024CECAC800BC773A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8LSN3WQC77;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = AppleMusic/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.AppleMusic;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		B964BCD123E0670100288E0D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BBF96480A5CBA83FEB75EF07 /* Pods-DashRemote.debug.xcconfig */;
@@ -1598,6 +1739,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B929FB0124CECAC800BC773A /* Build configuration list for PBXNativeTarget "AppleMusic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B929FAFF24CECAC800BC773A /* Debug */,
+				B929FB0024CECAC800BC773A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B964BCD323E0670100288E0D /* Build configuration list for PBXNativeTarget "DashRemote" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
