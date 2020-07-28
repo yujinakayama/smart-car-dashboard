@@ -81,7 +81,6 @@
                                                 </constraints>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="28" id="Qpj-v8-7wv"/>
                                             <constraint firstItem="hV1-RD-Cct" firstAttribute="top" secondItem="uIo-P9-NkS" secondAttribute="top" id="UUn-0x-GaS"/>
