@@ -561,7 +561,7 @@
 			path = ShareExtension;
 			sourceTree = "<group>";
 		};
-		B9741F7623DF201A00F061E7 /* Share */ = {
+		B9741F7623DF201A00F061E7 /* Inbox */ = {
 			isa = PBXGroup;
 			children = (
 				B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */,
@@ -576,7 +576,7 @@
 				B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */,
 				B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */,
 			);
-			path = Share;
+			path = Inbox;
 			sourceTree = "<group>";
 		};
 		B97B0D8724C040A9006B675B /* BluetoothAudio */ = {
@@ -731,7 +731,7 @@
 				B90E21F824CBB1BF008330AD /* TabBarController.swift */,
 				B944C68E24A9E4C8000D1E99 /* Music */,
 				B9CEA76822D8F1990055C9A3 /* ETC */,
-				B9741F7623DF201A00F061E7 /* Share */,
+				B9741F7623DF201A00F061E7 /* Inbox */,
 				B904A2A4243968840087BD4A /* Maps */,
 				B97B0D8724C040A9006B675B /* BluetoothAudio */,
 				B97BAE6124B61DB100AE7D13 /* Vehicle.swift */,
