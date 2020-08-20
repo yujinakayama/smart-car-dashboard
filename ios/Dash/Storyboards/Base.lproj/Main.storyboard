@@ -675,7 +675,7 @@
                             <outlet property="delegate" destination="08M-uz-mue" id="3Of-4e-TNQ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Shared Items" id="08c-tQ-1d0"/>
+                    <navigationItem key="navigationItem" title="Inbox" id="08c-tQ-1d0"/>
                     <connections>
                         <segue destination="1MV-T3-y4O" kind="presentation" identifier="showSignIn" animates="NO" id="bw5-MR-F3K"/>
                     </connections>
@@ -730,11 +730,11 @@
             </objects>
             <point key="canvasLocation" x="864" y="1678"/>
         </scene>
-        <!--Shared Items-->
+        <!--Inbox-->
         <scene sceneID="JrH-as-C6C">
             <objects>
                 <navigationController restorationIdentifier="SharedItemNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="9rv-x1-HX3" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Shared Items" image="square.and.arrow.down.fill" catalog="system" id="5GI-ot-E7D"/>
+                    <tabBarItem key="tabBarItem" title="Inbox" image="tray.and.arrow.down.fill" catalog="system" id="5GI-ot-E7D"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="3Im-5G-ZFk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="102"/>
@@ -1018,7 +1018,7 @@
         <image name="repeat" catalog="system" width="128" height="99"/>
         <image name="shuffle" catalog="system" width="128" height="93"/>
         <image name="signature" catalog="system" width="128" height="90"/>
-        <image name="square.and.arrow.down.fill" catalog="system" width="121" height="128"/>
+        <image name="tray.and.arrow.down.fill" catalog="system" width="128" height="114"/>
         <image name="yensign.square.fill" catalog="system" width="128" height="114"/>
         <namedColor name="Hairline Border Color">
             <color white="0.0" alpha="0.10000000149011612" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
