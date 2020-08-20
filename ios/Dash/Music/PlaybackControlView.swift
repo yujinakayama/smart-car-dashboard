@@ -24,6 +24,7 @@ import MediaPlayer
         didSet {
             addNotificationObserver()
             updatePlayPauseButton()
+            updateBackwardAndForwardButtons()
         }
     }
 
@@ -126,6 +127,13 @@ import MediaPlayer
             name: .MPMusicPlayerControllerPlaybackStateDidChange,
             object: musicPlayer
         )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(musicPlayerControllerNowPlayingItemDidChange),
+            name: .MPMusicPlayerControllerNowPlayingItemDidChange,
+            object: musicPlayer
+        )
     }
 
     @objc func playPauseButtonDidTap() {
@@ -159,6 +167,10 @@ import MediaPlayer
         updatePlayPauseButton()
     }
 
+    @objc func musicPlayerControllerNowPlayingItemDidChange() {
+        updateBackwardAndForwardButtons()
+    }
+
     func updatePlayPauseButton() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -169,6 +181,16 @@ import MediaPlayer
                 self.playPauseButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
             }
         }
+    }
+
+    func updateBackwardAndForwardButtons() {
+        backwardButton.isHidden = isPlayingLiveItem
+        forwardButton.isHidden = isPlayingLiveItem
+    }
+
+    var isPlayingLiveItem: Bool {
+        guard let musicPlayer = musicPlayer else { return false }
+        return musicPlayer.currentPlaybackTime.isNaN
     }
 }
 
