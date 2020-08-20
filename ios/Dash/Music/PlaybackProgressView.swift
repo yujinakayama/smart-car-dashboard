@@ -70,7 +70,11 @@ import MediaPlayer
     }
 
     func setSliderThumbImage() {
-        slider.setThumbImage(thumbImage, for: .normal)
+        if isPlayingLiveItem {
+            slider.setThumbImage(UIImage(), for: .normal)
+        } else {
+            slider.setThumbImage(thumbImage, for: .normal)
+        }
     }
 
     func installLayoutConstraints() {
@@ -180,9 +184,14 @@ import MediaPlayer
 
     func updateTimeLabels() {
         if let nowPlayingItem = musicPlayer.nowPlayingItem {
-            elapsedTimeLabel.text = formatTimeInterval(displayedPlaybackTime)
-            let remainingTime = ceil(floor(nowPlayingItem.playbackDuration) - displayedPlaybackTime)
-            remainingTimeLabel.text = "−" + formatTimeInterval(remainingTime)
+            if isPlayingLiveItem {
+                elapsedTimeLabel.text = nil
+                remainingTimeLabel.text = nil
+            } else {
+                elapsedTimeLabel.text = formatTimeInterval(displayedPlaybackTime)
+                let remainingTime = ceil(floor(nowPlayingItem.playbackDuration) - displayedPlaybackTime)
+                remainingTimeLabel.text = "−" + formatTimeInterval(remainingTime)
+            }
         } else {
             elapsedTimeLabel.text = "--:--"
             remainingTimeLabel.text = "--:--"
@@ -196,6 +205,7 @@ import MediaPlayer
     }
 
     @objc func musicPlayerControllerNowPlayingItemDidChange() {
+        setSliderThumbImage()
         slider.maximumValue = Float(musicPlayer.nowPlayingItem?.playbackDuration ?? 0)
         scheduleUpdatesIfNeeded()
     }
@@ -238,12 +248,17 @@ import MediaPlayer
         case .interrupted, .paused, .stopped:
             return false
         default:
-            return true
+            return !isPlayingLiveItem
         }
     }
 
     var playbackTimeUpdateInterval: TimeInterval {
         return TimeInterval(1.0 / musicPlayer.currentPlaybackRate)
+    }
+
+    var isPlayingLiveItem: Bool {
+        guard let musicPlayer = musicPlayer else { return false }
+        return musicPlayer.currentPlaybackTime.isNaN
     }
 
     var displayedPlaybackTime: TimeInterval {
@@ -254,7 +269,7 @@ import MediaPlayer
         }
     }
 
-    var thumbImage: UIImage {
+    lazy var thumbImage: UIImage = {
         let color = UIColor(named: "Music Player Progress Slider Minimum Track Tint Color") ?? UIColor.gray
         let radius: CGFloat = 3
         let padding: CGFloat = 1
@@ -273,7 +288,7 @@ import MediaPlayer
             color.setFill()
             rendererContext.cgContext.fillEllipse(in: thumbFrame)
         }
-    }
+    }()
 
     class PrecisePlaybackObserver {
         let musicPlayer: MPMusicPlayerController
