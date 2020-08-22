@@ -2080,6 +2080,7 @@ tollbooth_id,road_name,route_name,tollbooth_name,direction,entrance_or_exit,note
 12-984,首都高速道路,横浜北西線,首都横浜青葉,,出口,,shutoko.jp
 12-985,首都高速道路,横浜北西線,首都横浜青葉,,出口,,shutoko.jp
 12-986,首都高速道路,横浜北西線,首都横浜青葉,,出口,,shutoko.jp
+12-990,首都高速道路,首都高速道路,首都高その他利用,,,,shutoko.jp
 13-101,阪神高速道路,15号堺線,湊町,,入口,,hanshin-exp.co.jp
 13-102,阪神高速道路,1号環状線,四ツ橋,,入口,,hanshin-exp.co.jp
 13-103,阪神高速道路,1号環状線,信濃橋,,入口,,hanshin-exp.co.jp
@@ -2123,7 +2124,7 @@ tollbooth_id,road_name,route_name,tollbooth_name,direction,entrance_or_exit,note
 13-222,阪神高速道路,14号松原線,駒川,,入口,,hanshin-exp.co.jp
 13-223,阪神高速道路,14号松原線,平野,,入口,,hanshin-exp.co.jp
 13-224,阪神高速道路,14号松原線,喜連瓜破,,入口,,hanshin-exp.co.jp
-13-225,阪神高速道路,14号松原線,大和川,,,本線料金所,hanshin-exp.co.jp
+13-225,阪神高速道路,14号松原線,瓜破本線,,,本線料金所,hanshin-exp.co.jp
 13-251,阪神高速道路,1号環状線,高津,,入口,,hanshin-exp.co.jp
 13-252,阪神高速道路,15号堺線,汐見橋,,入口,,hanshin-exp.co.jp
 13-253,阪神高速道路,15号堺線,南開,,,本線料金所,hanshin-exp.co.jp
@@ -2144,6 +2145,11 @@ tollbooth_id,road_name,route_name,tollbooth_name,direction,entrance_or_exit,note
 13-312,阪神高速道路,2号淀川左岸線,大開,,入口,,hanshin-exp.co.jp
 13-331,阪神高速道路,6号大和川線,三宅西,,入口,,hanshin-exp.co.jp
 13-332,阪神高速道路,6号大和川線,三宅西,,出口,,hanshin-exp.co.jp
+13-333,阪神高速道路,6号大和川線,三宅西本線,,,本線料金所,hanshin-exp.co.jp
+13-334,阪神高速道路,6号大和川線,天美,,入口,,hanshin-exp.co.jp
+13-335,阪神高速道路,6号大和川線,常磐,東行き,入口,,hanshin-exp.co.jp
+13-336,阪神高速道路,6号大和川線,常磐,西行き,入口,,hanshin-exp.co.jp
+13-337,阪神高速道路,6号大和川線,鉄砲,東行き,入口,,hanshin-exp.co.jp
 13-338,阪神高速道路,6号大和川線,鉄砲,西行き,入口,,hanshin-exp.co.jp
 13-346,阪神高速道路,15号堺線,湊町OCAT,,出口,,hanshin-exp.co.jp
 13-348,阪神高速道路,1号環状線,信濃橋,,出口,,hanshin-exp.co.jp
@@ -2248,7 +2254,7 @@ tollbooth_id,road_name,route_name,tollbooth_name,direction,entrance_or_exit,note
 13-512,阪神高速道路,4号湾岸線,南港北,,入口,,hanshin-exp.co.jp
 13-513,阪神高速道路,4号湾岸線,南港南,,入口,,hanshin-exp.co.jp
 13-514,阪神高速道路,4号湾岸線,三宝,,入口,,hanshin-exp.co.jp
-13-515,阪神高速道路,4号湾岸線,大浜,,入口,,hanshin-exp.co.jp
+13-515,阪神高速道路,4号湾岸線,大浜,,入口,,PastDatabase
 13-516,阪神高速道路,4号湾岸線,出島,,入口,,hanshin-exp.co.jp
 13-517,阪神高速道路,4号湾岸線,石津,,入口,,hanshin-exp.co.jp
 13-518,阪神高速道路,4号湾岸線,浜寺,,入口,,hanshin-exp.co.jp
@@ -2269,9 +2275,15 @@ tollbooth_id,road_name,route_name,tollbooth_name,direction,entrance_or_exit,note
 13-549,阪神高速道路,4号湾岸線,貝塚,南行き,入口,,hanshin-exp.co.jp
 13-550,阪神高速道路,4号湾岸線,泉佐野北,,入口,,hanshin-exp.co.jp
 13-551,阪神高速道路,4号湾岸線,泉佐野,,,本線料金所,hanshin-exp.co.jp
+13-553,阪神高速道路,4号湾岸線,助松,北行き,入口,,hanshin-exp.co.jp
 13-561,阪神高速道路,2号淀川左岸線,正蓮寺川,,出口,,hanshin-exp.co.jp
 13-562,阪神高速道路,2号淀川左岸線,大開,,出口,,hanshin-exp.co.jp
+13-581,阪神高速道路,6号大和川線,天美,,出口,,hanshin-exp.co.jp
+13-582,阪神高速道路,6号大和川線,常磐,西行き,出口,,hanshin-exp.co.jp
+13-583,阪神高速道路,6号大和川線,常磐,東行き,出口,,hanshin-exp.co.jp
+13-584,阪神高速道路,6号大和川線,鉄砲,西行き,出口,,hanshin-exp.co.jp
 13-585,阪神高速道路,6号大和川線,鉄砲,東行き,出口,,hanshin-exp.co.jp
+13-586,阪神高速道路,6号大和川線,天美本線,東行き,,本線FF,hanshin-exp.co.jp
 13-601,阪神高速道路,5号湾岸線,天保山JCT,,出口,,hanshin-exp.co.jp
 13-603,阪神高速道路,5号湾岸線,湾岸舞洲,,出口,,hanshin-exp.co.jp
 13-604,阪神高速道路,2号淀川左岸線,淀川左岸舞洲,,出口,,hanshin-exp.co.jp
@@ -2289,6 +2301,7 @@ tollbooth_id,road_name,route_name,tollbooth_name,direction,entrance_or_exit,note
 13-620,阪神高速道路,4号湾岸線,出島,,出口,,hanshin-exp.co.jp
 13-621,阪神高速道路,4号湾岸線,石津,,出口,,hanshin-exp.co.jp
 13-622,阪神高速道路,4号湾岸線,浜寺,,出口,,hanshin-exp.co.jp
+13-623,阪神高速道路,4号湾岸線,高石,,出口,,hanshin-exp.co.jp
 13-631,阪神高速道路,4号湾岸線,助松JCT,,入口,,hanshin-exp.co.jp
 13-633,阪神高速道路,4号湾岸線,助松JCT,,出口,,hanshin-exp.co.jp
 13-635,阪神高速道路,4号湾岸線,助松,,入口,,hanshin-exp.co.jp
@@ -2318,9 +2331,9 @@ tollbooth_id,road_name,route_name,tollbooth_name,direction,entrance_or_exit,note
 13-668,阪神高速道路,8号京都線,山科,,入口,,hanshin-exp.co.jp
 13-681,阪神高速道路,8号京都線,巨椋池・阪高割引,,,割引案内用FF,hanshin-exp.co.jp
 13-687,阪神高速道路,8号京都線,鴨川東,,出口,,hanshin-exp.co.jp
-13-701,阪神高速道路,3号神戸線,尼崎,,,本線料金所,hanshin-exp.co.jp
+13-701,阪神高速道路,3号神戸線,尼崎,,,本線料金所,PastDatabase
 13-702,阪神高速道路,3号神戸線,尼崎西,,入口,,hanshin-exp.co.jp
-13-703,阪神高速道路,3号神戸線,尼崎西,,出口,,hanshin-exp.co.jp
+13-703,阪神高速道路,3号神戸線,尼崎西,,出口,,PastDatabase
 13-704,阪神高速道路,3号神戸線,芦屋,,入口,,hanshin-exp.co.jp
 13-705,阪神高速道路,3号神戸線,芦屋,,出口,,hanshin-exp.co.jp
 13-706,阪神高速道路,3号神戸線,芦屋,,,本線料金所,hanshin-exp.co.jp
@@ -2363,9 +2376,9 @@ tollbooth_id,road_name,route_name,tollbooth_name,direction,entrance_or_exit,note
 13-763,阪神高速道路,5号湾岸線,尼崎末広,,出口,,hanshin-exp.co.jp
 13-764,阪神高速道路,5号湾岸線,尼崎末広,,入口,,hanshin-exp.co.jp
 13-767,阪神高速道路,5号湾岸線,甲子園浜,,入口,,hanshin-exp.co.jp
-13-771,阪神高速道路,5号湾岸線,西宮浜,,出口,,hanshin-exp.co.jp
+13-771,阪神高速道路,5号湾岸線,西宮浜,,出口,,PastDatabase
 13-772,阪神高速道路,5号湾岸線,西宮浜,,入口,,hanshin-exp.co.jp
-13-773,阪神高速道路,5号湾岸線,南芦屋浜,,,本線料金所,hanshin-exp.co.jp
+13-773,阪神高速道路,5号湾岸線,南芦屋浜,,,本線料金所,PastDatabase
 13-774,阪神高速道路,5号湾岸線,南芦屋浜,,入口,,hanshin-exp.co.jp
 13-775,阪神高速道路,5号湾岸線,深江浜東,,入口,,hanshin-exp.co.jp
 13-776,阪神高速道路,5号湾岸線,深江浜西,,入口,,hanshin-exp.co.jp
@@ -2376,7 +2389,7 @@ tollbooth_id,road_name,route_name,tollbooth_name,direction,entrance_or_exit,note
 13-792,阪神高速道路,31号神戸山手線,妙法寺,,入口,,hanshin-exp.co.jp
 13-793,阪神高速道路,31号神戸山手線,白川南,,入口,,hanshin-exp.co.jp
 13-801,阪神高速道路,3号神戸線,尼崎東,,出口,,hanshin-exp.co.jp
-13-802,阪神高速道路,3号神戸線,武庫川,,入口,,hanshin-exp.co.jp
+13-802,阪神高速道路,3号神戸線,武庫川,,入口,,PastDatabase
 13-803,阪神高速道路,3号神戸線,武庫川,,出口,,hanshin-exp.co.jp
 13-804,阪神高速道路,3号神戸線,西宮JCT,,入口,,hanshin-exp.co.jp
 13-805,阪神高速道路,3号神戸線,西宮JCT,,出口,,hanshin-exp.co.jp
@@ -2425,7 +2438,7 @@ tollbooth_id,road_name,route_name,tollbooth_name,direction,entrance_or_exit,note
 13-862,阪神高速道路,5号湾岸線,尼崎末広,東行き,入口,,hanshin-exp.co.jp
 13-863,阪神高速道路,5号湾岸線,鳴尾浜,,入口,,hanshin-exp.co.jp
 13-864,阪神高速道路,5号湾岸線,鳴尾浜,,出口,,hanshin-exp.co.jp
-13-865,阪神高速道路,5号湾岸線,甲子園浜,,入口,,hanshin-exp.co.jp
+13-865,阪神高速道路,5号湾岸線,甲子園浜,,入口,,PastDatabase
 13-866,阪神高速道路,5号湾岸線,甲子園浜,,出口,,hanshin-exp.co.jp
 13-871,阪神高速道路,5号湾岸線,南芦屋浜,,出口,,hanshin-exp.co.jp
 13-872,阪神高速道路,5号湾岸線,深江浜,西行き,出口,,hanshin-exp.co.jp
