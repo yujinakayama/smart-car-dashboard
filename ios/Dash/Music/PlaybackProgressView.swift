@@ -269,7 +269,7 @@ import MediaPlayer
         }
     }
 
-    lazy var thumbImage: UIImage = {
+    var thumbImage: UIImage {
         let color = UIColor(named: "Music Player Progress Slider Minimum Track Tint Color") ?? UIColor.gray
         let radius: CGFloat = 3
         let padding: CGFloat = 1
@@ -288,7 +288,7 @@ import MediaPlayer
             color.setFill()
             rendererContext.cgContext.fillEllipse(in: thumbFrame)
         }
-    }()
+    }
 
     class PrecisePlaybackObserver {
         let musicPlayer: MPMusicPlayerController
