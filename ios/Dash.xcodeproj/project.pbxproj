@@ -144,7 +144,7 @@
 		B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */; };
 		B9EF566123DF3D61000D0CB2 /* GoogleSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */; };
 		B9FA6CC824CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FA6CC724CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift */; };
-		B9FB33E124AE2ACD00FEB782 /* PlaybackModeSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FB33E024AE2ACD00FEB782 /* PlaybackModeSwitch.swift */; };
+		B9FB33E124AE2ACD00FEB782 /* PlaybackModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FB33E024AE2ACD00FEB782 /* PlaybackModeButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -390,7 +390,7 @@
 		B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInViewController.swift; sourceTree = "<group>"; };
 		B9FA6CC724CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OriginalLanguageSongTitleFetcher.swift; sourceTree = "<group>"; };
-		B9FB33E024AE2ACD00FEB782 /* PlaybackModeSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackModeSwitch.swift; sourceTree = "<group>"; };
+		B9FB33E024AE2ACD00FEB782 /* PlaybackModeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackModeButton.swift; sourceTree = "<group>"; };
 		BBF96480A5CBA83FEB75EF07 /* Pods-DashRemote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote.debug.xcconfig"; path = "Target Support Files/Pods-DashRemote/Pods-DashRemote.debug.xcconfig"; sourceTree = "<group>"; };
 		FDB9D0E23106CE353F300B76 /* Pods-Dash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dash.debug.xcconfig"; path = "Target Support Files/Pods-Dash/Pods-Dash.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -523,7 +523,7 @@
 				B92C6EC624AC77B2001E9675 /* PlaybackProgressView.swift */,
 				B944C69124A9E647000D1E99 /* PlaybackControlView.swift */,
 				B9CB753524AA1A17008264F5 /* VolumeView.swift */,
-				B9FB33E024AE2ACD00FEB782 /* PlaybackModeSwitch.swift */,
+				B9FB33E024AE2ACD00FEB782 /* PlaybackModeButton.swift */,
 				B9FA6CC724CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift */,
 			);
 			path = Music;
@@ -1307,7 +1307,7 @@
 				B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */,
 				B99D4F2824C0526200647A10 /* BluetoothAudioDevice.swift in Sources */,
 				B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */,
-				B9FB33E124AE2ACD00FEB782 /* PlaybackModeSwitch.swift in Sources */,
+				B9FB33E124AE2ACD00FEB782 /* PlaybackModeButton.swift in Sources */,
 				B92E2AFC23E4958200BB4C0E /* UNNotificationContentExtension.swift in Sources */,
 				B9DB8E5522D7A410003E4BD8 /* Dash.xcdatamodeld in Sources */,
 				B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */,

@@ -17,8 +17,8 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
     @IBOutlet weak var playbackProgressView: PlaybackProgressView!
     @IBOutlet weak var playbackControlView: PlaybackControlView!
     @IBOutlet weak var volumeView: VolumeView!
-    @IBOutlet weak var shuffleModeSwitch: PlaybackModeSwitch!
-    @IBOutlet weak var repeatModeSwitch: PlaybackModeSwitch!
+    @IBOutlet weak var shuffleModeButton: ShuffleModeButton!
+    @IBOutlet weak var repeatModeButton: RepeatModeButton!
 
     var musicPlayer: MPMusicPlayerController {
         return MPMusicPlayerController.systemMusicPlayer
@@ -66,15 +66,15 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
             object: nil
         )
 
-        shuffleModeSwitch.addTarget(self, action: #selector(shuffleModeSwitchValueDidChange), for: .valueChanged)
-        repeatModeSwitch.addTarget(self, action: #selector(repeatModeSwitchValueDidChange), for: .valueChanged)
+        shuffleModeButton.addTarget(self, action: #selector(shuffleModeSwitchValueDidChange), for: .valueChanged)
+        repeatModeButton.addTarget(self, action: #selector(repeatModeSwitchValueDidChange), for: .valueChanged)
 
-        updatePlaybackModeSwitches()
+        updatePlaybackModeButtons()
     }
 
-    func updatePlaybackModeSwitches() {
-        shuffleModeSwitch.isOn = (musicPlayer.shuffleMode != .off)
-        repeatModeSwitch.isOn = (musicPlayer.repeatMode != .none)
+    func updatePlaybackModeButtons() {
+        shuffleModeButton.value = musicPlayer.shuffleMode
+        repeatModeButton.value = musicPlayer.repeatMode
     }
 
     deinit {
@@ -91,14 +91,14 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
     }
 
     @objc func applicationWillEnterForeground() {
-        updatePlaybackModeSwitches()
+        updatePlaybackModeButtons()
     }
 
     @IBAction func shuffleModeSwitchValueDidChange() {
-        musicPlayer.shuffleMode = shuffleModeSwitch.isOn ? .songs : .off
+        musicPlayer.shuffleMode = shuffleModeButton.value
     }
 
     @IBAction func repeatModeSwitchValueDidChange() {
-        musicPlayer.repeatMode = repeatModeSwitch.isOn ? .all : .none
+        musicPlayer.repeatMode = repeatModeButton.value
     }
 }
