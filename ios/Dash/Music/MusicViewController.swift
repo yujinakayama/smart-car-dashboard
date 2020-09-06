@@ -61,6 +61,13 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
 
         NotificationCenter.default.addObserver(
             self,
+            selector: #selector(musicPlayerControllerNowPlayingItemDidChange),
+            name: .MPMusicPlayerControllerNowPlayingItemDidChange,
+            object: musicPlayer
+        )
+
+        NotificationCenter.default.addObserver(
+            self,
             selector: #selector(applicationWillEnterForeground),
             name: UIApplication.willEnterForegroundNotification,
             object: nil
@@ -88,6 +95,10 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
         default:
             break
         }
+    }
+
+    @objc func musicPlayerControllerNowPlayingItemDidChange() {
+        updatePlaybackModeButtons()
     }
 
     @objc func applicationWillEnterForeground() {
