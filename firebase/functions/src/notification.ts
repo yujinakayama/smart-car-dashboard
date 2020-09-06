@@ -37,7 +37,6 @@ function makeNotificationPayload(item: Item): NotificationPayload {
     const normalizedData = item as unknown as NormalizedData;
 
     let alert: admin.messaging.ApsAlert;
-    let foregroundPresentationOptions: UNNotificationPresentationOptions;
 
     switch (normalizedData.type) {
         case 'location':
@@ -45,7 +44,6 @@ function makeNotificationPayload(item: Item): NotificationPayload {
                 title: '目的地',
                 body: normalizedData.name || undefined
             }
-            foregroundPresentationOptions = UNNotificationPresentationOptions.sound;
             break;
         case 'musicItem':
             let body: string;
@@ -60,14 +58,13 @@ function makeNotificationPayload(item: Item): NotificationPayload {
                 title: '音楽',
                 body: body
             }
-            foregroundPresentationOptions = UNNotificationPresentationOptions.sound | UNNotificationPresentationOptions.alert;
+
             break;
         case 'website':
             alert = {
                 title: 'Webサイト',
                 body: normalizedData.title || normalizedData.url
             }
-            foregroundPresentationOptions = UNNotificationPresentationOptions.sound;
             break;
     }
 
@@ -76,7 +73,7 @@ function makeNotificationPayload(item: Item): NotificationPayload {
             alert: alert,
             sound: 'Share.wav'
         },
-        foregroundPresentationOptions: foregroundPresentationOptions,
+        foregroundPresentationOptions: UNNotificationPresentationOptions.sound | UNNotificationPresentationOptions.alert,
         item: item,
         notificationType: 'share'
     };
