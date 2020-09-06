@@ -26,66 +26,50 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3wq-8X-NTj" customClass="ArtworkView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="66.5" width="311" height="311"/>
+                                        <rect key="frame" x="0.0" y="64.5" width="311" height="311"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="3wq-8X-NTj" secondAttribute="height" multiplier="1:1" id="nRi-l7-2hN"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Beu-Kz-v6k" customClass="SongTitleView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="444" width="311" height="52"/>
+                                        <rect key="frame" x="0.0" y="440" width="311" height="52"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="52" id="jCn-aM-e0h"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4EW-dl-7rX" customClass="PlaybackProgressView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="562.5" width="311" height="24"/>
+                                        <rect key="frame" x="0.0" y="556.5" width="311" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="IT5-o9-AQP"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Z51-Ki-eML" customClass="PlaybackControlView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="652.5" width="311" height="60"/>
+                                        <rect key="frame" x="0.0" y="644.5" width="311" height="60"/>
                                         <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="2Lr-e8-jfW"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xiy-BS-1Rf" customClass="VolumeView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="779" width="311" height="19"/>
+                                        <rect key="frame" x="0.0" y="769" width="311" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="19" id="zIa-hH-lg5"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uIo-P9-NkS">
-                                        <rect key="frame" x="0.0" y="864.5" width="311" height="28"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="5dH-Ra-rgc">
+                                        <rect key="frame" x="0.0" y="852.5" width="311" height="42"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hV1-RD-Cct">
-                                                <rect key="frame" x="35.5" y="0.0" width="240" height="28"/>
-                                                <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfV-vr-luy" customClass="ShuffleModeButton" customModule="Dash" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="-3" width="30" height="34"/>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TAK-Hz-Kv5" customClass="RepeatModeButton" customModule="Dash" customModuleProvider="target">
-                                                        <rect key="frame" x="210" y="-3" width="30" height="34"/>
-                                                    </button>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="TAK-Hz-Kv5" firstAttribute="centerY" secondItem="hV1-RD-Cct" secondAttribute="centerY" id="8s1-Xm-rmk"/>
-                                                    <constraint firstItem="TAK-Hz-Kv5" firstAttribute="leading" secondItem="mfV-vr-luy" secondAttribute="trailing" constant="180" id="LWw-iu-yaB"/>
-                                                    <constraint firstAttribute="height" constant="28" id="N26-0C-r4X"/>
-                                                    <constraint firstItem="mfV-vr-luy" firstAttribute="leading" secondItem="hV1-RD-Cct" secondAttribute="leading" id="lSj-1F-cCP"/>
-                                                    <constraint firstItem="mfV-vr-luy" firstAttribute="centerY" secondItem="hV1-RD-Cct" secondAttribute="centerY" id="pPk-Do-WBP"/>
-                                                    <constraint firstAttribute="trailing" secondItem="TAK-Hz-Kv5" secondAttribute="trailing" id="swa-Cv-GBo"/>
-                                                </constraints>
-                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfV-vr-luy" customClass="ShuffleModeButton" customModule="Dash" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="146.5" height="42"/>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TAK-Hz-Kv5" customClass="RepeatModeButton" customModule="Dash" customModuleProvider="target">
+                                                <rect key="frame" x="164.5" y="0.0" width="146.5" height="42"/>
+                                            </button>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="28" id="Qpj-v8-7wv"/>
-                                            <constraint firstItem="hV1-RD-Cct" firstAttribute="top" secondItem="uIo-P9-NkS" secondAttribute="top" id="UUn-0x-GaS"/>
-                                            <constraint firstItem="hV1-RD-Cct" firstAttribute="centerX" secondItem="uIo-P9-NkS" secondAttribute="centerX" id="iIm-xl-5vt"/>
-                                            <constraint firstAttribute="bottom" secondItem="hV1-RD-Cct" secondAttribute="bottom" id="tFb-9q-Cj7"/>
+                                            <constraint firstAttribute="height" constant="42" id="eGn-LR-HXr"/>
                                         </constraints>
-                                    </view>
+                                    </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="not-0R-tgj">
                                         <rect key="frame" x="0.0" y="959" width="311" height="0.0"/>
                                         <constraints>

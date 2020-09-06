@@ -38,14 +38,9 @@ import MediaPlayer
     }
 
     func commonInit() {
-        layer.cornerRadius = 6
+        layer.cornerRadius = 8
 
-        setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 16), forImageIn: .normal)
-
-        NSLayoutConstraint.activate([
-            widthAnchor.constraint(equalToConstant: 28),
-            widthAnchor.constraint(equalTo: heightAnchor)
-        ])
+        setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 18), forImageIn: .normal)
     }
 }
 
