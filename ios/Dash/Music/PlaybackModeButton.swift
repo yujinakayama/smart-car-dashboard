@@ -12,13 +12,7 @@ import MediaPlayer
 @IBDesignable class PlaybackModeButton: UIButton {
     override var isSelected: Bool {
         didSet {
-            if isSelected {
-                imageView?.tintColor = .white
-                backgroundColor = tintColor
-            } else {
-                imageView?.tintColor = tintColor
-                backgroundColor = nil
-            }
+            reflectSelection()
         }
     }
 
@@ -41,6 +35,18 @@ import MediaPlayer
         layer.cornerRadius = 8
 
         setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 18), forImageIn: .normal)
+
+        reflectSelection()
+    }
+
+    func reflectSelection() {
+        if isSelected {
+            imageView?.tintColor = .white
+            backgroundColor = tintColor
+        } else {
+            imageView?.tintColor = tintColor
+            backgroundColor = .secondarySystemBackground
+        }
     }
 }
 
