@@ -34,7 +34,7 @@ import MediaPlayer
     func commonInit() {
         layer.cornerRadius = 8
 
-        setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 18), forImageIn: .normal)
+        setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 20), forImageIn: .normal)
 
         reflectSelection()
     }
