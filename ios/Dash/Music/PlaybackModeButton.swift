@@ -52,9 +52,7 @@ import MediaPlayer
 }
 
 @IBDesignable class RepeatModeButton: PlaybackModeButton {
-    static let modes: [MPMusicRepeatMode] = [.none, .all, .one]
-
-    var value = RepeatModeButton.modes.first! {
+    var value = MPMusicRepeatMode.none {
         didSet {
             updateAppearance()
         }
@@ -76,9 +74,12 @@ import MediaPlayer
     }
 
     var nextValue: MPMusicRepeatMode {
-        let currentIndex = Self.modes.firstIndex(of: value) ?? Self.modes.startIndex
-        let nextIndex = currentIndex >= (Self.modes.endIndex - 1) ? Self.modes.startIndex : currentIndex + 1
-        return Self.modes[nextIndex]
+        switch value {
+        case .all:
+            return .none
+        default:
+            return .all
+        }
     }
 
     func updateAppearance() {
@@ -97,9 +98,7 @@ import MediaPlayer
 }
 
 @IBDesignable class ShuffleModeButton: PlaybackModeButton {
-    static let modes: [MPMusicShuffleMode] = [.off, .songs]
-
-    var value = ShuffleModeButton.modes.first! {
+    var value = MPMusicShuffleMode.off {
         didSet {
             updateAppearance()
         }
