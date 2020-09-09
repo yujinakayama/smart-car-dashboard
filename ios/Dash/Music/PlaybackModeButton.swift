@@ -32,7 +32,8 @@ import MediaPlayer
     }
 
     func commonInit() {
-        layer.cornerRadius = 8
+        layer.cornerCurve = .continuous
+        layer.cornerRadius = 10
 
         setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 20), forImageIn: .normal)
 
