@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  RearviewViewController.swift
 //  Rearview
 //
 //  Created by Yuji Nakayama on 2020/09/09.
@@ -23,28 +23,33 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
         let displayLayer = AVSampleBufferDisplayLayer()
         displayLayer.frame = view.layer.bounds
         displayLayer.videoGravity = .resizeAspect
-        displayLayer.backgroundColor = UIColor.black.cgColor
         view.layer.addSublayer(displayLayer)
         return displayLayer
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        connectToRaspberryPi(host: "192.168.1.124")
+
+        // Run the following command on the Raspberry Pi with camera:
+        // while :
+        // do
+        // raspivid --verbose --flush -t 0 --hflip -fps 40 --exposure nightpreview --metering backlit --awb auto --flicker auto --metering average --drc high --profile high -w 1440 -h 1080 --sharpness 100 --imxfx denoise --listen -o tcp://0.0.0.0:5001 --ev 10 --saturation 10
+        // done
+        connectToRaspberryPi(host: "192.168.1.119")
     }
 
     func connectToRaspberryPi(host: String) {
         connection = NWConnection(host: NWEndpoint.Host(host), port: 5001, using: .tcp)
 
         connection.stateUpdateHandler = { [unowned self] (state) in
-            print(state)
+            logger.info(state)
 
             if state == .ready {
                 self.readReceivedData()
             }
         }
 
-        connection.start(queue: DispatchQueue(label: "network"))
+        connection.start(queue: DispatchQueue(label: "NWConnection"))
     }
 
     func readReceivedData() {
@@ -58,7 +63,7 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
     }
 
     func parser(_ parser: H264ByteStreamParser, didBuildSampleBuffer sampleBuffer: CMSampleBuffer) {
-        print(#function)
+        logger.debug()
         displayLayer.enqueue(sampleBuffer)
     }
 }
