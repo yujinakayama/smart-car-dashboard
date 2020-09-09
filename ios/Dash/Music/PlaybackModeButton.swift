@@ -58,14 +58,10 @@ import MediaPlayer
         }
     }
 
-    override func prepareForInterfaceBuilder() {
-        super.prepareForInterfaceBuilder()
-        updateAppearance()
-    }
-
     override func commonInit() {
         super.commonInit()
         addTarget(self, action: #selector(didTouchUpInside), for: .touchUpInside)
+        updateAppearance()
     }
 
     @objc func didTouchUpInside() {
@@ -104,15 +100,11 @@ import MediaPlayer
         }
     }
 
-    override func prepareForInterfaceBuilder() {
-        super.prepareForInterfaceBuilder()
-        updateAppearance()
-    }
-
     override func commonInit() {
         super.commonInit()
         setImage(UIImage(systemName: "shuffle"), for: .normal)
         addTarget(self, action: #selector(didTouchUpInside), for: .touchUpInside)
+        updateAppearance()
     }
 
     @objc func didTouchUpInside() {
