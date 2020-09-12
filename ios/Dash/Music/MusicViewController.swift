@@ -123,7 +123,21 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
 
     func addNowPlayingItemToFavoritesPlaylist() {
         guard let nowPlayingItem = musicPlayer.nowPlayingItem else { return }
-        guard let favoritesPlaylist = favoritesPlaylist else { return }
+
+        guard let favoritesPlaylist = favoritesPlaylist else {
+            let alertController = UIAlertController(
+                title: "“Favorites” playlist not found",
+                message: "You need to create a playlist named “Favorites” in the Music app first.",
+                preferredStyle: .alert
+            )
+
+            alertController.addAction(UIAlertAction(title: "OK", style: .default))
+
+            present(alertController, animated: true)
+
+            return
+        }
+
         if favoritesPlaylist.items.contains(nowPlayingItem) { return }
 
         favoritesPlaylist.add([nowPlayingItem]) { (error) in
