@@ -77,6 +77,10 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
         repeatModeButton.addTarget(self, action: #selector(repeatModeSwitchValueDidChange), for: .valueChanged)
 
         updatePlaybackModeButtons()
+
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(artworkViewDidRecognizeDoubleTap))
+        gestureRecognizer.numberOfTapsRequired = 2
+        artworkView.addGestureRecognizer(gestureRecognizer)
     }
 
     func updatePlaybackModeButtons() {
@@ -111,5 +115,28 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
 
     @IBAction func repeatModeSwitchValueDidChange() {
         musicPlayer.repeatMode = repeatModeButton.value
+    }
+
+    @objc func artworkViewDidRecognizeDoubleTap() {
+        addNowPlayingItemToFavoritesPlaylist()
+    }
+
+    func addNowPlayingItemToFavoritesPlaylist() {
+        guard let nowPlayingItem = musicPlayer.nowPlayingItem else { return }
+        guard let favoritesPlaylist = favoritesPlaylist else { return }
+        if favoritesPlaylist.items.contains(nowPlayingItem) { return }
+
+        favoritesPlaylist.add([nowPlayingItem]) { (error) in
+            logger.error(error)
+        }
+    }
+
+    var favoritesPlaylist: MPMediaPlaylist? {
+        let favoritesPlaylist = MPMediaQuery.playlists().collections?.first(where: { (collection) in
+            guard let playlist = collection as? MPMediaPlaylist else { return false }
+            return playlist.name == "Favorites"
+        })
+
+        return favoritesPlaylist as? MPMediaPlaylist
     }
 }
