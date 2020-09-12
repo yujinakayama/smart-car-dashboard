@@ -129,6 +129,9 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
         favoritesPlaylist.add([nowPlayingItem]) { (error) in
             logger.error(error)
         }
+
+        let animation = HeartAnimation(view: artworkView)
+        animation.start()
     }
 
     var favoritesPlaylist: MPMediaPlaylist? {

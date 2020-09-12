@@ -110,6 +110,7 @@
 		B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */; };
 		B9BC920923250A0A006F22FC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BC920823250A0A006F22FC /* Defaults.swift */; };
 		B9BF2F0523F6946100967316 /* GradientPathRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BF2F0423F6946100967316 /* GradientPathRenderer.swift */; };
+		B9C0CEED250C3A27006D246E /* HeartAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEEC250C3A27006D246E /* HeartAnimation.swift */; };
 		B9C2455F23EDA2EA00E00523 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
 		B9C2456523EDBB4800E00523 /* FloatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C2456423EDBB4800E00523 /* FloatButton.swift */; };
 		B9CB753624AA1A17008264F5 /* VolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB753524AA1A17008264F5 /* VolumeView.swift */; };
@@ -346,6 +347,7 @@
 		B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewCell.swift; sourceTree = "<group>"; };
 		B9BC920823250A0A006F22FC /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		B9BF2F0423F6946100967316 /* GradientPathRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientPathRenderer.swift; sourceTree = "<group>"; };
+		B9C0CEEC250C3A27006D246E /* HeartAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartAnimation.swift; sourceTree = "<group>"; };
 		B9C2455E23EDA2EA00E00523 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		B9C2456423EDBB4800E00523 /* FloatButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatButton.swift; sourceTree = "<group>"; };
 		B9CB753524AA1A17008264F5 /* VolumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeView.swift; sourceTree = "<group>"; };
@@ -524,6 +526,7 @@
 				B944C69124A9E647000D1E99 /* PlaybackControlView.swift */,
 				B9CB753524AA1A17008264F5 /* VolumeView.swift */,
 				B9FB33E024AE2ACD00FEB782 /* PlaybackModeButton.swift */,
+				B9C0CEEC250C3A27006D246E /* HeartAnimation.swift */,
 				B9FA6CC724CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift */,
 			);
 			path = Music;
@@ -1322,6 +1325,7 @@
 				B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */,
 				B942553D22B8C3E2008B053B /* Logger.swift in Sources */,
 				B9BC920923250A0A006F22FC /* Defaults.swift in Sources */,
+				B9C0CEED250C3A27006D246E /* HeartAnimation.swift in Sources */,
 				B9DC5B3D229D9E0C00B645D5 /* BLERemotePeripheral.swift in Sources */,
 				B9D8E43A23D345D70078A057 /* UUIDExtension.swift in Sources */,
 				B90265AB23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift in Sources */,
