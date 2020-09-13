@@ -13,6 +13,10 @@ import AVFoundation
 class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
     var connection: NWConnection?
 
+    var expiredFrameFlushingTimer: Timer?
+    let frameExpirationPeriodInMilliseconds = 200
+    var lastFrameTime: __uint64_t?
+
     lazy var h264ByteStreamParser: H264ByteStreamParser = {
         let h264ByteStreamParser = H264ByteStreamParser()
         h264ByteStreamParser.delegate = self
@@ -47,11 +51,23 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
         // raspivid --verbose --flush -t 0 --hflip -fps 40 --exposure nightpreview --metering backlit --awb auto --flicker auto --metering average --drc high --profile high -w 1440 -h 1080 --sharpness 100 --imxfx denoise --listen -o tcp://0.0.0.0:5001 --ev 10 --saturation 10
         // done
         connectToRaspberryPi(host: "192.168.1.119")
+
+        expiredFrameFlushingTimer = Timer.scheduledTimer(
+            timeInterval: 1.0 / 30,
+            target: self,
+            selector: #selector(flushExpiredFrame),
+            userInfo: nil,
+            repeats: true
+        )
     }
 
     @objc func stop() {
         connection?.cancel()
         connection = nil
+
+        expiredFrameFlushingTimer?.invalidate()
+        expiredFrameFlushingTimer = nil
+
         displayLayer.flushAndRemoveImage()
     }
 
@@ -89,5 +105,22 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
     func parser(_ parser: H264ByteStreamParser, didBuildSampleBuffer sampleBuffer: CMSampleBuffer) {
         logger.debug()
         displayLayer.enqueue(sampleBuffer)
+        lastFrameTime = currentTime
+    }
+
+    // For safety, avoid keeping displaying old frame when the connection is unstable
+    // since it may mislead the driver to determine the frame is showing the current environment.
+    @objc func flushExpiredFrame() {
+        guard let lastFrameTime = self.lastFrameTime else { return }
+
+        let elapsedTimeSinceLastFrameInMilliseconds = (currentTime - lastFrameTime) / 1_000_000
+
+        if elapsedTimeSinceLastFrameInMilliseconds >= frameExpirationPeriodInMilliseconds {
+            displayLayer.flushAndRemoveImage()
+        }
+    }
+
+    var currentTime: __uint64_t {
+        return clock_gettime_nsec_np(CLOCK_MONOTONIC)
     }
 }
