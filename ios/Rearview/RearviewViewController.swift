@@ -50,7 +50,21 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
         // do
         // raspivid --verbose --flush -t 0 --hflip -fps 40 --exposure nightpreview --metering backlit --awb auto --flicker auto --metering average --drc high --profile high -w 1440 -h 1080 --sharpness 100 --imxfx denoise --listen -o tcp://0.0.0.0:5001 --ev 10 --saturation 10
         // done
-        connectToRaspberryPi(host: "192.168.1.119")
+        if let raspberryPiAddress = Defaults.shared.raspberryPiAddress {
+            connectToRaspberryPi(host: raspberryPiAddress)
+        } else {
+            let alertController = UIAlertController(
+                title: nil,
+                message: "You need to specity your Raspberry Pi address in the Settings app.",
+                preferredStyle: .alert
+            )
+
+            alertController.addAction(UIAlertAction(title: "OK", style: .default))
+
+            present(alertController, animated: true)
+
+            return
+        }
 
         expiredFrameFlushingTimer = Timer.scheduledTimer(
             timeInterval: 1.0 / 30,
