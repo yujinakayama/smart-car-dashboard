@@ -73,7 +73,7 @@ class H264ByteStreamParser {
     private func makeVideoFormatDescription(spsPointer: UnsafeRawBufferPointer, ppsPointer: UnsafeRawBufferPointer) -> CMFormatDescription? {
         let parameterSets = [
             spsPointer.baseAddress!.bindMemory(to: UInt8.self, capacity: spsPointer.count),
-            ppsPointer.baseAddress!.bindMemory(to: UInt8.self, capacity: spsPointer.count)
+            ppsPointer.baseAddress!.bindMemory(to: UInt8.self, capacity: ppsPointer.count)
         ]
 
         let parameterSetSizes = [spsPointer.count, ppsPointer.count]
