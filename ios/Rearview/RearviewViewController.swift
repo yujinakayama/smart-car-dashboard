@@ -11,7 +11,7 @@ import Network
 import AVFoundation
 
 class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
-    var connection: NWConnection!
+    var connection: NWConnection?
 
     lazy var h264ByteStreamParser: H264ByteStreamParser = {
         let h264ByteStreamParser = H264ByteStreamParser()
@@ -30,6 +30,13 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NotificationCenter.default.addObserver(self, selector: #selector(start), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(stop), name: UIApplication.didEnterBackgroundNotification, object: nil)
+
+        start()
+    }
+
+    @objc func start() {
         // Run the following command on the Raspberry Pi with camera:
         // while :
         // do
@@ -38,27 +45,40 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
         connectToRaspberryPi(host: "192.168.1.119")
     }
 
+    @objc func stop() {
+        connection?.cancel()
+        connection = nil
+        displayLayer.flushAndRemoveImage()
+    }
+
     func connectToRaspberryPi(host: String) {
-        connection = NWConnection(host: NWEndpoint.Host(host), port: 5001, using: .tcp)
+        let connection = NWConnection(host: NWEndpoint.Host(host), port: 5001, using: .tcp)
 
         connection.stateUpdateHandler = { [unowned self] (state) in
             logger.info(state)
 
-            if state == .ready {
-                self.readReceivedData()
+            switch state {
+            case .ready:
+                self.readReceivedData(from: connection)
+            case .cancelled, .failed, .waiting:
+                self.displayLayer.flushAndRemoveImage()
+            default:
+                break
             }
         }
 
         connection.start(queue: DispatchQueue(label: "NWConnection"))
+
+        self.connection = connection
     }
 
-    func readReceivedData() {
+    func readReceivedData(from connection: NWConnection) {
         connection.receive(minimumIncompleteLength: 500, maximumLength: 100000) { [unowned self] (data, context, completed, error) in
             if let data = data {
                 self.h264ByteStreamParser.parse(data)
             }
 
-            self.readReceivedData()
+            self.readReceivedData(from: connection)
         }
     }
 
