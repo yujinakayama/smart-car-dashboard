@@ -80,14 +80,16 @@ class H264ByteStreamParser {
 
         var formatDescription: CMFormatDescription?
 
-        let status = CMVideoFormatDescriptionCreateFromH264ParameterSets(
-            allocator: nil,
-            parameterSetCount: parameterSets.count,
-            parameterSetPointers: UnsafePointer(parameterSets),
-            parameterSetSizes: parameterSetSizes,
-            nalUnitHeaderLength: Int32(MemoryLayout<UInt32>.size),
-            formatDescriptionOut: &formatDescription
-        )
+        let status = parameterSets.withUnsafeBufferPointer { (parameterSetPointers) in
+            CMVideoFormatDescriptionCreateFromH264ParameterSets(
+                allocator: nil,
+                parameterSetCount: parameterSets.count,
+                parameterSetPointers: parameterSetPointers.baseAddress!,
+                parameterSetSizes: parameterSetSizes,
+                nalUnitHeaderLength: Int32(MemoryLayout<UInt32>.size),
+                formatDescriptionOut: &formatDescription
+            )
+        }
 
         if status != noErr {
             // TODO: Throw error
@@ -101,24 +103,24 @@ class H264ByteStreamParser {
         guard let formatDescription = makeVideoFormatDescriptionIfPossible() else { return nil }
         guard let block = makeBlockBuffer(from: nalUnit) else { return nil }
 
-        let sampleSizeArray = UnsafePointer<Int>([block.size])
-
         var sampleBuffer: CMSampleBuffer?
 
-        let status = CMSampleBufferCreate(
-            allocator: nil,
-            dataBuffer: block.buffer,
-            dataReady: true,
-            makeDataReadyCallback: nil,
-            refcon: nil,
-            formatDescription: formatDescription,
-            sampleCount: 1,
-            sampleTimingEntryCount: 0,
-            sampleTimingArray: nil,
-            sampleSizeEntryCount: 1,
-            sampleSizeArray: sampleSizeArray,
-            sampleBufferOut: &sampleBuffer
-        )
+        let status = [block.size].withUnsafeBufferPointer { (sampleSizeArray) in
+            CMSampleBufferCreate(
+                allocator: nil,
+                dataBuffer: block.buffer,
+                dataReady: true,
+                makeDataReadyCallback: nil,
+                refcon: nil,
+                formatDescription: formatDescription,
+                sampleCount: 1,
+                sampleTimingEntryCount: 0,
+                sampleTimingArray: nil,
+                sampleSizeEntryCount: 1,
+                sampleSizeArray: sampleSizeArray.baseAddress!,
+                sampleBufferOut: &sampleBuffer
+            )
+        }
 
         if status != noErr {
             // TODO: Throw error
