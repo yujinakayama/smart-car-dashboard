@@ -53,7 +53,7 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
     }
 
     func readReceivedData() {
-        connection.receive(minimumIncompleteLength: 1000, maximumLength: 10000) { [unowned self] (data, context, completed, error) in
+        connection.receive(minimumIncompleteLength: 500, maximumLength: 100000) { [unowned self] (data, context, completed, error) in
             if let data = data {
                 self.h264ByteStreamParser.parse(data)
             }
