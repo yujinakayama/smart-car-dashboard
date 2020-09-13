@@ -14,6 +14,13 @@ protocol H264ByteStreamParserDelegate: NSObjectProtocol {
     func parser(_ parser: H264ByteStreamParser, didBuildSampleBuffer sampleBuffer: CMSampleBuffer)
 }
 
+enum H264ByteStreamParserError: Error {
+    case formatDescriptionCreationFailure(status: OSStatus)
+    case sampleBufferCreationFailure(status: OSStatus)
+    case blockBufferAppendingFailure(status: OSStatus)
+    case blockBufferCreationFailure(status: OSStatus)
+}
+
 class H264ByteStreamParser {
     typealias CMBlockBufferWithSize = (buffer: CMBlockBuffer, size: Int)
 
@@ -46,15 +53,19 @@ class H264ByteStreamParser {
             pictureParameterSetNALUnit = nalUnit
             cachedFormatDescription = nil
         case .codedSliceOfIDRPicture, .codedSliceOfNonIDRPicture:
-            if let sampleBuffer = makeSampleBuffer(from: nalUnit) {
-                delegate?.parser(self, didBuildSampleBuffer: sampleBuffer)
+            do {
+                if let sampleBuffer = try makeSampleBuffer(from: nalUnit) {
+                    delegate?.parser(self, didBuildSampleBuffer: sampleBuffer)
+                }
+            } catch {
+                print(error)
             }
         default:
             break
         }
     }
 
-    private func makeVideoFormatDescriptionIfPossible() -> CMFormatDescription? {
+    private func makeVideoFormatDescriptionIfPossible() throws -> CMFormatDescription? {
         guard let spsNALUnit = sequenceParameterSetNALUnit else { return nil }
         guard let ppsNALUnit = pictureParameterSetNALUnit else { return nil }
 
@@ -62,15 +73,15 @@ class H264ByteStreamParser {
             return formatDescription
         }
 
-        return spsNALUnit.data.withUnsafeBytes { (spsPointer) in
-            ppsNALUnit.data.withUnsafeBytes({ (ppsPointer) in
-                cachedFormatDescription = makeVideoFormatDescription(spsPointer: spsPointer, ppsPointer: ppsPointer)
+        return try spsNALUnit.data.withUnsafeBytes { (spsPointer) in
+            try ppsNALUnit.data.withUnsafeBytes({ (ppsPointer) in
+                cachedFormatDescription = try makeVideoFormatDescription(spsPointer: spsPointer, ppsPointer: ppsPointer)
                 return cachedFormatDescription
             })
         }
     }
 
-    private func makeVideoFormatDescription(spsPointer: UnsafeRawBufferPointer, ppsPointer: UnsafeRawBufferPointer) -> CMFormatDescription? {
+    private func makeVideoFormatDescription(spsPointer: UnsafeRawBufferPointer, ppsPointer: UnsafeRawBufferPointer) throws -> CMFormatDescription {
         let parameterSets = [
             spsPointer.baseAddress!.bindMemory(to: UInt8.self, capacity: spsPointer.count),
             ppsPointer.baseAddress!.bindMemory(to: UInt8.self, capacity: ppsPointer.count)
@@ -92,16 +103,15 @@ class H264ByteStreamParser {
         }
 
         if status != noErr {
-            // TODO: Throw error
-            print("\(#function) error: \(status)")
+            throw H264ByteStreamParserError.formatDescriptionCreationFailure(status: status)
         }
 
-        return formatDescription
+        return formatDescription!
     }
 
-    private func makeSampleBuffer(from nalUnit: NALUnit) -> CMSampleBuffer? {
-        guard let formatDescription = makeVideoFormatDescriptionIfPossible() else { return nil }
-        guard let block = makeBlockBuffer(from: nalUnit) else { return nil }
+    private func makeSampleBuffer(from nalUnit: NALUnit) throws -> CMSampleBuffer? {
+        guard let formatDescription = try makeVideoFormatDescriptionIfPossible() else { return nil }
+        let block = try makeBlockBuffer(from: nalUnit)
 
         var sampleBuffer: CMSampleBuffer?
 
@@ -123,13 +133,12 @@ class H264ByteStreamParser {
         }
 
         if status != noErr {
-            // TODO: Throw error
-            print("\(#function) error: \(status)")
+            throw H264ByteStreamParserError.sampleBufferCreationFailure(status: status)
         }
 
         configureAttachments(of: sampleBuffer!)
 
-        return sampleBuffer
+        return sampleBuffer!
     }
 
     private func configureAttachments(of sampleBuffer: CMSampleBuffer) {
@@ -140,9 +149,9 @@ class H264ByteStreamParser {
         CFDictionarySetValue(attachment, key, value)
     }
 
-    private func makeBlockBuffer(from nalUnit: NALUnit) -> CMBlockBufferWithSize? {
-        guard let headerBlock = makeHeaderBlockBuffer(from: nalUnit) else { return nil }
-        guard let dataBlock = makeDataBlockBuffer(from: nalUnit) else { return nil }
+    private func makeBlockBuffer(from nalUnit: NALUnit) throws -> CMBlockBufferWithSize {
+        let headerBlock = try makeHeaderBlockBuffer(from: nalUnit)
+        let dataBlock = try makeDataBlockBuffer(from: nalUnit)
 
         let blockBuffer = headerBlock.buffer
 
@@ -155,14 +164,13 @@ class H264ByteStreamParser {
         )
 
         if status != noErr {
-            // TODO: Throw error
-            print("\(#function) error: \(status)")
+            throw H264ByteStreamParserError.blockBufferAppendingFailure(status: status)
         }
 
         return (blockBuffer, headerBlock.size + dataBlock.size)
     }
 
-    private func makeHeaderBlockBuffer(from nalUnit: NALUnit) -> CMBlockBufferWithSize? {
+    private func makeHeaderBlockBuffer(from nalUnit: NALUnit) throws -> CMBlockBufferWithSize {
         let blockPointer = UnsafeMutablePointer<UInt32>.allocate(capacity: 1)
         blockPointer.initialize(to: CFSwapInt32HostToBig(UInt32(nalUnit.data.count)))
 
@@ -183,14 +191,13 @@ class H264ByteStreamParser {
         )
 
         if status != noErr {
-            // TODO: Throw error
-            print("\(#function) error: \(status)")
+            throw H264ByteStreamParserError.blockBufferCreationFailure(status: status)
         }
 
         return (blockBuffer!, blockLength)
     }
 
-    private func makeDataBlockBuffer(from nalUnit: NALUnit) -> CMBlockBufferWithSize? {
+    private func makeDataBlockBuffer(from nalUnit: NALUnit) throws -> CMBlockBufferWithSize {
         let blockPointer = UnsafeMutableBufferPointer<UInt8>.allocate(capacity: nalUnit.data.count)
         _ = blockPointer.initialize(from: nalUnit.data)
 
@@ -211,8 +218,7 @@ class H264ByteStreamParser {
         )
 
         if status != noErr {
-            // TODO: Throw error
-            print("\(#function) error: \(status)")
+            throw H264ByteStreamParserError.blockBufferCreationFailure(status: status)
         }
 
         return (blockBuffer!, blockLength)
