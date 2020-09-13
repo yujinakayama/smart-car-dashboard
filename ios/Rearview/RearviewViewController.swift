@@ -11,6 +11,12 @@ import Network
 import AVFoundation
 
 class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
+    @IBOutlet var displayView: AVSampleBufferDisplayView!
+
+    var displayLayer: AVSampleBufferDisplayLayer {
+        return displayView.displayLayer
+    }
+
     var connection: NWConnection?
 
     var expiredFrameFlushingTimer: Timer?
@@ -23,20 +29,14 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
         return h264ByteStreamParser
     }()
 
-    lazy var displayLayer: AVSampleBufferDisplayLayer = {
-        let displayLayer = AVSampleBufferDisplayLayer()
-        displayLayer.frame = view.layer.bounds
-        displayLayer.videoGravity = .resizeAspect
-        view.layer.addSublayer(displayLayer)
-        return displayLayer
-    }()
-
     override var prefersHomeIndicatorAutoHidden: Bool {
         return true
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        displayLayer.videoGravity = .resizeAspect
 
         NotificationCenter.default.addObserver(self, selector: #selector(start), name: UIApplication.willEnterForegroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(stop), name: UIApplication.didEnterBackgroundNotification, object: nil)
@@ -68,7 +68,9 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
         expiredFrameFlushingTimer?.invalidate()
         expiredFrameFlushingTimer = nil
 
-        displayLayer.flushAndRemoveImage()
+        DispatchQueue.main.async {
+            self.displayLayer.flushAndRemoveImage()
+        }
     }
 
     func connectToRaspberryPi(host: String) {
@@ -81,7 +83,9 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
             case .ready:
                 self.readReceivedData(from: connection)
             case .cancelled, .failed, .waiting:
-                self.displayLayer.flushAndRemoveImage()
+                DispatchQueue.main.async {
+                    self.displayLayer.flushAndRemoveImage()
+                }
             default:
                 break
             }
@@ -104,8 +108,12 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
 
     func parser(_ parser: H264ByteStreamParser, didBuildSampleBuffer sampleBuffer: CMSampleBuffer) {
         logger.debug()
-        displayLayer.enqueue(sampleBuffer)
+
         lastFrameTime = currentTime
+
+        DispatchQueue.main.async {
+            self.displayLayer.enqueue(sampleBuffer)
+        }
     }
 
     // For safety, avoid keeping displaying old frame when the connection is unstable

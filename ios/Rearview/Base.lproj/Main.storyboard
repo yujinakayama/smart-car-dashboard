@@ -14,9 +14,23 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ntd-x0-913" customClass="AVSampleBufferDisplayView" customModule="Rearview" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="ntd-x0-913" secondAttribute="bottom" id="3Xe-g1-xfc"/>
+                            <constraint firstItem="ntd-x0-913" firstAttribute="left" secondItem="8bC-Xf-vdC" secondAttribute="left" id="gp1-A6-6O2"/>
+                            <constraint firstAttribute="right" secondItem="ntd-x0-913" secondAttribute="right" id="ufz-uu-dnI"/>
+                            <constraint firstItem="ntd-x0-913" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="xbD-Bg-9GV"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="displayView" destination="ntd-x0-913" id="XF8-Be-zPB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
