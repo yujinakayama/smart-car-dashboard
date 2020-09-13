@@ -76,24 +76,28 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
     func connectToRaspberryPi(host: String) {
         let connection = NWConnection(host: NWEndpoint.Host(host), port: 5001, using: .tcp)
 
-        connection.stateUpdateHandler = { [unowned self] (state) in
-            logger.info(state)
-
-            switch state {
-            case .ready:
-                self.readReceivedData(from: connection)
-            case .cancelled, .failed, .waiting:
-                DispatchQueue.main.async {
-                    self.displayLayer.flushAndRemoveImage()
-                }
-            default:
-                break
-            }
+        connection.stateUpdateHandler = { (state) in
+            self.handleConnectionStateUpdate(connection: connection)
         }
 
         connection.start(queue: DispatchQueue(label: "NWConnection"))
 
         self.connection = connection
+    }
+
+    func handleConnectionStateUpdate(connection: NWConnection) {
+        logger.info(connection.state)
+
+        switch connection.state {
+        case .ready:
+            readReceivedData(from: connection)
+        case .cancelled, .failed, .waiting:
+            DispatchQueue.main.async {
+                self.displayLayer.flushAndRemoveImage()
+            }
+        default:
+            break
+        }
     }
 
     func readReceivedData(from connection: NWConnection) {
