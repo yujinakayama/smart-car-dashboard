@@ -27,6 +27,10 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
         return displayLayer
     }()
 
+    override var prefersHomeIndicatorAutoHidden: Bool {
+        return true
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
