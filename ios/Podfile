@@ -33,6 +33,10 @@ target 'DashRemote' do
   end
 end
 
+target 'Rearview' do
+  pod 'XCGLogger'
+end
+
 # Suppress warning "Conversion to Swift 5 is available" from FirebaseFirestoreSwift
 post_install do |installer|
   # This removes the warning about swift conversion, hopefuly forever!
