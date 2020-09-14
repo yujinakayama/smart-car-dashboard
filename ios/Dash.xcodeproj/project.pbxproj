@@ -60,6 +60,7 @@
 		B940A45E250E3B50006BDFBB /* AVSampleBufferDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A45D250E3B50006BDFBB /* AVSampleBufferDisplayView.swift */; };
 		B940A460250E5B57006BDFBB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B940A45F250E5B57006BDFBB /* Settings.bundle */; };
 		B940A462250E5CDD006BDFBB /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* Defaults.swift */; };
+		B940A466250F0EBB006BDFBB /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A465250F0EBB006BDFBB /* Connection.swift */; };
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
 		B942554522B8ED10008B053B /* ETCMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554422B8ED10008B053B /* ETCMessageTests.swift */; };
 		B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554F22BAA5D1008B053B /* LocalNotification.swift */; };
@@ -311,6 +312,7 @@
 		B940A45D250E3B50006BDFBB /* AVSampleBufferDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVSampleBufferDisplayView.swift; sourceTree = "<group>"; };
 		B940A45F250E5B57006BDFBB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B940A461250E5CDD006BDFBB /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		B940A465250F0EBB006BDFBB /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		B941AEADBC8F07DBE594C95A /* Pods_DashRemote_ShareExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DashRemote_ShareExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B942553C22B8C3E2008B053B /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B942554422B8ED10008B053B /* ETCMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCMessageTests.swift; sourceTree = "<group>"; };
@@ -660,6 +662,7 @@
 				B9C0CED82508F63F006D246E /* AppDelegate.swift */,
 				B9C0CEDA2508F63F006D246E /* SceneDelegate.swift */,
 				B9C0CEDC2508F63F006D246E /* RearviewViewController.swift */,
+				B940A465250F0EBB006BDFBB /* Connection.swift */,
 				B940A45D250E3B50006BDFBB /* AVSampleBufferDisplayView.swift */,
 				B9C0CEEA2508F711006D246E /* H264ByteStreamParser.swift */,
 				B940A461250E5CDD006BDFBB /* Defaults.swift */,
@@ -1406,6 +1409,7 @@
 				B940A45E250E3B50006BDFBB /* AVSampleBufferDisplayView.swift in Sources */,
 				B940A462250E5CDD006BDFBB /* Defaults.swift in Sources */,
 				B9C0CEDD2508F63F006D246E /* RearviewViewController.swift in Sources */,
+				B940A466250F0EBB006BDFBB /* Connection.swift in Sources */,
 				B9C0CED92508F63F006D246E /* AppDelegate.swift in Sources */,
 				B9C0CEEB2508F711006D246E /* H264ByteStreamParser.swift in Sources */,
 				B9C0CEDB2508F63F006D246E /* SceneDelegate.swift in Sources */,

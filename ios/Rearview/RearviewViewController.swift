@@ -10,17 +10,14 @@ import UIKit
 import Network
 import AVFoundation
 
-class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
+class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStreamParserDelegate {
     @IBOutlet var displayView: AVSampleBufferDisplayView!
 
     var displayLayer: AVSampleBufferDisplayLayer {
         return displayView.displayLayer
     }
 
-    var connection: NWConnection?
-
-    var connectionTimeoutTimer: Timer?
-    let connectionTimeoutPeriod: TimeInterval = 3
+    var connection: Connection?
 
     var expiredFrameFlushingTimer: Timer?
     let frameExpirationPeriodInMilliseconds = 200
@@ -66,29 +63,15 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
 
             return
         }
-
-        expiredFrameFlushingTimer = Timer.scheduledTimer(
-            timeInterval: 1.0 / 30,
-            target: self,
-            selector: #selector(flushExpiredFrame),
-            userInfo: nil,
-            repeats: true
-        )
     }
 
     @objc func stop() {
-        connection?.cancel()
-        connection = nil
-
-        connectionTimeoutTimer?.invalidate()
-        connectionTimeoutTimer = nil
+        connection?.disconnect()
 
         expiredFrameFlushingTimer?.invalidate()
-        expiredFrameFlushingTimer = nil
+        lastFrameTime = nil
 
-        DispatchQueue.main.async {
-            self.displayLayer.flushAndRemoveImage()
-        }
+        flushImage()
     }
 
     func restart() {
@@ -96,47 +79,56 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
         start()
     }
 
-    func connectToRaspberryPi(host: String) {
-        let connection = NWConnection(host: NWEndpoint.Host(host), port: 5001, using: .tcp)
-
-        connection.stateUpdateHandler = { (state) in
-            self.handleConnectionStateUpdate(connection: connection)
+    func flushImage() {
+        DispatchQueue.main.async {
+            self.displayLayer.flushAndRemoveImage()
         }
+    }
 
-        connection.start(queue: DispatchQueue(label: "NWConnection"))
-
-        connectionTimeoutTimer = Timer.scheduledTimer(withTimeInterval: connectionTimeoutPeriod, repeats: false, block: { [unowned self] (timer) in
-            if connection.state == .ready { return }
-            logger.error("Connection to \(host) timed out.")
-            self.restart()
-        })
-
+    func connectToRaspberryPi(host: String) {
+        let connection = Connection(host: host, port: 5001)
+        connection.delegate = self
+        connection.connect()
         self.connection = connection
     }
 
-    func handleConnectionStateUpdate(connection: NWConnection) {
-        logger.info(connection.state)
+    func connectionDidEstablish(_ connection: Connection) {
+        logger.info()
 
-        switch connection.state {
-        case .ready:
-            readReceivedData(from: connection)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+
+            self.expiredFrameFlushingTimer = Timer.scheduledTimer(
+                timeInterval: 1.0 / 30,
+                target: self,
+                selector: #selector(self.flushExpiredFrame),
+                userInfo: nil,
+                repeats: true
+            )
+        }
+    }
+
+    func connectionDidTimeOut(_ connection: Connection) {
+        logger.error()
+
+        DispatchQueue.main.async { [weak self] in
+            self?.restart()
+        }
+    }
+
+    func connection(_ connection: Connection, didUpdateState state: NWConnection.State) {
+        logger.info(state)
+
+        switch state {
         case .cancelled, .failed, .waiting:
-            DispatchQueue.main.async {
-                self.displayLayer.flushAndRemoveImage()
-            }
+            flushImage()
         default:
             break
         }
     }
 
-    func readReceivedData(from connection: NWConnection) {
-        connection.receive(minimumIncompleteLength: 500, maximumLength: 100000) { [unowned self] (data, context, completed, error) in
-            if let data = data {
-                self.h264ByteStreamParser.parse(data)
-            }
-
-            self.readReceivedData(from: connection)
-        }
+    func connection(_ connection: Connection, didReceiveData data: Data) {
+        h264ByteStreamParser.parse(data)
     }
 
     func parser(_ parser: H264ByteStreamParser, didBuildSampleBuffer sampleBuffer: CMSampleBuffer) {
@@ -144,8 +136,8 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
 
         lastFrameTime = currentTime
 
-        DispatchQueue.main.async {
-            self.displayLayer.enqueue(sampleBuffer)
+        DispatchQueue.main.async { [weak self] in
+            self?.displayLayer.enqueue(sampleBuffer)
         }
     }
 
@@ -157,7 +149,7 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
         let elapsedTimeSinceLastFrameInMilliseconds = (currentTime - lastFrameTime) / 1_000_000
 
         if elapsedTimeSinceLastFrameInMilliseconds >= frameExpirationPeriodInMilliseconds {
-            displayLayer.flushAndRemoveImage()
+            flushImage()
         }
     }
 
