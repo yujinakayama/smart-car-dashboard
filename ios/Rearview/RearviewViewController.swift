@@ -39,8 +39,15 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
 
         displayLayer.videoGravity = .resizeAspect
 
-        NotificationCenter.default.addObserver(self, selector: #selector(start), name: UIApplication.willEnterForegroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(stop), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: OperationQueue.main) { [weak self] (notification) in
+            self?.hideBlankScreen()
+            self?.start()
+        }
+
+        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: OperationQueue.main) { [weak self] (notification) in
+            self?.stop()
+            self?.showBlankScreen()
+        }
     }
 
     @objc func start() {
@@ -162,5 +169,17 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
 
     var currentTime: __uint64_t {
         return clock_gettime_nsec_np(CLOCK_MONOTONIC)
+    }
+
+    // https://developer.apple.com/library/archive/qa/qa1838/_index.html
+    func showBlankScreen() {
+        let blankViewController = UIViewController()
+        blankViewController.modalPresentationStyle = .fullScreen
+        blankViewController.view.backgroundColor = .black
+        present(blankViewController, animated: false)
+    }
+
+    func hideBlankScreen() {
+        dismiss(animated: false)
     }
 }
