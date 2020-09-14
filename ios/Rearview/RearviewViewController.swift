@@ -43,8 +43,6 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
 
         NotificationCenter.default.addObserver(self, selector: #selector(start), name: UIApplication.willEnterForegroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(stop), name: UIApplication.didEnterBackgroundNotification, object: nil)
-
-        start()
     }
 
     @objc func start() {
