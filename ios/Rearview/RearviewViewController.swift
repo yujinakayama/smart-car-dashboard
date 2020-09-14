@@ -12,6 +12,7 @@ import AVFoundation
 
 class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStreamParserDelegate {
     @IBOutlet var displayView: AVSampleBufferDisplayView!
+    @IBOutlet var activityIndicatorView: UIActivityIndicatorView!
 
     var displayLayer: AVSampleBufferDisplayLayer {
         return displayView.displayLayer
@@ -74,7 +75,11 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
         flushImage()
     }
 
-    func restart() {
+    func retry() {
+        DispatchQueue.main.async { [weak self] in
+            self?.activityIndicatorView.startAnimating()
+        }
+
         stop()
         start()
     }
@@ -98,6 +103,8 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
 
+            self.activityIndicatorView.stopAnimating()
+
             self.expiredFrameFlushingTimer = Timer.scheduledTimer(
                 timeInterval: 1.0 / 30,
                 target: self,
@@ -112,7 +119,7 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
         logger.error()
 
         DispatchQueue.main.async { [weak self] in
-            self?.restart()
+            self?.retry()
         }
     }
 

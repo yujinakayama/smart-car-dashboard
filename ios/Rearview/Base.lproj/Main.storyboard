@@ -18,10 +18,16 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ntd-x0-913" customClass="AVSampleBufferDisplayView" customModule="Rearview" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                             </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="eCI-yi-nKC">
+                                <rect key="frame" x="664.5" y="493.5" width="37" height="37"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="ntd-x0-913" secondAttribute="bottom" id="3Xe-g1-xfc"/>
+                            <constraint firstItem="eCI-yi-nKC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="RUK-y0-zGD"/>
+                            <constraint firstItem="eCI-yi-nKC" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Uor-md-erz"/>
                             <constraint firstItem="ntd-x0-913" firstAttribute="left" secondItem="8bC-Xf-vdC" secondAttribute="left" id="gp1-A6-6O2"/>
                             <constraint firstAttribute="right" secondItem="ntd-x0-913" secondAttribute="right" id="ufz-uu-dnI"/>
                             <constraint firstItem="ntd-x0-913" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="xbD-Bg-9GV"/>
@@ -29,6 +35,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicatorView" destination="eCI-yi-nKC" id="gVJ-Lh-mMc"/>
                         <outlet property="displayView" destination="ntd-x0-913" id="XF8-Be-zPB"/>
                     </connections>
                 </viewController>
