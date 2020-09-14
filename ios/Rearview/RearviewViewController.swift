@@ -19,6 +19,9 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
 
     var connection: NWConnection?
 
+    var connectionTimeoutTimer: Timer?
+    let connectionTimeoutPeriod: TimeInterval = 3
+
     var expiredFrameFlushingTimer: Timer?
     let frameExpirationPeriodInMilliseconds = 200
     var lastFrameTime: __uint64_t?
@@ -79,6 +82,9 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
         connection?.cancel()
         connection = nil
 
+        connectionTimeoutTimer?.invalidate()
+        connectionTimeoutTimer = nil
+
         expiredFrameFlushingTimer?.invalidate()
         expiredFrameFlushingTimer = nil
 
@@ -95,6 +101,12 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
         }
 
         connection.start(queue: DispatchQueue(label: "NWConnection"))
+
+        connectionTimeoutTimer = Timer.scheduledTimer(withTimeInterval: connectionTimeoutPeriod, repeats: false, block: { [unowned self] (timer) in
+            if connection.state == .ready { return }
+            logger.error("Connection to \(host) timed out.")
+            self.stop()
+        })
 
         self.connection = connection
     }
