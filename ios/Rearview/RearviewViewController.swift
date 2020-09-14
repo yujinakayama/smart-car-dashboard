@@ -93,6 +93,11 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
         }
     }
 
+    func restart() {
+        stop()
+        start()
+    }
+
     func connectToRaspberryPi(host: String) {
         let connection = NWConnection(host: NWEndpoint.Host(host), port: 5001, using: .tcp)
 
@@ -105,7 +110,7 @@ class RearviewViewController: UIViewController, H264ByteStreamParserDelegate {
         connectionTimeoutTimer = Timer.scheduledTimer(withTimeInterval: connectionTimeoutPeriod, repeats: false, block: { [unowned self] (timer) in
             if connection.state == .ready { return }
             logger.error("Connection to \(host) timed out.")
-            self.stop()
+            self.restart()
         })
 
         self.connection = connection
