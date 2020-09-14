@@ -139,7 +139,7 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
     }
 
     func parser(_ parser: H264ByteStreamParser, didBuildSampleBuffer sampleBuffer: CMSampleBuffer) {
-        logger.debug()
+        logger.verbose()
 
         lastFrameTime = currentTime
 
