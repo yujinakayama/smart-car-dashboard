@@ -30,6 +30,8 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
         return h264ByteStreamParser
     }()
 
+    var hasReceivedInitialFrame = false
+
     override var prefersHomeIndicatorAutoHidden: Bool {
         return true
     }
@@ -51,6 +53,8 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
     }
 
     @objc func start() {
+        hasReceivedInitialFrame = false
+
         // Run the following command on the Raspberry Pi with camera:
         // while :
         // do
@@ -150,9 +154,25 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
 
         lastFrameTime = currentTime
 
+        if !hasReceivedInitialFrame {
+            DispatchQueue.main.async { [weak self] in
+                self?.fadeIn()
+            }
+
+            hasReceivedInitialFrame = true
+        }
+
         DispatchQueue.main.async { [weak self] in
             self?.displayLayer.enqueue(sampleBuffer)
         }
+    }
+
+    func fadeIn() {
+        let animation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
+        animation.fromValue = 0
+        animation.toValue = 1
+        animation.duration = 0.25
+        displayLayer.add(animation, forKey: nil)
     }
 
     // For safety, avoid keeping displaying old frame when the connection is unstable
