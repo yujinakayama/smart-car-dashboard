@@ -1975,7 +1975,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FDB9D0E23106CE353F300B76 /* Pods-Dash.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Dash/Dash.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -2003,7 +2002,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 869C973AA26AD90E148028FB /* Pods-Dash.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Dash/Dash.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
