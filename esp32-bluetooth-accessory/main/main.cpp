@@ -24,13 +24,11 @@ static HID* hid;
 static SerialBLEBridge* serialBLEBridge;
 static SteeringRemote* steeringRemote;
 static bool isiPadConnected = false;
-static bool wasiPadConnected = false;
 static unsigned long lastiPadSleepPreventionMillis = 0;
 
 static void startSteeringRemoteInputObservation();
 static void startBLEServer();
 static void sendBluetoothCommandForSteeringRemoteInput(SteeringRemoteInput steeringRemoteInput);
-static void unlockiPad();
 static void keepiPadAwake();
 
 class MySteeringRemoteCallbacks : public SteeringRemoteCallbacks {
@@ -61,16 +59,8 @@ void setup() {
 
 void loop() {
   if (isiPadConnected) {
-    if (!wasiPadConnected) {
-      // Not sure but this doen't work in ServerCallbacks::onConnect()
-      delay(1000);
-      unlockiPad();
-    }
-
     keepiPadAwake();
   }
-
-  wasiPadConnected = isiPadConnected;
 }
 
 static void startSteeringRemoteInputObservation() {
@@ -127,11 +117,6 @@ static void sendBluetoothCommandForSteeringRemoteInput(SteeringRemoteInput steer
   }
 
   hid->sendInputCode(code);
-}
-
-static void unlockiPad() {
-  ESP_LOGI(TAG, "Unlocking the iPad");
-  hid->sendInputCode(HIDInputCodeMenu);
 }
 
 static void keepiPadAwake() {
