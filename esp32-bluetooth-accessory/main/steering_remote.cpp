@@ -4,13 +4,17 @@
 
 static const char* TAG = "SteeringRemote";
 
+static const int kInputValueStep1 = 0;
+static const int kInputValueStep2 = 364;
+static const int kInputValueStep3 = 1130;
+static const int kInputValueStep4 = 2065;
+static const int kInputValueStep5 = 2734;
 static const int kAnalogInputMaxValue = 4095;
 
 static const int kDebounceThresholdMillis = 50;
 
-static bool rateIsAbout(float rate, float referenceRate) {
-  // The voltage tends to be higher when the button is contacting
-  return (referenceRate - 0.02) < rate && rate < (referenceRate + 0.05);
+static bool nearlyEqual(int actualValue, int referenceValue) {
+  return (referenceValue * 0.9) <= actualValue && actualValue <= (referenceValue * 1.1);
 }
 
 static void logCurrentInput(SteeringRemote* steeringRemote) {
@@ -86,31 +90,31 @@ SteeringRemoteInput SteeringRemote::getDebouncedCurrentInput() {
 }
 
 SteeringRemoteInput SteeringRemote::getCurrentInput() {
-  float inputRateA = (float)getRawInputA() / kAnalogInputMaxValue;
-  float inputRateB = (float)getRawInputB() / kAnalogInputMaxValue;
+  int inputValueA = getRawInputA();
+  int inputValueB = getRawInputB();
 
-  if (rateIsAbout(inputRateA, 1.00) && rateIsAbout(inputRateB, 1.00)) {
+  if (nearlyEqual(inputValueA, kAnalogInputMaxValue) && nearlyEqual(inputValueB, kAnalogInputMaxValue)) {
     return SteeringRemoteInputNone;
-  } else if (rateIsAbout(inputRateA, 0.00)) {
+  } else if (nearlyEqual(inputValueA, kInputValueStep1)) {
     return SteeringRemoteInputNext;
-  } else if (rateIsAbout(inputRateA, 0.09)) {
+  } else if (nearlyEqual(inputValueA, kInputValueStep2)) {
     return SteeringRemoteInputPrevious;
-  } else if (rateIsAbout(inputRateA, 0.28)) {
+  } else if (nearlyEqual(inputValueA, kInputValueStep3)) {
     return SteeringRemoteInputPlus;
-  } else if (rateIsAbout(inputRateA, 0.51)) {
+  } else if (nearlyEqual(inputValueA, kInputValueStep4)) {
     return SteeringRemoteInputMinus;
-  } else if (rateIsAbout(inputRateA, 0.67)) {
+  } else if (nearlyEqual(inputValueA, kInputValueStep5)) {
     return SteeringRemoteInputMute;
-  } else if (rateIsAbout(inputRateB, 0.00)) {
+  } else if (nearlyEqual(inputValueB, kInputValueStep1)) {
     return SteeringRemoteInputSource;
-  } else if (rateIsAbout(inputRateB, 0.09)) {
+  } else if (nearlyEqual(inputValueB, kInputValueStep2)) {
     return SteeringRemoteInputAnswerPhone;
-  } else if (rateIsAbout(inputRateB, 0.28)) {
+  } else if (nearlyEqual(inputValueB, kInputValueStep3)) {
     return SteeringRemoteInputHangUpPhone;
-  } else if (rateIsAbout(inputRateB, 0.51)) {
+  } else if (nearlyEqual(inputValueB, kInputValueStep4)) {
     return SteeringRemoteInputVoiceInput;
   } else {
-    ESP_LOGD(TAG, "Unknown Steering Remote Input: %f %f", inputRateA, inputRateB);
+    ESP_LOGD(TAG, "Unknown Steering Remote Input: %d %d", inputValueA, inputValueB);
     return SteeringRemoteInputUnknown;
   }
 }
@@ -122,3 +126,109 @@ uint16_t SteeringRemote::getRawInputA() {
 uint16_t SteeringRemote::getRawInputB() {
   return analogRead(inputPinB);
 }
+
+// Actual input values:
+//
+// 0
+// 0
+// 0
+// 0
+// 351
+// 362
+// 368
+// 369
+// 370
+// 371
+// 371
+// 371
+// 373
+// 373
+// 373
+// 373
+// 374
+// 375
+// 375
+// 375
+// 378
+// 378
+// 379
+// 379
+// 384
+// 385
+// 386
+// 410
+// 1111
+// 1120
+// 1125
+// 1126
+// 1126
+// 1127
+// 1127
+// 1127
+// 1129
+// 1130
+// 1130
+// 1131
+// 1131
+// 1132
+// 1133
+// 1133
+// 1133
+// 1134
+// 1134
+// 1135
+// 1136
+// 1136
+// 1139
+// 2021
+// 2032
+// 2046
+// 2061
+// 2063
+// 2064
+// 2064
+// 2064
+// 2064
+// 2064
+// 2064
+// 2065
+// 2065
+// 2065
+// 2065
+// 2065
+// 2065
+// 2066
+// 2066
+// 2071
+// 2071
+// 2071
+// 2075
+// 2077
+// 2108
+// 2704
+// 2722
+// 2726
+// 2727
+// 2727
+// 2729
+// 2730
+// 2730
+// 2733
+// 2733
+// 2734
+// 2734
+// 2734
+// 2735
+// 2735
+// 2736
+// 2736
+// 2736
+// 2736
+// 2736
+// 2736
+// 2738
+// 2738
+// 2742
+// 2746
+// 2749
+// 2755
