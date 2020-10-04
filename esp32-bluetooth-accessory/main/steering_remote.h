@@ -2,7 +2,7 @@
 #define IPAD_CAR_INTEGRATION_STEERING_REMOTE_H_
 
 typedef enum {
-  SteeringRemoteInputUnknown = -1,
+  SteeringRemoteInputUnknown = -1, // Used only internally
   SteeringRemoteInputNone = 0,
   SteeringRemoteInputNext,
   SteeringRemoteInputPrevious,
@@ -22,6 +22,7 @@ public:
   int inputPinA; // The brown-yellow wire in the car
   int inputPinB; // The brown-white wire in the car
   SteeringRemoteCallbacks* callbacks;
+  bool isReadyToDetectNewInput;
 
   SteeringRemote(int inputPinA, int inputPinB);
   void setCallbacks(SteeringRemoteCallbacks* callbacks);

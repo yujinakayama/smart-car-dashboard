@@ -61,6 +61,7 @@ static void observeInput(void* pvParameters) {
 SteeringRemote::SteeringRemote(int inputPinA, int inputPinB) {
   this->inputPinA = inputPinA;
   this->inputPinB = inputPinB;
+  this->isReadyToDetectNewInput = true;
 }
 
 void SteeringRemote::setCallbacks(SteeringRemoteCallbacks* callbacks) {
@@ -72,21 +73,19 @@ void SteeringRemote::startInputObservation() {
 }
 
 SteeringRemoteInput SteeringRemote::getDebouncedCurrentInput() {
-  SteeringRemoteInput initialInput = getCurrentInput();
+  SteeringRemoteInput input = getCurrentInput();
 
-  if (initialInput == SteeringRemoteInputNone || initialInput == SteeringRemoteInputUnknown) {
+  if (input == SteeringRemoteInputNone) {
+    this->isReadyToDetectNewInput = true;
     return SteeringRemoteInputNone;
   }
 
-  unsigned long initialInputMillis = millis();
-
-  while (getCurrentInput() == initialInput) {
-    if (millis() > initialInputMillis + kDebounceThresholdMillis) {
-      return initialInput;
-    }
+  if (!this->isReadyToDetectNewInput) {
+    return SteeringRemoteInputNone;
   }
 
-  return SteeringRemoteInputNone;
+  this->isReadyToDetectNewInput = false;
+  return input;
 }
 
 SteeringRemoteInput SteeringRemote::getCurrentInput() {
