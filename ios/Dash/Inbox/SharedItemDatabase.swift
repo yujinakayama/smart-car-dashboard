@@ -27,6 +27,7 @@ class SharedItemDatabase {
             dispatchQueue.sync {
                 _items = newValue
             }
+            migrate()
         }
     }
 
@@ -72,5 +73,12 @@ class SharedItemDatabase {
         })
 
         delegate?.database(self, didUpdateItems: items)
+    }
+
+    private func migrate() {
+        for item in items {
+            item.firebaseDocument?.updateData(["hasBeenOpened": true])
+            print(item.firebaseDocument?.documentID)
+        }
     }
 }
