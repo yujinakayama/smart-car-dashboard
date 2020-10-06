@@ -80,7 +80,16 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         DispatchQueue.global().async { [weak self] in
             guard let self = self else { return }
             self.dataSource.update(items: items, changes: changes, animatingDifferences: !self.dataSource.isEmpty)
+
+            DispatchQueue.main.async {
+                self.updateBadge(items: items)
+            }
         }
+    }
+
+    func updateBadge(items: [SharedItemProtocol]) {
+        let unopenedCount = items.filter { !$0.hasBeenOpened }.count
+        navigationController?.tabBarItem.badgeValue = (unopenedCount == 0) ? nil : "\(unopenedCount)"
     }
 
     func showSignInView() {
