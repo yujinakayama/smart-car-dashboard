@@ -8,9 +8,10 @@
 
 import UIKit
 import FirebaseAuth
-import FirebaseFirestore
 
-class SharedItemTableViewController: UITableViewController {
+class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDelegate {
+    let database = SharedItemDatabase()
+
     // We don't directly store SharedItemProtocol object in the data source
     // because doing so requires SharedItemProtocol to conform to Hashable and Equatable,
     // which force the protocol to depend on `Self`, and it makes impossible to create an array of SharedItemProtocol.
@@ -19,10 +20,6 @@ class SharedItemTableViewController: UITableViewController {
     var data = SharedItemTableViewData()
 
     var authStateListener: AuthStateDidChangeListenerHandle?
-
-    var querySnapshotListener: ListenerRegistration?
-
-    lazy var firestoreQuery: Query = Firestore.firestore().collection("items").order(by: "creationDate", descending: true)
 
     let sectionHeaderDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -33,6 +30,8 @@ class SharedItemTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        database.delegate = self
 
         dataSource = makeDataSource()
         tableView.dataSource = dataSource
@@ -47,7 +46,7 @@ class SharedItemTableViewController: UITableViewController {
     }
 
     deinit {
-        endLoadingItems()
+        database.endUpdating()
         endObservingAuthState()
     }
 
@@ -93,49 +92,26 @@ class SharedItemTableViewController: UITableViewController {
         logger.info("Current Firebase user: \(firebaseUser?.email as String?)")
 
         if firebaseUser != nil {
-            startLoadingItems()
+            database.startUpdating()
         } else {
-            endLoadingItems()
+            database.endUpdating()
             data = SharedItemTableViewData()
             tableView.reloadData()
             showSignInView()
         }
     }
 
-    func startLoadingItems() {
-        guard querySnapshotListener == nil else { return }
-
-        querySnapshotListener = firestoreQuery.addSnapshotListener { [weak self] (snapshot, error) in
+    func database(_ database: SharedItemDatabase, didUpdateItems items: [SharedItemProtocol]) {
+        DispatchQueue.global().async { [weak self] in
             guard let self = self else { return }
-
-            if let error = error {
-                logger.error(error)
-                return
-            }
-
-            guard let snapshot = snapshot else { return }
-
-            if self.data.sections.isEmpty {
-                self.updateData(firestoreSnapshot: snapshot, animatingDifferences: false)
-            } else {
-                self.updateData(firestoreSnapshot: snapshot, animatingDifferences: true)
-            }
+            self.updateData(items: items, animatingDifferences: !self.data.sections.isEmpty)
         }
     }
 
-    func endLoadingItems() {
-        guard let querySnapshotListener = querySnapshotListener else { return }
-
-        querySnapshotListener.remove()
-        self.querySnapshotListener = nil
-    }
-
-    func updateData(firestoreSnapshot: QuerySnapshot, animatingDifferences: Bool) {
-        DispatchQueue.global().async {
-            self.data = SharedItemTableViewData(firestoreSnapshot: firestoreSnapshot)
-            let dataSourceSnapshot = self.makeDataSourceSnapshot(from: self.data)
-            self.dataSource.apply(dataSourceSnapshot, animatingDifferences: animatingDifferences)
-        }
+    func updateData(items: [SharedItemProtocol], animatingDifferences: Bool) {
+        data = SharedItemTableViewData(items: items)
+        let dataSourceSnapshot = self.makeDataSourceSnapshot(from: data)
+        dataSource.apply(dataSourceSnapshot, animatingDifferences: animatingDifferences)
     }
 
     func makeDataSourceSnapshot(from data: SharedItemTableViewData) -> NSDiffableDataSourceSnapshot<Date, SharedItem.Identifier> {

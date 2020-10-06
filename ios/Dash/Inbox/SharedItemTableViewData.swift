@@ -21,18 +21,7 @@ class SharedItemTableViewData {
         sections = []
     }
 
-    init(firestoreSnapshot: QuerySnapshot) {
-        let items: [SharedItemProtocol] = firestoreSnapshot.documents.compactMap({ (document) in
-            do {
-                var item = try SharedItem.makeItem(document: document)
-                item.firebaseDocument = document.reference
-                return item
-            } catch {
-                logger.error(error)
-                return nil
-            }
-        })
-
+    init(items: [SharedItemProtocol]) {
         let itemsByDate = Dictionary<Date, [SharedItemProtocol]>(grouping: items) { (item) in
             var components = Calendar.current.dateComponents(in: TimeZone.current, from: item.creationDate!)
             components.hour = nil

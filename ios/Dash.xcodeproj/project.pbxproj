@@ -106,6 +106,7 @@
 		B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */; };
 		B9989E3E23E8752100FAFD06 /* Share.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9989E3D23E8752100FAFD06 /* Share.wav */; };
 		B99D4F2824C0526200647A10 /* BluetoothAudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99D4F2724C0526200647A10 /* BluetoothAudioDevice.swift */; };
+		B9A45A9B252C229200CA7921 /* SharedItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A45A9A252C229200CA7921 /* SharedItemDatabase.swift */; };
 		B9A481FE23EF01DB00AA7590 /* SuccessCheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */; };
 		B9A4820023EF025200AA7590 /* SuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FF23EF025200AA7590 /* SuccessViewController.swift */; };
 		B9A4820123EFCEC200AA7590 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
@@ -361,6 +362,7 @@
 		B9989E3D23E8752100FAFD06 /* Share.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Share.wav; sourceTree = "<group>"; };
 		B99D4F2724C0526200647A10 /* BluetoothAudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothAudioDevice.swift; sourceTree = "<group>"; };
 		B9A3C09423E163F500EF1C4A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../ShareExtension/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B9A45A9A252C229200CA7921 /* SharedItemDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemDatabase.swift; sourceTree = "<group>"; };
 		B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessCheckmarkView.swift; sourceTree = "<group>"; };
 		B9A481FF23EF025200AA7590 /* SuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessViewController.swift; sourceTree = "<group>"; };
 		B9B717DD23E6B26900A47207 /* UnknownItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownItem.swift; sourceTree = "<group>"; };
@@ -609,6 +611,7 @@
 				B90265AA23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift */,
 				B90265A823EB34D800B2EF6B /* SharedItemTableViewData.swift */,
 				B92FB3BF23E95BE900EA702C /* SharedItemTableViewCell.swift */,
+				B9A45A9A252C229200CA7921 /* SharedItemDatabase.swift */,
 				B95F514D23E5BBF70063CB3D /* SharedItem.swift */,
 				B95F514523E5A8540063CB3D /* Location.swift */,
 				B932E5EB23F86C5F00726615 /* MusicItem.swift */,
@@ -1453,6 +1456,7 @@
 				B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */,
 				B95F514C23E5B53F0063CB3D /* RemoteNotification.swift in Sources */,
 				B9DC5B27229D59BE00B645D5 /* ETCPaymentTableViewController.swift in Sources */,
+				B9A45A9B252C229200CA7921 /* SharedItemDatabase.swift in Sources */,
 				B9BF2F0523F6946100967316 /* GradientPathRenderer.swift in Sources */,
 				B9D0260F24BF7704005C03B1 /* ClassicBluetoothManager.swift in Sources */,
 				B9CB7C0D22AD65A40059433E /* UITableViewCellExtension.swift in Sources */,
