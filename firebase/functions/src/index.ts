@@ -21,6 +21,7 @@ export const share = functions.region('asia-northeast1').https.onRequest(async (
     console.log('normalizedData:', normalizedData);
 
     const item = {
+        hasBeenOpened: false,
         raw: rawData,
         ...normalizedData
     };
