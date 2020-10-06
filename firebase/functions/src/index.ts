@@ -21,13 +21,19 @@ export const share = functions.region('asia-northeast1').https.onRequest(async (
     console.log('normalizedData:', normalizedData);
 
     const item = {
+        hasBeenOpened: false,
         raw: rawData,
         ...normalizedData
     };
 
-    await notify(item);
+    // Create a Firestore document without network access to get document identifier
+    // https://github.com/googleapis/nodejs-firestore/blob/v3.8.6/dev/src/reference.ts#L2414-L2479
+    const document = admin.firestore().collection('items').doc();
 
-    await addItemToFirestore(item);
+    await Promise.all([
+        notify(item, document.id),
+        addItemToFirestore(item, document)
+    ]);
 
     functionResponse.sendStatus(200);
 });
@@ -44,11 +50,11 @@ function normalize(inputData: InputData): Promise<NormalizedData> {
     }
 };
 
-async function addItemToFirestore(item: Item): Promise<any> {
-    const document = {
+async function addItemToFirestore(item: Item, document: FirebaseFirestore.DocumentReference): Promise<any> {
+    const data = {
         creationDate: admin.firestore.FieldValue.serverTimestamp(),
         ...item
     };
 
-    return admin.firestore().collection('items').add(document);
+    return document.create(data);
 }

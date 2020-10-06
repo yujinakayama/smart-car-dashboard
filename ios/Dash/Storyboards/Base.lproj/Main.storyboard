@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3pD-mC-pSF">
     <device id="ipad12_9rounded" orientation="landscape" layout="splitview1_3" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -137,10 +136,10 @@
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="AllPaymentsCell" rowHeight="82" id="2sj-lq-fub">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="82"/>
+                                <rect key="frame" x="0.0" y="55.5" width="1024" height="82"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2sj-lq-fub" id="UN9-2d-DFc">
-                                    <rect key="frame" x="0.0" y="0.0" width="1005" height="82"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="997" height="82"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="HKU-bN-sRN">
@@ -168,10 +167,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="ETCCardTableViewCell" editingAccessoryType="detailButton" id="Yhp-zq-xeI" customClass="ETCCardTableViewCell" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="137.5" width="375" height="68.5"/>
+                                <rect key="frame" x="0.0" y="137.5" width="1024" height="68.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yhp-zq-xeI" id="l4J-ek-iqJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="348" height="68.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="997" height="68.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="MZx-NX-l6V">
@@ -629,11 +628,26 @@
                                                 </label>
                                             </subviews>
                                         </stackView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0LH-Jz-Grm" customClass="BorderedView" customModule="Dash" customModuleProvider="target">
+                                            <rect key="frame" x="321" y="30.5" width="10" height="10"/>
+                                            <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="10" id="8e7-KB-d1N"/>
+                                                <constraint firstAttribute="width" constant="10" id="toH-SV-ZnC"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="5"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottomMargin" secondItem="hrG-N5-epA" secondAttribute="bottom" priority="999" id="5gV-k1-3pV"/>
+                                        <constraint firstAttribute="trailing" secondItem="0LH-Jz-Grm" secondAttribute="trailing" constant="12" id="8nm-dn-rHT"/>
                                         <constraint firstAttribute="trailing" secondItem="4Of-Fm-eCE" secondAttribute="trailing" constant="20" symbolic="YES" id="AcQ-JW-XrU"/>
                                         <constraint firstItem="hrG-N5-epA" firstAttribute="top" secondItem="gcV-k7-M3G" secondAttribute="topMargin" id="HWZ-bO-gPo"/>
+                                        <constraint firstItem="0LH-Jz-Grm" firstAttribute="centerY" secondItem="gcV-k7-M3G" secondAttribute="centerY" id="Y7Q-eY-Hcc"/>
                                         <constraint firstItem="hrG-N5-epA" firstAttribute="leading" secondItem="gcV-k7-M3G" secondAttribute="leadingMargin" id="gxc-a2-YHY"/>
                                         <constraint firstItem="4Of-Fm-eCE" firstAttribute="centerY" secondItem="hrG-N5-epA" secondAttribute="centerY" id="tcw-cZ-5ZY"/>
                                         <constraint firstItem="4Of-Fm-eCE" firstAttribute="leading" secondItem="hrG-N5-epA" secondAttribute="trailing" constant="12" id="uY7-KT-3GY"/>
@@ -647,6 +661,7 @@
                                     <outlet property="iconImageViewSmallHeightConstraint" destination="7Tq-kY-ICs" id="h2t-hO-nLu"/>
                                     <outlet property="iconImageViewSmallWidthConstraint" destination="vIV-eO-ucr" id="Icu-la-W15"/>
                                     <outlet property="nameLabel" destination="Yap-Es-0Pb" id="xJu-ch-ISo"/>
+                                    <outlet property="openedStatusView" destination="0LH-Jz-Grm" id="NlX-IS-DY7"/>
                                     <outletCollection property="iconImageViewNoMarginConstraints" destination="1wF-IR-I3b" collectionClass="NSMutableArray" id="9kd-XS-m1t"/>
                                     <outletCollection property="iconImageViewNoMarginConstraints" destination="5Yy-dh-x3e" collectionClass="NSMutableArray" id="SyL-0S-yzU"/>
                                     <outletCollection property="iconImageViewNoMarginConstraints" destination="j1V-NJ-v5B" collectionClass="NSMutableArray" id="GnR-0T-dGS"/>
