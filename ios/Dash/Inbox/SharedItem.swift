@@ -16,12 +16,17 @@ protocol SharedItemProtocol: Decodable {
     var identifier: SharedItem.Identifier { get }
     var url: URL { get }
     var creationDate: Date? { get }
+    var hasBeenOpened: Bool { get }
     func open()
 }
 
 extension SharedItemProtocol {
     var identifier: SharedItem.Identifier {
         return SharedItem.Identifier(url: url, creationDate: creationDate)
+    }
+
+    func markAsOpened() {
+        firebaseDocument?.updateData(["hasBeenOpened": true])
     }
 
     func delete() {

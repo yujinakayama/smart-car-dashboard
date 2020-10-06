@@ -71,15 +71,15 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
             database.startUpdating()
         } else {
             database.endUpdating()
-            dataSource.update(items: [], animatingDifferences: false)
+            dataSource.update(items: [])
             showSignInView()
         }
     }
 
-    func database(_ database: SharedItemDatabase, didUpdateItems items: [SharedItemProtocol]) {
+    func database(_ database: SharedItemDatabase, didUpdateItems items: [SharedItemProtocol], withChanges changes: [SharedItemDatabase.Change]) {
         DispatchQueue.global().async { [weak self] in
             guard let self = self else { return }
-            self.dataSource.update(items: items, animatingDifferences: !self.dataSource.isEmpty)
+            self.dataSource.update(items: items, changes: changes, animatingDifferences: !self.dataSource.isEmpty)
         }
     }
 

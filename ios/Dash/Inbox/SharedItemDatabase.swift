@@ -10,7 +10,7 @@ import Foundation
 import FirebaseFirestore
 
 protocol SharedItemDatabaseDelegate: NSObjectProtocol {
-    func database(_ database: SharedItemDatabase, didUpdateItems items: [SharedItemProtocol])
+    func database(_ database: SharedItemDatabase, didUpdateItems items: [SharedItemProtocol], withChanges changes: [SharedItemDatabase.Change])
 }
 
 class SharedItemDatabase {
@@ -71,6 +71,35 @@ class SharedItemDatabase {
             }
         })
 
-        delegate?.database(self, didUpdateItems: items)
+        let changes = firestoreSnapshot.documentChanges.map { (documentChange) -> Change in
+            var changeType: Change.ChangeType!
+
+            switch documentChange.type {
+            case .added:
+                changeType = .addition
+            case .modified:
+                changeType = .modification
+            case .removed:
+                changeType = .removal
+            }
+
+            return Change(type: changeType, oldIndex: Int(documentChange.oldIndex), newIndex: Int(documentChange.newIndex))
+        }
+
+        delegate?.database(self, didUpdateItems: items, withChanges: changes)
+    }
+}
+
+extension SharedItemDatabase {
+    struct Change {
+        enum ChangeType {
+            case addition
+            case modification
+            case removal
+        }
+
+        let type: ChangeType
+        let oldIndex: Int
+        let newIndex: Int
     }
 }

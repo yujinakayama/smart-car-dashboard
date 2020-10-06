@@ -19,10 +19,13 @@ class Location: SharedItemProtocol {
     let url: URL
     let websiteURL: URL?
     let creationDate: Date?
+    var hasBeenOpened: Bool
 
     lazy var formattedAddress = address.format()
 
     func open() {
+        markAsOpened()
+
         if Defaults.shared.snapReceivedLocationToPointOfInterest {
             findCorrespondingPointOfInterest() { (pointOfInterest) in
                 if let pointOfInterest = pointOfInterest {

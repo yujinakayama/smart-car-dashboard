@@ -37,13 +37,17 @@ class SharedItemTableViewDataSource: UITableViewDiffableDataSource<Date, SharedI
         item(for: indexPath).delete()
     }
 
-    func update(items: [SharedItemProtocol], animatingDifferences: Bool) {
+    func update(items: [SharedItemProtocol]) {
+        update(items: items, changes: [], animatingDifferences: false)
+    }
+
+    func update(items: [SharedItemProtocol], changes: [SharedItemDatabase.Change], animatingDifferences: Bool) {
         data = TableViewData(items: items)
-        let dataSourceSnapshot = makeDataSourceSnapshot(from: data)
+        let dataSourceSnapshot = makeDataSourceSnapshot(data: data, changes: changes)
         apply(dataSourceSnapshot, animatingDifferences: animatingDifferences)
     }
 
-    private func makeDataSourceSnapshot(from data: TableViewData) -> NSDiffableDataSourceSnapshot<Date, SharedItem.Identifier> {
+    private func makeDataSourceSnapshot(data: TableViewData, changes: [SharedItemDatabase.Change]) -> NSDiffableDataSourceSnapshot<Date, SharedItem.Identifier> {
         var snapshot = NSDiffableDataSourceSnapshot<Date, SharedItem.Identifier>()
 
         snapshot.appendSections(data.sections.map { $0.date })
@@ -51,6 +55,10 @@ class SharedItemTableViewDataSource: UITableViewDiffableDataSource<Date, SharedI
         for section in data.sections {
             snapshot.appendItems(section.items.map { $0.identifier }, toSection: section.date)
         }
+
+        let modifiedItemIndices = changes.filter { $0.type == .modification }.map { $0.newIndex }
+        let modifiedItemIdentifiers = modifiedItemIndices.map { data.items[$0].identifier }
+        snapshot.reloadItems(modifiedItemIdentifiers)
 
         return snapshot
     }
@@ -91,6 +99,10 @@ extension SharedItemTableViewDataSource {
             }
 
             self.sections = sections
+        }
+
+        var items: [SharedItemProtocol] {
+            return sections.flatMap { $0.items }
         }
     }
 }

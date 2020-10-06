@@ -14,7 +14,9 @@ class UnknownItem: SharedItemProtocol {
 
     let url: URL
     let creationDate: Date?
+    var hasBeenOpened: Bool
 
     func open() {
+        markAsOpened()
     }
 }

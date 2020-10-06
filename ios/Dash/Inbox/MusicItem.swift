@@ -21,8 +21,11 @@ class MusicItem: SharedItemProtocol {
     let playParameters: MPMusicPlayerPlayParameters?
     let url: URL
     let creationDate: Date?
+    var hasBeenOpened: Bool
 
     func open() {
+        markAsOpened()
+
         if let playParameters = playParameters {
             play(playParameters: playParameters)
         } else {

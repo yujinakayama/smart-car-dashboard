@@ -15,10 +15,12 @@ class Website: SharedItemProtocol {
     let title: String?
     let url: URL
     let creationDate: Date?
+    var hasBeenOpened: Bool
 
     lazy var icon = WebsiteIcon(websiteURL: url)
 
     func open() {
+        markAsOpened()
         UIApplication.shared.open(url, options: [:])
     }
 }

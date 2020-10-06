@@ -21,6 +21,7 @@ class SharedItemTableViewCell: UITableViewCell {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
+    @IBOutlet weak var openedStatusView: UIView!
 
     @IBOutlet weak var iconImageViewSmallWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var iconImageViewSmallHeightConstraint: NSLayoutConstraint!
@@ -64,6 +65,8 @@ class SharedItemTableViewCell: UITableViewCell {
             default:
                 configureView(for: item)
             }
+
+            openedStatusView.isHidden = item?.hasBeenOpened ?? true
         }
     }
 
