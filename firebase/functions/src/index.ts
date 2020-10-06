@@ -25,9 +25,10 @@ export const share = functions.region('asia-northeast1').https.onRequest(async (
         ...normalizedData
     };
 
-    await notify(item);
-
-    await addItemToFirestore(item);
+    await Promise.all([
+        notify(item),
+        addItemToFirestore(item)
+    ]);
 
     functionResponse.sendStatus(200);
 });
