@@ -5,10 +5,14 @@ import { NormalizedData } from './normalizedData';
 
 admin.initializeApp();
 
+interface ItemWithIdentifier extends Item {
+    identifier: string;
+}
+
 interface NotificationPayload {
     aps: admin.messaging.Aps;
     foregroundPresentationOptions: UNNotificationPresentationOptions;
-    item: Item;
+    item: ItemWithIdentifier;
     notificationType: 'share';
 }
 
@@ -19,8 +23,8 @@ enum UNNotificationPresentationOptions {
     alert = 1 << 2
 }
 
-export function notify(item: Item): Promise<any> {
-    const payload = makeNotificationPayload(item);
+export function notify(item: Item, identifier: string): Promise<any> {
+    const payload = makeNotificationPayload(item, identifier);
 
     const message = {
         topic: 'Dash',
@@ -33,7 +37,7 @@ export function notify(item: Item): Promise<any> {
     return admin.messaging().send(message);
 }
 
-function makeNotificationPayload(item: Item): NotificationPayload {
+function makeNotificationPayload(item: Item, identifier: string): NotificationPayload {
     const normalizedData = item as unknown as NormalizedData;
 
     let alert: admin.messaging.ApsAlert;
@@ -74,7 +78,10 @@ function makeNotificationPayload(item: Item): NotificationPayload {
             sound: 'Share.wav'
         },
         foregroundPresentationOptions: UNNotificationPresentationOptions.sound | UNNotificationPresentationOptions.alert,
-        item: item,
+        item: {
+            identifier: identifier,
+            ...item
+        },
         notificationType: 'share'
     };
 }

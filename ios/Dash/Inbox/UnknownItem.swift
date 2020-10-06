@@ -11,6 +11,7 @@ import FirebaseFirestore
 
 class UnknownItem: SharedItemProtocol {
     var firebaseDocument: DocumentReference?
+    var identifier: String!
 
     let url: URL
     let creationDate: Date?

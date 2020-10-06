@@ -11,9 +11,10 @@ import DictionaryCoding
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
+// TODO: Split metadata and content so that we can handle them easily on instantiation.
 protocol SharedItemProtocol: Decodable {
     var firebaseDocument: DocumentReference? { get set }
-    var identifier: SharedItem.Identifier { get }
+    var identifier: String! { get set }
     var url: URL { get }
     var creationDate: Date? { get }
     var hasBeenOpened: Bool { get }
@@ -21,10 +22,6 @@ protocol SharedItemProtocol: Decodable {
 }
 
 extension SharedItemProtocol {
-    var identifier: SharedItem.Identifier {
-        return SharedItem.Identifier(url: url, creationDate: creationDate)
-    }
-
     func markAsOpened() {
         firebaseDocument?.updateData(["hasBeenOpened": true])
     }
@@ -42,14 +39,10 @@ extension SharedItemProtocol {
 
 enum SharedItemError: Error {
     case invalidDictionaryStructure
+    case documentDoesNotExist
 }
 
 struct SharedItem {
-    struct Identifier: Hashable {
-        let url: URL
-        let creationDate: Date?
-    }
-
     enum ItemType: String {
         case location
         case musicItem
@@ -65,21 +58,31 @@ struct SharedItem {
         }
     }
 
-    static func makeItem(document: QueryDocumentSnapshot) throws -> SharedItemProtocol {
-        let dictionary = document.data()
+    static func makeItem(document: DocumentSnapshot) throws -> SharedItemProtocol {
+        guard let dictionary = document.data() else {
+            throw SharedItemError.documentDoesNotExist
+        }
+
         let type = try ItemType.makeType(dictionary: dictionary)
         let decoder = Firestore.Decoder() // Supports decoding Firestore's Timestamp
 
+        var item: SharedItemProtocol!
+
         switch type {
         case .location:
-            return try decoder.decode(Location.self, from: dictionary)
+            item = try decoder.decode(Location.self, from: dictionary)
         case .musicItem:
-            return try decoder.decode(MusicItem.self, from: dictionary)
+            item = try decoder.decode(MusicItem.self, from: dictionary)
         case .website:
-            return try decoder.decode(Website.self, from: dictionary)
+            item = try decoder.decode(Website.self, from: dictionary)
         case .unknown:
-            return try decoder.decode(UnknownItem.self, from: dictionary)
+            item = try decoder.decode(UnknownItem.self, from: dictionary)
         }
+
+        item.firebaseDocument = document.reference
+        item.identifier = document.documentID
+
+        return item
     }
 
     static func makeItem(dictionary: [String: Any]) throws -> SharedItemProtocol {

@@ -10,7 +10,7 @@ import UIKit
 import FirebaseAuth
 
 class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDelegate {
-    let database = SharedItemDatabase()
+    let database = SharedItemDatabase.shared
 
     var dataSource: SharedItemTableViewDataSource!
 

@@ -14,6 +14,8 @@ protocol SharedItemDatabaseDelegate: NSObjectProtocol {
 }
 
 class SharedItemDatabase {
+    static let shared = SharedItemDatabase()
+
     weak var delegate: SharedItemDatabaseDelegate?
 
     var items: [SharedItemProtocol] {
@@ -32,7 +34,7 @@ class SharedItemDatabase {
 
     private var _items: [SharedItemProtocol] = []
 
-    private lazy var firestoreQuery: Query = Firestore.firestore().collection("items").order(by: "creationDate", descending: true)
+    private lazy var firestoreCollection = Firestore.firestore().collection("items")
     private var firestoreQuerySnapshotListener: ListenerRegistration?
 
     let dispatchQueue = DispatchQueue(label: "SharedItemDatabase")
@@ -40,7 +42,7 @@ class SharedItemDatabase {
     func startUpdating() {
         guard firestoreQuerySnapshotListener == nil else { return }
 
-        firestoreQuerySnapshotListener = firestoreQuery.addSnapshotListener { [weak self] (snapshot, error) in
+        firestoreQuerySnapshotListener = firestoreCollection.order(by: "creationDate", descending: true).addSnapshotListener { [weak self] (snapshot, error) in
             guard let self = self else { return }
 
             if let error = error {
@@ -57,6 +59,29 @@ class SharedItemDatabase {
     func endUpdating() {
         firestoreQuerySnapshotListener?.remove()
         firestoreQuerySnapshotListener = nil
+    }
+
+    func findItem(identifier: String, completion: @escaping (SharedItemProtocol?, Error?) -> Void) {
+        let document = firestoreCollection.document(identifier)
+
+        document.getDocument { (snapshot, error) in
+            if let error = error {
+                completion(nil, error)
+                return
+            }
+
+            guard let snapshot = snapshot, snapshot.exists else {
+                completion(nil, nil)
+                return
+            }
+
+            do {
+                let item = try SharedItem.makeItem(document: snapshot)
+                completion(item, nil)
+            } catch {
+                completion(nil, error)
+            }
+        }
     }
 
     private func updateItem(from firestoreSnapshot: QuerySnapshot) {

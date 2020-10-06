@@ -51,6 +51,14 @@ struct ShareNotification {
             do {
                 let item = try SharedItem.makeItem(dictionary: self.itemDictionary)
                 item.open()
+
+                SharedItemDatabase.shared.findItem(identifier: item.identifier) { (item, error) in
+                    if let error = error {
+                        logger.error(error)
+                    }
+
+                    item?.markAsOpened()
+                }
             } catch {
                 logger.error(error)
             }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SharedItemTableViewDataSource: UITableViewDiffableDataSource<Date, SharedItem.Identifier> {
+class SharedItemTableViewDataSource: UITableViewDiffableDataSource<Date, String> {
     var data = TableViewData()
 
     var isEmpty: Bool {
@@ -47,8 +47,8 @@ class SharedItemTableViewDataSource: UITableViewDiffableDataSource<Date, SharedI
         apply(dataSourceSnapshot, animatingDifferences: animatingDifferences)
     }
 
-    private func makeDataSourceSnapshot(data: TableViewData, changes: [SharedItemDatabase.Change]) -> NSDiffableDataSourceSnapshot<Date, SharedItem.Identifier> {
-        var snapshot = NSDiffableDataSourceSnapshot<Date, SharedItem.Identifier>()
+    private func makeDataSourceSnapshot(data: TableViewData, changes: [SharedItemDatabase.Change]) -> NSDiffableDataSourceSnapshot<Date, String> {
+        var snapshot = NSDiffableDataSourceSnapshot<Date, String>()
 
         snapshot.appendSections(data.sections.map { $0.date })
 
@@ -57,7 +57,7 @@ class SharedItemTableViewDataSource: UITableViewDiffableDataSource<Date, SharedI
         }
 
         let modifiedItemIndices = changes.filter { $0.type == .modification }.map { $0.newIndex }
-        let modifiedItemIdentifiers = modifiedItemIndices.map { data.items[$0].identifier }
+        let modifiedItemIdentifiers = modifiedItemIndices.map { data.items[$0].identifier! }
         snapshot.reloadItems(modifiedItemIdentifiers)
 
         return snapshot

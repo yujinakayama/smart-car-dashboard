@@ -12,6 +12,7 @@ import FirebaseFirestore
 
 class Location: SharedItemProtocol {
     var firebaseDocument: DocumentReference?
+    var identifier: String!
 
     let address: Address
     let coordinate: Coordinate

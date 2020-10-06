@@ -13,6 +13,7 @@ import StoreKit
 
 class MusicItem: SharedItemProtocol {
     var firebaseDocument: DocumentReference?
+    var identifier: String!
 
     let artworkURLTemplate: String?
     let creator: String?

@@ -11,6 +11,7 @@ import FirebaseFirestore
 
 class Website: SharedItemProtocol {
     var firebaseDocument: DocumentReference?
+    var identifier: String!
 
     let title: String?
     let url: URL
