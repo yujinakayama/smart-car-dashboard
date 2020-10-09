@@ -10,8 +10,8 @@ import UIKit
 import MediaPlayer
 
 @IBDesignable class PlaybackProgressView: UIView {
-    let slider: UISlider = {
-        let slider = UISlider()
+    let slider: Slider = {
+        let slider = Slider()
         slider.addTarget(self, action: #selector(sliderValueDidChange), for: .valueChanged)
         slider.isContinuous = true
         slider.minimumTrackTintColor = UIColor(named: "Music Player Progress Slider Minimum Track Tint Color")
@@ -87,7 +87,8 @@ import MediaPlayer
         constraints.append(contentsOf: [
             slider.topAnchor.constraint(equalTo: topAnchor),
             slider.leftAnchor.constraint(equalTo: leftAnchor),
-            rightAnchor.constraint(equalTo: slider.rightAnchor)
+            rightAnchor.constraint(equalTo: slider.rightAnchor),
+            slider.heightAnchor.constraint(equalToConstant: 10)
         ])
 
         constraints.append(contentsOf: [
@@ -289,7 +290,21 @@ import MediaPlayer
             rendererContext.cgContext.fillEllipse(in: thumbFrame)
         }
     }
+}
 
+extension PlaybackProgressView {
+    class Slider: UISlider {
+        let trackHeight: CGFloat = 3
+
+        override func trackRect(forBounds bounds: CGRect) -> CGRect {
+            var trackRect = super.trackRect(forBounds: bounds)
+            trackRect.size.height = trackHeight
+            return trackRect
+        }
+    }
+}
+
+extension PlaybackProgressView {
     class PrecisePlaybackObserver {
         let musicPlayer: MPMusicPlayerController
         var timer: Timer?
