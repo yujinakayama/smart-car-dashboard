@@ -6,9 +6,9 @@
 
 ### Software
 
-* [ESP-IDF](https://github.com/espressif/esp-idf) v3.3
+* [ESP-IDF](https://github.com/espressif/esp-idf) v3.2 (not v3.2.x)
     * Check the version with `(cd "$IDF_PATH" && git describe --tags --dirty)`
-* [Arduino core for the ESP32](https://github.com/espressif/arduino-esp32) v1.0.2
+* [Arduino core for the ESP32](https://github.com/espressif/arduino-esp32) v1.0.4
     * Managed with git submodule under `components/arduino`
 
 ## Project Configuration
