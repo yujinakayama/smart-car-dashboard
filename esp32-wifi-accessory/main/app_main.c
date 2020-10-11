@@ -42,6 +42,10 @@
 #include <app_wifi.h>
 #include <app_hap_setup_payload.h>
 
+#include <esp_wifi.h>
+
+#include "wifi_config.h"
+
 /*  Required for server verification during OTA, PEM format as string  */
 char server_cert[] = {};
 
@@ -202,6 +206,34 @@ static int fan_write(hap_write_data_t write_data[], int count,
     return ret;
 }
 
+esp_err_t app_wifi_softap_start()
+{
+    esp_netif_create_default_wifi_ap();
+
+    wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
+    ESP_ERROR_CHECK(esp_wifi_init(&cfg));
+
+    wifi_config_t wifi_config = {
+        .ap = {
+            .ssid = WIFI_SSID,
+            .ssid_len = strlen(WIFI_SSID),
+            .password = WIFI_PASSWORD,
+            .max_connection = 10,
+            .authmode = WIFI_AUTH_WPA_WPA2_PSK
+        },
+    };
+
+    if (strlen(WIFI_SSID) == 0) {
+        wifi_config.ap.authmode = WIFI_AUTH_OPEN;
+    }
+
+    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_AP));
+    ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_AP, &wifi_config));
+    ESP_ERROR_CHECK(esp_wifi_start());
+
+    return ESP_OK;
+}
+
 /*The main thread for handling the Fan Accessory */
 static void fan_thread_entry(void *p)
 {
@@ -313,7 +345,7 @@ static void fan_thread_entry(void *p)
     /* After all the initializations are done, start the HAP core */
     hap_start();
     /* Start Wi-Fi */
-    app_wifi_start(portMAX_DELAY);
+    app_wifi_softap_start();
     /* The task ends here. The read/write callbacks will be invoked by the HAP Framework */
     vTaskDelete(NULL);
 }
