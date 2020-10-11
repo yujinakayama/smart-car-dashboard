@@ -1,9 +1,3 @@
 [submodule "esp32-bluetooth-accessory/components/arduino"]
 	path = esp32-bluetooth-accessory/components/arduino
 	url = https://github.com/espressif/arduino-esp32.git
-[submodule "esp32-wifi-accessory/components/arduino"]
-	path = esp32-wifi-accessory/components/arduino
-	url = https://github.com/espressif/arduino-esp32.git
-[submodule "esp32-wifi-accessory/components/homekit"]
-	path = esp32-wifi-accessory/components/homekit
-	url = https://github.com/willson556/esp32-homekit.git
