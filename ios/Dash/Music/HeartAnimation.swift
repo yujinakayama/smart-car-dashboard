@@ -44,13 +44,17 @@ class HeartAnimation: NSObject, CAAnimationDelegate {
         }
     }
 
-    lazy var imageLayer: CALayer = {
+    var imageLayer: CALayer {
+        return imageView.layer
+    }
+
+    lazy var imageView: UIImageView = {
         let image = UIImage(systemName: "heart.fill")!
         let imageView = UIImageView(image: image)
         imageView.tintColor = UIColor(hue: 0, saturation: 0.6, brightness: 1, alpha: 1)
         imageView.contentMode = .scaleAspectFit
         imageView.frame = view.bounds.insetBy(dx: view.bounds.width * 0.15, dy: view.bounds.height * 0.15)
-        return imageView.layer
+        return imageView
     }()
 
     lazy var appearanceAnimation: CAAnimation = {
