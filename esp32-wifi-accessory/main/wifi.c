@@ -12,7 +12,16 @@ void startWiFiAccessPoint() {
   /* Initialize the event loop */
   ESP_ERROR_CHECK(esp_event_loop_create_default());
 
-  esp_netif_create_default_wifi_ap();
+  esp_netif_t* netif = esp_netif_create_default_wifi_ap();
+
+  esp_netif_dhcps_stop(netif); // Need to stop DHCP server to update IP info
+  // https://github.com/espressif/esp-idf/blob/8bc19ba893e5544d571a753d82b44a84799b94b1/components/esp_netif/esp_netif_defaults.c#L42-L45
+  esp_netif_ip_info_t ipInfo;
+  ESP_ERROR_CHECK(esp_netif_get_ip_info(netif, &ipInfo));
+  esp_ip4_addr_t gatewayAddress;
+  gatewayAddress.addr = 0; // 0.0.0.0
+  ipInfo.gw = gatewayAddress;
+  ESP_ERROR_CHECK(esp_netif_set_ip_info(netif, &ipInfo));
 
   wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
   ESP_ERROR_CHECK(esp_wifi_init(&cfg));
