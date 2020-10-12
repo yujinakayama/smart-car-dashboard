@@ -66,14 +66,6 @@ void GarageRemote::startHomeKitAccessory() {
 }
 
 void GarageRemote::createAccessory() {
-  /* Configure HomeKit core to make the Accessory name (and thus the WAC SSID) unique,
-   * instead of the default configuration wherein only the WAC SSID is made unique.
-   */
-  hap_cfg_t hap_cfg;
-  hap_get_config(&hap_cfg);
-  hap_cfg.unique_param = UNIQUE_NAME;
-  hap_set_config(&hap_cfg);
-
   /* Initialize the HAP core */
   hap_init(HAP_TRANSPORT_WIFI);
 
