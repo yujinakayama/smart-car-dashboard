@@ -23,12 +23,14 @@ public:
   gpio_num_t openButtonPin; // The brown-white wire in the car
   gpio_num_t resetButtonPin;
   hap_acc_t* accessory;
+  hap_acc_cfg_t accessoryConfig;
   TargetDoorState targetDoorState;
   CurrentDoorState currentDoorState;
 
   GarageRemote(gpio_num_t powerButtonPin, gpio_num_t openButtonPin, gpio_num_t resetButtonPin);
   void registerHomeKitAccessory();
   void startHomeKitAccessory();
+  void printSetupQRCode();
 
   TargetDoorState getTargetDoorState();
   void setTargetDoorState(TargetDoorState state);
@@ -38,7 +40,7 @@ public:
   void turnOffOpenButton();
 
 private:
-  hap_acc_t* createAccessory();
+  void createAccessory();
   void addGarageDoorOpenerService();
   void addFirmwareUpgradeService();
   void configureHomeKitSetupCode();

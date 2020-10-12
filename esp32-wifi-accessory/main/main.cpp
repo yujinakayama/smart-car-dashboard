@@ -37,6 +37,7 @@ static void mainTask(void *p) {
   garageRemote->registerHomeKitAccessory();
   startWiFiAccessPoint();
   garageRemote->startHomeKitAccessory();
+  garageRemote->printSetupQRCode();
 
   /* The task ends here. The read/write callbacks will be invoked by the HAP Framework */
   vTaskDelete(NULL);

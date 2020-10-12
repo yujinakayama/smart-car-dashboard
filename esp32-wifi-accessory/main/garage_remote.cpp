@@ -5,6 +5,10 @@
 #include <hap_apple_chars.h>
 #include <hap_fw_upgrade.h>
 
+extern "C" {
+  #include <app_hap_setup_payload.h>
+}
+
 #include <iot_button.h>
 
 #include <esp_timer.h>
@@ -46,7 +50,7 @@ GarageRemote::GarageRemote(gpio_num_t powerButtonPin, gpio_num_t openButtonPin, 
 void GarageRemote::registerHomeKitAccessory() {
   ESP_LOGI(TAG, "registerHomeKitAccessory");
 
-  this->accessory = this->createAccessory();
+  this->createAccessory();
   this->addGarageDoorOpenerService();
   this->addFirmwareUpgradeService();
   /* Add the Accessory to the HomeKit Database */
@@ -61,7 +65,7 @@ void GarageRemote::startHomeKitAccessory() {
   hap_start();
 }
 
-hap_acc_t* GarageRemote::createAccessory() {
+void GarageRemote::createAccessory() {
   /* Configure HomeKit core to make the Accessory name (and thus the WAC SSID) unique,
    * instead of the default configuration wherein only the WAC SSID is made unique.
    */
@@ -76,25 +80,22 @@ hap_acc_t* GarageRemote::createAccessory() {
   /* Initialise the mandatory parameters for Accessory which will be added as
    * the mandatory services internally
    */
-  hap_acc_cfg_t cfg;
-  cfg.name = (char*)"Garage";
-  cfg.manufacturer = (char*)"Yuji Nakayama";
-  cfg.model = (char*)"Model";
-  cfg.serial_num = (char*)"Serial Number";
-  cfg.fw_rev = (char*)"Firmware Version";
-  cfg.hw_rev = NULL;
-  cfg.pv = (char*)"1.1.0";
-  cfg.cid = HAP_CID_GARAGE_DOOR_OPENER;
-  cfg.identify_routine = identifyAccessory;
+  this->accessoryConfig.name = (char*)"Garage";
+  this->accessoryConfig.manufacturer = (char*)"Yuji Nakayama";
+  this->accessoryConfig.model = (char*)"Model";
+  this->accessoryConfig.serial_num = (char*)"Serial Number";
+  this->accessoryConfig.fw_rev = (char*)"Firmware Version";
+  this->accessoryConfig.hw_rev = NULL;
+  this->accessoryConfig.pv = (char*)"1.1.0";
+  this->accessoryConfig.cid = HAP_CID_GARAGE_DOOR_OPENER;
+  this->accessoryConfig.identify_routine = identifyAccessory;
 
   /* Create accessory object */
-  hap_acc_t* accessory = hap_acc_create(&cfg);
+  this->accessory = hap_acc_create(&this->accessoryConfig);
 
   /* Add a dummy Product Data */
   uint8_t product_data[] = {'E','S','P','3','2','H','A','P'};
   hap_acc_add_product_data(accessory, product_data, sizeof(product_data));
-
-  return accessory;
 }
 
 void GarageRemote::addGarageDoorOpenerService() {
@@ -139,6 +140,10 @@ void GarageRemote::configureHomeKitSetupCode() {
   hap_set_setup_code(CONFIG_EXAMPLE_SETUP_CODE);
   /* Unique four character Setup Id. Default: ES32 */
   hap_set_setup_id(CONFIG_EXAMPLE_SETUP_ID);
+}
+
+void GarageRemote::printSetupQRCode() {
+  app_hap_setup_payload((char*)CONFIG_EXAMPLE_SETUP_CODE, (char*)CONFIG_EXAMPLE_SETUP_ID, false, this->accessoryConfig.cid);
 }
 
 /**
