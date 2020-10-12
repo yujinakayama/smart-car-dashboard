@@ -1,28 +1,47 @@
 #include "log_config.h"
 #include "garage_remote.h"
-#include <hap.h>
-#include <esp_wifi.h>
-#include <esp_event_loop.h>
-#include <nvs_flash.h>
-#include <string.h>
-#include <Arduino.h>
 
-#define ARRAY_SIZE(array) (sizeof(array) / sizeof(array[0]))
+#include <hap_apple_servs.h>
+#include <hap_apple_chars.h>
+#include <hap_fw_upgrade.h>
+
+extern "C" {
+  #include <app_hap_setup_payload.h>
+}
+
+#include <iot_button.h>
+
+#include <esp_timer.h>
+
+#include <cstring>
 
 static const char* TAG = "GarageRemote";
 
-static void hapObjectInit(void* context);
-static void turnOffOpenButton(int pin);
-static void* readTargetDoorState(void* context);
-static void writeTargetDoorState(void* context, void* value, int length);
-static void* readCurrentDoorState(void* context);
+/* Reset network credentials if button is pressed for more than 3 seconds and then released */
+static const uint32_t kNetworkResetButtonPressDuration = 3;
 
-GarageRemote::GarageRemote(int powerButtonPin, int openButtonPin) {
+/* Reset to factory if button is pressed and held for more than 10 seconds */
+static const uint32_t kFactoryResetButtonPressDuration = 10;
+
+static esp_timer_handle_t timer;
+typedef void (*callback_with_arg_t)(void*);
+
+static void _turnOffOpenButton(void* arg);
+static int identifyAccessory(hap_acc_t* ha);
+static int readCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv);
+static int writeTargetDoorState(hap_write_data_t write_data[], int count, void* serv_priv, void* write_priv);
+static void resetNetworkConfiguration(void* arg);
+static void resetToFactory(void* arg);
+static void delay(uint32_t ms);
+static void performLater(uint32_t milliseconds, callback_with_arg_t callback, void* arg);
+
+GarageRemote::GarageRemote(gpio_num_t powerButtonPin, gpio_num_t openButtonPin, gpio_num_t resetButtonPin) {
   this->powerButtonPin = powerButtonPin;
   this->openButtonPin = openButtonPin;
+  this->resetButtonPin = resetButtonPin;
 
-  pinMode(powerButtonPin, OUTPUT);
-  pinMode(openButtonPin, OUTPUT);
+  gpio_set_direction(powerButtonPin, GPIO_MODE_OUTPUT);
+  gpio_set_direction(openButtonPin, GPIO_MODE_OUTPUT);
 
   this->targetDoorState = TargetDoorStateClosed;
   this->currentDoorState = CurrentDoorStateClosed;
@@ -31,69 +50,103 @@ GarageRemote::GarageRemote(int powerButtonPin, int openButtonPin) {
 void GarageRemote::registerHomeKitAccessory() {
   ESP_LOGI(TAG, "registerHomeKitAccessory");
 
-  hap_init();
+  this->createAccessory();
+  this->addGarageDoorOpenerService();
+  this->addFirmwareUpgradeService();
+  /* Add the Accessory to the HomeKit Database */
+  hap_add_accessory(this->accessory);
+  this->configureHomeKitSetupCode();
 
-  uint8_t mac[6];
-  esp_wifi_get_mac(ESP_IF_WIFI_STA, mac);
-  char accessoryID[32] = {0};
-  sprintf(accessoryID, "%02X:%02X:%02X:%02X:%02X:%02X", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
-
-  hap_accessory_callback_t callback;
-  callback.hap_object_init = hapObjectInit;
-
-  this->accessory = (hap_accessory*)hap_accessory_register(
-    (char*)"Garage",
-    accessoryID,
-    (char*)"053-58-197",
-    (char*)"Yuji Nakayama",
-    HAP_ACCESSORY_CATEGORY_OTHER,
-    811,
-    1,
-    this,
-    &callback
-  );
+  this->initializeResetButton();
 }
 
-void hapObjectInit(void* context) {
-  ESP_LOGI(TAG, "hapObjectInit");
-  GarageRemote* garageRemote = (GarageRemote*)context;
-  garageRemote->registerHomeKitServicesAndCharacteristics();
+void GarageRemote::startHomeKitAccessory() {
+  /* After all the initializations are done, start the HAP core */
+  hap_start();
 }
 
-void GarageRemote::registerHomeKitServicesAndCharacteristics() {
-  ESP_LOGI(TAG, "registerHomeKitServicesAndCharacteristics");
+void GarageRemote::createAccessory() {
+  /* Initialize the HAP core */
+  hap_init(HAP_TRANSPORT_WIFI);
 
-  void* accessoryObject = hap_accessory_add(this->accessory);
+  /* Initialise the mandatory parameters for Accessory which will be added as
+   * the mandatory services internally
+   */
+  this->accessoryConfig.name = (char*)"Garage";
+  this->accessoryConfig.manufacturer = (char*)"Yuji Nakayama";
+  this->accessoryConfig.model = (char*)"Model";
+  this->accessoryConfig.serial_num = (char*)"Serial Number";
+  this->accessoryConfig.fw_rev = (char*)"Firmware Version";
+  this->accessoryConfig.hw_rev = NULL;
+  this->accessoryConfig.pv = (char*)"1.1.0";
+  this->accessoryConfig.cid = HAP_CID_GARAGE_DOOR_OPENER;
+  this->accessoryConfig.identify_routine = identifyAccessory;
 
-  struct hap_characteristic accessoryInformationCharacteristics[] = {
-    {HAP_CHARACTER_IDENTIFY, (void*)true, NULL, NULL, NULL, NULL},
-    {HAP_CHARACTER_MANUFACTURER, (void*)"Yuji Nakayama", NULL, NULL, NULL, NULL},
-    {HAP_CHARACTER_MODEL, (void*)"Model", NULL, NULL, NULL, NULL},
-    {HAP_CHARACTER_NAME, (void*)"Garage", NULL, NULL, NULL, NULL},
-    {HAP_CHARACTER_SERIAL_NUMBER, (void*)"Serial Number", NULL, NULL, NULL, NULL},
-    {HAP_CHARACTER_FIRMWARE_REVISION, (void*)"Firmware Version", NULL, NULL, NULL, NULL},
+  /* Create accessory object */
+  this->accessory = hap_acc_create(&this->accessoryConfig);
+
+  /* Add a dummy Product Data */
+  uint8_t product_data[] = {'E','S','P','3','2','H','A','P'};
+  hap_acc_add_product_data(accessory, product_data, sizeof(product_data));
+}
+
+void GarageRemote::addGarageDoorOpenerService() {
+  /* Create the Fan Service. Include the "name" since this is a user visible service  */
+  hap_serv_t* service = hap_serv_garage_door_opener_create(this->currentDoorState, this->targetDoorState, false);
+
+  hap_serv_add_char(service, hap_char_name_create((char*)"Garage"));
+
+  /* Set the write callback for the service */
+  hap_serv_set_write_cb(service, writeTargetDoorState);
+
+  /* Set the read callback for the service (optional) */
+  hap_serv_set_read_cb(service, readCharacteristic);
+
+  // Allow access to GarageRemote instance from the read/write callbals
+  hap_serv_set_priv(service, this);
+
+  /* Add the Fan Service to the Accessory Object */
+  hap_acc_add_serv(this->accessory, service);
+}
+
+/* Create the Firmware Upgrade HomeKit Custom Service.
+ * Please refer the FW Upgrade documentation under components/homekit/extras/include/hap_fw_upgrade.h
+ * and the top level README for more information.
+ */
+void GarageRemote::addFirmwareUpgradeService() {
+  /*  Required for server verification during OTA, PEM format as string  */
+  char server_cert[] = {};
+
+  hap_fw_upgrade_config_t ota_config = {
+      .server_cert_pem = server_cert,
   };
 
-  hap_service_and_characteristics_add(
-    this->accessory,
-    accessoryObject,
-    HAP_SERVICE_ACCESSORY_INFORMATION,
-    accessoryInformationCharacteristics,
-    ARRAY_SIZE(accessoryInformationCharacteristics)
-  );
+  hap_serv_t* service = hap_serv_fw_upgrade_create(&ota_config);
 
-  struct hap_characteristic garageDoorOpenerCharacteristics[] = {
-    {HAP_CHARACTER_TARGET_DOORSTATE, (void*)&(this->targetDoorState), this, readTargetDoorState, writeTargetDoorState, NULL},
-    {HAP_CHARACTER_CURRENT_DOOR_STATE, (void*)&(this->currentDoorState), this, readCurrentDoorState, NULL, NULL},
-  };
+  /* Add the service to the Accessory Object */
+  hap_acc_add_serv(accessory, service);
+}
 
-  hap_service_and_characteristics_add(
-    this->accessory,
-    accessoryObject,
-    HAP_SERVICE_GARAGE_DOOR_OPENER,
-    garageDoorOpenerCharacteristics,
-    ARRAY_SIZE(garageDoorOpenerCharacteristics)
-  );
+void GarageRemote::configureHomeKitSetupCode() {
+  /* Unique Setup code of the format xxx-xx-xxx. Default: 111-22-333 */
+  hap_set_setup_code(CONFIG_EXAMPLE_SETUP_CODE);
+  /* Unique four character Setup Id. Default: ES32 */
+  hap_set_setup_id(CONFIG_EXAMPLE_SETUP_ID);
+}
+
+void GarageRemote::printSetupQRCode() {
+  app_hap_setup_payload((char*)CONFIG_EXAMPLE_SETUP_CODE, (char*)CONFIG_EXAMPLE_SETUP_ID, false, this->accessoryConfig.cid);
+}
+
+/**
+ * The Reset button  GPIO initialisation function.
+ * Same button will be used for resetting Wi-Fi network as well as for reset to factory based on
+ * the time for which the button is pressed.
+ */
+void GarageRemote::initializeResetButton() {
+  button_handle_t button = iot_button_create(this->resetButtonPin, BUTTON_ACTIVE_LOW);
+  iot_button_add_on_release_cb(button, kNetworkResetButtonPressDuration, resetNetworkConfiguration, NULL);
+  iot_button_add_on_press_cb(button, kFactoryResetButtonPressDuration, resetToFactory, NULL);
 }
 
 TargetDoorState GarageRemote::getTargetDoorState() {
@@ -124,36 +177,98 @@ CurrentDoorState GarageRemote::getCurrentDoorState() {
 void GarageRemote::open() {
   ESP_LOGD(TAG, "open");
 
-  digitalWrite(this->powerButtonPin, HIGH);
+  gpio_set_level(this->powerButtonPin, 1);
   delay(100);
-  digitalWrite(this->powerButtonPin, LOW);
+  gpio_set_level(this->powerButtonPin, 0);
 
   delay(100);
 
-  digitalWrite(this->openButtonPin, HIGH);
-  this->ticker.once(3, turnOffOpenButton, this->openButtonPin);
+  gpio_set_level(this->openButtonPin, 1);
+  performLater(3000, _turnOffOpenButton, this);
 }
 
-static void turnOffOpenButton(int pin) {
+void GarageRemote::turnOffOpenButton() {
   ESP_LOGD(TAG, "turnOffOpenButton");
-  digitalWrite(pin, LOW);
+  gpio_set_level(this->openButtonPin, 0);
 }
 
-static void* readTargetDoorState(void* context) {
-  GarageRemote* garageRemote = (GarageRemote*)context;
-  return (void*)garageRemote->getTargetDoorState();
+static void _turnOffOpenButton(void* arg) {
+  GarageRemote* garageRemote = (GarageRemote*)arg;
+  garageRemote->turnOffOpenButton();
 }
 
-static void writeTargetDoorState(void* context, void* value, int length) {
-  GarageRemote* garageRemote = (GarageRemote*)context;
+/* Mandatory identify routine for the accessory.
+ * In a real accessory, something like LED blink should be implemented
+ * got visual identification
+ */
+static int identifyAccessory(hap_acc_t* ha) {
+  ESP_LOGI(TAG, "Accessory identified");
+  return HAP_SUCCESS;
+}
 
-  TargetDoorState state;
-  memcpy(&state, &value, sizeof(state));
+static int readCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv) {
+  const char* characteristicUUID = hap_char_get_type_uuid(hc);
+  ESP_LOGD(TAG, "readCharacteristic: %s", characteristicUUID);
+
+  GarageRemote* garageRemote = (GarageRemote*)serv_priv;
+  hap_val_t value;
+
+  if (strcmp(characteristicUUID, HAP_CHAR_UUID_TARGET_DOOR_STATE) == 0) {
+    value.u = garageRemote->getTargetDoorState();
+    hap_char_update_val(hc, &value);
+  } else if (strcmp(characteristicUUID, HAP_CHAR_UUID_CURRENT_DOOR_STATE) == 0) {
+    value.u = garageRemote->getCurrentDoorState();
+    hap_char_update_val(hc, &value);
+  }
+
+  *status_code = HAP_STATUS_SUCCESS;
+
+  return HAP_SUCCESS;
+}
+
+static int writeTargetDoorState(hap_write_data_t write_data[], int count, void* serv_priv, void* write_priv) {
+  GarageRemote* garageRemote = (GarageRemote*)serv_priv;
+
+  // TODO: Handle all data
+  hap_write_data_t* data = &write_data[0];
+  TargetDoorState state = (TargetDoorState)data->val.u;
 
   garageRemote->setTargetDoorState(state);
+
+  return HAP_SUCCESS;
 }
 
-static void* readCurrentDoorState(void* context) {
-  GarageRemote* garageRemote = (GarageRemote*)context;
-  return (void*)garageRemote->getCurrentDoorState();
+/**
+ * @brief The network reset button callback handler.
+ * Useful for testing the Wi-Fi re-configuration feature of WAC2
+ */
+static void resetNetworkConfiguration(void* arg) {
+  hap_reset_network();
+}
+
+/**
+ * @brief The factory reset button callback handler.
+ */
+static void resetToFactory(void* arg) {
+  hap_reset_to_factory();
+}
+
+static void delay(uint32_t ms) {
+  vTaskDelay(ms / portTICK_PERIOD_MS);
+}
+
+static void performLater(uint32_t milliseconds, callback_with_arg_t callback, void* arg) {
+  esp_timer_create_args_t config;
+  config.arg = reinterpret_cast<void*>(arg);
+  config.callback = callback;
+  config.dispatch_method = ESP_TIMER_TASK;
+  config.name = "Ticker";
+
+  if (timer) {
+    esp_timer_stop(timer);
+    esp_timer_delete(timer);
+  }
+
+  esp_timer_create(&config, &timer);
+  esp_timer_start_once(timer, milliseconds * 1000ULL);
 }

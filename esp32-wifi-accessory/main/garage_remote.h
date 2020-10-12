@@ -1,7 +1,8 @@
 #ifndef IPAD_CAR_INTEGRATION_GARAGE_H_
 #define IPAD_CAR_INTEGRATION_GARAGE_H_
 
-#include <Ticker.h>
+#include <hap.h>
+#include <driver/gpio.h>
 
 typedef enum {
   CurrentDoorStateOpen = 0,
@@ -18,23 +19,32 @@ typedef enum {
 
 class GarageRemote {
 public:
-  int powerButtonPin; // The brown-yellow wire in the car
-  int openButtonPin; // The brown-white wire in the car
-  struct hap_accessory* accessory;
+  gpio_num_t powerButtonPin; // The brown-yellow wire in the car
+  gpio_num_t openButtonPin; // The brown-white wire in the car
+  gpio_num_t resetButtonPin;
+  hap_acc_t* accessory;
+  hap_acc_cfg_t accessoryConfig;
   TargetDoorState targetDoorState;
   CurrentDoorState currentDoorState;
 
-  GarageRemote(int powerButtonPin, int openButtonPin);
+  GarageRemote(gpio_num_t powerButtonPin, gpio_num_t openButtonPin, gpio_num_t resetButtonPin);
   void registerHomeKitAccessory();
-  void registerHomeKitServicesAndCharacteristics();
+  void startHomeKitAccessory();
+  void printSetupQRCode();
 
   TargetDoorState getTargetDoorState();
   void setTargetDoorState(TargetDoorState state);
 
   CurrentDoorState getCurrentDoorState();
 
+  void turnOffOpenButton();
+
 private:
-  Ticker ticker;
+  void createAccessory();
+  void addGarageDoorOpenerService();
+  void addFirmwareUpgradeService();
+  void configureHomeKitSetupCode();
+  void initializeResetButton();
   void open();
 };
 
