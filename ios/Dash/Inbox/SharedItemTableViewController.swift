@@ -25,10 +25,6 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         tableView.dataSource = dataSource
 
         navigationItem.leftBarButtonItem = editButtonItem
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
 
         startObservingAuthState()
     }
@@ -77,18 +73,12 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
     }
 
     func database(_ database: SharedItemDatabase, didUpdateItems items: [SharedItemProtocol], withChanges changes: [SharedItemDatabase.Change]) {
-        DispatchQueue.global().async { [weak self] in
-            guard let self = self else { return }
-            self.dataSource.update(items: items, changes: changes, animatingDifferences: !self.dataSource.isEmpty)
-
-            DispatchQueue.main.async {
-                self.updateBadge(items: items)
-            }
-        }
+        dataSource.update(items: items, changes: changes, animatingDifferences: !dataSource.isEmpty)
+        updateBadge()
     }
 
-    func updateBadge(items: [SharedItemProtocol]) {
-        let unopenedCount = items.filter { !$0.hasBeenOpened }.count
+    func updateBadge() {
+        let unopenedCount = database.items.filter { !$0.hasBeenOpened }.count
         navigationController?.tabBarItem.badgeValue = (unopenedCount == 0) ? nil : "\(unopenedCount)"
     }
 

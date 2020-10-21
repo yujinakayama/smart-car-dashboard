@@ -40,6 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
         vehicle.connect()
 
+        for viewController in tabBarController.viewControllers! {
+            _ = viewController.view
+        }
+
         return true
     }
 
