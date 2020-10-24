@@ -69,7 +69,7 @@
 		B9588B5D23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */; };
 		B95BF23823EBF43900A30DE0 /* ETCCardEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95BF23723EBF43900A30DE0 /* ETCCardEditViewController.swift */; };
 		B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95BF23B23EBFFE300A30DE0 /* ETCCardView.swift */; };
-		B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */; };
+		B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift */; };
 		B95F514623E5A8540063CB3D /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514523E5A8540063CB3D /* Location.swift */; };
 		B95F514A23E5B2C10063CB3D /* Website.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514923E5B2C10063CB3D /* Website.swift */; };
 		B95F514C23E5B53F0063CB3D /* RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */; };
@@ -322,7 +322,7 @@
 		B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentDebugInformationViewController.swift; sourceTree = "<group>"; };
 		B95BF23723EBF43900A30DE0 /* ETCCardEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCCardEditViewController.swift; sourceTree = "<group>"; };
 		B95BF23B23EBFFE300A30DE0 /* ETCCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardView.swift; sourceTree = "<group>"; };
-		B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceStatusBar.swift; sourceTree = "<group>"; };
+		B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceStatusBarItemManager.swift; sourceTree = "<group>"; };
 		B95F514523E5A8540063CB3D /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		B95F514923E5B2C10063CB3D /* Website.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Website.swift; sourceTree = "<group>"; };
 		B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteNotification.swift; sourceTree = "<group>"; };
@@ -724,7 +724,7 @@
 				B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */,
 				B95BF23B23EBFFE300A30DE0 /* ETCCardView.swift */,
 				B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */,
-				B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBar.swift */,
+				B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift */,
 			);
 			path = ETC;
 			sourceTree = "<group>";
@@ -1428,7 +1428,7 @@
 				B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */,
 				B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */,
 				B9DC5B46229EB8B200B645D5 /* SerialPortManager.swift in Sources */,
-				B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBar.swift in Sources */,
+				B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift in Sources */,
 				B92C6EC324AC2F0A001E9675 /* ArtworkView.swift in Sources */,
 				B94E69D123F7A313004CCC7C /* WebsiteIcon.swift in Sources */,
 				B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */,

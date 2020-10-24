@@ -33,7 +33,7 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
 
     var device: ETCDevice!
 
-    lazy var deviceStatusBar = ETCDeviceStatusBar(device: device)
+    lazy var deviceStatusBarItemManager = ETCDeviceStatusBarItemManager(device: device)
 
     lazy var fetchedResultsController: NSFetchedResultsController<ETCCardManagedObject> = {
         let request: NSFetchRequest<ETCCardManagedObject> = ETCCardManagedObject.fetchRequest()
@@ -67,7 +67,8 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
 
     func setUpNavigationBar() {
         navigationItem.leftBarButtonItem = editButtonItem
-        navigationItem.rightBarButtonItems = deviceStatusBar.items
+        deviceStatusBarItemManager.tintColor = view.tintColor
+        deviceStatusBarItemManager.addBarItem(to: navigationItem)
     }
 
     func startObservingNotifications() {

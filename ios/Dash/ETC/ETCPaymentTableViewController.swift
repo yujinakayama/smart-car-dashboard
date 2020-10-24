@@ -14,7 +14,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
 
     var card: ETCCardManagedObject?
 
-    lazy var deviceStatusBar = ETCDeviceStatusBar(device: device)
+    lazy var deviceStatusBarItemManager = ETCDeviceStatusBarItemManager(device: device)
 
     lazy var fetchedResultsController: NSFetchedResultsController<ETCPaymentManagedObject> = {
         let request: NSFetchRequest<ETCPaymentManagedObject> = ETCPaymentManagedObject.fetchRequest()
@@ -59,7 +59,8 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
 
     func setUpNavigationBar() {
         navigationItem.title = card?.tentativeName ?? "All Payments"
-        navigationItem.rightBarButtonItems = deviceStatusBar.items
+        deviceStatusBarItemManager.tintColor = view.tintColor
+        deviceStatusBarItemManager.addBarItem(to: navigationItem)
     }
 
     func startObservingNotifications() {
