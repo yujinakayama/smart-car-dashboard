@@ -48,11 +48,11 @@ class ETCCardTableViewCell: UITableViewCell {
     }
 
     func updateNameLabel() {
-        if let name = card.name {
-            nameLabel.text = name
+        nameLabel.text = card.displayedName
+
+        if card.name != nil {
             nameLabel.textColor = UIColor.label
         } else {
-            nameLabel.text = card.tentativeName
             nameLabel.textColor = UIColor.secondaryLabel
         }
     }

@@ -42,7 +42,7 @@ class ETCCardManagedObject: NSManagedObject {
         }
     }
 
-    var tentativeName: String {
+    var displayedName: String {
         return name ?? "Unnamed Card"
     }
 }

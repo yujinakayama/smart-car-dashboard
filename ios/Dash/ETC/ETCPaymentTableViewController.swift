@@ -58,7 +58,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     }
 
     func setUpNavigationBar() {
-        navigationItem.title = card?.tentativeName ?? "All Payments"
+        navigationItem.title = card?.displayedName ?? "All Payments"
         deviceStatusBarItemManager.tintColor = view.tintColor
         deviceStatusBarItemManager.addBarItem(to: navigationItem)
     }
