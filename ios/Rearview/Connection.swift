@@ -21,7 +21,7 @@ class Connection {
 
     let connection: NWConnection
     var timeoutTimer: Timer?
-    let timeoutPeriod: TimeInterval = 3
+    let timeoutPeriod: TimeInterval = 1
     var isEstablished = false
 
     init(host: String, port: NWEndpoint.Port) {
