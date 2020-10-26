@@ -11,6 +11,7 @@ import Network
 
 protocol ConnectionDelegate: NSObjectProtocol {
     func connectionDidEstablish(_ connection: Connection)
+    func connectionDidTerminate(_ connection: Connection)
     func connectionDidTimeOut(_ connection: Connection)
     func connection(_ connection: Connection, didUpdateState state: NWConnection.State)
     func connection(_ connection: Connection, didReceiveData data: Data)
@@ -70,7 +71,15 @@ class Connection {
                 self.delegate?.connection(self, didReceiveData: data)
             }
 
-            self.readReceivedData()
+            if let error = error {
+                logger.error(error)
+            }
+
+            if completed {
+                self.delegate?.connectionDidTerminate(self)
+            } else {
+                self.readReceivedData()
+            }
         }
     }
 

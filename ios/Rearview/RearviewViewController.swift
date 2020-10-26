@@ -134,6 +134,15 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
         }
     }
 
+    func connectionDidTerminate(_ connection: Connection) {
+        logger.error()
+
+        DispatchQueue.main.async { [weak self] in
+            self?.retry()
+        }
+    }
+
+    // TODO: NWConnection.State handling should be done in Connection and should not be exposed to delegate
     func connection(_ connection: Connection, didUpdateState state: NWConnection.State) {
         logger.info(state)
 
