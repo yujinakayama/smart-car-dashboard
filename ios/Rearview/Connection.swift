@@ -11,9 +11,7 @@ import Network
 
 protocol ConnectionDelegate: NSObjectProtocol {
     func connectionDidEstablish(_ connection: Connection)
-    func connectionDidTerminate(_ connection: Connection)
-    func connectionDidTimeOut(_ connection: Connection)
-    func connection(_ connection: Connection, didUpdateState state: NWConnection.State)
+    func connection(_ connection: Connection, didTerminateWithReason reason: Connection.TerminationReason)
     func connection(_ connection: Connection, didReceiveData data: Data)
 }
 
@@ -21,7 +19,8 @@ class Connection {
     weak var delegate: ConnectionDelegate?
 
     let connection: NWConnection
-    var timeoutTimer: Timer?
+    lazy var dispatchQueue = DispatchQueue(label: "NWConnection")
+    var timeoutTimer: DispatchSourceTimer?
     let timeoutPeriod: TimeInterval = 1
     var isEstablished = false
 
@@ -34,40 +33,47 @@ class Connection {
     }
 
     func connect() {
-        connection.start(queue: DispatchQueue(label: "NWConnection"))
-
-        timeoutTimer = Timer.scheduledTimer(withTimeInterval: timeoutPeriod, repeats: false, block: { [weak self] (timer) in
-            guard let self = self else { return }
-            if self.connection.state == .ready { return }
-            self.delegate?.connectionDidTimeOut(self)
-        })
+        connection.start(queue: dispatchQueue)
+        scheduleTimeoutTimer()
     }
 
     func disconnect() {
-        connection.cancel()
+        if connection.state != .cancelled {
+            connection.cancel()
+        }
+    }
+
+    private func terminate(reason: TerminationReason) {
         isEstablished = false
-
-        timeoutTimer?.invalidate()
+        timeoutTimer?.cancel()
+        delegate?.connection(self, didTerminateWithReason: reason)
     }
 
-    func handleStateUpdate() {
-        if !isEstablished && connection.state == .ready {
-            isEstablished = true
-            delegate?.connectionDidEstablish(self)
-        }
+    private func handleStateUpdate() {
+        logger.debug(connection.state)
 
-        delegate?.connection(self, didUpdateState: connection.state)
-
-        if connection.state == .ready {
+        switch connection.state {
+        case .ready:
+            if !isEstablished {
+                isEstablished = true
+                delegate?.connectionDidEstablish(self)
+            }
             readReceivedData()
+        case .cancelled:
+            terminate(reason: .closedByClient)
+        case .failed:
+            terminate(reason: .error)
+        default:
+            break
         }
     }
 
-    func readReceivedData() {
+    private func readReceivedData() {
         connection.receive(minimumIncompleteLength: 500, maximumLength: 100000) { [weak self] (data, context, completed, error) in
             guard let self = self else { return }
 
             if let data = data {
+                self.scheduleTimeoutTimer()
                 self.delegate?.connection(self, didReceiveData: data)
             }
 
@@ -76,11 +82,35 @@ class Connection {
             }
 
             if completed {
-                self.delegate?.connectionDidTerminate(self)
-            } else {
+                self.terminate(reason: .closedByServer)
+            } else if self.isEstablished {
                 self.readReceivedData()
             }
         }
     }
 
+    private func scheduleTimeoutTimer() {
+        timeoutTimer?.cancel()
+
+        let timer = DispatchSource.makeTimerSource(flags: [], queue: dispatchQueue)
+
+        timer.setEventHandler { [weak self] in
+            guard let self = self else { return }
+            self.terminate(reason: .timeout)
+        }
+
+        timer.schedule(deadline: .now() + timeoutPeriod)
+        timer.resume()
+
+        timeoutTimer = timer
+    }
+}
+
+extension Connection {
+    enum TerminationReason {
+        case closedByClient
+        case closedByServer
+        case error
+        case timeout
+    }
 }

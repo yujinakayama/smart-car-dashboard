@@ -79,11 +79,6 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
 
     @objc func stop() {
         connection?.disconnect()
-
-        expiredFrameFlushingTimer?.invalidate()
-        lastFrameTime = nil
-
-        flushImage()
     }
 
     func retry() {
@@ -126,31 +121,20 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
         }
     }
 
-    func connectionDidTimeOut(_ connection: Connection) {
-        logger.error()
+    func connection(_ connection: Connection, didTerminateWithReason reason: Connection.TerminationReason) {
+        logger.info(reason)
 
         DispatchQueue.main.async { [weak self] in
-            self?.retry()
-        }
-    }
+            guard let self = self else { return }
 
-    func connectionDidTerminate(_ connection: Connection) {
-        logger.error()
+            self.expiredFrameFlushingTimer?.invalidate()
+            self.lastFrameTime = nil
 
-        DispatchQueue.main.async { [weak self] in
-            self?.retry()
-        }
-    }
+            self.flushImage()
 
-    // TODO: NWConnection.State handling should be done in Connection and should not be exposed to delegate
-    func connection(_ connection: Connection, didUpdateState state: NWConnection.State) {
-        logger.info(state)
-
-        switch state {
-        case .cancelled, .failed, .waiting:
-            flushImage()
-        default:
-            break
+            if reason != .closedByClient {
+                self.retry()
+            }
         }
     }
 
