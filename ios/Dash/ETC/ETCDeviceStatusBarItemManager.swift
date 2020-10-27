@@ -64,11 +64,12 @@ class ETCDeviceStatusBarItemManager {
     }
 
     private func makeCardBarButtonItem(for cardName: String, color: UIColor?) -> UIBarButtonItem {
-        let label = CardLabel(insets: UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 5))
+        let label = CardLabel(insets: UIEdgeInsets(top: 4, left: 6, bottom: 4, right: 6))
         label.text = cardName
-        label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
-        label.textColor = .white
-        label.backgroundColor = color
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.textColor = color
+        label.borderColor = color
+        label.layer.borderWidth = 1.0 / UIScreen.main.scale
         label.layer.cornerRadius = 5
         label.layer.masksToBounds = true
 
@@ -79,6 +80,19 @@ class ETCDeviceStatusBarItemManager {
 extension ETCDeviceStatusBarItemManager {
     class CardLabel: UILabel {
         let insets: UIEdgeInsets
+
+        var borderColor: UIColor? {
+            get {
+                return _borderColor
+            }
+
+            set {
+                _borderColor = newValue
+                applyBorderColor()
+            }
+        }
+
+        private var _borderColor: UIColor?
 
         init(insets: UIEdgeInsets) {
             self.insets = insets
@@ -106,6 +120,18 @@ extension ETCDeviceStatusBarItemManager {
             fittingSize.width = fittingSize.width + insets.left + insets.right
             fittingSize.height = fittingSize.height + insets.top + insets.bottom
             return fittingSize
+        }
+
+        override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+            super.traitCollectionDidChange(previousTraitCollection)
+
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                applyBorderColor()
+            }
+        }
+
+        private func applyBorderColor() {
+            layer.borderColor = _borderColor?.resolvedColor(with: traitCollection).cgColor
         }
     }
 }

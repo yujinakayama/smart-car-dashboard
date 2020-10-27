@@ -67,7 +67,7 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
 
     func setUpNavigationBar() {
         navigationItem.leftBarButtonItem = editButtonItem
-        deviceStatusBarItemManager.tintColor = view.tintColor
+        deviceStatusBarItemManager.tintColor = .label
         deviceStatusBarItemManager.addBarItem(to: navigationItem)
     }
 
