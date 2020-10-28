@@ -13,8 +13,6 @@ class ETCDeviceStatusBarItemManager {
 
     weak var navigationItem: UINavigationItem?
 
-    var tintColor: UIColor?
-
     private lazy var disconnectedStatusBarButtonItem: UIBarButtonItem = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "bolt.slash.fill")
@@ -54,9 +52,9 @@ class ETCDeviceStatusBarItemManager {
 
         if device.isConnected {
             if let card = device.currentCard {
-                navigationItem.rightBarButtonItem = makeCardBarButtonItem(for: card.displayedName, color: tintColor)
+                navigationItem.rightBarButtonItem = makeCardBarButtonItem(for: card.displayedName, color: .secondaryLabel)
             } else {
-                navigationItem.rightBarButtonItem = makeCardBarButtonItem(for: "No Card", color: UIColor(named: "Inactive Bar Item Color"))
+                navigationItem.rightBarButtonItem = makeCardBarButtonItem(for: "No Card", color: .systemRed)
             }
         } else {
             navigationItem.rightBarButtonItem = disconnectedStatusBarButtonItem
@@ -64,13 +62,13 @@ class ETCDeviceStatusBarItemManager {
     }
 
     private func makeCardBarButtonItem(for cardName: String, color: UIColor?) -> UIBarButtonItem {
-        let label = CardLabel(insets: UIEdgeInsets(top: 4, left: 6, bottom: 4, right: 6))
+        let label = CardLabel(insets: UIEdgeInsets(top: 4, left: 7, bottom: 4, right: 7))
         label.text = cardName
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         label.textColor = color
         label.borderColor = color
-        label.layer.borderWidth = 1.0 / UIScreen.main.scale
-        label.layer.cornerRadius = 5
+        label.layer.borderWidth = 1
+        label.layer.cornerRadius = 6
         label.layer.masksToBounds = true
 
         return UIBarButtonItem(customView: label)
