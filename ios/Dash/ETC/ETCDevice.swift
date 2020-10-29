@@ -25,7 +25,7 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
     var connection: ETCDeviceConnection?
 
     var isConnected: Bool {
-        return connection?.isAvailable ?? false
+        return connection?.isEstablished ?? false
     }
 
     var currentCard: ETCCardManagedObject? {

@@ -26,7 +26,7 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
 
     var unprocessedData = Data()
 
-    var isAvailable: Bool {
+    var isEstablished: Bool {
         return serialPort.isAvailable && handshakeStatus == .complete
     }
 
