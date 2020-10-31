@@ -11,7 +11,7 @@ import MapKit
 import TransitionButton
 import DashShareKit
 
-class MapViewController: UIViewController, MKMapViewDelegate, SignInWithAppleViewControllerDelegate, AccountDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, AccountDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var pickUpButton: TransitionButton!
 
@@ -22,32 +22,33 @@ class MapViewController: UIViewController, MKMapViewDelegate, SignInWithAppleVie
         super.viewDidLoad()
 
         Account.default.delegate = self
+    }
 
-        Account.default.checkSignInState { (signedIn) in
-            if signedIn {
-                self.setUpMapView()
-            } else {
-                self.showSignInWithApple()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        showRequirementsIfNeeded()
+    }
+
+    func accountDidSignOut(_ account: Account) {
+        showRequirementsIfNeeded()
+    }
+
+    func showRequirementsIfNeeded() {
+        if PairedVehicle.defaultVehicleID == nil {
+            showPairingRequirement()
+        } else {
+            Account.default.checkSignInState { (signedIn) in
+                if signedIn {
+                    self.setUpMapView()
+                } else {
+                    self.showSignInWithApple()
+                }
             }
         }
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        switch segue.identifier {
-        case "signInWithApple":
-            let signInWithAppleViewController = segue.destination as! SignInWithAppleViewController
-            signInWithAppleViewController.delegate = self
-        default:
-            break
-        }
-    }
-
-    func signInWithAppleViewControllerDidCompleteAuthorization(_ viewController: SignInWithAppleViewController) {
-        setUpMapView()
-    }
-
-    func accountDidSignOut(_ account: Account) {
-        showSignInWithApple()
+    func showPairingRequirement() {
+        performSegue(withIdentifier: "pairingRequirement", sender: nil)
     }
 
     func showSignInWithApple() {
@@ -91,13 +92,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, SignInWithAppleVie
     }
 
     func share(mapItem: MKMapItem, url: URL) {
+        guard let vehicleID = PairedVehicle.defaultVehicleID else { return }
+
         let encoder = SharingItem.Encoder()
         encoder.add(mapItem)
         encoder.add(url)
 
         let sharingItem = SharingItem(encoder: encoder)
 
-        sharingItem.share { (error) in
+        sharingItem.share(with: vehicleID) { (error) in
             if error != nil {
                 self.pickUpButton.stopAnimation(animationStyle: .shake, revertAfterDelay: 1)
             } else {

@@ -24,7 +24,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         dataSource = makeDataSource()
         tableView.dataSource = dataSource
 
-        navigationItem.leftBarButtonItem = editButtonItem
+        setUpNavigationItem()
 
         startObservingAuthState()
     }
@@ -32,6 +32,15 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
     deinit {
         database.endUpdating()
         endObservingAuthState()
+    }
+
+    func setUpNavigationItem() {
+        navigationItem.leftBarButtonItem = editButtonItem
+
+        let pairingMenuItem = UIAction(title: "Pair with Dash Remote") { [unowned self] (action) in
+            self.sharePairingURL()
+        }
+        navigationItem.rightBarButtonItem?.menu = UIMenu(title: "", children: [pairingMenuItem])
     }
 
     func makeDataSource() -> SharedItemTableViewDataSource {
@@ -98,5 +107,13 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
         }
+    }
+
+    func sharePairingURL() {
+        guard let vehicleID = Auth.auth().currentUser?.uid else { return }
+
+        let pairingURLItem = PairingURLItem(vehicleID: vehicleID)
+        let activityViewController = UIActivityViewController(activityItems: [pairingURLItem], applicationActivities: nil)
+        present(activityViewController, animated: true)
     }
 }

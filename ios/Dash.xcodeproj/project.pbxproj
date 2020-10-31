@@ -11,6 +11,8 @@
 		05AF2A4656E64E69DD4EAD79 /* Pods_Rearview.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9233EBD8F1F59FBBA4C36D4 /* Pods_Rearview.framework */; };
 		0B41F2C816E331BA2FB139A3 /* Pods_DashRemote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A188A66685EA4375D4818F /* Pods_DashRemote.framework */; };
 		412025EE69F3FE2D953808D6 /* Pods_DashRemote_ShareExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B941AEADBC8F07DBE594C95A /* Pods_DashRemote_ShareExtension.framework */; };
+		B9025F63254D21E1001E25DF /* PairedVehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A676254D0EB30012A4CB /* PairedVehicle.swift */; };
+		B9025F68254D2260001E25DF /* PairedVehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A676254D0EB30012A4CB /* PairedVehicle.swift */; };
 		B90265AB23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90265AA23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift */; };
 		B904A2A6243968990087BD4A /* MapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B904A2A5243968990087BD4A /* MapsViewController.swift */; };
 		B90666DE247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90666DD247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift */; };
@@ -19,6 +21,7 @@
 		B91B5DD523ED7886003F4AEF /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91B5DD423ED7886003F4AEF /* Account.swift */; };
 		B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
 		B91BD8092323FD820064D2B5 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
+		B91E0B62254D047D002928D3 /* PairingURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E0B61254D047D002928D3 /* PairingURLItem.swift */; };
 		B92451D423E30ACE007556D5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B92451D323E30ACE007556D5 /* Settings.bundle */; };
 		B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */; };
 		B929FAFA24CECAC800BC773A /* AppleMusic.h in Headers */ = {isa = PBXBuildFile; fileRef = B929FAF824CECAC800BC773A /* AppleMusic.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -87,6 +90,7 @@
 		B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */; };
 		B9741F7523DF200600F061E7 /* SharedItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */; };
 		B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97BAE6124B61DB100AE7D13 /* Vehicle.swift */; };
+		B988A66C254D0E570012A4CB /* PairingRequirementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A66B254D0E570012A4CB /* PairingRequirementViewController.swift */; };
 		B98B783723ED4C3F00A5102F /* DashShareKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B98B783523ED4C3F00A5102F /* DashShareKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B98B783A23ED4C3F00A5102F /* DashShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; };
 		B98B783B23ED4C3F00A5102F /* DashShareKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -261,12 +265,14 @@
 		79A188A66685EA4375D4818F /* Pods_DashRemote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DashRemote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		869C973AA26AD90E148028FB /* Pods-Dash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dash.release.xcconfig"; path = "Target Support Files/Pods-Dash/Pods-Dash.release.xcconfig"; sourceTree = "<group>"; };
 		A383EF13705DD2A97098F1F8 /* Pods-DashRemote-ShareExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote-ShareExtension.release.xcconfig"; path = "Target Support Files/Pods-DashRemote-ShareExtension/Pods-DashRemote-ShareExtension.release.xcconfig"; sourceTree = "<group>"; };
+		B9025F62254D2180001E25DF /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
 		B90265AA23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemTableViewDataSource.swift; sourceTree = "<group>"; };
 		B904A2A5243968990087BD4A /* MapsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsViewController.swift; sourceTree = "<group>"; };
 		B90666DD247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTypeSegmentedControlIndex.swift; sourceTree = "<group>"; };
 		B90700A3250E31B1004E7D7A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B90E21F824CBB1BF008330AD /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		B91B5DD423ED7886003F4AEF /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		B91E0B61254D047D002928D3 /* PairingURLItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingURLItem.swift; sourceTree = "<group>"; };
 		B9233EBD8F1F59FBBA4C36D4 /* Pods_Rearview.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rearview.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B92451D323E30ACE007556D5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B92451D523E3204D007556D5 /* GoogleServieInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleServieInfo.swift; sourceTree = "<group>"; };
@@ -343,6 +349,8 @@
 		B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemTableViewController.swift; sourceTree = "<group>"; };
 		B97BAE6124B61DB100AE7D13 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
+		B988A66B254D0E570012A4CB /* PairingRequirementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingRequirementViewController.swift; sourceTree = "<group>"; };
+		B988A676254D0EB30012A4CB /* PairedVehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairedVehicle.swift; sourceTree = "<group>"; };
 		B98B783323ED4C3F00A5102F /* DashShareKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DashShareKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B98B783523ED4C3F00A5102F /* DashShareKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DashShareKit.h; sourceTree = "<group>"; };
 		B98B783623ED4C3F00A5102F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -576,9 +584,11 @@
 				B964BCC223E066FF00288E0D /* AppDelegate.swift */,
 				B964BCC423E066FF00288E0D /* SceneDelegate.swift */,
 				B964BCC623E066FF00288E0D /* MapViewController.swift */,
-				B9A481FF23EF025200AA7590 /* SuccessViewController.swift */,
-				B98B784C23ED530E00A5102F /* SignInWithAppleViewController.swift */,
 				B932E5EF23F9082600726615 /* Location.swift */,
+				B9A481FF23EF025200AA7590 /* SuccessViewController.swift */,
+				B988A66B254D0E570012A4CB /* PairingRequirementViewController.swift */,
+				B988A676254D0EB30012A4CB /* PairedVehicle.swift */,
+				B98B784C23ED530E00A5102F /* SignInWithAppleViewController.swift */,
 				B91B5DD423ED7886003F4AEF /* Account.swift */,
 				B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */,
 				B98B784E23ED583600A5102F /* AppIconImageView.swift */,
@@ -595,6 +605,7 @@
 		B964BCD923E067EB00288E0D /* ShareExtension */ = {
 			isa = PBXGroup;
 			children = (
+				B9025F62254D2180001E25DF /* ShareExtension.entitlements */,
 				B964BCDA23E067EB00288E0D /* ShareViewController.swift */,
 				B964BCDC23E067EB00288E0D /* MainInterface.storyboard */,
 				B964BCDF23E067EB00288E0D /* Info.plist */,
@@ -616,6 +627,7 @@
 				B9B717DD23E6B26900A47207 /* UnknownItem.swift */,
 				B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */,
 				B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */,
+				B91E0B61254D047D002928D3 /* PairingURLItem.swift */,
 			);
 			path = Inbox;
 			sourceTree = "<group>";
@@ -1379,6 +1391,8 @@
 				B9A481FE23EF01DB00AA7590 /* SuccessCheckmarkView.swift in Sources */,
 				B9C2456523EDBB4800E00523 /* FloatButton.swift in Sources */,
 				B964BCC323E066FF00288E0D /* AppDelegate.swift in Sources */,
+				B9025F63254D21E1001E25DF /* PairedVehicle.swift in Sources */,
+				B988A66C254D0E570012A4CB /* PairingRequirementViewController.swift in Sources */,
 				B964BCC523E066FF00288E0D /* SceneDelegate.swift in Sources */,
 				B98B784D23ED530E00A5102F /* SignInWithAppleViewController.swift in Sources */,
 				B98B784F23ED583600A5102F /* AppIconImageView.swift in Sources */,
@@ -1390,6 +1404,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B964BCDB23E067EB00288E0D /* ShareViewController.swift in Sources */,
+				B9025F68254D2260001E25DF /* PairedVehicle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1462,6 +1477,7 @@
 				B99D4F2824C0526200647A10 /* BluetoothAudioDevice.swift in Sources */,
 				B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */,
 				B9FB33E124AE2ACD00FEB782 /* PlaybackModeButton.swift in Sources */,
+				B91E0B62254D047D002928D3 /* PairingURLItem.swift in Sources */,
 				B92E2AFC23E4958200BB4C0E /* UNNotificationContentExtension.swift in Sources */,
 				B9DB8E5522D7A410003E4BD8 /* Dash.xcdatamodeld in Sources */,
 				B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */,
@@ -1708,6 +1724,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 018C0FC4E70FD814CF520AD5 /* Pods-DashRemote-ShareExtension.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 8LSN3WQC77;
@@ -1731,6 +1748,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A383EF13705DD2A97098F1F8 /* Pods-DashRemote-ShareExtension.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 8LSN3WQC77;

@@ -18,6 +18,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+
+        // https://celsiusnotes.com/url-schemes-in-ios/
+        if connectionOptions.urlContexts.count > 0 {
+            self.scene(scene, openURLContexts: connectionOptions.urlContexts)
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -48,6 +53,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else { return }
+        handleURL(url)
+    }
 
+    private func handleURL(_ url: URL) {
+        guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return }
+
+        guard let action = urlComponents.host else { return }
+
+        switch action {
+        case "pair":
+            handlePairing(urlComponents: urlComponents)
+        default:
+            break
+        }
+    }
+
+    private func handlePairing(urlComponents: URLComponents) {
+        guard let vehicleID = urlComponents.queryItems?.first(where: { $0.name == "vehicleID" })?.value  else { return }
+
+        PairedVehicle.defaultVehicleID = vehicleID
+
+        let alertController = UIAlertController(
+            title: nil,
+            message: "Pairing completed.",
+            preferredStyle: .alert
+        )
+
+        alertController.addAction(UIAlertAction(title: "OK", style: .default))
+
+        window?.rootViewController?.present(alertController, animated: true)
+    }
 }
 

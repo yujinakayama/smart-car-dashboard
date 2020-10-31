@@ -21,24 +21,29 @@ public class SharingItem {
         self.encoder = encoder
     }
 
-    public func share(completionHandler: @escaping (Error?) -> Void) {
+    public func share(with vehicleID: String, completionHandler: @escaping (Error?) -> Void) {
         encoder.encode { (result) in
             switch result {
             case .success(let encodedDictionary):
-                self.send(encodedDictionary, completionHandler: completionHandler)
+                self.send(encodedDictionary, to: vehicleID, completionHandler: completionHandler)
             case .failure(let error):
                 completionHandler(error)
             }
         }
     }
 
-    private func send(_ dictionary: [String: Any], completionHandler: @escaping (Error?) -> Void) {
+    private func send(_ itemDictionary: [String: Any], to vehicleID: String, completionHandler: @escaping (Error?) -> Void) {
         var request = URLRequest(url: endPointURL)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
+        let payload: [String: Any] = [
+            "vehicleID": vehicleID,
+            "item": itemDictionary
+        ]
+
         do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: dictionary)
+            request.httpBody = try JSONSerialization.data(withJSONObject: payload)
         } catch {
             completionHandler(error)
         }
