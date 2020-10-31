@@ -2,6 +2,11 @@ import { URL } from 'url';
 
 import { urlPattern } from './util';
 
+export interface Request {
+    vehicleID: string;
+    item: RawInputData;
+}
+
 export class InputData {
     rawData: RawInputData;
     url: URL;

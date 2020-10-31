@@ -23,11 +23,11 @@ enum UNNotificationPresentationOptions {
     alert = 1 << 2
 }
 
-export function notify(item: Item, identifier: string): Promise<any> {
-    const payload = makeNotificationPayload(item, identifier);
+export function notify(vehicleID: string, item: Item, itemIdentifier: string): Promise<any> {
+    const payload = makeNotificationPayload(item, itemIdentifier);
 
     const message = {
-        topic: 'Dash',
+        topic: vehicleID,
         apns: {
             // admin.messaging.ApnsPayload type requires `object` value for custom keys but it's wrong
             payload: payload as any

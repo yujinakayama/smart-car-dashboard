@@ -108,6 +108,7 @@
 		B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E722A9553A00BA08AB /* MockSerialPort.swift */; };
 		B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */; };
 		B9989E3E23E8752100FAFD06 /* Share.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9989E3D23E8752100FAFD06 /* Share.wav */; };
+		B9994293254D82A100E535C3 /* FirebaseAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9994292254D82A100E535C3 /* FirebaseAuthentication.swift */; };
 		B99D4F2824C0526200647A10 /* BluetoothAudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99D4F2724C0526200647A10 /* BluetoothAudioDevice.swift */; };
 		B9A45A9B252C229200CA7921 /* SharedItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A45A9A252C229200CA7921 /* SharedItemDatabase.swift */; };
 		B9A481FE23EF01DB00AA7590 /* SuccessCheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */; };
@@ -366,6 +367,7 @@
 		B99356E722A9553A00BA08AB /* MockSerialPort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSerialPort.swift; sourceTree = "<group>"; };
 		B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCPaymentTableViewCell.swift; sourceTree = "<group>"; };
 		B9989E3D23E8752100FAFD06 /* Share.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Share.wav; sourceTree = "<group>"; };
+		B9994292254D82A100E535C3 /* FirebaseAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthentication.swift; sourceTree = "<group>"; };
 		B99D4F2724C0526200647A10 /* BluetoothAudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothAudioDevice.swift; sourceTree = "<group>"; };
 		B9A3C09423E163F500EF1C4A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../ShareExtension/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9A45A9A252C229200CA7921 /* SharedItemDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemDatabase.swift; sourceTree = "<group>"; };
@@ -811,6 +813,7 @@
 				B904A2A4243968840087BD4A /* Maps */,
 				B97B0D8724C040A9006B675B /* BluetoothAudio */,
 				B97BAE6124B61DB100AE7D13 /* Vehicle.swift */,
+				B9994292254D82A100E535C3 /* FirebaseAuthentication.swift */,
 				B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */,
 				B942554F22BAA5D1008B053B /* LocalNotification.swift */,
 				B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */,
@@ -1462,6 +1465,7 @@
 				B9D0260E24BF7704005C03B1 /* BluetoothDeviceHandler.m in Sources */,
 				B95BF23823EBF43900A30DE0 /* ETCCardEditViewController.swift in Sources */,
 				B9D0261024BF7704005C03B1 /* ClassicBluetoothDevice.swift in Sources */,
+				B9994293254D82A100E535C3 /* FirebaseAuthentication.swift in Sources */,
 				B9FA6CC824CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift in Sources */,
 				B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */,
 				B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */,

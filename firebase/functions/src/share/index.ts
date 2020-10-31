@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
-import { RawInputData, InputData } from './inputData';
+import { Request, InputData } from './inputData';
 import { NormalizedData } from './normalizedData';
 import { Item } from './item';
 import { isAppleMapsLocation, normalizeAppleMapsLocation } from './appleMaps';
@@ -11,27 +11,27 @@ import { normalizeWebpage } from './website';
 import { notify } from './notification';
 
 export const share = functions.region('asia-northeast1').https.onRequest(async (functionRequest, functionResponse) => {
-    const rawData = functionRequest.body as RawInputData;
-    const inputData = new InputData(rawData);
+    const request = functionRequest.body as Request;
 
-    console.log('rawData:', rawData);
+    console.log('request:', request);
 
+    const inputData = new InputData(request.item);
     const normalizedData = await normalize(inputData);
 
     console.log('normalizedData:', normalizedData);
 
     const item = {
         hasBeenOpened: false,
-        raw: rawData,
+        raw: request.item,
         ...normalizedData
     };
 
     // Create a Firestore document without network access to get document identifier
     // https://github.com/googleapis/nodejs-firestore/blob/v3.8.6/dev/src/reference.ts#L2414-L2479
-    const document = admin.firestore().collection('items').doc();
+    const document = admin.firestore().collection('vehicles').doc(request.vehicleID).collection('items').doc();
 
     await Promise.all([
-        notify(item, document.id),
+        notify(request.vehicleID, item, document.id),
         addItemToFirestore(item, document)
     ]);
 
