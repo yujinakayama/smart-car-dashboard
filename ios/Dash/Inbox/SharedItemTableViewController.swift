@@ -24,10 +24,10 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         dataSource = makeDataSource()
         tableView.dataSource = dataSource
 
-        setUpNavigationItem()
+        NotificationCenter.default.addObserver(self, selector: #selector(firebaseAuthenticationDidChangeVehicleID), name: .FirebaseAuthenticationDidChangeVehicleID, object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(rebuildDatabase), name: .FirebaseAuthenticationDidChangeVehicleID, object: nil)
-        rebuildDatabase()
+        buildDatabase()
+        setUpNavigationItem()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -35,6 +35,34 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
         if FirebaseAuthentication.vehicleID == nil {
             showSignInView()
+        }
+    }
+
+    func makeDataSource() -> SharedItemTableViewDataSource {
+        return SharedItemTableViewDataSource(tableView: tableView) { (tableView, indexPath, itemIdentifier) in
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SharedItemTableViewCell") as! SharedItemTableViewCell
+            cell.item = self.dataSource.item(for: indexPath)
+            return cell
+        }
+    }
+
+    @objc func firebaseAuthenticationDidChangeVehicleID() {
+        buildDatabase()
+        setUpNavigationItem()
+    }
+
+    @objc func buildDatabase() {
+        if let vehicleID = FirebaseAuthentication.vehicleID {
+            let database = SharedItemDatabase(vehicleID: vehicleID)
+            database.delegate = self
+            database.startUpdating()
+            self.database = database
+        } else {
+            database = nil
+            dataSource.update(items: [])
+            if isVisible {
+                showSignInView()
+            }
         }
     }
 
@@ -49,30 +77,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
             try? Auth.auth().signOut()
         }
 
-        navigationItem.rightBarButtonItem?.menu = UIMenu(title: "", children: [pairingMenuItem, signOutMenuItem])
-    }
-
-    func makeDataSource() -> SharedItemTableViewDataSource {
-        return SharedItemTableViewDataSource(tableView: tableView) { (tableView, indexPath, itemIdentifier) in
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SharedItemTableViewCell") as! SharedItemTableViewCell
-            cell.item = self.dataSource.item(for: indexPath)
-            return cell
-        }
-    }
-
-    @objc func rebuildDatabase() {
-        if let vehicleID = FirebaseAuthentication.vehicleID {
-            let database = SharedItemDatabase(vehicleID: vehicleID)
-            database.delegate = self
-            database.startUpdating()
-            self.database = database
-        } else {
-            database = nil
-            dataSource.update(items: [])
-            if isVisible {
-                showSignInView()
-            }
-        }
+        navigationItem.rightBarButtonItem?.menu = UIMenu(title: FirebaseAuthentication.email ?? "", children: [pairingMenuItem, signOutMenuItem])
     }
 
     func database(_ database: SharedItemDatabase, didUpdateItems items: [SharedItemProtocol], withChanges changes: [SharedItemDatabase.Change]) {

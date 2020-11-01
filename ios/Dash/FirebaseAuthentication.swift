@@ -23,6 +23,10 @@ class FirebaseAuthentication {
         return Auth.auth().currentUser?.uid
     }
 
+    static var email: String? {
+        return Auth.auth().currentUser?.email
+    }
+
     private static var previousVehicleID: String?
 
     private static var authStateListener: AuthStateDidChangeListenerHandle?
