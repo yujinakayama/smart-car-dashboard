@@ -11,6 +11,12 @@ import { normalizeWebpage } from './website';
 import { notify } from './notification';
 
 export const share = functions.region('asia-northeast1').https.onRequest(async (functionRequest, functionResponse) => {
+    if (functionRequest.method === 'GET') {
+        await warmUpFirestore();
+        functionResponse.sendStatus(200);
+        return;
+    }
+
     const request = functionRequest.body as Request;
 
     console.log('request:', request);
@@ -37,6 +43,13 @@ export const share = functions.region('asia-northeast1').https.onRequest(async (
 
     functionResponse.sendStatus(200);
 });
+
+function warmUpFirestore(): Promise<any> {
+    // Initial call to Firestore client takes about 5 seconds,
+    // so we warm up the client every 2 minutes.
+    // https://github.com/firebase/firebase-functions/issues/263#issuecomment-397129178
+    return admin.firestore().collection('vehicles').get();
+}
 
 function normalize(inputData: InputData): Promise<NormalizedData> {
     if (isAppleMapsLocation(inputData)) {
