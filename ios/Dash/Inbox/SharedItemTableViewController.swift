@@ -112,6 +112,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
         let pairingURLItem = PairingURLItem(vehicleID: vehicleID)
         let activityViewController = UIActivityViewController(activityItems: [pairingURLItem], applicationActivities: nil)
+        activityViewController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(activityViewController, animated: true)
     }
 }
