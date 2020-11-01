@@ -10,6 +10,7 @@ import UIKit
 import FirebaseCore
 import FirebaseMessaging
 import GoogleSignIn
+import FirebaseFirestore
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -46,7 +47,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
         FirebaseAuthentication.beginGeneratingVehicleIDNotifications()
 
+        migrateSharedItems()
+
         return true
+    }
+
+    func migrateSharedItems() {
+        let firestore = Firestore.firestore()
+        let rootItems = firestore.collection("items")
+        let vehicleItems = firestore.collection("vehicles").document(FirebaseAuthentication.vehicleID!).collection("items")
+
+        rootItems.getDocuments { (snapshot, error) in
+            guard error == nil else { abort() }
+            guard let snapshot = snapshot else { abort() }
+
+            for document in snapshot.documents {
+                logger.info("Copying document \(document.documentID)")
+                vehicleItems.addDocument(data: document.data())
+            }
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
