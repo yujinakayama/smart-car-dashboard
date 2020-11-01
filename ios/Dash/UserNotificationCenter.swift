@@ -26,6 +26,7 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, Messag
         super.init()
         notificationCenter.delegate = self
         Messaging.messaging().delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(firebaseAuthenticationDidUpdateVehicleID), name: .FirebaseAuthenticationDidChangeVehicleID, object: nil)
     }
 
     func setUp() {
@@ -84,7 +85,18 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, Messag
 
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         logger.debug(fcmToken)
-        Messaging.messaging().subscribe(toTopic: "Dash")
+    }
+
+    @objc func firebaseAuthenticationDidUpdateVehicleID(notification: Notification) {
+        if let oldVehicleID = notification.userInfo?[FirebaseAuthentication.UserInfoKey.oldVehicleID] as? String {
+            logger.info("Unsubscribing from topic \(oldVehicleID)")
+            Messaging.messaging().unsubscribe(fromTopic: oldVehicleID)
+        }
+
+        if let newVehicleID = notification.userInfo?[FirebaseAuthentication.UserInfoKey.newVehicleID] as? String {
+            logger.info("Subscribing to topic \(newVehicleID)")
+            Messaging.messaging().subscribe(toTopic: newVehicleID)
+        }
     }
 }
 

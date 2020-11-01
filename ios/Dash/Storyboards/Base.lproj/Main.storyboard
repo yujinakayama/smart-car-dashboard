@@ -170,7 +170,7 @@
                                 <rect key="frame" x="0.0" y="137.5" width="1024" height="68.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yhp-zq-xeI" id="l4J-ek-iqJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="997" height="68.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="356" height="68.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="MZx-NX-l6V">
@@ -674,7 +674,9 @@
                             <outlet property="delegate" destination="08M-uz-mue" id="3Of-4e-TNQ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Inbox" id="08c-tQ-1d0"/>
+                    <navigationItem key="navigationItem" title="Inbox" id="08c-tQ-1d0">
+                        <barButtonItem key="rightBarButtonItem" image="ellipsis.circle" catalog="system" style="plain" id="JZh-o5-flX"/>
+                    </navigationItem>
                     <connections>
                         <segue destination="1MV-T3-y4O" kind="presentation" identifier="showSignIn" animates="NO" id="bw5-MR-F3K"/>
                     </connections>
@@ -1022,6 +1024,7 @@
         <image name="Visa" width="496" height="161"/>
         <image name="arrow.right" catalog="system" width="128" height="98"/>
         <image name="checkmark" catalog="system" width="128" height="114"/>
+        <image name="ellipsis.circle" catalog="system" width="128" height="121"/>
         <image name="map.fill" catalog="system" width="128" height="110"/>
         <image name="mappin" catalog="system" width="105" height="128"/>
         <image name="music.note.beamed" width="15" height="19"/>

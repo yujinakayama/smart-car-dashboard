@@ -8,14 +8,14 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
 
 protocol SharedItemDatabaseDelegate: NSObjectProtocol {
     func database(_ database: SharedItemDatabase, didUpdateItems items: [SharedItemProtocol], withChanges changes: [SharedItemDatabase.Change])
 }
 
 class SharedItemDatabase {
-    static let shared = SharedItemDatabase()
-
+    let vehicleID: String
     weak var delegate: SharedItemDatabaseDelegate?
 
     var items: [SharedItemProtocol] {
@@ -34,10 +34,18 @@ class SharedItemDatabase {
 
     private var _items: [SharedItemProtocol] = []
 
-    private lazy var firestoreCollection = Firestore.firestore().collection("items")
+    private lazy var firestoreCollection = Firestore.firestore().collection("vehicles").document(vehicleID).collection("items")
     private var firestoreQuerySnapshotListener: ListenerRegistration?
 
     let dispatchQueue = DispatchQueue(label: "SharedItemDatabase")
+
+    init(vehicleID: String) {
+        self.vehicleID = vehicleID
+    }
+
+    deinit {
+        endUpdating()
+    }
 
     func startUpdating() {
         guard firestoreQuerySnapshotListener == nil else { return }

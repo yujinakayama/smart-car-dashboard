@@ -8,6 +8,7 @@
 
 import Foundation
 import DictionaryCoding
+import FirebaseAuth
 
 struct RemoteNotification {
     enum NotificationType: String {
@@ -52,7 +53,9 @@ struct ShareNotification {
                 let item = try SharedItem.makeItem(dictionary: self.itemDictionary)
                 item.open()
 
-                SharedItemDatabase.shared.findItem(identifier: item.identifier) { (item, error) in
+                guard let vehicleID = FirebaseAuthentication.vehicleID else { return }
+
+                SharedItemDatabase(vehicleID: vehicleID).findItem(identifier: item.identifier) { (item, error) in
                     if let error = error {
                         logger.error(error)
                     }

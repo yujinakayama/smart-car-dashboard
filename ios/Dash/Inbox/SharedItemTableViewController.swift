@@ -10,28 +10,46 @@ import UIKit
 import FirebaseAuth
 
 class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDelegate {
-    let database = SharedItemDatabase.shared
+    var database: SharedItemDatabase?
 
     var dataSource: SharedItemTableViewDataSource!
 
-    var authStateListener: AuthStateDidChangeListenerHandle?
+    var isVisible: Bool {
+        return isViewLoaded && view.window != nil
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        database.delegate = self
-
         dataSource = makeDataSource()
         tableView.dataSource = dataSource
 
-        navigationItem.leftBarButtonItem = editButtonItem
+        setUpNavigationItem()
 
-        startObservingAuthState()
+        NotificationCenter.default.addObserver(self, selector: #selector(rebuildDatabase), name: .FirebaseAuthenticationDidChangeVehicleID, object: nil)
+        rebuildDatabase()
     }
 
-    deinit {
-        database.endUpdating()
-        endObservingAuthState()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if FirebaseAuthentication.vehicleID == nil {
+            showSignInView()
+        }
+    }
+
+    func setUpNavigationItem() {
+        navigationItem.leftBarButtonItem = editButtonItem
+
+        let pairingMenuItem = UIAction(title: "Pair with Dash Remote") { [unowned self] (action) in
+            self.sharePairingURL()
+        }
+
+        let signOutMenuItem = UIAction(title: "Sign out") { (action) in
+            try? Auth.auth().signOut()
+        }
+
+        navigationItem.rightBarButtonItem?.menu = UIMenu(title: "", children: [pairingMenuItem, signOutMenuItem])
     }
 
     func makeDataSource() -> SharedItemTableViewDataSource {
@@ -42,33 +60,18 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         }
     }
 
-    func startObservingAuthState() {
-        guard authStateListener == nil else { return }
-
-        authStateListener = Auth.auth().addStateDidChangeListener { [weak self] (auth, user) in
-            guard let self = self else { return }
-            self.authStateDidChange()
-        }
-    }
-
-    func endObservingAuthState() {
-        guard let authStateListener = authStateListener else { return }
-
-        Auth.auth().removeStateDidChangeListener(authStateListener)
-        self.authStateListener = nil
-    }
-
-    func authStateDidChange() {
-        let firebaseUser = Auth.auth().currentUser
-
-        logger.info("Current Firebase user: \(firebaseUser?.email as String?)")
-
-        if firebaseUser != nil {
+    @objc func rebuildDatabase() {
+        if let vehicleID = FirebaseAuthentication.vehicleID {
+            let database = SharedItemDatabase(vehicleID: vehicleID)
+            database.delegate = self
             database.startUpdating()
+            self.database = database
         } else {
-            database.endUpdating()
+            database = nil
             dataSource.update(items: [])
-            showSignInView()
+            if isVisible {
+                showSignInView()
+            }
         }
     }
 
@@ -78,8 +81,12 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
     }
 
     func updateBadge() {
-        let unopenedCount = database.items.filter { !$0.hasBeenOpened }.count
-        navigationController?.tabBarItem.badgeValue = (unopenedCount == 0) ? nil : "\(unopenedCount)"
+        if let database = database {
+            let unopenedCount = database.items.filter { !$0.hasBeenOpened }.count
+            navigationController?.tabBarItem.badgeValue = (unopenedCount == 0) ? nil : "\(unopenedCount)"
+        } else {
+            navigationController?.tabBarItem.badgeValue = nil
+        }
     }
 
     func showSignInView() {
@@ -98,5 +105,14 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
         }
+    }
+
+    func sharePairingURL() {
+        guard let vehicleID = FirebaseAuthentication.vehicleID else { return }
+
+        let pairingURLItem = PairingURLItem(vehicleID: vehicleID)
+        let activityViewController = UIActivityViewController(activityItems: [pairingURLItem], applicationActivities: nil)
+        activityViewController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(activityViewController, animated: true)
     }
 }

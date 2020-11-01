@@ -11,6 +11,7 @@ import DashShareKit
 import SVProgressHUD
 
 enum ShareError: Error {
+    case pairingRequired
     case serverError
     case unknown
 }
@@ -27,11 +28,16 @@ class ShareViewController: UIViewController {
     }
 
     func share() {
+        guard let vehicleID = PairedVehicle.defaultVehicleID else {
+            self.cancelRequest(withError: ShareError.pairingRequired, message: "Pairing Required")
+            return
+        }
+
         SVProgressHUD.show(withStatus: "Sending")
 
-        sharingItem.share { (error) in
+        sharingItem.share(with: vehicleID) { (error) in
             if let error = error {
-                self.cancelRequest(withError: error)
+                self.cancelRequest(withError: error, message: "Failed")
             } else {
                 self.completeRequest()
             }
@@ -52,8 +58,8 @@ class ShareViewController: UIViewController {
         }
     }
 
-    func cancelRequest(withError error: Error) {
-        SVProgressHUD.showError(withStatus: "Failed")
+    func cancelRequest(withError error: Error, message: String) {
+        SVProgressHUD.showError(withStatus: message)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.extensionContext!.cancelRequest(withError: error)

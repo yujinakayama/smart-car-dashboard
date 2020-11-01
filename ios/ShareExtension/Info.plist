@@ -22,6 +22,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>MKDirectionsApplicationSupportedModes</key>
 	<array/>
+	<key>AppIdentifierPrefix</key>
+	<string>$(AppIdentifierPrefix)</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>
@@ -33,11 +35,11 @@
   SUBQUERY(
     $extensionItem.attachments,
     $attachment,
-    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.url"
+    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.url&quot;
     ||
-    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.plain-text"
+    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.plain-text&quot;
     ||
-    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "com.apple.mapkit.map-item"
+    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;com.apple.mapkit.map-item&quot;
   ).@count &gt;= 1
 ).@count == 1</string>
 		</dict>
