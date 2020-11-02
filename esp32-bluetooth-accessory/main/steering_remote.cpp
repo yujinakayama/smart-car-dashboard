@@ -11,8 +11,6 @@ static const int kInputValueStep4 = 2065;
 static const int kInputValueStep5 = 2734;
 static const int kAnalogInputMaxValue = 4095;
 
-static const int kDebounceThresholdMillis = 50;
-
 static bool nearlyEqual(int actualValue, int referenceValue) {
   return (referenceValue * 0.9) <= actualValue && actualValue <= (referenceValue * 1.1);
 }
