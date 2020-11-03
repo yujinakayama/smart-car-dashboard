@@ -12,6 +12,7 @@ import MediaPlayer
 @IBDesignable class ArtworkView: UIView {
     let imageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.backgroundColor = .secondarySystemBackground
         imageView.layer.masksToBounds = true
         return imageView
     }()
