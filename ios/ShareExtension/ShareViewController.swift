@@ -27,6 +27,13 @@ class ShareViewController: UIViewController {
         share()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // We want to show the HUD after the modal transition animation is finished
+        // so that the HUD won't appear from bottom and won't move the position strangely by change of the view frame.
+        hud.show(in: view, animated: false)
+    }
+
     func share() {
         guard let vehicleID = PairedVehicle.defaultVehicleID else {
             self.cancelRequest(withError: ShareError.pairingRequired, message: "Pairing Required")
@@ -34,7 +41,6 @@ class ShareViewController: UIViewController {
         }
 
         hud.textLabel.text = "Sending"
-        hud.show(in: view)
 
         sharingItem.share(with: vehicleID) { (error) in
             if let error = error {
@@ -54,7 +60,6 @@ class ShareViewController: UIViewController {
     func completeRequest() {
         hud.textLabel.text = "Sent"
         hud.indicatorView = JGProgressHUDSuccessIndicatorView()
-        hud.show(in: view)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.extensionContext!.completeRequest(returningItems: nil)
@@ -64,7 +69,6 @@ class ShareViewController: UIViewController {
     func cancelRequest(withError error: Error, message: String) {
         hud.textLabel.text = message
         hud.indicatorView = JGProgressHUDErrorIndicatorView()
-        hud.show(in: view)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.extensionContext!.cancelRequest(withError: error)
