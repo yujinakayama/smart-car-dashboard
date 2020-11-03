@@ -48,7 +48,7 @@ function warmUpFirestore(): Promise<any> {
     // Initial call to Firestore client takes about 5 seconds,
     // so we warm up the client every 2 minutes.
     // https://github.com/firebase/firebase-functions/issues/263#issuecomment-397129178
-    return admin.firestore().collection('vehicles').get();
+    return admin.firestore().collection('health').get();
 }
 
 function normalize(inputData: InputData): Promise<NormalizedData> {
