@@ -13,13 +13,14 @@ import MediaPlayer
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .secondarySystemBackground
+        imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
         return imageView
     }()
 
     let shadowView: UIView = {
         let shadowView = UIView()
-        shadowView.backgroundColor = .white
+        shadowView.backgroundColor = .black
         shadowView.layer.masksToBounds = false
         shadowView.layer.shadowColor = UIColor.black.cgColor
         shadowView.layer.shadowOffset = .zero
@@ -81,7 +82,7 @@ import MediaPlayer
     }
 
     func updateColorAppearance() {
-        imageView.layer.borderColor = UIColor.label.withAlphaComponent(0.1).cgColor
+        imageView.layer.borderColor = UIColor.label.withAlphaComponent(0.125).cgColor
 
         if traitCollection.userInterfaceStyle == .dark {
             shadowView.layer.shadowOpacity = 0.6
