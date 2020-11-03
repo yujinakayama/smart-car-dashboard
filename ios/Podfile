@@ -29,7 +29,7 @@ target 'DashRemote' do
   pod 'TransitionButton', inhibit_warnings: true
 
   target 'ShareExtension' do
-    pod 'SVProgressHUD'
+    pod 'JGProgressHUD'
   end
 end
 
@@ -43,14 +43,4 @@ post_install do |installer|
   installer.pods_project.root_object.attributes['LastSwiftMigration'] = 9999
   installer.pods_project.root_object.attributes['LastSwiftUpdateCheck'] = 9999
   installer.pods_project.root_object.attributes['LastUpgradeCheck'] = 9999
-
-  share_extension_pods_target = installer.pods_project.targets.find do |target|
-    target.name == 'SVProgressHUD'
-  end
-
-  # https://github.com/SVProgressHUD/SVProgressHUD#app-extensions
-  share_extension_pods_target.build_configurations.each do |config|
-    config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)']
-    config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << 'SV_APP_EXTENSIONS'
-  end
 end

@@ -8,7 +8,7 @@
 
 import UIKit
 import DashShareKit
-import SVProgressHUD
+import JGProgressHUD
 
 enum ShareError: Error {
     case pairingRequired
@@ -17,12 +17,12 @@ enum ShareError: Error {
 }
 
 class ShareViewController: UIViewController {
+    let hud = JGProgressHUD()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        SVProgressHUD.setViewForExtension(view)
-        SVProgressHUD.setMinimumSize(CGSize(width: 120, height: 120))
-        SVProgressHUD.setHapticsEnabled(true)
+        hud.square = true
 
         share()
     }
@@ -33,7 +33,8 @@ class ShareViewController: UIViewController {
             return
         }
 
-        SVProgressHUD.show(withStatus: "Sending")
+        hud.textLabel.text = "Sending"
+        hud.show(in: view)
 
         sharingItem.share(with: vehicleID) { (error) in
             if let error = error {
@@ -51,7 +52,9 @@ class ShareViewController: UIViewController {
     }()
 
     func completeRequest() {
-        SVProgressHUD.showSuccess(withStatus: "Sent")
+        hud.textLabel.text = "Sent"
+        hud.indicatorView = JGProgressHUDSuccessIndicatorView()
+        hud.show(in: view)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.extensionContext!.completeRequest(returningItems: nil)
@@ -59,7 +62,9 @@ class ShareViewController: UIViewController {
     }
 
     func cancelRequest(withError error: Error, message: String) {
-        SVProgressHUD.showError(withStatus: message)
+        hud.textLabel.text = message
+        hud.indicatorView = JGProgressHUDErrorIndicatorView()
+        hud.show(in: view)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.extensionContext!.cancelRequest(withError: error)
