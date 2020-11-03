@@ -68,6 +68,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BIf-6G-XGM" customClass="FloatButton" customModule="Dash_Remote" customModuleProvider="target">
                                 <rect key="frame" x="62" y="787" width="290" height="51"/>
                                 <color key="backgroundColor" systemColor="linkColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="360" id="RQb-5B-9o0"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="contentEdgeInsets" minX="32" minY="13" maxX="32" maxY="16"/>
@@ -120,7 +123,7 @@
                             <constraint firstItem="BIf-6G-XGM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fWx-zW-XEs"/>
                             <constraint firstAttribute="trailing" secondItem="HTS-8g-YUt" secondAttribute="trailing" id="hUS-bS-1OQ"/>
                             <constraint firstAttribute="bottom" secondItem="HTS-8g-YUt" secondAttribute="bottom" id="jqd-i0-M2j"/>
-                            <constraint firstItem="BIf-6G-XGM" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.7" id="rLf-j2-7TQ"/>
+                            <constraint firstItem="BIf-6G-XGM" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.7" priority="750" id="rLf-j2-7TQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="BIf-6G-XGM" secondAttribute="bottom" constant="24" id="yS7-Sc-PlW"/>
                         </constraints>
                     </view>
