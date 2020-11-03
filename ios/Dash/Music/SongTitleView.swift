@@ -98,8 +98,15 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
     }
 
     func tryUpdatingLabelsWithOriginalLanguageTitle() {
-        guard let songID = musicPlayer.nowPlayingItem?.playbackStoreID else {
+        guard let nowPlayingItem = musicPlayer.nowPlayingItem else {
             updateLabels(title: nil, artist: nil)
+            return
+        }
+
+        let songID = nowPlayingItem.playbackStoreID
+
+        if songID.isEmpty {
+            updateLabels(title: nowPlayingItem.title, artist: nowPlayingItem.artist)
             return
         }
 
@@ -107,14 +114,12 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
             if let originalLanguageSong = originalLanguageSongTitleFetcher.cachedOriginalLanguageSong(id: songID) {
                 updateLabels(title: originalLanguageSong.title, artist: originalLanguageSong.artist)
             } else {
-                let mediaItem = self.musicPlayer.nowPlayingItem
-                updateLabels(title: mediaItem?.title, artist: mediaItem?.artist)
+                updateLabels(title: nowPlayingItem.title, artist: nowPlayingItem.artist)
             }
             return
         }
 
-        let mediaItem = self.musicPlayer.nowPlayingItem
-        updateLabels(title: mediaItem?.title, artist: mediaItem?.artist)
+        updateLabels(title: nowPlayingItem.title, artist: nowPlayingItem.artist)
 
         originalLanguageSongTitleFetcher.fetchOriginalLanguageSong(id: songID) { [weak self] (result) in
             guard let self = self else { return }
