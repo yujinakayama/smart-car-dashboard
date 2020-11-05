@@ -92,6 +92,7 @@
 		B96793E924AF6ACC0019BFE5 /* apple_music_developer_token.txt in Resources */ = {isa = PBXBuildFile; fileRef = B96793E824AF6ACC0019BFE5 /* apple_music_developer_token.txt */; };
 		B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */; };
 		B9741F7523DF200600F061E7 /* SharedItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */; };
+		B97A82242553F8A900CD2870 /* Sun.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97A82232553F8A900CD2870 /* Sun.swift */; };
 		B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97BAE6124B61DB100AE7D13 /* Vehicle.swift */; };
 		B988A66C254D0E570012A4CB /* PairingRequirementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A66B254D0E570012A4CB /* PairingRequirementViewController.swift */; };
 		B98B783723ED4C3F00A5102F /* DashShareKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B98B783523ED4C3F00A5102F /* DashShareKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -358,6 +359,7 @@
 		B96793E824AF6ACC0019BFE5 /* apple_music_developer_token.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = apple_music_developer_token.txt; sourceTree = "<group>"; };
 		B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemTableViewController.swift; sourceTree = "<group>"; };
+		B97A82232553F8A900CD2870 /* Sun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sun.swift; sourceTree = "<group>"; };
 		B97BAE6124B61DB100AE7D13 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		B988A66B254D0E570012A4CB /* PairingRequirementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingRequirementViewController.swift; sourceTree = "<group>"; };
 		B988A676254D0EB30012A4CB /* PairedVehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairedVehicle.swift; sourceTree = "<group>"; };
@@ -702,6 +704,7 @@
 				B940A465250F0EBB006BDFBB /* Connection.swift */,
 				B940A45D250E3B50006BDFBB /* AVSampleBufferDisplayView.swift */,
 				B9C0CEEA2508F711006D246E /* H264ByteStreamParser.swift */,
+				B97A82232553F8A900CD2870 /* Sun.swift */,
 				B940A461250E5CDD006BDFBB /* Defaults.swift */,
 				B90700A3250E31B1004E7D7A /* Logger.swift */,
 				B9C0CEDE2508F63F006D246E /* Main.storyboard */,
@@ -1458,6 +1461,7 @@
 				B9C0CEEB2508F711006D246E /* H264ByteStreamParser.swift in Sources */,
 				B9C0CEDB2508F63F006D246E /* SceneDelegate.swift in Sources */,
 				B90700A4250E31B1004E7D7A /* Logger.swift in Sources */,
+				B97A82242553F8A900CD2870 /* Sun.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
