@@ -32,6 +32,8 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
 
     var hasReceivedInitialFrame = false
 
+    let cameraOptionsAdjuster = CameraOptionsAdjuster()
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
