@@ -32,6 +32,10 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
 
     var hasReceivedInitialFrame = false
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
     override var prefersHomeIndicatorAutoHidden: Bool {
         return true
     }
