@@ -297,7 +297,7 @@ Create a user to run `raspivid-server`:
 $ sudo useradd --groups video --user-group raspivid-server
 ```
 
-Create systemd service unit file:
+Create systemd unit files:
 
 ```
 $ sudo nano /etc/systemd/system/raspivid-server.service
@@ -313,12 +313,29 @@ User=raspivid-server
 
 [Install]
 WantedBy=multi-user.target
+$ sudo nano /etc/systemd/system/raspivid-server-restarter.service
+[Unit]
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/systemctl restart raspivid-server.service
+
+[Install]
+WantedBy=multi-user.target
+$ sudo nano /etc/systemd/system/raspivid-server-restarter.path
+[Path]
+PathModified=/opt/bin/raspivid-server
+
+[Install]
+WantedBy=multi-user.target
 ```
 
-Enable the service:
+Enable the services:
 
 ```
 $ sudo systemctl enable raspivid-server.service
+$ sudo systemctl enable raspivid-server-restarter.path
 ```
 
 ### Make filesystem read-only for sudden power down
