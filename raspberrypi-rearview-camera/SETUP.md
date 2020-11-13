@@ -28,13 +28,25 @@ Burn the image into a SD card with balena Etcher.
 
 Re-insert the SD card into the Mac and run `touch /Volumes/boot/ssh` to enable SSH.
 
+Create file `/Volumes/boot/wpa_supplicant.conf` with the following content:
+
+```
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+country=JP
+
+network={
+    ssid="MY_SSID"
+    psk="MY_PASSWORD"
+    priority=100
+}
+```
+
 ### Log in to Raspberry Pi with SSH
 
 Insert the SD card into the Raspberry Pi.
 
-Enable "Internet Sharing" on the Mac and connect the Raspberry Pi and the Mac with an Ethernet cable.
-
-Turn on the Raspberry Pi.
+Connect the Mac to the Wi-Fi and turn on the Raspberry Pi.
 
 Run `ssh pi@raspberrypi.local` on the Mac and enter password `raspberry`.
 
@@ -52,57 +64,6 @@ $ sudo reboot
 
 Enable camera with `sudo raspi-config` -> `Interfacing Options` -> `Camera`.
 This will modify `/boot/config.txt`.
-
-### Enable Wi-Fi for now
-
-Choose country with `sudo raspi-config` -> `Localisation Options` -> `WLAN Country`.
-
-Add the following content to `/etc/wpa_supplicant/wpa_supplicant.conf`:
-
-```
-network={
-    ssid="MY_SSID"
-    psk="MY_PASSWORD"
-    priority=100
-}
-```
-
-Run `sudo reboot`.
-
-### Use static IP address and disable DHCP client daemon for faster boot
-
-[networking - disable dhcpcd.service for static ip? - Raspberry Pi Stack Exchange](https://raspberrypi.stackexchange.com/a/106914)
-
-Disable `dhcpcd` service:
-
-```
-$ sudo systemctl stop dhcpcd
-$ sudo systemctl disable dhcpcd
-```
-
-Set a static IP address:
-
-```
-$ sudo nano /etc/network/interfaces.d/eth0
-# Don't specify `auth eth0` since it make boot time longer
-# https://askubuntu.com/a/887458
-allow-hotplug eth0
-iface eth0 inet static
-address 192.168.100.1
-netmask 255.255.255.0
-```
-
-Reboot:
-
-```
-$ sudo reboot
-```
-
-Then log in with the IP address:
-
-```
-$ ssh pi@192.168.100.1
-```
 
 ### Remove unneccessary services for faster boot
 
@@ -168,8 +129,6 @@ keyboard-setup.service
 raspi-config.service
 systemd-timesyncd.service
 dphys-swapfile.service
-wpa_supplicant.service
-avahi-daemon.service
 rpi-eeprom-update.service
 triggerhappy.service
 bluetooth.service
@@ -191,7 +150,7 @@ disable_splash=1
 dtoverlay=pi3-disable-bt
 
 # Disable Wifi
-dtoverlay=pi3-disable-wifi
+#dtoverlay=pi3-disable-wifi
 
 # Set the bootloader delay to 0 seconds. The default is 1s if not specified.
 boot_delay=0
@@ -218,32 +177,6 @@ Add the following lines to `/etc/rc.local` before `exit 0`:
 /opt/vc/bin/tvservice --off
 ```
 
-### Add scripts to enable/disable Wi-Fi
-
-Basically we should disable Wi-Fi in usual operation for faster boot, but we may need to enable Wi-Fi to tweak configuration:
-
-```
-$ sudo nano /opt/bin/enable-wifi
-sed --in-place --expression 's/^#dtoverlay=pi3-disable-wifi/dtoverlay=pi3-disable-wifi/' /boot/config.txt
-systemctl enable wpa_supplicant.service
-systemctl enable avahi-daemon.service
-systemctl enable dhcpcd.service
-echo "Reboot to apply the change."
-$ sudo chmod 755 /opt/bin/enable-wifi
-```
-
-```
-$ sudo nano /opt/bin/disable-wifi
-sed --in-place --expression 's/^dtoverlay=pi3-disable-wifi/#dtoverlay=pi3-disable-wifi/' /boot/config.txt
-systemctl disable wpa_supplicant.service
-systemctl disable avahi-daemon.service
-systemctl disable dhcpcd.service
-echo "Reboot to apply the change."
-$ sudo chmod 755 /opt/bin/disable-wifi
-```
-
-Run `sudo /opt/bin/disable-wifi`.
-
 ### Create admin user and remove default user `pi`:
 
 Create a user:
@@ -269,7 +202,6 @@ MYUSER@raspberrypi:~ $ sudo userdel --remove pi
 Create an executable `raspivid-server`:
 
 ```
-$ sudo mkdir /opt/bin
 $ sudo nano /opt/bin/raspivid-server
 #!/bin/sh
 
@@ -281,7 +213,7 @@ raspivid \
 --flush --timeout 0 \
 --width 1440 --height 1080 --framerate 40 \
 --profile high --level 4.2 \
---awb off --awbgains 1.4,1.6
+--awb off --awbgains 1.4,1.7 \
 --exposure auto --metering average --drc high --flicker auto \
 --ev -10 --brightness 55 --saturation 12 --sharpness 100 \
 --imxfx denoise \
@@ -336,6 +268,70 @@ Enable the services:
 ```
 $ sudo systemctl enable raspivid-server.service
 $ sudo systemctl enable raspivid-server-restarter.path
+```
+
+### Add scripts to enable/disable Wi-Fi
+
+Basically we should disable Wi-Fi in usual operation for faster boot, but we may need to enable Wi-Fi to tweak configuration:
+
+```
+$ sudo mkdir /opt/bin
+```
+
+```
+$ sudo nano /opt/bin/enable-wifi
+sed --in-place --expression 's/^dtoverlay=pi3-disable-wifi/#dtoverlay=pi3-disable-wifi/' /boot/config.txt
+systemctl enable wpa_supplicant.service
+systemctl enable avahi-daemon.service
+systemctl enable dhcpcd.service
+echo "Reboot to apply the change."
+$ sudo chmod 755 /opt/bin/enable-wifi
+```
+
+```
+$ sudo nano /opt/bin/disable-wifi
+sed --in-place --expression 's/^#dtoverlay=pi3-disable-wifi/dtoverlay=pi3-disable-wifi/' /boot/config.txt
+systemctl disable wpa_supplicant.service
+systemctl disable avahi-daemon.service
+systemctl disable dhcpcd.service
+echo "Reboot to apply the change."
+$ sudo chmod 755 /opt/bin/disable-wifi
+```
+
+### Use static IP address for Ethernet and disable Wi-Fi for faster boot
+
+[networking - disable dhcpcd.service for static ip? - Raspberry Pi Stack Exchange](https://raspberrypi.stackexchange.com/a/106914)
+
+Set a static IP address:
+
+```
+$ sudo nano /etc/network/interfaces.d/eth0
+# Don't specify `auth eth0` since it make boot time longer
+# https://askubuntu.com/a/887458
+allow-hotplug eth0
+iface eth0 inet static
+address 192.168.100.1
+netmask 255.255.255.0
+```
+
+Connect the Mac and the Raspberry Pi with an Ethernet cable.
+
+Reboot and confirm that you can log in with
+
+```
+$ ssh pi@192.168.100.1
+```
+
+Disable Wi-Fi:
+
+```
+$ /opt/bin/disable-wifi
+```
+
+Reboot:
+
+```
+$ sudo reboot
 ```
 
 ### Make filesystem read-only for sudden power down
