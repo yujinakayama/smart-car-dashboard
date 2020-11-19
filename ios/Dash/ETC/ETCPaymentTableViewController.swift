@@ -102,9 +102,9 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     func showPayment(_ payment: ETCPaymentProtocol?, in detailViewController: ETCPaymentDetailViewController) {
         detailViewController.payment = payment
 
-        if splitViewController.displayMode == .primaryOverlay {
+        if splitViewController.displayMode == .oneOverSecondary {
             UIView.animate(withDuration: 0.25, animations: { [unowned self] in
-                self.splitViewController.preferredDisplayMode = .primaryHidden
+                self.splitViewController.preferredDisplayMode = .secondaryOnly
             }, completion: { (completed) in
                 self.splitViewController.preferredDisplayMode = .automatic
             })
