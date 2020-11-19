@@ -675,7 +675,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Inbox" id="08c-tQ-1d0">
-                        <barButtonItem key="rightBarButtonItem" image="ellipsis.circle" catalog="system" style="plain" id="JZh-o5-flX"/>
+                        <barButtonItem key="rightBarButtonItem" image="ellipsis.circle" catalog="system" id="JZh-o5-flX"/>
                     </navigationItem>
                     <connections>
                         <segue destination="1MV-T3-y4O" kind="presentation" identifier="showSignIn" animates="NO" id="bw5-MR-F3K"/>
