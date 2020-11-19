@@ -37,7 +37,7 @@ struct TollgatePassingThroughNotification: LocalNotificationProtocol {
     let title: String? = nil
     let body: String? = "ETCゲートを通過しました。"
     let sound: UNNotificationSound? = UNNotificationSound(named: UNNotificationSoundName("TollgatePassingThrough.wav"))
-    let foregroundPresentationOptions: UNNotificationPresentationOptions = [.alert, .sound]
+    let foregroundPresentationOptions: UNNotificationPresentationOptions = [.banner, .sound]
 
     func shouldBeDelivered(history: LatestLocalNotificationHistory) -> Bool {
         return !history.contains { $0 is TollgatePassingThroughNotification }
@@ -80,7 +80,7 @@ struct PaymentNotification: LocalNotificationProtocol {
 
     let sound: UNNotificationSound? = UNNotificationSound(named: UNNotificationSoundName("Payment.wav"))
 
-    let foregroundPresentationOptions: UNNotificationPresentationOptions = [.alert, .sound]
+    let foregroundPresentationOptions: UNNotificationPresentationOptions = [.banner, .sound]
 
     func shouldBeDelivered(history: LatestLocalNotificationHistory) -> Bool {
         return true
