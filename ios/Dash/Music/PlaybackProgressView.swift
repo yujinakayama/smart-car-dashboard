@@ -88,11 +88,11 @@ import MediaPlayer
             slider.topAnchor.constraint(equalTo: topAnchor),
             slider.leftAnchor.constraint(equalTo: leftAnchor),
             rightAnchor.constraint(equalTo: slider.rightAnchor),
-            slider.heightAnchor.constraint(equalToConstant: 10)
+            slider.heightAnchor.constraint(equalToConstant: 30)
         ])
 
         constraints.append(contentsOf: [
-            elapsedTimeLabel.topAnchor.constraint(equalTo: slider.bottomAnchor, constant: 2),
+            elapsedTimeLabel.topAnchor.constraint(equalTo: slider.bottomAnchor, constant: -8),
             elapsedTimeLabel.leftAnchor.constraint(equalTo: leftAnchor),
         ])
 
@@ -306,6 +306,11 @@ extension PlaybackProgressView {
             var trackRect = super.trackRect(forBounds: bounds)
             trackRect.size.height = trackHeight
             return trackRect
+        }
+
+        override func thumbRect(forBounds bounds: CGRect, trackRect rect: CGRect, value: Float) -> CGRect {
+            let thumbRect = super.thumbRect(forBounds: bounds, trackRect: rect, value: value)
+            return thumbRect.inset(by: UIEdgeInsets(top: -15, left: -15, bottom: -15, right: -15))
         }
     }
 }
