@@ -65,7 +65,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
             self.database = database
         } else {
             database = nil
-            dataSource.update(items: [])
+            dataSource.setItems([])
             if isVisible {
                 showSignInView()
             }
@@ -87,7 +87,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
     }
 
     func database(_ database: SharedItemDatabase, didUpdateItems items: [SharedItemProtocol], withChanges changes: [SharedItemDatabase.Change]) {
-        dataSource.update(items: items, changes: changes, animatingDifferences: !dataSource.isEmpty)
+        dataSource.setItems(items, changes: changes, animated: !dataSource.isEmpty)
         updateBadge()
     }
 

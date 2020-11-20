@@ -37,14 +37,14 @@ class SharedItemTableViewDataSource: UITableViewDiffableDataSource<Date, String>
         item(for: indexPath).delete()
     }
 
-    func update(items: [SharedItemProtocol]) {
-        update(items: items, changes: [], animatingDifferences: false)
+    func setItems(_ items: [SharedItemProtocol]) {
+        setItems(items, changes: [], animated: false)
     }
 
-    func update(items: [SharedItemProtocol], changes: [SharedItemDatabase.Change], animatingDifferences: Bool) {
+    func setItems(_ items: [SharedItemProtocol], changes: [SharedItemDatabase.Change], animated: Bool) {
         data = TableViewData(items: items)
         let dataSourceSnapshot = makeDataSourceSnapshot(data: data, changes: changes)
-        apply(dataSourceSnapshot, animatingDifferences: animatingDifferences)
+        apply(dataSourceSnapshot, animatingDifferences: animated)
     }
 
     private func makeDataSourceSnapshot(data: TableViewData, changes: [SharedItemDatabase.Change]) -> NSDiffableDataSourceSnapshot<Date, String> {
