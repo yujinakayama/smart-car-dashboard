@@ -29,8 +29,13 @@ class ShareViewController: UIViewController {
         return hud
     }()
 
+    let feedbackGenerator = UINotificationFeedbackGenerator()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        feedbackGenerator.prepare()
+
         share()
     }
 
@@ -71,6 +76,8 @@ class ShareViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             self.extensionContext!.completeRequest(returningItems: nil)
         }
+
+        feedbackGenerator.notificationOccurred(.success)
     }
 
     func cancelRequest(withError error: Error, message: String) {
@@ -80,5 +87,7 @@ class ShareViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.extensionContext!.cancelRequest(withError: error)
         }
+
+        feedbackGenerator.notificationOccurred(.error)
     }
 }
