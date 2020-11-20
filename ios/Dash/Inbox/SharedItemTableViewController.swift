@@ -12,7 +12,12 @@ import FirebaseAuth
 class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDelegate {
     var database: SharedItemDatabase?
 
-    var dataSource: SharedItemTableViewDataSource!
+    lazy var dataSource = SharedItemTableViewDataSource(tableView: tableView) { [weak self] (tableView, indexPath, itemIdentifier) in
+        guard let self = self else { return nil }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SharedItemTableViewCell") as! SharedItemTableViewCell
+        cell.item = self.item(for: indexPath)
+        return cell
+    }
 
     var isVisible: Bool {
         return isViewLoaded && view.window != nil
@@ -111,6 +116,10 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
         }
+    }
+
+    func item(for indexPath: IndexPath) -> SharedItemProtocol {
+        return dataSource.item(for: indexPath)
     }
 
     func sharePairingURL() {
