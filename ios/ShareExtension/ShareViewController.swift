@@ -68,7 +68,7 @@ class ShareViewController: UIViewController {
         hud.textLabel.text = "Sent"
         hud.indicatorView = JGProgressHUDSuccessIndicatorView()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             self.extensionContext!.completeRequest(returningItems: nil)
         }
     }
