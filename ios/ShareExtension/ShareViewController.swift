@@ -17,13 +17,20 @@ enum ShareError: Error {
 }
 
 class ShareViewController: UIViewController {
-    let hud = JGProgressHUD()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    lazy var hud: JGProgressHUD = {
+        let hud = JGProgressHUD()
 
         hud.square = true
 
+        let animation = JGProgressHUDFadeAnimation()
+        animation.duration = 0.2
+        hud.animation = animation
+
+        return hud
+    }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
         share()
     }
 
@@ -31,7 +38,7 @@ class ShareViewController: UIViewController {
         super.viewDidAppear(animated)
         // We want to show the HUD after the modal transition animation is finished
         // so that the HUD won't appear from bottom and won't move the position strangely by change of the view frame.
-        hud.show(in: view, animated: false)
+        hud.show(in: view, animated: true)
     }
 
     func share() {
