@@ -34,6 +34,11 @@ class ShareViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // On Mac clear background doesn't appear correctly
+        #if targetEnvironment(macCatalyst)
+        view.backgroundColor = .systemBackground
+        #endif
+
         feedbackGenerator.prepare()
 
         share()
