@@ -731,6 +731,14 @@
 			path = DashShareKit;
 			sourceTree = "<group>";
 		};
+		B9B4A88C2569306500FE0C9F /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				B944C68E24A9E4C8000D1E99 /* Music */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
 		B9BF2F0323F6946100967316 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
@@ -875,7 +883,7 @@
 				B9DC5B24229D59BE00B645D5 /* AppDelegate.swift */,
 				B90E21F824CBB1BF008330AD /* TabBarController.swift */,
 				B9B154F72576075C0031761F /* TabBarBadgeManager.swift */,
-				B944C68E24A9E4C8000D1E99 /* Music */,
+				B9B4A88C2569306500FE0C9F /* Dashboard */,
 				B9CEA76822D8F1990055C9A3 /* ETC */,
 				B9741F7623DF201A00F061E7 /* Inbox */,
 				B904A2A4243968840087BD4A /* Maps */,
