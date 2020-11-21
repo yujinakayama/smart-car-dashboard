@@ -26,7 +26,6 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        dataSource = makeDataSource()
         tableView.dataSource = dataSource
 
         NotificationCenter.default.addObserver(self, selector: #selector(firebaseAuthenticationDidChangeVehicleID), name: .FirebaseAuthenticationDidChangeVehicleID, object: nil)
@@ -40,15 +39,6 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
         if FirebaseAuthentication.vehicleID == nil {
             showSignInView()
-        }
-    }
-
-    func makeDataSource() -> SharedItemTableViewDataSource {
-        return SharedItemTableViewDataSource(tableView: tableView) { [weak self] (tableView, indexPath, itemIdentifier) in
-            guard let self = self else { return nil }
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SharedItemTableViewCell") as! SharedItemTableViewCell
-            cell.item = self.dataSource.item(for: indexPath)
-            return cell
         }
     }
 
