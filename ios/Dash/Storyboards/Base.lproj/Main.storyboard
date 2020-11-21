@@ -10,6 +10,36 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Dashboard View Controller-->
+        <scene sceneID="Su0-wk-jA3">
+            <objects>
+                <viewController id="GIS-op-tOW" userLabel="Dashboard View Controller" customClass="DashboardViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Am0-lQ-F8N">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nEC-rf-DCk">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
+                                <connections>
+                                    <segue destination="zuP-Ci-kYP" kind="embed" id="0mp-rp-FvL"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="3Xo-J1-LB7"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="nEC-rf-DCk" secondAttribute="trailing" id="BSA-zk-e8G"/>
+                            <constraint firstAttribute="bottom" secondItem="nEC-rf-DCk" secondAttribute="bottom" id="CFz-Gw-gGr"/>
+                            <constraint firstItem="nEC-rf-DCk" firstAttribute="leading" secondItem="Am0-lQ-F8N" secondAttribute="leading" id="pcO-88-c3Z"/>
+                            <constraint firstItem="nEC-rf-DCk" firstAttribute="top" secondItem="Am0-lQ-F8N" secondAttribute="top" id="tFj-kx-B1O"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Dashboard" image="speedometer" catalog="system" id="8iC-BB-hC9"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Nbq-dQ-IEj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="17" y="-2819"/>
+        </scene>
         <!--Music-->
         <scene sceneID="8uU-kC-YE5">
             <objects>
@@ -19,7 +49,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="sLb-Je-6Yi">
-                                <rect key="frame" x="32" y="0.0" width="311" height="959"/>
+                                <rect key="frame" x="32" y="0.0" width="311" height="1004"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="avy-aC-AOd">
                                         <rect key="frame" x="0.0" y="0.0" width="311" height="0.0"/>
@@ -28,38 +58,38 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3wq-8X-NTj" customClass="ArtworkView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="64" width="311" height="311"/>
+                                        <rect key="frame" x="0.0" y="70.5" width="311" height="311"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="3wq-8X-NTj" secondAttribute="height" multiplier="1:1" id="nRi-l7-2hN"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Beu-Kz-v6k" customClass="SongTitleView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="438.5" width="311" height="52"/>
+                                        <rect key="frame" x="0.0" y="451.5" width="311" height="52"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="52" id="jCn-aM-e0h"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4EW-dl-7rX" customClass="PlaybackProgressView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="554.5" width="311" height="24"/>
+                                        <rect key="frame" x="0.0" y="574" width="311" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="IT5-o9-AQP"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Z51-Ki-eML" customClass="PlaybackControlView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="642.5" width="311" height="60"/>
+                                        <rect key="frame" x="0.0" y="668" width="311" height="60"/>
                                         <color key="tintColor" systemColor="labelColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="2Lr-e8-jfW"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xiy-BS-1Rf" customClass="VolumeView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="766.5" width="311" height="19"/>
+                                        <rect key="frame" x="0.0" y="798.5" width="311" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="19" id="zIa-hH-lg5"/>
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="5dH-Ra-rgc">
-                                        <rect key="frame" x="0.0" y="849" width="311" height="46"/>
+                                        <rect key="frame" x="0.0" y="887.5" width="311" height="46"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfV-vr-luy" customClass="ShuffleModeButton" customModule="Dash" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="145.5" height="46"/>
@@ -73,7 +103,7 @@
                                         </constraints>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="not-0R-tgj">
-                                        <rect key="frame" x="0.0" y="959" width="311" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="1004" width="311" height="0.0"/>
                                         <constraints>
                                             <constraint firstAttribute="height" id="93d-Ti-xxP"/>
                                         </constraints>
@@ -109,7 +139,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uei-Iu-VKy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-856.79999999999995" y="-2835.3515625"/>
+            <point key="canvasLocation" x="1191" y="-2820"/>
         </scene>
         <!--Master Navigation Controller-->
         <scene sceneID="pY4-Hu-kfo">
@@ -331,7 +361,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="zuP-Ci-kYP" kind="relationship" relationship="viewControllers" id="uhj-yT-8WV"/>
+                        <segue destination="GIS-op-tOW" kind="relationship" relationship="viewControllers" id="UKu-E5-AT2"/>
                         <segue destination="H1p-Uh-vWS" kind="relationship" relationship="viewControllers" id="Yb9-ec-BFu"/>
                         <segue destination="9rv-x1-HX3" kind="relationship" relationship="viewControllers" id="tYp-y0-GC7"/>
                         <segue destination="0o8-aQ-xh6" kind="relationship" relationship="viewControllers" id="eGv-fE-PSG"/>
@@ -1116,6 +1146,17 @@
             <point key="canvasLocation" x="1492" y="-1748"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="3d5-rM-KEm">
+            <size key="intrinsicContentSize" width="189" height="38"/>
+        </designable>
+        <designable name="TAK-Hz-Kv5">
+            <size key="intrinsicContentSize" width="30" height="34"/>
+        </designable>
+        <designable name="mfV-vr-luy">
+            <size key="intrinsicContentSize" width="30" height="34"/>
+        </designable>
+    </designables>
     <inferredMetricsTieBreakers>
         <segue reference="6S0-TO-JiA"/>
         <segue reference="ZuQ-m0-CKt"/>
@@ -1133,6 +1174,7 @@
         <image name="music.note.beamed" width="15" height="19"/>
         <image name="safari" catalog="system" width="128" height="121"/>
         <image name="signature" catalog="system" width="128" height="90"/>
+        <image name="speedometer" catalog="system" width="128" height="121"/>
         <image name="tray.and.arrow.down.fill" catalog="system" width="128" height="114"/>
         <image name="yensign.square.fill" catalog="system" width="128" height="114"/>
         <namedColor name="Hairline Border Color">

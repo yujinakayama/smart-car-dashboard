@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fWN-mX-tBn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fWN-mX-tBn">
     <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -14,8 +15,8 @@
                     <view key="view" contentMode="scaleToFill" id="KKN-4Z-ava">
                         <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="v8d-da-uBf"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Inbox" image="tray.and.arrow.down.fill" catalog="system" id="iBW-wI-9b7"/>
                 </viewController>
@@ -30,8 +31,8 @@
                     <view key="view" contentMode="scaleToFill" id="IUi-v4-Rsu">
                         <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="nVI-bn-rDz"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Maps" image="map.fill" catalog="system" id="3e8-qg-gBS"/>
                 </viewController>
@@ -39,17 +40,17 @@
             </objects>
             <point key="canvasLocation" x="-213" y="875"/>
         </scene>
-        <!--Music-->
+        <!--Dashboard-->
         <scene sceneID="Hsj-OS-Yh5">
             <objects>
                 <viewController id="xrf-X8-9c0" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3Ge-ae-grq">
                         <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="E9n-i4-Rue"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Music" image="music.note.beamed" id="5MN-5g-w6L"/>
+                    <tabBarItem key="tabBarItem" title="Dashboard" image="speedometer" catalog="system" id="5MN-5g-w6L"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xFQ-xk-DP7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -62,8 +63,8 @@
                     <view key="view" contentMode="scaleToFill" id="QfH-Od-aFs">
                         <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="Tte-I0-6mV"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="ETC" image="yensign.square.fill" catalog="system" id="sPZ-gZ-qxr"/>
                 </viewController>
@@ -93,9 +94,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="map.fill" catalog="system" width="128" height="113"/>
-        <image name="music.note.beamed" width="19" height="24"/>
+        <image name="map.fill" catalog="system" width="128" height="110"/>
+        <image name="speedometer" catalog="system" width="128" height="121"/>
         <image name="tray.and.arrow.down.fill" catalog="system" width="128" height="114"/>
         <image name="yensign.square.fill" catalog="system" width="128" height="114"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
