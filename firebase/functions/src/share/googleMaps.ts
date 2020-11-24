@@ -4,6 +4,7 @@ import * as functions from 'firebase-functions';
 
 import { URL } from 'url';
 
+import { decodeURLDataParameter } from './googleMapsURLDataParameter'
 import { InputData } from './inputData';
 import { Location, Address } from './normalizedData';
 import { convertAlphanumericsToAscii } from './util'
@@ -69,7 +70,14 @@ const googleMapsClient = new Client();
 const googleMapsAPIKey = functions.config().googlemaps.api_key;
 
 export function isGoogleMapsLocation(inputData: InputData): boolean {
-    return inputData.url.toString().startsWith('https://goo.gl/maps/');
+    const url = inputData.url;
+
+    if (url.toString().startsWith('https://goo.gl/maps/')) {
+        return true;
+    }
+
+    return !!url.hostname.match(/((www|maps)\.)google\.(com|co\.jp)/)
+        && !!url.pathname.startsWith('/maps/place/')
 }
 
 export async function normalizeGoogleMapsLocation(inputData: InputData): Promise<Location> {
@@ -95,8 +103,12 @@ export async function normalizeGoogleMapsLocation(inputData: InputData): Promise
     throw new Error('Cannot find details for the Google Maps URL');
 }
 
-async function expandShortenURL(shortenURL: URL): Promise<URL> {
-    const response = await axios.get(shortenURL.toString(), {
+async function expandShortenURL(url: URL): Promise<URL> {
+    if (url.hostname !== 'goo.gl') {
+        return url;
+    }
+
+    const response = await axios.get(url.toString(), {
         maxRedirects: 0,
         validateStatus: (statusCode) => true
     });
@@ -106,14 +118,26 @@ async function expandShortenURL(shortenURL: URL): Promise<URL> {
     if (expandedURLString) {
         return new URL(expandedURLString);
     } else {
-        throw new Error(`Shorten URL could not be expanded: ${shortenURL.toString()}`)
+        throw new Error(`URL could not be expanded: ${url.toString()}`)
     }
 }
 
 // Point of Interests
 // https://stackoverflow.com/a/47042514/784241
 async function normalizeLocationWithFtid(expandedURL: URL): Promise<Location | null> {
-    const ftid = expandedURL.searchParams.get('ftid');
+    let ftid = expandedURL.searchParams.get('ftid');
+
+    if (!ftid) {
+        const matches = expandedURL.pathname.match(/\/data=([^\/]+)/)
+        const dataParameter = matches && matches[1];
+
+        if (!dataParameter) {
+            return null;
+        }
+
+        const data = decodeURLDataParameter(dataParameter);
+        ftid = data.place?.geometry?.ftid || null;
+    }
 
     if (!ftid) {
         return null;
