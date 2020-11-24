@@ -8,7 +8,6 @@
 
 import Foundation
 import AppleMusic
-import PINCache
 
 class OriginalLanguageSongTitleFetcher {
     enum LanguageTag: String {
@@ -16,17 +15,7 @@ class OriginalLanguageSongTitleFetcher {
         case enUS = "en-US"
     }
 
-    static let cache = PINCache(
-        name: "OriginalLanguageSongTitleFetcher",
-        rootPath: NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!,
-        serializer: nil,
-        deserializer: nil,
-        keyEncoder: nil,
-        keyDecoder: nil,
-        ttlCache: true
-    )
-
-    private let cacheAgeLimit: TimeInterval = 60 * 60 * 24 * 30 * 6 // 6 months
+    static let cache = Cache(name: "OriginalLanguageSongTitleFetcher", ageLimit: 60 * 60 * 24 * 30 * 6) // 6 months
 
     let appleMusicClient: AppleMusic
 
@@ -86,7 +75,7 @@ class OriginalLanguageSongTitleFetcher {
     }
 
     private func cache(song: OriginalLanguageSong?, for id: String) {
-        OriginalLanguageSongTitleFetcher.cache.setObjectAsync(song ?? NSNull(), forKey: id, withAgeLimit: cacheAgeLimit)
+        OriginalLanguageSongTitleFetcher.cache.setObjectAsync(song, forKey: id)
     }
 
     private func originalLanguage(of song: SongAttributes) -> LanguageTag {

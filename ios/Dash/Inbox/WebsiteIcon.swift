@@ -8,7 +8,6 @@
 
 import Foundation
 import SwiftSoup
-import PINCache
 import CommonCrypto
 
 enum WebsiteIconError: Error {
@@ -26,25 +25,17 @@ class WebsiteIcon {
         case generic
     }
 
-    static let cache = PINCache(
-        name: "WebsiteIcon",
-        rootPath: NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!,
-        serializer: nil,
-        deserializer: nil,
-        keyEncoder: nil,
-        keyDecoder: nil,
-        ttlCache: true
-    )
+    static let cache = Cache(name: "WebsiteIcon", ageLimit: 60 * 60 * 24 * 30) // 30 days
 
     let websiteURL: URL
 
-    private (set) var url: URL? {
+    private (set) var cachedURL: URL? {
         get {
             return WebsiteIcon.cache.object(forKey: cacheKey) as? URL
         }
 
         set {
-            WebsiteIcon.cache.setObjectAsync(newValue as Any, forKey: cacheKey, withAgeLimit: cacheAgeLimit)
+            WebsiteIcon.cache.setObjectAsync(newValue as Any, forKey: cacheKey)
         }
     }
 
@@ -65,25 +56,23 @@ class WebsiteIcon {
         return hexDigest
     }()
 
-    private let cacheAgeLimit: TimeInterval = 60 * 60 * 24 * 30 // 30 days
-
     init(websiteURL: URL) {
         self.websiteURL = websiteURL
     }
 
     func getURL(completionHandler: @escaping (URL?) -> Void) {
         if isCached {
-            completionHandler(url)
+            completionHandler(cachedURL)
             return
         }
 
         fetchIconURL { (result) in
             switch result {
             case .success(let url):
-                self.url = url
+                self.cachedURL = url
                 completionHandler(url)
             case .failure(let error) where error is WebsiteIconError:
-                self.url = nil // Cache the fact there's no icon
+                self.cachedURL = nil // Cache the fact there's no icon
                 completionHandler(nil)
             default:
                 completionHandler(nil)
