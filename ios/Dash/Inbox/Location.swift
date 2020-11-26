@@ -9,6 +9,7 @@
 import Foundation
 import MapKit
 import FirebaseFirestore
+import CommonCrypto
 
 class Location: SharedItemProtocol {
     var firebaseDocument: DocumentReference?
@@ -23,6 +24,11 @@ class Location: SharedItemProtocol {
     var hasBeenOpened: Bool
 
     lazy var formattedAddress = address.format()
+
+    lazy var pointOfInterestFinder: PointOfInterestFinder? = {
+        guard let name = name else { return nil }
+        return PointOfInterestFinder(name: name, coordinate: coordinate.clLocationCoordinate2D, maxDistance: 50)
+    }()
 
     func open() {
         markAsOpened()
@@ -41,13 +47,12 @@ class Location: SharedItemProtocol {
     }
 
     private func findCorrespondingPointOfInterest(completionHandler: @escaping (MKMapItem?) -> Void) {
-        guard let name = name else {
+        guard let pointOfInterestFinder = pointOfInterestFinder else {
             completionHandler(nil)
             return
         }
 
-        let finder = PointOfInterestFinder(name: name, coordinate: coordinate.clLocationCoordinate2D, maxDistance: 50)
-        finder.findPointOfInterest(completionHandler: completionHandler)
+        pointOfInterestFinder.find(completionHandler: completionHandler)
     }
 
     private func openDirectionsInMaps(destination: MKMapItem) {
@@ -66,9 +71,38 @@ class Location: SharedItemProtocol {
     }
 
     class PointOfInterestFinder {
+        static let cache = Cache(name: "PointOfInterestFinder", ageLimit: 60 * 60 * 24 * 7) // 7 days
+
         let name: String
         let coordinate: CLLocationCoordinate2D
         let maxDistance: CLLocationDistance
+
+        private (set) var cachedMapItem: MKMapItem? {
+            get {
+                return PointOfInterestFinder.cache.object(forKey: cacheKey) as? MKMapItem
+            }
+
+            set {
+                PointOfInterestFinder.cache.setObjectAsync(newValue as Any, forKey: cacheKey)
+            }
+        }
+
+        var isCached: Bool {
+            PointOfInterestFinder.cache.containsObject(forKey: cacheKey)
+        }
+
+        private lazy var cacheKey: String = {
+            let data = String(format: "%s|%f,%f|%f", name, coordinate.latitude, coordinate.longitude, maxDistance).data(using: .utf8)!
+            var digest = [UInt8](repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
+
+            _ = data.withUnsafeBytes { (dataPointer) in
+                CC_SHA1(dataPointer.baseAddress, CC_LONG(data.count), &digest)
+            }
+
+            let hexDigest = digest.map { String(format: "%02x", $0) }.joined()
+
+            return hexDigest
+        }()
 
         init(name: String, coordinate: CLLocationCoordinate2D, maxDistance: CLLocationDistance) {
             self.name = name
@@ -76,18 +110,28 @@ class Location: SharedItemProtocol {
             self.maxDistance = maxDistance
         }
 
-        func findPointOfInterest(completionHandler: @escaping (MKMapItem?) -> Void) {
-            MKLocalSearch(request: request).start { (response, error) in
-                guard let pointOfInterest = response?.mapItems.first else {
+        func find(completionHandler: @escaping (MKMapItem?) -> Void) {
+            if isCached {
+                completionHandler(cachedMapItem)
+                return
+            }
+
+            MKLocalSearch(request: request).start { [weak self] (response, error) in
+                guard let self = self else { return }
+
+                guard error == nil else {
                     completionHandler(nil)
                     return
                 }
 
-                if self.isClose(pointOfInterest) {
-                    completionHandler(pointOfInterest)
-                } else {
-                    completionHandler(nil)
+                var foundMapItem: MKMapItem?
+
+                if let mapItem = response?.mapItems.first, self.isClose(mapItem) {
+                    foundMapItem = mapItem
                 }
+
+                self.cachedMapItem = foundMapItem
+                completionHandler(foundMapItem)
             }
         }
 
@@ -98,12 +142,10 @@ class Location: SharedItemProtocol {
             return request
         }
 
-        private func isClose(_ pointOfInterest: MKMapItem) -> Bool {
-            guard let pointOfInterestLocation = pointOfInterest.placemark.location else {
+        private func isClose(_ mapItem: MKMapItem) -> Bool {
+            guard let pointOfInterestLocation = mapItem.placemark.location else {
                 return false
             }
-
-            print(pointOfInterestLocation.distance(from: location))
 
             return pointOfInterestLocation.distance(from: location) <= maxDistance
         }
