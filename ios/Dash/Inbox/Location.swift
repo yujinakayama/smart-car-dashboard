@@ -92,7 +92,7 @@ class Location: SharedItemProtocol {
         }
 
         private lazy var cacheKey: String = {
-            let data = String(format: "%s|%f,%f|%f", name, coordinate.latitude, coordinate.longitude, maxDistance).data(using: .utf8)!
+            let data = String(format: "%@|%f,%f|%f", name, coordinate.latitude, coordinate.longitude, maxDistance).data(using: .utf8)!
             var digest = [UInt8](repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
 
             _ = data.withUnsafeBytes { (dataPointer) in
