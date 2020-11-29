@@ -9,18 +9,22 @@
 import UIKit
 
 class TabBarController: UITabBarController, UITabBarControllerDelegate {
+    private var previousSelectedIndex: Int?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
     }
 
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        if let tabSelectionRespondable = viewController as? TabSelectionRespondable {
-            tabSelectionRespondable.tabDidSelect()
+        if selectedIndex == previousSelectedIndex, let tabReselectionRespondable = viewController as? TabReselectionRespondable {
+            tabReselectionRespondable.tabBarControllerDidReselectAlreadyVisibleTab(self)
         }
+
+        previousSelectedIndex = selectedIndex
     }
 }
 
-protocol TabSelectionRespondable {
-    func tabDidSelect()
+protocol TabReselectionRespondable {
+    func tabBarControllerDidReselectAlreadyVisibleTab(_ tabBarController: UITabBarController)
 }

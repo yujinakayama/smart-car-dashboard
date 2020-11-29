@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate, TabSelectionRespondable {
+class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate, TabReselectionRespondable {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mapTypeSegmentedControl: UISegmentedControl!
 
@@ -29,7 +29,6 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
 
         mapView.delegate = self
         mapView.register(DirectionalUserLocationAnnotationView.self, forAnnotationViewWithReuseIdentifier: "DirectionalUserLocationAnnotationView")
-        mapView.setUserTrackingMode(.follow, animated: false)
 
         gestureRecognizer.delegate = self
         mapView.addGestureRecognizer(gestureRecognizer)
@@ -37,22 +36,13 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         updatePointOfInterestFilter()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        isVisible = true
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        mapView.setUserTrackingMode(.follow, animated: false)
     }
 
-    override func viewDidDisappear(_ animated: Bool) {
-        isVisible = false
-        super.viewDidDisappear(animated)
-    }
-
-    func tabDidSelect() {
-        if isVisible {
-            mapView.setUserTrackingMode(.follow, animated: true)
-        } else {
-            mapView.setUserTrackingMode(.follow, animated: false)
-        }
+    func tabBarControllerDidReselectAlreadyVisibleTab(_ tabBarController: UITabBarController) {
+        mapView.setUserTrackingMode(.follow, animated: true)
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
