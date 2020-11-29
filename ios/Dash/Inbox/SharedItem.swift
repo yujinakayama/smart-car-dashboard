@@ -49,12 +49,12 @@ struct SharedItem {
         case website
         case unknown
 
-        static func makeType(dictionary: [String: Any]) throws -> ItemType {
+        init(dictionary: [String: Any]) throws {
             guard let typeString = dictionary["type"] as? String else {
                 throw SharedItemError.invalidDictionaryStructure
             }
 
-            return ItemType(rawValue: typeString) ?? .unknown
+            self = ItemType(rawValue: typeString) ?? .unknown
         }
     }
 
@@ -63,7 +63,7 @@ struct SharedItem {
             throw SharedItemError.documentDoesNotExist
         }
 
-        let type = try ItemType.makeType(dictionary: dictionary)
+        let type = try ItemType(dictionary: dictionary)
         let decoder = Firestore.Decoder() // Supports decoding Firestore's Timestamp
 
         var item: SharedItemProtocol!
@@ -86,7 +86,7 @@ struct SharedItem {
     }
 
     static func makeItem(dictionary: [String: Any]) throws -> SharedItemProtocol {
-        let type = try ItemType.makeType(dictionary: dictionary)
+        let type = try ItemType(dictionary: dictionary)
         let decoder = DictionaryDecoder()
 
         switch type {
