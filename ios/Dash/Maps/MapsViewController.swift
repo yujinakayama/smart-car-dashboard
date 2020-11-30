@@ -10,6 +10,10 @@ import UIKit
 import MapKit
 
 class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate, TabReselectionRespondable {
+    enum RestorationCodingKeys: String {
+        case mapType
+    }
+
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mapTypeSegmentedControl: UISegmentedControl!
 
@@ -19,8 +23,6 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
 
     let userTrackingModeRestorationInterval: TimeInterval = 10
     var userTrackingModeRestorationTimer: Timer?
-
-    var isVisible = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +36,23 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         mapView.addGestureRecognizer(gestureRecognizer)
 
         updatePointOfInterestFilter()
+    }
+
+    override func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+        coder.encode(Int(mapView.mapType.rawValue), forKey: RestorationCodingKeys.mapType.rawValue)
+    }
+
+    override func decodeRestorableState(with coder: NSCoder) {
+        if coder.containsValue(forKey: RestorationCodingKeys.mapType.rawValue),
+           let mapType = MKMapType(rawValue: UInt(coder.decodeInteger(forKey: RestorationCodingKeys.mapType.rawValue))),
+           let index = MapTypeSegmentedControlIndex(mapType)
+        {
+            mapTypeSegmentedControl.selectedSegmentIndex = index.rawValue
+            mapTypeSegmentedControlDidChange()
+        }
+
+        super.decodeRestorableState(with: coder)
     }
 
     override func viewWillAppear(_ animated: Bool) {
