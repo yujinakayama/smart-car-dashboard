@@ -12,7 +12,7 @@
         <!--Music-->
         <scene sceneID="8uU-kC-YE5">
             <objects>
-                <viewController id="zuP-Ci-kYP" customClass="MusicViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="MusicViewController" id="zuP-Ci-kYP" customClass="MusicViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="B1Y-hT-Lkm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -752,7 +752,7 @@
         <!--Maps-->
         <scene sceneID="yXK-kc-Vg4">
             <objects>
-                <viewController id="0o8-aQ-xh6" customClass="MapsViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="MapsViewController" id="0o8-aQ-xh6" customClass="MapsViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RGr-z9-sAj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
