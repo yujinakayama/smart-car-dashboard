@@ -58,6 +58,8 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     override func decodeRestorableState(with coder: NSCoder) {
         if let cardUUIDString = coder.decodeObject(forKey: RestorationCodingKeys.cardUUIDString.rawValue) as? String {
             restoredCardUUID = UUID(uuidString: cardUUIDString)
+        } else {
+            card = nil
         }
 
         super.decodeRestorableState(with: coder)
