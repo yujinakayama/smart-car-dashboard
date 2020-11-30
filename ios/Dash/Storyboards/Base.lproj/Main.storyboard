@@ -226,7 +226,7 @@
                             <outlet property="delegate" destination="jqf-qq-fTP" id="X0V-rw-3A6"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="ETC" id="dgH-Z0-R0U"/>
+                    <navigationItem key="navigationItem" title="ETC" largeTitleDisplayMode="always" id="dgH-Z0-R0U"/>
                     <connections>
                         <segue destination="LHg-0V-zMa" kind="presentation" identifier="edit" id="iFs-D4-qCS"/>
                     </connections>
