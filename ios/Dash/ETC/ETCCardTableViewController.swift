@@ -35,21 +35,8 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
 
     lazy var deviceStatusBarItemManager = ETCDeviceStatusBarItemManager(device: device)
 
-    lazy var fetchedResultsController: NSFetchedResultsController<ETCCardManagedObject> = {
-        let request: NSFetchRequest<ETCCardManagedObject> = ETCCardManagedObject.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-
-        let controller = NSFetchedResultsController(
-            fetchRequest: request,
-            managedObjectContext: device.dataStore.viewContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil
-        )
-
-        controller.delegate = self
-
-        return controller
-    }()
+    var managedObjectContextObservation: NSKeyValueObservation?
+    var fetchedResultsController: NSFetchedResultsController<ETCCardManagedObject>?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +47,8 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
         setUpNavigationBar()
 
         startObservingNotifications()
+
+        startFetchingCards()
 
         // Show "All Payments" immediately on launch
         performSegue(withIdentifier: "initialShow", sender: nil)
@@ -73,11 +62,6 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
     func startObservingNotifications() {
         let notificationCenter = NotificationCenter.default
 
-        notificationCenter.addObserver(forName: .ETCDeviceDidFinishDataStorePreparation, object: device, queue: .main) { (notification) in
-            try! self.fetchedResultsController.performFetch()
-            self.tableView.reloadData()
-        }
-
         notificationCenter.addObserver(forName: .ETCDeviceDidDetectCardInsertion, object: device, queue: .main) { (notification) in
             self.indicateCurrentCard()
         }
@@ -85,6 +69,39 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
         notificationCenter.addObserver(forName: .ETCDeviceDidDetectCardEjection, object: device, queue: .main) { (notification) in
             self.indicateCurrentCard()
         }
+    }
+
+    func startFetchingCards() {
+        if let managedObjectContext = device.dataStore.viewContext {
+            fetchCards(managedObjectContext: managedObjectContext)
+        } else {
+            managedObjectContextObservation = device.dataStore.observe(\.viewContext) { [weak self] (dataStore, change) in
+                guard let managedObjectContext = dataStore.viewContext else { return }
+                self?.fetchCards(managedObjectContext: managedObjectContext)
+            }
+        }
+    }
+
+    func fetchCards(managedObjectContext: NSManagedObjectContext) {
+        fetchedResultsController = makeFetchedResultsController(managedObjectContext: managedObjectContext)
+        try! fetchedResultsController!.performFetch()
+        tableView.reloadData()
+    }
+
+    func makeFetchedResultsController(managedObjectContext: NSManagedObjectContext) -> NSFetchedResultsController<ETCCardManagedObject> {
+        let request: NSFetchRequest<ETCCardManagedObject> = ETCCardManagedObject.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+
+        let controller = NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: managedObjectContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+
+        controller.delegate = self
+
+        return controller
     }
 
     func indicateCurrentCard() {
@@ -107,7 +124,7 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
                 case .allPayments:
                     paymentTableViewController.card = nil
                 case .cards:
-                    paymentTableViewController.card = fetchedResultsController.object(at: indexPath.adding(section: -1))
+                    paymentTableViewController.card = fetchedResultsController?.object(at: indexPath.adding(section: -1))
                 }
             }
         case "edit":
@@ -130,7 +147,7 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
         case .allPayments:
             return 1
         case .cards:
-            return fetchedResultsController.sections?.first?.numberOfObjects ?? 0
+            return fetchedResultsController?.sections?.first?.numberOfObjects ?? 0
         }
     }
 
@@ -149,9 +166,13 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
             return tableView.dequeueReusableCell(withIdentifier: "AllPaymentsCell", for: indexPath)
         case .cards:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ETCCardTableViewCell", for: indexPath) as! ETCCardTableViewCell
-            let card = fetchedResultsController.object(at: indexPath.adding(section: -1))
-            cell.card = card
-            cell.isCurrentCard = card.objectID == device.currentCard?.objectID
+            if let card = fetchedResultsController?.object(at: indexPath.adding(section: -1)) {
+                cell.card = card
+                cell.isCurrentCard = card.objectID == device.currentCard?.objectID
+            } else {
+                cell.card = nil
+                cell.isCurrentCard = false
+            }
             return cell
         }
     }
@@ -170,7 +191,7 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
 
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         guard Section(indexPath)! == .cards else { return }
-        let card = fetchedResultsController.object(at: indexPath.adding(section: -1))
+        guard let card = fetchedResultsController?.object(at: indexPath.adding(section: -1)) else { return }
         performSegue(withIdentifier: "edit", sender: card)
     }
 

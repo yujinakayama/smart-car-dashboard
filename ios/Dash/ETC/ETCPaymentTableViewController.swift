@@ -16,25 +16,8 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
 
     lazy var deviceStatusBarItemManager = ETCDeviceStatusBarItemManager(device: device)
 
-    lazy var fetchedResultsController: NSFetchedResultsController<ETCPaymentManagedObject> = {
-        let request: NSFetchRequest<ETCPaymentManagedObject> = ETCPaymentManagedObject.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-
-        if let card = card {
-            request.predicate = NSPredicate(format: "card == %@", card)
-        }
-
-        let controller = NSFetchedResultsController(
-            fetchRequest: request,
-            managedObjectContext: device.dataStore.viewContext,
-            sectionNameKeyPath: "sectionIdentifier",
-            cacheName: nil
-        )
-
-        controller.delegate = self
-
-        return controller
-    }()
+    var managedObjectContextObservation: NSKeyValueObservation?
+    var fetchedResultsController: NSFetchedResultsController<ETCPaymentManagedObject>?
 
     override var splitViewController: ETCSplitViewController {
         return super.splitViewController as! ETCSplitViewController
@@ -50,11 +33,9 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        try! fetchedResultsController.performFetch()
-
         setUpNavigationBar()
 
-        startObservingNotifications()
+        startFetchingPayments()
     }
 
     func setUpNavigationBar() {
@@ -62,13 +43,41 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         deviceStatusBarItemManager.addBarItem(to: navigationItem)
     }
 
-    func startObservingNotifications() {
-        let notificationCenter = NotificationCenter.default
-
-        notificationCenter.addObserver(forName: .ETCDeviceDidFinishDataStorePreparation, object: device, queue: .main) { (notification) in
-            try! self.fetchedResultsController.performFetch()
-            self.tableView.reloadData()
+    func startFetchingPayments() {
+        if let managedObjectContext = device.dataStore.viewContext {
+            fetchPayments(managedObjectContext: managedObjectContext)
+        } else {
+            managedObjectContextObservation = device.dataStore.observe(\.viewContext) { [weak self] (dataStore, change) in
+                guard let managedObjectContext = dataStore.viewContext else { return }
+                self?.fetchPayments(managedObjectContext: managedObjectContext)
+            }
         }
+    }
+
+    func fetchPayments(managedObjectContext: NSManagedObjectContext) {
+        fetchedResultsController = makeFetchedResultsController(managedObjectContext: managedObjectContext)
+        try! fetchedResultsController!.performFetch()
+        tableView.reloadData()
+    }
+
+    func makeFetchedResultsController(managedObjectContext: NSManagedObjectContext) -> NSFetchedResultsController<ETCPaymentManagedObject> {
+        let request: NSFetchRequest<ETCPaymentManagedObject> = ETCPaymentManagedObject.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+
+        if let card = card {
+            request.predicate = NSPredicate(format: "card == %@", card)
+        }
+
+        let controller = NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: managedObjectContext,
+            sectionNameKeyPath: "sectionIdentifier",
+            cacheName: nil
+        )
+
+        controller.delegate = self
+
+        return controller
     }
 
     // MARK: - Segues
@@ -76,8 +85,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "showDetail" {
             if let detailNavigationController = splitViewController.detailNavigationController {
-                if let indexPath = tableView.indexPathForSelectedRow {
-                    let payment = fetchedResultsController.object(at: indexPath)
+                if let indexPath = tableView.indexPathForSelectedRow, let payment = fetchedResultsController?.object(at: indexPath) {
                     showPayment(payment, in: detailNavigationController.topViewController as! ETCPaymentDetailViewController)
                     showDetailViewController(detailNavigationController, sender: self)
                 }
@@ -92,14 +100,14 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail", let indexPath = tableView.indexPathForSelectedRow {
+            guard let payment = fetchedResultsController?.object(at: indexPath) else { return }
             let navigationController = segue.destination as! UINavigationController
             splitViewController.detailNavigationController = navigationController
-            let payment = fetchedResultsController.object(at: indexPath)
             showPayment(payment, in: navigationController.topViewController as! ETCPaymentDetailViewController)
         }
     }
 
-    func showPayment(_ payment: ETCPaymentProtocol?, in detailViewController: ETCPaymentDetailViewController) {
+    func showPayment(_ payment: ETCPaymentProtocol, in detailViewController: ETCPaymentDetailViewController) {
         detailViewController.payment = payment
 
         if splitViewController.displayMode == .oneOverSecondary {
@@ -114,24 +122,21 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     // MARK: - UITableViewDataSource
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return fetchedResultsController.sections?.count ?? 0
+        return fetchedResultsController?.sections?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
+        return fetchedResultsController?.sections?[section].numberOfObjects ?? 0
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let sectionInfo = fetchedResultsController.sections?[section]
-        let payment = sectionInfo?.objects?.first as? ETCPaymentManagedObject
-        return sectionHeaderDateFormatter.string(from: payment!.date)
+        guard let payment = fetchedResultsController?.sections?[section].objects?.first as? ETCPaymentManagedObject else { return nil }
+        return sectionHeaderDateFormatter.string(from: payment.date)
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ETCPaymentTableViewCell", for: indexPath) as! ETCPaymentTableViewCell
-
-        let payment = fetchedResultsController.object(at: indexPath)
-        cell.payment = payment
+        cell.payment = fetchedResultsController?.object(at: indexPath)
         return cell
     }
 

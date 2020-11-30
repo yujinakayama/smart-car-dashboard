@@ -13,12 +13,10 @@ enum ETCDataStoreError: Error {
     case currentCardMustBeSet
 }
 
-class ETCDataStore {
+class ETCDataStore: NSObject {
     let persistentContainer: NSPersistentContainer
 
-    var viewContext: NSManagedObjectContext {
-        return persistentContainer.viewContext
-    }
+    @objc dynamic var viewContext: NSManagedObjectContext?
 
     lazy var backgroundContext = persistentContainer.newBackgroundContext()
 
@@ -27,15 +25,18 @@ class ETCDataStore {
     init(name: String) {
         persistentContainer = NSPersistentContainer(name: name)
 
-        persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
-
         persistentContainer.persistentStoreDescriptions.forEach { (persistentStoreDescription) in
             persistentStoreDescription.shouldAddStoreAsynchronously = true
         }
     }
 
     func loadPersistantStores(completionHandler: @escaping (NSPersistentStoreDescription, Error?) -> Void) {
-        persistentContainer.loadPersistentStores(completionHandler: completionHandler)
+        persistentContainer.loadPersistentStores { [weak self] (persistentStoreDescription, error) in
+            guard let self = self else { return }
+            self.viewContext = self.persistentContainer.viewContext
+            self.viewContext!.automaticallyMergesChangesFromParent = true
+            completionHandler(persistentStoreDescription, error)
+        }
     }
 
     func performBackgroundTask(block: @escaping (NSManagedObjectContext) -> Void) {
