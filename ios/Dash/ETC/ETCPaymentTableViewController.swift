@@ -10,9 +10,21 @@ import UIKit
 import CoreData
 
 class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
-    var device: ETCDevice!
+    enum RestorationCodingKeys: String {
+        case cardUUIDString
+    }
 
-    var card: ETCCardManagedObject?
+    var device: ETCDevice {
+        return Vehicle.default.etcDevice
+    }
+
+    var card: ETCCardManagedObject? {
+        didSet {
+            navigationItem.title = card?.displayedName ?? "All Payments"
+        }
+    }
+
+    var restoredCardUUID: UUID?
 
     lazy var deviceStatusBarItemManager = ETCDeviceStatusBarItemManager(device: device)
 
@@ -33,14 +45,22 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setUpNavigationBar()
+        deviceStatusBarItemManager.addBarItem(to: navigationItem)
 
         startFetchingPayments()
     }
 
-    func setUpNavigationBar() {
-        navigationItem.title = card?.displayedName ?? "All Payments"
-        deviceStatusBarItemManager.addBarItem(to: navigationItem)
+    override func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+        coder.encode(card?.uuid.uuidString, forKey: RestorationCodingKeys.cardUUIDString.rawValue)
+    }
+
+    override func decodeRestorableState(with coder: NSCoder) {
+        if let cardUUIDString = coder.decodeObject(forKey: RestorationCodingKeys.cardUUIDString.rawValue) as? String {
+            restoredCardUUID = UUID(uuidString: cardUUIDString)
+        }
+
+        super.decodeRestorableState(with: coder)
     }
 
     func startFetchingPayments() {
@@ -55,6 +75,10 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     }
 
     func fetchPayments(managedObjectContext: NSManagedObjectContext) {
+        if let restoredCardUUID = restoredCardUUID {
+            card = try! device.dataStore.findCard(uuid: restoredCardUUID, in: managedObjectContext)
+        }
+
         fetchedResultsController = makeFetchedResultsController(managedObjectContext: managedObjectContext)
         try! fetchedResultsController!.performFetch()
         tableView.reloadData()

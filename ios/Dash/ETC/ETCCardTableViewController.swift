@@ -31,7 +31,9 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
         }
     }
 
-    var device: ETCDevice!
+    var device: ETCDevice {
+        return Vehicle.default.etcDevice
+    }
 
     lazy var deviceStatusBarItemManager = ETCDeviceStatusBarItemManager(device: device)
 
@@ -49,9 +51,6 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
         startObservingNotifications()
 
         startFetchingCards()
-
-        // Show "All Payments" immediately on launch
-        performSegue(withIdentifier: "initialShow", sender: nil)
     }
 
     func setUpNavigationBar() {
@@ -112,13 +111,9 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
-        case "initialShow":
-            let paymentTableViewController = segue.destination as! ETCPaymentTableViewController
-            paymentTableViewController.device = device
         case "show":
             if let indexPath = tableView.indexPathForSelectedRow {
                 let paymentTableViewController = segue.destination as! ETCPaymentTableViewController
-                paymentTableViewController.device = device
 
                 switch Section(indexPath)! {
                 case .allPayments:

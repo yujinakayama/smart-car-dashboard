@@ -229,7 +229,6 @@
                     <navigationItem key="navigationItem" title="ETC" id="dgH-Z0-R0U"/>
                     <connections>
                         <segue destination="LHg-0V-zMa" kind="presentation" identifier="edit" id="iFs-D4-qCS"/>
-                        <segue destination="7bK-jq-Zjz" kind="show" identifier="initialShow" animates="NO" id="FxZ-L2-3vE"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yGh-KL-oO3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -534,7 +533,7 @@
                             <outlet property="delegate" destination="7bK-jq-Zjz" id="RA6-mI-bju"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="My Card" id="Zdf-7t-Un8"/>
+                    <navigationItem key="navigationItem" id="Zdf-7t-Un8"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
             </objects>
@@ -1016,8 +1015,8 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="Tll-UG-LXB"/>
-        <segue reference="FxZ-L2-3vE"/>
+        <segue reference="6S0-TO-JiA"/>
+        <segue reference="ZuQ-m0-CKt"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Mastercard" width="117" height="73"/>

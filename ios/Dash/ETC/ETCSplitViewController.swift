@@ -9,13 +9,6 @@
 import UIKit
 
 class ETCSplitViewController: UISplitViewController, UISplitViewControllerDelegate {
-    var device: ETCDevice! {
-        didSet {
-            let cardTableViewController = masterNavigationController.viewControllers.first as! ETCCardTableViewController
-            cardTableViewController.device = device
-        }
-    }
-
     var masterNavigationController: UINavigationController {
         return viewControllers.first as! UINavigationController
     }

@@ -9,6 +9,8 @@
 import Foundation
 
 class Vehicle {
+    static let `default` = Vehicle()
+
     let etcDevice = ETCDevice()
     let bluetoothAudioDevice = BluetoothAudioDevice()
 

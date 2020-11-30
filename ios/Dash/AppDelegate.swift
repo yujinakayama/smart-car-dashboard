@@ -19,17 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         return window?.rootViewController as! UITabBarController
     }
 
-    let vehicle = Vehicle()
-
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
-
-        for viewController in tabBarController.viewControllers! {
-            if let etcSplitViewController = viewController as? ETCSplitViewController {
-                etcSplitViewController.device = vehicle.etcDevice
-            }
-        }
-
         return true
     }
 
@@ -38,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
         UserNotificationCenter.shared.setUp()
 
-        vehicle.connect()
+        Vehicle.default.connect()
 
         for viewController in tabBarController.viewControllers! {
             _ = viewController.view
