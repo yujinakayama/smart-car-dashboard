@@ -7,9 +7,14 @@
 //
 
 import Foundation
+import FirebaseCore
 
 class Firebase {
     static let shared = Firebase()
 
     let authentication = FirebaseAuthentication()
+
+    init() {
+        FirebaseApp.configure()
+    }
 }

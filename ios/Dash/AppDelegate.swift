@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FirebaseCore
 import FirebaseMessaging
 import GoogleSignIn
 
@@ -20,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        FirebaseApp.configure()
+        _ = Firebase.shared
         return true
     }
 
