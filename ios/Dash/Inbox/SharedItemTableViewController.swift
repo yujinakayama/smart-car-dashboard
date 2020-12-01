@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDelegate {
     var database: SharedItemDatabase? {
@@ -43,6 +44,10 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
         navigationItem.leftBarButtonItem = editButtonItem
         updateRightBarButtonItem()
+
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(tableViewDidRecognizeLongPress))
+        longPressGestureRecognizer.minimumPressDuration = 1
+        tableView.addGestureRecognizer(longPressGestureRecognizer)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -130,8 +135,22 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         }
     }
 
+    @objc func tableViewDidRecognizeLongPress(gestureRecognizer: UIGestureRecognizer) {
+        guard gestureRecognizer.state == .began else { return }
+        let point = gestureRecognizer.location(in: tableView)
+        guard let indexPath = tableView.indexPathForRow(at: point) else { return }
+        let item = self.item(for: indexPath)
+        openInInAppBrowser(item: item)
+    }
+
     func item(for indexPath: IndexPath) -> SharedItemProtocol {
         return dataSource.item(for: indexPath)
+    }
+
+    func openInInAppBrowser(item: SharedItemProtocol) {
+        let safariViewController = SFSafariViewController(url: item.url)
+        safariViewController.dismissButtonStyle = .close
+        present(safariViewController, animated: true)
     }
 
     func sharePairingURL() {
