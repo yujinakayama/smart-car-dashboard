@@ -8,7 +8,6 @@
 
 import UIKit
 import FirebaseMessaging
-import GoogleSignIn
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -24,8 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
-
         UserNotificationCenter.shared.setUp()
 
         Vehicle.default.connect()
@@ -73,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
 
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
-        return GIDSignIn.sharedInstance().handle(url)
+        return Firebase.shared.authentication.handle(url)
     }
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {

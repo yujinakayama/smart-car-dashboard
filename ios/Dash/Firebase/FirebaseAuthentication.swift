@@ -7,13 +7,15 @@
 //
 
 import Foundation
+import FirebaseCore
 import FirebaseAuth
+import GoogleSignIn
 
 extension Notification.Name {
     static let FirebaseAuthenticationDidChangeVehicleID = Notification.Name("FirebaseAuthenticationDidChangeVehicleID")
 }
 
-class FirebaseAuthentication {
+class FirebaseAuthentication: NSObject {
     struct UserInfoKey {
         static let oldVehicleID = "oldVehicleID"
         static let newVehicleID = "newVehicleID"
@@ -31,8 +33,23 @@ class FirebaseAuthentication {
 
     private var authStateListener: AuthStateDidChangeListenerHandle?
 
-    init() {
+    private var signInCompletionHandler: ((Error?) -> Void)?
+
+    override init() {
+        super.init()
+        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+        GIDSignIn.sharedInstance().delegate = self
         beginGeneratingNotifications()
+    }
+
+    func presentSignInViewController(in presentingViewController: UIViewController, completion: @escaping (Error?) -> Void) {
+        GIDSignIn.sharedInstance().presentingViewController = presentingViewController
+        signInCompletionHandler = completion
+        GIDSignIn.sharedInstance().signIn()
+    }
+
+    func handle(_ url: URL) -> Bool {
+        return GIDSignIn.sharedInstance().handle(url)
     }
 
     private func beginGeneratingNotifications() {
@@ -58,5 +75,43 @@ class FirebaseAuthentication {
         }
 
         previousVehicleID = vehicleID
+    }
+}
+
+extension FirebaseAuthentication: GIDSignInDelegate {
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
+        if let error = error {
+            logger.error(error)
+            return
+        }
+
+        guard let googleAuthentication = user.authentication else { return }
+
+        let firebaseCredential = GoogleAuthProvider.credential(
+            withIDToken: googleAuthentication.idToken,
+            accessToken: googleAuthentication.accessToken
+        )
+
+        signInToFirebase(with: firebaseCredential)
+    }
+
+    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+        if let error = error {
+            logger.error(error)
+        }
+
+        logger.info(user)
+    }
+
+    private func signInToFirebase(with credential: AuthCredential) {
+        Auth.auth().signIn(with: credential) { [weak self] (authResult, error) in
+            if let error = error {
+                logger.error(error)
+            } else {
+                logger.info(authResult)
+            }
+
+            self?.signInCompletionHandler?(error)
+        }
     }
 }

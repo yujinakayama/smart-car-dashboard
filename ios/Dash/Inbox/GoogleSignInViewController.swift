@@ -7,54 +7,10 @@
 //
 
 import UIKit
-import FirebaseAuth
-import GoogleSignIn
 
-class GoogleSignInViewController: UIViewController, GIDSignInDelegate {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        GIDSignIn.sharedInstance().delegate = self
-        GIDSignIn.sharedInstance().presentingViewController = self
-    }
-
+class GoogleSignInViewController: UIViewController {
     @IBAction func signInWithGoogleButtonDidTap(_ sender: Any) {
-        GIDSignIn.sharedInstance().signIn()
-    }
-
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
-        if let error = error {
-            logger.error(error)
-            return
-        }
-
-        guard let googleAuthentication = user.authentication else { return }
-
-        let firebaseCredential = GoogleAuthProvider.credential(
-            withIDToken: googleAuthentication.idToken,
-            accessToken: googleAuthentication.accessToken
-        )
-
-        signInToFirebase(with: firebaseCredential)
-    }
-
-    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
-        if let error = error {
-            logger.error(error)
-        }
-
-        logger.info(user)
-    }
-
-    func signInToFirebase(with credential: AuthCredential) {
-        Auth.auth().signIn(with: credential) { (authResult, error) in
-            if let error = error {
-                logger.error(error)
-                return
-            }
-
-            logger.info(authResult)
-
+        Firebase.shared.authentication.presentSignInViewController(in: self) { (error) in
             self.dismiss(animated: true)
         }
     }
