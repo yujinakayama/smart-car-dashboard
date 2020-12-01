@@ -48,6 +48,10 @@ class FirebaseAuthentication: NSObject {
         GIDSignIn.sharedInstance().signIn()
     }
 
+    func signOut() {
+        try? Auth.auth().signOut()
+    }
+
     func handle(_ url: URL) -> Bool {
         return GIDSignIn.sharedInstance().handle(url)
     }

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FirebaseAuth
 
 class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDelegate {
     var database: SharedItemDatabase? {
@@ -85,8 +84,8 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
                 self.sharePairingURL()
             }
 
-            let signOutMenuItem = UIAction(title: "Sign out") { (action) in
-                try? Auth.auth().signOut()
+            let signOutMenuItem = UIAction(title: "Sign out") { [unowned self] (action) in
+                self.authentication.signOut()
             }
 
             let menu = UIMenu(title: authentication.email ?? "", children: [pairingMenuItem, signOutMenuItem])

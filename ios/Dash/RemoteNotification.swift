@@ -8,7 +8,6 @@
 
 import Foundation
 import DictionaryCoding
-import FirebaseAuth
 
 struct RemoteNotification {
     enum NotificationType: String {
