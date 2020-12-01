@@ -9,9 +9,8 @@
 import UIKit
 import UserNotifications
 import MapKit
-import FirebaseMessaging
 
-class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, MessagingDelegate {
+class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
     static let shared = UserNotificationCenter()
 
     let authorizationOptions: UNAuthorizationOptions = [.sound, .alert]
@@ -25,8 +24,6 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, Messag
     override init() {
         super.init()
         notificationCenter.delegate = self
-        Messaging.messaging().delegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(firebaseAuthenticationDidUpdateVehicleID), name: .FirebaseAuthenticationDidChangeVehicleID, object: nil)
     }
 
     func setUp() {
@@ -62,6 +59,8 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, Messag
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         logger.info(response.notification.request.content)
 
+        Firebase.shared.cloudMessaging.markNotificationAsReceived(response.notification)
+
         process(response.notification)
 
         completionHandler()
@@ -71,8 +70,6 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, Messag
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         logger.info(notification)
 
-        Messaging.messaging().appDidReceiveMessage(notification.request.content.userInfo)
-
         process(notification)
 
         completionHandler(notification.request.content.foregroundPresentationOptions)
@@ -81,22 +78,6 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate, Messag
     func process(_ notification: UNNotification) {
         let remoteNotification = RemoteNotification(userInfo: notification.request.content.userInfo)
         remoteNotification.process()
-    }
-
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
-        logger.debug(fcmToken)
-    }
-
-    @objc func firebaseAuthenticationDidUpdateVehicleID(notification: Notification) {
-        if let oldVehicleID = notification.userInfo?[FirebaseAuthentication.UserInfoKey.oldVehicleID] as? String {
-            logger.info("Unsubscribing from topic \(oldVehicleID)")
-            Messaging.messaging().unsubscribe(fromTopic: oldVehicleID)
-        }
-
-        if let newVehicleID = notification.userInfo?[FirebaseAuthentication.UserInfoKey.newVehicleID] as? String {
-            logger.info("Subscribing to topic \(newVehicleID)")
-            Messaging.messaging().subscribe(toTopic: newVehicleID)
-        }
     }
 }
 
