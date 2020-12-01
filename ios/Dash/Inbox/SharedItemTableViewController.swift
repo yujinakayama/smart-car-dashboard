@@ -41,7 +41,9 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         }
 
         updateDataSource()
-        setUpNavigationItem()
+
+        navigationItem.leftBarButtonItem = editButtonItem
+        updateRightBarButtonItem()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -54,7 +56,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
     @objc func sharedItemDatabaseDidChange() {
         updateDataSource()
-        setUpNavigationItem()
+        updateRightBarButtonItem()
     }
 
     @objc func updateDataSource() {
@@ -70,18 +72,39 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         }
     }
 
-    func setUpNavigationItem() {
-        navigationItem.leftBarButtonItem = editButtonItem
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        updateRightBarButtonItem()
+    }
 
-        let pairingMenuItem = UIAction(title: "Pair with Dash Remote") { [unowned self] (action) in
-            self.sharePairingURL()
+    func updateRightBarButtonItem() {
+        if isEditing {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(trashBarButtonItemDidTap))
+        } else {
+            let pairingMenuItem = UIAction(title: "Pair with Dash Remote") { [unowned self] (action) in
+                self.sharePairingURL()
+            }
+
+            let signOutMenuItem = UIAction(title: "Sign out") { (action) in
+                try? Auth.auth().signOut()
+            }
+
+            let menu = UIMenu(title: authentication.email ?? "", children: [pairingMenuItem, signOutMenuItem])
+            let barButtonItem = UIBarButtonItem(title: nil, image: UIImage(systemName: "ellipsis.circle"), primaryAction: nil, menu: menu)
+            navigationItem.rightBarButtonItem = barButtonItem
+        }
+    }
+
+    @objc func trashBarButtonItemDidTap() {
+        assert(isEditing)
+
+        guard let indexPaths = tableView.indexPathsForSelectedRows else { return }
+
+        for indexPath in indexPaths {
+            dataSource.item(for: indexPath).delete()
         }
 
-        let signOutMenuItem = UIAction(title: "Sign out") { (action) in
-            try? Auth.auth().signOut()
-        }
-
-        navigationItem.rightBarButtonItem?.menu = UIMenu(title: authentication.email ?? "", children: [pairingMenuItem, signOutMenuItem])
+        setEditing(false, animated: true)
     }
 
     func database(_ database: SharedItemDatabase, didUpdateItems items: [SharedItemProtocol], withChanges changes: [SharedItemDatabase.Change]) {
@@ -98,6 +121,8 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard !tableView.isEditing else { return }
+
         let item = dataSource.item(for: indexPath)
         item.open()
 

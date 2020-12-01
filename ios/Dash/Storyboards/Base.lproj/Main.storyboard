@@ -559,7 +559,7 @@
         <scene sceneID="p0o-EX-VWk">
             <objects>
                 <tableViewController restorationIdentifier="SharedItemTableViewController" id="08M-uz-mue" userLabel="Shared Item Table View Controller" customClass="SharedItemTableViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5gS-Vr-VFB">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5gS-Vr-VFB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
@@ -673,9 +673,7 @@
                             <outlet property="delegate" destination="08M-uz-mue" id="3Of-4e-TNQ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Inbox" id="08c-tQ-1d0">
-                        <barButtonItem key="rightBarButtonItem" image="ellipsis.circle" catalog="system" id="JZh-o5-flX"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Inbox" id="08c-tQ-1d0"/>
                     <connections>
                         <segue destination="1MV-T3-y4O" kind="presentation" identifier="showSignIn" animates="NO" id="bw5-MR-F3K"/>
                     </connections>
@@ -1023,7 +1021,6 @@
         <image name="Visa" width="496" height="161"/>
         <image name="arrow.right" catalog="system" width="128" height="98"/>
         <image name="checkmark" catalog="system" width="128" height="114"/>
-        <image name="ellipsis.circle" catalog="system" width="128" height="121"/>
         <image name="map.fill" catalog="system" width="128" height="110"/>
         <image name="mappin" catalog="system" width="105" height="128"/>
         <image name="music.note.beamed" width="15" height="19"/>

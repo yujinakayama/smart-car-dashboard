@@ -33,10 +33,6 @@ class SharedItemTableViewDataSource: UITableViewDiffableDataSource<Date, String>
         return tableView.isEditing
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        item(for: indexPath).delete()
-    }
-
     func setItems(_ items: [SharedItemProtocol]) {
         setItems(items, changes: [], animated: false)
     }
