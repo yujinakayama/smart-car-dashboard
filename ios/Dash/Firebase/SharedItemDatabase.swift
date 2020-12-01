@@ -14,7 +14,11 @@ protocol SharedItemDatabaseDelegate: NSObjectProtocol {
     func database(_ database: SharedItemDatabase, didUpdateItems items: [SharedItemProtocol], withChanges changes: [SharedItemDatabase.Change])
 }
 
-class SharedItemDatabase {
+extension Notification.Name {
+    static let SharedItemDatabaseDidUpdateItems = Notification.Name("SharedItemDatabaseDidUpdateItems")
+}
+
+class SharedItemDatabase: NSObject {
     let vehicleID: String
     weak var delegate: SharedItemDatabaseDelegate?
 
@@ -60,7 +64,7 @@ class SharedItemDatabase {
 
             guard let snapshot = snapshot else { return }
 
-            self.updateItem(from: snapshot)
+            self.updateItems(from: snapshot)
         }
     }
 
@@ -92,7 +96,7 @@ class SharedItemDatabase {
         }
     }
 
-    private func updateItem(from firestoreSnapshot: QuerySnapshot) {
+    private func updateItems(from firestoreSnapshot: QuerySnapshot) {
         items = firestoreSnapshot.documents.compactMap({ (document) in
             do {
                 var item = try SharedItem.makeItem(document: document)
@@ -120,6 +124,8 @@ class SharedItemDatabase {
         }
 
         delegate?.database(self, didUpdateItems: items, withChanges: changes)
+
+        NotificationCenter.default.post(name: .SharedItemDatabaseDidUpdateItems, object: self)
     }
 }
 

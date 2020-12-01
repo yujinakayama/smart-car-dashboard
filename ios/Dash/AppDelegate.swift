@@ -7,9 +7,6 @@
 //
 
 import UIKit
-import FirebaseCore
-import FirebaseMessaging
-import GoogleSignIn
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -19,23 +16,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         return window?.rootViewController as! UITabBarController
     }
 
+    lazy var tabBarBadgeManager = TabBarBadgeManager(tabBarController: tabBarController)
+
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        FirebaseApp.configure()
+        _ = Firebase.shared
         return true
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
-
         UserNotificationCenter.shared.setUp()
 
         Vehicle.default.connect()
 
-        for viewController in tabBarController.viewControllers! {
-            _ = viewController.view
-        }
-
-        FirebaseAuthentication.beginGeneratingVehicleIDNotifications()
+        _ = tabBarBadgeManager
 
         return true
     }
@@ -76,10 +69,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
 
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
-        return GIDSignIn.sharedInstance().handle(url)
+        return Firebase.shared.authentication.handle(url)
     }
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        Messaging.messaging().apnsToken = deviceToken
+        Firebase.shared.cloudMessaging.deviceToken = deviceToken
     }
 }
