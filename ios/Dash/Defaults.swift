@@ -17,7 +17,7 @@ struct Defaults {
     private struct Key {
         static let mapTypeForETCRoute = "mapTypeForETCRoute"
         static let mapTypeForDirections = "mapTypeForDirections"
-        static let snapReceivedLocationToPointOfInterest = "snapReceivedLocationToPointOfInterest"
+        static let snapLocationToPointOfInterest = "snapLocationToPointOfInterest"
         static let verboseLogging = "verboseLogging"
     }
 
@@ -39,9 +39,9 @@ struct Defaults {
         }
     }
 
-    var snapReceivedLocationToPointOfInterest: Bool {
+    var snapLocationToPointOfInterest: Bool {
         get {
-            return userDefaults.bool(forKey: Key.snapReceivedLocationToPointOfInterest)
+            return userDefaults.bool(forKey: Key.snapLocationToPointOfInterest)
         }
     }
 

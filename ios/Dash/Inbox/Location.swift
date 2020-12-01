@@ -33,7 +33,7 @@ class Location: SharedItemProtocol {
     func open() {
         markAsOpened()
 
-        if Defaults.shared.snapReceivedLocationToPointOfInterest {
+        if Defaults.shared.snapLocationToPointOfInterest {
             findCorrespondingPointOfInterest() { (pointOfInterest) in
                 if let pointOfInterest = pointOfInterest {
                     self.openDirectionsInMaps(destination: pointOfInterest)

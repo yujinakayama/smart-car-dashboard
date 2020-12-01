@@ -8,6 +8,24 @@
 	<array>
 		<dict>
 			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Verbose Logging</string>
+			<key>Key</key>
+			<string>verboseLogging</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Maps Integration</string>
+			<key>FooterText</key>
+			<string>When opening locations in Apple Maps, automatically search and show corresponding point of interest with detailed infomation. This requires additional network request for searching.</string>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
 			<key>Title</key>
 			<string>Map Type for Directions</string>
@@ -28,29 +46,13 @@
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-			<key>FooterText</key>
-			<string>When opening received locations in Apple Maps, automatically search and show corresponding point of interest with detailed infomation. This requires additional network request for searching.</string>
-		</dict>
-		<dict>
-			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Snap Received Location to Point of Interest</string>
+			<string>Snap Location to Point of Interest</string>
 			<key>Key</key>
-			<string>snapReceivedLocationToPointOfInterest</string>
+			<string>snapLocationToPointOfInterest</string>
 			<key>DefaultValue</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Verbose Logging</string>
-			<key>Key</key>
-			<string>verboseLogging</string>
-			<key>DefaultValue</key>
-			<false/>
+			<true/>
 		</dict>
 	</array>
 </dict>
