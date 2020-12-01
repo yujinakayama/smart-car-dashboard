@@ -19,6 +19,10 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         return cell
     }
 
+    var authentication: FirebaseAuthentication {
+        return Firebase.shared.authentication
+    }
+
     var isVisible: Bool {
         return isViewLoaded && view.window != nil
     }
@@ -37,7 +41,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        if FirebaseAuthentication.vehicleID == nil {
+        if authentication.vehicleID == nil {
             showSignInView()
         }
     }
@@ -48,7 +52,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
     }
 
     @objc func buildDatabase() {
-        if let vehicleID = FirebaseAuthentication.vehicleID {
+        if let vehicleID = authentication.vehicleID {
             let database = SharedItemDatabase(vehicleID: vehicleID)
             database.delegate = self
             database.startUpdating()
@@ -73,7 +77,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
             try? Auth.auth().signOut()
         }
 
-        navigationItem.rightBarButtonItem?.menu = UIMenu(title: FirebaseAuthentication.email ?? "", children: [pairingMenuItem, signOutMenuItem])
+        navigationItem.rightBarButtonItem?.menu = UIMenu(title: authentication.email ?? "", children: [pairingMenuItem, signOutMenuItem])
     }
 
     func database(_ database: SharedItemDatabase, didUpdateItems items: [SharedItemProtocol], withChanges changes: [SharedItemDatabase.Change]) {
@@ -113,7 +117,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
     }
 
     func sharePairingURL() {
-        guard let vehicleID = FirebaseAuthentication.vehicleID else { return }
+        guard let vehicleID = authentication.vehicleID else { return }
 
         let pairingURLItem = PairingURLItem(vehicleID: vehicleID)
         let activityViewController = UIActivityViewController(activityItems: [pairingURLItem], applicationActivities: nil)

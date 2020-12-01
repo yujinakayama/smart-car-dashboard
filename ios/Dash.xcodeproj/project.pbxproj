@@ -77,6 +77,8 @@
 		B95F514A23E5B2C10063CB3D /* Website.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514923E5B2C10063CB3D /* Website.swift */; };
 		B95F514C23E5B53F0063CB3D /* RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */; };
 		B95F514E23E5BBF70063CB3D /* SharedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514D23E5BBF70063CB3D /* SharedItem.swift */; };
+		B9640AAB2575D9E800B779AD /* Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9640AAA2575D9E800B779AD /* Firebase.swift */; };
+		B9640AC22575EC0400B779AD /* FirebaseAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9640AC12575EC0400B779AD /* FirebaseAuthentication.swift */; };
 		B964BCC323E066FF00288E0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B964BCC223E066FF00288E0D /* AppDelegate.swift */; };
 		B964BCC523E066FF00288E0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B964BCC423E066FF00288E0D /* SceneDelegate.swift */; };
 		B964BCC723E066FF00288E0D /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B964BCC623E066FF00288E0D /* MapViewController.swift */; };
@@ -108,7 +110,6 @@
 		B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E722A9553A00BA08AB /* MockSerialPort.swift */; };
 		B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */; };
 		B9989E3E23E8752100FAFD06 /* Share.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9989E3D23E8752100FAFD06 /* Share.wav */; };
-		B9994293254D82A100E535C3 /* FirebaseAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9994292254D82A100E535C3 /* FirebaseAuthentication.swift */; };
 		B99D4F2824C0526200647A10 /* BluetoothAudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99D4F2724C0526200647A10 /* BluetoothAudioDevice.swift */; };
 		B9A45A9B252C229200CA7921 /* SharedItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A45A9A252C229200CA7921 /* SharedItemDatabase.swift */; };
 		B9A481FE23EF01DB00AA7590 /* SuccessCheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */; };
@@ -335,6 +336,8 @@
 		B95F514923E5B2C10063CB3D /* Website.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Website.swift; sourceTree = "<group>"; };
 		B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteNotification.swift; sourceTree = "<group>"; };
 		B95F514D23E5BBF70063CB3D /* SharedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItem.swift; sourceTree = "<group>"; };
+		B9640AAA2575D9E800B779AD /* Firebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firebase.swift; sourceTree = "<group>"; };
+		B9640AC12575EC0400B779AD /* FirebaseAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthentication.swift; sourceTree = "<group>"; };
 		B964BCC023E066FF00288E0D /* Dash Remote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dash Remote.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B964BCC223E066FF00288E0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B964BCC423E066FF00288E0D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -368,7 +371,6 @@
 		B99356E722A9553A00BA08AB /* MockSerialPort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSerialPort.swift; sourceTree = "<group>"; };
 		B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCPaymentTableViewCell.swift; sourceTree = "<group>"; };
 		B9989E3D23E8752100FAFD06 /* Share.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Share.wav; sourceTree = "<group>"; };
-		B9994292254D82A100E535C3 /* FirebaseAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthentication.swift; sourceTree = "<group>"; };
 		B99D4F2724C0526200647A10 /* BluetoothAudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothAudioDevice.swift; sourceTree = "<group>"; };
 		B9A3C09423E163F500EF1C4A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../ShareExtension/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9A45A9A252C229200CA7921 /* SharedItemDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemDatabase.swift; sourceTree = "<group>"; };
@@ -580,6 +582,15 @@
 				B9FA6CC724CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift */,
 			);
 			path = Music;
+			sourceTree = "<group>";
+		};
+		B9640ABC2575EBF200B779AD /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				B9640AAA2575D9E800B779AD /* Firebase.swift */,
+				B9640AC12575EC0400B779AD /* FirebaseAuthentication.swift */,
+			);
+			path = Firebase;
 			sourceTree = "<group>";
 		};
 		B964BCC123E066FF00288E0D /* DashRemote */ = {
@@ -815,7 +826,7 @@
 				B904A2A4243968840087BD4A /* Maps */,
 				B97B0D8724C040A9006B675B /* BluetoothAudio */,
 				B97BAE6124B61DB100AE7D13 /* Vehicle.swift */,
-				B9994292254D82A100E535C3 /* FirebaseAuthentication.swift */,
+				B9640ABC2575EBF200B779AD /* Firebase */,
 				B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */,
 				B942554F22BAA5D1008B053B /* LocalNotification.swift */,
 				B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */,
@@ -1469,7 +1480,6 @@
 				B95BF23823EBF43900A30DE0 /* ETCCardEditViewController.swift in Sources */,
 				B9D0261024BF7704005C03B1 /* ClassicBluetoothDevice.swift in Sources */,
 				B9F9EFD6256D3D6B00C33781 /* Cache.swift in Sources */,
-				B9994293254D82A100E535C3 /* FirebaseAuthentication.swift in Sources */,
 				B9FA6CC824CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift in Sources */,
 				B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */,
 				B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */,
@@ -1484,6 +1494,7 @@
 				B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */,
 				B99D4F2824C0526200647A10 /* BluetoothAudioDevice.swift in Sources */,
 				B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */,
+				B9640AAB2575D9E800B779AD /* Firebase.swift in Sources */,
 				B9FB33E124AE2ACD00FEB782 /* PlaybackModeButton.swift in Sources */,
 				B91E0B62254D047D002928D3 /* PairingURLItem.swift in Sources */,
 				B92E2AFC23E4958200BB4C0E /* UNNotificationContentExtension.swift in Sources */,
@@ -1513,6 +1524,7 @@
 				B932E5EC23F86C5F00726615 /* MusicItem.swift in Sources */,
 				B92FB3C023E95BE900EA702C /* SharedItemTableViewCell.swift in Sources */,
 				B9DC5B4A229EDA0000B645D5 /* SerialPort.swift in Sources */,
+				B9640AC22575EC0400B779AD /* FirebaseAuthentication.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

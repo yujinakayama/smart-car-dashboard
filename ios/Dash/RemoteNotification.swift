@@ -53,7 +53,7 @@ struct ShareNotification {
                 let item = try SharedItem.makeItem(dictionary: self.itemDictionary)
                 item.open()
 
-                guard let vehicleID = FirebaseAuthentication.vehicleID else { return }
+                guard let vehicleID = Firebase.shared.authentication.vehicleID else { return }
 
                 SharedItemDatabase(vehicleID: vehicleID).findItem(identifier: item.identifier) { (item, error) in
                     if let error = error {

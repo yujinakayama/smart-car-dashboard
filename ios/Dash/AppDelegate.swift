@@ -35,8 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             _ = viewController.view
         }
 
-        FirebaseAuthentication.beginGeneratingVehicleIDNotifications()
-
         return true
     }
 
