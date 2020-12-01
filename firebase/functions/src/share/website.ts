@@ -14,13 +14,17 @@ export async function normalizeWebpage(inputData: InputData): Promise<Website> {
 }
 
 async function getTitle(inputData: InputData): Promise<string | null> {
+    let title;
+
     const plainText = inputData.rawData['public.plain-text'];
 
     if (plainText && !urlPattern.test(plainText)) {
-        return plainText;
+        title = plainText;
+    } else {
+        title = await fetchTitle(inputData.url);
     }
 
-    return fetchTitle(inputData.url);
+    return title?.replace(/\n/g, ' ') || null;
 }
 
 async function fetchTitle(url: URL): Promise<string | null> {
