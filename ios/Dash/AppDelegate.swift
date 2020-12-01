@@ -18,6 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     lazy var tabBarBadgeManager = TabBarBadgeManager(tabBarController: tabBarController)
 
+    let assistant = Assistant()
+
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         _ = Firebase.shared
         return true
