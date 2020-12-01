@@ -40,6 +40,7 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
 
     override func encodeRestorableState(with coder: NSCoder) {
         super.encodeRestorableState(with: coder)
+        guard let mapView = mapView else { return } // For some reason mapView might be nil
         coder.encode(Int(mapView.mapType.rawValue), forKey: RestorationCodingKeys.mapType.rawValue)
     }
 
