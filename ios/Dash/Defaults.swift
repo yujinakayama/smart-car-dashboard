@@ -21,6 +21,25 @@ struct Defaults {
         static let verboseLogging = "verboseLogging"
     }
 
+    init() {
+        loadDefaultValues()
+    }
+
+    private func loadDefaultValues() {
+        let plistURL = Bundle.main.bundleURL.appendingPathComponent("Settings.bundle").appendingPathComponent("Root.plist")
+        let rootDictionary = NSDictionary(contentsOf: plistURL)
+        guard let preferences = rootDictionary?.object(forKey: "PreferenceSpecifiers") as? [[String: Any]] else { return }
+
+        var defaultValues: [String: Any] = Dictionary()
+
+        for preference in preferences {
+            guard let key = preference["Key"] as? String else { continue }
+            defaultValues[key] = preference["DefaultValue"]
+        }
+
+        userDefaults.register(defaults: defaultValues)
+    }
+
     var mapTypeForETCRoute: MKMapType? {
         get {
             let integer = userDefaults.integer(forKey: Key.mapTypeForETCRoute)
