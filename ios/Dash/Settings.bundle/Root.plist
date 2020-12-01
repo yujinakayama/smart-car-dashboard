@@ -48,6 +48,16 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
+			<string>Automatically Open Unopened Location When App Is Opened</string>
+			<key>Key</key>
+			<string>automaticallyOpenUnopenedLocationWhenAppIsOpened</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
 			<string>Snap Location to Point of Interest</string>
 			<key>Key</key>
 			<string>snapLocationToPointOfInterest</string>

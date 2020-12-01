@@ -17,6 +17,7 @@ struct Defaults {
     private struct Key {
         static let mapTypeForETCRoute = "mapTypeForETCRoute"
         static let mapTypeForDirections = "mapTypeForDirections"
+        static let automaticallyOpenUnopenedLocationWhenAppIsOpened = "automaticallyOpenUnopenedLocationWhenAppIsOpened"
         static let snapLocationToPointOfInterest = "snapLocationToPointOfInterest"
         static let verboseLogging = "verboseLogging"
     }
@@ -55,6 +56,12 @@ struct Defaults {
         get {
             let integer = userDefaults.integer(forKey: Key.mapTypeForDirections)
             return MKMapType(rawValue: UInt(integer))
+        }
+    }
+
+    var automaticallyOpenUnopenedLocationWhenAppIsOpened: Bool {
+        get {
+            return userDefaults.bool(forKey: Key.automaticallyOpenUnopenedLocationWhenAppIsOpened)
         }
     }
 

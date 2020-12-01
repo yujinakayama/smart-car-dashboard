@@ -16,7 +16,11 @@ class Assistant {
     }
 
     @objc func applicationDidBecomeActive() {
-        autoLocationOpener = AutoLocationOpener()
+        if Defaults.shared.automaticallyOpenUnopenedLocationWhenAppIsOpened {
+            autoLocationOpener = AutoLocationOpener()
+        } else {
+            autoLocationOpener = nil
+        }
     }
 }
 
@@ -31,18 +35,18 @@ extension Assistant {
 
             NotificationCenter.default.addObserver(self, selector: #selector(sharedItemDatabaseDidUpdateItems), name: .SharedItemDatabaseDidUpdateItems, object: nil)
 
-            openLocationThatMayBeNextDestination()
+            openUnopenedLocation()
         }
 
         @objc func sharedItemDatabaseDidUpdateItems() {
             logger.info()
 
             if Date().timeIntervalSince(startDate) < timeoutTimeInterval {
-                openLocationThatMayBeNextDestination()
+                openUnopenedLocation()
             }
         }
 
-        @objc func openLocationThatMayBeNextDestination() {
+        @objc func openUnopenedLocation() {
             logger.info()
 
             guard !finished else { return }
