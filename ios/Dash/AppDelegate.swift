@@ -16,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         return window?.rootViewController as! UITabBarController
     }
 
+    lazy var tabBarBadgeManager = TabBarBadgeManager(tabBarController: tabBarController)
+
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         _ = Firebase.shared
         return true
@@ -26,9 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
         Vehicle.default.connect()
 
-        for viewController in tabBarController.viewControllers! {
-            _ = viewController.view
-        }
+        _ = tabBarBadgeManager
 
         return true
     }

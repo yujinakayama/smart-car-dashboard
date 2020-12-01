@@ -55,8 +55,6 @@ class FirebaseAuthentication: NSObject {
     private func beginGeneratingNotifications() {
         guard authStateListener == nil else { return }
 
-        previousVehicleID = vehicleID
-
         authStateListener = Auth.auth().addStateDidChangeListener { [weak self] (auth, user) in
             self?.authStateDidChange()
         }

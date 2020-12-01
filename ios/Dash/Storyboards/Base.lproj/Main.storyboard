@@ -734,7 +734,7 @@
         <scene sceneID="JrH-as-C6C">
             <objects>
                 <navigationController restorationIdentifier="SharedItemNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="9rv-x1-HX3" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Inbox" image="tray.and.arrow.down.fill" catalog="system" id="5GI-ot-E7D"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="Inbox" image="tray.and.arrow.down.fill" catalog="system" id="5GI-ot-E7D"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="3Im-5G-ZFk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="102"/>

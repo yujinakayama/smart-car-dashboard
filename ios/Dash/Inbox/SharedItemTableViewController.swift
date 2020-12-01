@@ -10,7 +10,9 @@ import UIKit
 import FirebaseAuth
 
 class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDelegate {
-    var database: SharedItemDatabase?
+    var database: SharedItemDatabase? {
+        return Firebase.shared.sharedItemDatabase
+    }
 
     lazy var dataSource = SharedItemTableViewDataSource(tableView: tableView) { [weak self] (tableView, indexPath, itemIdentifier) in
         guard let self = self else { return nil }
@@ -27,14 +29,18 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         return isViewLoaded && view.window != nil
     }
 
+    private var sharedItemDatabaseObservation: NSKeyValueObservation?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.dataSource = dataSource
 
-        NotificationCenter.default.addObserver(self, selector: #selector(firebaseAuthenticationDidChangeVehicleID), name: .FirebaseAuthenticationDidChangeVehicleID, object: nil)
+        sharedItemDatabaseObservation = Firebase.shared.observe(\.sharedItemDatabase, options: .initial) { [weak self] (firbase, change) in
+            self?.sharedItemDatabaseDidChange()
+        }
 
-        buildDatabase()
+        updateDataSource()
         setUpNavigationItem()
     }
 
@@ -46,20 +52,18 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         }
     }
 
-    @objc func firebaseAuthenticationDidChangeVehicleID() {
-        buildDatabase()
+    @objc func sharedItemDatabaseDidChange() {
+        updateDataSource()
         setUpNavigationItem()
     }
 
-    @objc func buildDatabase() {
-        if let vehicleID = authentication.vehicleID {
-            let database = SharedItemDatabase(vehicleID: vehicleID)
+    @objc func updateDataSource() {
+        if let database = database {
             database.delegate = self
-            database.startUpdating()
-            self.database = database
+            dataSource.setItems(database.items)
         } else {
-            database = nil
             dataSource.setItems([])
+
             if isVisible {
                 showSignInView()
             }
@@ -82,16 +86,6 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
     func database(_ database: SharedItemDatabase, didUpdateItems items: [SharedItemProtocol], withChanges changes: [SharedItemDatabase.Change]) {
         dataSource.setItems(items, changes: changes, animated: !dataSource.isEmpty)
-        updateBadge()
-    }
-
-    func updateBadge() {
-        if let database = database {
-            let unopenedCount = database.items.filter { !$0.hasBeenOpened }.count
-            navigationController?.tabBarItem.badgeValue = (unopenedCount == 0) ? nil : "\(unopenedCount)"
-        } else {
-            navigationController?.tabBarItem.badgeValue = nil
-        }
     }
 
     func showSignInView() {

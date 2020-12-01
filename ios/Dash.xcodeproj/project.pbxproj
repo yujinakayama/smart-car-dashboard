@@ -116,6 +116,7 @@
 		B9A4820023EF025200AA7590 /* SuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FF23EF025200AA7590 /* SuccessViewController.swift */; };
 		B9A4820123EFCEC200AA7590 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
 		B9B154EE2575FCED0031761F /* FirebaseCloudMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B154ED2575FCED0031761F /* FirebaseCloudMessaging.swift */; };
+		B9B154F82576075C0031761F /* TabBarBadgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B154F72576075C0031761F /* TabBarBadgeManager.swift */; };
 		B9B18DD323EDFFF40096D603 /* DashShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; };
 		B9B18DD423EDFFF40096D603 /* DashShareKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B717DD23E6B26900A47207 /* UnknownItem.swift */; };
@@ -378,6 +379,7 @@
 		B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessCheckmarkView.swift; sourceTree = "<group>"; };
 		B9A481FF23EF025200AA7590 /* SuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessViewController.swift; sourceTree = "<group>"; };
 		B9B154ED2575FCED0031761F /* FirebaseCloudMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCloudMessaging.swift; sourceTree = "<group>"; };
+		B9B154F72576075C0031761F /* TabBarBadgeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarBadgeManager.swift; sourceTree = "<group>"; };
 		B9B717DD23E6B26900A47207 /* UnknownItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownItem.swift; sourceTree = "<group>"; };
 		B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewCell.swift; sourceTree = "<group>"; };
 		B9BC920823250A0A006F22FC /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
@@ -592,6 +594,7 @@
 				B9640AAA2575D9E800B779AD /* Firebase.swift */,
 				B9640AC12575EC0400B779AD /* FirebaseAuthentication.swift */,
 				B9B154ED2575FCED0031761F /* FirebaseCloudMessaging.swift */,
+				B9A45A9A252C229200CA7921 /* SharedItemDatabase.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -637,7 +640,6 @@
 				B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */,
 				B90265AA23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift */,
 				B92FB3BF23E95BE900EA702C /* SharedItemTableViewCell.swift */,
-				B9A45A9A252C229200CA7921 /* SharedItemDatabase.swift */,
 				B95F514D23E5BBF70063CB3D /* SharedItem.swift */,
 				B95F514523E5A8540063CB3D /* Location.swift */,
 				B932E5EB23F86C5F00726615 /* MusicItem.swift */,
@@ -823,6 +825,7 @@
 			children = (
 				B9DC5B24229D59BE00B645D5 /* AppDelegate.swift */,
 				B90E21F824CBB1BF008330AD /* TabBarController.swift */,
+				B9B154F72576075C0031761F /* TabBarBadgeManager.swift */,
 				B944C68E24A9E4C8000D1E99 /* Music */,
 				B9CEA76822D8F1990055C9A3 /* ETC */,
 				B9741F7623DF201A00F061E7 /* Inbox */,
@@ -1487,6 +1490,7 @@
 				B9FA6CC824CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift in Sources */,
 				B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */,
 				B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */,
+				B9B154F82576075C0031761F /* TabBarBadgeManager.swift in Sources */,
 				B95F514C23E5B53F0063CB3D /* RemoteNotification.swift in Sources */,
 				B9DC5B27229D59BE00B645D5 /* ETCPaymentTableViewController.swift in Sources */,
 				B9A45A9B252C229200CA7921 /* SharedItemDatabase.swift in Sources */,
