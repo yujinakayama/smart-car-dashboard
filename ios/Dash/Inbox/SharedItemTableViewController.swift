@@ -29,12 +29,20 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         return isViewLoaded && view.window != nil
     }
 
+    lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
+        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(tableViewDidRecognizeLongPress))
+        gestureRecognizer.minimumPressDuration = 1
+        gestureRecognizer.allowableMovement = 20 // Allow some movement for shaky vehicle environment
+        return gestureRecognizer
+    }()
+
     private var sharedItemDatabaseObservation: NSKeyValueObservation?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.dataSource = dataSource
+        tableView.addGestureRecognizer(longPressGestureRecognizer)
 
         sharedItemDatabaseObservation = Firebase.shared.observe(\.sharedItemDatabase, options: .initial) { [weak self] (firbase, change) in
             self?.sharedItemDatabaseDidChange()
@@ -44,10 +52,6 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
         navigationItem.leftBarButtonItem = editButtonItem
         updateRightBarButtonItem()
-
-        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(tableViewDidRecognizeLongPress))
-        longPressGestureRecognizer.minimumPressDuration = 1
-        tableView.addGestureRecognizer(longPressGestureRecognizer)
     }
 
     override func viewDidAppear(_ animated: Bool) {
