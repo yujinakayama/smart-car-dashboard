@@ -31,7 +31,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
     lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
         let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(tableViewDidRecognizeLongPress))
-        gestureRecognizer.minimumPressDuration = 1
+        gestureRecognizer.minimumPressDuration = 0.75
         gestureRecognizer.allowableMovement = 20 // Allow some movement for shaky vehicle environment
         return gestureRecognizer
     }()
