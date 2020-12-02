@@ -695,7 +695,7 @@
                                 <rect key="frame" x="0.0" y="50" width="375" height="954"/>
                                 <color key="backgroundColor" red="0.36078431372549019" green="0.38823529411764707" blue="0.40392156862745099" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration">
-                                    <dataDetectorTypes key="dataDetectorTypes" none="YES"/>
+                                    <dataDetectorTypes key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" audio="YES" video="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
