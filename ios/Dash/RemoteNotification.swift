@@ -49,21 +49,23 @@ struct ShareNotification {
         // causes freeze in a few seconds
         DispatchQueue.main.async {
             do {
-                let item = try SharedItem.makeItem(dictionary: self.itemDictionary)
-                item.open()
-
-                guard let vehicleID = Firebase.shared.authentication.vehicleID else { return }
-
-                SharedItemDatabase(vehicleID: vehicleID).findItem(identifier: item.identifier) { (item, error) in
-                    if let error = error {
-                        logger.error(error)
-                    }
-
-                    item?.markAsOpened()
-                }
+                try open()
             } catch {
                 logger.error(error)
             }
+        }
+    }
+
+    private func open() throws {
+        let item = try SharedItem.makeItem(dictionary: self.itemDictionary)
+        item.open(from: nil)
+
+        Firebase.shared.sharedItemDatabase?.findItem(identifier: item.identifier) { (item, error) in
+            if let error = error {
+                logger.error(error)
+            }
+
+            item?.markAsOpened()
         }
     }
 }

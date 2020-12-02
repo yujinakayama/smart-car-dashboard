@@ -30,7 +30,7 @@ class Location: SharedItemProtocol {
         return PointOfInterestFinder(name: name, coordinate: coordinate.clLocationCoordinate2D, maxDistance: 50)
     }()
 
-    func open() {
+    func open(from viewController: UIViewController?) {
         markAsOpened()
 
         if Defaults.shared.snapLocationToPointOfInterest {
@@ -43,6 +43,14 @@ class Location: SharedItemProtocol {
             }
         } else {
             openDirectionsInMaps(destination: mapItem)
+        }
+    }
+
+    func openSecondarily(from viewController: UIViewController?) {
+        if url.host == "maps.apple.com" {
+            openInOtherApp()
+        } else {
+            openInInAppBrowser(from: viewController)
         }
     }
 

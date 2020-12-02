@@ -24,14 +24,18 @@ class MusicItem: SharedItemProtocol {
     let creationDate: Date?
     var hasBeenOpened: Bool
 
-    func open() {
+    func open(from viewController: UIViewController?) {
         markAsOpened()
 
         if let playParameters = playParameters {
             play(playParameters: playParameters)
         } else {
-            openInMusicApp()
+            openInOtherApp()
         }
+    }
+
+    func openSecondarily(from viewController: UIViewController?) {
+        openInOtherApp()
     }
 
     func artworkURL(size: CGSize) -> URL? {
@@ -64,9 +68,5 @@ class MusicItem: SharedItemProtocol {
         player.prepend(queueDescriptor)
         player.skipToNextItem()
         player.play()
-    }
-
-    private func openInMusicApp() {
-        UIApplication.shared.open(url, options: [:])
     }
 }

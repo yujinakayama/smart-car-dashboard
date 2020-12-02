@@ -54,7 +54,7 @@ extension Assistant {
             guard let database = Firebase.shared.sharedItemDatabase else { return }
             let unopenedLocations = database.items.filter { $0 is Location && !$0.hasBeenOpened }
             guard unopenedLocations.count == 1, let location = unopenedLocations.first else { return }
-            location.open()
+            location.open(from: nil)
 
             finished = true
         }

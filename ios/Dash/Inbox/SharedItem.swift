@@ -10,6 +10,7 @@ import Foundation
 import DictionaryCoding
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import SafariServices
 
 // TODO: Split metadata and content so that we can handle them easily on instantiation.
 protocol SharedItemProtocol: Decodable {
@@ -18,12 +19,28 @@ protocol SharedItemProtocol: Decodable {
     var url: URL { get }
     var creationDate: Date? { get }
     var hasBeenOpened: Bool { get }
-    func open()
+    func open(from viewController: UIViewController?)
+    func openSecondarily(from viewController: UIViewController?)
 }
 
 extension SharedItemProtocol {
+    var rootViewController: UIViewController? {
+        return UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController
+    }
+
     func markAsOpened() {
         firebaseDocument?.updateData(["hasBeenOpened": true])
+    }
+
+    func openInOtherApp() {
+        UIApplication.shared.open(url, options: [:])
+    }
+
+    func openInInAppBrowser(from viewController: UIViewController?) {
+        guard let viewController = viewController ?? rootViewController else { return }
+        let safariViewController = SFSafariViewController(url: url)
+        safariViewController.dismissButtonStyle = .close
+        viewController.present(safariViewController, animated: true)
     }
 
     func delete() {

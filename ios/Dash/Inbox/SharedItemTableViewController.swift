@@ -132,7 +132,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         guard !tableView.isEditing else { return }
 
         let item = dataSource.item(for: indexPath)
-        item.open()
+        item.open(from: self)
 
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
@@ -144,17 +144,11 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         let point = gestureRecognizer.location(in: tableView)
         guard let indexPath = tableView.indexPathForRow(at: point) else { return }
         let item = self.item(for: indexPath)
-        openInInAppBrowser(item: item)
+        item.openSecondarily(from: self)
     }
 
     func item(for indexPath: IndexPath) -> SharedItemProtocol {
         return dataSource.item(for: indexPath)
-    }
-
-    func openInInAppBrowser(item: SharedItemProtocol) {
-        let safariViewController = SFSafariViewController(url: item.url)
-        safariViewController.dismissButtonStyle = .close
-        present(safariViewController, animated: true)
     }
 
     func sharePairingURL() {
