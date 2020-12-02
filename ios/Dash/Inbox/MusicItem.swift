@@ -24,6 +24,10 @@ class MusicItem: SharedItemProtocol {
     let creationDate: Date?
     var hasBeenOpened: Bool
 
+    var title: String? {
+        return name
+    }
+
     func open(from viewController: UIViewController?) {
         markAsOpened()
 

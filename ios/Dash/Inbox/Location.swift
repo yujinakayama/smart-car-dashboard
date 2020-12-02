@@ -30,6 +30,10 @@ class Location: SharedItemProtocol {
         return PointOfInterestFinder(name: name, coordinate: coordinate.clLocationCoordinate2D, maxDistance: 50)
     }()
 
+    var title: String? {
+        return name
+    }
+
     func open(from viewController: UIViewController?) {
         markAsOpened()
 

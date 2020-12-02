@@ -17,6 +17,10 @@ class UnknownItem: SharedItemProtocol {
     let creationDate: Date?
     var hasBeenOpened: Bool
 
+    var title: String? {
+        return nil
+    }
+
     func open(from viewController: UIViewController?) {
         markAsOpened()
         openInOtherApp()

@@ -10,12 +10,13 @@ import Foundation
 import DictionaryCoding
 import FirebaseFirestore
 import FirebaseFirestoreSwift
-import SafariServices
+import WebKit
 
 // TODO: Split metadata and content so that we can handle them easily on instantiation.
 protocol SharedItemProtocol: Decodable {
     var firebaseDocument: DocumentReference? { get set }
     var identifier: String! { get set }
+    var title: String? { get }
     var url: URL { get }
     var creationDate: Date? { get }
     var hasBeenOpened: Bool { get }
@@ -38,9 +39,12 @@ extension SharedItemProtocol {
 
     func openInInAppBrowser(from viewController: UIViewController?) {
         guard let viewController = viewController ?? rootViewController else { return }
-        let safariViewController = SFSafariViewController(url: url)
-        safariViewController.dismissButtonStyle = .close
-        viewController.present(safariViewController, animated: true)
+
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle(for: WebViewController.self))
+        let navigationController = storyboard.instantiateViewController(withIdentifier: "WebViewNavigationController") as! UINavigationController
+        let webViewController = navigationController.viewControllers.first as! WebViewController
+        webViewController.item = self
+        viewController.present(navigationController, animated: true)
     }
 
     func delete() {
