@@ -10,6 +10,8 @@ import UIKit
 import WebKit
 
 class WebViewController: UIViewController {
+    static var defaultUserAgent: String?
+
     @IBOutlet weak var webView: WKWebView!
 
     @IBOutlet weak var doneBarButtonItem: UIBarButtonItem!
@@ -28,12 +30,14 @@ class WebViewController: UIViewController {
 
         navigationItem.title = item.title
 
-        setUpBarButtonItems()
+        configureBarButtonItems()
 
-        webView.load(URLRequest(url: item.url))
+        configureWebView { [weak self] in
+            self?.startLoadingPage()
+        }
     }
 
-    func setUpBarButtonItems() {
+    func configureBarButtonItems() {
         keyValueObservations.append(webView.observe(\.title, changeHandler: { [unowned self] (webView, change) in
             navigationItem.title = webView.title
         }))
@@ -55,6 +59,46 @@ class WebViewController: UIViewController {
         }))
 
         openDirectionsInMapsBarButtonItem.isEnabled = item is Location
+    }
+
+    func configureWebView(completion: @escaping () -> Void) {
+        guard traitCollection.horizontalSizeClass == .compact else {
+            completion()
+            return
+        }
+
+        let webPagePreferences = WKWebpagePreferences()
+        webPagePreferences.preferredContentMode = .mobile
+        webView.configuration.defaultWebpagePreferences = webPagePreferences
+
+        getDefaultUserAgent { (defaultUserAgent) in
+            if let defaultUserAgent = defaultUserAgent {
+                // Some sites like Tabelog checks whether user agent includes "iPhone" or not to determine whether the device is mobile one
+                self.webView.customUserAgent = defaultUserAgent.replacingOccurrences(of: "iPad", with: "iPhone")
+            }
+
+            completion()
+        }
+    }
+
+    func getDefaultUserAgent(completion: @escaping (String?) -> Void) {
+        if let userAgent = WebViewController.defaultUserAgent {
+            completion(userAgent)
+            return
+        }
+
+        let webPagePreferences = WKWebpagePreferences()
+        webPagePreferences.preferredContentMode = .mobile
+        webView.configuration.defaultWebpagePreferences = webPagePreferences
+
+        webView.evaluateJavaScript("navigator.userAgent", completionHandler: { (userAgent, error) in
+            WebViewController.defaultUserAgent = userAgent as? String
+            completion(WebViewController.defaultUserAgent)
+        })
+    }
+
+    func startLoadingPage() {
+        webView.load(URLRequest(url: item.url))
     }
 
     func updateReloadOrStopLoadingBarButtonItem() {
