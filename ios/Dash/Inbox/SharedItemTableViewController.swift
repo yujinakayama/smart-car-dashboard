@@ -16,7 +16,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
     lazy var dataSource = SharedItemTableViewDataSource(tableView: tableView) { [weak self] (tableView, indexPath, itemIdentifier) in
         guard let self = self else { return nil }
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SharedItemTableViewCell") as! SharedItemTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SharedItemTableViewCell",for: indexPath) as! SharedItemTableViewCell
         cell.item = self.item(for: indexPath)
         return cell
     }
