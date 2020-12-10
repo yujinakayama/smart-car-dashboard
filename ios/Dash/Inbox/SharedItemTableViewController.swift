@@ -38,6 +38,8 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
     private var sharedItemDatabaseObservation: NSKeyValueObservation?
 
+    private var pendingUpdate: SharedItemDatabase.Update?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -60,6 +62,10 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         if authentication.vehicleID == nil {
             showSignInView()
         }
+
+        if let pendingUpdate = pendingUpdate {
+            applyUpdate(pendingUpdate)
+        }
     }
 
     @objc func sharedItemDatabaseDidChange() {
@@ -73,6 +79,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
             dataSource.setItems(database.items)
         } else {
             dataSource.setItems([])
+            pendingUpdate = nil
 
             if isVisible {
                 showSignInView()
@@ -115,8 +122,17 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         setEditing(false, animated: true)
     }
 
-    func database(_ database: SharedItemDatabase, didUpdateItems items: [SharedItemProtocol], withChanges changes: [SharedItemDatabase.Change]) {
-        dataSource.setItems(items, changes: changes, animated: !dataSource.isEmpty)
+    func database(_ database: SharedItemDatabase, didUpdateItems update: SharedItemDatabase.Update) {
+        if tableView.window == nil {
+            pendingUpdate = update
+        } else {
+            applyUpdate(update)
+        }
+    }
+
+    func applyUpdate(_ update: SharedItemDatabase.Update) {
+        dataSource.setItems(update.items, changes: update.changes, animated: !dataSource.isEmpty)
+        pendingUpdate = nil
     }
 
     func showSignInView() {

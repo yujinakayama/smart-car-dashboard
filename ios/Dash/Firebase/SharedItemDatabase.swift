@@ -10,7 +10,7 @@ import Foundation
 import FirebaseFirestore
 
 protocol SharedItemDatabaseDelegate: NSObjectProtocol {
-    func database(_ database: SharedItemDatabase, didUpdateItems items: [SharedItemProtocol], withChanges changes: [SharedItemDatabase.Change])
+    func database(_ database: SharedItemDatabase, didUpdateItems update: SharedItemDatabase.Update)
 }
 
 extension Notification.Name {
@@ -18,6 +18,8 @@ extension Notification.Name {
 }
 
 class SharedItemDatabase: NSObject {
+    static let updateUserInfoKey = "updateUserInfoKey"
+
     let vehicleID: String
     weak var delegate: SharedItemDatabaseDelegate?
 
@@ -122,13 +124,20 @@ class SharedItemDatabase: NSObject {
             return Change(type: changeType, oldIndex: Int(documentChange.oldIndex), newIndex: Int(documentChange.newIndex))
         }
 
-        delegate?.database(self, didUpdateItems: items, withChanges: changes)
+        let update = Update(items: items, changes: changes)
 
-        NotificationCenter.default.post(name: .SharedItemDatabaseDidUpdateItems, object: self)
+        delegate?.database(self, didUpdateItems: update)
+
+        NotificationCenter.default.post(name: .SharedItemDatabaseDidUpdateItems, object: self, userInfo: [SharedItemDatabase.updateUserInfoKey: update])
     }
 }
 
 extension SharedItemDatabase {
+    struct Update {
+        let items: [SharedItemProtocol]
+        let changes: [Change]
+    }
+
     struct Change {
         enum ChangeType {
             case addition
