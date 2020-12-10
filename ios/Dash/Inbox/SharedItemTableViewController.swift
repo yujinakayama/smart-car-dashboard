@@ -98,7 +98,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
             }
 
             let menu = UIMenu(title: authentication.email ?? "", children: [pairingMenuItem, signOutMenuItem])
-            let barButtonItem = UIBarButtonItem(title: nil, image: UIImage(systemName: "ellipsis.circle"), primaryAction: nil, menu: menu)
+            let barButtonItem = UIBarButtonItem(title: nil, image: UIImage(systemName: "person.circle"), primaryAction: nil, menu: menu)
             navigationItem.rightBarButtonItem = barButtonItem
         }
     }
