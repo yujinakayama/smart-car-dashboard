@@ -93,7 +93,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
                 self.sharePairingURL()
             }
 
-            let signOutMenuItem = UIAction(title: "Sign out") { [unowned self] (action) in
+            let signOutMenuItem = UIAction(title: "Sign Out") { [unowned self] (action) in
                 self.authentication.signOut()
             }
 
