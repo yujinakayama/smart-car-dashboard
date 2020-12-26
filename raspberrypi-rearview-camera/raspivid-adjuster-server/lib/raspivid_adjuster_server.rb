@@ -12,7 +12,10 @@ class RaspividAdjusterServer < Sinatra::Application
 
     raspivid_options = RaspividOptions.new(JSON.parse(json))
     script = generate_script(raspivid_options)
-    File.write(SCRIPT_PATH, script)
+
+    if !File.exist?(SCRIPT_PATH) || File.read(SCRIPT_PATH) != script
+      File.write(SCRIPT_PATH, script)
+    end
 
     status 204
   end
