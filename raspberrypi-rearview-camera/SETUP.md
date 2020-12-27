@@ -241,6 +241,7 @@ After=network.target
 Type=simple
 ExecStart=/opt/bin/raspivid-server
 Restart=always
+RestartSec=0
 StartLimitInterval=10
 StartLimitBurst=20
 User=raspivid-server
