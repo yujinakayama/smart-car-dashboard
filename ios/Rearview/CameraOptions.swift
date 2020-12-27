@@ -35,9 +35,23 @@ struct CameraOptions: Encodable {
     }()
 
     static func fixedSensitivity(digitalgain: Float) -> CameraOptions {
-        var options = day
-        options.digitalgain = digitalgain
+        var options = night
+        options.digitalgain = sanitizeDigitalGain(digitalgain)
         return options
+    }
+
+    private static func sanitizeDigitalGain(_ digitalgain: Float) -> Float {
+        // Sets the digital gain value applied by the ISP (floating point value from 1.0 to 64.0,
+        // but values over about 4.0 will produce overexposed images)
+        // https://www.raspberrypi.org/documentation/raspbian/applications/camera.md
+
+        if digitalgain < 1 {
+            return 1
+        } else if digitalgain > 64 {
+            return 64
+        } else {
+            return digitalgain
+        }
     }
 
     // https://github.com/raspberrypi/userland/blob/093b30b/host_applications/linux/apps/raspicam/RaspiCamControl.c#L189-L218

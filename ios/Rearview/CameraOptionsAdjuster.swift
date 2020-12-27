@@ -51,9 +51,9 @@ class CameraOptionsAdjuster: NSObject, SunDelegate {
         case .night:
             cameraOptions = CameraOptions.night
         case .lowLight:
-            cameraOptions = CameraOptions.fixedSensitivity(digitalgain: 6)
+            cameraOptions = CameraOptions.fixedSensitivity(digitalgain: Defaults.shared.digitalGainForLowLightMode)
         case .ultraLowLight:
-            cameraOptions = CameraOptions.fixedSensitivity(digitalgain: 10)
+            cameraOptions = CameraOptions.fixedSensitivity(digitalgain: Defaults.shared.digitalGainForUltraLowLightMode)
         }
 
         if let cameraOptions = cameraOptions {

@@ -24,6 +24,50 @@
 			<key>AutocorrectionType</key>
 			<string>No</string>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Camera Sensitivity</string>
+			<key>FooterText</key>
+			<string>Digital gain values must be from 1.0 to 64.0.</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Digital Gain for Low Light Mode</string>
+			<key>Key</key>
+			<string>digitalGainForLowLightMode</string>
+			<key>DefaultValue</key>
+			<string>6</string>
+			<key>IsSecure</key>
+			<false/>
+			<key>KeyboardType</key>
+			<string>NumberPad</string>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Digital Gain for Ultra Low Light Mode</string>
+			<key>Key</key>
+			<string>digitalGainForUltraLowLightMode</string>
+			<key>DefaultValue</key>
+			<string>10</string>
+			<key>IsSecure</key>
+			<false/>
+			<key>KeyboardType</key>
+			<string>NumberPad</string>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+		</dict>
 	</array>
 </dict>
 </plist>
