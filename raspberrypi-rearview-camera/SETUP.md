@@ -241,6 +241,8 @@ After=network.target
 Type=simple
 ExecStart=/opt/bin/raspivid-server
 Restart=always
+StartLimitInterval=10
+StartLimitBurst=20
 User=raspivid-server
 
 [Install]
@@ -252,6 +254,8 @@ After=network.target
 [Service]
 Type=oneshot
 ExecStart=/bin/systemctl restart raspivid-server.service
+StartLimitInterval=10
+StartLimitBurst=20
 
 [Install]
 WantedBy=multi-user.target
