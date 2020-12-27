@@ -325,7 +325,7 @@ $ ssh pi@192.168.100.1
 Disable Wi-Fi:
 
 ```
-$ /opt/bin/disable-wifi
+$ sudo /opt/bin/disable-wifi
 ```
 
 Reboot:
