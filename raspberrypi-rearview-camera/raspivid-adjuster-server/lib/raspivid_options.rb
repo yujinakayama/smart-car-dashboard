@@ -6,6 +6,10 @@ class RaspividOptions
 
   OptionValidator = Struct.new(:name, :type, :matcher) do
     def validate!(value)
+      if value.is_a?(Integer) && type == Float
+        value = Float(value)
+      end
+
       unless value.is_a?(type)
         raise ValidationError, "\"#{name}\" must be a value of #{type}"
       end
