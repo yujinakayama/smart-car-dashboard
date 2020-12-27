@@ -33,6 +33,8 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
 
     var hasReceivedInitialFrame = false
 
+    var retryCount = 0
+
     let cameraOptionsAdjuster = CameraOptionsAdjuster()
 
     lazy var sensitivityModeSegmentedControl: HUDSegmentedControl = {
@@ -130,12 +132,16 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
     }
 
     func retry() {
-        DispatchQueue.main.async { [weak self] in
-            self?.activityIndicatorView.startAnimating()
-        }
+        retryCount += 1
 
-        stop()
-        start()
+        if retryCount < 5 {
+            self.start()
+        } else {
+            activityIndicatorView.startAnimating()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                self.start()
+            }
+        }
     }
 
     func flushImage() {
@@ -153,6 +159,8 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
 
     func connectionDidEstablish(_ connection: Connection) {
         logger.info()
+
+        retryCount = 0
 
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
