@@ -213,7 +213,7 @@ raspivid \
 --flush --timeout 0 \
 --width 1440 --height 1080 --framerate 40 \
 --profile high --level 4.2 \
---awb off --awbgains 1.4,1.7 \
+--awb off --awbgains 1.4,1.6 \
 --exposure auto --metering average --drc high --flicker auto \
 --ev -10 --brightness 55 --saturation 12 --sharpness 100 \
 --imxfx denoise \
@@ -268,6 +268,76 @@ Enable the services:
 ```
 $ sudo systemctl enable raspivid-server.service
 $ sudo systemctl enable raspivid-server-restarter.path
+```
+
+### Make `raspivid-adjuster-server` run on boot
+
+Create a user to run `raspivid-adjuster-server`:
+
+```
+$ sudo useradd --user-group --create-home raspivid-adjuster-server
+```
+
+Install ruby:
+
+https://github.com/rbenv/ruby-build/wiki#suggested-build-environment
+
+```
+$ sudo apt install git
+$ sudo apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev
+$ sudo -u raspivid-adjuster-server -i
+$ git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+$ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.profile
+$ echo 'eval "$(rbenv init -)"' >> ~/.profile
+$ exit
+$ sudo -u raspivid-adjuster-server -i
+$ mkdir -p "$(rbenv root)"/plugins
+$ git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
+$ rbenv install 2.7.2
+$ rbenv global 2.7.2
+```
+
+Deploy `raspivid-adjuster-server`:
+
+https://github.com/rbenv/rbenv/wiki/Deploying-with-rbenv#app-bundles-and-binstubs
+
+```
+$ sudo systemctl start systemd-timesyncd.service # Sync clock with ntp so that rubygems certificate validation won't fail
+$ sudo -u raspivid-adjuster-server -i
+$ git clone https://github.com/yujinakayama/ipad-car-integration
+$ cd ipad-car-integration/raspberrypi-rearview-camera/raspivid-adjuster-server
+$ bundle install --deployment --binstubs
+```
+
+Create systemd unit file:
+
+```
+[Unit]
+Description=raspivid adjuster server
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/raspivid-adjuster-server/ipad-car-integration/raspberrypi-rearview-camera/raspivid-adjuster-server
+Environment=PATH=/home/raspivid-adjuster-server/.rbenv/shims:/home/raspivid-adjuster-server/.rbenv/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStart=/home/raspivid-adjuster-server/ipad-car-integration/raspberrypi-rearview-camera/raspivid-adjuster-server/bin/rackup --host 0.0.0.0 --port 5002
+Restart=always
+User=raspivid-adjuster-server
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable the service:
+
+```
+$ sudo systemctl enable raspivid-adjuster-server.service
+```
+
+Allow the server to rewrite `/opt/bin/raspivid-server`:
+
+```
+$ sudo chown raspivid-adjuster-server:raspivid-adjuster-server /opt/bin/raspivid-server
 ```
 
 ### Add scripts to enable/disable Wi-Fi
