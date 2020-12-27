@@ -36,6 +36,7 @@ target 'DashRemote' do
 end
 
 target 'Rearview' do
+  pod 'BetterSegmentedControl'
   pod 'Solar'
   pod 'XCGLogger'
 end

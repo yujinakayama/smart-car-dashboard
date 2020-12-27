@@ -9,6 +9,7 @@
 import UIKit
 import Network
 import AVFoundation
+import BetterSegmentedControl
 
 class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStreamParserDelegate {
     @IBOutlet var displayView: AVSampleBufferDisplayView!
@@ -34,6 +35,43 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
 
     let cameraOptionsAdjuster = CameraOptionsAdjuster()
 
+    lazy var sensitivityModeSegmentedControl: HUDSegmentedControl = {
+        let segmentTitles = ["Auto", "Day", "Night", "Low Light", "Ultra Low Light"]
+        assert(segmentTitles.count == CameraOptionsAdjuster.SensitivityMode.allCases.count)
+
+        let segmentedControl = HUDSegmentedControl(titles: segmentTitles)
+        segmentedControl.isHidden = true
+        segmentedControl.selectedSegmentIndex = Defaults.shared.cameraSensitivityMode?.rawValue ?? 0
+        segmentedControl.addTarget(self, action: #selector(sensitivityModeSegmentedControlDidChangeValue), for: .valueChanged)
+
+        view.addSubview(segmentedControl)
+
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+
+        var constraints = [
+            segmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            NSLayoutConstraint(item: segmentedControl, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 0.15, constant: 0),
+            segmentedControl.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, multiplier: 0.9),
+            segmentedControl.heightAnchor.constraint(equalTo: segmentedControl.widthAnchor, multiplier: 0.3 / CGFloat(segmentTitles.count)),
+        ]
+
+        let constraint = segmentedControl.widthAnchor.constraint(equalToConstant: CGFloat(segmentTitles.count * 180))
+        constraint.priority = .defaultHigh
+        constraints.append(constraint)
+
+        NSLayoutConstraint.activate(constraints)
+
+        return segmentedControl
+    }()
+
+    var sensitivityModeSegmentedControlHidingTimer: Timer?
+
+    lazy var gestureRecognizer: UIGestureRecognizer = {
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(gestureRecognizerDidRecognizeTap))
+        gestureRecognizer.numberOfTapsRequired = 1
+        return gestureRecognizer
+    }()
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -46,6 +84,10 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
         super.viewDidLoad()
 
         displayLayer.videoGravity = .resizeAspect
+
+        _ = sensitivityModeSegmentedControl
+
+        displayView.addGestureRecognizer(gestureRecognizer)
 
         NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: OperationQueue.main) { [weak self] (notification) in
             self?.hideBlankScreen()
@@ -188,6 +230,37 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
 
     var currentTime: __uint64_t {
         return clock_gettime_nsec_np(CLOCK_MONOTONIC)
+    }
+
+    @IBAction func gestureRecognizerDidRecognizeTap() {
+        if sensitivityModeSegmentedControl.isHidden {
+            self.sensitivityModeSegmentedControl.alpha = 0
+            sensitivityModeSegmentedControl.isHidden = false
+
+            UIView.animate(withDuration: 0.25) {
+                self.sensitivityModeSegmentedControl.alpha = 1
+            }
+        }
+
+        resetSensitivityModeSegmentedControlVisibilityLifetime()
+    }
+
+    @IBAction func sensitivityModeSegmentedControlDidChangeValue() {
+        guard let sensitivityMode = CameraOptionsAdjuster.SensitivityMode(rawValue: sensitivityModeSegmentedControl.selectedSegmentIndex) else { return }
+        cameraOptionsAdjuster.sensitivityMode = sensitivityMode
+        resetSensitivityModeSegmentedControlVisibilityLifetime()
+    }
+
+    private func resetSensitivityModeSegmentedControlVisibilityLifetime() {
+        sensitivityModeSegmentedControlHidingTimer?.invalidate()
+
+        sensitivityModeSegmentedControlHidingTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (timer) in
+            UIView.animate(withDuration: 1) {
+                self.sensitivityModeSegmentedControl.alpha = 0
+            } completion: { (finished) in
+                self.sensitivityModeSegmentedControl.isHidden = true
+            }
+        }
     }
 
     // https://developer.apple.com/library/archive/qa/qa1838/_index.html

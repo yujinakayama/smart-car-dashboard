@@ -40,9 +40,26 @@ class Sun: NSObject, CLLocationManagerDelegate {
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyReduced
-        locationManager.requestWhenInUseAuthorization()
 
         NotificationCenter.default.addObserver(self, selector: #selector(update), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+
+    func startTrackingAppearance() {
+        logger.info()
+
+        switch locationManager.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
+            locationManager.startUpdatingLocation()
+        default:
+            locationManager.requestWhenInUseAuthorization()
+        }
+    }
+
+    func stopTrackingAppearance() {
+        logger.info()
+        locationManager.stopUpdatingLocation()
+        appearance = nil
+        location = nil
     }
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {

@@ -123,6 +123,7 @@
 		B9B18DD323EDFFF40096D603 /* DashShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; };
 		B9B18DD423EDFFF40096D603 /* DashShareKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B9B399CC25965BDC00C7977F /* CameraOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B399CB25965BDC00C7977F /* CameraOptions.swift */; };
+		B9B39AB72598B11700C7977F /* HUDSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B39AB62598B11700C7977F /* HUDSegmentedControl.swift */; };
 		B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B717DD23E6B26900A47207 /* UnknownItem.swift */; };
 		B9BA819E2350931A00657DEB /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
 		B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */; };
@@ -389,6 +390,7 @@
 		B9B154ED2575FCED0031761F /* FirebaseCloudMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCloudMessaging.swift; sourceTree = "<group>"; };
 		B9B154F72576075C0031761F /* TabBarBadgeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarBadgeManager.swift; sourceTree = "<group>"; };
 		B9B399CB25965BDC00C7977F /* CameraOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOptions.swift; sourceTree = "<group>"; };
+		B9B39AB62598B11700C7977F /* HUDSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDSegmentedControl.swift; sourceTree = "<group>"; };
 		B9B717DD23E6B26900A47207 /* UnknownItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownItem.swift; sourceTree = "<group>"; };
 		B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewCell.swift; sourceTree = "<group>"; };
 		B9BC920823250A0A006F22FC /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
@@ -712,6 +714,7 @@
 				B9B399CB25965BDC00C7977F /* CameraOptions.swift */,
 				B97A82232553F8A900CD2870 /* Sun.swift */,
 				B940A461250E5CDD006BDFBB /* Defaults.swift */,
+				B9B39AB62598B11700C7977F /* HUDSegmentedControl.swift */,
 				B90700A3250E31B1004E7D7A /* Logger.swift */,
 				B9C0CEDE2508F63F006D246E /* Main.storyboard */,
 				B940A45F250E5B57006BDFBB /* Settings.bundle */,
@@ -1461,6 +1464,7 @@
 			files = (
 				B97A822A255449C800CD2870 /* CameraOptionsAdjuster.swift in Sources */,
 				B940A45E250E3B50006BDFBB /* AVSampleBufferDisplayView.swift in Sources */,
+				B9B39AB72598B11700C7977F /* HUDSegmentedControl.swift in Sources */,
 				B940A462250E5CDD006BDFBB /* Defaults.swift in Sources */,
 				B9C0CEDD2508F63F006D246E /* RearviewViewController.swift in Sources */,
 				B940A466250F0EBB006BDFBB /* Connection.swift in Sources */,

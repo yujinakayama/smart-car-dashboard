@@ -217,6 +217,7 @@ PODS:
     - AppAuth/ExternalUserAgent (= 1.4.0)
   - AppAuth/Core (1.4.0)
   - AppAuth/ExternalUserAgent (1.4.0)
+  - BetterSegmentedControl (2.0.1)
   - BoringSSL-GRPC (0.0.7):
     - BoringSSL-GRPC/Implementation (= 0.0.7)
     - BoringSSL-GRPC/Interface (= 0.0.7)
@@ -396,6 +397,7 @@ PODS:
     - ObjcExceptionBridging
 
 DEPENDENCIES:
+  - BetterSegmentedControl
   - DictionaryCoding
   - Firebase/Analytics
   - Firebase/Auth
@@ -418,6 +420,7 @@ SPEC REPOS:
   trunk:
     - abseil
     - AppAuth
+    - BetterSegmentedControl
     - BoringSSL-GRPC
     - DictionaryCoding
     - Firebase
@@ -466,6 +469,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
+  BetterSegmentedControl: 09607b27861d49cbce48b7673b74f9150a3d371a
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   DictionaryCoding: 0ebf6aa87afe8be803c544b85b8d894907c0e019
   Firebase: c23a36d9e4cdf7877dfcba8dd0c58add66358999
@@ -502,6 +506,6 @@ SPEC CHECKSUMS:
   TransitionButton: 36283346e17c64775a1b3bc3a7a72940a367de1f
   XCGLogger: 1943831ef907df55108b0b18657953f868de973b
 
-PODFILE CHECKSUM: 8392050fbd64dd8e83e9e4cf03b8d16526b45a92
+PODFILE CHECKSUM: a44ac32bdc11fd27ae29d0cf14bc765a47dea30e
 
 COCOAPODS: 1.10.0
