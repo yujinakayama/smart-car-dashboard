@@ -40,7 +40,7 @@
 			<key>Key</key>
 			<string>digitalGainForLowLightMode</string>
 			<key>DefaultValue</key>
-			<string>6</string>
+			<string>8</string>
 			<key>IsSecure</key>
 			<false/>
 			<key>KeyboardType</key>
@@ -58,7 +58,7 @@
 			<key>Key</key>
 			<string>digitalGainForUltraLowLightMode</string>
 			<key>DefaultValue</key>
-			<string>10</string>
+			<string>16</string>
 			<key>IsSecure</key>
 			<false/>
 			<key>KeyboardType</key>
