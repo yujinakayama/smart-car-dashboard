@@ -68,6 +68,8 @@
 		B944C69024A9E4C8000D1E99 /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B944C68F24A9E4C8000D1E99 /* MusicViewController.swift */; };
 		B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B944C69124A9E647000D1E99 /* PlaybackControlView.swift */; };
 		B94E69D123F7A313004CCC7C /* WebsiteIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */; };
+		B954CA2325693CCC00BAD0F0 /* WidgetPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */; };
+		B954CA3225693EDA00BAD0F0 /* RearviewWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */; };
 		B9588B5D23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */; };
 		B95BF23823EBF43900A30DE0 /* ETCCardEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95BF23723EBF43900A30DE0 /* ETCCardEditViewController.swift */; };
 		B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95BF23B23EBFFE300A30DE0 /* ETCCardView.swift */; };
@@ -118,8 +120,6 @@
 		B9B154F82576075C0031761F /* TabBarBadgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B154F72576075C0031761F /* TabBarBadgeManager.swift */; };
 		B9B18DD323EDFFF40096D603 /* DashShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; };
 		B9B18DD423EDFFF40096D603 /* DashShareKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B9B399CC25965BDC00C7977F /* CameraOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B399CB25965BDC00C7977F /* CameraOptions.swift */; };
-		B9B39AB72598B11700C7977F /* HUDSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B39AB62598B11700C7977F /* HUDSegmentedControl.swift */; };
 		B9B4A89A2569310400FE0C9F /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B4A8992569310400FE0C9F /* DashboardViewController.swift */; };
 		B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B717DD23E6B26900A47207 /* UnknownItem.swift */; };
 		B9BA819E2350931A00657DEB /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
@@ -365,6 +365,8 @@
 		B944C68F24A9E4C8000D1E99 /* MusicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
 		B944C69124A9E647000D1E99 /* PlaybackControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackControlView.swift; sourceTree = "<group>"; };
 		B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteIcon.swift; sourceTree = "<group>"; };
+		B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetPageViewController.swift; sourceTree = "<group>"; };
+		B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewWidgetViewController.swift; sourceTree = "<group>"; };
 		B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentDebugInformationViewController.swift; sourceTree = "<group>"; };
 		B95BF23723EBF43900A30DE0 /* ETCCardEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCCardEditViewController.swift; sourceTree = "<group>"; };
 		B95BF23B23EBFFE300A30DE0 /* ETCCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardView.swift; sourceTree = "<group>"; };
@@ -643,6 +645,15 @@
 			path = Music;
 			sourceTree = "<group>";
 		};
+		B954CA2825693CD100BAD0F0 /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */,
+				B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
 		B9640ABC2575EBF200B779AD /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
@@ -739,6 +750,7 @@
 			isa = PBXGroup;
 			children = (
 				B9B4A8992569310400FE0C9F /* DashboardViewController.swift */,
+				B954CA2825693CD100BAD0F0 /* Widget */,
 				B944C68E24A9E4C8000D1E99 /* Music */,
 			);
 			path = Dashboard;
@@ -1618,6 +1630,7 @@
 				B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */,
 				B9CEA76622D89A400055C9A3 /* ETCDataStore.swift in Sources */,
 				B931C4FF23D369760020DF13 /* ETCDevice.swift in Sources */,
+				B954CA2325693CCC00BAD0F0 /* WidgetPageViewController.swift in Sources */,
 				B9D0261124BF7704005C03B1 /* BluetoothManagerHandler.m in Sources */,
 				B9C04B42257775B8001D6E0F /* WebViewController.swift in Sources */,
 				B904A2A6243968990087BD4A /* MapsViewController.swift in Sources */,
@@ -1675,6 +1688,7 @@
 				B99356E422A94D6900BA08AB /* BLESerialPort.swift in Sources */,
 				B932E5EC23F86C5F00726615 /* MusicItem.swift in Sources */,
 				B92FB3C023E95BE900EA702C /* SharedItemTableViewCell.swift in Sources */,
+				B954CA3225693EDA00BAD0F0 /* RearviewWidgetViewController.swift in Sources */,
 				B9DC5B4A229EDA0000B645D5 /* SerialPort.swift in Sources */,
 				B9640AC22575EC0400B779AD /* FirebaseAuthentication.swift in Sources */,
 			);

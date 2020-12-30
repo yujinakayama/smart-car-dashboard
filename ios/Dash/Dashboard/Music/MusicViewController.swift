@@ -29,6 +29,8 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
 
         playbackControlView.delegate = self
 
+        artworkView.visualEffectScopeView = view
+
         MPMediaLibrary.requestAuthorization { [weak self] (mediaPlayerAuthorizationStatus) in
             logger.info(mediaPlayerAuthorizationStatus)
 
