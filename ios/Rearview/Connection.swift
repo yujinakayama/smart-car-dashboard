@@ -65,7 +65,6 @@ class Connection {
     private func terminate(reason: TerminationReason) {
         isEstablished = false
         timeoutTimer?.cancel()
-        connection.cancel()
         delegate?.connection(self, didTerminateWithReason: reason)
     }
 
@@ -79,7 +78,7 @@ class Connection {
                 delegate?.connectionDidEstablish(self)
             }
             readReceivedData()
-        case .cancelled where isEstablished:
+        case .cancelled:
             terminate(reason: .closedByClient)
         case .failed:
             terminate(reason: .error)
