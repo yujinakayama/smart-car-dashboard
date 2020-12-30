@@ -216,10 +216,10 @@
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="AllPaymentsCell" rowHeight="82" id="2sj-lq-fub">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="82"/>
+                                <rect key="frame" x="0.0" y="55.5" width="1024" height="82"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2sj-lq-fub" id="UN9-2d-DFc">
-                                    <rect key="frame" x="0.0" y="0.0" width="1005" height="82"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="997" height="82"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="HKU-bN-sRN">
@@ -247,10 +247,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="ETCCardTableViewCell" editingAccessoryType="detailButton" id="Yhp-zq-xeI" customClass="ETCCardTableViewCell" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="137.5" width="375" height="68.5"/>
+                                <rect key="frame" x="0.0" y="137.5" width="1024" height="68.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yhp-zq-xeI" id="l4J-ek-iqJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="1005" height="68.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="997" height="68.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="MZx-NX-l6V">
@@ -1238,7 +1238,54 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pIM-Ib-b9H" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2642" y="-3108"/>
+            <point key="canvasLocation" x="2788" y="-3226"/>
+        </scene>
+        <!--Altitude Widget View Controller-->
+        <scene sceneID="qcm-7L-ndy">
+            <objects>
+                <viewController storyboardIdentifier="AltitudeWidgetViewController" id="VMk-82-p47" customClass="AltitudeWidgetViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dEL-jx-xL4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Altitude" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HD0-yO-GKL">
+                                <rect key="frame" x="153.5" y="38.5" width="68" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="67" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eij-rK-Z1p">
+                                <rect key="frame" x="145.5" y="62.5" width="84.5" height="86"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="72"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="m" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Mr-8K-2qc">
+                                <rect key="frame" x="178" y="142.5" width="19" height="26.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="BJ1-4j-srV"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="HD0-yO-GKL" firstAttribute="centerX" secondItem="eij-rK-Z1p" secondAttribute="centerX" id="G8j-5x-2ch"/>
+                            <constraint firstItem="4Mr-8K-2qc" firstAttribute="centerX" secondItem="eij-rK-Z1p" secondAttribute="centerX" id="IYR-3P-4Vw"/>
+                            <constraint firstItem="eij-rK-Z1p" firstAttribute="centerY" secondItem="dEL-jx-xL4" secondAttribute="centerY" id="ML4-sC-Hcf"/>
+                            <constraint firstItem="eij-rK-Z1p" firstAttribute="centerX" secondItem="dEL-jx-xL4" secondAttribute="centerX" id="hQ2-O0-Ab6"/>
+                            <constraint firstItem="HD0-yO-GKL" firstAttribute="bottom" secondItem="eij-rK-Z1p" secondAttribute="top" id="k8c-vh-bLx"/>
+                            <constraint firstItem="4Mr-8K-2qc" firstAttribute="top" secondItem="eij-rK-Z1p" secondAttribute="bottom" constant="-6" id="yda-bZ-VTL"/>
+                        </constraints>
+                    </view>
+                    <size key="freeformSize" width="375" height="211"/>
+                    <connections>
+                        <outlet property="altitudeLabel" destination="eij-rK-Z1p" id="S9p-OE-0XH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="biB-wX-pt9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2788" y="-3008"/>
         </scene>
     </scenes>
     <designables>
@@ -1246,10 +1293,10 @@
             <size key="intrinsicContentSize" width="189" height="38"/>
         </designable>
         <designable name="TAK-Hz-Kv5">
-            <size key="intrinsicContentSize" width="23.5" height="22"/>
+            <size key="intrinsicContentSize" width="26.5" height="22.5"/>
         </designable>
         <designable name="mfV-vr-luy">
-            <size key="intrinsicContentSize" width="25" height="22"/>
+            <size key="intrinsicContentSize" width="28.5" height="23"/>
         </designable>
     </designables>
     <inferredMetricsTieBreakers>

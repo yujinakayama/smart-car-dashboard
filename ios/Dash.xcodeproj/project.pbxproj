@@ -165,6 +165,7 @@
 		B9E96CC822A4EF1300C2E009 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
 		B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */; };
 		B9EF566123DF3D61000D0CB2 /* GoogleSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */; };
+		B9F272C4259C91990098CB3B /* AltitudeWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F272C3259C91990098CB3B /* AltitudeWidgetViewController.swift */; };
 		B9F4377F25D41C19004B9140 /* RearviewKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B9F4377D25D41C19004B9140 /* RearviewKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B9F4378225D41C19004B9140 /* RearviewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9F4377B25D41C19004B9140 /* RearviewKit.framework */; };
 		B9F4378325D41C19004B9140 /* RearviewKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B9F4377B25D41C19004B9140 /* RearviewKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -479,6 +480,7 @@
 		B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPayment.swift; sourceTree = "<group>"; };
 		B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInViewController.swift; sourceTree = "<group>"; };
+		B9F272C3259C91990098CB3B /* AltitudeWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltitudeWidgetViewController.swift; sourceTree = "<group>"; };
 		B9F4375E25D414D8004B9140 /* RearviewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewConfiguration.swift; sourceTree = "<group>"; };
 		B9F4376C25D4170D004B9140 /* CameraSensitivityMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraSensitivityMode.swift; sourceTree = "<group>"; };
 		B9F4377B25D41C19004B9140 /* RearviewKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RearviewKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -650,6 +652,7 @@
 			children = (
 				B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */,
 				B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */,
+				B9F272C3259C91990098CB3B /* AltitudeWidgetViewController.swift */,
 			);
 			path = Widget;
 			sourceTree = "<group>";
@@ -1618,6 +1621,7 @@
 				B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */,
 				B9B154EE2575FCED0031761F /* FirebaseMessaging.swift in Sources */,
 				B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */,
+				B9F272C4259C91990098CB3B /* AltitudeWidgetViewController.swift in Sources */,
 				B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */,
 				B9DC5B46229EB8B200B645D5 /* SerialPortManager.swift in Sources */,
 				B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift in Sources */,
