@@ -111,19 +111,13 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
         // raspivid --verbose --flush -t 0 --hflip -fps 40 --exposure nightpreview --metering backlit --awb auto --flicker auto --metering average --drc high --profile high -w 1440 -h 1080 --sharpness 100 --imxfx denoise --listen -o tcp://0.0.0.0:5001 --ev 10 --saturation 10
         // done
         if let raspberryPiAddress = Defaults.shared.raspberryPiAddress {
-            connectToRaspberryPi(host: raspberryPiAddress)
+            do {
+                try connectToRaspberryPi(host: raspberryPiAddress)
+            } catch {
+                showAlertAboutInvalidRaspberryPiAddress()
+            }
         } else {
-            let alertController = UIAlertController(
-                title: nil,
-                message: "You need to specity your Raspberry Pi address in the Settings app.",
-                preferredStyle: .alert
-            )
-
-            alertController.addAction(UIAlertAction(title: "OK", style: .default))
-
-            present(alertController, animated: true)
-
-            return
+            showAlertAboutInvalidRaspberryPiAddress()
         }
     }
 
@@ -150,8 +144,8 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
         }
     }
 
-    func connectToRaspberryPi(host: String) {
-        let connection = Connection(host: host, port: 5001)
+    func connectToRaspberryPi(host: String) throws {
+        let connection = try Connection(host: host, port: 5001)
         connection.delegate = self
         connection.connect()
         self.connection = connection
@@ -281,5 +275,17 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
 
     func hideBlankScreen() {
         dismiss(animated: false)
+    }
+
+    func showAlertAboutInvalidRaspberryPiAddress() {
+        let alertController = UIAlertController(
+            title: nil,
+            message: "You need to specity your Raspberry Pi address in the Settings app.",
+            preferredStyle: .alert
+        )
+
+        alertController.addAction(UIAlertAction(title: "OK", style: .default))
+
+        present(alertController, animated: true)
     }
 }

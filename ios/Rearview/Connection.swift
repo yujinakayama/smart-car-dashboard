@@ -15,7 +15,22 @@ protocol ConnectionDelegate: NSObjectProtocol {
     func connection(_ connection: Connection, didReceiveData data: Data)
 }
 
+enum ConnectionError: Error {
+    case invalidHost
+}
+
 class Connection {
+    static func isValidHost(_ string: String) -> Bool {
+        let host = NWEndpoint.Host(string)
+
+        switch host {
+        case .ipv4(_), .ipv6(_):
+            return true
+        default:
+            return false
+        }
+    }
+
     weak var delegate: ConnectionDelegate?
 
     let connection: NWConnection
@@ -24,7 +39,11 @@ class Connection {
     let timeoutPeriod: TimeInterval = 0.2
     var isEstablished = false
 
-    init(host: String, port: NWEndpoint.Port) {
+    init(host: String, port: NWEndpoint.Port) throws {
+        guard Self.isValidHost(host) else {
+            throw ConnectionError.invalidHost
+        }
+
         connection = NWConnection(host: NWEndpoint.Host(host), port: port, using: .tcp)
 
         connection.stateUpdateHandler = { [weak self] (state) in
