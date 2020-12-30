@@ -59,7 +59,7 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         logger.info(response.notification.request.content)
 
-        Firebase.shared.cloudMessaging.markNotificationAsReceived(response.notification)
+        Firebase.shared.messaging.markNotificationAsReceived(response.notification)
 
         process(response.notification)
 

@@ -13,7 +13,7 @@ class Firebase: NSObject {
     static let shared = Firebase()
 
     let authentication: FirebaseAuthentication
-    let cloudMessaging: FirebaseCloudMessaging
+    let messaging: FirebaseMessaging
 
     @objc dynamic var sharedItemDatabase: SharedItemDatabase?
 
@@ -22,7 +22,7 @@ class Firebase: NSObject {
 
         // We instantiate Authentication here to invoke FirebaseApp.configure() first
         authentication = FirebaseAuthentication()
-        cloudMessaging = FirebaseCloudMessaging()
+        messaging = FirebaseMessaging()
 
         super.init()
 

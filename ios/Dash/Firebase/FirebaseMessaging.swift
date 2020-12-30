@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseMessaging
 
-class FirebaseCloudMessaging: NSObject {
+class FirebaseMessaging: NSObject {
     var deviceToken: Data? {
         get {
             return Messaging.messaging().apnsToken
@@ -43,7 +43,7 @@ class FirebaseCloudMessaging: NSObject {
     }
 }
 
-extension FirebaseCloudMessaging: MessagingDelegate {
+extension FirebaseMessaging: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         logger.debug(fcmToken)
     }

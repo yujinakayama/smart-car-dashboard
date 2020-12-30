@@ -75,6 +75,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        Firebase.shared.cloudMessaging.deviceToken = deviceToken
+        Firebase.shared.messaging.deviceToken = deviceToken
     }
 }
