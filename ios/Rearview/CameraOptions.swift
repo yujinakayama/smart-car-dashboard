@@ -11,7 +11,6 @@ import Foundation
 struct CameraOptions: Encodable {
     static let day = CameraOptions(
         sharpness: 100,
-        brightness: 55,
         saturation: 12,
         exposure: .auto,
         flicker: .auto,
@@ -30,6 +29,7 @@ struct CameraOptions: Encodable {
 
     static let night: CameraOptions = {
         var options = day
+        options.brightness = 55
         options.exposure = .nightpreview
         return options
     }()
