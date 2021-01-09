@@ -272,7 +272,13 @@ import MediaPlayer
         if slider.isTracking {
             return TimeInterval(slider.value)
         } else {
-            return musicPlayer.currentPlaybackTime
+            // On iOS 14 musicPlayer.currentPlaybackTime tends to return musicPlayer.nowPlayingItem.playbackDuration (i.e. end of the song)
+            // when the musicPlayer.nowPlayingItem is just changed.
+            if musicPlayer.currentPlaybackTime == musicPlayer.nowPlayingItem?.playbackDuration {
+                return 0
+            } else {
+                return musicPlayer.currentPlaybackTime
+            }
         }
     }
 
@@ -316,6 +322,9 @@ extension PlaybackProgressView {
 }
 
 extension PlaybackProgressView {
+    // TODO: Turn this utility into a class something like PlaybackTime
+    //   and manage all the odd behaviors of MPMusicPlayerController,
+    //   so that PlaybackProgressView can simply delegate all the workarounds to this class.
     class PrecisePlaybackObserver {
         let musicPlayer: MPMusicPlayerController
         var timer: Timer?
