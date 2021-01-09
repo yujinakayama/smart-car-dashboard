@@ -265,7 +265,7 @@ import MediaPlayer
 
     var isProbablyPlayingRadio: Bool {
         guard let nowPlayingItem = musicPlayer?.nowPlayingItem else { return false }
-        return nowPlayingItem.mediaType.rawValue == 0 || nowPlayingItem.playbackDuration == 0 || musicPlayer.currentPlaybackTime > nowPlayingItem.playbackDuration
+        return nowPlayingItem.mediaType.rawValue == 0 || nowPlayingItem.playbackDuration == 0
     }
 
     var displayedPlaybackTime: TimeInterval {
