@@ -15,6 +15,8 @@ extern "C" {
 
 static const char* TAG = "GarageRemote";
 
+static const char* kSetupID = "GRGR"; // This must be unique
+
 static esp_timer_handle_t timer;
 typedef void (*callback_with_arg_t)(void*);
 
@@ -110,11 +112,11 @@ void GarageRemote::configureHomeKitSetupCode() {
   /* Unique Setup code of the format xxx-xx-xxx. Default: 111-22-333 */
   hap_set_setup_code(CONFIG_EXAMPLE_SETUP_CODE);
   /* Unique four character Setup Id. Default: ES32 */
-  hap_set_setup_id(CONFIG_EXAMPLE_SETUP_ID);
+  hap_set_setup_id(kSetupID);
 }
 
 void GarageRemote::printSetupQRCode() {
-  app_hap_setup_payload((char*)CONFIG_EXAMPLE_SETUP_CODE, (char*)CONFIG_EXAMPLE_SETUP_ID, false, this->accessoryConfig.cid);
+  app_hap_setup_payload((char*)CONFIG_EXAMPLE_SETUP_CODE, (char*)kSetupID, false, this->accessoryConfig.cid);
 }
 
 TargetDoorState GarageRemote::getTargetDoorState() {

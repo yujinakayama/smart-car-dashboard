@@ -25,6 +25,7 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
+#include "engine.h"
 #include "garage_remote.h"
 
 extern "C" {
@@ -37,6 +38,9 @@ static void mainTask(void *p) {
   /* Initialize the HAP core */
   hap_init(HAP_TRANSPORT_WIFI);
 
+  Engine* engine = new Engine(GPIO_NUM_16, GPIO_NUM_17);
+  engine->registerHomeKitAccessory();
+
   GarageRemote* garageRemote = new GarageRemote(GPIO_NUM_18, GPIO_NUM_19);
   garageRemote->registerHomeKitAccessory();
 
@@ -44,6 +48,7 @@ static void mainTask(void *p) {
   /* After all the initializations are done, start the HAP core */
   hap_start();
 
+  engine->printSetupQRCode();
   garageRemote->printSetupQRCode();
 
   initializeHomeKitResetButton(GPIO_NUM_0);
