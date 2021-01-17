@@ -34,10 +34,16 @@ extern "C" {
 
 /*The main thread for handling the accessory */
 static void mainTask(void *p) {
+  /* Initialize the HAP core */
+  hap_init(HAP_TRANSPORT_WIFI);
+
   GarageRemote* garageRemote = new GarageRemote(GPIO_NUM_18, GPIO_NUM_19);
   garageRemote->registerHomeKitAccessory();
+
   startWiFiAccessPoint();
-  garageRemote->startHomeKitAccessory();
+  /* After all the initializations are done, start the HAP core */
+  hap_start();
+
   garageRemote->printSetupQRCode();
 
   initializeHomeKitResetButton(GPIO_NUM_0);

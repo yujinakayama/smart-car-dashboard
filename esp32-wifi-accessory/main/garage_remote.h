@@ -28,7 +28,6 @@ public:
 
   GarageRemote(gpio_num_t powerButtonPin, gpio_num_t openButtonPin);
   void registerHomeKitAccessory();
-  void startHomeKitAccessory();
   void printSetupQRCode();
 
   TargetDoorState getTargetDoorState();

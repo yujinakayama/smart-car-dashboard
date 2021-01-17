@@ -47,15 +47,7 @@ void GarageRemote::registerHomeKitAccessory() {
   this->configureHomeKitSetupCode();
 }
 
-void GarageRemote::startHomeKitAccessory() {
-  /* After all the initializations are done, start the HAP core */
-  hap_start();
-}
-
 void GarageRemote::createAccessory() {
-  /* Initialize the HAP core */
-  hap_init(HAP_TRANSPORT_WIFI);
-
   /* Initialise the mandatory parameters for Accessory which will be added as
    * the mandatory services internally
    */
