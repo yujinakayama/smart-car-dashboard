@@ -28,16 +28,19 @@
 #include "garage_remote.h"
 
 extern "C" {
+  #include "homekit.h"
   #include "wifi.h"
 }
 
 /*The main thread for handling the accessory */
 static void mainTask(void *p) {
-  GarageRemote* garageRemote = new GarageRemote(GPIO_NUM_18, GPIO_NUM_19, GPIO_NUM_0);
+  GarageRemote* garageRemote = new GarageRemote(GPIO_NUM_18, GPIO_NUM_19);
   garageRemote->registerHomeKitAccessory();
   startWiFiAccessPoint();
   garageRemote->startHomeKitAccessory();
   garageRemote->printSetupQRCode();
+
+  initializeHomeKitResetButton(GPIO_NUM_0);
 
   /* The task ends here. The read/write callbacks will be invoked by the HAP Framework */
   vTaskDelete(NULL);

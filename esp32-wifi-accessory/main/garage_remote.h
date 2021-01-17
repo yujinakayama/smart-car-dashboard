@@ -19,15 +19,14 @@ typedef enum {
 
 class GarageRemote {
 public:
-  gpio_num_t powerButtonPin; // The brown-yellow wire in the car
-  gpio_num_t openButtonPin; // The brown-white wire in the car
-  gpio_num_t resetButtonPin;
+  gpio_num_t powerButtonPin;
+  gpio_num_t openButtonPin;
   hap_acc_t* accessory;
   hap_acc_cfg_t accessoryConfig;
   TargetDoorState targetDoorState;
   CurrentDoorState currentDoorState;
 
-  GarageRemote(gpio_num_t powerButtonPin, gpio_num_t openButtonPin, gpio_num_t resetButtonPin);
+  GarageRemote(gpio_num_t powerButtonPin, gpio_num_t openButtonPin);
   void registerHomeKitAccessory();
   void startHomeKitAccessory();
   void printSetupQRCode();
@@ -44,7 +43,6 @@ private:
   void addGarageDoorOpenerService();
   void addFirmwareUpgradeService();
   void configureHomeKitSetupCode();
-  void initializeResetButton();
   void open();
 };
 
