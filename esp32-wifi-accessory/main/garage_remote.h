@@ -1,5 +1,5 @@
-#ifndef IPAD_CAR_INTEGRATION_GARAGE_H_
-#define IPAD_CAR_INTEGRATION_GARAGE_H_
+#ifndef IPAD_CAR_INTEGRATION_GARAGE_REMOTE_H_
+#define IPAD_CAR_INTEGRATION_GARAGE_REMOTE_H_
 
 #include <hap.h>
 #include <driver/gpio.h>
