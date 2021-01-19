@@ -5,10 +5,6 @@
 #include <hap_apple_chars.h>
 #include <hap_fw_upgrade.h>
 
-extern "C" {
-  #include <app_hap_setup_payload.h>
-}
-
 #include <cstring>
 
 static const char* TAG = "Engine";
@@ -33,15 +29,14 @@ Engine::Engine(gpio_num_t smartKeyPowerPin, gpio_num_t smartKeyLockButtonPin) {
   this->deactivateSmartKey();
 }
 
-void Engine::registerHomeKitAccessory() {
-  ESP_LOGI(TAG, "registerHomeKitAccessory");
+void Engine::registerBridgedHomeKitAccessory() {
+  ESP_LOGI(TAG, "registerBridgedHomeKitAccessory");
 
   this->createAccessory();
   this->addSwitchService();
   this->addFirmwareUpgradeService();
   /* Add the Accessory to the HomeKit Database */
-  hap_add_accessory(this->accessory);
-  this->configureHomeKitSetupCode();
+  hap_add_bridged_accessory(this->accessory, hap_get_unique_aid(kSetupID));
 }
 
 void Engine::createAccessory() {
@@ -101,17 +96,6 @@ void Engine::addFirmwareUpgradeService() {
 
   /* Add the service to the Accessory Object */
   hap_acc_add_serv(accessory, service);
-}
-
-void Engine::configureHomeKitSetupCode() {
-  /* Unique Setup code of the format xxx-xx-xxx. Default: 111-22-333 */
-  hap_set_setup_code(CONFIG_EXAMPLE_SETUP_CODE);
-  /* Unique four character Setup Id. Default: ES32 */
-  hap_set_setup_id(kSetupID);
-}
-
-void Engine::printSetupQRCode() {
-  app_hap_setup_payload((char*)CONFIG_EXAMPLE_SETUP_CODE, (char*)kSetupID, false, this->accessoryConfig.cid);
 }
 
 bool Engine::isOn() {

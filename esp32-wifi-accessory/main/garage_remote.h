@@ -27,8 +27,7 @@ public:
   CurrentDoorState currentDoorState;
 
   GarageRemote(gpio_num_t powerButtonPin, gpio_num_t openButtonPin);
-  void registerHomeKitAccessory();
-  void printSetupQRCode();
+  void registerBridgedHomeKitAccessory();
 
   TargetDoorState getTargetDoorState();
   void setTargetDoorState(TargetDoorState state);
@@ -41,7 +40,6 @@ private:
   void createAccessory();
   void addGarageDoorOpenerService();
   void addFirmwareUpgradeService();
-  void configureHomeKitSetupCode();
   void open();
 };
 

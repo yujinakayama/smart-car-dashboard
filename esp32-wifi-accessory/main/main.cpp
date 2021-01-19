@@ -27,6 +27,7 @@
 
 #include "engine.h"
 #include "garage_remote.h"
+#include "homekit_bridge.h"
 
 extern "C" {
   #include "homekit.h"
@@ -38,18 +39,20 @@ static void mainTask(void *p) {
   /* Initialize the HAP core */
   hap_init(HAP_TRANSPORT_WIFI);
 
+  HomeKitBridge* bridge = new HomeKitBridge();
+  bridge->registerHomeKitAccessory();
+
   Engine* engine = new Engine(GPIO_NUM_16, GPIO_NUM_17);
-  engine->registerHomeKitAccessory();
+  engine->registerBridgedHomeKitAccessory();
 
   GarageRemote* garageRemote = new GarageRemote(GPIO_NUM_18, GPIO_NUM_19);
-  garageRemote->registerHomeKitAccessory();
+  garageRemote->registerBridgedHomeKitAccessory();
 
   startWiFiAccessPoint();
   /* After all the initializations are done, start the HAP core */
   hap_start();
 
-  engine->printSetupQRCode();
-  garageRemote->printSetupQRCode();
+  bridge->printSetupQRCode();
 
   initializeHomeKitResetButton(GPIO_NUM_0);
 

@@ -5,10 +5,6 @@
 #include <hap_apple_chars.h>
 #include <hap_fw_upgrade.h>
 
-extern "C" {
-  #include <app_hap_setup_payload.h>
-}
-
 #include <esp_timer.h>
 
 #include <cstring>
@@ -38,15 +34,14 @@ GarageRemote::GarageRemote(gpio_num_t powerButtonPin, gpio_num_t openButtonPin) 
   this->currentDoorState = CurrentDoorStateClosed;
 }
 
-void GarageRemote::registerHomeKitAccessory() {
-  ESP_LOGI(TAG, "registerHomeKitAccessory");
+void GarageRemote::registerBridgedHomeKitAccessory() {
+  ESP_LOGI(TAG, "registerBridgedHomeKitAccessory");
 
   this->createAccessory();
   this->addGarageDoorOpenerService();
   this->addFirmwareUpgradeService();
   /* Add the Accessory to the HomeKit Database */
-  hap_add_accessory(this->accessory);
-  this->configureHomeKitSetupCode();
+  hap_add_bridged_accessory(this->accessory, hap_get_unique_aid(kSetupID));
 }
 
 void GarageRemote::createAccessory() {
@@ -106,17 +101,6 @@ void GarageRemote::addFirmwareUpgradeService() {
 
   /* Add the service to the Accessory Object */
   hap_acc_add_serv(accessory, service);
-}
-
-void GarageRemote::configureHomeKitSetupCode() {
-  /* Unique Setup code of the format xxx-xx-xxx. Default: 111-22-333 */
-  hap_set_setup_code(CONFIG_EXAMPLE_SETUP_CODE);
-  /* Unique four character Setup Id. Default: ES32 */
-  hap_set_setup_id(kSetupID);
-}
-
-void GarageRemote::printSetupQRCode() {
-  app_hap_setup_payload((char*)CONFIG_EXAMPLE_SETUP_CODE, (char*)kSetupID, false, this->accessoryConfig.cid);
 }
 
 TargetDoorState GarageRemote::getTargetDoorState() {

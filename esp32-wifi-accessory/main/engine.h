@@ -13,8 +13,7 @@ public:
   bool on;
 
   Engine(gpio_num_t smartKeyPowerPin, gpio_num_t smartKeyLockButtonPin);
-  void registerHomeKitAccessory();
-  void printSetupQRCode();
+  void registerBridgedHomeKitAccessory();
 
   bool isOn();
   void setOn(bool newOn);
@@ -23,7 +22,6 @@ private:
   void createAccessory();
   void addSwitchService();
   void addFirmwareUpgradeService();
-  void configureHomeKitSetupCode();
   void startEngine();
   void stopEngine();
   void activateSmartKey();
