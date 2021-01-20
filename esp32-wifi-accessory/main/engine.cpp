@@ -141,7 +141,11 @@ void Engine::stopEngine() {
 void Engine::activateSmartKey() {
   ESP_LOGV(TAG, "activateSmartKey");
   gpio_set_level(this->smartKeyPowerPin, 1);
-  delay(100);
+  // It seems the smart key has some capacitors inside
+  // and they need some time to be charged to generate radio waves
+  // especially for long press of the lock button.
+  // 500ms doesn't work.
+  delay(1000);
 }
 
 void Engine::deactivateSmartKey() {
