@@ -45,10 +45,10 @@ static void mainTask(void *p) {
   HomeKitBridge* bridge = new HomeKitBridge();
   bridge->registerHomeKitAccessory();
 
-  Engine* engine = new Engine(GPIO_NUM_16, GPIO_NUM_17);
+  Engine* engine = new Engine(GPIO_NUM_27, GPIO_NUM_14);
   engine->registerBridgedHomeKitAccessory();
 
-  GarageRemote* garageRemote = new GarageRemote(GPIO_NUM_18, GPIO_NUM_19);
+  GarageRemote* garageRemote = new GarageRemote(GPIO_NUM_12, GPIO_NUM_13);
   garageRemote->registerBridgedHomeKitAccessory();
 
   startWiFiAccessPoint();
