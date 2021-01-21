@@ -31,11 +31,14 @@
 
 extern "C" {
   #include "homekit.h"
+  #include "log_config.h"
   #include "wifi.h"
 }
 
 /*The main thread for handling the accessory */
 static void mainTask(void *p) {
+  setupLogLevel();
+
   /* Initialize the HAP core */
   hap_init(HAP_TRANSPORT_WIFI);
 
