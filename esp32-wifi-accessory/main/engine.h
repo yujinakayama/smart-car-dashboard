@@ -8,11 +8,11 @@ class Engine {
 public:
   gpio_num_t smartKeyPowerPin;
   gpio_num_t smartKeyLockButtonPin;
+  gpio_num_t engineStatePin;
   hap_acc_t* accessory;
   hap_acc_cfg_t accessoryConfig;
-  bool on;
 
-  Engine(gpio_num_t smartKeyPowerPin, gpio_num_t smartKeyLockButtonPin);
+  Engine(gpio_num_t smartKeyPowerOutputPin, gpio_num_t smartKeyLockButtonOutputPin, gpio_num_t engineStateInputPin);
   void registerBridgedHomeKitAccessory();
 
   bool isOn();

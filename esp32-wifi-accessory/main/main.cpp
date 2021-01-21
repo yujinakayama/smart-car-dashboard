@@ -45,7 +45,7 @@ static void mainTask(void *p) {
   HomeKitBridge* bridge = new HomeKitBridge();
   bridge->registerHomeKitAccessory();
 
-  Engine* engine = new Engine(GPIO_NUM_27, GPIO_NUM_14);
+  Engine* engine = new Engine(GPIO_NUM_27, GPIO_NUM_14, GPIO_NUM_26);
   engine->registerBridgedHomeKitAccessory();
 
   GarageRemote* garageRemote = new GarageRemote(GPIO_NUM_12, GPIO_NUM_13);

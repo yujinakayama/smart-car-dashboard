@@ -16,14 +16,14 @@ static int readCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* s
 static int writeCharacteristic(hap_write_data_t write_data[], int count, void* serv_priv, void* write_priv);
 static void delay(uint32_t ms);
 
-Engine::Engine(gpio_num_t smartKeyPowerPin, gpio_num_t smartKeyLockButtonPin) {
-  this->smartKeyPowerPin = smartKeyPowerPin;
-  this->smartKeyLockButtonPin = smartKeyLockButtonPin;
+Engine::Engine(gpio_num_t smartKeyPowerOutputPin, gpio_num_t smartKeyLockButtonOutputPin, gpio_num_t engineStateInputPin) {
+  this->smartKeyPowerPin = smartKeyPowerOutputPin;
+  this->smartKeyLockButtonPin = smartKeyLockButtonOutputPin;
+  this->engineStatePin = engineStateInputPin;
 
-  gpio_set_direction(smartKeyPowerPin, GPIO_MODE_OUTPUT);
-  gpio_set_direction(smartKeyLockButtonPin, GPIO_MODE_OUTPUT);
-
-  this->on = false; // FIXME: Observe the real engine state
+  gpio_set_direction(this->smartKeyPowerPin, GPIO_MODE_OUTPUT);
+  gpio_set_direction(this->smartKeyLockButtonPin, GPIO_MODE_OUTPUT);
+  gpio_set_direction(this->engineStatePin, GPIO_MODE_INPUT);
 
   // Ensure the smart key power is off for security
   this->deactivateSmartKey();
@@ -99,7 +99,7 @@ void Engine::addFirmwareUpgradeService() {
 }
 
 bool Engine::isOn() {
-  bool on = this->on;
+  bool on = gpio_get_level(this->engineStatePin) == 1;
   ESP_LOGD(TAG, "isOn: %i", on);
   return on;
 }
@@ -112,8 +112,6 @@ void Engine::setOn(bool newOn) {
   } else if (!newOn && this->isOn()) {
     this->stopEngine();
   }
-
-  this->on = newOn;
 }
 
 void Engine::startEngine() {
@@ -128,6 +126,9 @@ void Engine::startEngine() {
   this->pressSmartKeyLockButton(3000);
 
   this->deactivateSmartKey();
+
+  delay(1500); // Wait for the engine to actually start
+
 }
 
 void Engine::stopEngine() {
@@ -136,6 +137,8 @@ void Engine::stopEngine() {
   this->activateSmartKey();
   this->pressSmartKeyLockButton(2000);
   this->deactivateSmartKey();
+
+  delay(1500); // Wait for the engine to actually stop
 }
 
 void Engine::activateSmartKey() {
@@ -195,10 +198,11 @@ static int writeCharacteristic(hap_write_data_t write_data[], int count, void* s
   // TODO: Handle all data
   hap_write_data_t* data = &write_data[0];
   bool newOn = data->val.b;
-
   engine->setOn(newOn);
 
-  return HAP_SUCCESS;
+  bool successful = engine->isOn() == newOn;
+  *(data->status) = successful ? HAP_STATUS_SUCCESS : HAP_STATUS_COMM_ERR;
+  return successful ? HAP_SUCCESS : HAP_FAIL;
 }
 
 static void delay(uint32_t ms) {
