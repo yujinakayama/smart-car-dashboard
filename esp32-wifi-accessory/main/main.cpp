@@ -30,14 +30,27 @@
 #include "homekit_bridge.h"
 
 extern "C" {
+  #include <driver/gpio.h>
+
   #include "homekit.h"
   #include "log_config.h"
   #include "wifi.h"
 }
 
+static void configureGPIOPins() {
+  // Configure 12-15 GPIO pins since they cannot be used as output pins by default.
+  // https://esp32.com/viewtopic.php?f=14&t=2687
+  gpio_config_t config;
+  config.pin_bit_mask = (1 << GPIO_NUM_12) | (1 << GPIO_NUM_13) | (1 << GPIO_NUM_14) | (1 << GPIO_NUM_15);
+  config.mode = GPIO_MODE_INPUT_OUTPUT;
+  ESP_ERROR_CHECK(gpio_config(&config));
+}
+
 /*The main thread for handling the accessory */
 static void mainTask(void *p) {
   setupLogLevel();
+
+  configureGPIOPins();
 
   /* Initialize the HAP core */
   hap_init(HAP_TRANSPORT_WIFI);
