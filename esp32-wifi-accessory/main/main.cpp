@@ -52,6 +52,11 @@ static void mainTask(void *p) {
 
   configureGPIOPins();
 
+  // This needs to be prior to Engine initialization
+  // because this internally calls gpio_install_isr_service(),
+  // which is also required in Engine.
+  initializeHomeKitResetButton(GPIO_NUM_0);
+
   /* Initialize the HAP core */
   hap_init(HAP_TRANSPORT_WIFI);
 
@@ -69,8 +74,6 @@ static void mainTask(void *p) {
   hap_start();
 
   bridge->printSetupQRCode();
-
-  initializeHomeKitResetButton(GPIO_NUM_0);
 
   /* The task ends here. The read/write callbacks will be invoked by the HAP Framework */
   vTaskDelete(NULL);

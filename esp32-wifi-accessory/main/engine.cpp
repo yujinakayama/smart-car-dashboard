@@ -14,6 +14,7 @@ static const char* kSetupID = "ENGN"; // This must be unique
 static int identifyAccessory(hap_acc_t* ha);
 static int readCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv);
 static int writeCharacteristic(hap_write_data_t write_data[], int count, void* serv_priv, void* write_priv);
+static void onEngineStateChange(void* arg);
 static void delay(uint32_t ms);
 
 Engine::Engine(gpio_num_t smartKeyPowerOutputPin, gpio_num_t smartKeyLockButtonOutputPin, gpio_num_t engineStateInputPin) {
@@ -37,6 +38,8 @@ void Engine::registerBridgedHomeKitAccessory() {
   this->addFirmwareUpgradeService();
   /* Add the Accessory to the HomeKit Database */
   hap_add_bridged_accessory(this->accessory, hap_get_unique_aid(kSetupID));
+
+  this->startObservingEngineState();
 }
 
 void Engine::createAccessory() {
@@ -78,6 +81,8 @@ void Engine::addSwitchService() {
 
   /* Add the Switch Service to the Accessory Object */
   hap_acc_add_serv(this->accessory, service);
+
+  this->onCharacteristic = hap_serv_get_char_by_uuid(service, HAP_CHAR_UUID_ON);
 }
 
 /* Create the Firmware Upgrade HomeKit Custom Service.
@@ -98,9 +103,23 @@ void Engine::addFirmwareUpgradeService() {
   hap_acc_add_serv(accessory, service);
 }
 
-bool Engine::isOn() {
+void Engine::startObservingEngineState() {
+  gpio_config_t config;
+  config.pin_bit_mask = (1 << this->engineStatePin);
+  config.mode = GPIO_MODE_INPUT;
+  config.intr_type = GPIO_INTR_ANYEDGE;
+  ESP_ERROR_CHECK(gpio_config(&config));
+
+  gpio_isr_handler_add(this->engineStatePin, onEngineStateChange, this);
+}
+
+bool Engine::isOn(bool loggingEnabled) {
   bool on = gpio_get_level(this->engineStatePin) == 1;
-  ESP_LOGD(TAG, "isOn: %i", on);
+
+  if (loggingEnabled) {
+    ESP_LOGD(TAG, "isOn: %i", on);
+  }
+
   return on;
 }
 
@@ -203,6 +222,21 @@ static int writeCharacteristic(hap_write_data_t write_data[], int count, void* s
   bool successful = engine->isOn() == newOn;
   *(data->status) = successful ? HAP_STATUS_SUCCESS : HAP_STATUS_COMM_ERR;
   return successful ? HAP_SUCCESS : HAP_FAIL;
+}
+
+static void onEngineStateChange(void* arg) {
+  // We cannot use log functions in this interrupt handler.
+  // > This function or these macros should not be used from an interrupt.
+  // https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/log.html#_CPPv413esp_log_write15esp_log_level_tPKcPKcz
+  // https://esp32.com/viewtopic.php?f=13&t=3748&p=17131
+  Engine* engine = (Engine*)arg;
+  bool on = engine->isOn(false);
+
+  ets_printf("onEngineStateChange %d\n", on);
+
+  hap_val_t value;
+  value.b = on;
+  hap_char_update_val(engine->onCharacteristic, &value);
 }
 
 static void delay(uint32_t ms) {
