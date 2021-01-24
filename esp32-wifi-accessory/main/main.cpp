@@ -25,19 +25,52 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
+#include "engine.h"
 #include "garage_remote.h"
+#include "homekit_bridge.h"
 
 extern "C" {
+  #include <driver/gpio.h>
+
+  #include "homekit.h"
+  #include "log_config.h"
   #include "wifi.h"
+}
+
+static void configureGPIOPins() {
+  // Configure 12-15 GPIO pins since they cannot be used as output pins by default.
+  // https://esp32.com/viewtopic.php?f=14&t=2687
+  gpio_config_t config;
+  config.pin_bit_mask = (1 << GPIO_NUM_12) | (1 << GPIO_NUM_13) | (1 << GPIO_NUM_14) | (1 << GPIO_NUM_15);
+  config.mode = GPIO_MODE_INPUT_OUTPUT;
+  ESP_ERROR_CHECK(gpio_config(&config));
 }
 
 /*The main thread for handling the accessory */
 static void mainTask(void *p) {
-  GarageRemote* garageRemote = new GarageRemote(GPIO_NUM_18, GPIO_NUM_19, GPIO_NUM_0);
-  garageRemote->registerHomeKitAccessory();
+  setupLogLevel();
+
+  configureGPIOPins();
+
+  /* Initialize the HAP core */
+  hap_init(HAP_TRANSPORT_WIFI);
+
+  HomeKitBridge* bridge = new HomeKitBridge();
+  bridge->registerHomeKitAccessory();
+
+  Engine* engine = new Engine(GPIO_NUM_27, GPIO_NUM_14, GPIO_NUM_26);
+  engine->registerBridgedHomeKitAccessory();
+
+  GarageRemote* garageRemote = new GarageRemote(GPIO_NUM_12, GPIO_NUM_13);
+  garageRemote->registerBridgedHomeKitAccessory();
+
   startWiFiAccessPoint();
-  garageRemote->startHomeKitAccessory();
-  garageRemote->printSetupQRCode();
+  /* After all the initializations are done, start the HAP core */
+  hap_start();
+
+  bridge->printSetupQRCode();
+
+  initializeHomeKitResetButton(GPIO_NUM_0);
 
   /* The task ends here. The read/write callbacks will be invoked by the HAP Framework */
   vTaskDelete(NULL);

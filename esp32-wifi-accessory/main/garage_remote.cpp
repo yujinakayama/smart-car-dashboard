@@ -5,23 +5,13 @@
 #include <hap_apple_chars.h>
 #include <hap_fw_upgrade.h>
 
-extern "C" {
-  #include <app_hap_setup_payload.h>
-}
-
-#include <iot_button.h>
-
 #include <esp_timer.h>
 
 #include <cstring>
 
 static const char* TAG = "GarageRemote";
 
-/* Reset network credentials if button is pressed for more than 3 seconds and then released */
-static const uint32_t kNetworkResetButtonPressDuration = 3;
-
-/* Reset to factory if button is pressed and held for more than 10 seconds */
-static const uint32_t kFactoryResetButtonPressDuration = 10;
+static const char* kSetupID = "GRGR"; // This must be unique
 
 static esp_timer_handle_t timer;
 typedef void (*callback_with_arg_t)(void*);
@@ -30,15 +20,12 @@ static void _turnOffOpenButton(void* arg);
 static int identifyAccessory(hap_acc_t* ha);
 static int readCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv);
 static int writeTargetDoorState(hap_write_data_t write_data[], int count, void* serv_priv, void* write_priv);
-static void resetNetworkConfiguration(void* arg);
-static void resetToFactory(void* arg);
 static void delay(uint32_t ms);
 static void performLater(uint32_t milliseconds, callback_with_arg_t callback, void* arg);
 
-GarageRemote::GarageRemote(gpio_num_t powerButtonPin, gpio_num_t openButtonPin, gpio_num_t resetButtonPin) {
+GarageRemote::GarageRemote(gpio_num_t powerButtonPin, gpio_num_t openButtonPin) {
   this->powerButtonPin = powerButtonPin;
   this->openButtonPin = openButtonPin;
-  this->resetButtonPin = resetButtonPin;
 
   gpio_set_direction(powerButtonPin, GPIO_MODE_OUTPUT);
   gpio_set_direction(openButtonPin, GPIO_MODE_OUTPUT);
@@ -47,28 +34,17 @@ GarageRemote::GarageRemote(gpio_num_t powerButtonPin, gpio_num_t openButtonPin, 
   this->currentDoorState = CurrentDoorStateClosed;
 }
 
-void GarageRemote::registerHomeKitAccessory() {
-  ESP_LOGI(TAG, "registerHomeKitAccessory");
+void GarageRemote::registerBridgedHomeKitAccessory() {
+  ESP_LOGI(TAG, "registerBridgedHomeKitAccessory");
 
   this->createAccessory();
   this->addGarageDoorOpenerService();
   this->addFirmwareUpgradeService();
   /* Add the Accessory to the HomeKit Database */
-  hap_add_accessory(this->accessory);
-  this->configureHomeKitSetupCode();
-
-  this->initializeResetButton();
-}
-
-void GarageRemote::startHomeKitAccessory() {
-  /* After all the initializations are done, start the HAP core */
-  hap_start();
+  hap_add_bridged_accessory(this->accessory, hap_get_unique_aid(kSetupID));
 }
 
 void GarageRemote::createAccessory() {
-  /* Initialize the HAP core */
-  hap_init(HAP_TRANSPORT_WIFI);
-
   /* Initialise the mandatory parameters for Accessory which will be added as
    * the mandatory services internally
    */
@@ -125,28 +101,6 @@ void GarageRemote::addFirmwareUpgradeService() {
 
   /* Add the service to the Accessory Object */
   hap_acc_add_serv(accessory, service);
-}
-
-void GarageRemote::configureHomeKitSetupCode() {
-  /* Unique Setup code of the format xxx-xx-xxx. Default: 111-22-333 */
-  hap_set_setup_code(CONFIG_EXAMPLE_SETUP_CODE);
-  /* Unique four character Setup Id. Default: ES32 */
-  hap_set_setup_id(CONFIG_EXAMPLE_SETUP_ID);
-}
-
-void GarageRemote::printSetupQRCode() {
-  app_hap_setup_payload((char*)CONFIG_EXAMPLE_SETUP_CODE, (char*)CONFIG_EXAMPLE_SETUP_ID, false, this->accessoryConfig.cid);
-}
-
-/**
- * The Reset button  GPIO initialisation function.
- * Same button will be used for resetting Wi-Fi network as well as for reset to factory based on
- * the time for which the button is pressed.
- */
-void GarageRemote::initializeResetButton() {
-  button_handle_t button = iot_button_create(this->resetButtonPin, BUTTON_ACTIVE_LOW);
-  iot_button_add_on_release_cb(button, kNetworkResetButtonPressDuration, resetNetworkConfiguration, NULL);
-  iot_button_add_on_press_cb(button, kFactoryResetButtonPressDuration, resetToFactory, NULL);
 }
 
 TargetDoorState GarageRemote::getTargetDoorState() {
@@ -236,21 +190,6 @@ static int writeTargetDoorState(hap_write_data_t write_data[], int count, void* 
   garageRemote->setTargetDoorState(state);
 
   return HAP_SUCCESS;
-}
-
-/**
- * @brief The network reset button callback handler.
- * Useful for testing the Wi-Fi re-configuration feature of WAC2
- */
-static void resetNetworkConfiguration(void* arg) {
-  hap_reset_network();
-}
-
-/**
- * @brief The factory reset button callback handler.
- */
-static void resetToFactory(void* arg) {
-  hap_reset_to_factory();
 }
 
 static void delay(uint32_t ms) {
