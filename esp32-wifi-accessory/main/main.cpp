@@ -25,7 +25,7 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
-#include "engine.h"
+#include "car_smart_key.h"
 #include "garage_remote.h"
 #include "homekit_bridge.h"
 
@@ -57,9 +57,9 @@ static void mainTask(void *p) {
 
   configureGPIOPins();
 
-  // This needs to be prior to Engine initialization
+  // This needs to be prior to CarSmartKey initialization
   // because this internally calls gpio_install_isr_service(),
-  // which is also required in Engine.
+  // which is also required in CarSmartKey.
   initializeHomeKitResetButton(GPIO_NUM_0);
 
   /* Initialize the HAP core */
@@ -68,8 +68,8 @@ static void mainTask(void *p) {
   HomeKitBridge* bridge = new HomeKitBridge();
   bridge->registerHomeKitAccessory();
 
-  Engine* engine = new Engine(GPIO_NUM_27, GPIO_NUM_14, GPIO_NUM_26);
-  engine->registerBridgedHomeKitAccessory();
+  CarSmartKey* smartKey = new CarSmartKey(GPIO_NUM_27, GPIO_NUM_14, GPIO_NUM_26);
+  smartKey->registerBridgedHomeKitAccessory();
 
   GarageRemote* garageRemote = new GarageRemote(GPIO_NUM_12, GPIO_NUM_13);
   garageRemote->registerBridgedHomeKitAccessory();

@@ -1,5 +1,5 @@
 #include "log_config.h"
-#include "engine.h"
+#include "car_smart_key.h"
 
 #include <hap_apple_servs.h>
 #include <hap_apple_chars.h>
@@ -11,33 +11,33 @@ extern "C" {
   #include "util.h"
 }
 
-static const char* TAG = "Engine";
+static const char* TAG = "CarSmartKey";
 
-static const char* kSetupID = "ENGN"; // This must be unique
+static const char* kSetupID = "SKEY"; // This must be unique
 
 static int identifyAccessory(hap_acc_t* ha);
-static int readCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv);
-static int writeCharacteristic(hap_write_data_t write_data[], int count, void* serv_priv, void* write_priv);
+static int readEngineOnCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv);
+static int writeEngineOnCharacteristic(hap_write_data_t write_data[], int count, void* serv_priv, void* write_priv);
 static void onEngineStateChange(void* arg);
 
-Engine::Engine(gpio_num_t smartKeyPowerOutputPin, gpio_num_t smartKeyLockButtonOutputPin, gpio_num_t engineStateInputPin) {
-  this->smartKeyPowerPin = smartKeyPowerOutputPin;
-  this->smartKeyLockButtonPin = smartKeyLockButtonOutputPin;
+CarSmartKey::CarSmartKey(gpio_num_t powerOutputPin, gpio_num_t lockButtonOutputPin, gpio_num_t engineStateInputPin) {
+  this->powerPin = powerOutputPin;
+  this->lockButtonPin = lockButtonOutputPin;
   this->engineStatePin = engineStateInputPin;
 
-  gpio_set_direction(this->smartKeyPowerPin, GPIO_MODE_OUTPUT);
-  gpio_set_direction(this->smartKeyLockButtonPin, GPIO_MODE_OUTPUT);
+  gpio_set_direction(this->powerPin, GPIO_MODE_OUTPUT);
+  gpio_set_direction(this->lockButtonPin, GPIO_MODE_OUTPUT);
   gpio_set_direction(this->engineStatePin, GPIO_MODE_INPUT);
 
   // Ensure the smart key power is off for security
   this->deactivateSmartKey();
 }
 
-void Engine::registerBridgedHomeKitAccessory() {
+void CarSmartKey::registerBridgedHomeKitAccessory() {
   ESP_LOGI(TAG, "registerBridgedHomeKitAccessory");
 
   this->createAccessory();
-  this->addSwitchService();
+  this->addEngineSwitchService();
   this->addFirmwareUpgradeService();
   /* Add the Accessory to the HomeKit Database */
   hap_add_bridged_accessory(this->accessory, hap_get_unique_aid(kSetupID));
@@ -45,11 +45,11 @@ void Engine::registerBridgedHomeKitAccessory() {
   this->startObservingEngineState();
 }
 
-void Engine::createAccessory() {
+void CarSmartKey::createAccessory() {
   /* Initialise the mandatory parameters for Accessory which will be added as
    * the mandatory services internally
    */
-  this->accessoryConfig.name = (char*)"Engine";
+  this->accessoryConfig.name = (char*)"CarSmartKey";
   this->accessoryConfig.manufacturer = (char*)"Yuji Nakayama";
   this->accessoryConfig.model = (char*)"Model";
   this->accessoryConfig.serial_num = (char*)"Serial Number";
@@ -67,32 +67,32 @@ void Engine::createAccessory() {
   hap_acc_add_product_data(accessory, product_data, sizeof(product_data));
 }
 
-void Engine::addSwitchService() {
+void CarSmartKey::addEngineSwitchService() {
   /* Create the Switch Service. Include the "name" since this is a user visible service  */
   hap_serv_t* service = hap_serv_switch_create(false);
 
   hap_serv_add_char(service, hap_char_name_create((char*)"Engine"));
 
   /* Set the write callback for the service */
-  hap_serv_set_write_cb(service, writeCharacteristic);
+  hap_serv_set_write_cb(service, writeEngineOnCharacteristic);
 
   /* Set the read callback for the service (optional) */
-  hap_serv_set_read_cb(service, readCharacteristic);
+  hap_serv_set_read_cb(service, readEngineOnCharacteristic);
 
-  // Allow access to Engine instance from the read/write callbals
+  // Allow access to CarSmartKey instance from the read/write callbals
   hap_serv_set_priv(service, this);
 
   /* Add the Switch Service to the Accessory Object */
   hap_acc_add_serv(this->accessory, service);
 
-  this->onCharacteristic = hap_serv_get_char_by_uuid(service, HAP_CHAR_UUID_ON);
+  this->engineOnCharacteristic = hap_serv_get_char_by_uuid(service, HAP_CHAR_UUID_ON);
 }
 
 /* Create the Firmware Upgrade HomeKit Custom Service.
  * Please refer the FW Upgrade documentation under components/homekit/extras/include/hap_fw_upgrade.h
  * and the top level README for more information.
  */
-void Engine::addFirmwareUpgradeService() {
+void CarSmartKey::addFirmwareUpgradeService() {
   /*  Required for server verification during OTA, PEM format as string  */
   char server_cert[] = {};
 
@@ -106,7 +106,7 @@ void Engine::addFirmwareUpgradeService() {
   hap_acc_add_serv(accessory, service);
 }
 
-void Engine::startObservingEngineState() {
+void CarSmartKey::startObservingEngineState() {
   gpio_config_t config;
   config.pin_bit_mask = (1 << this->engineStatePin);
   config.mode = GPIO_MODE_INPUT;
@@ -116,27 +116,27 @@ void Engine::startObservingEngineState() {
   gpio_isr_handler_add(this->engineStatePin, onEngineStateChange, this);
 }
 
-bool Engine::isOn(bool loggingEnabled) {
-  bool on = gpio_get_level(this->engineStatePin) == 1;
+bool CarSmartKey::getEngineState(bool loggingEnabled) {
+  bool state = gpio_get_level(this->engineStatePin) == 1;
 
   if (loggingEnabled) {
-    ESP_LOGD(TAG, "isOn: %i", on);
+    ESP_LOGD(TAG, "getEngineState: %i", state);
   }
 
-  return on;
+  return state;
 }
 
-void Engine::setOn(bool newOn) {
-  ESP_LOGD(TAG, "setOn: %i", newOn);
+void CarSmartKey::setEngineState(bool newState) {
+  ESP_LOGD(TAG, "setEngineState: %i", newState);
 
-  if (newOn && !this->isOn()) {
+  if (newState && !this->getEngineState()) {
     this->startEngine();
-  } else if (!newOn && this->isOn()) {
+  } else if (!newState && this->getEngineState()) {
     this->stopEngine();
   }
 }
 
-void Engine::startEngine() {
+void CarSmartKey::startEngine() {
   ESP_LOGD(TAG, "startEngine");
 
   this->activateSmartKey();
@@ -152,7 +152,7 @@ void Engine::startEngine() {
   delay(1000); // Wait for the engine to actually start
 }
 
-void Engine::stopEngine() {
+void CarSmartKey::stopEngine() {
   ESP_LOGD(TAG, "stopEngine");
 
   this->activateSmartKey();
@@ -162,9 +162,9 @@ void Engine::stopEngine() {
   delay(500); // Wait for the engine to actually stop
 }
 
-void Engine::activateSmartKey() {
+void CarSmartKey::activateSmartKey() {
   ESP_LOGV(TAG, "activateSmartKey");
-  gpio_set_level(this->smartKeyPowerPin, 1);
+  gpio_set_level(this->powerPin, 1);
   // It seems the smart key has some capacitors inside
   // and they need some time to be charged to generate radio waves
   // especially for long press of the lock button.
@@ -172,19 +172,19 @@ void Engine::activateSmartKey() {
   delay(1000);
 }
 
-void Engine::deactivateSmartKey() {
+void CarSmartKey::deactivateSmartKey() {
   ESP_LOGV(TAG, "deactivateSmartKey");
-  gpio_set_level(this->smartKeyPowerPin, 0);
+  gpio_set_level(this->powerPin, 0);
 }
 
-void Engine::pressSmartKeyLockButton(uint32_t durationInMilliseconds) {
+void CarSmartKey::pressSmartKeyLockButton(uint32_t durationInMilliseconds) {
   ESP_LOGV(TAG, "pressSmartKeyLockButton on");
-  gpio_set_level(this->smartKeyLockButtonPin, 1);
+  gpio_set_level(this->lockButtonPin, 1);
 
   delay(durationInMilliseconds);
 
   ESP_LOGV(TAG, "pressSmartKeyLockButton off");
-  gpio_set_level(this->smartKeyLockButtonPin, 0);
+  gpio_set_level(this->lockButtonPin, 0);
 }
 
 /* Mandatory identify routine for the accessory.
@@ -196,15 +196,15 @@ static int identifyAccessory(hap_acc_t* ha) {
   return HAP_SUCCESS;
 }
 
-static int readCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv) {
+static int readEngineOnCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv) {
   const char* characteristicUUID = hap_char_get_type_uuid(hc);
-  ESP_LOGD(TAG, "readCharacteristic: %s", characteristicUUID);
+  ESP_LOGD(TAG, "readEngineOnCharacteristic: %s", characteristicUUID);
 
-  Engine* engine = (Engine*)serv_priv;
+  CarSmartKey* smartKey = (CarSmartKey*)serv_priv;
   hap_val_t value;
 
   if (strcmp(characteristicUUID, HAP_CHAR_UUID_ON) == 0) {
-    value.b = engine->isOn();
+    value.b = smartKey->getEngineState();
     hap_char_update_val(hc, &value);
   }
 
@@ -213,15 +213,15 @@ static int readCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* s
   return HAP_SUCCESS;
 }
 
-static int writeCharacteristic(hap_write_data_t write_data[], int count, void* serv_priv, void* write_priv) {
-  Engine* engine = (Engine*)serv_priv;
+static int writeEngineOnCharacteristic(hap_write_data_t write_data[], int count, void* serv_priv, void* write_priv) {
+  CarSmartKey* smartKey = (CarSmartKey*)serv_priv;
 
   // TODO: Handle all data
   hap_write_data_t* data = &write_data[0];
-  bool newOn = data->val.b;
-  engine->setOn(newOn);
+  bool newState = data->val.b;
+  smartKey->setEngineState(newState);
 
-  bool successful = engine->isOn() == newOn;
+  bool successful = smartKey->getEngineState() == newState;
   *(data->status) = successful ? HAP_STATUS_SUCCESS : HAP_STATUS_COMM_ERR;
   return successful ? HAP_SUCCESS : HAP_FAIL;
 }
@@ -231,12 +231,12 @@ static void onEngineStateChange(void* arg) {
   // > This function or these macros should not be used from an interrupt.
   // https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/log.html#_CPPv413esp_log_write15esp_log_level_tPKcPKcz
   // https://esp32.com/viewtopic.php?f=13&t=3748&p=17131
-  Engine* engine = (Engine*)arg;
-  bool on = engine->isOn(false);
+  CarSmartKey* smartKey = (CarSmartKey*)arg;
+  bool state = smartKey->getEngineState(false);
 
-  ets_printf("onEngineStateChange %d\n", on);
+  ets_printf("onEngineStateChange %d\n", state);
 
   hap_val_t value;
-  value.b = on;
-  hap_char_update_val(engine->onCharacteristic, &value);
+  value.b = state;
+  hap_char_update_val(smartKey->engineOnCharacteristic, &value);
 }

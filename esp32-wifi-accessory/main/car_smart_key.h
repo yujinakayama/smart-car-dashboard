@@ -4,24 +4,24 @@
 #include <hap.h>
 #include <driver/gpio.h>
 
-class Engine {
+class CarSmartKey {
 public:
-  gpio_num_t smartKeyPowerPin;
-  gpio_num_t smartKeyLockButtonPin;
+  gpio_num_t powerPin;
+  gpio_num_t lockButtonPin;
   gpio_num_t engineStatePin;
   hap_acc_t* accessory;
   hap_acc_cfg_t accessoryConfig;
-  hap_char_t* onCharacteristic;
+  hap_char_t* engineOnCharacteristic;
 
-  Engine(gpio_num_t smartKeyPowerOutputPin, gpio_num_t smartKeyLockButtonOutputPin, gpio_num_t engineStateInputPin);
+  CarSmartKey(gpio_num_t powerOutputPin, gpio_num_t lockButtonOutputPin, gpio_num_t engineStateInputPin);
   void registerBridgedHomeKitAccessory();
 
-  bool isOn(bool loggingEnabled = true);
-  void setOn(bool newOn);
+  bool getEngineState(bool loggingEnabled = true);
+  void setEngineState(bool state);
 
 private:
   void createAccessory();
-  void addSwitchService();
+  void addEngineSwitchService();
   void addFirmwareUpgradeService();
   void startObservingEngineState();
   void startEngine();
