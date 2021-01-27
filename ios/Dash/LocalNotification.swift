@@ -127,11 +127,13 @@ struct ETCCardEjectionNotification: LocalNotificationProtocol {
 struct NoMainETCCardNotification: LocalNotificationProtocol {
     let currentCard: ETCCardManagedObject?
 
-    let title: String? = nil
+    var title: String? {
+        return currentCard?.displayedName
+    }
 
     var body: String? {
-        if let currentCard = currentCard {
-            return "\(currentCard.displayedName)が挿入されています。"
+        if currentCard != nil {
+            return "メインカードでないETCカードが挿入されています。"
         } else {
             return "ETCカードが挿入されていません。"
         }
