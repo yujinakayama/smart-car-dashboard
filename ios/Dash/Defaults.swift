@@ -19,6 +19,7 @@ struct Defaults {
         static let mapTypeForDirections = "mapTypeForDirections"
         static let automaticallyOpenUnopenedLocationWhenAppIsOpened = "automaticallyOpenUnopenedLocationWhenAppIsOpened"
         static let snapLocationToPointOfInterest = "snapLocationToPointOfInterest"
+        static let mainETCCardUUID = "mainETCCardUUID"
         static let verboseLogging = "verboseLogging"
     }
 
@@ -68,6 +69,20 @@ struct Defaults {
     var snapLocationToPointOfInterest: Bool {
         get {
             return userDefaults.bool(forKey: Key.snapLocationToPointOfInterest)
+        }
+    }
+
+    var mainETCCardUUID: UUID? {
+        get {
+            if let string = userDefaults.string(forKey: Key.mainETCCardUUID) {
+                return UUID(uuidString: string)
+            } else {
+                return nil
+            }
+        }
+
+        set {
+            userDefaults.set(newValue?.uuidString, forKey: Key.mainETCCardUUID)
         }
     }
 

@@ -123,3 +123,25 @@ struct ETCCardEjectionNotification: LocalNotificationProtocol {
         return true
     }
 }
+
+struct NoMainETCCardNotification: LocalNotificationProtocol {
+    let currentCard: ETCCardManagedObject?
+
+    let title: String? = nil
+
+    var body: String? {
+        if let currentCard = currentCard {
+            return "\(currentCard.displayedName)が挿入されています。"
+        } else {
+            return "ETCカードが挿入されていません。"
+        }
+    }
+
+    let sound: UNNotificationSound? = nil
+
+    let foregroundPresentationOptions: UNNotificationPresentationOptions = [.banner]
+
+    func shouldBeDelivered(history: LatestLocalNotificationHistory) -> Bool {
+        return true
+    }
+}

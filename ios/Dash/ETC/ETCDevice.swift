@@ -45,6 +45,10 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
                     UserNotificationCenter.shared.requestDelivery(ETCCardEjectionNotification())
                 }
             }
+
+            if let mainCardUUID = Defaults.shared.mainETCCardUUID, currentCard?.uuid != mainCardUUID, justConnected {
+                UserNotificationCenter.shared.requestDelivery(NoMainETCCardNotification(currentCard: currentCard))
+            }
         }
     }
 
