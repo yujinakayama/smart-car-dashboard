@@ -52,7 +52,7 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
 
         var constraints = [
             segmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            NSLayoutConstraint(item: segmentedControl, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1.8, constant: 0),
+            NSLayoutConstraint(item: segmentedControl, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1.7, constant: 0),
             segmentedControl.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, multiplier: 0.9),
             segmentedControl.heightAnchor.constraint(equalTo: segmentedControl.widthAnchor, multiplier: 0.3 / CGFloat(segmentTitles.count)),
         ]
