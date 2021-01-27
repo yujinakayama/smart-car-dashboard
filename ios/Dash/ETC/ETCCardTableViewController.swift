@@ -37,8 +37,9 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
 
     lazy var deviceStatusBarItemManager = ETCDeviceStatusBarItemManager(device: device)
 
-    var managedObjectContextObservation: NSKeyValueObservation?
     var fetchedResultsController: NSFetchedResultsController<ETCCardManagedObject>?
+
+    var keyValueObservations: [NSKeyValueObservation] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,7 +49,7 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
 
         setUpNavigationBar()
 
-        startObservingNotifications()
+        startObservingCurrentCard()
 
         startFetchingCards()
     }
@@ -58,26 +59,22 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
         deviceStatusBarItemManager.addBarItem(to: navigationItem)
     }
 
-    func startObservingNotifications() {
-        let notificationCenter = NotificationCenter.default
-
-        notificationCenter.addObserver(forName: .ETCDeviceDidDetectCardInsertion, object: device, queue: .main) { (notification) in
-            self.indicateCurrentCard()
-        }
-
-        notificationCenter.addObserver(forName: .ETCDeviceDidDetectCardEjection, object: device, queue: .main) { (notification) in
-            self.indicateCurrentCard()
-        }
+    func startObservingCurrentCard() {
+        keyValueObservations.append(device.observe(\.currentCard) { [weak self] (currentCard, change) in
+            DispatchQueue.main.async {
+                self?.indicateCurrentCard()
+            }
+        })
     }
 
     func startFetchingCards() {
         if let managedObjectContext = device.dataStore.viewContext {
             fetchCards(managedObjectContext: managedObjectContext)
         } else {
-            managedObjectContextObservation = device.dataStore.observe(\.viewContext) { [weak self] (dataStore, change) in
+            keyValueObservations.append(device.dataStore.observe(\.viewContext) { [weak self] (dataStore, change) in
                 guard let managedObjectContext = dataStore.viewContext else { return }
                 self?.fetchCards(managedObjectContext: managedObjectContext)
-            }
+            })
         }
     }
 

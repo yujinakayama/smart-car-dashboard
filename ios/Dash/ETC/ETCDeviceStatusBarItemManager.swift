@@ -23,9 +23,11 @@ class ETCDeviceStatusBarItemManager {
         return UIBarButtonItem(customView: imageView)
     }()
 
+    private var keyValueObservation: NSKeyValueObservation?
+
     init(device: ETCDevice) {
         self.device = device
-        startObservingNotifications()
+        startObservingCurrentCard()
     }
 
     func addBarItem(to navigationItem: UINavigationItem) {
@@ -33,12 +35,12 @@ class ETCDeviceStatusBarItemManager {
         updateNavigationItem()
     }
 
-    private func startObservingNotifications() {
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(updateNavigationOnMainThread), name: .ETCDeviceDidConnect, object: device)
-        notificationCenter.addObserver(self, selector: #selector(updateNavigationOnMainThread), name: .ETCDeviceDidDisconnect, object: device)
-        notificationCenter.addObserver(self, selector: #selector(updateNavigationOnMainThread), name: .ETCDeviceDidDetectCardInsertion, object: device)
-        notificationCenter.addObserver(self, selector: #selector(updateNavigationOnMainThread), name: .ETCDeviceDidDetectCardEjection, object: device)
+    private func startObservingCurrentCard() {
+        keyValueObservation = device.observe(\.currentCard, changeHandler: { [weak self] (currentCard, change) in
+            DispatchQueue.main.async {
+                self?.updateNavigationItem()
+            }
+        })
     }
 
     @objc private func updateNavigationOnMainThread() {

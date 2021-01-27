@@ -13,8 +13,8 @@ extension Notification.Name {
     static let ETCDeviceDidFinishDataStorePreparation = Notification.Name("ETCDeviceDidFinishDataStorePreparation")
     static let ETCDeviceDidConnect = Notification.Name("ETCDeviceDidConnect")
     static let ETCDeviceDidDisconnect = Notification.Name("ETCDeviceDidDisconnect")
-    static let ETCDeviceDidDetectCardInsertion = Notification.Name("ETCDeviceDidDetectCardInsertion")
-    static let ETCDeviceDidDetectCardEjection = Notification.Name("ETCDeviceDidDetectCardEjection")
+    static let ETCDeviceDidDetectCardInsertion = Notification.Name("ETCDeviceDidDetectCardInsertion") // Physically inserted by human
+    static let ETCDeviceDidDetectCardEjection = Notification.Name("ETCDeviceDidDetectCardEjection") // Physically ejected by human
 }
 
 class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegate {
@@ -28,22 +28,20 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
         return connection?.isEstablished ?? false
     }
 
-    var currentCard: ETCCardManagedObject? {
+    @objc dynamic var currentCard: ETCCardManagedObject? {
         didSet {
             dataStore.currentCard = currentCard
 
-            if oldValue == nil, let insertedCard = currentCard {
-                notificationCenter.post(name: .ETCDeviceDidDetectCardInsertion, object: self)
-
-                if !justConnected {
+            if shouldNotifyOfCardInsertionOrEjection {
+                if oldValue == nil, let insertedCard = currentCard {
+                    notificationCenter.post(name: .ETCDeviceDidDetectCardInsertion, object: self)
                     UserNotificationCenter.shared.requestDelivery(ETCCardInsertionNotification(insertedCard: insertedCard))
-                }
-            } else if oldValue != nil && currentCard == nil {
-                notificationCenter.post(name: .ETCDeviceDidDetectCardEjection, object: self)
-
-                if !justConnected {
+                } else if oldValue != nil && currentCard == nil {
+                    notificationCenter.post(name: .ETCDeviceDidDetectCardEjection, object: self)
                     UserNotificationCenter.shared.requestDelivery(ETCCardEjectionNotification())
                 }
+
+                shouldNotifyOfCardInsertionOrEjection = false
             }
 
             if let mainCardUUID = Defaults.shared.mainETCCardUUID, currentCard?.uuid != mainCardUUID, justConnected {
@@ -51,6 +49,8 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
             }
         }
     }
+
+    private var shouldNotifyOfCardInsertionOrEjection = false
 
     var justConnected: Bool {
         get {
@@ -126,6 +126,7 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
 
     func serialPortManager(_ serialPortManager: SerialPortManager, didLoseSerialPort serialPort: SerialPort) {
         connection = nil
+        shouldNotifyOfCardInsertionOrEjection = false
         currentCard = nil
         notificationCenter.post(name: .ETCDeviceDidDisconnect, object: self)
     }
@@ -156,8 +157,10 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
             justReceivedPaymentNotification = true
             try! connection.send(ETCMessageToDevice.initialPaymentRecordRequest)
         case is ETCMessageFromDevice.CardInsertionNotification:
+            shouldNotifyOfCardInsertionOrEjection = true
             try! connection.send(ETCMessageToDevice.cardExistenceRequest)
         case is ETCMessageFromDevice.CardEjectionNotification:
+            shouldNotifyOfCardInsertionOrEjection = true
             currentCard = nil
         default:
             break
