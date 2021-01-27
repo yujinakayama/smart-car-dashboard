@@ -91,3 +91,35 @@ struct PaymentNotification: LocalNotificationProtocol {
         return PaymentNotification.amountNumberFormatter.string(from: number)!
     }
 }
+
+struct ETCCardInsertionNotification: LocalNotificationProtocol {
+    let insertedCard: ETCCardManagedObject
+
+    var title: String? {
+        return insertedCard.displayedName
+    }
+
+    let body: String? = "ETCカードが挿入されました。"
+
+    let sound: UNNotificationSound? = nil
+
+    let foregroundPresentationOptions: UNNotificationPresentationOptions = [.banner]
+
+    func shouldBeDelivered(history: LatestLocalNotificationHistory) -> Bool {
+        return true
+    }
+}
+
+struct ETCCardEjectionNotification: LocalNotificationProtocol {
+    let title: String? = nil
+
+    let body: String? = "ETCカードが取り出されました。"
+
+    let sound: UNNotificationSound? = nil
+
+    let foregroundPresentationOptions: UNNotificationPresentationOptions = [.banner]
+
+    func shouldBeDelivered(history: LatestLocalNotificationHistory) -> Bool {
+        return true
+    }
+}

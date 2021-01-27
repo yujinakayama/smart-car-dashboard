@@ -32,13 +32,41 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
         didSet {
             dataStore.currentCard = currentCard
 
-            if oldValue == nil && currentCard != nil {
+            if oldValue == nil, let insertedCard = currentCard {
                 notificationCenter.post(name: .ETCDeviceDidDetectCardInsertion, object: self)
+
+                if !justConnected {
+                    UserNotificationCenter.shared.requestDelivery(ETCCardInsertionNotification(insertedCard: insertedCard))
+                }
             } else if oldValue != nil && currentCard == nil {
                 notificationCenter.post(name: .ETCDeviceDidDetectCardEjection, object: self)
+
+                if !justConnected {
+                    UserNotificationCenter.shared.requestDelivery(ETCCardEjectionNotification())
+                }
             }
         }
     }
+
+    var justConnected: Bool {
+        get {
+            if let lastConnectionTime = lastConnectionTime {
+                return Date().timeIntervalSince(lastConnectionTime) < 3
+            } else {
+                return false
+            }
+        }
+
+        set {
+            if newValue {
+                lastConnectionTime = Date()
+            } else {
+                lastConnectionTime = nil
+            }
+        }
+    }
+
+    private var lastConnectionTime: Date?
 
     var justReceivedPaymentNotification: Bool {
         get {
@@ -101,6 +129,7 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
     // MARK: - ETCDeviceConnectionDelegate
 
     func deviceConnectionDidFinishPreparation(_ connection: ETCDeviceConnection, error: Error?) {
+        justConnected = true
         notificationCenter.post(name: .ETCDeviceDidConnect, object: self)
         try! connection.send(ETCMessageToDevice.cardExistenceRequest)
     }
