@@ -28,10 +28,10 @@
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8PU-dv-E76">
-                                <rect key="frame" x="0.0" y="211" width="375" height="748"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="959"/>
                                 <subviews>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nEC-rf-DCk" userLabel="Music View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="748"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="959"/>
                                         <connections>
                                             <segue destination="zuP-Ci-kYP" kind="embed" id="0mp-rp-FvL"/>
                                         </connections>
@@ -63,13 +63,24 @@
                             <constraint firstItem="tZz-9P-vdJ" firstAttribute="top" secondItem="Am0-lQ-F8N" secondAttribute="top" id="K4y-V8-w5y"/>
                             <constraint firstItem="8PU-dv-E76" firstAttribute="leading" secondItem="3Xo-J1-LB7" secondAttribute="leading" id="Mhj-Nw-ZdM"/>
                             <constraint firstItem="3Xo-J1-LB7" firstAttribute="trailing" secondItem="8PU-dv-E76" secondAttribute="trailing" id="VYM-Ne-pXR"/>
+                            <constraint firstItem="8PU-dv-E76" firstAttribute="top" secondItem="Am0-lQ-F8N" secondAttribute="top" id="mYe-3d-EzT"/>
                             <constraint firstItem="tZz-9P-vdJ" firstAttribute="leading" secondItem="Am0-lQ-F8N" secondAttribute="leading" id="nyG-eC-Dvx"/>
                             <constraint firstAttribute="trailing" secondItem="tZz-9P-vdJ" secondAttribute="trailing" id="pZ2-PS-XSX"/>
+                            <constraint firstItem="8PU-dv-E76" firstAttribute="top" secondItem="Am0-lQ-F8N" secondAttribute="top" id="pqC-vl-LYL"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="4tN-1y-bWT"/>
+                                <exclude reference="pqC-vl-LYL"/>
+                            </mask>
+                        </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="Dashboard" image="speedometer" catalog="system" id="8iC-BB-hC9"/>
                     <connections>
                         <outlet property="musicContainerView" destination="8PU-dv-E76" id="Ap8-Vk-BGW"/>
+                        <outlet property="musicContainerViewTopConstraintForDraggingState" destination="mYe-3d-EzT" id="KKR-q5-hJo"/>
+                        <outlet property="musicContainerViewTopConstraintForFullMusicLayout" destination="pqC-vl-LYL" id="mQE-L8-FgO"/>
+                        <outlet property="musicContainerViewTopConstraintForSplitLayout" destination="4tN-1y-bWT" id="dfw-zY-hze"/>
                         <outlet property="musicEdgeGlossView" destination="Hvx-z0-zUB" id="FUs-0J-9bv"/>
                         <outlet property="widgetView" destination="tZz-9P-vdJ" id="paE-67-fpD"/>
                     </connections>
@@ -83,11 +94,11 @@
             <objects>
                 <viewController restorationIdentifier="MusicViewController" id="zuP-Ci-kYP" customClass="MusicViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="B1Y-hT-Lkm">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="748"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="959"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="sLb-Je-6Yi">
-                                <rect key="frame" x="32" y="0.0" width="311" height="748"/>
+                                <rect key="frame" x="32" y="0.0" width="311" height="959"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="avy-aC-AOd">
                                         <rect key="frame" x="0.0" y="0.0" width="311" height="0.0"/>
@@ -96,38 +107,38 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3wq-8X-NTj" customClass="ArtworkView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="33.5" width="311" height="311"/>
+                                        <rect key="frame" x="0.0" y="64" width="311" height="311"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="3wq-8X-NTj" secondAttribute="height" multiplier="1:1" id="nRi-l7-2hN"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Beu-Kz-v6k" customClass="SongTitleView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="378.5" width="311" height="52"/>
+                                        <rect key="frame" x="0.0" y="438.5" width="311" height="52"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="52" id="jCn-aM-e0h"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4EW-dl-7rX" customClass="PlaybackProgressView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="464" width="311" height="24"/>
+                                        <rect key="frame" x="0.0" y="554.5" width="311" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="IT5-o9-AQP"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Z51-Ki-eML" customClass="PlaybackControlView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="522" width="311" height="60"/>
+                                        <rect key="frame" x="0.0" y="642.5" width="311" height="60"/>
                                         <color key="tintColor" systemColor="labelColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="2Lr-e8-jfW"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xiy-BS-1Rf" customClass="VolumeView" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="615.5" width="311" height="19"/>
+                                        <rect key="frame" x="0.0" y="766.5" width="311" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="19" id="zIa-hH-lg5"/>
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="5dH-Ra-rgc">
-                                        <rect key="frame" x="0.0" y="668.5" width="311" height="46"/>
+                                        <rect key="frame" x="0.0" y="849" width="311" height="46"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfV-vr-luy" customClass="ShuffleModeButton" customModule="Dash" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="145.5" height="46"/>
@@ -141,7 +152,7 @@
                                         </constraints>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="not-0R-tgj">
-                                        <rect key="frame" x="0.0" y="748" width="311" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="959" width="311" height="0.0"/>
                                         <constraints>
                                             <constraint firstAttribute="height" id="93d-Ti-xxP"/>
                                         </constraints>
@@ -158,8 +169,8 @@
                             <constraint firstItem="vle-wP-uq3" firstAttribute="trailing" secondItem="sLb-Je-6Yi" secondAttribute="trailing" priority="750" constant="32" id="3kl-kx-wYZ"/>
                             <constraint firstItem="sLb-Je-6Yi" firstAttribute="centerX" secondItem="B1Y-hT-Lkm" secondAttribute="centerX" id="EpA-Bf-7oX"/>
                             <constraint firstItem="vle-wP-uq3" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sLb-Je-6Yi" secondAttribute="trailing" constant="32" id="YVI-oF-Get"/>
-                            <constraint firstItem="vle-wP-uq3" firstAttribute="bottom" secondItem="sLb-Je-6Yi" secondAttribute="bottom" id="b70-dR-XCh"/>
-                            <constraint firstItem="sLb-Je-6Yi" firstAttribute="top" secondItem="vle-wP-uq3" secondAttribute="top" id="cXV-9j-f4N"/>
+                            <constraint firstAttribute="bottom" secondItem="sLb-Je-6Yi" secondAttribute="bottom" id="b70-dR-XCh"/>
+                            <constraint firstItem="sLb-Je-6Yi" firstAttribute="top" secondItem="B1Y-hT-Lkm" secondAttribute="top" id="cXV-9j-f4N"/>
                             <constraint firstItem="sLb-Je-6Yi" firstAttribute="leading" secondItem="vle-wP-uq3" secondAttribute="leading" priority="750" constant="32" id="pL5-sW-1LF"/>
                             <constraint firstItem="sLb-Je-6Yi" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vle-wP-uq3" secondAttribute="leading" constant="32" id="xMZ-kT-K0V"/>
                         </constraints>
