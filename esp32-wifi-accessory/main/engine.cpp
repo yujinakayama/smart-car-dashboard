@@ -141,9 +141,9 @@ void Engine::startEngine() {
 
   this->activateSmartKey();
 
-  this->pressSmartKeyLockButton(100);
+  this->pressSmartKeyLockButton(150);
   delay(400);
-  this->pressSmartKeyLockButton(100);
+  this->pressSmartKeyLockButton(150);
   delay(400);
   this->pressSmartKeyLockButton(3000);
 
