@@ -149,8 +149,7 @@ void Engine::startEngine() {
 
   this->deactivateSmartKey();
 
-  delay(1500); // Wait for the engine to actually start
-
+  delay(1000); // Wait for the engine to actually start
 }
 
 void Engine::stopEngine() {
@@ -160,7 +159,7 @@ void Engine::stopEngine() {
   this->pressSmartKeyLockButton(2000);
   this->deactivateSmartKey();
 
-  delay(1500); // Wait for the engine to actually stop
+  delay(500); // Wait for the engine to actually stop
 }
 
 void Engine::activateSmartKey() {
