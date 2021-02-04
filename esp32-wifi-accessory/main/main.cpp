@@ -34,6 +34,7 @@ extern "C" {
 
   #include "homekit.h"
   #include "log_config.h"
+  #include "util.h"
   #include "wifi.h"
 }
 
@@ -48,6 +49,10 @@ static void configureGPIOPins() {
 
 /*The main thread for handling the accessory */
 static void mainTask(void *p) {
+  // Wait a bit to make inrush current lower at the boot time
+  // https://dreamerdream.hateblo.jp/entry/2019/12/04/120000
+  delay(50);
+
   setupLogLevel();
 
   configureGPIOPins();

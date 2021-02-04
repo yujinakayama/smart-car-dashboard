@@ -9,6 +9,10 @@
 
 #include <cstring>
 
+extern "C" {
+  #include "util.h"
+}
+
 static const char* TAG = "GarageRemote";
 
 static const char* kSetupID = "GRGR"; // This must be unique
@@ -20,7 +24,6 @@ static void _turnOffOpenButton(void* arg);
 static int identifyAccessory(hap_acc_t* ha);
 static int readCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv);
 static int writeTargetDoorState(hap_write_data_t write_data[], int count, void* serv_priv, void* write_priv);
-static void delay(uint32_t ms);
 static void performLater(uint32_t milliseconds, callback_with_arg_t callback, void* arg);
 
 GarageRemote::GarageRemote(gpio_num_t powerButtonPin, gpio_num_t openButtonPin) {
@@ -190,10 +193,6 @@ static int writeTargetDoorState(hap_write_data_t write_data[], int count, void* 
   garageRemote->setTargetDoorState(state);
 
   return HAP_SUCCESS;
-}
-
-static void delay(uint32_t ms) {
-  vTaskDelay(ms / portTICK_PERIOD_MS);
 }
 
 static void performLater(uint32_t milliseconds, callback_with_arg_t callback, void* arg) {

@@ -7,6 +7,10 @@
 
 #include <cstring>
 
+extern "C" {
+  #include "util.h"
+}
+
 static const char* TAG = "Engine";
 
 static const char* kSetupID = "ENGN"; // This must be unique
@@ -15,7 +19,6 @@ static int identifyAccessory(hap_acc_t* ha);
 static int readCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv);
 static int writeCharacteristic(hap_write_data_t write_data[], int count, void* serv_priv, void* write_priv);
 static void onEngineStateChange(void* arg);
-static void delay(uint32_t ms);
 
 Engine::Engine(gpio_num_t smartKeyPowerOutputPin, gpio_num_t smartKeyLockButtonOutputPin, gpio_num_t engineStateInputPin) {
   this->smartKeyPowerPin = smartKeyPowerOutputPin;
@@ -138,16 +141,15 @@ void Engine::startEngine() {
 
   this->activateSmartKey();
 
-  this->pressSmartKeyLockButton(100);
+  this->pressSmartKeyLockButton(150);
   delay(400);
-  this->pressSmartKeyLockButton(100);
+  this->pressSmartKeyLockButton(150);
   delay(400);
   this->pressSmartKeyLockButton(3000);
 
   this->deactivateSmartKey();
 
-  delay(1500); // Wait for the engine to actually start
-
+  delay(1000); // Wait for the engine to actually start
 }
 
 void Engine::stopEngine() {
@@ -157,7 +159,7 @@ void Engine::stopEngine() {
   this->pressSmartKeyLockButton(2000);
   this->deactivateSmartKey();
 
-  delay(1500); // Wait for the engine to actually stop
+  delay(500); // Wait for the engine to actually stop
 }
 
 void Engine::activateSmartKey() {
@@ -237,8 +239,4 @@ static void onEngineStateChange(void* arg) {
   hap_val_t value;
   value.b = on;
   hap_char_update_val(engine->onCharacteristic, &value);
-}
-
-static void delay(uint32_t ms) {
-  vTaskDelay(ms / portTICK_PERIOD_MS);
 }
