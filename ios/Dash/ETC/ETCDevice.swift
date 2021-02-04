@@ -190,15 +190,8 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
         }
 
         dataStore.performBackgroundTask { [unowned self] (context) in
-            if let managedObject = try! self.dataStore.find(payment, in: context) {
-                // For migration of old payment records having no card
-                if managedObject.card == nil {
-                    managedObject.card = self.currentCard
-                    try! context.save()
-                    try! self.connection!.send(ETCMessageToDevice.nextPaymentRecordRequest)
-                }
-            } else {
-                _ = try! self.dataStore.insert(payment, into: context)
+            let managedObject = try! self.dataStore.insert(payment: payment, unlessExistsIn: context)
+            if managedObject != nil {
                 try! context.save()
                 try! self.connection!.send(ETCMessageToDevice.nextPaymentRecordRequest)
             }
