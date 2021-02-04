@@ -85,17 +85,29 @@ class LatestLocalNotificationHistory {
     let dropOutTimeInterval: TimeInterval = 5
 
     private var notifications: [LocalNotificationProtocol] = []
+    private lazy var dispatchQueue = DispatchQueue(label: "LatestLocalNotificationHistory")
+    private var dropOutTimers: [DispatchSourceTimer] = []
 
     func append(_ notification: LocalNotificationProtocol) {
         notifications.append(notification)
-
-        Timer.scheduledTimer(withTimeInterval: dropOutTimeInterval, repeats: false) { [weak self] (timer) in
-            guard let self = self else { return }
-            self.notifications.removeFirst()
-        }
+        removeNotificationLater()
     }
 
     func contains(where predicate: (LocalNotificationProtocol) -> Bool) -> Bool {
         return notifications.contains(where: predicate)
+    }
+
+    private func removeNotificationLater() {
+        let timer = DispatchSource.makeTimerSource(flags: [], queue: dispatchQueue)
+        dropOutTimers.append(timer)
+
+        timer.setEventHandler { [weak self] in
+            guard let self = self else { return }
+            self.notifications.removeFirst()
+            self.dropOutTimers.removeFirst()
+        }
+
+        timer.schedule(deadline: .now() + dropOutTimeInterval)
+        timer.resume()
     }
 }
