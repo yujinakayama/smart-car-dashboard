@@ -5,13 +5,7 @@
 #include <esp_wifi.h>
 #include <string.h>
 
-void startWiFiAccessPoint() {
-  /* Initialize TCP/IP */
-  ESP_ERROR_CHECK(esp_netif_init());
-
-  /* Initialize the event loop */
-  ESP_ERROR_CHECK(esp_event_loop_create_default());
-
+static void configureDHCPServer() {
   esp_netif_t* netif = esp_netif_create_default_wifi_ap();
 
   esp_netif_dhcps_stop(netif); // Need to stop DHCP server to update IP info
@@ -22,11 +16,13 @@ void startWiFiAccessPoint() {
   gatewayAddress.addr = 0; // 0.0.0.0
   ipInfo.gw = gatewayAddress;
   ESP_ERROR_CHECK(esp_netif_set_ip_info(netif, &ipInfo));
+}
 
-  wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
-  ESP_ERROR_CHECK(esp_wifi_init(&cfg));
+void configureWiFi() {
+  wifi_init_config_t initializationConfig = WIFI_INIT_CONFIG_DEFAULT();
+  ESP_ERROR_CHECK(esp_wifi_init(&initializationConfig));
 
-  wifi_config_t wifi_config = {
+  wifi_config_t config = {
     .ap = {
       .ssid = WIFI_SSID,
       .ssid_len = strlen(WIFI_SSID),
@@ -37,10 +33,23 @@ void startWiFiAccessPoint() {
   };
 
   if (strlen(WIFI_SSID) == 0) {
-    wifi_config.ap.authmode = WIFI_AUTH_OPEN;
+    config.ap.authmode = WIFI_AUTH_OPEN;
   }
 
   ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_AP));
-  ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_AP, &wifi_config));
+  ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_AP, &config));
+}
+
+void startWiFiAccessPoint() {
+  /* Initialize TCP/IP */
+  ESP_ERROR_CHECK(esp_netif_init());
+
+  /* Initialize the event loop */
+  ESP_ERROR_CHECK(esp_event_loop_create_default());
+
+  configureDHCPServer();
+
+  configureWiFi();
+
   ESP_ERROR_CHECK(esp_wifi_start());
 }
