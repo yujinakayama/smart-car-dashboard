@@ -20,7 +20,7 @@ class DashboardViewController: UIViewController {
     @IBOutlet weak var musicEdgeGlossView: UIView!
 
     lazy var widgetViewController: UIViewController = children.first { $0 is WidgetPageViewController }!
-    lazy var musicViewController: UIViewController = children.first { $0 is MusicViewController }!
+    lazy var musicViewController: MusicViewController = children.first { $0 is MusicViewController } as! MusicViewController
 
     @IBOutlet weak var musicContainerViewTopConstraintForSplitLayout: NSLayoutConstraint!
     @IBOutlet weak var musicContainerViewTopConstraintForFullMusicLayout: NSLayoutConstraint!
@@ -28,11 +28,9 @@ class DashboardViewController: UIViewController {
 
     var currentLayoutMode: LayoutMode = .fullMusicView
 
-    lazy var gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(gestureRecognizerDidRecognizePanGesture))
-
     var layoutSwitchGesture: LayoutSwitchGesture {
         return LayoutSwitchGesture(
-            gestureRecognizer: gestureRecognizer,
+            gestureRecognizer: musicViewController.panGestureRecognizer,
             currentLayoutMode: currentLayoutMode,
             currentSplitPosition: musicContainerView.frame.origin.y,
             fullSplitPosition: widgetView.frame.maxY
@@ -50,7 +48,7 @@ class DashboardViewController: UIViewController {
             musicEdgeGlossView.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale)
         ])
 
-        musicContainerView.addGestureRecognizer(gestureRecognizer)
+        musicViewController.panGestureRecognizer.addTarget(self, action: #selector(gestureRecognizerDidRecognizePanGesture))
 
         updateMusicContainerViewShadow()
     }
