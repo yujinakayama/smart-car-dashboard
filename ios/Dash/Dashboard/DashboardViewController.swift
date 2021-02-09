@@ -37,6 +37,8 @@ class DashboardViewController: UIViewController {
         )
     }
 
+    var hasBegunMusicViewAppearanceTransition = false
+
     override var shouldAutomaticallyForwardAppearanceMethods: Bool {
         return false
     }
@@ -96,8 +98,15 @@ class DashboardViewController: UIViewController {
     @objc func gestureRecognizerDidRecognizePanGesture(gestureRecognizer: UIPanGestureRecognizer) {
         switch gestureRecognizer.state {
         case .began:
-            widgetViewController.beginAppearanceTransition(currentLayoutMode == .fullMusicView, animated: true)
+            // We don't invoke widgetViewController.beginAppearanceTransition() here
+            // to avoid inefficient invocation of viewWillAppear() in MusicViewController
+            // with pan gestures that actually don't switch layout
+            hasBegunMusicViewAppearanceTransition = false
         case .changed:
+            if !hasBegunMusicViewAppearanceTransition, layoutSwitchGesture.isConsideredToBeTryingToSwitchLayout {
+                widgetViewController.beginAppearanceTransition(currentLayoutMode == .fullMusicView, animated: true)
+                hasBegunMusicViewAppearanceTransition = true
+            }
             updateLayoutConstraintForDraggingState(gestureRecognizer: gestureRecognizer)
         case .ended:
             switchLayoutWithAnimation(gestureRecognizer: gestureRecognizer)
@@ -125,16 +134,21 @@ class DashboardViewController: UIViewController {
         musicContainerViewTopConstraintForSplitLayout.isActive = finalLayoutMode == .split
         musicContainerViewTopConstraintForFullMusicLayout.isActive = finalLayoutMode == .fullMusicView
 
-        if finalLayoutMode == currentLayoutMode {
-            // The transition is canceled
+        if (!hasBegunMusicViewAppearanceTransition && finalLayoutMode != currentLayoutMode) // Transitioning but hasn't notified
+        || (hasBegunMusicViewAppearanceTransition && finalLayoutMode == currentLayoutMode)  // Canceling transition so we need to notify of opposite one
+        {
             widgetViewController.beginAppearanceTransition(finalLayoutMode == .split, animated: true)
+            hasBegunMusicViewAppearanceTransition = true
         }
 
         UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1) {
             self.view.layoutIfNeeded()
         } completion: { (finished) in
             self.currentLayoutMode = finalLayoutMode
-            self.widgetViewController.endAppearanceTransition()
+
+            if self.hasBegunMusicViewAppearanceTransition {
+                self.widgetViewController.endAppearanceTransition()
+            }
         }
     }
 
@@ -170,6 +184,7 @@ class DashboardViewController: UIViewController {
 extension DashboardViewController {
     class LayoutSwitchGesture {
         let absoluteGestureVelocityToSwitchLayout: CGFloat = 1000
+        let minimumDeltaToBeConsideredAsTryingToSwitchLayout: CGFloat = 20
 
         let gestureRecognizer: UIPanGestureRecognizer
         let currentLayoutMode: LayoutMode
@@ -183,9 +198,13 @@ extension DashboardViewController {
             self.fullSplitPosition = fullSplitPosition
         }
 
+        var isConsideredToBeTryingToSwitchLayout: Bool {
+            let positiveDelta = delta * (currentLayoutMode == .fullMusicView ? 1 : -1)
+            return positiveDelta >= minimumDeltaToBeConsideredAsTryingToSwitchLayout
+        }
+
         var splitPosition: CGFloat {
             let initialSplitPosition = (currentLayoutMode == .split) ? fullSplitPosition : 0
-            let delta = gestureRecognizer.translation(in: nil).y
             let unlimitedSplitPosition = initialSplitPosition + delta
             return (unlimitedSplitPosition...unlimitedSplitPosition).clamped(to: 0...fullSplitPosition).lowerBound
         }
@@ -206,6 +225,10 @@ extension DashboardViewController {
                     return .fullMusicView
                 }
             }
+        }
+
+        var delta: CGFloat {
+            return gestureRecognizer.translation(in: nil).y
         }
     }
 }
