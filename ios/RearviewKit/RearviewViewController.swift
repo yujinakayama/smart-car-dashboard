@@ -159,17 +159,19 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         displayLayer.videoGravity = .resizeAspect
 
         displayView.addGestureRecognizer(gestureRecognizer)
+    }
 
-        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: OperationQueue.main) { [weak self] (notification) in
-            self?.cameraOptionsAdjuster.applySensitivityMode()
-            self?.hideBlankScreen()
-            self?.start()
-        }
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        cameraOptionsAdjuster.applySensitivityMode()
+        hideBlankScreen()
+        start()
+    }
 
-        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: OperationQueue.main) { [weak self] (notification) in
-            self?.stop()
-            self?.showBlankScreen()
-        }
+    public override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        stop()
+        showBlankScreen()
     }
 
     @objc func start() {
