@@ -35,10 +35,19 @@ target 'DashRemote' do
   end
 end
 
-target 'Rearview' do
+# https://medium.com/@akfreas/how-to-use-cocoapods-with-your-internal-ios-frameworks-192aa472f64b
+def rearviewkit_dependencies
   pod 'BetterSegmentedControl'
   pod 'Solar'
   pod 'XCGLogger'
+end
+
+target 'Rearview' do
+  rearviewkit_dependencies
+end
+
+target 'RearviewKit' do
+  rearviewkit_dependencies
 end
 
 # Suppress warning "Conversion to Swift 5 is available" from FirebaseFirestoreSwift

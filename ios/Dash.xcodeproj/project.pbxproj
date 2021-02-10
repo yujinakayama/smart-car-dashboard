@@ -8,15 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		01861A4B14032E6339D8E511 /* Pods_Dash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 125AA3B115ABAB0DD3288056 /* Pods_Dash.framework */; };
-		05AF2A4656E64E69DD4EAD79 /* Pods_Rearview.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9233EBD8F1F59FBBA4C36D4 /* Pods_Rearview.framework */; };
 		0B41F2C816E331BA2FB139A3 /* Pods_DashRemote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A188A66685EA4375D4818F /* Pods_DashRemote.framework */; };
 		412025EE69F3FE2D953808D6 /* Pods_DashRemote_ShareExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B941AEADBC8F07DBE594C95A /* Pods_DashRemote_ShareExtension.framework */; };
+		66DA20D749E1EF848B3B203E /* Pods_RearviewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0198292C4BC2FEDD3C5A08E3 /* Pods_RearviewKit.framework */; };
+		75D3A42AAA73CA0E953322EA /* Pods_Rearview.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C66DD7AC35DF7FDDB0FB1B /* Pods_Rearview.framework */; };
 		B9025F63254D21E1001E25DF /* PairedVehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A676254D0EB30012A4CB /* PairedVehicle.swift */; };
 		B9025F68254D2260001E25DF /* PairedVehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A676254D0EB30012A4CB /* PairedVehicle.swift */; };
 		B90265AB23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90265AA23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift */; };
 		B904A2A6243968990087BD4A /* MapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B904A2A5243968990087BD4A /* MapsViewController.swift */; };
 		B90666DE247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90666DD247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift */; };
-		B90700A4250E31B1004E7D7A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90700A3250E31B1004E7D7A /* Logger.swift */; };
 		B90E21F924CBB1BF008330AD /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90E21F824CBB1BF008330AD /* TabBarController.swift */; };
 		B91B5DD523ED7886003F4AEF /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91B5DD423ED7886003F4AEF /* Account.swift */; };
 		B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
@@ -60,10 +60,8 @@
 		B932E5EC23F86C5F00726615 /* MusicItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932E5EB23F86C5F00726615 /* MusicItem.swift */; };
 		B932E5F023F9082600726615 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932E5EF23F9082600726615 /* Location.swift */; };
 		B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93321ED2323C9D500BFAB21 /* BorderedView.swift */; };
-		B940A45E250E3B50006BDFBB /* AVSampleBufferDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A45D250E3B50006BDFBB /* AVSampleBufferDisplayView.swift */; };
 		B940A460250E5B57006BDFBB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B940A45F250E5B57006BDFBB /* Settings.bundle */; };
 		B940A462250E5CDD006BDFBB /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* Defaults.swift */; };
-		B940A466250F0EBB006BDFBB /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A465250F0EBB006BDFBB /* Connection.swift */; };
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
 		B942554522B8ED10008B053B /* ETCMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554422B8ED10008B053B /* ETCMessageTests.swift */; };
 		B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554F22BAA5D1008B053B /* LocalNotification.swift */; };
@@ -92,8 +90,6 @@
 		B96793E924AF6ACC0019BFE5 /* apple_music_developer_token.txt in Resources */ = {isa = PBXBuildFile; fileRef = B96793E824AF6ACC0019BFE5 /* apple_music_developer_token.txt */; };
 		B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */; };
 		B9741F7523DF200600F061E7 /* SharedItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */; };
-		B97A82242553F8A900CD2870 /* Sun.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97A82232553F8A900CD2870 /* Sun.swift */; };
-		B97A822A255449C800CD2870 /* CameraOptionsAdjuster.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97A8229255449C800CD2870 /* CameraOptionsAdjuster.swift */; };
 		B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97BAE6124B61DB100AE7D13 /* Vehicle.swift */; };
 		B988A66C254D0E570012A4CB /* PairingRequirementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A66B254D0E570012A4CB /* PairingRequirementViewController.swift */; };
 		B98B783723ED4C3F00A5102F /* DashShareKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B98B783523ED4C3F00A5102F /* DashShareKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -122,8 +118,6 @@
 		B9B154F82576075C0031761F /* TabBarBadgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B154F72576075C0031761F /* TabBarBadgeManager.swift */; };
 		B9B18DD323EDFFF40096D603 /* DashShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; };
 		B9B18DD423EDFFF40096D603 /* DashShareKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B9B399CC25965BDC00C7977F /* CameraOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B399CB25965BDC00C7977F /* CameraOptions.swift */; };
-		B9B39AB72598B11700C7977F /* HUDSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B39AB62598B11700C7977F /* HUDSegmentedControl.swift */; };
 		B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B717DD23E6B26900A47207 /* UnknownItem.swift */; };
 		B9BA819E2350931A00657DEB /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
 		B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */; };
@@ -132,10 +126,8 @@
 		B9C04B42257775B8001D6E0F /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C04B41257775B8001D6E0F /* WebViewController.swift */; };
 		B9C0CED92508F63F006D246E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CED82508F63F006D246E /* AppDelegate.swift */; };
 		B9C0CEDB2508F63F006D246E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEDA2508F63F006D246E /* SceneDelegate.swift */; };
-		B9C0CEDD2508F63F006D246E /* RearviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEDC2508F63F006D246E /* RearviewViewController.swift */; };
 		B9C0CEE22508F641006D246E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9C0CEE12508F641006D246E /* Assets.xcassets */; };
 		B9C0CEE52508F641006D246E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9C0CEE32508F641006D246E /* LaunchScreen.storyboard */; };
-		B9C0CEEB2508F711006D246E /* H264ByteStreamParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEEA2508F711006D246E /* H264ByteStreamParser.swift */; };
 		B9C0CEED250C3A27006D246E /* HeartAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEEC250C3A27006D246E /* HeartAnimation.swift */; };
 		B9C2455F23EDA2EA00E00523 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
 		B9C2456523EDBB4800E00523 /* FloatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C2456423EDBB4800E00523 /* FloatButton.swift */; };
@@ -170,8 +162,20 @@
 		B9E96CC822A4EF1300C2E009 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
 		B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */; };
 		B9EF566123DF3D61000D0CB2 /* GoogleSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */; };
-		B9F4375F25D414D8004B9140 /* RearviewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F4375E25D414D8004B9140 /* RearviewConfiguration.swift */; };
-		B9F4376D25D4170D004B9140 /* CameraSensitivityMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F4376C25D4170D004B9140 /* CameraSensitivityMode.swift */; };
+		B9F4377F25D41C19004B9140 /* RearviewKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B9F4377D25D41C19004B9140 /* RearviewKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B9F4378225D41C19004B9140 /* RearviewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9F4377B25D41C19004B9140 /* RearviewKit.framework */; };
+		B9F4378325D41C19004B9140 /* RearviewKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B9F4377B25D41C19004B9140 /* RearviewKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B9F4378C25D41C42004B9140 /* H264ByteStreamParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEEA2508F711006D246E /* H264ByteStreamParser.swift */; };
+		B9F4378D25D41C42004B9140 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A465250F0EBB006BDFBB /* Connection.swift */; };
+		B9F4378E25D41C42004B9140 /* Sun.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97A82232553F8A900CD2870 /* Sun.swift */; };
+		B9F4378F25D41C42004B9140 /* HUDSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B39AB62598B11700C7977F /* HUDSegmentedControl.swift */; };
+		B9F4379025D41C42004B9140 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90700A3250E31B1004E7D7A /* Logger.swift */; };
+		B9F4379125D41C42004B9140 /* RearviewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F4375E25D414D8004B9140 /* RearviewConfiguration.swift */; };
+		B9F4379225D41C42004B9140 /* CameraOptionsAdjuster.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97A8229255449C800CD2870 /* CameraOptionsAdjuster.swift */; };
+		B9F4379325D41C42004B9140 /* AVSampleBufferDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A45D250E3B50006BDFBB /* AVSampleBufferDisplayView.swift */; };
+		B9F4379425D41C42004B9140 /* RearviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEDC2508F63F006D246E /* RearviewViewController.swift */; };
+		B9F4379525D41C42004B9140 /* CameraSensitivityMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F4376C25D4170D004B9140 /* CameraSensitivityMode.swift */; };
+		B9F4379625D41C42004B9140 /* CameraOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B399CB25965BDC00C7977F /* CameraOptions.swift */; };
 		B9F9EFD6256D3D6B00C33781 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F9EFD5256D3D6B00C33781 /* Cache.swift */; };
 		B9FA6CC824CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FA6CC724CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift */; };
 		B9FB33E124AE2ACD00FEB782 /* PlaybackModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FB33E024AE2ACD00FEB782 /* PlaybackModeButton.swift */; };
@@ -220,6 +224,13 @@
 			remoteGlobalIDString = B9DC5B20229D59BE00B645D5;
 			remoteInfo = ETC;
 		};
+		B9F4378025D41C19004B9140 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9F4377A25D41C19004B9140;
+			remoteInfo = RearviewKit;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -267,13 +278,27 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B9F4378725D41C19004B9140 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B9F4378325D41C19004B9140 /* RearviewKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		018C0FC4E70FD814CF520AD5 /* Pods-DashRemote-ShareExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote-ShareExtension.debug.xcconfig"; path = "Target Support Files/Pods-DashRemote-ShareExtension/Pods-DashRemote-ShareExtension.debug.xcconfig"; sourceTree = "<group>"; };
-		0E2E76FC9CCF8810F695BE7D /* Pods-Rearview.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rearview.debug.xcconfig"; path = "Target Support Files/Pods-Rearview/Pods-Rearview.debug.xcconfig"; sourceTree = "<group>"; };
+		0198292C4BC2FEDD3C5A08E3 /* Pods_RearviewKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RearviewKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		125AA3B115ABAB0DD3288056 /* Pods_Dash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CF65395131B1292F6415A43 /* Pods-DashRemote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote.release.xcconfig"; path = "Target Support Files/Pods-DashRemote/Pods-DashRemote.release.xcconfig"; sourceTree = "<group>"; };
+		425C056D1C977242B289F14E /* Pods-Rearview.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rearview.debug.xcconfig"; path = "Target Support Files/Pods-Rearview/Pods-Rearview.debug.xcconfig"; sourceTree = "<group>"; };
+		54C66DD7AC35DF7FDDB0FB1B /* Pods_Rearview.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rearview.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		55B63F95FAEA20086745553D /* Pods-RearviewKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RearviewKit.debug.xcconfig"; path = "Target Support Files/Pods-RearviewKit/Pods-RearviewKit.debug.xcconfig"; sourceTree = "<group>"; };
 		79A188A66685EA4375D4818F /* Pods_DashRemote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DashRemote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		869C973AA26AD90E148028FB /* Pods-Dash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dash.release.xcconfig"; path = "Target Support Files/Pods-Dash/Pods-Dash.release.xcconfig"; sourceTree = "<group>"; };
 		A383EF13705DD2A97098F1F8 /* Pods-DashRemote-ShareExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote-ShareExtension.release.xcconfig"; path = "Target Support Files/Pods-DashRemote-ShareExtension/Pods-DashRemote-ShareExtension.release.xcconfig"; sourceTree = "<group>"; };
@@ -285,7 +310,6 @@
 		B90E21F824CBB1BF008330AD /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		B91B5DD423ED7886003F4AEF /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		B91E0B61254D047D002928D3 /* PairingURLItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingURLItem.swift; sourceTree = "<group>"; };
-		B9233EBD8F1F59FBBA4C36D4 /* Pods_Rearview.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rearview.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B92451D323E30ACE007556D5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B92451D523E3204D007556D5 /* GoogleServieInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleServieInfo.swift; sourceTree = "<group>"; };
 		B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexPathExtension.swift; sourceTree = "<group>"; };
@@ -451,11 +475,15 @@
 		B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInViewController.swift; sourceTree = "<group>"; };
 		B9F4375E25D414D8004B9140 /* RearviewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewConfiguration.swift; sourceTree = "<group>"; };
 		B9F4376C25D4170D004B9140 /* CameraSensitivityMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraSensitivityMode.swift; sourceTree = "<group>"; };
+		B9F4377B25D41C19004B9140 /* RearviewKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RearviewKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9F4377D25D41C19004B9140 /* RearviewKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RearviewKit.h; sourceTree = "<group>"; };
+		B9F4377E25D41C19004B9140 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9F9EFD5256D3D6B00C33781 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		B9FA6CC724CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OriginalLanguageSongTitleFetcher.swift; sourceTree = "<group>"; };
 		B9FB33E024AE2ACD00FEB782 /* PlaybackModeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackModeButton.swift; sourceTree = "<group>"; };
 		BBF96480A5CBA83FEB75EF07 /* Pods-DashRemote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote.debug.xcconfig"; path = "Target Support Files/Pods-DashRemote/Pods-DashRemote.debug.xcconfig"; sourceTree = "<group>"; };
-		D36836E53C53D127DAC0E5BB /* Pods-Rearview.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rearview.release.xcconfig"; path = "Target Support Files/Pods-Rearview/Pods-Rearview.release.xcconfig"; sourceTree = "<group>"; };
+		D72D61E07B471561E0FDF3FC /* Pods-Rearview.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rearview.release.xcconfig"; path = "Target Support Files/Pods-Rearview/Pods-Rearview.release.xcconfig"; sourceTree = "<group>"; };
+		E8E732016FBB1AB0B6B32FD4 /* Pods-RearviewKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RearviewKit.release.xcconfig"; path = "Target Support Files/Pods-RearviewKit/Pods-RearviewKit.release.xcconfig"; sourceTree = "<group>"; };
 		FDB9D0E23106CE353F300B76 /* Pods-Dash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dash.debug.xcconfig"; path = "Target Support Files/Pods-Dash/Pods-Dash.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -498,7 +526,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05AF2A4656E64E69DD4EAD79 /* Pods_Rearview.framework in Frameworks */,
+				B9F4378225D41C19004B9140 /* RearviewKit.framework in Frameworks */,
+				75D3A42AAA73CA0E953322EA /* Pods_Rearview.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,6 +545,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9F4377825D41C19004B9140 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				66DA20D749E1EF848B3B203E /* Pods_RearviewKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -708,18 +745,7 @@
 			children = (
 				B9C0CED82508F63F006D246E /* AppDelegate.swift */,
 				B9C0CEDA2508F63F006D246E /* SceneDelegate.swift */,
-				B9C0CEDC2508F63F006D246E /* RearviewViewController.swift */,
-				B9F4375E25D414D8004B9140 /* RearviewConfiguration.swift */,
-				B9F4376C25D4170D004B9140 /* CameraSensitivityMode.swift */,
-				B940A465250F0EBB006BDFBB /* Connection.swift */,
-				B940A45D250E3B50006BDFBB /* AVSampleBufferDisplayView.swift */,
-				B9C0CEEA2508F711006D246E /* H264ByteStreamParser.swift */,
-				B97A8229255449C800CD2870 /* CameraOptionsAdjuster.swift */,
-				B9B399CB25965BDC00C7977F /* CameraOptions.swift */,
-				B97A82232553F8A900CD2870 /* Sun.swift */,
 				B940A461250E5CDD006BDFBB /* Defaults.swift */,
-				B9B39AB62598B11700C7977F /* HUDSegmentedControl.swift */,
-				B90700A3250E31B1004E7D7A /* Logger.swift */,
 				B940A45F250E5B57006BDFBB /* Settings.bundle */,
 				B9C0CEE12508F641006D246E /* Assets.xcassets */,
 				B9C0CEE32508F641006D246E /* LaunchScreen.storyboard */,
@@ -735,7 +761,8 @@
 				125AA3B115ABAB0DD3288056 /* Pods_Dash.framework */,
 				79A188A66685EA4375D4818F /* Pods_DashRemote.framework */,
 				B941AEADBC8F07DBE594C95A /* Pods_DashRemote_ShareExtension.framework */,
-				B9233EBD8F1F59FBBA4C36D4 /* Pods_Rearview.framework */,
+				0198292C4BC2FEDD3C5A08E3 /* Pods_RearviewKit.framework */,
+				54C66DD7AC35DF7FDDB0FB1B /* Pods_Rearview.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -820,6 +847,7 @@
 				B98B783423ED4C3F00A5102F /* DashShareKit */,
 				B929FAF724CECAC800BC773A /* AppleMusic */,
 				B9C0CED72508F63F006D246E /* Rearview */,
+				B9F4377C25D41C19004B9140 /* RearviewKit */,
 				B9DC5B22229D59BE00B645D5 /* Products */,
 				B9CD1D8B22A51AAD00170082 /* Frameworks */,
 				FC2BACFC9EC4F82C9699C39B /* Pods */,
@@ -836,6 +864,7 @@
 				B98B783323ED4C3F00A5102F /* DashShareKit.framework */,
 				B929FAF624CECAC800BC773A /* AppleMusic.framework */,
 				B9C0CED62508F63F006D246E /* Rearview.app */,
+				B9F4377B25D41C19004B9140 /* RearviewKit.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -890,6 +919,26 @@
 			path = DashTests;
 			sourceTree = "<group>";
 		};
+		B9F4377C25D41C19004B9140 /* RearviewKit */ = {
+			isa = PBXGroup;
+			children = (
+				B9F4377D25D41C19004B9140 /* RearviewKit.h */,
+				B9C0CEDC2508F63F006D246E /* RearviewViewController.swift */,
+				B9F4375E25D414D8004B9140 /* RearviewConfiguration.swift */,
+				B9F4376C25D4170D004B9140 /* CameraSensitivityMode.swift */,
+				B940A465250F0EBB006BDFBB /* Connection.swift */,
+				B940A45D250E3B50006BDFBB /* AVSampleBufferDisplayView.swift */,
+				B9C0CEEA2508F711006D246E /* H264ByteStreamParser.swift */,
+				B97A8229255449C800CD2870 /* CameraOptionsAdjuster.swift */,
+				B9B399CB25965BDC00C7977F /* CameraOptions.swift */,
+				B97A82232553F8A900CD2870 /* Sun.swift */,
+				B9B39AB62598B11700C7977F /* HUDSegmentedControl.swift */,
+				B90700A3250E31B1004E7D7A /* Logger.swift */,
+				B9F4377E25D41C19004B9140 /* Info.plist */,
+			);
+			path = RearviewKit;
+			sourceTree = "<group>";
+		};
 		FC2BACFC9EC4F82C9699C39B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -899,8 +948,10 @@
 				1CF65395131B1292F6415A43 /* Pods-DashRemote.release.xcconfig */,
 				018C0FC4E70FD814CF520AD5 /* Pods-DashRemote-ShareExtension.debug.xcconfig */,
 				A383EF13705DD2A97098F1F8 /* Pods-DashRemote-ShareExtension.release.xcconfig */,
-				0E2E76FC9CCF8810F695BE7D /* Pods-Rearview.debug.xcconfig */,
-				D36836E53C53D127DAC0E5BB /* Pods-Rearview.release.xcconfig */,
+				55B63F95FAEA20086745553D /* Pods-RearviewKit.debug.xcconfig */,
+				E8E732016FBB1AB0B6B32FD4 /* Pods-RearviewKit.release.xcconfig */,
+				425C056D1C977242B289F14E /* Pods-Rearview.debug.xcconfig */,
+				D72D61E07B471561E0FDF3FC /* Pods-Rearview.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -921,6 +972,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B98B783723ED4C3F00A5102F /* DashShareKit.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9F4377625D41C19004B9140 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9F4377F25D41C19004B9140 /* RearviewKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1010,15 +1069,17 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B9C0CEE92508F641006D246E /* Build configuration list for PBXNativeTarget "Rearview" */;
 			buildPhases = (
-				B2858A4B953C968261319E5E /* [CP] Check Pods Manifest.lock */,
+				79FBD000CA50954476634386 /* [CP] Check Pods Manifest.lock */,
 				B9C0CED22508F63F006D246E /* Sources */,
 				B9C0CED32508F63F006D246E /* Frameworks */,
 				B9C0CED42508F63F006D246E /* Resources */,
-				C3454C19C48C57F5E36FF63D /* [CP] Embed Pods Frameworks */,
+				B9F4378725D41C19004B9140 /* Embed Frameworks */,
+				F5FB522ADD1B571A40F9F680 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B9F4378125D41C19004B9140 /* PBXTargetDependency */,
 			);
 			name = Rearview;
 			productName = Rearview;
@@ -1068,6 +1129,25 @@
 			productReference = B9E96CB822A3CE7500C2E009 /* DashTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		B9F4377A25D41C19004B9140 /* RearviewKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B9F4378425D41C19004B9140 /* Build configuration list for PBXNativeTarget "RearviewKit" */;
+			buildPhases = (
+				994642B4FB5813941C888159 /* [CP] Check Pods Manifest.lock */,
+				B9F4377625D41C19004B9140 /* Headers */,
+				B9F4377725D41C19004B9140 /* Sources */,
+				B9F4377825D41C19004B9140 /* Frameworks */,
+				B9F4377925D41C19004B9140 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RearviewKit;
+			productName = RearviewKit;
+			productReference = B9F4377B25D41C19004B9140 /* RearviewKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1101,6 +1181,9 @@
 						CreatedOnToolsVersion = 10.2.1;
 						TestTargetID = B9DC5B20229D59BE00B645D5;
 					};
+					B9F4377A25D41C19004B9140 = {
+						CreatedOnToolsVersion = 12.4;
+					};
 				};
 			};
 			buildConfigurationList = B9DC5B1C229D59BE00B645D5 /* Build configuration list for PBXProject "Dash" */;
@@ -1123,6 +1206,7 @@
 				B98B783223ED4C3F00A5102F /* DashShareKit */,
 				B929FAF524CECAC800BC773A /* AppleMusic */,
 				B9C0CED52508F63F006D246E /* Rearview */,
+				B9F4377A25D41C19004B9140 /* RearviewKit */,
 			);
 		};
 /* End PBXProject section */
@@ -1195,9 +1279,60 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B9F4377925D41C19004B9140 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		79FBD000CA50954476634386 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Rearview-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		994642B4FB5813941C888159 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RearviewKit-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A0F351071CC537560CF6BC1A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1235,28 +1370,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DashRemote/Pods-DashRemote-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B2858A4B953C968261319E5E /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Rearview-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B96793EA24AF6B180019BFE5 /* Generate Apple Music Developer Token */ = {
@@ -1313,23 +1426,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dash/Pods-Dash-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C3454C19C48C57F5E36FF63D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Rearview/Pods-Rearview-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Rearview/Pods-Rearview-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Rearview/Pods-Rearview-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		D1976B69B2C9268348B831AA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1367,6 +1463,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dash/Pods-Dash-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F5FB522ADD1B571A40F9F680 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Rearview/Pods-Rearview-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Rearview/Pods-Rearview-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Rearview/Pods-Rearview-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FF0964F940FD8EE7634CAC0C /* [CP] Check Pods Manifest.lock */ = {
@@ -1464,20 +1577,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B97A822A255449C800CD2870 /* CameraOptionsAdjuster.swift in Sources */,
-				B940A45E250E3B50006BDFBB /* AVSampleBufferDisplayView.swift in Sources */,
-				B9B39AB72598B11700C7977F /* HUDSegmentedControl.swift in Sources */,
 				B940A462250E5CDD006BDFBB /* Defaults.swift in Sources */,
-				B9C0CEDD2508F63F006D246E /* RearviewViewController.swift in Sources */,
-				B940A466250F0EBB006BDFBB /* Connection.swift in Sources */,
 				B9C0CED92508F63F006D246E /* AppDelegate.swift in Sources */,
-				B9F4375F25D414D8004B9140 /* RearviewConfiguration.swift in Sources */,
-				B9C0CEEB2508F711006D246E /* H264ByteStreamParser.swift in Sources */,
-				B9F4376D25D4170D004B9140 /* CameraSensitivityMode.swift in Sources */,
 				B9C0CEDB2508F63F006D246E /* SceneDelegate.swift in Sources */,
-				B9B399CC25965BDC00C7977F /* CameraOptions.swift in Sources */,
-				B90700A4250E31B1004E7D7A /* Logger.swift in Sources */,
-				B97A82242553F8A900CD2870 /* Sun.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1577,6 +1679,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B9F4377725D41C19004B9140 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9F4379225D41C42004B9140 /* CameraOptionsAdjuster.swift in Sources */,
+				B9F4379025D41C42004B9140 /* Logger.swift in Sources */,
+				B9F4379125D41C42004B9140 /* RearviewConfiguration.swift in Sources */,
+				B9F4378C25D41C42004B9140 /* H264ByteStreamParser.swift in Sources */,
+				B9F4379425D41C42004B9140 /* RearviewViewController.swift in Sources */,
+				B9F4378D25D41C42004B9140 /* Connection.swift in Sources */,
+				B9F4378F25D41C42004B9140 /* HUDSegmentedControl.swift in Sources */,
+				B9F4379325D41C42004B9140 /* AVSampleBufferDisplayView.swift in Sources */,
+				B9F4379625D41C42004B9140 /* CameraOptions.swift in Sources */,
+				B9F4378E25D41C42004B9140 /* Sun.swift in Sources */,
+				B9F4379525D41C42004B9140 /* CameraSensitivityMode.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1610,6 +1730,11 @@
 			isa = PBXTargetDependency;
 			target = B9DC5B20229D59BE00B645D5 /* Dash */;
 			targetProxy = B9E96CBD22A3CE7500C2E009 /* PBXContainerItemProxy */;
+		};
+		B9F4378125D41C19004B9140 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9F4377A25D41C19004B9140 /* RearviewKit */;
+			targetProxy = B9F4378025D41C19004B9140 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1888,7 +2013,7 @@
 		};
 		B9C0CEE72508F641006D246E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0E2E76FC9CCF8810F695BE7D /* Pods-Rearview.debug.xcconfig */;
+			baseConfigurationReference = 425C056D1C977242B289F14E /* Pods-Rearview.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1910,7 +2035,7 @@
 		};
 		B9C0CEE82508F641006D246E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D36836E53C53D127DAC0E5BB /* Pods-Rearview.release.xcconfig */;
+			baseConfigurationReference = D72D61E07B471561E0FDF3FC /* Pods-Rearview.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -2142,6 +2267,66 @@
 			};
 			name = Release;
 		};
+		B9F4378525D41C19004B9140 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55B63F95FAEA20086745553D /* Pods-RearviewKit.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8LSN3WQC77;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = RearviewKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.RearviewKit;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		B9F4378625D41C19004B9140 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E8E732016FBB1AB0B6B32FD4 /* Pods-RearviewKit.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8LSN3WQC77;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = RearviewKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.RearviewKit;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2213,6 +2398,15 @@
 			buildConfigurations = (
 				B9E96CBF22A3CE7500C2E009 /* Debug */,
 				B9E96CC022A3CE7500C2E009 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B9F4378425D41C19004B9140 /* Build configuration list for PBXNativeTarget "RearviewKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9F4378525D41C19004B9140 /* Debug */,
+				B9F4378625D41C19004B9140 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

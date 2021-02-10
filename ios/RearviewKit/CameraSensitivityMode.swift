@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum CameraSensitivityMode: Int, CaseIterable {
+public enum CameraSensitivityMode: Int, CaseIterable {
     case auto = 0
     case day
     case night

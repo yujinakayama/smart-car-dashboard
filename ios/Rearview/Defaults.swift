@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RearviewKit
 
 struct Defaults {
     static var shared = Defaults()

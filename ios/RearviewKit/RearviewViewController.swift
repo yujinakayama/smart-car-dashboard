@@ -11,14 +11,14 @@ import Network
 import AVFoundation
 import BetterSegmentedControl
 
-protocol RearviewViewControllerDelegate: NSObjectProtocol {
+public protocol RearviewViewControllerDelegate: NSObjectProtocol {
     func rearviewViewController(didChangeCameraSensitivityMode cameraSensitivityMode: CameraSensitivityMode)
 }
 
-class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStreamParserDelegate {
-    weak var delegate: RearviewViewControllerDelegate?
+public class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStreamParserDelegate {
+    public weak var delegate: RearviewViewControllerDelegate?
 
-    var configuration: RearviewConfiguration {
+    public var configuration: RearviewConfiguration {
         didSet {
             cameraOptionsAdjuster.configuration = configuration
 
@@ -29,7 +29,7 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
         }
     }
 
-    var cameraSensitivityMode: CameraSensitivityMode {
+    public var cameraSensitivityMode: CameraSensitivityMode {
         get {
             return cameraOptionsAdjuster.sensitivityMode
         }
@@ -129,15 +129,15 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
         return gestureRecognizer
     }()
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
 
-    override var prefersHomeIndicatorAutoHidden: Bool {
+    public override var prefersHomeIndicatorAutoHidden: Bool {
         return true
     }
 
-    init(configuration: RearviewConfiguration, cameraSensitivityMode: CameraSensitivityMode = .auto) {
+    public init(configuration: RearviewConfiguration, cameraSensitivityMode: CameraSensitivityMode = .auto) {
         self.configuration = configuration
         self.cameraOptionsAdjuster = CameraOptionsAdjuster(configuration: configuration, sensitivityMode: cameraSensitivityMode)
         super.init(nibName: nil, bundle: nil)
@@ -147,7 +147,7 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
         fatalError()
     }
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .black

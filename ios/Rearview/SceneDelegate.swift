@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RearviewKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
