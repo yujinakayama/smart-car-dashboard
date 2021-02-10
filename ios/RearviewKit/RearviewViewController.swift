@@ -82,6 +82,8 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
     let frameExpirationPeriodInMilliseconds = 200
     var lastFrameTime: __uint64_t?
 
+    var retryTimer: Timer?
+
     lazy var h264ByteStreamParser: H264ByteStreamParser = {
         let h264ByteStreamParser = H264ByteStreamParser()
         h264ByteStreamParser.delegate = self
@@ -188,15 +190,16 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
     }
 
     @objc func stop() {
+        retryTimer?.invalidate()
         connection?.disconnect()
     }
 
     func retry(terminationReason: Connection.TerminationReason) {
         if terminationReason == .closedByServer {
-            Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(start), userInfo: nil, repeats: false)
+            retryTimer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(start), userInfo: nil, repeats: false)
         } else {
             activityIndicatorView.startAnimating()
-            Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(start), userInfo: nil, repeats: false)
+            retryTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(start), userInfo: nil, repeats: false)
         }
     }
 
