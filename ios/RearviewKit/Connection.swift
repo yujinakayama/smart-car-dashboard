@@ -38,6 +38,7 @@ class Connection {
     var timeoutTimer: DispatchSourceTimer?
     let timeoutPeriod: TimeInterval = 1
     var isEstablished = false
+    private var isTerminated = false
 
     init(host: String, port: NWEndpoint.Port) throws {
         guard Self.isValidHost(host) else {
@@ -64,6 +65,7 @@ class Connection {
 
     private func terminate(reason: TerminationReason) {
         isEstablished = false
+        isTerminated = true
         timeoutTimer?.cancel()
         connection.cancel()
         delegate?.connection(self, didTerminateWithReason: reason)
@@ -79,7 +81,7 @@ class Connection {
                 delegate?.connectionDidEstablish(self)
             }
             readReceivedData()
-        case .cancelled where isEstablished:
+        case .cancelled where !isTerminated:
             terminate(reason: .closedByClient)
         case .failed:
             terminate(reason: .error)
