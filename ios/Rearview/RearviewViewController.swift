@@ -113,6 +113,8 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .black
+
         _ = displayView
         _ = activityIndicatorView
         _ = sensitivityModeSegmentedControl
