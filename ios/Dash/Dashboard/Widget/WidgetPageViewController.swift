@@ -41,8 +41,16 @@ class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelega
 
         view.translatesAutoresizingMaskIntoConstraints = false
         _ = pageControl
+    }
 
-        setViewControllers([widgetViewControllers.first!], direction: .forward, animated: false)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        // We should not do this in viewDidLoad()
+        // because setViewControllers() invokes the view controller's viewWillAppear() unintentionally.
+        if viewControllers == nil || viewControllers!.isEmpty {
+            setViewControllers([widgetViewControllers.first!], direction: .forward, animated: false)
+        }
     }
 
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
