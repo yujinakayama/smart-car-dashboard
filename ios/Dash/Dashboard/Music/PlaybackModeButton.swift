@@ -35,7 +35,7 @@ import MediaPlayer
         layer.cornerCurve = .continuous
         layer.cornerRadius = 10
 
-        setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 20), forImageIn: .normal)
+        setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 18), forImageIn: .normal)
 
         reflectSelection()
     }
