@@ -36,7 +36,7 @@ class Connection {
     let connection: NWConnection
     lazy var dispatchQueue = DispatchQueue(label: "NWConnection")
     var timeoutTimer: DispatchSourceTimer?
-    let timeoutPeriod: TimeInterval = 0.2
+    let timeoutPeriod: TimeInterval = 1
     var isEstablished = false
 
     init(host: String, port: NWEndpoint.Port) throws {
