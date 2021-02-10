@@ -12,8 +12,38 @@ import AVFoundation
 import BetterSegmentedControl
 
 class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStreamParserDelegate {
-    @IBOutlet var displayView: AVSampleBufferDisplayView!
-    @IBOutlet var activityIndicatorView: UIActivityIndicatorView!
+    lazy var displayView: AVSampleBufferDisplayView = {
+        let displayView = AVSampleBufferDisplayView()
+
+        view.addSubview(displayView)
+
+        displayView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            displayView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            displayView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            displayView.topAnchor.constraint(equalTo: view.topAnchor),
+            displayView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+
+        return displayView
+    }()
+
+    lazy var activityIndicatorView: UIActivityIndicatorView = {
+        let activityIndicatorView = UIActivityIndicatorView(style: .large)
+        activityIndicatorView.color = .white
+
+        view.addSubview(activityIndicatorView)
+
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+
+        return activityIndicatorView
+    }()
 
     var displayLayer: AVSampleBufferDisplayLayer {
         return displayView.displayLayer
@@ -83,9 +113,11 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        displayLayer.videoGravity = .resizeAspect
-
+        _ = displayView
+        _ = activityIndicatorView
         _ = sensitivityModeSegmentedControl
+
+        displayLayer.videoGravity = .resizeAspect
 
         displayView.addGestureRecognizer(gestureRecognizer)
 
