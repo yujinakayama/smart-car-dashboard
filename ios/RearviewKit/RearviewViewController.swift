@@ -192,6 +192,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
     @objc func stop() {
         retryTimer?.invalidate()
         connection?.disconnect()
+        activityIndicatorView.stopAnimating()
     }
 
     func retry(terminationReason: Connection.TerminationReason) {
