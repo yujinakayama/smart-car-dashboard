@@ -170,6 +170,8 @@
 		B9E96CC822A4EF1300C2E009 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
 		B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */; };
 		B9EF566123DF3D61000D0CB2 /* GoogleSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */; };
+		B9F4375F25D414D8004B9140 /* RearviewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F4375E25D414D8004B9140 /* RearviewConfiguration.swift */; };
+		B9F4376D25D4170D004B9140 /* CameraSensitivityMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F4376C25D4170D004B9140 /* CameraSensitivityMode.swift */; };
 		B9F9EFD6256D3D6B00C33781 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F9EFD5256D3D6B00C33781 /* Cache.swift */; };
 		B9FA6CC824CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FA6CC724CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift */; };
 		B9FB33E124AE2ACD00FEB782 /* PlaybackModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FB33E024AE2ACD00FEB782 /* PlaybackModeButton.swift */; };
@@ -447,6 +449,8 @@
 		B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPayment.swift; sourceTree = "<group>"; };
 		B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInViewController.swift; sourceTree = "<group>"; };
+		B9F4375E25D414D8004B9140 /* RearviewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewConfiguration.swift; sourceTree = "<group>"; };
+		B9F4376C25D4170D004B9140 /* CameraSensitivityMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraSensitivityMode.swift; sourceTree = "<group>"; };
 		B9F9EFD5256D3D6B00C33781 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		B9FA6CC724CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OriginalLanguageSongTitleFetcher.swift; sourceTree = "<group>"; };
 		B9FB33E024AE2ACD00FEB782 /* PlaybackModeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackModeButton.swift; sourceTree = "<group>"; };
@@ -705,6 +709,8 @@
 				B9C0CED82508F63F006D246E /* AppDelegate.swift */,
 				B9C0CEDA2508F63F006D246E /* SceneDelegate.swift */,
 				B9C0CEDC2508F63F006D246E /* RearviewViewController.swift */,
+				B9F4375E25D414D8004B9140 /* RearviewConfiguration.swift */,
+				B9F4376C25D4170D004B9140 /* CameraSensitivityMode.swift */,
 				B940A465250F0EBB006BDFBB /* Connection.swift */,
 				B940A45D250E3B50006BDFBB /* AVSampleBufferDisplayView.swift */,
 				B9C0CEEA2508F711006D246E /* H264ByteStreamParser.swift */,
@@ -1465,7 +1471,9 @@
 				B9C0CEDD2508F63F006D246E /* RearviewViewController.swift in Sources */,
 				B940A466250F0EBB006BDFBB /* Connection.swift in Sources */,
 				B9C0CED92508F63F006D246E /* AppDelegate.swift in Sources */,
+				B9F4375F25D414D8004B9140 /* RearviewConfiguration.swift in Sources */,
 				B9C0CEEB2508F711006D246E /* H264ByteStreamParser.swift in Sources */,
+				B9F4376D25D4170D004B9140 /* CameraSensitivityMode.swift in Sources */,
 				B9C0CEDB2508F63F006D246E /* SceneDelegate.swift in Sources */,
 				B9B399CC25965BDC00C7977F /* CameraOptions.swift in Sources */,
 				B90700A4250E31B1004E7D7A /* Logger.swift in Sources */,

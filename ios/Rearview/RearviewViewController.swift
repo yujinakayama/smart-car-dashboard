@@ -11,7 +11,34 @@ import Network
 import AVFoundation
 import BetterSegmentedControl
 
+protocol RearviewViewControllerDelegate: NSObjectProtocol {
+    func rearviewViewController(didChangeCameraSensitivityMode cameraSensitivityMode: CameraSensitivityMode)
+}
+
 class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStreamParserDelegate {
+    weak var delegate: RearviewViewControllerDelegate?
+
+    var configuration: RearviewConfiguration {
+        didSet {
+            cameraOptionsAdjuster.configuration = configuration
+
+            if configuration.raspberryPiAddress != oldValue.raspberryPiAddress {
+                stop()
+                start()
+            }
+        }
+    }
+
+    var cameraSensitivityMode: CameraSensitivityMode {
+        get {
+            return cameraOptionsAdjuster.sensitivityMode
+        }
+
+        set {
+            cameraOptionsAdjuster.sensitivityMode = newValue
+        }
+    }
+
     lazy var displayView: AVSampleBufferDisplayView = {
         let displayView = AVSampleBufferDisplayView()
 
@@ -63,15 +90,15 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
 
     var hasReceivedInitialFrame = false
 
-    let cameraOptionsAdjuster = CameraOptionsAdjuster()
+    let cameraOptionsAdjuster: CameraOptionsAdjuster
 
     lazy var sensitivityModeSegmentedControl: HUDSegmentedControl = {
         let segmentTitles = ["Auto", "Day", "Night", "Low Light", "Ultra Low Light"]
-        assert(segmentTitles.count == CameraOptionsAdjuster.SensitivityMode.allCases.count)
+        assert(segmentTitles.count == CameraSensitivityMode.allCases.count)
 
         let segmentedControl = HUDSegmentedControl(titles: segmentTitles)
         segmentedControl.isHidden = true
-        segmentedControl.selectedSegmentIndex = Defaults.shared.cameraSensitivityMode?.rawValue ?? 0
+        segmentedControl.selectedSegmentIndex = cameraOptionsAdjuster.sensitivityMode.rawValue
         segmentedControl.addTarget(self, action: #selector(sensitivityModeSegmentedControlDidChangeValue), for: .valueChanged)
 
         view.addSubview(segmentedControl)
@@ -110,6 +137,16 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
         return true
     }
 
+    init(configuration: RearviewConfiguration, cameraSensitivityMode: CameraSensitivityMode = .auto) {
+        self.configuration = configuration
+        self.cameraOptionsAdjuster = CameraOptionsAdjuster(configuration: configuration, sensitivityMode: cameraSensitivityMode)
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -124,6 +161,7 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
         displayView.addGestureRecognizer(gestureRecognizer)
 
         NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: OperationQueue.main) { [weak self] (notification) in
+            self?.cameraOptionsAdjuster.applySensitivityMode()
             self?.hideBlankScreen()
             self?.start()
         }
@@ -142,13 +180,9 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
         // do
         // raspivid --verbose --flush -t 0 --hflip -fps 40 --exposure nightpreview --metering backlit --awb auto --flicker auto --metering average --drc high --profile high -w 1440 -h 1080 --sharpness 100 --imxfx denoise --listen -o tcp://0.0.0.0:5001 --ev 10 --saturation 10
         // done
-        if let raspberryPiAddress = Defaults.shared.raspberryPiAddress {
-            do {
-                try connectToRaspberryPi(host: raspberryPiAddress)
-            } catch {
-                showAlertAboutInvalidRaspberryPiAddress()
-            }
-        } else {
+        do {
+            try connectToRaspberryPi(host: configuration.raspberryPiAddress)
+        } catch {
             showAlertAboutInvalidRaspberryPiAddress()
         }
     }
@@ -274,9 +308,10 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
     }
 
     @IBAction func sensitivityModeSegmentedControlDidChangeValue() {
-        guard let sensitivityMode = CameraOptionsAdjuster.SensitivityMode(rawValue: sensitivityModeSegmentedControl.selectedSegmentIndex) else { return }
+        guard let sensitivityMode = CameraSensitivityMode(rawValue: sensitivityModeSegmentedControl.selectedSegmentIndex) else { return }
         cameraOptionsAdjuster.sensitivityMode = sensitivityMode
         resetSensitivityModeSegmentedControlVisibilityLifetime()
+        delegate?.rearviewViewController(didChangeCameraSensitivityMode: sensitivityMode)
     }
 
     private func resetSensitivityModeSegmentedControlVisibilityLifetime() {

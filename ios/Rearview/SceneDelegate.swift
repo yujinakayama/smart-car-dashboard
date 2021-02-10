@@ -9,9 +9,17 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
     var window: UIWindow?
 
+    var rearviewViewController: RearviewViewController?
+
+    var configuration: RearviewConfiguration {
+        return RearviewConfiguration(
+            raspberryPiAddress: Defaults.shared.raspberryPiAddress,
+            digitalGainForLowLightMode: Defaults.shared.digitalGainForLowLightMode,
+            digitalGainForUltraLowLightMode: Defaults.shared.digitalGainForUltraLowLightMode
+        )
+    }
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -19,8 +27,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
+        let rearviewViewController = RearviewViewController(configuration: configuration, cameraSensitivityMode: Defaults.shared.cameraSensitivityMode)
+        rearviewViewController.delegate = self
+        self.rearviewViewController = rearviewViewController
+
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = RearviewViewController()
+        window.rootViewController = rearviewViewController
         window.makeKeyAndVisible()
         self.window = window
     }
@@ -45,6 +57,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
+
+        guard let rearviewViewController = rearviewViewController else { return }
+        rearviewViewController.configuration = configuration
+        rearviewViewController.cameraSensitivityMode = Defaults.shared.cameraSensitivityMode
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -52,7 +68,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
 
+extension SceneDelegate: RearviewViewControllerDelegate {
+    func rearviewViewController(didChangeCameraSensitivityMode cameraSensitivityMode: CameraSensitivityMode) {
+        Defaults.shared.cameraSensitivityMode = cameraSensitivityMode
+    }
+}
