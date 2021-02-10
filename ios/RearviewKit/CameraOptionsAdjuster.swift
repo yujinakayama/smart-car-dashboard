@@ -9,34 +9,34 @@
 import UIKit
 
 class CameraOptionsAdjuster: NSObject, SunDelegate {
-    enum SensitivityMode: Int, CaseIterable {
-        case auto = 0
-        case day
-        case night
-        case lowLight
-        case ultraLowLight
+    var configuration: RearviewConfiguration {
+        didSet {
+            if configuration != oldValue {
+                applySensitivityMode()
+            }
+        }
+    }
+
+    var sensitivityMode: CameraSensitivityMode {
+        didSet {
+            if sensitivityMode != oldValue {
+                applySensitivityMode()
+            }
+        }
     }
 
     let sun = Sun()
 
-    var sensitivityMode: SensitivityMode {
-        get {
-            return Defaults.shared.cameraSensitivityMode ?? .auto
-        }
+    private var _digitalGainForUltraLowLightMode: Float?
 
-        set {
-            Defaults.shared.cameraSensitivityMode = newValue
-            applySensitivityMode()
-        }
-    }
-
-    override init() {
+    init(configuration: RearviewConfiguration, sensitivityMode: CameraSensitivityMode) {
+        self.configuration = configuration
+        self.sensitivityMode = sensitivityMode
         super.init()
         sun.delegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(applySensitivityMode), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
 
-    @objc private func applySensitivityMode() {
+    func applySensitivityMode() {
         logger.info(sensitivityMode)
 
         var cameraOptions: CameraOptions?
@@ -51,9 +51,9 @@ class CameraOptionsAdjuster: NSObject, SunDelegate {
         case .night:
             cameraOptions = CameraOptions.night
         case .lowLight:
-            cameraOptions = CameraOptions.fixedSensitivity(digitalgain: Defaults.shared.digitalGainForLowLightMode)
+            cameraOptions = CameraOptions.fixedSensitivity(digitalgain: configuration.digitalGainForLowLightMode)
         case .ultraLowLight:
-            cameraOptions = CameraOptions.fixedSensitivity(digitalgain: Defaults.shared.digitalGainForUltraLowLightMode)
+            cameraOptions = CameraOptions.fixedSensitivity(digitalgain: configuration.digitalGainForUltraLowLightMode)
         }
 
         if let cameraOptions = cameraOptions {
@@ -116,11 +116,9 @@ class CameraOptionsAdjuster: NSObject, SunDelegate {
     }
 
     private var url: URL? {
-        guard let raspberryPiAddress = Defaults.shared.raspberryPiAddress else { return nil }
-
         var urlComponents = URLComponents()
         urlComponents.scheme = "http"
-        urlComponents.host = raspberryPiAddress
+        urlComponents.host = configuration.raspberryPiAddress
         urlComponents.port = 5002
         urlComponents.path = "/raspivid-options"
         return urlComponents.url

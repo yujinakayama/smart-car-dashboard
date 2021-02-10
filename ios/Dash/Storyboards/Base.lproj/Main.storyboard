@@ -131,7 +131,7 @@
         <scene sceneID="UzF-l4-l0z">
             <objects>
                 <tableViewController restorationIdentifier="ETCCardTableViewController" id="jqf-qq-fTP" userLabel="Card Table View Controller" customClass="ETCCardTableViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="rBj-BB-kSy">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="rBj-BB-kSy">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
@@ -140,7 +140,7 @@
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="82"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2sj-lq-fub" id="UN9-2d-DFc">
-                                    <rect key="frame" x="0.0" y="0.0" width="1005" height="82"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="348" height="82"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="HKU-bN-sRN">
@@ -171,7 +171,7 @@
                                 <rect key="frame" x="0.0" y="137.5" width="375" height="68.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yhp-zq-xeI" id="l4J-ek-iqJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="1005" height="68.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="348" height="68.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="MZx-NX-l6V">
@@ -1116,17 +1116,6 @@
             <point key="canvasLocation" x="1492" y="-1748"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="3d5-rM-KEm">
-            <size key="intrinsicContentSize" width="189" height="38"/>
-        </designable>
-        <designable name="TAK-Hz-Kv5">
-            <size key="intrinsicContentSize" width="26.5" height="22.5"/>
-        </designable>
-        <designable name="mfV-vr-luy">
-            <size key="intrinsicContentSize" width="28.5" height="23"/>
-        </designable>
-    </designables>
     <inferredMetricsTieBreakers>
         <segue reference="6S0-TO-JiA"/>
         <segue reference="ZuQ-m0-CKt"/>

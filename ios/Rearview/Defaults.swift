@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RearviewKit
 
 struct Defaults {
     static var shared = Defaults()
@@ -19,7 +20,6 @@ struct Defaults {
         case digitalGainForLowLightMode
         case digitalGainForUltraLowLightMode
     }
-
 
     init() {
         loadDefaultValues()
@@ -40,18 +40,18 @@ struct Defaults {
         userDefaults.register(defaults: defaultValues)
     }
 
-    var raspberryPiAddress: String? {
-        return userDefaults.string(forKey: Key.raspberryPiAddress.rawValue)
+    var raspberryPiAddress: String {
+        return userDefaults.string(forKey: Key.raspberryPiAddress.rawValue) ?? ""
     }
 
-    var cameraSensitivityMode: CameraOptionsAdjuster.SensitivityMode? {
+    var cameraSensitivityMode: CameraSensitivityMode {
         get {
             let integer = userDefaults.integer(forKey: Key.cameraSensitivityMode.rawValue)
-            return CameraOptionsAdjuster.SensitivityMode(rawValue: integer)
+            return CameraSensitivityMode(rawValue: integer) ?? .auto
         }
 
         set {
-            userDefaults.setValue(newValue?.rawValue, forKey: Key.cameraSensitivityMode.rawValue)
+            userDefaults.setValue(newValue.rawValue, forKey: Key.cameraSensitivityMode.rawValue)
         }
     }
 
