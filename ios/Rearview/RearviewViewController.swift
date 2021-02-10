@@ -123,13 +123,13 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
         connection?.disconnect()
     }
 
-    func retry() {
-        DispatchQueue.main.async { [weak self] in
-            self?.activityIndicatorView.startAnimating()
+    func retry(terminationReason: Connection.TerminationReason) {
+        if terminationReason == .closedByServer {
+            Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(start), userInfo: nil, repeats: false)
+        } else {
+            activityIndicatorView.startAnimating()
+            Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(start), userInfo: nil, repeats: false)
         }
-
-        stop()
-        start()
     }
 
     func flushImage() {
@@ -175,7 +175,7 @@ class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStre
             self.flushImage()
 
             if reason != .closedByClient {
-                self.retry()
+                self.retry(terminationReason: reason)
             }
         }
     }
