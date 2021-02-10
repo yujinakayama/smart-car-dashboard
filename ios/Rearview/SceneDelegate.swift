@@ -58,6 +58,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
+        hideBlankScreen()
 
         guard let rearviewViewController = rearviewViewController else { return }
         rearviewViewController.configuration = configuration
@@ -68,6 +69,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+        showBlankScreen()
+    }
+
+    // https://developer.apple.com/library/archive/qa/qa1838/_index.html
+    func showBlankScreen() {
+        guard let rearviewViewController = rearviewViewController else { return }
+        let blankViewController = UIViewController()
+        blankViewController.modalPresentationStyle = .fullScreen
+        blankViewController.view.backgroundColor = .black
+        rearviewViewController.present(blankViewController, animated: false)
+    }
+
+    func hideBlankScreen() {
+        rearviewViewController?.dismiss(animated: false)
     }
 }
 

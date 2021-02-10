@@ -164,14 +164,12 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         cameraOptionsAdjuster.applySensitivityMode()
-        hideBlankScreen()
         start()
     }
 
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         stop()
-        showBlankScreen()
     }
 
     @objc func start() {
@@ -326,18 +324,6 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
                 self.sensitivityModeSegmentedControl.isHidden = true
             }
         }
-    }
-
-    // https://developer.apple.com/library/archive/qa/qa1838/_index.html
-    func showBlankScreen() {
-        let blankViewController = UIViewController()
-        blankViewController.modalPresentationStyle = .fullScreen
-        blankViewController.view.backgroundColor = .black
-        present(blankViewController, animated: false)
-    }
-
-    func hideBlankScreen() {
-        dismiss(animated: false)
     }
 
     func showAlertAboutInvalidRaspberryPiAddress() {
