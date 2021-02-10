@@ -27,6 +27,8 @@ class Sun: NSObject, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
     private var location: CLLocation?
 
+    var isTrackingAppearance = false
+
     private var appearanceChangeTimer: Timer?
 
     private lazy var dateFormatter: DateFormatter = {
@@ -47,6 +49,8 @@ class Sun: NSObject, CLLocationManagerDelegate {
     func startTrackingAppearance() {
         logger.info()
 
+        isTrackingAppearance = true
+
         switch locationManager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
@@ -57,6 +61,7 @@ class Sun: NSObject, CLLocationManagerDelegate {
 
     func stopTrackingAppearance() {
         logger.info()
+        isTrackingAppearance = false
         locationManager.stopUpdatingLocation()
         appearance = nil
         location = nil
@@ -67,7 +72,9 @@ class Sun: NSObject, CLLocationManagerDelegate {
 
         switch manager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
-            locationManager.startUpdatingLocation()
+            if isTrackingAppearance {
+                locationManager.startUpdatingLocation()
+            }
         default:
             break
         }
