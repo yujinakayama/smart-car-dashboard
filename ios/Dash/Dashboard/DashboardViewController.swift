@@ -163,6 +163,13 @@ class DashboardViewController: UIViewController {
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             updateMusicContainerViewShadow()
         }
+
+        if traitCollection.horizontalSizeClass != .compact, currentLayoutMode != .split {
+            widgetViewController.beginAppearanceTransition(true, animated: false)
+            currentLayoutMode = .split
+            updateLayoutConstraints(for: currentLayoutMode)
+            widgetViewController.endAppearanceTransition()
+        }
     }
 
     private func updateMusicContainerViewShadow() {
