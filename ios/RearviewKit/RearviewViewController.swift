@@ -43,7 +43,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
     lazy var activityIndicatorView: UIActivityIndicatorView = {
         let activityIndicatorView = UIActivityIndicatorView(style: .large)
-        activityIndicatorView.color = .white
+        activityIndicatorView.color = .label
         return activityIndicatorView
     }()
 
@@ -88,10 +88,6 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         return gestureRecognizer
     }()
 
-    public override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-
     public override var prefersHomeIndicatorAutoHidden: Bool {
         return true
     }
@@ -109,7 +105,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .black
+        view.backgroundColor = .systemBackground
 
         view.addSubview(displayView)
         view.addSubview(activityIndicatorView)

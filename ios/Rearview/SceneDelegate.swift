@@ -30,6 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let rearviewViewController = RearviewViewController(configuration: configuration, cameraSensitivityMode: Defaults.shared.cameraSensitivityMode)
         rearviewViewController.delegate = self
+        rearviewViewController.overrideUserInterfaceStyle = .dark
         self.rearviewViewController = rearviewViewController
 
         let window = UIWindow(windowScene: windowScene)
