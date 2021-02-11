@@ -183,9 +183,23 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         if terminationReason == .closedByServer {
             retryTimer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(start), userInfo: nil, repeats: false)
         } else {
-            activityIndicatorView.startAnimating()
+            startAnimatingActivityIndicator()
             retryTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(start), userInfo: nil, repeats: false)
         }
+    }
+
+    func startAnimatingActivityIndicator() {
+        if activityIndicatorView.isAnimating {
+            return
+        }
+
+        let animation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
+        animation.fromValue = 0
+        animation.toValue = 1
+        animation.duration = 0.35
+        activityIndicatorView.layer.add(animation, forKey: nil)
+
+        activityIndicatorView.startAnimating()
     }
 
     func flushImage() {
