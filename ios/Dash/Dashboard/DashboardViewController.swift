@@ -22,9 +22,9 @@ class DashboardViewController: UIViewController {
     lazy var widgetViewController: UIViewController = children.first { $0 is WidgetPageViewController }!
     lazy var musicViewController: MusicViewController = children.first { $0 is MusicViewController } as! MusicViewController
 
-    @IBOutlet weak var musicContainerViewTopConstraintForSplitLayout: NSLayoutConstraint!
-    @IBOutlet weak var musicContainerViewTopConstraintForFullMusicLayout: NSLayoutConstraint!
-    @IBOutlet weak var musicContainerViewTopConstraintForDraggingState: NSLayoutConstraint!
+    lazy var musicContainerViewTopConstraintForFullMusicLayout = musicContainerView.topAnchor.constraint(equalTo: view.topAnchor)
+    lazy var musicContainerViewTopConstraintForSplitLayout = musicContainerView.topAnchor.constraint(equalTo: widgetView.bottomAnchor)
+    lazy var musicContainerViewTopConstraintForDraggingState = musicContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0)
 
     var currentLayoutMode: LayoutMode = .fullMusicView
 
@@ -45,6 +45,8 @@ class DashboardViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        updateLayoutConstraints(for: currentLayoutMode)
 
         NSLayoutConstraint.activate([
             musicEdgeGlossView.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale)
@@ -129,10 +131,7 @@ class DashboardViewController: UIViewController {
         view.layoutIfNeeded()
 
         let finalLayoutMode = layoutSwitchGesture.finalLayoutMode
-
-        musicContainerViewTopConstraintForDraggingState.isActive = false
-        musicContainerViewTopConstraintForSplitLayout.isActive = finalLayoutMode == .split
-        musicContainerViewTopConstraintForFullMusicLayout.isActive = finalLayoutMode == .fullMusicView
+        updateLayoutConstraints(for: finalLayoutMode)
 
         if (!hasBegunMusicViewAppearanceTransition && finalLayoutMode != currentLayoutMode) // Transitioning but hasn't notified
         || (hasBegunMusicViewAppearanceTransition && finalLayoutMode == currentLayoutMode)  // Canceling transition so we need to notify of opposite one
@@ -150,6 +149,12 @@ class DashboardViewController: UIViewController {
                 self.widgetViewController.endAppearanceTransition()
             }
         }
+    }
+
+    private func updateLayoutConstraints(for layoutMode: LayoutMode) {
+        musicContainerViewTopConstraintForDraggingState.isActive = false
+        musicContainerViewTopConstraintForSplitLayout.isActive = layoutMode == .split
+        musicContainerViewTopConstraintForFullMusicLayout.isActive = layoutMode == .fullMusicView
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
