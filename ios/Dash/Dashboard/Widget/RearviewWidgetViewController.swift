@@ -37,6 +37,7 @@ class RearviewWidgetViewController: UIViewController {
         let rearviewViewController = RearviewViewController(configuration: configuration, cameraSensitivityMode: RearviewDefaults.shared.cameraSensitivityMode)
         rearviewViewController.delegate = self
         rearviewViewController.videoGravity = .resizeAspectFill
+        rearviewViewController.sensitivityModeControlPosition = .center
 
         addChild(rearviewViewController)
         rearviewViewController.view.frame = view.bounds

@@ -90,6 +90,14 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         return segmentedControl
     }()
 
+    public var sensitivityModeControlPosition: SensitivityModeControlPosition = .bottom {
+        didSet {
+            updateSensitivityModeSegmentedControlCenterYConstraint()
+        }
+    }
+
+    var sensitivityModeSegmentedControlCenterYConstraint: NSLayoutConstraint?
+
     var sensitivityModeSegmentedControlHidingTimer: Timer?
 
     public lazy var tapGestureRecognizer: UIGestureRecognizer = {
@@ -150,9 +158,10 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
             activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
 
+        sensitivityModeSegmentedControlCenterYConstraint = NSLayoutConstraint(item: sensitivityModeSegmentedControl, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: sensitivityModeControlPosition.rawValue * 2, constant: 0)
+
         NSLayoutConstraint.activate([
             sensitivityModeSegmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            NSLayoutConstraint(item: sensitivityModeSegmentedControl, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1.7, constant: 0),
             sensitivityModeSegmentedControl.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, multiplier: 0.9),
             {
                 let constraint = sensitivityModeSegmentedControl.widthAnchor.constraint(equalToConstant: CGFloat(sensitivityModeSegmentedControl.titles!.count * 180))
@@ -162,6 +171,26 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
             sensitivityModeSegmentedControl.heightAnchor.constraint(equalTo: sensitivityModeSegmentedControl.widthAnchor, multiplier: 0.3 / CGFloat(sensitivityModeSegmentedControl.titles!.count)),
 
         ])
+
+        updateSensitivityModeSegmentedControlCenterYConstraint()
+    }
+
+    func updateSensitivityModeSegmentedControlCenterYConstraint() {
+        sensitivityModeSegmentedControlCenterYConstraint?.isActive = false
+
+        sensitivityModeSegmentedControlCenterYConstraint = NSLayoutConstraint(
+            item: sensitivityModeSegmentedControl,
+            attribute: .centerY,
+            relatedBy: .equal,
+            toItem: view,
+            attribute: .centerY,
+            multiplier: sensitivityModeControlPosition.rawValue * 2,
+            constant: 0
+        )
+
+        sensitivityModeSegmentedControlCenterYConstraint?.isActive = true
+
+        sensitivityModeSegmentedControl.superview?.setNeedsLayout()
     }
 
     public override func viewWillAppear(_ animated: Bool) {
@@ -368,5 +397,13 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
 
         pendingAlertController = alertController
+    }
+}
+
+extension RearviewViewController {
+    public enum SensitivityModeControlPosition: CGFloat {
+        case top    = 0.15
+        case center = 0.50
+        case bottom = 0.85
     }
 }
