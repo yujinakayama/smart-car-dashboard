@@ -12,12 +12,6 @@ import RearviewKit
 class RearviewWidgetViewController: UIViewController {
     var rearviewViewController: RearviewViewController?
 
-    lazy var statusBarView: UIView = {
-        let effect = UIBlurEffect(style: .regular)
-        let statusBarView = UIVisualEffectView(effect: effect)
-        return statusBarView
-    }()
-
     var configuration: RearviewConfiguration {
         return RearviewConfiguration(
             raspberryPiAddress: RearviewDefaults.shared.raspberryPiAddress,
@@ -31,7 +25,6 @@ class RearviewWidgetViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpRearviewViewController()
-        setUpStatusBarView()
     }
 
     func setUpRearviewViewController() {
@@ -49,19 +42,6 @@ class RearviewWidgetViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
 
         NotificationCenter.default.addObserver(rearviewViewController, selector: #selector(RearviewViewController.stop), name: UIApplication.didEnterBackgroundNotification, object: nil)
-    }
-
-    func setUpStatusBarView() {
-        view.addSubview(statusBarView)
-
-        statusBarView.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            statusBarView.topAnchor.constraint(equalTo: view.topAnchor),
-            statusBarView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            statusBarView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            statusBarView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-        ])
     }
 
     override func viewWillAppear(_ animated: Bool) {
