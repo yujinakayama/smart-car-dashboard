@@ -39,6 +39,16 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         }
     }
 
+    public var videoGravity: AVLayerVideoGravity {
+        get {
+            return displayLayer.videoGravity
+        }
+
+        set {
+            displayLayer.videoGravity = newValue
+        }
+    }
+
     lazy var displayView = AVSampleBufferDisplayView()
 
     lazy var activityIndicatorView: UIActivityIndicatorView = {
@@ -100,6 +110,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         self.configuration = configuration
         self.cameraOptionsAdjuster = CameraOptionsAdjuster(configuration: configuration, sensitivityMode: cameraSensitivityMode)
         super.init(nibName: nil, bundle: nil)
+        videoGravity = .resizeAspect
     }
 
     required init?(coder: NSCoder) {
@@ -153,8 +164,11 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        cameraOptionsAdjuster.applySensitivityMode()
-        start()
+
+        if connection == nil {
+            cameraOptionsAdjuster.applySensitivityMode()
+            start()
+        }
     }
 
     public override func viewDidDisappear(_ animated: Bool) {
@@ -162,7 +176,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         stop()
     }
 
-    @objc func start() {
+    @objc public func start() {
         hasReceivedInitialFrame = false
 
         // Run the following command on the Raspberry Pi with camera:
@@ -177,9 +191,10 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         }
     }
 
-    @objc func stop() {
+    @objc public func stop() {
         retryTimer?.invalidate()
         connection?.disconnect()
+        connection = nil
         activityIndicatorView.stopAnimating()
     }
 

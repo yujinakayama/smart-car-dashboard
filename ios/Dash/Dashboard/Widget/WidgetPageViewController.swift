@@ -10,7 +10,7 @@ import UIKit
 
 class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     lazy var widgetViewControllers: [UIViewController] = [
-        storyboard!.instantiateViewController(identifier: "RearviewWidgetViewController"),
+        RearviewWidgetViewController(),
         storyboard!.instantiateViewController(identifier: "AltitudeWidgetViewController"),
     ]
 

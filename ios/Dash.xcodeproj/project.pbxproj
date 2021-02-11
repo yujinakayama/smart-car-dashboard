@@ -182,6 +182,8 @@
 		B9F4379625D41C42004B9140 /* CameraOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B399CB25965BDC00C7977F /* CameraOptions.swift */; };
 		B9F9EFD6256D3D6B00C33781 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F9EFD5256D3D6B00C33781 /* Cache.swift */; };
 		B9FA6CC824CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FA6CC724CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift */; };
+		B9FACF4C25D4299900F05CAE /* RearviewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9F4377B25D41C19004B9140 /* RearviewKit.framework */; };
+		B9FACF4D25D4299900F05CAE /* RearviewKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B9F4377B25D41C19004B9140 /* RearviewKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B9FB33E124AE2ACD00FEB782 /* PlaybackModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FB33E024AE2ACD00FEB782 /* PlaybackModeButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -235,6 +237,13 @@
 			remoteGlobalIDString = B9F4377A25D41C19004B9140;
 			remoteInfo = RearviewKit;
 		};
+		B9FACF4E25D4299900F05CAE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9F4377A25D41C19004B9140;
+			remoteInfo = RearviewKit;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -255,6 +264,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				B9FACF4D25D4299900F05CAE /* RearviewKit.framework in Embed Frameworks */,
 				B98B783B23ED4C3F00A5102F /* DashShareKit.framework in Embed Frameworks */,
 				B929FAFE24CECAC800BC773A /* AppleMusic.framework in Embed Frameworks */,
 			);
@@ -545,6 +555,7 @@
 			files = (
 				B929FAFD24CECAC800BC773A /* AppleMusic.framework in Frameworks */,
 				B98B783A23ED4C3F00A5102F /* DashShareKit.framework in Frameworks */,
+				B9FACF4C25D4299900F05CAE /* RearviewKit.framework in Frameworks */,
 				01861A4B14032E6339D8E511 /* Pods_Dash.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1133,6 +1144,7 @@
 			dependencies = (
 				B98B783923ED4C3F00A5102F /* PBXTargetDependency */,
 				B929FAFC24CECAC800BC773A /* PBXTargetDependency */,
+				B9FACF4F25D4299900F05CAE /* PBXTargetDependency */,
 			);
 			name = Dash;
 			productName = ETC;
@@ -1768,6 +1780,11 @@
 			target = B9F4377A25D41C19004B9140 /* RearviewKit */;
 			targetProxy = B9F4378025D41C19004B9140 /* PBXContainerItemProxy */;
 		};
+		B9FACF4F25D4299900F05CAE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9F4377A25D41C19004B9140 /* RearviewKit */;
+			targetProxy = B9FACF4E25D4299900F05CAE /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -2217,7 +2234,7 @@
 				DEVELOPMENT_TEAM = 8LSN3WQC77;
 				INFOPLIST_FILE = Dash/Info.plist;
 				INFOPLIST_PREPROCESS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2244,7 +2261,7 @@
 				DEVELOPMENT_TEAM = 8LSN3WQC77;
 				INFOPLIST_FILE = Dash/Info.plist;
 				INFOPLIST_PREPROCESS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
