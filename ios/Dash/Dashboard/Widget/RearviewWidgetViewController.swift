@@ -22,6 +22,12 @@ class RearviewWidgetViewController: UIViewController {
 
     var isVisible = false
 
+    lazy var doubleTapGestureRecognizer: UITapGestureRecognizer = {
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(gestureRecognizerDidRecognizeDoubleTap))
+        gestureRecognizer.numberOfTapsRequired = 2
+        return gestureRecognizer
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpRearviewViewController()
@@ -36,6 +42,9 @@ class RearviewWidgetViewController: UIViewController {
         rearviewViewController.view.frame = view.bounds
         view.addSubview(rearviewViewController.view)
         rearviewViewController.didMove(toParent: self)
+
+        rearviewViewController.view.addGestureRecognizer(doubleTapGestureRecognizer)
+        rearviewViewController.tapGestureRecognizer.require(toFail: doubleTapGestureRecognizer)
 
         self.rearviewViewController = rearviewViewController
 
@@ -60,6 +69,17 @@ class RearviewWidgetViewController: UIViewController {
         rearviewViewController.configuration = configuration
         rearviewViewController.cameraSensitivityMode = RearviewDefaults.shared.cameraSensitivityMode
         rearviewViewController.start()
+    }
+
+    @objc func gestureRecognizerDidRecognizeDoubleTap() {
+        openRearviewApp()
+    }
+
+    func openRearviewApp() {
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "rearview"
+        let url = urlComponents.url!
+        UIApplication.shared.open(url, options: [:])
     }
 }
 

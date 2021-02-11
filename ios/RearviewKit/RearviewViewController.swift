@@ -92,7 +92,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
     var sensitivityModeSegmentedControlHidingTimer: Timer?
 
-    lazy var gestureRecognizer: UIGestureRecognizer = {
+    public lazy var tapGestureRecognizer: UIGestureRecognizer = {
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(gestureRecognizerDidRecognizeTap))
         gestureRecognizer.numberOfTapsRequired = 1
         return gestureRecognizer
@@ -128,7 +128,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         view.addSubview(activityIndicatorView)
         view.addSubview(sensitivityModeSegmentedControl)
 
-        displayView.addGestureRecognizer(gestureRecognizer)
+        view.addGestureRecognizer(tapGestureRecognizer)
 
         installLayoutConstraints()
     }
