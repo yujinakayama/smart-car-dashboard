@@ -39,36 +39,11 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         }
     }
 
-    lazy var displayView: AVSampleBufferDisplayView = {
-        let displayView = AVSampleBufferDisplayView()
-
-        view.addSubview(displayView)
-
-        displayView.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            displayView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            displayView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            displayView.topAnchor.constraint(equalTo: view.topAnchor),
-            displayView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        ])
-
-        return displayView
-    }()
+    lazy var displayView = AVSampleBufferDisplayView()
 
     lazy var activityIndicatorView: UIActivityIndicatorView = {
         let activityIndicatorView = UIActivityIndicatorView(style: .large)
         activityIndicatorView.color = .white
-
-        view.addSubview(activityIndicatorView)
-
-        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        ])
-
         return activityIndicatorView
     }()
 
@@ -102,24 +77,6 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         segmentedControl.isHidden = true
         segmentedControl.selectedSegmentIndex = cameraOptionsAdjuster.sensitivityMode.rawValue
         segmentedControl.addTarget(self, action: #selector(sensitivityModeSegmentedControlDidChangeValue), for: .valueChanged)
-
-        view.addSubview(segmentedControl)
-
-        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-
-        var constraints = [
-            segmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            NSLayoutConstraint(item: segmentedControl, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1.7, constant: 0),
-            segmentedControl.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, multiplier: 0.9),
-            segmentedControl.heightAnchor.constraint(equalTo: segmentedControl.widthAnchor, multiplier: 0.3 / CGFloat(segmentTitles.count)),
-        ]
-
-        let constraint = segmentedControl.widthAnchor.constraint(equalToConstant: CGFloat(segmentTitles.count * 180))
-        constraint.priority = .defaultHigh
-        constraints.append(constraint)
-
-        NSLayoutConstraint.activate(constraints)
-
         return segmentedControl
     }()
 
@@ -154,13 +111,44 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
         view.backgroundColor = .black
 
-        _ = displayView
-        _ = activityIndicatorView
-        _ = sensitivityModeSegmentedControl
-
-        displayLayer.videoGravity = .resizeAspect
+        view.addSubview(displayView)
+        view.addSubview(activityIndicatorView)
+        view.addSubview(sensitivityModeSegmentedControl)
 
         displayView.addGestureRecognizer(gestureRecognizer)
+
+        installLayoutConstraints()
+    }
+
+    func installLayoutConstraints() {
+        for subview in view.subviews {
+            subview.translatesAutoresizingMaskIntoConstraints = false
+        }
+
+        NSLayoutConstraint.activate([
+            displayView.topAnchor.constraint(equalTo: view.topAnchor),
+            displayView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            displayView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            displayView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+
+        NSLayoutConstraint.activate([
+            activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+
+        NSLayoutConstraint.activate([
+            sensitivityModeSegmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            NSLayoutConstraint(item: sensitivityModeSegmentedControl, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1.7, constant: 0),
+            sensitivityModeSegmentedControl.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, multiplier: 0.9),
+            {
+                let constraint = sensitivityModeSegmentedControl.widthAnchor.constraint(equalToConstant: CGFloat(sensitivityModeSegmentedControl.titles!.count * 180))
+                constraint.priority = .defaultHigh
+                return constraint
+            }(),
+            sensitivityModeSegmentedControl.heightAnchor.constraint(equalTo: sensitivityModeSegmentedControl.widthAnchor, multiplier: 0.3 / CGFloat(sensitivityModeSegmentedControl.titles!.count)),
+
+        ])
     }
 
     public override func viewWillAppear(_ animated: Bool) {
