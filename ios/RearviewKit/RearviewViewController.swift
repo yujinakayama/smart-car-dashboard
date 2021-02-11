@@ -98,6 +98,8 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         return gestureRecognizer
     }()
 
+    var pendingAlertController: UIAlertController?
+
     public override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -171,6 +173,15 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         }
     }
 
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if let alertController = pendingAlertController {
+            present(alertController, animated: true)
+            pendingAlertController = nil
+        }
+    }
+
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         stop()
@@ -187,7 +198,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         do {
             try connectToRaspberryPi(host: configuration.raspberryPiAddress)
         } catch {
-            showAlertAboutInvalidRaspberryPiAddress()
+            showAlertAboutInvalidRaspberryPiAddressLater()
         }
     }
 
@@ -347,7 +358,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         }
     }
 
-    func showAlertAboutInvalidRaspberryPiAddress() {
+    func showAlertAboutInvalidRaspberryPiAddressLater() {
         let alertController = UIAlertController(
             title: nil,
             message: "You need to specity your Raspberry Pi address in the Settings app.",
@@ -356,6 +367,6 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
 
-        present(alertController, animated: true)
+        pendingAlertController = alertController
     }
 }
