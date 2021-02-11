@@ -4,6 +4,8 @@
 <dict>
 	<key>StringsTable</key>
 	<string>Root</string>
+	<key>ApplicationGroupContainerIdentifier</key>
+	<string>group.com.yujinakayama.Rearview</string>
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>

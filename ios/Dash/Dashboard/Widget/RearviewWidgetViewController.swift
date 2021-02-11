@@ -18,6 +18,14 @@ class RearviewWidgetViewController: UIViewController {
         return statusBarView
     }()
 
+    var configuration: RearviewConfiguration {
+        return RearviewConfiguration(
+            raspberryPiAddress: RearviewDefaults.shared.raspberryPiAddress,
+            digitalGainForLowLightMode: RearviewDefaults.shared.digitalGainForLowLightMode,
+            digitalGainForUltraLowLightMode: RearviewDefaults.shared.digitalGainForUltraLowLightMode
+        )
+    }
+
     var isVisible = false
 
     override func viewDidLoad() {
@@ -27,8 +35,8 @@ class RearviewWidgetViewController: UIViewController {
     }
 
     func setUpRearviewViewController() {
-        let configuration = RearviewConfiguration(raspberryPiAddress: "192.168.100.1", digitalGainForLowLightMode: 8, digitalGainForUltraLowLightMode: 16)
-        let rearviewViewController = RearviewViewController(configuration: configuration)
+        let rearviewViewController = RearviewViewController(configuration: configuration, cameraSensitivityMode: RearviewDefaults.shared.cameraSensitivityMode)
+        rearviewViewController.delegate = self
         rearviewViewController.videoGravity = .resizeAspectFill
 
         addChild(rearviewViewController)
@@ -68,6 +76,15 @@ class RearviewWidgetViewController: UIViewController {
 
     @objc func applicationWillEnterForeground() {
         guard isVisible, let rearviewViewController = rearviewViewController else { return }
+
+        rearviewViewController.configuration = configuration
+        rearviewViewController.cameraSensitivityMode = RearviewDefaults.shared.cameraSensitivityMode
         rearviewViewController.start()
+    }
+}
+
+extension RearviewWidgetViewController: RearviewViewControllerDelegate {
+    func rearviewViewController(didChangeCameraSensitivityMode cameraSensitivityMode: CameraSensitivityMode) {
+        RearviewDefaults.shared.cameraSensitivityMode = cameraSensitivityMode
     }
 }

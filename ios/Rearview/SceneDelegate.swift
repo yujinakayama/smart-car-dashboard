@@ -16,9 +16,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var configuration: RearviewConfiguration {
         return RearviewConfiguration(
-            raspberryPiAddress: Defaults.shared.raspberryPiAddress,
-            digitalGainForLowLightMode: Defaults.shared.digitalGainForLowLightMode,
-            digitalGainForUltraLowLightMode: Defaults.shared.digitalGainForUltraLowLightMode
+            raspberryPiAddress: RearviewDefaults.shared.raspberryPiAddress,
+            digitalGainForLowLightMode: RearviewDefaults.shared.digitalGainForLowLightMode,
+            digitalGainForUltraLowLightMode: RearviewDefaults.shared.digitalGainForUltraLowLightMode
         )
     }
 
@@ -28,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        let rearviewViewController = RearviewViewController(configuration: configuration, cameraSensitivityMode: Defaults.shared.cameraSensitivityMode)
+        let rearviewViewController = RearviewViewController(configuration: configuration, cameraSensitivityMode: RearviewDefaults.shared.cameraSensitivityMode)
         rearviewViewController.delegate = self
         self.rearviewViewController = rearviewViewController
 
@@ -62,7 +62,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         guard let rearviewViewController = rearviewViewController else { return }
         rearviewViewController.configuration = configuration
-        rearviewViewController.cameraSensitivityMode = Defaults.shared.cameraSensitivityMode
+        rearviewViewController.cameraSensitivityMode = RearviewDefaults.shared.cameraSensitivityMode
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -88,6 +88,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 extension SceneDelegate: RearviewViewControllerDelegate {
     func rearviewViewController(didChangeCameraSensitivityMode cameraSensitivityMode: CameraSensitivityMode) {
-        Defaults.shared.cameraSensitivityMode = cameraSensitivityMode
+        RearviewDefaults.shared.cameraSensitivityMode = cameraSensitivityMode
     }
 }

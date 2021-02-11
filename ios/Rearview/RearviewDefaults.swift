@@ -9,10 +9,10 @@
 import Foundation
 import RearviewKit
 
-struct Defaults {
-    static var shared = Defaults()
+class RearviewDefaults {
+    static var shared = RearviewDefaults()
 
-    private let userDefaults = UserDefaults.standard
+    private let userDefaults = UserDefaults(suiteName: "group.com.yujinakayama.Rearview")!
 
     enum Key: String {
         case raspberryPiAddress
