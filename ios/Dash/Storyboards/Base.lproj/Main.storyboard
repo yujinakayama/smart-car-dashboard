@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3pD-mC-pSF">
-    <device id="ipad12_9rounded" orientation="landscape" layout="splitview1_3" appearance="light"/>
+    <device id="ipad12_9rounded" orientation="landscape" layout="splitview2_3" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Image references" minToolsVersion="12.0"/>
@@ -15,11 +15,11 @@
             <objects>
                 <viewController id="GIS-op-tOW" userLabel="Dashboard View Controller" customClass="DashboardViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Am0-lQ-F8N">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="981" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tZz-9P-vdJ">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
+                                <rect key="frame" x="0.0" y="0.0" width="981" height="699"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="tZz-9P-vdJ" secondAttribute="height" multiplier="4:3" priority="750" id="Jpy-KQ-jpS"/>
                                     <constraint firstAttribute="width" secondItem="tZz-9P-vdJ" secondAttribute="height" multiplier="16:9" id="Y08-0f-mWj"/>
@@ -45,16 +45,16 @@
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8PU-dv-E76">
-                                <rect key="frame" x="0.0" y="211" width="375" height="748"/>
+                                <rect key="frame" x="0.0" y="699" width="981" height="260"/>
                                 <subviews>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nEC-rf-DCk" userLabel="Music View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="748"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="981" height="260"/>
                                         <connections>
                                             <segue destination="zuP-Ci-kYP" kind="embed" id="0mp-rp-FvL"/>
                                         </connections>
                                     </containerView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hvx-z0-zUB" userLabel="Music Edge Gloss View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="981" height="1"/>
                                         <color key="backgroundColor" white="1" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" placeholder="YES" id="qoi-EI-9PF"/>
@@ -111,29 +111,17 @@
             <objects>
                 <viewController restorationIdentifier="MusicViewController" id="zuP-Ci-kYP" customClass="MusicViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="B1Y-hT-Lkm">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="748"/>
+                        <rect key="frame" x="0.0" y="0.0" width="981" height="260"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0IA-qe-Utr" userLabel="Spacer 1">
-                                <rect key="frame" x="187.5" y="0.0" width="0.0" height="30.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" id="vqS-RS-wWi"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3wq-8X-NTj" customClass="ArtworkView" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="32" y="30.5" width="311" height="311"/>
+                                <rect key="frame" x="24" y="24" width="212" height="212"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="3wq-8X-NTj" secondAttribute="height" multiplier="1:1" id="nRi-l7-2hN"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Nb-ey-hxe" userLabel="Spacer 2">
-                                <rect key="frame" x="187.5" y="341.5" width="0.0" height="30.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" id="GLD-4P-ZQx"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Beu-Kz-v6k" customClass="SongTitleView" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="32" y="372" width="311" height="52"/>
+                                <rect key="frame" x="260" y="22" width="549" height="52"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="jCn-aM-e0h"/>
                                 </constraints>
@@ -145,7 +133,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4EW-dl-7rX" customClass="PlaybackProgressView" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="32" y="454.5" width="311" height="30"/>
+                                <rect key="frame" x="260" y="84" width="697" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="IT5-o9-AQP"/>
                                 </constraints>
@@ -156,12 +144,29 @@
                                     <constraint firstAttribute="width" id="LSW-Mh-ZiH"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0IA-qe-Utr" userLabel="Spacer 1">
+                                <rect key="frame" x="608.5" y="114" width="0.0" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" id="vqS-RS-wWi"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Z51-Ki-eML" customClass="PlaybackControlView" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="32" y="514.5" width="311" height="60"/>
+                                <rect key="frame" x="453" y="130" width="311" height="60"/>
                                 <color key="tintColor" systemColor="labelColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="2Lr-e8-jfW"/>
+                                    <constraint firstAttribute="width" constant="311" id="8BV-B8-pYZ"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="8BV-B8-pYZ"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="8BV-B8-pYZ"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4eW-n8-2Zi" userLabel="Spacer 5">
                                 <rect key="frame" x="187.5" y="574.5" width="0.0" height="30.5"/>
@@ -169,8 +174,14 @@
                                     <constraint firstAttribute="width" id="yur-TP-pep"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Nb-ey-hxe" userLabel="Spacer 2">
+                                <rect key="frame" x="608.5" y="190" width="0.0" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" id="GLD-4P-ZQx"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xiy-BS-1Rf" customClass="VolumeView" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="32" y="605" width="311" height="30"/>
+                                <rect key="frame" x="260" y="206" width="697" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="zIa-hH-lg5"/>
                                 </constraints>
@@ -182,18 +193,29 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="5dH-Ra-rgc" userLabel="Playback Mode Buttons">
-                                <rect key="frame" x="32" y="675.5" width="311" height="42"/>
+                                <rect key="frame" x="849" y="27" width="108" height="42"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfV-vr-luy" customClass="ShuffleModeButton" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="143.5" height="42"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="42" height="42"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TAK-Hz-Kv5" customClass="RepeatModeButton" customModule="Dash" customModuleProvider="target">
-                                        <rect key="frame" x="167.5" y="0.0" width="143.5" height="42"/>
+                                        <rect key="frame" x="66" y="0.0" width="42" height="42"/>
                                     </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="eGn-LR-HXr"/>
+                                    <constraint firstAttribute="width" constant="108" id="efJ-Yt-F8a"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="efJ-Yt-F8a"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="efJ-Yt-F8a"/>
+                                    </mask>
+                                </variation>
                             </stackView>
                             <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hXL-il-xFS" userLabel="Spacer 7">
                                 <rect key="frame" x="187.5" y="717.5" width="0.0" height="30.5"/>
@@ -205,6 +227,7 @@
                         <viewLayoutGuide key="safeArea" id="vle-wP-uq3"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="xiy-BS-1Rf" firstAttribute="bottom" secondItem="3wq-8X-NTj" secondAttribute="bottom" id="03s-iN-iqr"/>
                             <constraint firstItem="3wq-8X-NTj" firstAttribute="leading" secondItem="vle-wP-uq3" secondAttribute="leading" constant="32" id="22R-0j-PDT"/>
                             <constraint firstItem="0IA-qe-Utr" firstAttribute="top" secondItem="B1Y-hT-Lkm" secondAttribute="top" id="2zI-02-zpa"/>
                             <constraint firstItem="0IA-qe-Utr" firstAttribute="centerX" secondItem="B1Y-hT-Lkm" secondAttribute="centerX" id="3cL-f8-R4K"/>
@@ -217,77 +240,114 @@
                             <constraint firstItem="8Nb-ey-hxe" firstAttribute="bottom" secondItem="Beu-Kz-v6k" secondAttribute="top" id="CJg-Hu-IuA"/>
                             <constraint firstItem="z1u-Dm-Bid" firstAttribute="centerX" secondItem="B1Y-hT-Lkm" secondAttribute="centerX" id="Cfo-jF-LoL"/>
                             <constraint firstItem="5dH-Ra-rgc" firstAttribute="trailing" secondItem="3wq-8X-NTj" secondAttribute="trailing" id="Dq0-mS-fml"/>
+                            <constraint firstItem="0IA-qe-Utr" firstAttribute="top" secondItem="4EW-dl-7rX" secondAttribute="bottom" id="E7a-l2-Wpe"/>
+                            <constraint firstItem="4EW-dl-7rX" firstAttribute="leading" secondItem="Beu-Kz-v6k" secondAttribute="leading" id="Fz3-9K-KMf"/>
+                            <constraint firstItem="Z51-Ki-eML" firstAttribute="top" secondItem="0IA-qe-Utr" secondAttribute="bottom" id="GHg-l5-bj4"/>
                             <constraint firstItem="4eW-n8-2Zi" firstAttribute="top" secondItem="Z51-Ki-eML" secondAttribute="bottom" id="GSj-kI-3xH"/>
                             <constraint firstItem="4EW-dl-7rX" firstAttribute="trailing" secondItem="3wq-8X-NTj" secondAttribute="trailing" id="GYE-aX-kLi"/>
+                            <constraint firstItem="Z51-Ki-eML" firstAttribute="centerX" secondItem="8Nb-ey-hxe" secondAttribute="centerX" id="HAG-ML-cAd"/>
                             <constraint firstItem="Beu-Kz-v6k" firstAttribute="leading" secondItem="3wq-8X-NTj" secondAttribute="leading" id="HcV-Mc-6HJ"/>
                             <constraint firstItem="Cv6-cL-Lvl" firstAttribute="height" secondItem="0IA-qe-Utr" secondAttribute="height" id="He1-Gq-MFI"/>
+                            <constraint firstItem="Beu-Kz-v6k" firstAttribute="leading" secondItem="3wq-8X-NTj" secondAttribute="trailing" constant="24" id="IGD-2d-pTH"/>
+                            <constraint firstItem="0IA-qe-Utr" firstAttribute="centerX" secondItem="4EW-dl-7rX" secondAttribute="centerX" id="IJf-u8-eB6"/>
                             <constraint firstItem="5dH-Ra-rgc" firstAttribute="leading" secondItem="3wq-8X-NTj" secondAttribute="leading" id="IhL-KH-gXI"/>
                             <constraint firstItem="Z51-Ki-eML" firstAttribute="trailing" secondItem="3wq-8X-NTj" secondAttribute="trailing" id="KE7-tC-eON"/>
+                            <constraint firstItem="3wq-8X-NTj" firstAttribute="leading" secondItem="vle-wP-uq3" secondAttribute="leading" constant="24" id="KQr-TY-CMp"/>
                             <constraint firstItem="hXL-il-xFS" firstAttribute="centerX" secondItem="B1Y-hT-Lkm" secondAttribute="centerX" id="KqV-KT-Gfl"/>
+                            <constraint firstItem="Beu-Kz-v6k" firstAttribute="top" secondItem="3wq-8X-NTj" secondAttribute="top" constant="-2" id="OOW-7M-hZB"/>
+                            <constraint firstItem="xiy-BS-1Rf" firstAttribute="trailing" secondItem="4EW-dl-7rX" secondAttribute="trailing" id="OYQ-Dx-mka"/>
                             <constraint firstItem="xiy-BS-1Rf" firstAttribute="leading" secondItem="3wq-8X-NTj" secondAttribute="leading" id="Pij-Lp-cTb"/>
                             <constraint firstAttribute="bottom" secondItem="hXL-il-xFS" secondAttribute="bottom" id="Qnx-5f-Nuh"/>
+                            <constraint firstItem="8Nb-ey-hxe" firstAttribute="height" secondItem="0IA-qe-Utr" secondAttribute="height" id="RPP-aw-I87"/>
                             <constraint firstItem="4EW-dl-7rX" firstAttribute="top" secondItem="3T8-fO-LGk" secondAttribute="bottom" id="Rjf-rk-5Y2"/>
                             <constraint firstItem="8Nb-ey-hxe" firstAttribute="height" secondItem="0IA-qe-Utr" secondAttribute="height" id="Ryw-2P-NJq"/>
                             <constraint firstItem="Z51-Ki-eML" firstAttribute="leading" secondItem="3wq-8X-NTj" secondAttribute="leading" id="TGD-ls-o7N"/>
                             <constraint firstItem="Z51-Ki-eML" firstAttribute="top" secondItem="Cv6-cL-Lvl" secondAttribute="bottom" id="UBd-kD-uM7"/>
                             <constraint firstItem="xiy-BS-1Rf" firstAttribute="top" secondItem="4eW-n8-2Zi" secondAttribute="bottom" id="X7a-aE-tSu"/>
+                            <constraint firstItem="8Nb-ey-hxe" firstAttribute="bottom" secondItem="xiy-BS-1Rf" secondAttribute="top" id="Yac-wB-Mla"/>
                             <constraint firstItem="4eW-n8-2Zi" firstAttribute="height" secondItem="0IA-qe-Utr" secondAttribute="height" id="Yyl-u2-qUN"/>
                             <constraint firstItem="3T8-fO-LGk" firstAttribute="centerX" secondItem="B1Y-hT-Lkm" secondAttribute="centerX" id="ZX6-pw-vMw"/>
+                            <constraint firstItem="3wq-8X-NTj" firstAttribute="top" secondItem="vle-wP-uq3" secondAttribute="top" constant="24" id="aU5-Xb-fw6"/>
                             <constraint firstItem="4EW-dl-7rX" firstAttribute="leading" secondItem="3wq-8X-NTj" secondAttribute="leading" id="bHQ-PS-OA4"/>
                             <constraint firstItem="xiy-BS-1Rf" firstAttribute="trailing" secondItem="3wq-8X-NTj" secondAttribute="trailing" id="cEI-ua-hdu"/>
                             <constraint firstItem="hXL-il-xFS" firstAttribute="top" secondItem="5dH-Ra-rgc" secondAttribute="bottom" id="ccY-2K-iCd"/>
+                            <constraint firstItem="5dH-Ra-rgc" firstAttribute="trailing" secondItem="4EW-dl-7rX" secondAttribute="trailing" id="e0P-uv-1oO"/>
+                            <constraint firstItem="vle-wP-uq3" firstAttribute="bottom" secondItem="3wq-8X-NTj" secondAttribute="bottom" constant="24" id="ejM-ZK-RCV"/>
+                            <constraint firstItem="5dH-Ra-rgc" firstAttribute="centerY" secondItem="Beu-Kz-v6k" secondAttribute="centerY" id="fCi-Ef-kOW"/>
+                            <constraint firstItem="vle-wP-uq3" firstAttribute="trailing" secondItem="4EW-dl-7rX" secondAttribute="trailing" constant="24" id="iBj-ak-ZPk"/>
                             <constraint firstItem="hXL-il-xFS" firstAttribute="height" secondItem="0IA-qe-Utr" secondAttribute="height" id="jz2-Sf-oTl"/>
                             <constraint firstItem="vle-wP-uq3" firstAttribute="trailing" secondItem="3wq-8X-NTj" secondAttribute="trailing" constant="32" id="kfP-A4-OYC"/>
+                            <constraint firstItem="8Nb-ey-hxe" firstAttribute="top" secondItem="Z51-Ki-eML" secondAttribute="bottom" id="lpU-b6-Saf"/>
+                            <constraint firstItem="Z51-Ki-eML" firstAttribute="centerX" secondItem="4EW-dl-7rX" secondAttribute="centerX" id="m2e-Xe-h2T"/>
                             <constraint firstItem="4eW-n8-2Zi" firstAttribute="centerX" secondItem="B1Y-hT-Lkm" secondAttribute="centerX" id="mKP-SB-zpp"/>
                             <constraint firstItem="3T8-fO-LGk" firstAttribute="height" secondItem="0IA-qe-Utr" secondAttribute="height" id="oDM-rh-rwO"/>
                             <constraint firstItem="Beu-Kz-v6k" firstAttribute="trailing" secondItem="3wq-8X-NTj" secondAttribute="trailing" id="qTf-Sk-zfL"/>
                             <constraint firstItem="z1u-Dm-Bid" firstAttribute="height" secondItem="0IA-qe-Utr" secondAttribute="height" constant="10" id="qwc-Nl-v9e"/>
                             <constraint firstItem="8Nb-ey-hxe" firstAttribute="top" secondItem="3wq-8X-NTj" secondAttribute="bottom" id="rsH-Uz-sTH"/>
                             <constraint firstItem="Cv6-cL-Lvl" firstAttribute="top" secondItem="4EW-dl-7rX" secondAttribute="bottom" id="sCx-ZX-ySl"/>
+                            <constraint firstItem="xiy-BS-1Rf" firstAttribute="leading" secondItem="4EW-dl-7rX" secondAttribute="leading" id="vHZ-Rq-x9G"/>
+                            <constraint firstItem="4EW-dl-7rX" firstAttribute="top" secondItem="Beu-Kz-v6k" secondAttribute="bottom" constant="10" id="vQk-ek-ru3"/>
+                            <constraint firstItem="5dH-Ra-rgc" firstAttribute="leading" secondItem="Beu-Kz-v6k" secondAttribute="trailing" constant="40" id="yc7-A3-eWe"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="0IA-qe-Utr"/>
-                                <exclude reference="8Nb-ey-hxe"/>
                                 <exclude reference="3T8-fO-LGk"/>
                                 <exclude reference="Cv6-cL-Lvl"/>
+                                <exclude reference="0IA-qe-Utr"/>
                                 <exclude reference="4eW-n8-2Zi"/>
+                                <exclude reference="8Nb-ey-hxe"/>
                                 <exclude reference="z1u-Dm-Bid"/>
                                 <exclude reference="hXL-il-xFS"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="HcV-Mc-6HJ"/>
-                                <exclude reference="qTf-Sk-zfL"/>
-                                <exclude reference="2zI-02-zpa"/>
-                                <exclude reference="3cL-f8-R4K"/>
+                                <exclude reference="ejM-ZK-RCV"/>
+                                <exclude reference="iBj-ak-ZPk"/>
                                 <exclude reference="kfP-A4-OYC"/>
                                 <exclude reference="22R-0j-PDT"/>
                                 <exclude reference="86M-HG-Woa"/>
+                                <exclude reference="KQr-TY-CMp"/>
+                                <exclude reference="aU5-Xb-fw6"/>
+                                <exclude reference="HcV-Mc-6HJ"/>
+                                <exclude reference="IGD-2d-pTH"/>
+                                <exclude reference="OOW-7M-hZB"/>
+                                <exclude reference="qTf-Sk-zfL"/>
+                                <exclude reference="Fz3-9K-KMf"/>
                                 <exclude reference="GYE-aX-kLi"/>
                                 <exclude reference="Rjf-rk-5Y2"/>
                                 <exclude reference="bHQ-PS-OA4"/>
-                                <exclude reference="KE7-tC-eON"/>
-                                <exclude reference="TGD-ls-o7N"/>
-                                <exclude reference="UBd-kD-uM7"/>
+                                <exclude reference="vQk-ek-ru3"/>
+                                <exclude reference="03s-iN-iqr"/>
+                                <exclude reference="OYQ-Dx-mka"/>
                                 <exclude reference="Pij-Lp-cTb"/>
                                 <exclude reference="X7a-aE-tSu"/>
                                 <exclude reference="cEI-ua-hdu"/>
-                                <exclude reference="AiO-Ph-l5N"/>
-                                <exclude reference="CJg-Hu-IuA"/>
-                                <exclude reference="Ryw-2P-NJq"/>
-                                <exclude reference="rsH-Uz-sTH"/>
-                                <exclude reference="7o1-Bg-Clo"/>
-                                <exclude reference="Dq0-mS-fml"/>
-                                <exclude reference="IhL-KH-gXI"/>
+                                <exclude reference="vHZ-Rq-x9G"/>
+                                <exclude reference="GHg-l5-bj4"/>
+                                <exclude reference="HAG-ML-cAd"/>
+                                <exclude reference="KE7-tC-eON"/>
+                                <exclude reference="TGD-ls-o7N"/>
+                                <exclude reference="UBd-kD-uM7"/>
+                                <exclude reference="m2e-Xe-h2T"/>
                                 <exclude reference="5Ze-c3-DSK"/>
                                 <exclude reference="ZX6-pw-vMw"/>
                                 <exclude reference="oDM-rh-rwO"/>
                                 <exclude reference="9YU-KL-Imq"/>
                                 <exclude reference="He1-Gq-MFI"/>
                                 <exclude reference="sCx-ZX-ySl"/>
+                                <exclude reference="2zI-02-zpa"/>
+                                <exclude reference="3cL-f8-R4K"/>
+                                <exclude reference="E7a-l2-Wpe"/>
+                                <exclude reference="IJf-u8-eB6"/>
                                 <exclude reference="GSj-kI-3xH"/>
                                 <exclude reference="Yyl-u2-qUN"/>
                                 <exclude reference="mKP-SB-zpp"/>
+                                <exclude reference="AiO-Ph-l5N"/>
+                                <exclude reference="CJg-Hu-IuA"/>
+                                <exclude reference="RPP-aw-I87"/>
+                                <exclude reference="Ryw-2P-NJq"/>
+                                <exclude reference="Yac-wB-Mla"/>
+                                <exclude reference="lpU-b6-Saf"/>
+                                <exclude reference="rsH-Uz-sTH"/>
                                 <exclude reference="9Zi-Or-RgR"/>
                                 <exclude reference="Cfo-jF-LoL"/>
                                 <exclude reference="qwc-Nl-v9e"/>
@@ -295,51 +355,54 @@
                                 <exclude reference="Qnx-5f-Nuh"/>
                                 <exclude reference="ccY-2K-iCd"/>
                                 <exclude reference="jz2-Sf-oTl"/>
+                                <exclude reference="7o1-Bg-Clo"/>
+                                <exclude reference="Dq0-mS-fml"/>
+                                <exclude reference="IhL-KH-gXI"/>
+                                <exclude reference="e0P-uv-1oO"/>
+                                <exclude reference="fCi-Ef-kOW"/>
+                                <exclude reference="yc7-A3-eWe"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
-                                <include reference="0IA-qe-Utr"/>
-                                <include reference="8Nb-ey-hxe"/>
                                 <include reference="3T8-fO-LGk"/>
                                 <include reference="Cv6-cL-Lvl"/>
+                                <include reference="0IA-qe-Utr"/>
                                 <include reference="4eW-n8-2Zi"/>
+                                <include reference="8Nb-ey-hxe"/>
                                 <include reference="z1u-Dm-Bid"/>
                                 <include reference="hXL-il-xFS"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="HcV-Mc-6HJ"/>
-                                <include reference="qTf-Sk-zfL"/>
-                                <include reference="2zI-02-zpa"/>
-                                <include reference="3cL-f8-R4K"/>
                                 <include reference="kfP-A4-OYC"/>
                                 <include reference="22R-0j-PDT"/>
                                 <include reference="86M-HG-Woa"/>
+                                <include reference="HcV-Mc-6HJ"/>
+                                <include reference="qTf-Sk-zfL"/>
                                 <include reference="GYE-aX-kLi"/>
                                 <include reference="Rjf-rk-5Y2"/>
                                 <include reference="bHQ-PS-OA4"/>
-                                <include reference="KE7-tC-eON"/>
-                                <include reference="TGD-ls-o7N"/>
-                                <include reference="UBd-kD-uM7"/>
                                 <include reference="Pij-Lp-cTb"/>
                                 <include reference="X7a-aE-tSu"/>
                                 <include reference="cEI-ua-hdu"/>
-                                <include reference="AiO-Ph-l5N"/>
-                                <include reference="CJg-Hu-IuA"/>
-                                <include reference="Ryw-2P-NJq"/>
-                                <include reference="rsH-Uz-sTH"/>
-                                <include reference="7o1-Bg-Clo"/>
-                                <include reference="Dq0-mS-fml"/>
-                                <include reference="IhL-KH-gXI"/>
+                                <include reference="KE7-tC-eON"/>
+                                <include reference="TGD-ls-o7N"/>
+                                <include reference="UBd-kD-uM7"/>
                                 <include reference="5Ze-c3-DSK"/>
                                 <include reference="ZX6-pw-vMw"/>
                                 <include reference="oDM-rh-rwO"/>
                                 <include reference="9YU-KL-Imq"/>
                                 <include reference="He1-Gq-MFI"/>
                                 <include reference="sCx-ZX-ySl"/>
+                                <include reference="2zI-02-zpa"/>
+                                <include reference="3cL-f8-R4K"/>
                                 <include reference="GSj-kI-3xH"/>
                                 <include reference="Yyl-u2-qUN"/>
                                 <include reference="mKP-SB-zpp"/>
+                                <include reference="AiO-Ph-l5N"/>
+                                <include reference="CJg-Hu-IuA"/>
+                                <include reference="Ryw-2P-NJq"/>
+                                <include reference="rsH-Uz-sTH"/>
                                 <include reference="9Zi-Or-RgR"/>
                                 <include reference="Cfo-jF-LoL"/>
                                 <include reference="qwc-Nl-v9e"/>
@@ -347,6 +410,39 @@
                                 <include reference="Qnx-5f-Nuh"/>
                                 <include reference="ccY-2K-iCd"/>
                                 <include reference="jz2-Sf-oTl"/>
+                                <include reference="7o1-Bg-Clo"/>
+                                <include reference="Dq0-mS-fml"/>
+                                <include reference="IhL-KH-gXI"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=regular">
+                            <mask key="subviews">
+                                <include reference="0IA-qe-Utr"/>
+                                <include reference="8Nb-ey-hxe"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="ejM-ZK-RCV"/>
+                                <include reference="iBj-ak-ZPk"/>
+                                <include reference="KQr-TY-CMp"/>
+                                <include reference="aU5-Xb-fw6"/>
+                                <include reference="IGD-2d-pTH"/>
+                                <include reference="OOW-7M-hZB"/>
+                                <include reference="Fz3-9K-KMf"/>
+                                <include reference="vQk-ek-ru3"/>
+                                <include reference="03s-iN-iqr"/>
+                                <include reference="OYQ-Dx-mka"/>
+                                <include reference="vHZ-Rq-x9G"/>
+                                <include reference="GHg-l5-bj4"/>
+                                <include reference="HAG-ML-cAd"/>
+                                <include reference="m2e-Xe-h2T"/>
+                                <include reference="E7a-l2-Wpe"/>
+                                <include reference="IJf-u8-eB6"/>
+                                <include reference="RPP-aw-I87"/>
+                                <include reference="Yac-wB-Mla"/>
+                                <include reference="lpU-b6-Saf"/>
+                                <include reference="e0P-uv-1oO"/>
+                                <include reference="fCi-Ef-kOW"/>
+                                <include reference="yc7-A3-eWe"/>
                             </mask>
                         </variation>
                     </view>
@@ -370,7 +466,7 @@
             <objects>
                 <navigationController restorationIdentifier="ETCNavigationController" id="RMx-3f-FxP" userLabel="Master Navigation Controller" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" largeTitles="YES" id="Pmd-2v-anx">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="102"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -386,22 +482,22 @@
             <objects>
                 <tableViewController restorationIdentifier="ETCCardTableViewController" id="jqf-qq-fTP" userLabel="Card Table View Controller" customClass="ETCCardTableViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="rBj-BB-kSy">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="AllPaymentsCell" rowHeight="82" id="2sj-lq-fub">
-                                <rect key="frame" x="0.0" y="55.5" width="1024" height="82"/>
+                                <rect key="frame" x="0.0" y="55.5" width="320" height="82"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2sj-lq-fub" id="UN9-2d-DFc">
-                                    <rect key="frame" x="0.0" y="0.0" width="997" height="82"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="293" height="82"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="HKU-bN-sRN">
-                                            <rect key="frame" x="24" y="19" width="308" height="44"/>
+                                            <rect key="frame" x="24" y="19" width="253" height="44"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="All Payments" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wLH-Uf-nlx">
-                                                    <rect key="frame" x="0.0" y="10.5" width="308" height="23"/>
+                                                    <rect key="frame" x="0.0" y="10.5" width="253" height="23"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -422,14 +518,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="ETCCardTableViewCell" editingAccessoryType="detailButton" id="Yhp-zq-xeI" customClass="ETCCardTableViewCell" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="137.5" width="1024" height="68.5"/>
+                                <rect key="frame" x="0.0" y="137.5" width="320" height="68.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yhp-zq-xeI" id="l4J-ek-iqJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="356" height="68.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="293" height="68.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="MZx-NX-l6V">
-                                            <rect key="frame" x="24" y="19" width="308" height="30.5"/>
+                                            <rect key="frame" x="24" y="19" width="253" height="30.5"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u8s-v0-sEG" customClass="ETCCardView" customModule="Dash" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.5" width="47.5" height="30"/>
@@ -447,13 +543,13 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="My Card" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z8y-WU-Yma">
-                                                    <rect key="frame" x="59.5" y="4" width="217" height="23"/>
+                                                    <rect key="frame" x="59.5" y="4" width="162" height="23"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="checkmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="mTz-mb-dFn">
-                                                    <rect key="frame" x="288.5" y="7" width="19.5" height="17"/>
+                                                    <rect key="frame" x="233.5" y="7" width="19.5" height="17"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="semibold"/>
                                                 </imageView>
                                             </subviews>
@@ -495,15 +591,15 @@
             <objects>
                 <viewController title="Detail" id="JEX-9P-axG" userLabel="Payment Detail View Controller" customClass="ETCPaymentDetailViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="svH-Pt-448">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="660.5" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" pitchEnabled="NO" showsUserLocation="YES" showsScale="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gCy-yW-GVk">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
+                                <rect key="frame" x="0.0" y="50" width="660.5" height="974"/>
                                 <color key="tintColor" systemColor="linkColor"/>
                             </mapView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="PSg-N3-wKj">
-                                <rect key="frame" x="175" y="20" width="200" height="32"/>
+                                <rect key="frame" x="440.5" y="70" width="200" height="32"/>
                                 <color key="backgroundColor" name="Map Type Segmented Control Background Color"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="qyI-Dq-mjx"/>
@@ -545,11 +641,11 @@
             <objects>
                 <viewController storyboardIdentifier="ETCPaymentDebugInformationViewController" id="XAw-sF-trU" customClass="ETCPaymentDebugInformationViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aTm-cg-LO8">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="981" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2xv-3E-dT2">
-                                <rect key="frame" x="20" y="20" width="335" height="1004"/>
+                                <rect key="frame" x="20" y="20" width="941" height="1004"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor"/>
@@ -615,18 +711,18 @@
             <objects>
                 <tableViewController restorationIdentifier="ETCPaymentTableViewController" id="7bK-jq-Zjz" userLabel="Payment Table View Controller" customClass="ETCPaymentTableViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="r7i-6Z-zg0">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ETCPaymentTableViewCell" rowHeight="102" id="WCw-Qf-5nD" customClass="ETCPaymentTableViewCell" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="16" y="55.5" width="343" height="102"/>
+                                <rect key="frame" x="16" y="55.5" width="288" height="102"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WCw-Qf-5nD" id="37f-cq-3Eg">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="102"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="288" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="OsG-NQ-3BY">
-                                            <rect key="frame" x="16" y="20" width="311" height="29"/>
+                                            <rect key="frame" x="16" y="20" width="256" height="29"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="yXL-mj-wgO" customClass="BorderedView" customModule="Dash" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="79.5" height="29"/>
@@ -661,7 +757,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="2019/05/31 12:34" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Lp-b1-rnx">
-                                                    <rect key="frame" x="79.5" y="0.0" width="231.5" height="18"/>
+                                                    <rect key="frame" x="79.5" y="0.0" width="176.5" height="18"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -799,7 +895,7 @@
             <objects>
                 <navigationController id="vC3-pB-5Vb" userLabel="Detail Navigation Controller" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="DjV-YW-jjY">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="660.5" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -815,14 +911,14 @@
             <objects>
                 <tableViewController restorationIdentifier="SharedItemTableViewController" id="08M-uz-mue" userLabel="Shared Item Table View Controller" customClass="SharedItemTableViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5gS-Vr-VFB">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="981" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SharedItemTableViewCell" id="Rqd-2m-ZMZ" customClass="SharedItemTableViewCell" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="16" y="55.5" width="343" height="70.5"/>
+                                <rect key="frame" x="20" y="55.5" width="941" height="70.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Rqd-2m-ZMZ" id="gcV-k7-M3G">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="70.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="941" height="70.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hrG-N5-epA" customClass="BorderedView" customModule="Dash" customModuleProvider="target">
@@ -866,16 +962,16 @@
                                             </variation>
                                         </view>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="4Of-Fm-eCE">
-                                            <rect key="frame" x="76" y="15.5" width="247" height="39"/>
+                                            <rect key="frame" x="76" y="15.5" width="845" height="39"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東京国際空港ターミナル羽田空港国際線駐車場" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yap-Es-0Pb">
-                                                    <rect key="frame" x="0.0" y="0.0" width="247" height="20.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="845" height="20.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="maps.apple.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IAv-oZ-xVj">
-                                                    <rect key="frame" x="0.0" y="24.5" width="247" height="14.5"/>
+                                                    <rect key="frame" x="0.0" y="24.5" width="845" height="14.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
                                                     <nil key="highlightedColor"/>
@@ -883,7 +979,7 @@
                                             </subviews>
                                         </stackView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0LH-Jz-Grm" customClass="BorderedView" customModule="Dash" customModuleProvider="target">
-                                            <rect key="frame" x="321" y="30.5" width="10" height="10"/>
+                                            <rect key="frame" x="919" y="30.5" width="10" height="10"/>
                                             <color key="backgroundColor" systemColor="systemBlueColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="10" id="8e7-KB-d1N"/>
@@ -942,11 +1038,11 @@
             <objects>
                 <viewController id="cu8-Rq-Mp0" customClass="WebViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="h98-fe-xrt">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="981" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" allowsBackForwardNavigationGestures="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d4F-Zy-sJE">
-                                <rect key="frame" x="0.0" y="50" width="375" height="954"/>
+                                <rect key="frame" x="0.0" y="50" width="981" height="954"/>
                                 <color key="backgroundColor" red="0.36078431372549019" green="0.38823529411764707" blue="0.40392156862745099" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <dataDetectorTypes key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
@@ -955,7 +1051,7 @@
                                 </wkWebViewConfiguration>
                             </wkWebView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QGt-iX-a7j">
-                                <rect key="frame" x="0.0" y="954" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="954" width="981" height="50"/>
                                 <items>
                                     <barButtonItem id="ieO-WG-slj">
                                         <imageReference key="image" image="chevron.backward" catalog="system" symbolScale="default"/>
@@ -1025,11 +1121,11 @@
             <objects>
                 <viewController modalPresentationStyle="currentContext" id="1MV-T3-y4O" customClass="GoogleSignInViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QRj-M3-7CO">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="981" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3d5-rM-KEm" customClass="BorderedButton" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="93" y="493" width="189" height="38"/>
+                                <rect key="frame" x="396" y="493" width="189" height="38"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <inset key="contentEdgeInsets" minX="18" minY="8" maxX="18" maxY="9"/>
                                 <state key="normal" title="Sign in with Google">
@@ -1073,7 +1169,7 @@
                     <tabBarItem key="tabBarItem" tag="2" title="Inbox" image="tray.and.arrow.down.fill" catalog="system" id="5GI-ot-E7D"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="3Im-5G-ZFk">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="102"/>
+                        <rect key="frame" x="0.0" y="0.0" width="981" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1090,14 +1186,14 @@
             <objects>
                 <viewController restorationIdentifier="MapsViewController" id="0o8-aQ-xh6" customClass="MapsViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RGr-z9-sAj">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="981" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" pitchEnabled="NO" showsUserLocation="YES" showsScale="YES" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kbs-HW-7zk">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="959"/>
+                                <rect key="frame" x="0.0" y="0.0" width="981" height="959"/>
                             </mapView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="uB9-Wf-7JO">
-                                <rect key="frame" x="159" y="20" width="200" height="32"/>
+                                <rect key="frame" x="761" y="20" width="200" height="32"/>
                                 <color key="backgroundColor" name="Map Type Segmented Control Background Color"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="LYD-jt-N5P"/>
@@ -1139,10 +1235,10 @@
             <objects>
                 <tableViewController id="rm7-Qu-Kz2" customClass="ETCCardEditViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="FCs-lq-ZD1">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="1004"/>
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BxA-Xb-WFh">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="211.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="540" height="211.5"/>
                             <subviews>
                                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QcC-fJ-8O1">
                                     <rect key="frame" x="0.0" y="40" width="375" height="120"/>
@@ -1257,14 +1353,14 @@
                             <tableViewSection id="ePN-Jb-R4a">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="DZD-vu-Ock">
-                                        <rect key="frame" x="16" y="229.5" width="343" height="44"/>
+                                        <rect key="frame" x="20" y="229.5" width="500" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DZD-vu-Ock" id="FRY-1p-AMd">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="500" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="My Card" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="crM-fa-JLa">
-                                                    <rect key="frame" x="8" y="11" width="327" height="22"/>
+                                                    <rect key="frame" x="8" y="11" width="484" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <userDefinedRuntimeAttributes>
@@ -1287,14 +1383,14 @@
                             <tableViewSection footerTitle="You will be notified if the main card is not inserted when the engine is started." id="bbC-MZ-3fk">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MainCardSwitchCell" textLabel="W2z-es-bHY" style="IBUITableViewCellStyleDefault" id="W7B-Vi-AL7">
-                                        <rect key="frame" x="16" y="309.5" width="343" height="44"/>
+                                        <rect key="frame" x="20" y="309.5" width="500" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="W7B-Vi-AL7" id="1DV-p8-9uV">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="500" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Main Card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="W2z-es-bHY">
-                                                    <rect key="frame" x="16" y="0.0" width="311" height="44"/>
+                                                    <rect key="frame" x="16" y="0.0" width="468" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1339,7 +1435,7 @@
                 <navigationController storyboardIdentifier="WebViewNavigationController" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="pageSheet" id="UBq-i7-klv" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="jUm-HZ-wpH">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="981" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1357,7 +1453,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="formSheet" id="0Eo-Gl-jno" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="1f5-3E-qoT">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
