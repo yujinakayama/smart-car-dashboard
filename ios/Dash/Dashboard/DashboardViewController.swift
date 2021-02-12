@@ -152,7 +152,12 @@ class DashboardViewController: UIViewController {
     }
 
     private func updateLayoutConstraints(for layoutMode: LayoutMode) {
+        // Deactivate all constraints once so that they won't raise UIViewAlertForUnsatisfiableConstraints error
+        // that may caused by activation ordering
+        musicContainerViewTopConstraintForSplitLayout.isActive = false
+        musicContainerViewTopConstraintForFullMusicLayout.isActive = false
         musicContainerViewTopConstraintForDraggingState.isActive = false
+
         musicContainerViewTopConstraintForSplitLayout.isActive = layoutMode == .split
         musicContainerViewTopConstraintForFullMusicLayout.isActive = layoutMode == .fullMusicView
     }
