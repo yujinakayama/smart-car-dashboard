@@ -39,7 +39,7 @@ class HUDSegmentedControl: UIControl {
         updateSegments()
 
         segmentedControl.addTarget(self, action: #selector(segmentedControlDidChangeValue), for: .valueChanged)
-        segmentedControl.backgroundColor = UIColor(white: 0.25, alpha: 0.5)
+        segmentedControl.backgroundColor = UIColor(white: 0.25, alpha: 0.65)
 
         addSubview(segmentedControl)
 
