@@ -39,6 +39,12 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         }
     }
 
+    public var contentMode: ContentMode = .scaleAspectFit {
+        didSet {
+            applyContentMode()
+        }
+    }
+
     lazy var displayView = AVSampleBufferDisplayView()
 
     lazy var activityIndicatorView: UIActivityIndicatorView = {
@@ -80,13 +86,27 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         return segmentedControl
     }()
 
+    public var sensitivityModeControlPosition: SensitivityModeControlPosition = .bottom {
+        didSet {
+            updateSensitivityModeSegmentedControlCenterYConstraint()
+        }
+    }
+
+    var sensitivityModeSegmentedControlCenterYConstraint: NSLayoutConstraint?
+
     var sensitivityModeSegmentedControlHidingTimer: Timer?
 
-    lazy var gestureRecognizer: UIGestureRecognizer = {
+    public lazy var tapGestureRecognizer: UIGestureRecognizer = {
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(gestureRecognizerDidRecognizeTap))
         gestureRecognizer.numberOfTapsRequired = 1
         return gestureRecognizer
     }()
+
+    var pendingAlertController: UIAlertController?
+
+    lazy var displayViewTopConstraint = displayView.topAnchor.constraint(equalTo: view.topAnchor)
+    lazy var displayViewBottomConstraint = displayView.topAnchor.constraint(equalTo: view.bottomAnchor)
+    lazy var displayViewAspectRatioConstraint = displayView.widthAnchor.constraint(equalTo: displayView.heightAnchor, multiplier: 4 / 3)
 
     public override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -115,9 +135,11 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         view.addSubview(activityIndicatorView)
         view.addSubview(sensitivityModeSegmentedControl)
 
-        displayView.addGestureRecognizer(gestureRecognizer)
+        view.addGestureRecognizer(tapGestureRecognizer)
 
         installLayoutConstraints()
+
+        applyContentMode()
     }
 
     func installLayoutConstraints() {
@@ -126,10 +148,8 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         }
 
         NSLayoutConstraint.activate([
-            displayView.topAnchor.constraint(equalTo: view.topAnchor),
             displayView.leftAnchor.constraint(equalTo: view.leftAnchor),
             displayView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            displayView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
 
         NSLayoutConstraint.activate([
@@ -137,9 +157,10 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
             activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
 
+        sensitivityModeSegmentedControlCenterYConstraint = NSLayoutConstraint(item: sensitivityModeSegmentedControl, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: sensitivityModeControlPosition.rawValue * 2, constant: 0)
+
         NSLayoutConstraint.activate([
             sensitivityModeSegmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            NSLayoutConstraint(item: sensitivityModeSegmentedControl, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1.7, constant: 0),
             sensitivityModeSegmentedControl.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, multiplier: 0.9),
             {
                 let constraint = sensitivityModeSegmentedControl.widthAnchor.constraint(equalToConstant: CGFloat(sensitivityModeSegmentedControl.titles!.count * 180))
@@ -149,12 +170,44 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
             sensitivityModeSegmentedControl.heightAnchor.constraint(equalTo: sensitivityModeSegmentedControl.widthAnchor, multiplier: 0.3 / CGFloat(sensitivityModeSegmentedControl.titles!.count)),
 
         ])
+
+        updateSensitivityModeSegmentedControlCenterYConstraint()
+    }
+
+    func updateSensitivityModeSegmentedControlCenterYConstraint() {
+        sensitivityModeSegmentedControlCenterYConstraint?.isActive = false
+
+        sensitivityModeSegmentedControlCenterYConstraint = NSLayoutConstraint(
+            item: sensitivityModeSegmentedControl,
+            attribute: .centerY,
+            relatedBy: .equal,
+            toItem: view,
+            attribute: .centerY,
+            multiplier: sensitivityModeControlPosition.rawValue * 2,
+            constant: 0
+        )
+
+        sensitivityModeSegmentedControlCenterYConstraint?.isActive = true
+
+        sensitivityModeSegmentedControl.superview?.setNeedsLayout()
     }
 
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        cameraOptionsAdjuster.applySensitivityMode()
-        start()
+
+        if connection == nil {
+            cameraOptionsAdjuster.applySensitivityMode()
+            start()
+        }
+    }
+
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if let alertController = pendingAlertController {
+            present(alertController, animated: true)
+            pendingAlertController = nil
+        }
     }
 
     public override func viewDidDisappear(_ animated: Bool) {
@@ -162,7 +215,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         stop()
     }
 
-    @objc func start() {
+    @objc public func start() {
         hasReceivedInitialFrame = false
 
         // Run the following command on the Raspberry Pi with camera:
@@ -173,13 +226,14 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         do {
             try connectToRaspberryPi(host: configuration.raspberryPiAddress)
         } catch {
-            showAlertAboutInvalidRaspberryPiAddress()
+            showAlertAboutInvalidRaspberryPiAddressLater()
         }
     }
 
-    @objc func stop() {
+    @objc public func stop() {
         retryTimer?.invalidate()
         connection?.disconnect()
+        connection = nil
         activityIndicatorView.stopAnimating()
     }
 
@@ -332,7 +386,35 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         }
     }
 
-    func showAlertAboutInvalidRaspberryPiAddress() {
+    func applyContentMode() {
+        // First reset this constaint to avoid conflicts
+        displayViewAspectRatioConstraint.isActive = false
+
+        switch contentMode {
+        case .scaleAspectFit:
+            displayLayer.videoGravity = .resizeAspect
+            displayViewTopConstraint.isActive = true
+            displayViewBottomConstraint.isActive = true
+            displayViewAspectRatioConstraint.isActive = false
+        case .scaleAspectFill:
+            displayLayer.videoGravity = .resizeAspectFill
+            displayViewTopConstraint.isActive = true
+            displayViewBottomConstraint.isActive = true
+            displayViewAspectRatioConstraint.isActive = false
+        case .top:
+            displayLayer.videoGravity = .resizeAspectFill
+            displayViewTopConstraint.isActive = true
+            displayViewBottomConstraint.isActive = false
+            displayViewAspectRatioConstraint.isActive = true
+        case .bottom:
+            displayLayer.videoGravity = .resizeAspectFill
+            displayViewTopConstraint.isActive = false
+            displayViewBottomConstraint.isActive = true
+            displayViewAspectRatioConstraint.isActive = true
+        }
+    }
+
+    func showAlertAboutInvalidRaspberryPiAddressLater() {
         let alertController = UIAlertController(
             title: nil,
             message: "You need to specity your Raspberry Pi address in the Settings app.",
@@ -341,6 +423,21 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
 
-        present(alertController, animated: true)
+        pendingAlertController = alertController
+    }
+}
+
+extension RearviewViewController {
+    public enum ContentMode {
+        case scaleAspectFit
+        case scaleAspectFill
+        case top
+        case bottom
+    }
+
+    public enum SensitivityModeControlPosition: CGFloat {
+        case top    = 0.15
+        case center = 0.50
+        case bottom = 0.85
     }
 }

@@ -34,7 +34,7 @@ import MediaPlayer
         button.addTarget(self, action: #selector(backwardButtonDidTap), for: .touchUpInside)
 
         button.setPreferredSymbolConfiguration(
-            UIImage.SymbolConfiguration(pointSize: 31),
+            UIImage.SymbolConfiguration(pointSize: 25),
             forImageIn: .normal
         )
 
@@ -49,7 +49,7 @@ import MediaPlayer
         button.addTarget(self, action: #selector(playPauseButtonDidTap), for: .touchUpInside)
 
         button.setPreferredSymbolConfiguration(
-            UIImage.SymbolConfiguration(pointSize: 46, weight: .heavy),
+            UIImage.SymbolConfiguration(pointSize: 40),
             forImageIn: .normal
         )
 
@@ -64,7 +64,7 @@ import MediaPlayer
         button.addTarget(self, action: #selector(forwardButtonDidTap), for: .touchUpInside)
 
         button.setPreferredSymbolConfiguration(
-            UIImage.SymbolConfiguration(pointSize: 31),
+            UIImage.SymbolConfiguration(pointSize: 25),
             forImageIn: .normal
         )
 
@@ -108,12 +108,12 @@ import MediaPlayer
         ])
 
         constraints.append(contentsOf: [
-            playPauseButton.leftAnchor.constraint(equalTo: backwardButton.rightAnchor, constant: 60),
+            backwardButton.leftAnchor.constraint(equalTo: leftAnchor),
             backwardButton.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
 
         constraints.append(contentsOf: [
-            forwardButton.leftAnchor.constraint(equalTo: playPauseButton.rightAnchor, constant: 60),
+            forwardButton.rightAnchor.constraint(equalTo: rightAnchor),
             forwardButton.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
 

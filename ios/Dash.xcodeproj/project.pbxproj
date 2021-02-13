@@ -61,13 +61,15 @@
 		B932E5F023F9082600726615 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932E5EF23F9082600726615 /* Location.swift */; };
 		B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93321ED2323C9D500BFAB21 /* BorderedView.swift */; };
 		B940A460250E5B57006BDFBB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B940A45F250E5B57006BDFBB /* Settings.bundle */; };
-		B940A462250E5CDD006BDFBB /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* Defaults.swift */; };
+		B940A462250E5CDD006BDFBB /* RearviewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */; };
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
 		B942554522B8ED10008B053B /* ETCMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554422B8ED10008B053B /* ETCMessageTests.swift */; };
 		B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554F22BAA5D1008B053B /* LocalNotification.swift */; };
 		B944C69024A9E4C8000D1E99 /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B944C68F24A9E4C8000D1E99 /* MusicViewController.swift */; };
 		B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B944C69124A9E647000D1E99 /* PlaybackControlView.swift */; };
 		B94E69D123F7A313004CCC7C /* WebsiteIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */; };
+		B954CA2325693CCC00BAD0F0 /* WidgetPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */; };
+		B954CA3225693EDA00BAD0F0 /* RearviewWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */; };
 		B9588B5D23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */; };
 		B95BF23823EBF43900A30DE0 /* ETCCardEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95BF23723EBF43900A30DE0 /* ETCCardEditViewController.swift */; };
 		B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95BF23B23EBFFE300A30DE0 /* ETCCardView.swift */; };
@@ -88,6 +90,7 @@
 		B964BCDE23E067EB00288E0D /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B964BCDC23E067EB00288E0D /* MainInterface.storyboard */; };
 		B964BCE223E067EB00288E0D /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B964BCD823E067EB00288E0D /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B96793E924AF6ACC0019BFE5 /* apple_music_developer_token.txt in Resources */ = {isa = PBXBuildFile; fileRef = B96793E824AF6ACC0019BFE5 /* apple_music_developer_token.txt */; };
+		B967D08225D51508000D9007 /* RearviewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */; };
 		B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */; };
 		B9741F7523DF200600F061E7 /* SharedItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */; };
 		B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97BAE6124B61DB100AE7D13 /* Vehicle.swift */; };
@@ -118,6 +121,7 @@
 		B9B154F82576075C0031761F /* TabBarBadgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B154F72576075C0031761F /* TabBarBadgeManager.swift */; };
 		B9B18DD323EDFFF40096D603 /* DashShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; };
 		B9B18DD423EDFFF40096D603 /* DashShareKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B9B4A89A2569310400FE0C9F /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B4A8992569310400FE0C9F /* DashboardViewController.swift */; };
 		B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B717DD23E6B26900A47207 /* UnknownItem.swift */; };
 		B9BA819E2350931A00657DEB /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
 		B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */; };
@@ -162,6 +166,7 @@
 		B9E96CC822A4EF1300C2E009 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
 		B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */; };
 		B9EF566123DF3D61000D0CB2 /* GoogleSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */; };
+		B9F272C4259C91990098CB3B /* AltitudeWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F272C3259C91990098CB3B /* AltitudeWidgetViewController.swift */; };
 		B9F4377F25D41C19004B9140 /* RearviewKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B9F4377D25D41C19004B9140 /* RearviewKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B9F4378225D41C19004B9140 /* RearviewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9F4377B25D41C19004B9140 /* RearviewKit.framework */; };
 		B9F4378325D41C19004B9140 /* RearviewKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B9F4377B25D41C19004B9140 /* RearviewKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -178,6 +183,8 @@
 		B9F4379625D41C42004B9140 /* CameraOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B399CB25965BDC00C7977F /* CameraOptions.swift */; };
 		B9F9EFD6256D3D6B00C33781 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F9EFD5256D3D6B00C33781 /* Cache.swift */; };
 		B9FA6CC824CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FA6CC724CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift */; };
+		B9FACF4C25D4299900F05CAE /* RearviewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9F4377B25D41C19004B9140 /* RearviewKit.framework */; };
+		B9FACF4D25D4299900F05CAE /* RearviewKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B9F4377B25D41C19004B9140 /* RearviewKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B9FB33E124AE2ACD00FEB782 /* PlaybackModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FB33E024AE2ACD00FEB782 /* PlaybackModeButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -231,6 +238,13 @@
 			remoteGlobalIDString = B9F4377A25D41C19004B9140;
 			remoteInfo = RearviewKit;
 		};
+		B9FACF4E25D4299900F05CAE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9F4377A25D41C19004B9140;
+			remoteInfo = RearviewKit;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -251,6 +265,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				B9FACF4D25D4299900F05CAE /* RearviewKit.framework in Embed Frameworks */,
 				B98B783B23ED4C3F00A5102F /* DashShareKit.framework in Embed Frameworks */,
 				B929FAFE24CECAC800BC773A /* AppleMusic.framework in Embed Frameworks */,
 			);
@@ -353,7 +368,7 @@
 		B939F0CF23EC5C7F00AA3E8E /* DashV3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DashV3.xcdatamodel; sourceTree = "<group>"; };
 		B940A45D250E3B50006BDFBB /* AVSampleBufferDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVSampleBufferDisplayView.swift; sourceTree = "<group>"; };
 		B940A45F250E5B57006BDFBB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		B940A461250E5CDD006BDFBB /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewDefaults.swift; sourceTree = "<group>"; };
 		B940A465250F0EBB006BDFBB /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		B941AEADBC8F07DBE594C95A /* Pods_DashRemote_ShareExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DashRemote_ShareExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B942553C22B8C3E2008B053B /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -362,6 +377,8 @@
 		B944C68F24A9E4C8000D1E99 /* MusicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
 		B944C69124A9E647000D1E99 /* PlaybackControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackControlView.swift; sourceTree = "<group>"; };
 		B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteIcon.swift; sourceTree = "<group>"; };
+		B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetPageViewController.swift; sourceTree = "<group>"; };
+		B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewWidgetViewController.swift; sourceTree = "<group>"; };
 		B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentDebugInformationViewController.swift; sourceTree = "<group>"; };
 		B95BF23723EBF43900A30DE0 /* ETCCardEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCCardEditViewController.swift; sourceTree = "<group>"; };
 		B95BF23B23EBFFE300A30DE0 /* ETCCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardView.swift; sourceTree = "<group>"; };
@@ -385,6 +402,7 @@
 		B964BCDD23E067EB00288E0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		B964BCDF23E067EB00288E0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B96793E824AF6ACC0019BFE5 /* apple_music_developer_token.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = apple_music_developer_token.txt; sourceTree = "<group>"; };
+		B967D07925D510A7000D9007 /* Rearview.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Rearview.entitlements; sourceTree = "<group>"; };
 		B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemTableViewController.swift; sourceTree = "<group>"; };
 		B97A82232553F8A900CD2870 /* Sun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sun.swift; sourceTree = "<group>"; };
@@ -416,6 +434,7 @@
 		B9B154F72576075C0031761F /* TabBarBadgeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarBadgeManager.swift; sourceTree = "<group>"; };
 		B9B399CB25965BDC00C7977F /* CameraOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOptions.swift; sourceTree = "<group>"; };
 		B9B39AB62598B11700C7977F /* HUDSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDSegmentedControl.swift; sourceTree = "<group>"; };
+		B9B4A8992569310400FE0C9F /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		B9B717DD23E6B26900A47207 /* UnknownItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownItem.swift; sourceTree = "<group>"; };
 		B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewCell.swift; sourceTree = "<group>"; };
 		B9BC920823250A0A006F22FC /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
@@ -473,6 +492,7 @@
 		B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPayment.swift; sourceTree = "<group>"; };
 		B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInViewController.swift; sourceTree = "<group>"; };
+		B9F272C3259C91990098CB3B /* AltitudeWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltitudeWidgetViewController.swift; sourceTree = "<group>"; };
 		B9F4375E25D414D8004B9140 /* RearviewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewConfiguration.swift; sourceTree = "<group>"; };
 		B9F4376C25D4170D004B9140 /* CameraSensitivityMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraSensitivityMode.swift; sourceTree = "<group>"; };
 		B9F4377B25D41C19004B9140 /* RearviewKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RearviewKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -537,6 +557,7 @@
 			files = (
 				B929FAFD24CECAC800BC773A /* AppleMusic.framework in Frameworks */,
 				B98B783A23ED4C3F00A5102F /* DashShareKit.framework in Frameworks */,
+				B9FACF4C25D4299900F05CAE /* RearviewKit.framework in Frameworks */,
 				01861A4B14032E6339D8E511 /* Pods_Dash.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -639,6 +660,16 @@
 			path = Music;
 			sourceTree = "<group>";
 		};
+		B954CA2825693CD100BAD0F0 /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */,
+				B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */,
+				B9F272C3259C91990098CB3B /* AltitudeWidgetViewController.swift */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
 		B9640ABC2575EBF200B779AD /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
@@ -731,6 +762,16 @@
 			path = DashShareKit;
 			sourceTree = "<group>";
 		};
+		B9B4A88C2569306500FE0C9F /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				B9B4A8992569310400FE0C9F /* DashboardViewController.swift */,
+				B954CA2825693CD100BAD0F0 /* Widget */,
+				B944C68E24A9E4C8000D1E99 /* Music */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
 		B9BF2F0323F6946100967316 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
@@ -743,9 +784,10 @@
 		B9C0CED72508F63F006D246E /* Rearview */ = {
 			isa = PBXGroup;
 			children = (
+				B967D07925D510A7000D9007 /* Rearview.entitlements */,
 				B9C0CED82508F63F006D246E /* AppDelegate.swift */,
 				B9C0CEDA2508F63F006D246E /* SceneDelegate.swift */,
-				B940A461250E5CDD006BDFBB /* Defaults.swift */,
+				B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */,
 				B940A45F250E5B57006BDFBB /* Settings.bundle */,
 				B9C0CEE12508F641006D246E /* Assets.xcassets */,
 				B9C0CEE32508F641006D246E /* LaunchScreen.storyboard */,
@@ -875,7 +917,7 @@
 				B9DC5B24229D59BE00B645D5 /* AppDelegate.swift */,
 				B90E21F824CBB1BF008330AD /* TabBarController.swift */,
 				B9B154F72576075C0031761F /* TabBarBadgeManager.swift */,
-				B944C68E24A9E4C8000D1E99 /* Music */,
+				B9B4A88C2569306500FE0C9F /* Dashboard */,
 				B9CEA76822D8F1990055C9A3 /* ETC */,
 				B9741F7623DF201A00F061E7 /* Inbox */,
 				B904A2A4243968840087BD4A /* Maps */,
@@ -1105,6 +1147,7 @@
 			dependencies = (
 				B98B783923ED4C3F00A5102F /* PBXTargetDependency */,
 				B929FAFC24CECAC800BC773A /* PBXTargetDependency */,
+				B9FACF4F25D4299900F05CAE /* PBXTargetDependency */,
 			);
 			name = Dash;
 			productName = ETC;
@@ -1577,7 +1620,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B940A462250E5CDD006BDFBB /* Defaults.swift in Sources */,
+				B940A462250E5CDD006BDFBB /* RearviewDefaults.swift in Sources */,
 				B9C0CED92508F63F006D246E /* AppDelegate.swift in Sources */,
 				B9C0CEDB2508F63F006D246E /* SceneDelegate.swift in Sources */,
 			);
@@ -1593,6 +1636,7 @@
 				B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */,
 				B9B154EE2575FCED0031761F /* FirebaseMessaging.swift in Sources */,
 				B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */,
+				B9F272C4259C91990098CB3B /* AltitudeWidgetViewController.swift in Sources */,
 				B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */,
 				B9DC5B46229EB8B200B645D5 /* SerialPortManager.swift in Sources */,
 				B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift in Sources */,
@@ -1605,6 +1649,7 @@
 				B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */,
 				B9CEA76622D89A400055C9A3 /* ETCDataStore.swift in Sources */,
 				B931C4FF23D369760020DF13 /* ETCDevice.swift in Sources */,
+				B954CA2325693CCC00BAD0F0 /* WidgetPageViewController.swift in Sources */,
 				B9D0261124BF7704005C03B1 /* BluetoothManagerHandler.m in Sources */,
 				B9C04B42257775B8001D6E0F /* WebViewController.swift in Sources */,
 				B904A2A6243968990087BD4A /* MapsViewController.swift in Sources */,
@@ -1627,6 +1672,7 @@
 				B9BF2F0523F6946100967316 /* GradientPathRenderer.swift in Sources */,
 				B9D0260F24BF7704005C03B1 /* ClassicBluetoothManager.swift in Sources */,
 				B9CB7C0D22AD65A40059433E /* UITableViewCellExtension.swift in Sources */,
+				B9B4A89A2569310400FE0C9F /* DashboardViewController.swift in Sources */,
 				B90666DE247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift in Sources */,
 				B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */,
 				B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */,
@@ -1657,10 +1703,12 @@
 				B9CEA76E22D911140055C9A3 /* ETCSplitViewController.swift in Sources */,
 				B9CB753624AA1A17008264F5 /* VolumeView.swift in Sources */,
 				B9EF566123DF3D61000D0CB2 /* GoogleSignInViewController.swift in Sources */,
+				B967D08225D51508000D9007 /* RearviewDefaults.swift in Sources */,
 				B9741F7523DF200600F061E7 /* SharedItemTableViewController.swift in Sources */,
 				B99356E422A94D6900BA08AB /* BLESerialPort.swift in Sources */,
 				B932E5EC23F86C5F00726615 /* MusicItem.swift in Sources */,
 				B92FB3C023E95BE900EA702C /* SharedItemTableViewCell.swift in Sources */,
+				B954CA3225693EDA00BAD0F0 /* RearviewWidgetViewController.swift in Sources */,
 				B9DC5B4A229EDA0000B645D5 /* SerialPort.swift in Sources */,
 				B9640AC22575EC0400B779AD /* FirebaseAuthentication.swift in Sources */,
 			);
@@ -1735,6 +1783,11 @@
 			isa = PBXTargetDependency;
 			target = B9F4377A25D41C19004B9140 /* RearviewKit */;
 			targetProxy = B9F4378025D41C19004B9140 /* PBXContainerItemProxy */;
+		};
+		B9FACF4F25D4299900F05CAE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9F4377A25D41C19004B9140 /* RearviewKit */;
+			targetProxy = B9FACF4E25D4299900F05CAE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2016,6 +2069,7 @@
 			baseConfigurationReference = 425C056D1C977242B289F14E /* Pods-Rearview.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Rearview/Rearview.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8LSN3WQC77;
@@ -2038,6 +2092,7 @@
 			baseConfigurationReference = D72D61E07B471561E0FDF3FC /* Pods-Rearview.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Rearview/Rearview.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8LSN3WQC77;
@@ -2185,7 +2240,7 @@
 				DEVELOPMENT_TEAM = 8LSN3WQC77;
 				INFOPLIST_FILE = Dash/Info.plist;
 				INFOPLIST_PREPROCESS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2212,7 +2267,7 @@
 				DEVELOPMENT_TEAM = 8LSN3WQC77;
 				INFOPLIST_FILE = Dash/Info.plist;
 				INFOPLIST_PREPROCESS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

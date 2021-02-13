@@ -48,6 +48,12 @@ import MediaPlayer
         }
     }
 
+    weak var visualEffectScopeView: UIView? {
+        didSet {
+            updateVisualEffectViewConstraints()
+        }
+    }
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInit()
@@ -130,16 +136,16 @@ import MediaPlayer
         NSLayoutConstraint.activate(constraints)
     }
 
-    override func didMoveToWindow() {
-        guard let window = window else { return }
-
+    func updateVisualEffectViewConstraints() {
         NSLayoutConstraint.deactivate(visualEffectView.constraints)
 
+        guard let scopeView = visualEffectScopeView else { return }
+
         NSLayoutConstraint.activate([
-            visualEffectView.topAnchor.constraint(equalTo: window.topAnchor),
-            window.bottomAnchor.constraint(equalTo: visualEffectView.bottomAnchor),
-            visualEffectView.leftAnchor.constraint(equalTo: window.leftAnchor),
-            window.rightAnchor.constraint(equalTo: visualEffectView.rightAnchor),
+            visualEffectView.topAnchor.constraint(equalTo: scopeView.topAnchor),
+            scopeView.bottomAnchor.constraint(equalTo: visualEffectView.bottomAnchor),
+            visualEffectView.leftAnchor.constraint(equalTo: scopeView.leftAnchor),
+            scopeView.rightAnchor.constraint(equalTo: visualEffectView.rightAnchor),
         ])
     }
 
