@@ -113,7 +113,10 @@ class DashboardViewController: UIViewController {
             }
             updateLayoutConstraintForDraggingState(gestureRecognizer: gestureRecognizer)
         case .ended:
-            switchLayoutWithAnimation(gestureRecognizer: gestureRecognizer)
+            let finalLayoutMode = layoutSwitchGesture.finalLayoutMode
+            switchLayoutWithAnimation(to: finalLayoutMode)
+        case .cancelled:
+            switchLayoutWithAnimation(to: currentLayoutMode)
         default:
             break
         }
@@ -129,10 +132,9 @@ class DashboardViewController: UIViewController {
         view.layoutIfNeeded()
     }
 
-    private func switchLayoutWithAnimation(gestureRecognizer: UIPanGestureRecognizer) {
+    private func switchLayoutWithAnimation(to finalLayoutMode: LayoutMode) {
         view.layoutIfNeeded()
 
-        let finalLayoutMode = layoutSwitchGesture.finalLayoutMode
         updateLayoutConstraints(for: finalLayoutMode)
 
         if (!hasBegunMusicViewAppearanceTransition && finalLayoutMode != currentLayoutMode) // Transitioning but hasn't notified
