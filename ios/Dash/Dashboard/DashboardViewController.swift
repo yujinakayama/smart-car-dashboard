@@ -46,7 +46,7 @@ class DashboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        updateLayoutConstraints(for: currentLayoutMode)
+        switchLayoutIfNeeded()
 
         NSLayoutConstraint.activate([
             musicEdgeGlossView.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale)
@@ -153,6 +153,15 @@ class DashboardViewController: UIViewController {
         }
     }
 
+    private func switchLayoutIfNeeded() {
+        if traitCollection.horizontalSizeClass != .compact, currentLayoutMode != .split {
+            widgetViewController.beginAppearanceTransition(true, animated: false)
+            currentLayoutMode = .split
+            updateLayoutConstraints(for: currentLayoutMode)
+            widgetViewController.endAppearanceTransition()
+        }
+    }
+
     private func updateLayoutConstraints(for layoutMode: LayoutMode) {
         // Deactivate all constraints once so that they won't raise UIViewAlertForUnsatisfiableConstraints error
         // that may caused by activation ordering
@@ -167,15 +176,10 @@ class DashboardViewController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
+        switchLayoutIfNeeded()
+
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             updateMusicContainerViewShadow()
-        }
-
-        if traitCollection.horizontalSizeClass != .compact, currentLayoutMode != .split {
-            widgetViewController.beginAppearanceTransition(true, animated: false)
-            currentLayoutMode = .split
-            updateLayoutConstraints(for: currentLayoutMode)
-            widgetViewController.endAppearanceTransition()
         }
     }
 
