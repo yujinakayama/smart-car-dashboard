@@ -10,7 +10,12 @@ import UIKit
 import RearviewKit
 
 class RearviewWidgetViewController: UIViewController {
-    var rearviewViewController: RearviewViewController?
+    lazy var rearviewViewController: RearviewViewController = {
+        let rearviewViewController = RearviewViewController(configuration: configuration, cameraSensitivityMode: RearviewDefaults.shared.cameraSensitivityMode)
+        rearviewViewController.delegate = self
+        rearviewViewController.contentMode = .top
+        return rearviewViewController
+    }()
 
     var configuration: RearviewConfiguration {
         return RearviewConfiguration(
@@ -34,10 +39,6 @@ class RearviewWidgetViewController: UIViewController {
     }
 
     func setUpRearviewViewController() {
-        let rearviewViewController = RearviewViewController(configuration: configuration, cameraSensitivityMode: RearviewDefaults.shared.cameraSensitivityMode)
-        rearviewViewController.delegate = self
-        rearviewViewController.videoGravity = .resizeAspectFill
-        rearviewViewController.sensitivityModeControlPosition = .center
 
         addChild(rearviewViewController)
         rearviewViewController.view.frame = view.bounds
@@ -47,11 +48,19 @@ class RearviewWidgetViewController: UIViewController {
         rearviewViewController.view.addGestureRecognizer(doubleTapGestureRecognizer)
         rearviewViewController.tapGestureRecognizer.require(toFail: doubleTapGestureRecognizer)
 
-        self.rearviewViewController = rearviewViewController
-
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
 
         NotificationCenter.default.addObserver(rearviewViewController, selector: #selector(RearviewViewController.stop), name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.horizontalSizeClass == .compact {
+            rearviewViewController.sensitivityModeControlPosition = .center
+        } else {
+            rearviewViewController.sensitivityModeControlPosition = .bottom
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -65,7 +74,7 @@ class RearviewWidgetViewController: UIViewController {
     }
 
     @objc func applicationWillEnterForeground() {
-        guard isVisible, let rearviewViewController = rearviewViewController else { return }
+        guard isVisible else { return }
 
         rearviewViewController.configuration = configuration
         rearviewViewController.cameraSensitivityMode = RearviewDefaults.shared.cameraSensitivityMode

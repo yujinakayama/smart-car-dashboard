@@ -39,13 +39,9 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         }
     }
 
-    public var videoGravity: AVLayerVideoGravity {
-        get {
-            return displayLayer.videoGravity
-        }
-
-        set {
-            displayLayer.videoGravity = newValue
+    public var contentMode: ContentMode = .scaleAspectFit {
+        didSet {
+            applyContentMode()
         }
     }
 
@@ -108,6 +104,10 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
     var pendingAlertController: UIAlertController?
 
+    lazy var displayViewTopConstraint = displayView.topAnchor.constraint(equalTo: view.topAnchor)
+    lazy var displayViewBottomConstraint = displayView.topAnchor.constraint(equalTo: view.bottomAnchor)
+    lazy var displayViewAspectRatioConstraint = displayView.widthAnchor.constraint(equalTo: displayView.heightAnchor, multiplier: 4 / 3)
+
     public override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -120,7 +120,6 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         self.configuration = configuration
         self.cameraOptionsAdjuster = CameraOptionsAdjuster(configuration: configuration, sensitivityMode: cameraSensitivityMode)
         super.init(nibName: nil, bundle: nil)
-        videoGravity = .resizeAspect
     }
 
     required init?(coder: NSCoder) {
@@ -139,6 +138,8 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         view.addGestureRecognizer(tapGestureRecognizer)
 
         installLayoutConstraints()
+
+        applyContentMode()
     }
 
     func installLayoutConstraints() {
@@ -147,10 +148,8 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         }
 
         NSLayoutConstraint.activate([
-            displayView.topAnchor.constraint(equalTo: view.topAnchor),
             displayView.leftAnchor.constraint(equalTo: view.leftAnchor),
             displayView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            displayView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
 
         NSLayoutConstraint.activate([
@@ -387,6 +386,34 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         }
     }
 
+    func applyContentMode() {
+        // First reset this constaint to avoid conflicts
+        displayViewAspectRatioConstraint.isActive = false
+
+        switch contentMode {
+        case .scaleAspectFit:
+            displayLayer.videoGravity = .resizeAspect
+            displayViewTopConstraint.isActive = true
+            displayViewBottomConstraint.isActive = true
+            displayViewAspectRatioConstraint.isActive = false
+        case .scaleAspectFill:
+            displayLayer.videoGravity = .resizeAspectFill
+            displayViewTopConstraint.isActive = true
+            displayViewBottomConstraint.isActive = true
+            displayViewAspectRatioConstraint.isActive = false
+        case .top:
+            displayLayer.videoGravity = .resizeAspectFill
+            displayViewTopConstraint.isActive = true
+            displayViewBottomConstraint.isActive = false
+            displayViewAspectRatioConstraint.isActive = true
+        case .bottom:
+            displayLayer.videoGravity = .resizeAspectFill
+            displayViewTopConstraint.isActive = false
+            displayViewBottomConstraint.isActive = true
+            displayViewAspectRatioConstraint.isActive = true
+        }
+    }
+
     func showAlertAboutInvalidRaspberryPiAddressLater() {
         let alertController = UIAlertController(
             title: nil,
@@ -401,6 +428,13 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 }
 
 extension RearviewViewController {
+    public enum ContentMode {
+        case scaleAspectFit
+        case scaleAspectFill
+        case top
+        case bottom
+    }
+
     public enum SensitivityModeControlPosition: CGFloat {
         case top    = 0.15
         case center = 0.50
