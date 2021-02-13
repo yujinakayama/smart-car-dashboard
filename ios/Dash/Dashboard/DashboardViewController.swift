@@ -53,6 +53,7 @@ class DashboardViewController: UIViewController {
         ])
 
         musicViewController.panGestureRecognizer.addTarget(self, action: #selector(gestureRecognizerDidRecognizePanGesture))
+        musicViewController.panGestureRecognizer.delegate = self
 
         updateMusicContainerViewShadow()
     }
@@ -98,8 +99,6 @@ class DashboardViewController: UIViewController {
     }
 
     @objc func gestureRecognizerDidRecognizePanGesture(gestureRecognizer: UIPanGestureRecognizer) {
-        guard traitCollection.horizontalSizeClass == .compact else { return }
-
         switch gestureRecognizer.state {
         case .began:
             // We don't invoke widgetViewController.beginAppearanceTransition() here
@@ -255,5 +254,14 @@ extension DashboardViewController {
         var delta: CGFloat {
             return gestureRecognizer.translation(in: nil).y
         }
+    }
+}
+
+extension DashboardViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard traitCollection.horizontalSizeClass == .compact else { return false }
+
+        let location = gestureRecognizer.location(in: musicViewController.view)
+        return location.y <= musicViewController.songTitleView.frame.maxY
     }
 }

@@ -32,7 +32,6 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
 
     lazy var panGestureRecognizer: UIPanGestureRecognizer = {
         let gestureRecognizer = UIPanGestureRecognizer()
-        gestureRecognizer.delegate = self
         view.addGestureRecognizer(gestureRecognizer)
         return gestureRecognizer
     }()
@@ -243,12 +242,5 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
         })
 
         return favoritesPlaylist as? MPMediaPlaylist
-    }
-}
-
-extension MusicViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        let location = gestureRecognizer.location(in: view)
-        return location.y <= songTitleView.frame.maxY
     }
 }
