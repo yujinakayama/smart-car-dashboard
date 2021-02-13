@@ -98,6 +98,8 @@ class DashboardViewController: UIViewController {
     }
 
     @objc func gestureRecognizerDidRecognizePanGesture(gestureRecognizer: UIPanGestureRecognizer) {
+        guard traitCollection.horizontalSizeClass == .compact else { return }
+
         switch gestureRecognizer.state {
         case .began:
             // We don't invoke widgetViewController.beginAppearanceTransition() here
