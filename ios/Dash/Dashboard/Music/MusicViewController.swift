@@ -12,6 +12,12 @@ import AVKit
 import StoreKit
 
 class MusicViewController: UIViewController, PlaybackControlViewDelegate {
+    enum LayoutMode {
+        case vertical
+        case square
+        case landscape
+    }
+
     @IBOutlet weak var artworkView: ArtworkView!
     @IBOutlet weak var songTitleView: SongTitleView!
     @IBOutlet weak var playbackProgressView: PlaybackProgressView!
@@ -30,6 +36,54 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
         view.addGestureRecognizer(gestureRecognizer)
         return gestureRecognizer
     }()
+
+    var currentLayoutMode: LayoutMode?
+
+    var desiredLayoutMode: LayoutMode {
+        if traitCollection.horizontalSizeClass == .compact {
+            return .vertical
+        } else {
+            let size = view.bounds.size
+
+            if (size.width / size.height) > 2 {
+                return .landscape
+            } else {
+                return .square
+            }
+        }
+    }
+
+    @IBOutlet var artworkViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet var artworkViewAndSongTitleViewTopAlignmentConstraint: NSLayoutConstraint!
+    @IBOutlet var songTitleViewAndPlaybackProgressViewLeadingAlignmentConstraint: NSLayoutConstraint!
+    @IBOutlet var songTitleViewAndPlaybackProgressViewVerticalConstraint: NSLayoutConstraint!
+    @IBOutlet var artworkViewAndVolumeViewBottomAlignmentConstraint: NSLayoutConstraint!
+
+    var constraintsForLandscapeLayoutMode: [NSLayoutConstraint] {
+        return [
+            artworkViewBottomConstraint,
+            artworkViewAndSongTitleViewTopAlignmentConstraint,
+            songTitleViewAndPlaybackProgressViewLeadingAlignmentConstraint,
+            songTitleViewAndPlaybackProgressViewVerticalConstraint,
+            artworkViewAndVolumeViewBottomAlignmentConstraint
+        ]
+    }
+
+    lazy var artworkViewBottomLargeSpacingConstraint = view.bottomAnchor.constraint(equalTo: artworkView.bottomAnchor, constant: 260)
+    lazy var artworkViewAndSongTitleViewCenterYAlignmentConstraint = songTitleView.centerYAnchor.constraint(equalTo: artworkView.centerYAnchor)
+    lazy var artworkViewAndPlaybackProgressViewLeadingAlignmentConstraint = playbackProgressView.leadingAnchor.constraint(equalTo: artworkView.leadingAnchor)
+    lazy var artworkViewAndPlaybackProgressViewVerticalConstraint = playbackProgressView.topAnchor.constraint(equalTo: artworkView.bottomAnchor, constant: 24)
+    lazy var volumeViewBottomConstraint = view.bottomAnchor.constraint(equalTo: volumeView.bottomAnchor, constant: 24)
+
+    var constraintsForSquareLayoutMode: [NSLayoutConstraint] {
+        return [
+            artworkViewBottomLargeSpacingConstraint,
+            artworkViewAndSongTitleViewCenterYAlignmentConstraint,
+            artworkViewAndPlaybackProgressViewLeadingAlignmentConstraint,
+            artworkViewAndPlaybackProgressViewVerticalConstraint,
+            volumeViewBottomConstraint
+        ]
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,6 +144,31 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(artworkViewDidRecognizeDoubleTap))
         gestureRecognizer.numberOfTapsRequired = 2
         artworkView.addGestureRecognizer(gestureRecognizer)
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        switchLayoutModeIfNeeded()
+    }
+
+    func switchLayoutModeIfNeeded() {
+        let desiredLayoutMode = self.desiredLayoutMode
+
+        if currentLayoutMode == desiredLayoutMode { return }
+
+        switch desiredLayoutMode {
+        case .vertical:
+            NSLayoutConstraint.deactivate(constraintsForSquareLayoutMode)
+            NSLayoutConstraint.deactivate(constraintsForLandscapeLayoutMode)
+        case .square:
+            NSLayoutConstraint.deactivate(constraintsForLandscapeLayoutMode)
+            NSLayoutConstraint.activate(constraintsForSquareLayoutMode)
+        case .landscape:
+            NSLayoutConstraint.deactivate(constraintsForSquareLayoutMode)
+            NSLayoutConstraint.activate(constraintsForLandscapeLayoutMode)
+        }
+
+        currentLayoutMode = desiredLayoutMode
     }
 
     func updatePlaybackModeButtons() {

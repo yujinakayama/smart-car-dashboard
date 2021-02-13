@@ -449,11 +449,16 @@
                     <tabBarItem key="tabBarItem" title="Music" image="music.note.beamed" id="s4e-oe-zlJ"/>
                     <connections>
                         <outlet property="artworkView" destination="3wq-8X-NTj" id="2Aa-Vh-QOj"/>
+                        <outlet property="artworkViewAndSongTitleViewTopAlignmentConstraint" destination="OOW-7M-hZB" id="SgG-lW-wzm"/>
+                        <outlet property="artworkViewAndVolumeViewBottomAlignmentConstraint" destination="03s-iN-iqr" id="e56-dA-43w"/>
+                        <outlet property="artworkViewBottomConstraint" destination="ejM-ZK-RCV" id="jre-Vx-GSq"/>
                         <outlet property="playbackControlView" destination="Z51-Ki-eML" id="CSg-xg-wZE"/>
                         <outlet property="playbackProgressView" destination="4EW-dl-7rX" id="JQa-Dw-sCH"/>
                         <outlet property="repeatModeButton" destination="TAK-Hz-Kv5" id="9K8-3K-4lK"/>
                         <outlet property="shuffleModeButton" destination="mfV-vr-luy" id="eje-LU-FiO"/>
                         <outlet property="songTitleView" destination="Beu-Kz-v6k" id="zWt-rx-Y2G"/>
+                        <outlet property="songTitleViewAndPlaybackProgressViewLeadingAlignmentConstraint" destination="Fz3-9K-KMf" id="7WN-yS-MNg"/>
+                        <outlet property="songTitleViewAndPlaybackProgressViewVerticalConstraint" destination="vQk-ek-ru3" id="fco-5X-DYn"/>
                         <outlet property="volumeView" destination="xiy-BS-1Rf" id="9XC-zY-aRP"/>
                     </connections>
                 </viewController>
