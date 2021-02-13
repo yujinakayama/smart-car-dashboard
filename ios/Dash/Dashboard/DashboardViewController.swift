@@ -46,7 +46,7 @@ class DashboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        switchLayoutIfNeeded()
+        updateLayoutConstraints(for: currentLayoutMode)
 
         NSLayoutConstraint.activate([
             musicEdgeGlossView.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale)
@@ -54,6 +54,8 @@ class DashboardViewController: UIViewController {
 
         musicViewController.panGestureRecognizer.addTarget(self, action: #selector(gestureRecognizerDidRecognizePanGesture))
         musicViewController.panGestureRecognizer.delegate = self
+
+        switchLayoutIfNeeded()
 
         updateMusicContainerViewShadow()
     }
