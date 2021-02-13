@@ -108,12 +108,12 @@ import MediaPlayer
         ])
 
         constraints.append(contentsOf: [
-            playPauseButton.leftAnchor.constraint(equalTo: backwardButton.rightAnchor, constant: 60),
+            backwardButton.leftAnchor.constraint(equalTo: leftAnchor),
             backwardButton.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
 
         constraints.append(contentsOf: [
-            forwardButton.leftAnchor.constraint(equalTo: playPauseButton.rightAnchor, constant: 60),
+            forwardButton.rightAnchor.constraint(equalTo: rightAnchor),
             forwardButton.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
 
