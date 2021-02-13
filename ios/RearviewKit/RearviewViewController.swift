@@ -105,7 +105,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
     var pendingAlertController: UIAlertController?
 
     lazy var displayViewTopConstraint = displayView.topAnchor.constraint(equalTo: view.topAnchor)
-    lazy var displayViewBottomConstraint = displayView.topAnchor.constraint(equalTo: view.bottomAnchor)
+    lazy var displayViewBottomConstraint = displayView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
     lazy var displayViewAspectRatioConstraint = displayView.widthAnchor.constraint(equalTo: displayView.heightAnchor, multiplier: 4 / 3)
 
     public override var preferredStatusBarStyle: UIStatusBarStyle {
