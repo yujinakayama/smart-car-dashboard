@@ -129,6 +129,10 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         fatalError()
     }
 
+    deinit {
+        stop()
+    }
+
     public override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -253,14 +257,11 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
             return
         }
 
-        do {
-            let connection = try Connection(host: configuration.raspberryPiAddress, port: 5001)
-            connection.delegate = self
-            connection.connect()
-            self.connection = connection
-        } catch {
-            showAlertAboutInvalidRaspberryPiAddressLater()
-        }
+        let host = NWEndpoint.Host.ipv4(configuration.raspberryPiAddress.ipv4Address)
+        let connection = Connection(host: host, port: 5001)
+        connection.delegate = self
+        connection.connect()
+        self.connection = connection
     }
 
     func connectionDidEstablish(_ connection: Connection) {
@@ -406,18 +407,6 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
             displayViewBottomConstraint.isActive = true
             displayViewAspectRatioConstraint.isActive = true
         }
-    }
-
-    func showAlertAboutInvalidRaspberryPiAddressLater() {
-        let alertController = UIAlertController(
-            title: nil,
-            message: "You need to specity your Raspberry Pi address in the Settings app.",
-            preferredStyle: .alert
-        )
-
-        alertController.addAction(UIAlertAction(title: "OK", style: .default))
-
-        pendingAlertController = alertController
     }
 }
 

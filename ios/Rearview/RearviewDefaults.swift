@@ -40,8 +40,9 @@ class RearviewDefaults {
         userDefaults.register(defaults: defaultValues)
     }
 
-    var raspberryPiAddress: String {
-        return userDefaults.string(forKey: Key.raspberryPiAddress.rawValue) ?? ""
+    var raspberryPiAddress: RearviewConfiguration.Address? {
+        guard let string = userDefaults.string(forKey: Key.raspberryPiAddress.rawValue) else { return nil }
+        return RearviewConfiguration.Address(string)
     }
 
     var cameraSensitivityMode: CameraSensitivityMode {

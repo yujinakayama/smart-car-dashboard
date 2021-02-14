@@ -103,7 +103,7 @@ class CameraOptionsAdjuster: NSObject, SunDelegate {
     private var url: URL? {
         var urlComponents = URLComponents()
         urlComponents.scheme = "http"
-        urlComponents.host = configuration.raspberryPiAddress
+        urlComponents.host = configuration.raspberryPiAddress.string
         urlComponents.port = 5002
         urlComponents.path = "/raspivid-options"
         return urlComponents.url

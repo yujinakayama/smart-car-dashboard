@@ -10,16 +10,13 @@ import UIKit
 import RearviewKit
 
 class RearviewWidgetViewController: UIViewController {
-    lazy var rearviewViewController: RearviewViewController = {
-        let rearviewViewController = RearviewViewController(configuration: configuration, cameraSensitivityMode: RearviewDefaults.shared.cameraSensitivityMode)
-        rearviewViewController.delegate = self
-        rearviewViewController.contentMode = .top
-        return rearviewViewController
-    }()
+    var rearviewViewController: RearviewViewController?
 
-    var configuration: RearviewConfiguration {
+    var configuration: RearviewConfiguration? {
+        guard let raspberryPiAddress = RearviewDefaults.shared.raspberryPiAddress else { return nil }
+
         return RearviewConfiguration(
-            raspberryPiAddress: RearviewDefaults.shared.raspberryPiAddress,
+            raspberryPiAddress: raspberryPiAddress,
             digitalGainForLowLightMode: RearviewDefaults.shared.digitalGainForLowLightMode,
             digitalGainForUltraLowLightMode: RearviewDefaults.shared.digitalGainForUltraLowLightMode
         )
@@ -33,12 +30,32 @@ class RearviewWidgetViewController: UIViewController {
         return gestureRecognizer
     }()
 
+    var warningLabel: UILabel?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpRearviewViewController()
+
+        view.backgroundColor = .black
+
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+
+        setUpRearviewViewControllerIfPossible()
     }
 
-    func setUpRearviewViewController() {
+    func setUpRearviewViewControllerIfPossible() {
+        if let configuration = configuration {
+            setUpRearviewViewController(configuration: configuration)
+        } else {
+            warnAboutInvalidRaspberryPiAddress()
+        }
+    }
+
+    func setUpRearviewViewController(configuration: RearviewConfiguration) {
+        let rearviewViewController = RearviewViewController(configuration: configuration, cameraSensitivityMode: RearviewDefaults.shared.cameraSensitivityMode)
+        rearviewViewController.delegate = self
+        rearviewViewController.contentMode = .top
 
         addChild(rearviewViewController)
         rearviewViewController.view.frame = view.bounds
@@ -48,13 +65,45 @@ class RearviewWidgetViewController: UIViewController {
         rearviewViewController.view.addGestureRecognizer(doubleTapGestureRecognizer)
         rearviewViewController.tapGestureRecognizer.require(toFail: doubleTapGestureRecognizer)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        self.rearviewViewController = rearviewViewController
+    }
 
-        NotificationCenter.default.addObserver(rearviewViewController, selector: #selector(RearviewViewController.stop), name: UIApplication.didEnterBackgroundNotification, object: nil)
+    func warnAboutInvalidRaspberryPiAddress() {
+        let label = UILabel()
+        label.text = "You need to specity your Raspberry Pi address in the Settings app."
+        label.textColor = UIColor(white: 1, alpha: 0.5)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+
+        view.addSubview(label)
+
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            label.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8)
+        ])
+
+        warningLabel = label
+    }
+
+    func tearDownRearviewViewControllerIfNeeded() {
+        guard let rearviewViewController = rearviewViewController else { return }
+
+        rearviewViewController.stop()
+
+        rearviewViewController.willMove(toParent: nil)
+        rearviewViewController.view.removeFromSuperview()
+        rearviewViewController.removeFromParent()
+
+        self.rearviewViewController = nil
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
+
+        guard let rearviewViewController = rearviewViewController else { return }
 
         if traitCollection.horizontalSizeClass == .compact {
             rearviewViewController.sensitivityModeControlPosition = .center
@@ -66,21 +115,26 @@ class RearviewWidgetViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isVisible = true
-        rearviewViewController.start()
+        rearviewViewController?.start()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         isVisible = false
-        rearviewViewController.stop()
+        rearviewViewController?.stop()
     }
 
     @objc func applicationWillEnterForeground() {
         guard isVisible else { return }
+        setUpRearviewViewControllerIfPossible()
+        rearviewViewController?.start()
+    }
 
-        rearviewViewController.configuration = configuration
-        rearviewViewController.cameraSensitivityMode = RearviewDefaults.shared.cameraSensitivityMode
-        rearviewViewController.start()
+    @objc func applicationDidEnterBackground() {
+        tearDownRearviewViewControllerIfNeeded()
+
+        warningLabel?.removeFromSuperview()
+        warningLabel = nil
     }
 
     @objc func gestureRecognizerDidRecognizeDoubleTap() {

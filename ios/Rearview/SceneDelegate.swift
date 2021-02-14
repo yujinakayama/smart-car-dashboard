@@ -14,9 +14,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var rearviewViewController: RearviewViewController?
 
-    var configuration: RearviewConfiguration {
+    var configuration: RearviewConfiguration? {
+        guard let raspberryPiAddress = RearviewDefaults.shared.raspberryPiAddress else { return nil }
+
         return RearviewConfiguration(
-            raspberryPiAddress: RearviewDefaults.shared.raspberryPiAddress,
+            raspberryPiAddress: raspberryPiAddress,
             digitalGainForLowLightMode: RearviewDefaults.shared.digitalGainForLowLightMode,
             digitalGainForUltraLowLightMode: RearviewDefaults.shared.digitalGainForUltraLowLightMode
         )
@@ -27,15 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
-
-        let rearviewViewController = RearviewViewController(configuration: configuration, cameraSensitivityMode: RearviewDefaults.shared.cameraSensitivityMode)
-        rearviewViewController.delegate = self
-        self.rearviewViewController = rearviewViewController
-
-        let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = rearviewViewController
-        window.makeKeyAndVisible()
-        self.window = window
+        window = UIWindow(windowScene: windowScene)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -58,33 +52,54 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
-        hideBlankScreen()
-
-        guard let rearviewViewController = rearviewViewController else { return }
-        rearviewViewController.configuration = configuration
-        rearviewViewController.cameraSensitivityMode = RearviewDefaults.shared.cameraSensitivityMode
-        rearviewViewController.start()
+        startIfPossible()
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
-        rearviewViewController?.stop()
+        stopIfNeeded()
         showBlankScreen()
+    }
+
+    func startIfPossible() {
+        guard let window = window else { return }
+
+        if let configuration = configuration {
+            let rearviewViewController = RearviewViewController(configuration: configuration, cameraSensitivityMode: RearviewDefaults.shared.cameraSensitivityMode)
+            rearviewViewController.delegate = self
+            window.rootViewController = rearviewViewController
+            window.makeKeyAndVisible()
+
+            rearviewViewController.start()
+
+            self.rearviewViewController = rearviewViewController
+        } else {
+            let alertController = UIAlertController(
+                title: nil,
+                message: "You need to specity your Raspberry Pi address in the Settings app.",
+                preferredStyle: .alert
+            )
+            alertController.addAction(UIAlertAction(title: "OK", style: .default))
+
+            window.rootViewController = UIViewController()
+            window.makeKeyAndVisible()
+            window.rootViewController?.present(alertController, animated: true)
+        }
+    }
+
+    func stopIfNeeded() {
+        rearviewViewController?.stop()
+        rearviewViewController = nil
     }
 
     // https://developer.apple.com/library/archive/qa/qa1838/_index.html
     func showBlankScreen() {
-        guard let rearviewViewController = rearviewViewController else { return }
+        guard let window = window else { return }
         let blankViewController = UIViewController()
-        blankViewController.modalPresentationStyle = .fullScreen
         blankViewController.view.backgroundColor = .black
-        rearviewViewController.present(blankViewController, animated: false)
-    }
-
-    func hideBlankScreen() {
-        rearviewViewController?.dismiss(animated: false)
+        window.rootViewController = blankViewController
     }
 }
 
