@@ -35,8 +35,6 @@ class Connection {
 
     let connection: NWConnection
     lazy var dispatchQueue = DispatchQueue(label: "NWConnection")
-    var timeoutTimer: DispatchSourceTimer?
-    let timeoutPeriod: TimeInterval = 1
     var isEstablished = false
     private var isTerminated = false
 
@@ -45,7 +43,15 @@ class Connection {
             throw ConnectionError.invalidHost
         }
 
-        connection = NWConnection(host: NWEndpoint.Host(host), port: port, using: .tcp)
+        let endpoint = NWEndpoint.hostPort(host: NWEndpoint.Host(host), port: port)
+
+        let tcpOptions = NWProtocolTCP.Options()
+        tcpOptions.connectionTimeout = 1  // establishmentTimeout
+        tcpOptions.connectionDropTime = 1 // connectionDropTimeout
+
+        let parameters = NWParameters(tls: nil, tcp: tcpOptions)
+
+        connection = NWConnection(to: endpoint, using: parameters)
 
         connection.stateUpdateHandler = { [weak self] (state) in
             self?.handleStateUpdate()
@@ -54,7 +60,6 @@ class Connection {
 
     func connect() {
         connection.start(queue: dispatchQueue)
-        scheduleTimeoutTimer()
     }
 
     func disconnect() {
@@ -66,7 +71,6 @@ class Connection {
     private func terminate(reason: TerminationReason) {
         isEstablished = false
         isTerminated = true
-        timeoutTimer?.cancel()
         connection.cancel()
         delegate?.connection(self, didTerminateWithReason: reason)
     }
@@ -77,7 +81,7 @@ class Connection {
         switch connection.state {
         case .waiting(let error):
             logger.error(error)
-            terminate(reason: .establishmentFailure)
+            terminate(reason: error.isTimeOutError ? .establishmentTimeout : .establishmentFailure)
         case .ready:
             if !isEstablished {
                 isEstablished = true
@@ -89,6 +93,7 @@ class Connection {
         case .failed(let error):
             logger.error(error)
             terminate(reason: .unexpectedDisconnection)
+            terminate(reason: error.isTimeOutError ? .connectionDropTimeout : .unexpectedDisconnection)
         default:
             break
         }
@@ -99,7 +104,6 @@ class Connection {
             guard let self = self else { return }
 
             if let data = data {
-                self.scheduleTimeoutTimer()
                 self.delegate?.connection(self, didReceiveData: data)
             }
 
@@ -114,30 +118,26 @@ class Connection {
             }
         }
     }
-
-    private func scheduleTimeoutTimer() {
-        timeoutTimer?.cancel()
-
-        let timer = DispatchSource.makeTimerSource(flags: [], queue: dispatchQueue)
-
-        timer.setEventHandler { [weak self] in
-            guard let self = self else { return }
-            self.terminate(reason: .timeout)
-        }
-
-        timer.schedule(deadline: .now() + timeoutPeriod)
-        timer.resume()
-
-        timeoutTimer = timer
-    }
 }
 
 extension Connection {
     enum TerminationReason {
         case establishmentFailure
+        case establishmentTimeout
         case closedByClient
         case closedByServer
         case unexpectedDisconnection
-        case timeout
+        case connectionDropTimeout
+    }
+}
+
+fileprivate extension NWError {
+    var isTimeOutError: Bool {
+        switch self {
+        case .posix(let posixErrorCode):
+            return posixErrorCode == .ETIMEDOUT
+        default:
+            return false
+        }
     }
 }
