@@ -9,34 +9,19 @@
 import UIKit
 
 class CameraOptionsAdjuster: NSObject, SunDelegate {
-    var configuration: RearviewConfiguration {
-        didSet {
-            if configuration != oldValue {
-                applySensitivityMode()
-            }
-        }
-    }
-
-    var sensitivityMode: CameraSensitivityMode {
-        didSet {
-            if sensitivityMode != oldValue {
-                applySensitivityMode()
-            }
-        }
-    }
+    var configuration: RearviewConfiguration
 
     let sun = Sun()
 
     private var _digitalGainForUltraLowLightMode: Float?
 
-    init(configuration: RearviewConfiguration, sensitivityMode: CameraSensitivityMode) {
+    init(configuration: RearviewConfiguration) {
         self.configuration = configuration
-        self.sensitivityMode = sensitivityMode
         super.init()
         sun.delegate = self
     }
 
-    func applySensitivityMode() {
+    func apply(_ sensitivityMode: CameraSensitivityMode) {
         logger.info(sensitivityMode)
 
         var cameraOptions: CameraOptions?

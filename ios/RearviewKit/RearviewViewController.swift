@@ -30,12 +30,12 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
     }
 
     public var cameraSensitivityMode: CameraSensitivityMode {
-        get {
-            return cameraOptionsAdjuster.sensitivityMode
-        }
+        didSet {
+            sensitivityModeSegmentedControl.selectedSegmentIndex = cameraSensitivityMode.rawValue
 
-        set {
-            cameraOptionsAdjuster.sensitivityMode = newValue
+            if isStarted {
+                cameraOptionsAdjuster.apply(cameraSensitivityMode)
+            }
         }
     }
 
@@ -56,6 +56,8 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
     var displayLayer: AVSampleBufferDisplayLayer {
         return displayView.displayLayer
     }
+
+    var isStarted: Bool = false
 
     var connection: Connection?
 
@@ -81,7 +83,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
         let segmentedControl = HUDSegmentedControl(titles: segmentTitles)
         segmentedControl.isHidden = true
-        segmentedControl.selectedSegmentIndex = cameraOptionsAdjuster.sensitivityMode.rawValue
+        segmentedControl.selectedSegmentIndex = cameraSensitivityMode.rawValue
         segmentedControl.addTarget(self, action: #selector(sensitivityModeSegmentedControlDidChangeValue), for: .valueChanged)
         return segmentedControl
     }()
@@ -118,7 +120,8 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
     public init(configuration: RearviewConfiguration, cameraSensitivityMode: CameraSensitivityMode = .auto) {
         self.configuration = configuration
-        self.cameraOptionsAdjuster = CameraOptionsAdjuster(configuration: configuration, sensitivityMode: cameraSensitivityMode)
+        self.cameraOptionsAdjuster = CameraOptionsAdjuster(configuration: configuration)
+        self.cameraSensitivityMode = cameraSensitivityMode
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -192,15 +195,6 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         sensitivityModeSegmentedControl.superview?.setNeedsLayout()
     }
 
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        if connection == nil {
-            cameraOptionsAdjuster.applySensitivityMode()
-            start()
-        }
-    }
-
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
@@ -210,39 +204,26 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         }
     }
 
-    public override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        stop()
-    }
-
     @objc public func start() {
-        hasReceivedInitialFrame = false
-
-        // Run the following command on the Raspberry Pi with camera:
-        // while :
-        // do
-        // raspivid --verbose --flush -t 0 --hflip -fps 40 --exposure nightpreview --metering backlit --awb auto --flicker auto --metering average --drc high --profile high -w 1440 -h 1080 --sharpness 100 --imxfx denoise --listen -o tcp://0.0.0.0:5001 --ev 10 --saturation 10
-        // done
-        do {
-            try connectToRaspberryPi(host: configuration.raspberryPiAddress)
-        } catch {
-            showAlertAboutInvalidRaspberryPiAddressLater()
-        }
+        if isStarted { return }
+        isStarted = true
+        cameraOptionsAdjuster.apply(cameraSensitivityMode)
+        connect()
     }
 
     @objc public func stop() {
+        isStarted = false
         retryTimer?.invalidate()
         connection?.disconnect()
-        connection = nil
         activityIndicatorView.stopAnimating()
     }
 
     func retry(terminationReason: Connection.TerminationReason) {
         if terminationReason == .closedByServer {
-            retryTimer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(start), userInfo: nil, repeats: false)
+            retryTimer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(connect), userInfo: nil, repeats: false)
         } else {
             startAnimatingActivityIndicator()
-            retryTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(start), userInfo: nil, repeats: false)
+            retryTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(connect), userInfo: nil, repeats: false)
         }
     }
 
@@ -266,11 +247,20 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         }
     }
 
-    func connectToRaspberryPi(host: String) throws {
-        let connection = try Connection(host: host, port: 5001)
-        connection.delegate = self
-        connection.connect()
-        self.connection = connection
+    @objc func connect() {
+        guard connection == nil else {
+            logger.warning("Skipping because a connection already exists")
+            return
+        }
+
+        do {
+            let connection = try Connection(host: configuration.raspberryPiAddress, port: 5001)
+            connection.delegate = self
+            connection.connect()
+            self.connection = connection
+        } catch {
+            showAlertAboutInvalidRaspberryPiAddressLater()
+        }
     }
 
     func connectionDidEstablish(_ connection: Connection) {
@@ -278,6 +268,8 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
+
+            self.hasReceivedInitialFrame = false
 
             self.activityIndicatorView.stopAnimating()
 
@@ -296,6 +288,8 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
+
+            self.connection = nil
 
             self.expiredFrameFlushingTimer?.invalidate()
             self.lastFrameTime = nil
@@ -369,7 +363,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
     @IBAction func sensitivityModeSegmentedControlDidChangeValue() {
         guard let sensitivityMode = CameraSensitivityMode(rawValue: sensitivityModeSegmentedControl.selectedSegmentIndex) else { return }
-        cameraOptionsAdjuster.sensitivityMode = sensitivityMode
+        cameraSensitivityMode = sensitivityMode
         resetSensitivityModeSegmentedControlVisibilityLifetime()
         delegate?.rearviewViewController(didChangeCameraSensitivityMode: sensitivityMode)
     }

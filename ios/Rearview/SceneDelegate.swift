@@ -63,12 +63,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let rearviewViewController = rearviewViewController else { return }
         rearviewViewController.configuration = configuration
         rearviewViewController.cameraSensitivityMode = RearviewDefaults.shared.cameraSensitivityMode
+        rearviewViewController.start()
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+        rearviewViewController?.stop()
         showBlankScreen()
     }
 

@@ -66,11 +66,13 @@ class RearviewWidgetViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isVisible = true
+        rearviewViewController.start()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         isVisible = false
+        rearviewViewController.stop()
     }
 
     @objc func applicationWillEnterForeground() {

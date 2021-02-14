@@ -18,7 +18,7 @@ class HUDSegmentedControl: UIControl {
         }
 
         set {
-            segmentedControl.setIndex(newValue, animated: true, shouldSendValueChangedEvent: true)
+            segmentedControl.setIndex(newValue, animated: false, shouldSendValueChangedEvent: false)
         }
     }
 
