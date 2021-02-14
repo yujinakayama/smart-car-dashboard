@@ -75,6 +75,9 @@ class Connection {
         logger.debug(connection.state)
 
         switch connection.state {
+        case .waiting(let error):
+            logger.error(error)
+            terminate(reason: .establishmentFailure)
         case .ready:
             if !isEstablished {
                 isEstablished = true
@@ -83,8 +86,9 @@ class Connection {
             readReceivedData()
         case .cancelled where !isTerminated:
             terminate(reason: .closedByClient)
-        case .failed:
-            terminate(reason: .error)
+        case .failed(let error):
+            logger.error(error)
+            terminate(reason: .unexpectedDisconnection)
         default:
             break
         }
@@ -130,9 +134,10 @@ class Connection {
 
 extension Connection {
     enum TerminationReason {
+        case establishmentFailure
         case closedByClient
         case closedByServer
-        case error
+        case unexpectedDisconnection
         case timeout
     }
 }
