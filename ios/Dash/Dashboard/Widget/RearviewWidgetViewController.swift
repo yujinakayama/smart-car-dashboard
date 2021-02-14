@@ -138,12 +138,15 @@ class RearviewWidgetViewController: UIViewController {
     }
 
     @objc func gestureRecognizerDidRecognizeDoubleTap() {
-        openRearviewApp()
+        handOffToRearviewApp()
     }
 
-    func openRearviewApp() {
+    func handOffToRearviewApp() {
+        rearviewViewController?.stop()
+
         var urlComponents = URLComponents()
         urlComponents.scheme = "rearview"
+        urlComponents.host = "handoff"
         let url = urlComponents.url!
         UIApplication.shared.open(url, options: [:])
     }

@@ -24,12 +24,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         )
     }
 
+    var isHandedOffFromOtherApp = false
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
+
         window = UIWindow(windowScene: windowScene)
+
+        if let url = connectionOptions.urlContexts.first?.url {
+            handle(url)
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -63,6 +70,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         showBlankScreen()
     }
 
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else { return }
+        handle(url)
+    }
+
+    func handle(_ url: URL) {
+        print(#function, url)
+
+        switch url.host {
+        case "handoff":
+            isHandedOffFromOtherApp = true
+        default:
+            break
+        }
+    }
+
     func startIfPossible() {
         guard let window = window else { return }
 
@@ -72,7 +95,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window.rootViewController = rearviewViewController
             window.makeKeyAndVisible()
 
-            rearviewViewController.start()
+            if isHandedOffFromOtherApp {
+                isHandedOffFromOtherApp = false
+
+                Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { (timer) in
+                    rearviewViewController.start()
+                }
+            } else {
+                rearviewViewController.start()
+            }
 
             self.rearviewViewController = rearviewViewController
         } else {
