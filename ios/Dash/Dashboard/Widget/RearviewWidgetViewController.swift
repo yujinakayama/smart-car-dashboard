@@ -125,9 +125,11 @@ class RearviewWidgetViewController: UIViewController {
     }
 
     @objc func applicationWillEnterForeground() {
-        guard isVisible else { return }
         setUpRearviewViewControllerIfPossible()
-        rearviewViewController?.start()
+
+        if isVisible {
+            rearviewViewController?.start()
+        }
     }
 
     @objc func applicationDidEnterBackground() {
