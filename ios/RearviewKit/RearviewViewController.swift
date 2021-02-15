@@ -104,8 +104,6 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         return gestureRecognizer
     }()
 
-    var pendingAlertController: UIAlertController?
-
     lazy var displayViewTopConstraint = displayView.topAnchor.constraint(equalTo: view.topAnchor)
     lazy var displayViewBottomConstraint = displayView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
     lazy var displayViewAspectRatioConstraint = displayView.widthAnchor.constraint(equalTo: displayView.heightAnchor, multiplier: 4 / 3)
@@ -197,15 +195,6 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         sensitivityModeSegmentedControlCenterYConstraint?.isActive = true
 
         sensitivityModeSegmentedControl.superview?.setNeedsLayout()
-    }
-
-    public override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        if let alertController = pendingAlertController {
-            present(alertController, animated: true)
-            pendingAlertController = nil
-        }
     }
 
     @objc public func start() {
