@@ -37,12 +37,14 @@ import MediaPlayer
 
     var musicPlayer: MPMusicPlayerController! {
         didSet {
+            playerState = PrecisePlayerState(musicPlayer: musicPlayer)
             addNotificationObserver()
             musicPlayerControllerNowPlayingItemDidChange()
         }
     }
 
-    lazy var precisePlaybackObserver = PrecisePlaybackObserver(musicPlayer: musicPlayer)
+    var playerState: PrecisePlayerState!
+
     var updateTimer: Timer?
     var sliderAnimator: UIViewPropertyAnimator?
 
@@ -138,7 +140,7 @@ import MediaPlayer
             return
         }
 
-        precisePlaybackObserver.waitForPlaybackToActuallyStart { [weak self] in
+        playerState.waitForPlaybackToActuallyStart { [weak self] in
             guard let self = self else { return }
 
             self.update()
@@ -154,7 +156,7 @@ import MediaPlayer
     }
 
     func unscheduleUpdates() {
-        precisePlaybackObserver.stopWaiting()
+        playerState.stopWaitingForPlaybackToActuallyStart()
         updateTimer?.invalidate()
         updateTimer = nil
     }
@@ -227,8 +229,8 @@ import MediaPlayer
         let isDragFinishing = !slider.isTracking
 
         if isDragFinishing {
-            musicPlayer.currentPlaybackTime = TimeInterval(slider.value)
-            // We spcify initialUpdate: false here because getter of musicPlayer.currentPlaybackTime
+            playerState.currentPlaybackTime = TimeInterval(slider.value)
+            // We specify initialUpdate: false here because getter of musicPlayer.currentPlaybackTime
             // returns the old value and calling update() here causes some flicker of the slider position
             scheduleUpdatesIfNeeded(initialUpdate: false)
         } else {
@@ -259,8 +261,7 @@ import MediaPlayer
     }
 
     var isPlayingLiveItem: Bool {
-        guard let musicPlayer = musicPlayer else { return false }
-        return musicPlayer.currentPlaybackTime.isNaN
+        return playerState?.currentPlaybackTime.isNaN ?? false
     }
 
     var isProbablyPlayingRadio: Bool {
@@ -272,13 +273,7 @@ import MediaPlayer
         if slider.isTracking {
             return TimeInterval(slider.value)
         } else {
-            // On iOS 14 musicPlayer.currentPlaybackTime tends to return musicPlayer.nowPlayingItem.playbackDuration (i.e. end of the song)
-            // when the musicPlayer.nowPlayingItem is just changed.
-            if musicPlayer.currentPlaybackTime == musicPlayer.nowPlayingItem?.playbackDuration {
-                return 0
-            } else {
-                return musicPlayer.currentPlaybackTime
-            }
+            return playerState.currentPlaybackTime
         }
     }
 
@@ -322,22 +317,73 @@ extension PlaybackProgressView {
 }
 
 extension PlaybackProgressView {
-    // TODO: Turn this utility into a class something like PlaybackTime
-    //   and manage all the odd behaviors of MPMusicPlayerController,
-    //   so that PlaybackProgressView can simply delegate all the workarounds to this class.
-    class PrecisePlaybackObserver {
+    class PrecisePlayerState {
         let musicPlayer: MPMusicPlayerController
-        var timer: Timer?
+
+        lazy var precisePlaybackObserver = PrecisePlaybackObserver(playerState: self)
+
+        var lastNowPlayingItemChangeTime: Date?
 
         init(musicPlayer: MPMusicPlayerController) {
             self.musicPlayer = musicPlayer
+
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(musicPlayerControllerNowPlayingItemDidChange),
+                name: .MPMusicPlayerControllerNowPlayingItemDidChange,
+                object: musicPlayer
+            )
+        }
+
+        @objc func musicPlayerControllerNowPlayingItemDidChange() {
+            lastNowPlayingItemChangeTime = Date()
+        }
+
+        var currentPlaybackTime: TimeInterval {
+            get {
+                // On iOS 14 musicPlayer.currentPlaybackTime tends to return
+                // musicPlayer.nowPlayingItem.playbackDuration (i.e. end of the song)
+                // when musicPlayer.nowPlayingItem is just changed.
+                if musicPlayer.currentPlaybackTime == musicPlayer.nowPlayingItem?.playbackDuration {
+                    return 0
+                } else if let lastNowPlayingItemChangeTime = lastNowPlayingItemChangeTime, Date().timeIntervalSince(lastNowPlayingItemChangeTime) < 0.15 {
+                    return 0
+                } else {
+                    return musicPlayer.currentPlaybackTime
+                }
+            }
+
+            set {
+                musicPlayer.currentPlaybackTime = newValue
+            }
+        }
+
+        var currentPlaybackRate: Float {
+            return musicPlayer.currentPlaybackRate
         }
 
         func waitForPlaybackToActuallyStart(precision: TimeInterval = 0.01, expirationDuration: TimeInterval = 1, handler: @escaping () -> Void) {
+            precisePlaybackObserver.waitForPlaybackToActuallyStart(precision: precision, expirationDuration: expirationDuration, handler: handler)
+        }
+
+        func stopWaitingForPlaybackToActuallyStart() {
+            precisePlaybackObserver.stopWaiting()
+        }
+    }
+
+    class PrecisePlaybackObserver {
+        let playerState: PrecisePlayerState
+        var timer: Timer?
+
+        init(playerState: PrecisePlayerState) {
+            self.playerState = playerState
+        }
+
+        func waitForPlaybackToActuallyStart(precision: TimeInterval, expirationDuration: TimeInterval, handler: @escaping () -> Void) {
             stopWaiting()
 
             let observationStartDate = Date()
-            let initialPlaybackTime = musicPlayer.currentPlaybackTime
+            let initialPlaybackTime = playerState.currentPlaybackTime
 
             timer = Timer.scheduledTimer(withTimeInterval: precision, repeats: true) { [weak self] (timer) in
                 guard let self = self else { return }
@@ -347,11 +393,11 @@ extension PlaybackProgressView {
                     return
                 }
 
-                if self.musicPlayer.currentPlaybackRate == 0 {
+                if self.playerState.currentPlaybackRate == 0 {
                     return
                 }
 
-                if self.musicPlayer.currentPlaybackTime != initialPlaybackTime  {
+                if self.playerState.currentPlaybackTime != initialPlaybackTime  {
                     handler()
                     self.stopWaiting()
                 }
