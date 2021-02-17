@@ -252,7 +252,7 @@ import MediaPlayer
         case .interrupted, .paused, .stopped:
             return false
         default:
-            return !isPlayingLiveItem
+            return !playerState.isWaitingForPlaybackToActuallyStart && !isPlayingLiveItem
         }
     }
 
@@ -369,6 +369,10 @@ extension PlaybackProgressView {
         func stopWaitingForPlaybackToActuallyStart() {
             precisePlaybackObserver.stopWaiting()
         }
+
+        var isWaitingForPlaybackToActuallyStart: Bool {
+            return precisePlaybackObserver.isWaiting
+        }
     }
 
     class PrecisePlaybackObserver {
@@ -407,6 +411,10 @@ extension PlaybackProgressView {
         func stopWaiting() {
             timer?.invalidate()
             timer = nil
+        }
+
+        var isWaiting: Bool {
+            return timer != nil
         }
     }
 }
