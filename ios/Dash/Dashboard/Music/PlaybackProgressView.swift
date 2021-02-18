@@ -72,7 +72,7 @@ import MediaPlayer
     }
 
     func setSliderThumbImage() {
-        if isPlayingLiveItem || isProbablyPlayingRadio {
+        if let playerState = playerState, playerState.isPlayingLiveItem || playerState.isProbablyPlayingRadio {
             slider.setThumbImage(UIImage(), for: .normal)
         } else {
             slider.setThumbImage(thumbImage, for: .normal)
@@ -136,7 +136,7 @@ import MediaPlayer
             update()
         }
 
-        if !willPlaybackTimeChange {
+        if !playerState.isMovingForwardPlaybackTime {
             return
         }
 
@@ -172,7 +172,7 @@ import MediaPlayer
 
         slider.value = Float(displayedPlaybackTime)
 
-        if !willPlaybackTimeChange || musicPlayer.currentPlaybackRate == 0 || slider.isTracking {
+        if !playerState.isMovingForwardPlaybackTime || playerState.currentPlaybackRate == 0 || slider.isTracking {
             return
         }
 
@@ -187,7 +187,7 @@ import MediaPlayer
 
     func updateTimeLabels() {
         if let nowPlayingItem = musicPlayer.nowPlayingItem {
-            if isPlayingLiveItem {
+            if playerState.isPlayingLiveItem {
                 elapsedTimeLabel.text = nil
                 remainingTimeLabel.text = nil
             } else {
@@ -210,7 +210,7 @@ import MediaPlayer
     @objc func musicPlayerControllerNowPlayingItemDidChange() {
         setSliderThumbImage()
         slider.maximumValue = Float(musicPlayer.nowPlayingItem?.playbackDuration ?? 0)
-        remainingTimeLabel.isHidden = isProbablyPlayingRadio
+        remainingTimeLabel.isHidden = playerState.isProbablyPlayingRadio
         scheduleUpdatesIfNeeded()
     }
 
@@ -247,26 +247,8 @@ import MediaPlayer
         }
     }
 
-    var willPlaybackTimeChange: Bool {
-        switch self.musicPlayer.playbackState {
-        case .interrupted, .paused, .stopped:
-            return false
-        default:
-            return !playerState.isWaitingForPlaybackToActuallyStart && !isPlayingLiveItem
-        }
-    }
-
     var playbackTimeUpdateInterval: TimeInterval {
         return TimeInterval(1.0 / musicPlayer.currentPlaybackRate)
-    }
-
-    var isPlayingLiveItem: Bool {
-        return playerState?.currentPlaybackTime.isNaN ?? false
-    }
-
-    var isProbablyPlayingRadio: Bool {
-        guard let nowPlayingItem = musicPlayer?.nowPlayingItem else { return false }
-        return nowPlayingItem.mediaType.rawValue == 0 || nowPlayingItem.playbackDuration == 0
     }
 
     var displayedPlaybackTime: TimeInterval {
@@ -360,6 +342,24 @@ extension PlaybackProgressView {
 
         var currentPlaybackRate: Float {
             return musicPlayer.currentPlaybackRate
+        }
+
+        var isMovingForwardPlaybackTime: Bool {
+            switch self.musicPlayer.playbackState {
+            case .interrupted, .paused, .stopped:
+                return false
+            default:
+                return !isWaitingForPlaybackToActuallyStart && !isPlayingLiveItem
+            }
+        }
+
+        var isPlayingLiveItem: Bool {
+            return musicPlayer.currentPlaybackTime.isNaN
+        }
+
+        var isProbablyPlayingRadio: Bool {
+            guard let nowPlayingItem = musicPlayer.nowPlayingItem else { return false }
+            return nowPlayingItem.mediaType.rawValue == 0 || nowPlayingItem.playbackDuration == 0
         }
 
         func waitForPlaybackToActuallyStart(precision: TimeInterval = 0.01, expirationDuration: TimeInterval = 1, handler: @escaping () -> Void) {
