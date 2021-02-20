@@ -27,7 +27,7 @@ class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelega
 
         NSLayoutConstraint.activate([
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            view.bottomAnchor.constraint(equalTo: pageControl.bottomAnchor, constant: 8)
+            view.bottomAnchor.constraint(equalTo: pageControl.bottomAnchor, constant: 4)
         ])
 
         return pageControl
