@@ -9,6 +9,9 @@
 import UIKit
 
 class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource {
+    let pageControlHeight: CGFloat = 28
+    let pageControlBottomMargin: CGFloat = 4
+
     lazy var widgetViewControllers: [UIViewController] = [
         RearviewWidgetViewController(),
         storyboard!.instantiateViewController(identifier: "AltitudeWidgetViewController"),
@@ -27,7 +30,8 @@ class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelega
 
         NSLayoutConstraint.activate([
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            view.bottomAnchor.constraint(equalTo: pageControl.bottomAnchor, constant: 4)
+            pageControl.heightAnchor.constraint(equalToConstant: pageControlHeight),
+            view.bottomAnchor.constraint(equalTo: pageControl.bottomAnchor, constant: pageControlBottomMargin)
         ])
 
         return pageControl
@@ -38,6 +42,13 @@ class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelega
 
         delegate = self
         dataSource = self
+
+        additionalSafeAreaInsets = UIEdgeInsets(
+            top: 0,
+            left: 0,
+            bottom: pageControlHeight + pageControlBottomMargin,
+            right: 0
+        )
 
         view.translatesAutoresizingMaskIntoConstraints = false
         _ = pageControl
