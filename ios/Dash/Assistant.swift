@@ -12,10 +12,11 @@ class Assistant {
     var autoLocationOpener: AutoLocationOpener?
 
     init() {
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
 
-    @objc func applicationDidBecomeActive() {
+    @objc func applicationWillEnterForeground() {
+        print(#function)
         if Defaults.shared.automaticallyOpenUnopenedLocationWhenAppIsOpened {
             autoLocationOpener = AutoLocationOpener()
         } else {
