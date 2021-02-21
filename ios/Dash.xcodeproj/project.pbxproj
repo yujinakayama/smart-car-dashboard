@@ -50,6 +50,7 @@
 		B929FB2F24CECAE700BC773A /* EditorialNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B929FB1924CECAE700BC773A /* EditorialNotes.swift */; };
 		B929FB3024CECAE700BC773A /* Curator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B929FB1A24CECAE700BC773A /* Curator.swift */; };
 		B92A61112576472A0073AB7B /* Assistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92A61102576472A0073AB7B /* Assistant.swift */; };
+		B92A97DA25E0AE8900D70A14 /* GForceMeterWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92A97D925E0AE8900D70A14 /* GForceMeterWidgetViewController.swift */; };
 		B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */; };
 		B92C6EC324AC2F0A001E9675 /* ArtworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92C6EC224AC2F0A001E9675 /* ArtworkView.swift */; };
 		B92C6EC524AC68B7001E9675 /* SongTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92C6EC424AC68B7001E9675 /* SongTitleView.swift */; };
@@ -355,6 +356,7 @@
 		B929FB1924CECAE700BC773A /* EditorialNotes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorialNotes.swift; sourceTree = "<group>"; };
 		B929FB1A24CECAE700BC773A /* Curator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Curator.swift; sourceTree = "<group>"; };
 		B92A61102576472A0073AB7B /* Assistant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assistant.swift; sourceTree = "<group>"; };
+		B92A97D925E0AE8900D70A14 /* GForceMeterWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GForceMeterWidgetViewController.swift; sourceTree = "<group>"; };
 		B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewController.swift; sourceTree = "<group>"; };
 		B92C6EC224AC2F0A001E9675 /* ArtworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkView.swift; sourceTree = "<group>"; };
 		B92C6EC424AC68B7001E9675 /* SongTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongTitleView.swift; sourceTree = "<group>"; };
@@ -666,6 +668,7 @@
 				B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */,
 				B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */,
 				B9F272C3259C91990098CB3B /* AltitudeWidgetViewController.swift */,
+				B92A97D925E0AE8900D70A14 /* GForceMeterWidgetViewController.swift */,
 			);
 			path = Widget;
 			sourceTree = "<group>";
@@ -1680,6 +1683,7 @@
 				B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */,
 				B9640AAB2575D9E800B779AD /* Firebase.swift in Sources */,
 				B9FB33E124AE2ACD00FEB782 /* PlaybackModeButton.swift in Sources */,
+				B92A97DA25E0AE8900D70A14 /* GForceMeterWidgetViewController.swift in Sources */,
 				B91E0B62254D047D002928D3 /* PairingURLItem.swift in Sources */,
 				B92E2AFC23E4958200BB4C0E /* UNNotificationContentExtension.swift in Sources */,
 				B9DB8E5522D7A410003E4BD8 /* Dash.xcdatamodeld in Sources */,

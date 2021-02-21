@@ -1571,6 +1571,37 @@
             </objects>
             <point key="canvasLocation" x="2772" y="-3108"/>
         </scene>
+        <!--G Force Meter Widget View Controller-->
+        <scene sceneID="cHI-QO-TJl">
+            <objects>
+                <viewController storyboardIdentifier="GMeterWidgetViewController" id="lRb-nJ-N4n" userLabel="G Force Meter Widget View Controller" customClass="GForceMeterWidgetViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fnb-OL-YU3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l5N-hO-tAC" customClass="GForceMeterView" customModule="Dash" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
+                                <viewLayoutGuide key="safeArea" id="kJq-XR-hiN"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="HQC-di-pGu"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="l5N-hO-tAC" firstAttribute="bottom" secondItem="fnb-OL-YU3" secondAttribute="bottom" id="8Ua-HT-dUy"/>
+                            <constraint firstItem="l5N-hO-tAC" firstAttribute="leading" secondItem="fnb-OL-YU3" secondAttribute="leading" id="M2U-mU-ZVx"/>
+                            <constraint firstItem="l5N-hO-tAC" firstAttribute="top" secondItem="fnb-OL-YU3" secondAttribute="top" id="aDb-PR-zFq"/>
+                            <constraint firstAttribute="trailing" secondItem="l5N-hO-tAC" secondAttribute="trailing" id="zqX-pL-pXR"/>
+                        </constraints>
+                    </view>
+                    <size key="freeformSize" width="375" height="211"/>
+                    <connections>
+                        <outlet property="gForceMeterView" destination="l5N-hO-tAC" id="mrb-OM-Mbd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J0k-sM-q2y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2772" y="-2909"/>
+        </scene>
     </scenes>
     <designables>
         <designable name="3d5-rM-KEm">

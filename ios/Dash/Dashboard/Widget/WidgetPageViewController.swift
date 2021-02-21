@@ -15,6 +15,7 @@ class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelega
     lazy var widgetViewControllers: [UIViewController] = [
         RearviewWidgetViewController(),
         storyboard!.instantiateViewController(identifier: "AltitudeWidgetViewController"),
+        storyboard!.instantiateViewController(identifier: "GMeterWidgetViewController")
     ]
 
     lazy var pageControl: UIPageControl = {
