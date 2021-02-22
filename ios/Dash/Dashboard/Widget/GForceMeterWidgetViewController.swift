@@ -245,7 +245,7 @@ class Accelerometer {
     }
 
     private func updateAccelerationPointerSize() {
-        let sideLength = scaleFrame.size.width / 12
+        let sideLength = sqrt(scaleFrame.size.width) * 1.2
         let size = CGSize(width: sideLength, height: sideLength)
         accelerationPointerLayer.bounds = CGRect(origin: .zero, size: size)
 
