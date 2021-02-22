@@ -13,20 +13,11 @@ import simd
 class GForceMeterWidgetViewController: UIViewController {
     @IBOutlet weak var gForceMeterView: GForceMeterView!
 
-    lazy var motionManager: CMMotionManager = {
-        let motionManager = CMMotionManager()
-        motionManager.accelerometerUpdateInterval = 1 / 30
-        return motionManager
-    }()
-
-    var isMetering = false
+    let accelerometer = Accelerometer()
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        if !isMetering {
-            startMetering()
-        }
+        startMetering()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -37,19 +28,74 @@ class GForceMeterWidgetViewController: UIViewController {
     func startMetering() {
         logger.info()
 
-        motionManager.startAccelerometerUpdates(to: .main) { [unowned self] (accelerometerData, error) in
-            guard let acceleration = accelerometerData?.acceleration else { return }
-            // TODO: calibarate the acceleration against stable acceleration
-            self.gForceMeterView.acceleration = acceleration
+        accelerometer.startMetering() { [unowned self] (result) in
+            switch result {
+            case .success(let acceleration):
+                // TODO: calibarate the acceleration against stable acceleration
+                self.gForceMeterView.acceleration = acceleration
+            case .failure(let error):
+                logger.error(error)
+            }
         }
-
-        isMetering = true
     }
 
     func stopMetering() {
         logger.info()
+        accelerometer.stopMetering()
+    }
+}
+
+class Accelerometer {
+    lazy var motionManager: CMMotionManager = {
+        let motionManager = CMMotionManager()
+        motionManager.accelerometerUpdateInterval = 1 / 30
+        return motionManager
+    }()
+
+    var isMetering: Bool {
+        return motionManager.isAccelerometerActive
+    }
+
+    func startMetering(handler: @escaping (Result<CMAcceleration, Error>) -> Void) {
+        guard !isMetering else { return }
+
+        motionManager.startAccelerometerUpdates(to: .main) { [unowned self] (accelerometerData, error) in
+            if let error = error {
+                handler(.failure(error))
+                return
+            }
+
+            if let acceleration = accelerometerData?.acceleration {
+                let normalizedAcceleration = self.normalizeAccelerationBasedOnInterfaceOrientation(acceleration)
+                handler(.success(normalizedAcceleration))
+            } else {
+                fatalError()
+            }
+        }
+    }
+
+    func stopMetering() {
         motionManager.stopAccelerometerUpdates()
-        isMetering = false
+    }
+
+    private func normalizeAccelerationBasedOnInterfaceOrientation(_ acceleration: CMAcceleration) -> CMAcceleration {
+        switch interfaceOrientation {
+        case .portrait:
+            return acceleration
+        case .portraitUpsideDown:
+            return CMAcceleration(x: -acceleration.x, y: -acceleration.y, z: acceleration.z)
+        case .landscapeLeft:
+            return CMAcceleration(x: acceleration.y, y: -acceleration.x, z: acceleration.z)
+        case .landscapeRight:
+            return CMAcceleration(x: -acceleration.y, y: acceleration.x, z: acceleration.z)
+        default:
+            return acceleration
+        }
+    }
+
+    var interfaceOrientation: UIInterfaceOrientation {
+        let scene = UIApplication.shared.connectedScenes.first as! UIWindowScene
+        return scene.interfaceOrientation
     }
 }
 
