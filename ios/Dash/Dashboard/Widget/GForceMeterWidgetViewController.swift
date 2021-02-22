@@ -31,8 +31,7 @@ class GForceMeterWidgetViewController: UIViewController {
         accelerometer.startMetering() { [unowned self] (result) in
             switch result {
             case .success(let acceleration):
-                // TODO: calibarate the acceleration against stable acceleration
-                self.gForceMeterView.acceleration = acceleration
+                self.displayCalibratedAcceleration(acceleration)
             case .failure(let error):
                 logger.error(error)
             }
@@ -42,6 +41,49 @@ class GForceMeterWidgetViewController: UIViewController {
     func stopMetering() {
         logger.info()
         accelerometer.stopMetering()
+    }
+
+    private func displayCalibratedAcceleration(_ acceleration: CMAcceleration) {
+        if calibrationMatrix == nil {
+            calibrationMatrix = makeCalibrationMatrix(from: acceleration)
+        }
+
+        if let calibrationMatrix = calibrationMatrix {
+            gForceMeterView.acceleration = calibrate(acceleration, with: calibrationMatrix)
+        }
+    }
+
+    private var calibrationMatrix: simd_double3x3?
+
+    func calibrate(_ acceleration: CMAcceleration, with calibrationMatrix: simd_double3x3) -> CMAcceleration {
+        let vector = simd_double3(acceleration)
+        let calibatedVector = calibrationMatrix * vector
+        return CMAcceleration(calibatedVector)
+    }
+
+    private func makeCalibrationMatrix(from referenceAcceleration: CMAcceleration) -> simd_double3x3 {
+        let referenceVector = simd_double3(referenceAcceleration)
+        return makeMatrix(rotating: referenceVector, to: gravityVectorWithFaceUpDeviceOrientation)
+    }
+
+    // https://developer.apple.com/documentation/coremotion/getting_raw_accelerometer_events
+    private let gravityVectorWithFaceUpDeviceOrientation = simd_double3(0, 0, -1)
+
+    // https://math.stackexchange.com/a/476311
+    private func makeMatrix(rotating sourceVector: simd_double3, to destinationVector: simd_double3) -> simd_double3x3 {
+        let v = cross(sourceVector, destinationVector)
+        let s = simd_length(v)
+        let c = dot(sourceVector, destinationVector)
+
+        let vx = simd_matrix_from_rows(
+            SIMD3(0, -v[2], v[1]),
+            SIMD3(v[2], 0, -v[0]),
+            SIMD3(-v[1], v[0], 0)
+        )
+
+        let r = matrix_identity_double3x3 + vx + vx * vx * Double((1 - c) / pow(s, 2))
+
+        return r
     }
 }
 
@@ -250,5 +292,17 @@ class Accelerometer {
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             updateColors()
         }
+    }
+}
+
+fileprivate extension simd_double3 {
+    init(_ acceleration: CMAcceleration) {
+        self.init(acceleration.x, acceleration.y, acceleration.z)
+    }
+}
+
+fileprivate extension CMAcceleration {
+    init(_ vector: simd_double3) {
+        self.init(x: vector.x, y: vector.y, z: vector.z)
     }
 }
