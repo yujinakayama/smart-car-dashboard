@@ -15,6 +15,16 @@ class GForceMeterWidgetViewController: UIViewController {
 
     let accelerometer = Accelerometer()
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.addInteraction(UIContextMenuInteraction(delegate: self))
+
+        if let referenceAcceleration = Defaults.shared.referenceAccelerationForGForceMeter {
+            calibrationMatrix = makeCalibrationMatrix(from: referenceAcceleration)
+        }
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         startMetering()
@@ -45,12 +55,18 @@ class GForceMeterWidgetViewController: UIViewController {
 
     private func displayCalibratedAcceleration(_ acceleration: CMAcceleration) {
         if calibrationMatrix == nil {
-            calibrationMatrix = makeCalibrationMatrix(from: acceleration)
+            setCurrentAccelerationAsReference()
         }
 
         if let calibrationMatrix = calibrationMatrix {
             gForceMeterView.acceleration = calibrate(acceleration, with: calibrationMatrix)
         }
+    }
+
+    private func setCurrentAccelerationAsReference() {
+        guard let acceleration = accelerometer.acceleration else { return }
+        Defaults.shared.referenceAccelerationForGForceMeter = acceleration
+        calibrationMatrix = makeCalibrationMatrix(from: acceleration)
     }
 
     private var calibrationMatrix: simd_double3x3?
@@ -87,12 +103,37 @@ class GForceMeterWidgetViewController: UIViewController {
     }
 }
 
+extension GForceMeterWidgetViewController: UIContextMenuInteractionDelegate {
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        let actionProvider: UIContextMenuActionProvider = { (suggestedActions) in
+            let action = UIAction(title: "Calibrate Acceleration", image: UIImage(systemName: "gyroscope")) { (action) in
+                // Delay to avoid vibrations by the touch operation
+                Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] (timer) in
+                    self?.setCurrentAccelerationAsReference()
+                }
+            }
+
+            return UIMenu(title: "", children: [action])
+        }
+
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: actionProvider)
+    }
+}
+
 class Accelerometer {
     lazy var motionManager: CMMotionManager = {
         let motionManager = CMMotionManager()
         motionManager.accelerometerUpdateInterval = 1 / 30
         return motionManager
     }()
+
+    var acceleration: CMAcceleration? {
+        if let acceleration = motionManager.accelerometerData?.acceleration {
+            return normalizeAccelerationBasedOnInterfaceOrientation(acceleration)
+        } else {
+            return nil
+        }
+    }
 
     var isMetering: Bool {
         return motionManager.isAccelerometerActive
@@ -292,17 +333,5 @@ class Accelerometer {
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             updateColors()
         }
-    }
-}
-
-fileprivate extension simd_double3 {
-    init(_ acceleration: CMAcceleration) {
-        self.init(acceleration.x, acceleration.y, acceleration.z)
-    }
-}
-
-fileprivate extension CMAcceleration {
-    init(_ vector: simd_double3) {
-        self.init(x: vector.x, y: vector.y, z: vector.z)
     }
 }

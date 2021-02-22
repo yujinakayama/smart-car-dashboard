@@ -8,6 +8,8 @@
 
 import Foundation
 import MapKit
+import CoreMotion
+import simd
 
 struct Defaults {
     static var shared = Defaults()
@@ -20,6 +22,7 @@ struct Defaults {
         static let automaticallyOpenUnopenedLocationWhenAppIsOpened = "automaticallyOpenUnopenedLocationWhenAppIsOpened"
         static let snapLocationToPointOfInterest = "snapLocationToPointOfInterest"
         static let mainETCCardUUID = "mainETCCardUUID"
+        static let referenceAccelerationForGForceMeter = "referenceAccelerationForGForceMeter"
         static let verboseLogging = "verboseLogging"
     }
 
@@ -83,6 +86,25 @@ struct Defaults {
 
         set {
             userDefaults.set(newValue?.uuidString, forKey: Key.mainETCCardUUID)
+        }
+    }
+
+    var referenceAccelerationForGForceMeter: CMAcceleration? {
+        get {
+            guard let data = userDefaults.data(forKey: Key.referenceAccelerationForGForceMeter) else { return nil }
+            guard let vector = try? JSONDecoder().decode(simd_double3.self, from: data) else { return nil }
+            return CMAcceleration(vector)
+        }
+
+        set {
+            var data: Data?
+
+            if let acceleration = newValue {
+                let vector = simd_double3(acceleration)
+                data = try? JSONEncoder().encode(vector)
+            }
+
+            userDefaults.set(data, forKey: Key.referenceAccelerationForGForceMeter)
         }
     }
 

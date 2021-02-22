@@ -17,6 +17,7 @@
 		B90265AB23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90265AA23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift */; };
 		B904A2A6243968990087BD4A /* MapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B904A2A5243968990087BD4A /* MapsViewController.swift */; };
 		B90666DE247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90666DD247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift */; };
+		B90C297225E3FB80004466C9 /* SIMDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90C297125E3FB80004466C9 /* SIMDExtension.swift */; };
 		B90E21F924CBB1BF008330AD /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90E21F824CBB1BF008330AD /* TabBarController.swift */; };
 		B91B5DD523ED7886003F4AEF /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91B5DD423ED7886003F4AEF /* Account.swift */; };
 		B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
@@ -323,6 +324,7 @@
 		B904A2A5243968990087BD4A /* MapsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsViewController.swift; sourceTree = "<group>"; };
 		B90666DD247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTypeSegmentedControlIndex.swift; sourceTree = "<group>"; };
 		B90700A3250E31B1004E7D7A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		B90C297125E3FB80004466C9 /* SIMDExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIMDExtension.swift; sourceTree = "<group>"; };
 		B90E21F824CBB1BF008330AD /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		B91B5DD423ED7886003F4AEF /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		B91E0B61254D047D002928D3 /* PairingURLItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingURLItem.swift; sourceTree = "<group>"; };
@@ -860,6 +862,7 @@
 				B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */,
 				B9D8E43923D345D70078A057 /* UUIDExtension.swift */,
 				B92E2AFB23E4958200BB4C0E /* UNNotificationContentExtension.swift */,
+				B90C297125E3FB80004466C9 /* SIMDExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1678,6 +1681,7 @@
 				B9B4A89A2569310400FE0C9F /* DashboardViewController.swift in Sources */,
 				B90666DE247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift in Sources */,
 				B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */,
+				B90C297225E3FB80004466C9 /* SIMDExtension.swift in Sources */,
 				B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */,
 				B99D4F2824C0526200647A10 /* BluetoothAudioDevice.swift in Sources */,
 				B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */,
