@@ -23,6 +23,12 @@ class GForceMeterWidgetViewController: UIViewController {
         if let referenceAcceleration = Defaults.shared.referenceAccelerationForGForceMeter {
             calibrationMatrix = makeCalibrationMatrix(from: referenceAcceleration)
         }
+
+        gForceMeterView.unitOfScale = Defaults.shared.unitOfGForceMeterScale
+
+        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { [weak self] (notification) in
+            self?.gForceMeterView.unitOfScale = Defaults.shared.unitOfGForceMeterScale
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -183,7 +189,7 @@ class Accelerometer {
 }
 
 @IBDesignable class GForceMeterView: UIView {
-    let gForceForScale: CGFloat = 0.5
+    var unitOfScale: CGFloat = 0.5
 
     var acceleration: CMAcceleration? {
         didSet {
@@ -256,8 +262,8 @@ class Accelerometer {
         let scale = scaleLayer.frame
 
         accelerationPointerLayer.position = CGPoint(
-            x: scale.midX + (CGFloat(acceleration?.x ?? 0) * CGFloat(scale.size.width / 2.0) / gForceForScale),
-            y: scale.midY - (CGFloat(acceleration?.y ?? 0) * CGFloat(scale.size.height / 2.0) / gForceForScale)
+            x: scale.midX + (CGFloat(acceleration?.x ?? 0) * CGFloat(scale.size.width / 2.0) / unitOfScale),
+            y: scale.midY - (CGFloat(acceleration?.y ?? 0) * CGFloat(scale.size.height / 2.0) / unitOfScale)
         )
     }
 

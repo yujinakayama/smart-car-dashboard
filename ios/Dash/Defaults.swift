@@ -23,6 +23,7 @@ struct Defaults {
         static let snapLocationToPointOfInterest = "snapLocationToPointOfInterest"
         static let mainETCCardUUID = "mainETCCardUUID"
         static let referenceAccelerationForGForceMeter = "referenceAccelerationForGForceMeter"
+        static let unitOfGForceMeterScale = "unitOfGForceMeterScale"
         static let verboseLogging = "verboseLogging"
     }
 
@@ -105,6 +106,12 @@ struct Defaults {
             }
 
             userDefaults.set(data, forKey: Key.referenceAccelerationForGForceMeter)
+        }
+    }
+
+    var unitOfGForceMeterScale: CGFloat {
+        get {
+            return CGFloat(userDefaults.float(forKey: Key.unitOfGForceMeterScale))
         }
     }
 
