@@ -189,11 +189,11 @@ class DashboardViewController: UIViewController {
     private func updateMusicContainerViewShadow() {
         musicContainerView.layer.shadowColor = UIColor.black.cgColor
         musicContainerView.layer.shadowOffset = CGSize.zero
-        musicContainerView.layer.shadowRadius = 20
+        musicContainerView.layer.shadowRadius = 16
 
         switch traitCollection.userInterfaceStyle {
         case .dark:
-            musicContainerView.layer.shadowOpacity = 0.5
+            musicContainerView.layer.shadowOpacity = 0.3
             musicEdgeGlossView.backgroundColor = UIColor(white: 1, alpha: 0.15)
         default:
             musicContainerView.layer.shadowOpacity = 0.15
