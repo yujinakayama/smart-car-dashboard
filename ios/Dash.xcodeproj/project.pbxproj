@@ -669,8 +669,8 @@
 			children = (
 				B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */,
 				B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */,
-				B9F272C3259C91990098CB3B /* AltitudeWidgetViewController.swift */,
 				B92A97D925E0AE8900D70A14 /* GForceMeterWidgetViewController.swift */,
+				B9F272C3259C91990098CB3B /* AltitudeWidgetViewController.swift */,
 			);
 			path = Widget;
 			sourceTree = "<group>";
