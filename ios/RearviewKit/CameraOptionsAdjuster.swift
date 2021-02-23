@@ -9,9 +9,15 @@
 import UIKit
 
 class CameraOptionsAdjuster: NSObject, SunDelegate {
+    let retryInterval: TimeInterval = 1
+
     var configuration: RearviewConfiguration
 
     let sun = Sun()
+
+    var lastRequestError: Error?
+
+    var remainingRetryCount = 0
 
     init(configuration: RearviewConfiguration) {
         self.configuration = configuration
@@ -19,8 +25,10 @@ class CameraOptionsAdjuster: NSObject, SunDelegate {
         sun.delegate = self
     }
 
-    func apply(_ sensitivityMode: CameraSensitivityMode) {
+    func apply(_ sensitivityMode: CameraSensitivityMode, maxRetryCount: Int = 0) {
         logger.info(sensitivityMode)
+
+        remainingRetryCount = maxRetryCount
 
         var cameraOptions: CameraOptions?
 
@@ -79,14 +87,29 @@ class CameraOptionsAdjuster: NSObject, SunDelegate {
         }
 
         let task = urlSession.dataTask(with: request) { (data, response, error) in
+            self.lastRequestError = error
+
             if let error = error {
                 logger.error(error)
+                self.retryIfPossible(cameraOptions: cameraOptions)
             } else {
                 logger.info(response)
             }
         }
 
         task.resume()
+    }
+
+    private func retryIfPossible(cameraOptions: CameraOptions) {
+        logger.info("remainingRetryCount: \(remainingRetryCount)")
+
+        guard remainingRetryCount > 0 else { return }
+
+        remainingRetryCount -= 1
+
+        DispatchQueue.global().asyncAfter(deadline: .now() + retryInterval) {
+            self.updateCameraOptions(cameraOptions)
+        }
     }
 
     private lazy var urlSession = URLSession(configuration: urlSessionConfiguration)

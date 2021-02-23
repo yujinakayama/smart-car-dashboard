@@ -256,6 +256,11 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
     func connectionDidEstablish(_ connection: Connection) {
         logger.info()
 
+        if cameraOptionsAdjuster.lastRequestError != nil {
+            // The sinatra server takes longer to launch than raspivid.
+            cameraOptionsAdjuster.apply(cameraSensitivityMode, maxRetryCount: 10)
+        }
+
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
 
