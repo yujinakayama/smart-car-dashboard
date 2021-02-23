@@ -78,7 +78,7 @@ class CameraOptionsAdjuster: NSObject, SunDelegate {
             return
         }
 
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        let task = urlSession.dataTask(with: request) { (data, response, error) in
             if let error = error {
                 logger.error(error)
             } else {
@@ -88,6 +88,16 @@ class CameraOptionsAdjuster: NSObject, SunDelegate {
 
         task.resume()
     }
+
+    private lazy var urlSession = URLSession(configuration: urlSessionConfiguration)
+
+    private lazy var urlSessionConfiguration: URLSessionConfiguration = {
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.allowsCellularAccess = false
+        configuration.timeoutIntervalForRequest = 1
+        configuration.urlCache = nil
+        return configuration
+    }()
 
     private func suitableCameraOptions(for sunAppearance: Sun.Appearance) -> CameraOptions {
         switch sunAppearance {
