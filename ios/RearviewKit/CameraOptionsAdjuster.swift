@@ -13,8 +13,6 @@ class CameraOptionsAdjuster: NSObject, SunDelegate {
 
     let sun = Sun()
 
-    private var _digitalGainForUltraLowLightMode: Float?
-
     init(configuration: RearviewConfiguration) {
         self.configuration = configuration
         super.init()
