@@ -41,7 +41,7 @@ class GForceMeterWidgetViewController: UIViewController {
 
     @objc func loadDefaults() {
         gForceMeterView.unitOfScale = Defaults.shared.unitOfGForceMeterScale
-        gForceMeterView.pointerScalingFactorForVerticalAcceleration = Defaults.shared.pointerScalingFactorForVerticalAccelerationForGForceMeter
+        gForceMeterView.pointerScalingBaseForVerticalAcceleration = Defaults.shared.pointerScalingBaseForVerticalAccelerationForGForceMeter
     }
 
     func startMetering() {
@@ -194,9 +194,9 @@ class Accelerometer {
 @IBDesignable class GForceMeterView: UIView {
     var unitOfScale: CGFloat = 0.5
 
-    var pointerScalingFactorForVerticalAcceleration: CGFloat? {
+    var pointerScalingBaseForVerticalAcceleration: CGFloat? {
         didSet {
-            if pointerScalingFactorForVerticalAcceleration == nil {
+            if pointerScalingBaseForVerticalAcceleration == nil {
                 accelerationPointerLayer.setAffineTransform(.identity)
             }
         }
@@ -280,9 +280,10 @@ class Accelerometer {
     }
 
     private func updateAccelerationPointerScale() {
-        guard let pointerScalingFactor = pointerScalingFactorForVerticalAcceleration else { return }
-        let verticalAccelerationWithoutGravity = CGFloat(acceleration?.z ?? -1) + 1
-        let scale = 1 + (verticalAccelerationWithoutGravity * pointerScalingFactor)
+        guard let pointerScalingBase = pointerScalingBaseForVerticalAcceleration else { return }
+
+        // https://www.desmos.com/calculator/jcctj2ah0v
+        let scale = pow(pointerScalingBase, CGFloat(acceleration?.z ?? -1) + 1)
         accelerationPointerLayer.setAffineTransform(CGAffineTransform(scaleX: scale, y: scale))
     }
 

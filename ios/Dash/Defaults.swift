@@ -24,7 +24,7 @@ struct Defaults {
         static let mainETCCardUUID = "mainETCCardUUID"
         static let referenceAccelerationForGForceMeter = "referenceAccelerationForGForceMeter"
         static let unitOfGForceMeterScale = "unitOfGForceMeterScale"
-        static let pointerScalingFactorForVerticalAccelerationForGForceMeter = "pointerScalingFactorForVerticalAccelerationForGForceMeter"
+        static let pointerScalingBaseForVerticalAccelerationForGForceMeter = "pointerScalingBaseForVerticalAccelerationForGForceMeter"
         static let verboseLogging = "verboseLogging"
     }
 
@@ -116,11 +116,11 @@ struct Defaults {
         }
     }
 
-    var pointerScalingFactorForVerticalAccelerationForGForceMeter: CGFloat? {
+    var pointerScalingBaseForVerticalAccelerationForGForceMeter: CGFloat? {
         get {
-            let float = userDefaults.float(forKey: Key.pointerScalingFactorForVerticalAccelerationForGForceMeter)
+            let float = userDefaults.float(forKey: Key.pointerScalingBaseForVerticalAccelerationForGForceMeter)
 
-            if float == 0 {
+            if float == 1 {
                 return nil
             } else {
                 return CGFloat(float)
