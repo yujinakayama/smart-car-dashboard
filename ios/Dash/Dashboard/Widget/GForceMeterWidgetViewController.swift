@@ -313,19 +313,14 @@ class Accelerometer {
     }
 
     private var scaleFrame: CGRect {
-        let safeFrame = layer.bounds.inset(by: safeAreaInsets)
-        let sideLength = min(safeFrame.size.width, safeFrame.size.height)
+        let sideLength = min(bounds.size.width, bounds.size.height)
+
         return CGRect(
-            x: safeFrame.midX - (sideLength / 2),
-            y: safeFrame.midY - (sideLength / 2),
+            x: bounds.midX - (sideLength / 2),
+            y: bounds.midY - (sideLength / 2),
             width: sideLength,
             height: sideLength
         )
-    }
-
-    override func safeAreaInsetsDidChange() {
-        super.safeAreaInsetsDidChange()
-        updateScaleShape()
     }
 
     override func tintColorDidChange() {
