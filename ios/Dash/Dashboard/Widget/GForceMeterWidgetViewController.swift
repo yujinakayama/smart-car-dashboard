@@ -24,11 +24,9 @@ class GForceMeterWidgetViewController: UIViewController {
             calibrationMatrix = makeCalibrationMatrix(from: referenceAcceleration)
         }
 
-        gForceMeterView.unitOfScale = Defaults.shared.unitOfGForceMeterScale
+        loadDefaults()
 
-        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { [weak self] (notification) in
-            self?.gForceMeterView.unitOfScale = Defaults.shared.unitOfGForceMeterScale
-        }
+        NotificationCenter.default.addObserver(self, selector: #selector(loadDefaults), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -39,6 +37,11 @@ class GForceMeterWidgetViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         stopMetering()
         super.viewDidDisappear(animated)
+    }
+
+    @objc func loadDefaults() {
+        gForceMeterView.unitOfScale = Defaults.shared.unitOfGForceMeterScale
+        gForceMeterView.pointerScalingFactorForVerticalAcceleration = Defaults.shared.pointerScalingFactorForVerticalAccelerationForGForceMeter
     }
 
     func startMetering() {
@@ -191,10 +194,19 @@ class Accelerometer {
 @IBDesignable class GForceMeterView: UIView {
     var unitOfScale: CGFloat = 0.5
 
+    var pointerScalingFactorForVerticalAcceleration: CGFloat? {
+        didSet {
+            if pointerScalingFactorForVerticalAcceleration == nil {
+                accelerationPointerLayer.setAffineTransform(.identity)
+            }
+        }
+    }
+
     var acceleration: CMAcceleration? {
         didSet {
             accelerationPointerLayer.isHidden = acceleration == nil
             updateAccelerationPointerPosition()
+            updateAccelerationPointerScale()
         }
     }
 
@@ -265,6 +277,13 @@ class Accelerometer {
             x: scale.midX + (CGFloat(acceleration?.x ?? 0) * CGFloat(scale.size.width / 2.0) / unitOfScale),
             y: scale.midY - (CGFloat(acceleration?.y ?? 0) * CGFloat(scale.size.height / 2.0) / unitOfScale)
         )
+    }
+
+    private func updateAccelerationPointerScale() {
+        guard let pointerScalingFactor = pointerScalingFactorForVerticalAcceleration else { return }
+        let verticalAccelerationWithoutGravity = CGFloat(acceleration?.z ?? -1) + 1
+        let scale = 1 + (verticalAccelerationWithoutGravity * pointerScalingFactor)
+        accelerationPointerLayer.setAffineTransform(CGAffineTransform(scaleX: scale, y: scale))
     }
 
     private lazy var accelerationPointerLayer: CAShapeLayer = {
