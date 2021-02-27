@@ -1266,7 +1266,7 @@
                             <constraint firstItem="kbs-HW-7zk" firstAttribute="right" secondItem="RGr-z9-sAj" secondAttribute="right" id="Psr-SA-PCU"/>
                             <constraint firstItem="uB9-Wf-7JO" firstAttribute="left" relation="greaterThanOrEqual" secondItem="aIe-nH-B5z" secondAttribute="left" id="T2F-BR-3Rd"/>
                             <constraint firstItem="kbs-HW-7zk" firstAttribute="left" secondItem="RGr-z9-sAj" secondAttribute="left" id="j1d-NF-Q2T"/>
-                            <constraint firstItem="kbs-HW-7zk" firstAttribute="bottom" secondItem="RGr-z9-sAj" secondAttribute="bottom" constant="-65" id="nCn-wg-1Hu"/>
+                            <constraint firstItem="kbs-HW-7zk" firstAttribute="bottom" secondItem="RGr-z9-sAj" secondAttribute="bottom" id="nCn-wg-1Hu"/>
                             <constraint firstItem="kbs-HW-7zk" firstAttribute="top" secondItem="RGr-z9-sAj" secondAttribute="top" id="r3D-qn-6XC"/>
                             <constraint firstItem="uB9-Wf-7JO" firstAttribute="top" secondItem="aIe-nH-B5z" secondAttribute="top" constant="20" id="xhc-KO-ISg"/>
                         </constraints>
