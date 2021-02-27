@@ -15,7 +15,7 @@ class OriginalLanguageSongTitleFetcher {
         case enUS = "en-US"
     }
 
-    static let cache = Cache(name: "OriginalLanguageSongTitleFetcher", ageLimit: 60 * 60 * 24 * 30 * 6) // 6 months
+    static let cache = Cache(name: "OriginalLanguageSongTitleFetcher", ageLimit: 60 * 60 * 24 * 30 * 12) // 12 months
 
     let appleMusicClient: AppleMusic
 
