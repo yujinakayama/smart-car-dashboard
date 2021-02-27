@@ -102,18 +102,14 @@
 			<key>Values</key>
 			<array>
 				<real>1</real>
-				<real>2</real>
-				<real>3</real>
-				<real>4</real>
 				<real>5</real>
+				<string>10</string>
 			</array>
 			<key>Titles</key>
 			<array>
 				<string>Disable Scaling</string>
-				<string>2</string>
-				<string>3</string>
-				<string>4</string>
 				<string>5</string>
+				<string>10</string>
 			</array>
 		</dict>
 	</array>
