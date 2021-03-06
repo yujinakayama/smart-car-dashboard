@@ -9,45 +9,41 @@
 import UIKit
 
 class Assistant {
-    var autoLocationOpener: AutoLocationOpener?
+    var locationOpener: LocationOpener?
 
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
 
     @objc func applicationWillEnterForeground() {
-        print(#function)
-        if Defaults.shared.automaticallyOpenUnopenedLocationWhenAppIsOpened {
-            autoLocationOpener = AutoLocationOpener()
+        if Defaults.shared.automaticallyOpensUnopenedLocationWhenAppIsOpened {
+            locationOpener = LocationOpener()
+            locationOpener?.start()
         } else {
-            autoLocationOpener = nil
+            locationOpener = nil
         }
     }
 }
 
 extension Assistant {
-    class AutoLocationOpener {
+    class LocationOpener {
         let startDate = Date()
         let timeoutTimeInterval: TimeInterval = 5
         var finished = false
 
-        init() {
-            logger.info()
-
+        func start() {
             NotificationCenter.default.addObserver(self, selector: #selector(sharedItemDatabaseDidUpdateItems), name: .SharedItemDatabaseDidUpdateItems, object: nil)
-
-            openUnopenedLocation()
         }
 
         @objc func sharedItemDatabaseDidUpdateItems() {
             logger.info()
 
             if Date().timeIntervalSince(startDate) < timeoutTimeInterval {
-                openUnopenedLocation()
+                openUnopenedLocationIfNeeded()
             }
         }
 
-        @objc func openUnopenedLocation() {
+        private func openUnopenedLocationIfNeeded() {
             logger.info()
 
             guard !finished else { return }

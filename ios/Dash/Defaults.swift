@@ -19,7 +19,7 @@ struct Defaults {
     private struct Key {
         static let mapTypeForETCRoute = "mapTypeForETCRoute"
         static let mapTypeForDirections = "mapTypeForDirections"
-        static let automaticallyOpenUnopenedLocationWhenAppIsOpened = "automaticallyOpenUnopenedLocationWhenAppIsOpened"
+        static let automaticallyOpensUnopenedLocationWhenAppIsOpened = "automaticallyOpensUnopenedLocationWhenAppIsOpened"
         static let snapLocationToPointOfInterest = "snapLocationToPointOfInterest"
         static let mainETCCardUUID = "mainETCCardUUID"
         static let referenceAccelerationForGForceMeter = "referenceAccelerationForGForceMeter"
@@ -65,9 +65,9 @@ struct Defaults {
         }
     }
 
-    var automaticallyOpenUnopenedLocationWhenAppIsOpened: Bool {
+    var automaticallyOpensUnopenedLocationWhenAppIsOpened: Bool {
         get {
-            return userDefaults.bool(forKey: Key.automaticallyOpenUnopenedLocationWhenAppIsOpened)
+            return userDefaults.bool(forKey: Key.automaticallyOpensUnopenedLocationWhenAppIsOpened)
         }
     }
 

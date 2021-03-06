@@ -48,9 +48,9 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Automatically Open Unopened Location When App Is Opened</string>
+			<string>Automatically Opens Unopened Location When App Is Opened</string>
 			<key>Key</key>
-			<string>automaticallyOpenUnopenedLocationWhenAppIsOpened</string>
+			<string>automaticallyOpensUnopenedLocationWhenAppIsOpened</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
