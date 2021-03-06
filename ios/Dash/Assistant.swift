@@ -27,20 +27,23 @@ class Assistant {
 
 extension Assistant {
     class LocationOpener {
-        let startDate = Date()
-        let timeoutTimeInterval: TimeInterval = 5
+        let maxDatabaseUpdateWaitTimeInterval: TimeInterval = 5
         var finished = false
 
         func start() {
             NotificationCenter.default.addObserver(self, selector: #selector(sharedItemDatabaseDidUpdateItems), name: .SharedItemDatabaseDidUpdateItems, object: nil)
+            Timer.scheduledTimer(timeInterval: maxDatabaseUpdateWaitTimeInterval, target: self, selector: #selector(timeoutTimerDidFire), userInfo: nil, repeats: false)
         }
 
         @objc func sharedItemDatabaseDidUpdateItems() {
             logger.info()
+            openUnopenedLocationIfNeeded()
+        }
 
-            if Date().timeIntervalSince(startDate) < timeoutTimeInterval {
-                openUnopenedLocationIfNeeded()
-            }
+        @objc func timeoutTimerDidFire() {
+            logger.info()
+            NotificationCenter.default.removeObserver(self, name: .SharedItemDatabaseDidUpdateItems, object: nil)
+            openUnopenedLocationIfNeeded()
         }
 
         private func openUnopenedLocationIfNeeded() {
