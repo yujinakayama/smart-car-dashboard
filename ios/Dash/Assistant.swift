@@ -12,12 +12,17 @@ class Assistant {
     var locationOpener: LocationOpener?
 
     init() {
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+
+    @objc func applicationDidEnterBackground() {
+        Defaults.shared.lastBackgroundEntranceTime = Date()
     }
 
     @objc func applicationWillEnterForeground() {
         if Defaults.shared.automaticallyOpensUnopenedLocationWhenAppIsOpened {
-            locationOpener = LocationOpener()
+            locationOpener = LocationOpener(newItemThresholdTime: Defaults.shared.lastBackgroundEntranceTime)
             locationOpener?.start()
         } else {
             locationOpener = nil
@@ -27,8 +32,13 @@ class Assistant {
 
 extension Assistant {
     class LocationOpener {
+        let newItemThresholdTime: Date
         let maxDatabaseUpdateWaitTimeInterval: TimeInterval = 5
         var finished = false
+
+        init(newItemThresholdTime: Date) {
+            self.newItemThresholdTime = newItemThresholdTime
+        }
 
         func start() {
             NotificationCenter.default.addObserver(self, selector: #selector(sharedItemDatabaseDidUpdateItems), name: .SharedItemDatabaseDidUpdateItems, object: nil)
@@ -52,7 +62,7 @@ extension Assistant {
             guard !finished else { return }
 
             guard let database = Firebase.shared.sharedItemDatabase else { return }
-            let unopenedLocations = database.items.filter { $0 is Location && !$0.hasBeenOpened }
+            let unopenedLocations = database.items.filter { $0 is Location && !$0.hasBeenOpened && ($0.creationDate ?? Date()) > newItemThresholdTime }
             guard unopenedLocations.count == 1, let location = unopenedLocations.first else { return }
             location.open(from: nil)
 

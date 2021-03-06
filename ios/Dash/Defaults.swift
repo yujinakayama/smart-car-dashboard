@@ -17,6 +17,7 @@ struct Defaults {
     private let userDefaults = UserDefaults.standard
 
     private struct Key {
+        static let lastBackgroundEntranceTime = "lastBackgroundEntranceTime"
         static let mapTypeForETCRoute = "mapTypeForETCRoute"
         static let mapTypeForDirections = "mapTypeForDirections"
         static let automaticallyOpensUnopenedLocationWhenAppIsOpened = "automaticallyOpensUnopenedLocationWhenAppIsOpened"
@@ -45,6 +46,17 @@ struct Defaults {
         }
 
         userDefaults.register(defaults: defaultValues)
+    }
+
+    var lastBackgroundEntranceTime: Date {
+        get {
+            let timeInterval = userDefaults.double(forKey: Key.lastBackgroundEntranceTime)
+            return Date(timeIntervalSinceReferenceDate: timeInterval)
+        }
+
+        set {
+            userDefaults.set(newValue.timeIntervalSinceReferenceDate, forKey: Key.lastBackgroundEntranceTime)
+        }
     }
 
     var mapTypeForETCRoute: MKMapType? {
