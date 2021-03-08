@@ -317,6 +317,7 @@ $ bundle install --deployment --binstubs
 Create systemd unit file:
 
 ```
+$ sudo nano /etc/systemd/system/raspivid-adjuster-server.service
 [Unit]
 Description=raspivid adjuster server
 After=network.target
