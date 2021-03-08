@@ -117,7 +117,11 @@ extension CameraOptions {
 
         func encode(to encoder: Encoder) throws {
             var container = encoder.singleValueContainer()
-            try container.encode(String(format: "%d,%d", u, v))
+            try container.encode(string)
+        }
+
+        var string: String {
+            return [u, v].map { String($0) }.joined(separator: ",")
         }
     }
 
@@ -133,7 +137,11 @@ extension CameraOptions {
 
         func encode(to encoder: Encoder) throws {
             var container = encoder.singleValueContainer()
-            try container.encode(String(format: "%f,%f,%f,%f", x, y, width, height))
+            try container.encode(string)
+        }
+
+        var string: String {
+            return [x, y, width, height].map { String($0) }.joined(separator: ",")
         }
     }
 
@@ -147,7 +155,11 @@ extension CameraOptions {
 
         func encode(to encoder: Encoder) throws {
             var container = encoder.singleValueContainer()
-            try container.encode(String(format: "%f,%f", blue, red))
+            try container.encode(string)
+        }
+
+        var string: String {
+            return [blue, red].map { String($0) }.joined(separator: ",")
         }
     }
 
