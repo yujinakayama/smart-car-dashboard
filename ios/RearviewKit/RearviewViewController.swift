@@ -18,16 +18,7 @@ public protocol RearviewViewControllerDelegate: NSObjectProtocol {
 public class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStreamParserDelegate {
     public weak var delegate: RearviewViewControllerDelegate?
 
-    public var configuration: RearviewConfiguration {
-        didSet {
-            cameraOptionsAdjuster.configuration = configuration
-
-            if configuration.raspberryPiAddress != oldValue.raspberryPiAddress {
-                stop()
-                start()
-            }
-        }
-    }
+    public let configuration: RearviewConfiguration
 
     public var cameraSensitivityMode: CameraSensitivityMode {
         didSet {
