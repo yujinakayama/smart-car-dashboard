@@ -18,16 +18,7 @@ public protocol RearviewViewControllerDelegate: NSObjectProtocol {
 public class RearviewViewController: UIViewController, ConnectionDelegate, H264ByteStreamParserDelegate {
     public weak var delegate: RearviewViewControllerDelegate?
 
-    public var configuration: RearviewConfiguration {
-        didSet {
-            cameraOptionsAdjuster.configuration = configuration
-
-            if configuration.raspberryPiAddress != oldValue.raspberryPiAddress {
-                stop()
-                start()
-            }
-        }
-    }
+    public let configuration: RearviewConfiguration
 
     public var cameraSensitivityMode: CameraSensitivityMode {
         didSet {
@@ -45,17 +36,13 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         }
     }
 
-    lazy var displayView = AVSampleBufferDisplayView()
+    lazy var videoDisplayView = VideoDisplayView()
 
     lazy var activityIndicatorView: UIActivityIndicatorView = {
         let activityIndicatorView = UIActivityIndicatorView(style: .large)
         activityIndicatorView.color = .white
         return activityIndicatorView
     }()
-
-    var displayLayer: AVSampleBufferDisplayLayer {
-        return displayView.displayLayer
-    }
 
     var isStarted: Bool = false
 
@@ -104,9 +91,9 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         return gestureRecognizer
     }()
 
-    lazy var displayViewTopConstraint = displayView.topAnchor.constraint(equalTo: view.topAnchor)
-    lazy var displayViewBottomConstraint = displayView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-    lazy var displayViewAspectRatioConstraint = displayView.widthAnchor.constraint(equalTo: displayView.heightAnchor, multiplier: 4 / 3)
+    lazy var videoDisplayViewTopConstraint = videoDisplayView.topAnchor.constraint(equalTo: view.topAnchor)
+    lazy var videoDisplayViewBottomConstraint = videoDisplayView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+    lazy var videoDisplayViewAspectRatioConstraint = videoDisplayView.widthAnchor.constraint(equalTo: videoDisplayView.heightAnchor, multiplier: 4 / 3)
 
     public override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -136,7 +123,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
         view.backgroundColor = .black
 
-        view.addSubview(displayView)
+        view.addSubview(videoDisplayView)
         view.addSubview(activityIndicatorView)
         view.addSubview(sensitivityModeSegmentedControl)
 
@@ -145,6 +132,8 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         installLayoutConstraints()
 
         applyContentMode()
+
+        applyFilters()
     }
 
     func installLayoutConstraints() {
@@ -153,8 +142,8 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         }
 
         NSLayoutConstraint.activate([
-            displayView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            displayView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            videoDisplayView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            videoDisplayView.rightAnchor.constraint(equalTo: view.rightAnchor),
         ])
 
         NSLayoutConstraint.activate([
@@ -236,7 +225,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
     func flushImage() {
         DispatchQueue.main.async {
-            self.displayLayer.flushAndRemoveImage()
+            self.videoDisplayView.flushAndRemoveImage()
         }
     }
 
@@ -314,8 +303,8 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
             hasReceivedInitialFrame = true
         }
 
-        DispatchQueue.main.async { [weak self] in
-            self?.displayLayer.enqueue(sampleBuffer)
+        DispatchQueue.main.async {
+            self.videoDisplayView.enqueue(sampleBuffer)
         }
     }
 
@@ -324,7 +313,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         animation.fromValue = 0
         animation.toValue = 1
         animation.duration = 0.25
-        displayLayer.add(animation, forKey: nil)
+        videoDisplayView.layer.add(animation, forKey: nil)
     }
 
     // For safety, avoid keeping displaying old frame when the connection is unstable
@@ -377,30 +366,42 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
     func applyContentMode() {
         // First reset this constaint to avoid conflicts
-        displayViewAspectRatioConstraint.isActive = false
+        videoDisplayViewAspectRatioConstraint.isActive = false
 
         switch contentMode {
         case .scaleAspectFit:
-            displayLayer.videoGravity = .resizeAspect
-            displayViewTopConstraint.isActive = true
-            displayViewBottomConstraint.isActive = true
-            displayViewAspectRatioConstraint.isActive = false
+            videoDisplayView.scalingMode = .aspectFit
+            videoDisplayViewTopConstraint.isActive = true
+            videoDisplayViewBottomConstraint.isActive = true
+            videoDisplayViewAspectRatioConstraint.isActive = false
         case .scaleAspectFill:
-            displayLayer.videoGravity = .resizeAspectFill
-            displayViewTopConstraint.isActive = true
-            displayViewBottomConstraint.isActive = true
-            displayViewAspectRatioConstraint.isActive = false
+            videoDisplayView.scalingMode = .aspectFill
+            videoDisplayViewTopConstraint.isActive = true
+            videoDisplayViewBottomConstraint.isActive = true
+            videoDisplayViewAspectRatioConstraint.isActive = false
         case .top:
-            displayLayer.videoGravity = .resizeAspectFill
-            displayViewTopConstraint.isActive = true
-            displayViewBottomConstraint.isActive = false
-            displayViewAspectRatioConstraint.isActive = true
+            videoDisplayView.scalingMode = .aspectFill
+            videoDisplayViewTopConstraint.isActive = true
+            videoDisplayViewBottomConstraint.isActive = false
+            videoDisplayViewAspectRatioConstraint.isActive = true
         case .bottom:
-            displayLayer.videoGravity = .resizeAspectFill
-            displayViewTopConstraint.isActive = false
-            displayViewBottomConstraint.isActive = true
-            displayViewAspectRatioConstraint.isActive = true
+            videoDisplayView.scalingMode = .aspectFill
+            videoDisplayViewTopConstraint.isActive = false
+            videoDisplayViewBottomConstraint.isActive = true
+            videoDisplayViewAspectRatioConstraint.isActive = true
         }
+    }
+
+    func applyFilters() {
+        var filters: [String: [String: Any]] = [:]
+
+        if let gammaAdjustmentPower = configuration.gammaAdjustmentPower {
+            filters["CIGammaAdjust"] = [
+                "inputPower": gammaAdjustmentPower
+            ]
+        }
+
+        videoDisplayView.filters = filters
     }
 }
 

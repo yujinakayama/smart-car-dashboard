@@ -12,16 +12,6 @@ import RearviewKit
 class RearviewWidgetViewController: UIViewController {
     var rearviewViewController: RearviewViewController?
 
-    var configuration: RearviewConfiguration? {
-        guard let raspberryPiAddress = RearviewDefaults.shared.raspberryPiAddress else { return nil }
-
-        return RearviewConfiguration(
-            raspberryPiAddress: raspberryPiAddress,
-            digitalGainForLowLightMode: RearviewDefaults.shared.digitalGainForLowLightMode,
-            digitalGainForUltraLowLightMode: RearviewDefaults.shared.digitalGainForUltraLowLightMode
-        )
-    }
-
     var isVisible = false
 
     lazy var doubleTapGestureRecognizer: UITapGestureRecognizer = {
@@ -45,7 +35,7 @@ class RearviewWidgetViewController: UIViewController {
     }
 
     func setUpRearviewViewControllerIfPossible() {
-        if let configuration = configuration {
+        if let configuration = RearviewDefaults.shared.configuration {
             setUpRearviewViewController(configuration: configuration)
         } else {
             warnAboutInvalidRaspberryPiAddress()

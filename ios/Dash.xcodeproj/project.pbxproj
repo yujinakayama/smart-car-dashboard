@@ -19,6 +19,11 @@
 		B90666DE247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90666DD247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift */; };
 		B90C297225E3FB80004466C9 /* SIMDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90C297125E3FB80004466C9 /* SIMDExtension.swift */; };
 		B90E21F924CBB1BF008330AD /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90E21F824CBB1BF008330AD /* TabBarController.swift */; };
+		B90F5FD525EFF13D00C2578C /* CIImageDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F5FD425EFF13D00C2578C /* CIImageDisplayView.swift */; };
+		B90F5FED25F0079600C2578C /* VideoDisplayViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F5FEC25F0079600C2578C /* VideoDisplayViewProtocol.swift */; };
+		B90F5FFF25F3CA4D00C2578C /* SampleBufferDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F5FFE25F3CA4D00C2578C /* SampleBufferDecoder.swift */; };
+		B90F600925F3CD0300C2578C /* FilterableVideoDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F600825F3CD0300C2578C /* FilterableVideoDisplayView.swift */; };
+		B90F600F25F3E10A00C2578C /* VideoDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F600E25F3E10A00C2578C /* VideoDisplayView.swift */; };
 		B91B5DD523ED7886003F4AEF /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91B5DD423ED7886003F4AEF /* Account.swift */; };
 		B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
 		B91BD8092323FD820064D2B5 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
@@ -326,6 +331,11 @@
 		B90700A3250E31B1004E7D7A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B90C297125E3FB80004466C9 /* SIMDExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIMDExtension.swift; sourceTree = "<group>"; };
 		B90E21F824CBB1BF008330AD /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		B90F5FD425EFF13D00C2578C /* CIImageDisplayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CIImageDisplayView.swift; sourceTree = "<group>"; };
+		B90F5FEC25F0079600C2578C /* VideoDisplayViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDisplayViewProtocol.swift; sourceTree = "<group>"; };
+		B90F5FFE25F3CA4D00C2578C /* SampleBufferDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleBufferDecoder.swift; sourceTree = "<group>"; };
+		B90F600825F3CD0300C2578C /* FilterableVideoDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterableVideoDisplayView.swift; sourceTree = "<group>"; };
+		B90F600E25F3E10A00C2578C /* VideoDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDisplayView.swift; sourceTree = "<group>"; };
 		B91B5DD423ED7886003F4AEF /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		B91E0B61254D047D002928D3 /* PairingURLItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingURLItem.swift; sourceTree = "<group>"; };
 		B92451D323E30ACE007556D5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -975,8 +985,13 @@
 				B9F4375E25D414D8004B9140 /* RearviewConfiguration.swift */,
 				B9F4376C25D4170D004B9140 /* CameraSensitivityMode.swift */,
 				B940A465250F0EBB006BDFBB /* Connection.swift */,
+				B90F600E25F3E10A00C2578C /* VideoDisplayView.swift */,
+				B90F5FEC25F0079600C2578C /* VideoDisplayViewProtocol.swift */,
 				B940A45D250E3B50006BDFBB /* AVSampleBufferDisplayView.swift */,
+				B90F600825F3CD0300C2578C /* FilterableVideoDisplayView.swift */,
+				B90F5FD425EFF13D00C2578C /* CIImageDisplayView.swift */,
 				B9C0CEEA2508F711006D246E /* H264ByteStreamParser.swift */,
+				B90F5FFE25F3CA4D00C2578C /* SampleBufferDecoder.swift */,
 				B97A8229255449C800CD2870 /* CameraOptionsAdjuster.swift */,
 				B9B399CB25965BDC00C7977F /* CameraOptions.swift */,
 				B97A82232553F8A900CD2870 /* Sun.swift */,
@@ -1747,9 +1762,14 @@
 				B9F4378D25D41C42004B9140 /* Connection.swift in Sources */,
 				B9F4378F25D41C42004B9140 /* HUDSegmentedControl.swift in Sources */,
 				B9F4379325D41C42004B9140 /* AVSampleBufferDisplayView.swift in Sources */,
+				B90F5FFF25F3CA4D00C2578C /* SampleBufferDecoder.swift in Sources */,
+				B90F600F25F3E10A00C2578C /* VideoDisplayView.swift in Sources */,
+				B90F5FED25F0079600C2578C /* VideoDisplayViewProtocol.swift in Sources */,
+				B90F600925F3CD0300C2578C /* FilterableVideoDisplayView.swift in Sources */,
 				B9F4379625D41C42004B9140 /* CameraOptions.swift in Sources */,
 				B9F4378E25D41C42004B9140 /* Sun.swift in Sources */,
 				B9F4379525D41C42004B9140 /* CameraSensitivityMode.swift in Sources */,
+				B90F5FD525EFF13D00C2578C /* CIImageDisplayView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

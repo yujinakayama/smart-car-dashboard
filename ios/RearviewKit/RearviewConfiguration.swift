@@ -13,11 +13,13 @@ public struct RearviewConfiguration: Equatable {
     let raspberryPiAddress: Address
     let digitalGainForLowLightMode: Float
     let digitalGainForUltraLowLightMode: Float
+    let gammaAdjustmentPower: Float?
 
-    public init(raspberryPiAddress: Address, digitalGainForLowLightMode: Float, digitalGainForUltraLowLightMode: Float) {
+    public init(raspberryPiAddress: Address, digitalGainForLowLightMode: Float, digitalGainForUltraLowLightMode: Float, gammaAdjustmentPower: Float? = nil) {
         self.raspberryPiAddress = raspberryPiAddress
         self.digitalGainForLowLightMode = digitalGainForLowLightMode
         self.digitalGainForUltraLowLightMode = digitalGainForUltraLowLightMode
+        self.gammaAdjustmentPower = gammaAdjustmentPower
     }
 
     public struct Address: Equatable {

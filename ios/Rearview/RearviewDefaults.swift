@@ -19,6 +19,7 @@ class RearviewDefaults {
         case cameraSensitivityMode
         case digitalGainForLowLightMode
         case digitalGainForUltraLowLightMode
+        case gammaAdjustmentPower
     }
 
     init() {
@@ -62,5 +63,26 @@ class RearviewDefaults {
 
     var digitalGainForUltraLowLightMode: Float {
         return userDefaults.float(forKey: Key.digitalGainForUltraLowLightMode.rawValue)
+    }
+
+    var gammaAdjustmentPower: Float? {
+        let value = userDefaults.float(forKey: Key.gammaAdjustmentPower.rawValue)
+
+        if value == 1 {
+            return nil
+        } else {
+            return value
+        }
+    }
+
+    var configuration: RearviewConfiguration? {
+        guard let raspberryPiAddress = raspberryPiAddress else { return nil }
+
+        return RearviewConfiguration(
+            raspberryPiAddress: raspberryPiAddress,
+            digitalGainForLowLightMode: digitalGainForLowLightMode,
+            digitalGainForUltraLowLightMode: digitalGainForUltraLowLightMode,
+            gammaAdjustmentPower: gammaAdjustmentPower
+        )
     }
 }
