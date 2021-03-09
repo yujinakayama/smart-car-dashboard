@@ -14,16 +14,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var rearviewViewController: RearviewViewController?
 
-    var configuration: RearviewConfiguration? {
-        guard let raspberryPiAddress = RearviewDefaults.shared.raspberryPiAddress else { return nil }
-
-        return RearviewConfiguration(
-            raspberryPiAddress: raspberryPiAddress,
-            digitalGainForLowLightMode: RearviewDefaults.shared.digitalGainForLowLightMode,
-            digitalGainForUltraLowLightMode: RearviewDefaults.shared.digitalGainForUltraLowLightMode
-        )
-    }
-
     var isHandedOffFromOtherApp = false
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -89,7 +79,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func startIfPossible() {
         guard let window = window else { return }
 
-        if let configuration = configuration {
+        if let configuration = RearviewDefaults.shared.configuration {
             start(window: window, configuration: configuration)
         } else {
             showAlertAboutInvalidRaspberryPiAddress(window: window)

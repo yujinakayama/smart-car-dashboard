@@ -72,6 +72,8 @@ class VideoDisplayView: UIView {
 
         inactiveView.flushAndRemoveImage()
         inactiveView.isHidden = true
+
+        logger.debug("Switched to \(type(of: activeView))")
     }
 }
 

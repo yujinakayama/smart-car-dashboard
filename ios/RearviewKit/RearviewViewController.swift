@@ -132,6 +132,8 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         installLayoutConstraints()
 
         applyContentMode()
+
+        applyFilters()
     }
 
     func installLayoutConstraints() {
@@ -388,6 +390,18 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
             videoDisplayViewBottomConstraint.isActive = true
             videoDisplayViewAspectRatioConstraint.isActive = true
         }
+    }
+
+    func applyFilters() {
+        var filters: [String: [String: Any]] = [:]
+
+        if let gammaAdjustmentPower = configuration.gammaAdjustmentPower {
+            filters["CIGammaAdjust"] = [
+                "inputPower": gammaAdjustmentPower
+            ]
+        }
+
+        videoDisplayView.filters = filters
     }
 }
 
