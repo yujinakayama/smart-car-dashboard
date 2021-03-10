@@ -44,6 +44,8 @@ class SampleBufferDecoder {
 
     deinit {
         if let session = session {
+            // https://developer.apple.com/forums/thread/85678
+            VTDecompressionSessionWaitForAsynchronousFrames(session)
             VTDecompressionSessionInvalidate(session)
         }
     }
