@@ -190,8 +190,9 @@ extension SharingItem {
 
             switch typeIdentifier {
             case .url:
-                attachment.loadItem(forTypeIdentifier: typeIdentifier.rawValue, options: nil) { (url, error) in
-                    if let url = url as? URL {
+                // Not sure why but loadItem(forTypeIdentifier:options:) does not work on Mac
+                _ = attachment.loadObject(ofClass: URL.self) { (url, error) in
+                    if let url = url {
                         self.encoder.add(url)
                     }
                     completionHandler()
