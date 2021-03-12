@@ -12,6 +12,7 @@
 		412025EE69F3FE2D953808D6 /* Pods_DashRemote_ShareExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B941AEADBC8F07DBE594C95A /* Pods_DashRemote_ShareExtension.framework */; };
 		66DA20D749E1EF848B3B203E /* Pods_RearviewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0198292C4BC2FEDD3C5A08E3 /* Pods_RearviewKit.framework */; };
 		75D3A42AAA73CA0E953322EA /* Pods_Rearview.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C66DD7AC35DF7FDDB0FB1B /* Pods_Rearview.framework */; };
+		B9008EAF25FBB6D7005DAD13 /* NoMainETCCard.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9008EAE25FBB6D7005DAD13 /* NoMainETCCard.wav */; };
 		B9025F63254D21E1001E25DF /* PairedVehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A676254D0EB30012A4CB /* PairedVehicle.swift */; };
 		B9025F68254D2260001E25DF /* PairedVehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A676254D0EB30012A4CB /* PairedVehicle.swift */; };
 		B90265AB23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90265AA23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift */; };
@@ -323,6 +324,7 @@
 		79A188A66685EA4375D4818F /* Pods_DashRemote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DashRemote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		869C973AA26AD90E148028FB /* Pods-Dash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dash.release.xcconfig"; path = "Target Support Files/Pods-Dash/Pods-Dash.release.xcconfig"; sourceTree = "<group>"; };
 		A383EF13705DD2A97098F1F8 /* Pods-DashRemote-ShareExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote-ShareExtension.release.xcconfig"; path = "Target Support Files/Pods-DashRemote-ShareExtension/Pods-DashRemote-ShareExtension.release.xcconfig"; sourceTree = "<group>"; };
+		B9008EAE25FBB6D7005DAD13 /* NoMainETCCard.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = NoMainETCCard.wav; sourceTree = "<group>"; };
 		B9025F62254D2180001E25DF /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
 		B90265AA23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemTableViewDataSource.swift; sourceTree = "<group>"; };
 		B904A2A5243968990087BD4A /* MapsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsViewController.swift; sourceTree = "<group>"; };
@@ -825,6 +827,7 @@
 		B9CD1D9322A535A900170082 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				B9008EAE25FBB6D7005DAD13 /* NoMainETCCard.wav */,
 				B9E6CCA0234F69B800E18603 /* Payment.wav */,
 				B9989E3D23E8752100FAFD06 /* Share.wav */,
 				B9E6CC9B234F65A000E18603 /* TollgatePassingThrough.wav */,
@@ -1330,6 +1333,7 @@
 				B9DC5B2C229D59BE00B645D5 /* Main.storyboard in Resources */,
 				B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */,
 				B9989E3E23E8752100FAFD06 /* Share.wav in Resources */,
+				B9008EAF25FBB6D7005DAD13 /* NoMainETCCard.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

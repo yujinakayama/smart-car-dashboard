@@ -139,9 +139,9 @@ struct NoMainETCCardNotification: LocalNotificationProtocol {
         }
     }
 
-    let sound: UNNotificationSound? = nil
+    let sound: UNNotificationSound? = UNNotificationSound(named: UNNotificationSoundName("NoMainETCCard.wav"))
 
-    let foregroundPresentationOptions: UNNotificationPresentationOptions = [.banner]
+    let foregroundPresentationOptions: UNNotificationPresentationOptions = [.banner, .sound]
 
     func shouldBeDelivered(history: LatestLocalNotificationHistory) -> Bool {
         return true
