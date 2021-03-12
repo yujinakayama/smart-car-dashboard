@@ -30,7 +30,7 @@ class SampleBufferDecoder {
         VTDecompressionSessionDecodeFrame(
             session,
             sampleBuffer: sampleBuffer,
-            flags: [._EnableAsynchronousDecompression],
+            flags: [._EnableAsynchronousDecompression, ._EnableTemporalProcessing],
             infoFlagsOut: nil
         ) { (status, infoFlags, imageBuffer, presentationTimeStamp, presentationDuration) in
             if let imageBuffer = imageBuffer {
