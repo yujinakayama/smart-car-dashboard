@@ -15,6 +15,8 @@ class FilterableVideoDisplayView: CIImageDisplayView, VideoDisplayViewProtocol {
 
     var filters: [FilterName: FilterParameters] = [:]
 
+    private let decodingAndFilteringQueue = DispatchQueue(label: "FilterableVideoDisplayView (decoding and filtering)")
+
     private var decoder: SampleBufferDecoder?
 
     private var shouldDisplayImage = false
@@ -28,20 +30,21 @@ class FilterableVideoDisplayView: CIImageDisplayView, VideoDisplayViewProtocol {
 
         guard let decoder = decoder else { abort() }
 
-        decoder.decode(sampleBuffer) { [weak self] (image) in
-            guard let image = image else { return }
-            self?.display(image)
+        decodingAndFilteringQueue.async {
+            decoder.decode(sampleBuffer) { [weak self] (image) in
+                guard let self = self, let image = image else { return }
+                let filteredImage = self.applyFilters(image)
+
+                DispatchQueue.main.async {
+                    self.image = filteredImage
+                }
+            }
         }
     }
 
     func flushAndRemoveImage() {
         shouldDisplayImage = false
         image = nil
-    }
-
-    private func display(_ image: CIImage) {
-        guard shouldDisplayImage else { return }
-        self.image = applyFilters(image)
     }
 
     private func applyFilters(_ inputImage: CIImage) -> CIImage {
