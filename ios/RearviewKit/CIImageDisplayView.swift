@@ -11,6 +11,11 @@ import MetalKit
 import VideoToolbox
 
 class CIImageDisplayView: UIView {
+    enum ScalingMode {
+        case aspectFit
+        case aspectFill
+    }
+
     var image: CIImage? {
         didSet {
             if let image = image {
@@ -21,7 +26,7 @@ class CIImageDisplayView: UIView {
         }
     }
 
-    var scalingMode: VideoDisplayViewScalingMode = .aspectFit
+    var scalingMode: ScalingMode = .aspectFit
 
     private lazy var mtkView: MTKView = {
         let mtkView = MTKView(frame: .zero, device: device)

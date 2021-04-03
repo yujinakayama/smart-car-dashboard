@@ -36,7 +36,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         }
     }
 
-    lazy var videoDisplayView = VideoDisplayView()
+    lazy var imageDisplayView = CIImageDisplayView()
 
     lazy var activityIndicatorView: UIActivityIndicatorView = {
         let activityIndicatorView = UIActivityIndicatorView(style: .large)
@@ -61,6 +61,10 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
     }()
 
     var hasReceivedInitialFrame = false
+
+    lazy var sampleBufferDecoder = SampleBufferDecoder()
+
+    let imageFilterChain: ImageFilterChain
 
     let cameraOptionsAdjuster: CameraOptionsAdjuster
 
@@ -91,9 +95,9 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         return gestureRecognizer
     }()
 
-    lazy var videoDisplayViewTopConstraint = videoDisplayView.topAnchor.constraint(equalTo: view.topAnchor)
-    lazy var videoDisplayViewBottomConstraint = videoDisplayView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-    lazy var videoDisplayViewAspectRatioConstraint = videoDisplayView.widthAnchor.constraint(equalTo: videoDisplayView.heightAnchor, multiplier: 4 / 3)
+    lazy var imageDisplayViewTopConstraint = imageDisplayView.topAnchor.constraint(equalTo: view.topAnchor)
+    lazy var imageDisplayViewBottomConstraint = imageDisplayView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+    lazy var imageDisplayViewAspectRatioConstraint = imageDisplayView.widthAnchor.constraint(equalTo: imageDisplayView.heightAnchor, multiplier: 4 / 3)
 
     public override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -103,10 +107,23 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         return true
     }
 
+    static func makeFilters(from configuration: RearviewConfiguration) -> [ImageFilterChain.FilterName: ImageFilterChain.FilterParameters] {
+        var filters: [String: [String: Any]] = [:]
+
+        if let gammaAdjustmentPower = configuration.gammaAdjustmentPower {
+            filters["CIGammaAdjust"] = [
+                "inputPower": gammaAdjustmentPower
+            ]
+        }
+
+        return filters
+    }
+
     public init(configuration: RearviewConfiguration, cameraSensitivityMode: CameraSensitivityMode = .auto) {
         self.configuration = configuration
         self.cameraOptionsAdjuster = CameraOptionsAdjuster(configuration: configuration)
         self.cameraSensitivityMode = cameraSensitivityMode
+        self.imageFilterChain = ImageFilterChain(filters: Self.makeFilters(from: configuration))
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -123,7 +140,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
         view.backgroundColor = .black
 
-        view.addSubview(videoDisplayView)
+        view.addSubview(imageDisplayView)
         view.addSubview(activityIndicatorView)
         view.addSubview(sensitivityModeSegmentedControl)
 
@@ -132,8 +149,6 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         installLayoutConstraints()
 
         applyContentMode()
-
-        applyFilters()
     }
 
     func installLayoutConstraints() {
@@ -142,8 +157,8 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         }
 
         NSLayoutConstraint.activate([
-            videoDisplayView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            videoDisplayView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            imageDisplayView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            imageDisplayView.rightAnchor.constraint(equalTo: view.rightAnchor),
         ])
 
         NSLayoutConstraint.activate([
@@ -225,7 +240,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
     func flushImage() {
         DispatchQueue.main.async {
-            self.videoDisplayView.flushAndRemoveImage()
+            self.imageDisplayView.image = nil
         }
     }
 
@@ -303,8 +318,14 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
             hasReceivedInitialFrame = true
         }
 
-        DispatchQueue.main.async {
-            self.videoDisplayView.enqueue(sampleBuffer)
+        sampleBufferDecoder.decode(sampleBuffer) { [weak self] (image) in
+            guard let self = self, let image = image else { return }
+
+            let filteredImage = self.imageFilterChain.apply(to: image)
+
+            DispatchQueue.main.async {
+                self.imageDisplayView.image = filteredImage
+            }
         }
     }
 
@@ -313,7 +334,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
         animation.fromValue = 0
         animation.toValue = 1
         animation.duration = 0.25
-        videoDisplayView.layer.add(animation, forKey: nil)
+        imageDisplayView.layer.add(animation, forKey: nil)
     }
 
     // For safety, avoid keeping displaying old frame when the connection is unstable
@@ -366,42 +387,30 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
     func applyContentMode() {
         // First reset this constaint to avoid conflicts
-        videoDisplayViewAspectRatioConstraint.isActive = false
+        imageDisplayViewAspectRatioConstraint.isActive = false
 
         switch contentMode {
         case .scaleAspectFit:
-            videoDisplayView.scalingMode = .aspectFit
-            videoDisplayViewTopConstraint.isActive = true
-            videoDisplayViewBottomConstraint.isActive = true
-            videoDisplayViewAspectRatioConstraint.isActive = false
+            imageDisplayView.scalingMode = .aspectFit
+            imageDisplayViewTopConstraint.isActive = true
+            imageDisplayViewBottomConstraint.isActive = true
+            imageDisplayViewAspectRatioConstraint.isActive = false
         case .scaleAspectFill:
-            videoDisplayView.scalingMode = .aspectFill
-            videoDisplayViewTopConstraint.isActive = true
-            videoDisplayViewBottomConstraint.isActive = true
-            videoDisplayViewAspectRatioConstraint.isActive = false
+            imageDisplayView.scalingMode = .aspectFill
+            imageDisplayViewTopConstraint.isActive = true
+            imageDisplayViewBottomConstraint.isActive = true
+            imageDisplayViewAspectRatioConstraint.isActive = false
         case .top:
-            videoDisplayView.scalingMode = .aspectFill
-            videoDisplayViewTopConstraint.isActive = true
-            videoDisplayViewBottomConstraint.isActive = false
-            videoDisplayViewAspectRatioConstraint.isActive = true
+            imageDisplayView.scalingMode = .aspectFill
+            imageDisplayViewTopConstraint.isActive = true
+            imageDisplayViewBottomConstraint.isActive = false
+            imageDisplayViewAspectRatioConstraint.isActive = true
         case .bottom:
-            videoDisplayView.scalingMode = .aspectFill
-            videoDisplayViewTopConstraint.isActive = false
-            videoDisplayViewBottomConstraint.isActive = true
-            videoDisplayViewAspectRatioConstraint.isActive = true
+            imageDisplayView.scalingMode = .aspectFill
+            imageDisplayViewTopConstraint.isActive = false
+            imageDisplayViewBottomConstraint.isActive = true
+            imageDisplayViewAspectRatioConstraint.isActive = true
         }
-    }
-
-    func applyFilters() {
-        var filters: [String: [String: Any]] = [:]
-
-        if let gammaAdjustmentPower = configuration.gammaAdjustmentPower {
-            filters["CIGammaAdjust"] = [
-                "inputPower": gammaAdjustmentPower
-            ]
-        }
-
-        videoDisplayView.filters = filters
     }
 }
 

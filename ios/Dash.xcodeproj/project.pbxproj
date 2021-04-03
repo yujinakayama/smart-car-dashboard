@@ -21,10 +21,7 @@
 		B90C297225E3FB80004466C9 /* SIMDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90C297125E3FB80004466C9 /* SIMDExtension.swift */; };
 		B90E21F924CBB1BF008330AD /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90E21F824CBB1BF008330AD /* TabBarController.swift */; };
 		B90F5FD525EFF13D00C2578C /* CIImageDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F5FD425EFF13D00C2578C /* CIImageDisplayView.swift */; };
-		B90F5FED25F0079600C2578C /* VideoDisplayViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F5FEC25F0079600C2578C /* VideoDisplayViewProtocol.swift */; };
 		B90F5FFF25F3CA4D00C2578C /* SampleBufferDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F5FFE25F3CA4D00C2578C /* SampleBufferDecoder.swift */; };
-		B90F600925F3CD0300C2578C /* FilterableVideoDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F600825F3CD0300C2578C /* FilterableVideoDisplayView.swift */; };
-		B90F600F25F3E10A00C2578C /* VideoDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F600E25F3E10A00C2578C /* VideoDisplayView.swift */; };
 		B91B5DD523ED7886003F4AEF /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91B5DD423ED7886003F4AEF /* Account.swift */; };
 		B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
 		B91BD8092323FD820064D2B5 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
@@ -99,6 +96,7 @@
 		B964BCE223E067EB00288E0D /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B964BCD823E067EB00288E0D /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B96793E924AF6ACC0019BFE5 /* apple_music_developer_token.txt in Resources */ = {isa = PBXBuildFile; fileRef = B96793E824AF6ACC0019BFE5 /* apple_music_developer_token.txt */; };
 		B967D08225D51508000D9007 /* RearviewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */; };
+		B96810752614C5C300D647FA /* ImageFilterChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96810742614C5C300D647FA /* ImageFilterChain.swift */; };
 		B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */; };
 		B9741F7523DF200600F061E7 /* SharedItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */; };
 		B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97BAE6124B61DB100AE7D13 /* Vehicle.swift */; };
@@ -184,7 +182,6 @@
 		B9F4379025D41C42004B9140 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90700A3250E31B1004E7D7A /* Logger.swift */; };
 		B9F4379125D41C42004B9140 /* RearviewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F4375E25D414D8004B9140 /* RearviewConfiguration.swift */; };
 		B9F4379225D41C42004B9140 /* CameraOptionsAdjuster.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97A8229255449C800CD2870 /* CameraOptionsAdjuster.swift */; };
-		B9F4379325D41C42004B9140 /* AVSampleBufferDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A45D250E3B50006BDFBB /* AVSampleBufferDisplayView.swift */; };
 		B9F4379425D41C42004B9140 /* RearviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEDC2508F63F006D246E /* RearviewViewController.swift */; };
 		B9F4379525D41C42004B9140 /* CameraSensitivityMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F4376C25D4170D004B9140 /* CameraSensitivityMode.swift */; };
 		B9F4379625D41C42004B9140 /* CameraOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B399CB25965BDC00C7977F /* CameraOptions.swift */; };
@@ -333,10 +330,7 @@
 		B90C297125E3FB80004466C9 /* SIMDExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIMDExtension.swift; sourceTree = "<group>"; };
 		B90E21F824CBB1BF008330AD /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		B90F5FD425EFF13D00C2578C /* CIImageDisplayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CIImageDisplayView.swift; sourceTree = "<group>"; };
-		B90F5FEC25F0079600C2578C /* VideoDisplayViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDisplayViewProtocol.swift; sourceTree = "<group>"; };
 		B90F5FFE25F3CA4D00C2578C /* SampleBufferDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleBufferDecoder.swift; sourceTree = "<group>"; };
-		B90F600825F3CD0300C2578C /* FilterableVideoDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterableVideoDisplayView.swift; sourceTree = "<group>"; };
-		B90F600E25F3E10A00C2578C /* VideoDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDisplayView.swift; sourceTree = "<group>"; };
 		B91B5DD423ED7886003F4AEF /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		B91E0B61254D047D002928D3 /* PairingURLItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingURLItem.swift; sourceTree = "<group>"; };
 		B92451D323E30ACE007556D5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -381,7 +375,6 @@
 		B932E5EF23F9082600726615 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		B93321ED2323C9D500BFAB21 /* BorderedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedView.swift; sourceTree = "<group>"; };
 		B939F0CF23EC5C7F00AA3E8E /* DashV3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DashV3.xcdatamodel; sourceTree = "<group>"; };
-		B940A45D250E3B50006BDFBB /* AVSampleBufferDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVSampleBufferDisplayView.swift; sourceTree = "<group>"; };
 		B940A45F250E5B57006BDFBB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewDefaults.swift; sourceTree = "<group>"; };
 		B940A465250F0EBB006BDFBB /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
@@ -418,6 +411,7 @@
 		B964BCDF23E067EB00288E0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B96793E824AF6ACC0019BFE5 /* apple_music_developer_token.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = apple_music_developer_token.txt; sourceTree = "<group>"; };
 		B967D07925D510A7000D9007 /* Rearview.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Rearview.entitlements; sourceTree = "<group>"; };
+		B96810742614C5C300D647FA /* ImageFilterChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilterChain.swift; sourceTree = "<group>"; };
 		B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemTableViewController.swift; sourceTree = "<group>"; };
 		B97A82232553F8A900CD2870 /* Sun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sun.swift; sourceTree = "<group>"; };
@@ -985,13 +979,10 @@
 				B9F4375E25D414D8004B9140 /* RearviewConfiguration.swift */,
 				B9F4376C25D4170D004B9140 /* CameraSensitivityMode.swift */,
 				B940A465250F0EBB006BDFBB /* Connection.swift */,
-				B90F600E25F3E10A00C2578C /* VideoDisplayView.swift */,
-				B90F5FEC25F0079600C2578C /* VideoDisplayViewProtocol.swift */,
-				B940A45D250E3B50006BDFBB /* AVSampleBufferDisplayView.swift */,
-				B90F600825F3CD0300C2578C /* FilterableVideoDisplayView.swift */,
 				B90F5FD425EFF13D00C2578C /* CIImageDisplayView.swift */,
 				B9C0CEEA2508F711006D246E /* H264ByteStreamParser.swift */,
 				B90F5FFE25F3CA4D00C2578C /* SampleBufferDecoder.swift */,
+				B96810742614C5C300D647FA /* ImageFilterChain.swift */,
 				B97A8229255449C800CD2870 /* CameraOptionsAdjuster.swift */,
 				B9B399CB25965BDC00C7977F /* CameraOptions.swift */,
 				B97A82232553F8A900CD2870 /* Sun.swift */,
@@ -1761,13 +1752,10 @@
 				B9F4379425D41C42004B9140 /* RearviewViewController.swift in Sources */,
 				B9F4378D25D41C42004B9140 /* Connection.swift in Sources */,
 				B9F4378F25D41C42004B9140 /* HUDSegmentedControl.swift in Sources */,
-				B9F4379325D41C42004B9140 /* AVSampleBufferDisplayView.swift in Sources */,
 				B90F5FFF25F3CA4D00C2578C /* SampleBufferDecoder.swift in Sources */,
-				B90F600F25F3E10A00C2578C /* VideoDisplayView.swift in Sources */,
-				B90F5FED25F0079600C2578C /* VideoDisplayViewProtocol.swift in Sources */,
-				B90F600925F3CD0300C2578C /* FilterableVideoDisplayView.swift in Sources */,
 				B9F4379625D41C42004B9140 /* CameraOptions.swift in Sources */,
 				B9F4378E25D41C42004B9140 /* Sun.swift in Sources */,
+				B96810752614C5C300D647FA /* ImageFilterChain.swift in Sources */,
 				B9F4379525D41C42004B9140 /* CameraSensitivityMode.swift in Sources */,
 				B90F5FD525EFF13D00C2578C /* CIImageDisplayView.swift in Sources */,
 			);
