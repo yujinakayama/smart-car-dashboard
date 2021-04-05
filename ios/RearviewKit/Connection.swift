@@ -73,7 +73,6 @@ class Connection {
             terminate(reason: .closedByClient)
         case .failed(let error):
             logger.error(error)
-            terminate(reason: .unexpectedDisconnection)
             terminate(reason: error.isTimeOutError ? .connectionDropTimeout : .unexpectedDisconnection)
         default:
             break
