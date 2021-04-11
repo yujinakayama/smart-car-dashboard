@@ -37,24 +37,23 @@ class Location: SharedItemProtocol {
     func open(from viewController: UIViewController?) {
         markAsOpened()
 
-        if Defaults.shared.snapLocationToPointOfInterest {
-            findCorrespondingPointOfInterest() { (pointOfInterest) in
-                if let pointOfInterest = pointOfInterest {
-                    self.openDirectionsInMaps(destination: pointOfInterest)
-                } else {
-                    self.openDirectionsInMaps(destination: self.mapItem)
-                }
-            }
-        } else {
-            openDirectionsInMaps(destination: mapItem)
+        getNormalizedMapItem { (mapItem) in
+            mapItem.openInMaps(launchOptions: [
+                MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,
+                MKLaunchOptionsMapTypeKey: Defaults.shared.mapTypeForDirections?.rawValue ?? MKMapType.standard
+            ])
         }
     }
 
     func openSecondarily(from viewController: UIViewController?) {
-        if url.host == "maps.apple.com" {
-            openInOtherApp()
-        } else {
-            openInInAppBrowser(from: viewController)
+        getNormalizedMapItem { (mapItem) in
+            mapItem.openInMaps()
+        }
+    }
+
+    private func getNormalizedMapItem(completion: @escaping (MKMapItem) -> Void) {
+        findCorrespondingPointOfInterest() { (pointOfInterest) in
+            completion(pointOfInterest ?? self.mapItem)
         }
     }
 
@@ -65,13 +64,6 @@ class Location: SharedItemProtocol {
         }
 
         pointOfInterestFinder.find(completionHandler: completionHandler)
-    }
-
-    private func openDirectionsInMaps(destination: MKMapItem) {
-        destination.openInMaps(launchOptions: [
-            MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,
-            MKLaunchOptionsMapTypeKey: Defaults.shared.mapTypeForDirections?.rawValue ?? MKMapType.standard
-        ])
     }
 
     private var mapItem: MKMapItem {
