@@ -41,8 +41,23 @@ class BluetoothAudioDevice: NSObject, ClassicBluetoothManagerDelegate {
     }
 
     @objc func startPlayingMusic() {
-        let musicPlayer = MPMusicPlayerController.systemMusicPlayer
-        musicPlayer.skipToBeginning()
+        if !isPlayingLiveItem && !isProbablyPlayingRadio {
+            musicPlayer.skipToBeginning()
+        }
+
         musicPlayer.play()
+    }
+
+    var musicPlayer: MPMusicPlayerController {
+        return MPMusicPlayerController.systemMusicPlayer
+    }
+
+    var isPlayingLiveItem: Bool {
+        return musicPlayer.currentPlaybackTime.isNaN
+    }
+
+    var isProbablyPlayingRadio: Bool {
+        guard let nowPlayingItem = musicPlayer.nowPlayingItem else { return false }
+        return nowPlayingItem.mediaType.rawValue == 0 || nowPlayingItem.playbackDuration == 0
     }
 }
