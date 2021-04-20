@@ -22,7 +22,17 @@ class HUDSegmentedControl: UIControl {
         }
     }
 
-    private let segmentedControl = BetterSegmentedControl()
+    private lazy var segmentedControl: BetterSegmentedControl = {
+        let segmentedControl = BetterSegmentedControl()
+        segmentedControl.backgroundColor = nil
+        return segmentedControl
+    }()
+
+    private lazy var visualEffectView: UIVisualEffectView = {
+        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        visualEffectView.clipsToBounds = true
+        return visualEffectView
+    }()
 
     init(titles: [String]) {
         self.titles = titles
@@ -38,8 +48,8 @@ class HUDSegmentedControl: UIControl {
     private func commonInit() {
         updateSegments()
 
+        segmentedControl.backgroundColor = nil
         segmentedControl.addTarget(self, action: #selector(segmentedControlDidChangeValue), for: .valueChanged)
-        segmentedControl.backgroundColor = UIColor(white: 0.25, alpha: 0.65)
 
         addSubview(segmentedControl)
 
@@ -50,6 +60,17 @@ class HUDSegmentedControl: UIControl {
             segmentedControl.trailingAnchor.constraint(equalTo: trailingAnchor),
             segmentedControl.topAnchor.constraint(equalTo: topAnchor),
             segmentedControl.bottomAnchor.constraint(equalTo: bottomAnchor),
+        ])
+
+        insertSubview(visualEffectView, belowSubview: segmentedControl)
+
+        visualEffectView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            visualEffectView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            visualEffectView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            visualEffectView.topAnchor.constraint(equalTo: topAnchor),
+            visualEffectView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
 
@@ -62,6 +83,7 @@ class HUDSegmentedControl: UIControl {
         let height = segmentedControl.frame.height
         segmentedControl.cornerRadius = height / 2
         segmentedControl.indicatorViewInset = round(height * 0.06 * UIScreen.main.scale) / UIScreen.main.scale
+        visualEffectView.layer.cornerRadius = segmentedControl.cornerRadius
 
         let index = selectedSegmentIndex
         updateSegments()
