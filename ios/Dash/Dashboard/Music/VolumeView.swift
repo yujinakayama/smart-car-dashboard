@@ -48,7 +48,7 @@ class VolumeView: UIStackView {
         addArrangedSubview(UIImageView(image: minimumImage))
 
         // Using KVC to avoid annoying deprecation message
-        volumeView.setValue(false, forKey: #keyPath(MPVolumeView.showsRouteButton))
+        volumeView.setValue(false, forKey: "showsRouteButton")
         volumeView.heightAnchor.constraint(equalToConstant: 19).isActive = true
         setVolumeViewImages()
         addArrangedSubview(volumeView)
