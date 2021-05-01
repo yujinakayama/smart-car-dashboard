@@ -100,6 +100,7 @@
 		B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */; };
 		B9741F7523DF200600F061E7 /* SharedItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */; };
 		B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97BAE6124B61DB100AE7D13 /* Vehicle.swift */; };
+		B984C01A263DA08D00AF79AE /* TimeDurationPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B984C019263DA08D00AF79AE /* TimeDurationPicker.swift */; };
 		B988A66C254D0E570012A4CB /* PairingRequirementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A66B254D0E570012A4CB /* PairingRequirementViewController.swift */; };
 		B98B783723ED4C3F00A5102F /* DashShareKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B98B783523ED4C3F00A5102F /* DashShareKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B98B783A23ED4C3F00A5102F /* DashShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; };
@@ -185,6 +186,8 @@
 		B9F4379425D41C42004B9140 /* RearviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEDC2508F63F006D246E /* RearviewViewController.swift */; };
 		B9F4379525D41C42004B9140 /* CameraSensitivityMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F4376C25D4170D004B9140 /* CameraSensitivityMode.swift */; };
 		B9F4379625D41C42004B9140 /* CameraOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B399CB25965BDC00C7977F /* CameraOptions.swift */; };
+		B9F8DBE825EA288B00F6FA55 /* PPParkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F8DBE725EA288B00F6FA55 /* PPParkClient.swift */; };
+		B9F8DC1325EA847E00F6FA55 /* ParkingSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F8DC1225EA847E00F6FA55 /* ParkingSearchViewController.swift */; };
 		B9F9EFD6256D3D6B00C33781 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F9EFD5256D3D6B00C33781 /* Cache.swift */; };
 		B9FA6CC824CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FA6CC724CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift */; };
 		B9FACF4C25D4299900F05CAE /* RearviewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9F4377B25D41C19004B9140 /* RearviewKit.framework */; };
@@ -417,6 +420,7 @@
 		B97A82232553F8A900CD2870 /* Sun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sun.swift; sourceTree = "<group>"; };
 		B97A8229255449C800CD2870 /* CameraOptionsAdjuster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOptionsAdjuster.swift; sourceTree = "<group>"; };
 		B97BAE6124B61DB100AE7D13 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
+		B984C019263DA08D00AF79AE /* TimeDurationPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDurationPicker.swift; sourceTree = "<group>"; };
 		B988A66B254D0E570012A4CB /* PairingRequirementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingRequirementViewController.swift; sourceTree = "<group>"; };
 		B988A676254D0EB30012A4CB /* PairedVehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairedVehicle.swift; sourceTree = "<group>"; };
 		B98B783323ED4C3F00A5102F /* DashShareKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DashShareKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -506,6 +510,8 @@
 		B9F4377B25D41C19004B9140 /* RearviewKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RearviewKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9F4377D25D41C19004B9140 /* RearviewKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RearviewKit.h; sourceTree = "<group>"; };
 		B9F4377E25D41C19004B9140 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B9F8DBE725EA288B00F6FA55 /* PPParkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPParkClient.swift; sourceTree = "<group>"; };
+		B9F8DC1225EA847E00F6FA55 /* ParkingSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingSearchViewController.swift; sourceTree = "<group>"; };
 		B9F9EFD5256D3D6B00C33781 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		B9FA6CC724CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OriginalLanguageSongTitleFetcher.swift; sourceTree = "<group>"; };
 		B9FB33E024AE2ACD00FEB782 /* PlaybackModeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackModeButton.swift; sourceTree = "<group>"; };
@@ -931,6 +937,7 @@
 				B9CEA76822D8F1990055C9A3 /* ETC */,
 				B9741F7623DF201A00F061E7 /* Inbox */,
 				B904A2A4243968840087BD4A /* Maps */,
+				B9F8DC1125EA845E00F6FA55 /* ParkingSearch */,
 				B97B0D8724C040A9006B675B /* BluetoothAudio */,
 				B97BAE6124B61DB100AE7D13 /* Vehicle.swift */,
 				B92A61102576472A0073AB7B /* Assistant.swift */,
@@ -991,6 +998,16 @@
 				B9F4377E25D41C19004B9140 /* Info.plist */,
 			);
 			path = RearviewKit;
+			sourceTree = "<group>";
+		};
+		B9F8DC1125EA845E00F6FA55 /* ParkingSearch */ = {
+			isa = PBXGroup;
+			children = (
+				B9F8DC1225EA847E00F6FA55 /* ParkingSearchViewController.swift */,
+				B9F8DBE725EA288B00F6FA55 /* PPParkClient.swift */,
+				B984C019263DA08D00AF79AE /* TimeDurationPicker.swift */,
+			);
+			path = ParkingSearch;
 			sourceTree = "<group>";
 		};
 		FC2BACFC9EC4F82C9699C39B /* Pods */ = {
@@ -1681,6 +1698,7 @@
 				B95F514C23E5B53F0063CB3D /* RemoteNotification.swift in Sources */,
 				B9DC5B27229D59BE00B645D5 /* ETCPaymentTableViewController.swift in Sources */,
 				B92A61112576472A0073AB7B /* Assistant.swift in Sources */,
+				B9F8DBE825EA288B00F6FA55 /* PPParkClient.swift in Sources */,
 				B9A45A9B252C229200CA7921 /* SharedItemDatabase.swift in Sources */,
 				B9BF2F0523F6946100967316 /* GradientPathRenderer.swift in Sources */,
 				B9D0260F24BF7704005C03B1 /* ClassicBluetoothManager.swift in Sources */,
@@ -1692,6 +1710,7 @@
 				B99D4F2824C0526200647A10 /* BluetoothAudioDevice.swift in Sources */,
 				B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */,
 				B9640AAB2575D9E800B779AD /* Firebase.swift in Sources */,
+				B984C01A263DA08D00AF79AE /* TimeDurationPicker.swift in Sources */,
 				B9FB33E124AE2ACD00FEB782 /* PlaybackModeButton.swift in Sources */,
 				B92A97DA25E0AE8900D70A14 /* GForceMeterWidgetViewController.swift in Sources */,
 				B91E0B62254D047D002928D3 /* PairingURLItem.swift in Sources */,
@@ -1706,6 +1725,7 @@
 				B9D8E43823D345940078A057 /* ETCCardManagedObject.swift in Sources */,
 				B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */,
 				B9CEADAD24501FE7006898F8 /* DirectionalUserLocationAnnotationView.swift in Sources */,
+				B9F8DC1325EA847E00F6FA55 /* ParkingSearchViewController.swift in Sources */,
 				B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */,
 				B942553D22B8C3E2008B053B /* Logger.swift in Sources */,
 				B9BC920923250A0A006F22FC /* Defaults.swift in Sources */,
