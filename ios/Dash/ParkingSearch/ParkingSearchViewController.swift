@@ -234,50 +234,14 @@ extension ParkingSearchViewController: MKMapViewDelegate {
     }
 
     private func viewForParkingAnnotation(_ annotation: ParkingAnnotation) -> MKAnnotationView {
-        var view: MKMarkerAnnotationView! = mapView.dequeueReusableAnnotationView(withIdentifier: "MKMarkerAnnotationView") as? MKMarkerAnnotationView
-
-        if view == nil {
-            view = makeParkingAnnotationView(for: annotation)
-        } else {
+        if let view = mapView.dequeueReusableAnnotationView(withIdentifier: "MKMarkerAnnotationView") as? ParkingAnnotationView {
             view.annotation = annotation
-        }
-
-        if let rank = annotation.parking.rank {
-            view.glyphText = "\(rank)位"
-            view.markerTintColor = UIColor.link.blend(
-                with: UIColor.systemGray,
-                ratio: 1.0 - CGFloat(rank - 1) * 0.2
-            )
-            view.zPriority = MKAnnotationViewZPriority(rawValue: MKAnnotationViewZPriority.defaultUnselected.rawValue - Float(rank - 1))
+            return view
         } else {
-            if annotation.parking.isClosed {
-                view.glyphImage = UIImage(systemName: "xmark")
-            } else {
-                view.glyphImage = UIImage(systemName: "questionmark")
-            }
-
-            view.markerTintColor = .systemGray
-            view.zPriority = .min
+            let view = ParkingAnnotationView(annotation: annotation, reuseIdentifier: "MKMarkerAnnotationView")
+            view.departureButton.addTarget(self, action: #selector(departureButtonDidTap), for: .touchUpInside)
+            return view
         }
-
-        return view
-    }
-
-    private func makeParkingAnnotationView(for annotation: MKAnnotation) -> MKMarkerAnnotationView {
-        let view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "MKMarkerAnnotationView")
-        view.canShowCallout = true
-        view.animatesWhenAdded = true
-        view.displayPriority = .required
-
-        let button = UIButton()
-        let carImage = UIImage(systemName: "car.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 42))
-        button.setImage(carImage, for: .normal)
-        button.addTarget(self, action: #selector(departureButtonDidTap), for: .touchUpInside)
-        button.tintColor = UIColor(named: "Departure Color")!
-        button.sizeToFit()
-        view.rightCalloutAccessoryView = button
-
-        return view
     }
 
     private func viewForOtherAnnotation(_ annotation: MKAnnotation) -> MKAnnotationView {
@@ -312,6 +276,145 @@ class ParkingAnnotation: NSObject, MKAnnotation {
 
     var subtitle: String? {
         return parking.name
+    }
+}
+
+class ParkingAnnotationView: MKMarkerAnnotationView {
+    override var annotation: MKAnnotation? {
+        didSet {
+            update()
+        }
+    }
+
+    var parking: Parking? {
+        return (annotation as? ParkingAnnotation)?.parking
+    }
+
+    lazy var departureButton: UIButton = {
+        let carImage = UIImage(systemName: "car.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 42))
+
+        let button = UIButton()
+        button.setImage(carImage, for: .normal)
+        button.tintColor = UIColor(named: "Departure Color")!
+        button.sizeToFit()
+        return button
+    }()
+
+    lazy var detailView: UIView = {
+        let view = UIStackView(arrangedSubviews: [
+            nameLabel,
+            makeRulerView(),
+            makeItemLabels(heading: "台数", contentLabel: capacityLabel),
+            makeItemLabels(heading: "営業時間", contentLabel: openingHoursLabel),
+            makeItemLabels(heading: "料金", contentLabel: priceDescriptionLabel)
+        ])
+
+        view.axis = .vertical
+        view.alignment = .fill
+        view.distribution = .equalSpacing
+        view.spacing = 8
+        return view
+    }()
+
+    lazy var nameLabel = makeContentLabel()
+    lazy var capacityLabel = makeContentLabel()
+    lazy var openingHoursLabel = makeContentLabel()
+    lazy var priceDescriptionLabel = makeContentLabel()
+
+    func makeItemLabels(heading: String, contentLabel: UILabel) -> UIView {
+        let headinglabel = UILabel()
+        headinglabel.text = heading
+        headinglabel.textColor = .secondaryLabel
+
+        let stackView = UIStackView(arrangedSubviews: [headinglabel, contentLabel])
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        return stackView
+    }
+
+    func makeContentLabel() -> UILabel {
+        let label = UILabel()
+        label.numberOfLines = 0
+        return label
+    }
+
+    func makeRulerView() -> UIView {
+        let view = UIView()
+        view.backgroundColor = .tertiaryLabel
+        view.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale).isActive = true
+        return view
+    }
+
+    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+
+        canShowCallout = true
+        animatesWhenAdded = true
+        displayPriority = .required
+        rightCalloutAccessoryView = departureButton
+        detailCalloutAccessoryView = detailView
+
+        update()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func update() {
+        guard let parking = parking else { return }
+
+        if let rank = parking.rank {
+            glyphText = "\(rank)位"
+
+            markerTintColor = UIColor.link.blend(
+                with: UIColor.systemGray,
+                ratio: 1.0 - CGFloat(rank - 1) * 0.2
+            )
+
+            let zPriorityValue = MKAnnotationViewZPriority.defaultUnselected.rawValue - Float(rank - 1)
+            zPriority = MKAnnotationViewZPriority(rawValue: zPriorityValue)
+        } else {
+            if parking.isClosed {
+                glyphImage = UIImage(systemName: "xmark")
+            } else {
+                glyphImage = UIImage(systemName: "questionmark")
+            }
+
+            markerTintColor = .systemGray
+            zPriority = .min
+        }
+
+        nameLabel.text = parking.name
+        capacityLabel.text = normalizeDescription(parking.capacityDescription) ?? "-"
+        openingHoursLabel.text = normalizeDescription(parking.openingHoursDescription) ?? "-"
+        priceDescriptionLabel.text = normalizedPriceDescription ?? "-"
+    }
+
+    func normalizeDescription(_ text: String?) -> String? {
+        guard let text = text else { return nil }
+
+        let lines = text.split(separator: "\n")
+        let normalizedLines = lines.map { $0.trimmingCharacters(in: .whitespaces) }.compactMap { $0 }
+        return normalizedLines.joined(separator: "\n")
+    }
+
+    var normalizedPriceDescription: String? {
+        guard let parking = parking, let text = normalizeDescription(parking.priceDescription) else { return nil }
+
+        let lines = text.split(separator: "\n")
+
+        let linePrefixToRemove = "全日 "
+
+        let normalizedLines: [String] = lines.map { (line) in
+            if line.hasPrefix(linePrefixToRemove) {
+                return String(line.dropFirst(linePrefixToRemove.count))
+            } else {
+                return String(line)
+            }
+        }
+
+        return normalizedLines.joined(separator: "\n")
     }
 }
 
