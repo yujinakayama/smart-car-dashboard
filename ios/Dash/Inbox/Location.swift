@@ -46,8 +46,18 @@ class Location: SharedItemProtocol {
     }
 
     func openSecondarily(from viewController: UIViewController?) {
-        getNormalizedMapItem { (mapItem) in
-            mapItem.openInMaps()
+        guard let viewController = viewController ?? rootViewController else { return }
+
+        markAsOpened()
+
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let parkingSearchViewController = storyboard.instantiateViewController(identifier: "ParkingSearchViewController") as ParkingSearchViewController
+        parkingSearchViewController.destination = self
+
+        if let navigationController = viewController.navigationController {
+            navigationController.pushViewController(parkingSearchViewController, animated: true)
+        } else {
+            viewController.present(parkingSearchViewController, animated: true)
         }
     }
 
