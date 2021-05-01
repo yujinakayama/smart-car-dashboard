@@ -185,6 +185,7 @@
 		B9F4379425D41C42004B9140 /* RearviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEDC2508F63F006D246E /* RearviewViewController.swift */; };
 		B9F4379525D41C42004B9140 /* CameraSensitivityMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F4376C25D4170D004B9140 /* CameraSensitivityMode.swift */; };
 		B9F4379625D41C42004B9140 /* CameraOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B399CB25965BDC00C7977F /* CameraOptions.swift */; };
+		B9F8DBE825EA288B00F6FA55 /* PPParkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F8DBE725EA288B00F6FA55 /* PPParkClient.swift */; };
 		B9F9EFD6256D3D6B00C33781 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F9EFD5256D3D6B00C33781 /* Cache.swift */; };
 		B9FA6CC824CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FA6CC724CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift */; };
 		B9FACF4C25D4299900F05CAE /* RearviewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9F4377B25D41C19004B9140 /* RearviewKit.framework */; };
@@ -506,6 +507,7 @@
 		B9F4377B25D41C19004B9140 /* RearviewKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RearviewKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9F4377D25D41C19004B9140 /* RearviewKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RearviewKit.h; sourceTree = "<group>"; };
 		B9F4377E25D41C19004B9140 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B9F8DBE725EA288B00F6FA55 /* PPParkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPParkClient.swift; sourceTree = "<group>"; };
 		B9F9EFD5256D3D6B00C33781 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		B9FA6CC724CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OriginalLanguageSongTitleFetcher.swift; sourceTree = "<group>"; };
 		B9FB33E024AE2ACD00FEB782 /* PlaybackModeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackModeButton.swift; sourceTree = "<group>"; };
@@ -931,6 +933,7 @@
 				B9CEA76822D8F1990055C9A3 /* ETC */,
 				B9741F7623DF201A00F061E7 /* Inbox */,
 				B904A2A4243968840087BD4A /* Maps */,
+				B9F8DC1125EA845E00F6FA55 /* ParkingSearch */,
 				B97B0D8724C040A9006B675B /* BluetoothAudio */,
 				B97BAE6124B61DB100AE7D13 /* Vehicle.swift */,
 				B92A61102576472A0073AB7B /* Assistant.swift */,
@@ -991,6 +994,14 @@
 				B9F4377E25D41C19004B9140 /* Info.plist */,
 			);
 			path = RearviewKit;
+			sourceTree = "<group>";
+		};
+		B9F8DC1125EA845E00F6FA55 /* ParkingSearch */ = {
+			isa = PBXGroup;
+			children = (
+				B9F8DBE725EA288B00F6FA55 /* PPParkClient.swift */,
+			);
+			path = ParkingSearch;
 			sourceTree = "<group>";
 		};
 		FC2BACFC9EC4F82C9699C39B /* Pods */ = {
@@ -1681,6 +1692,7 @@
 				B95F514C23E5B53F0063CB3D /* RemoteNotification.swift in Sources */,
 				B9DC5B27229D59BE00B645D5 /* ETCPaymentTableViewController.swift in Sources */,
 				B92A61112576472A0073AB7B /* Assistant.swift in Sources */,
+				B9F8DBE825EA288B00F6FA55 /* PPParkClient.swift in Sources */,
 				B9A45A9B252C229200CA7921 /* SharedItemDatabase.swift in Sources */,
 				B9BF2F0523F6946100967316 /* GradientPathRenderer.swift in Sources */,
 				B9D0260F24BF7704005C03B1 /* ClassicBluetoothManager.swift in Sources */,
