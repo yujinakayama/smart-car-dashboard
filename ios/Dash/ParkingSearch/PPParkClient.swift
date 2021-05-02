@@ -134,7 +134,6 @@ struct Parking: Decodable {
         case address
         case capacityDescription = "capacity"
         case distance
-        case vacancyInfo = "fv"
         case isClosed = "closed"
         case lat
         case lng
@@ -145,6 +144,7 @@ struct Parking: Decodable {
         case priceGap = "pricegap"
         case rank
         case reservationInfo = "rsv"
+        case vacancyInfo = "fv"
     }
 
     init(from decoder: Decoder) throws {
@@ -154,17 +154,20 @@ struct Parking: Decodable {
         capacityDescription = try values.decodeIfPresent(String.self, forKey: .capacityDescription)
         distance = try values.decode(Double.self, forKey: .distance)
         isClosed = try values.decode(Int.self, forKey: .isClosed) != 0
+
+        coordinate = CLLocationCoordinate2D(
+            latitude: try values.decode(Double.self, forKey: .lat),
+            longitude: try values.decode(Double.self, forKey: .lng)
+        )
+
         name = try values.decode(String.self, forKey: .name)
         openingHoursDescription = try values.decodeIfPresent(String.self, forKey: .openingHoursDescription)
         price = try values.decodeIfPresent(Int.self, forKey: .price)
         priceDescription = try values.decodeIfPresent(String.self, forKey: .priceDescription)
         priceGap = try values.decodeIfPresent(Int.self, forKey: .priceGap)
         rank = try values.decodeIfPresent(Int.self, forKey: .rank)
-
-        coordinate = CLLocationCoordinate2D(
-            latitude: try values.decode(Double.self, forKey: .lat),
-            longitude: try values.decode(Double.self, forKey: .lng)
-        )
+        reservationInfo = try values.decodeIfPresent(ReservationInfo.self, forKey: .reservationInfo)
+        vacancyInfo = try values.decodeIfPresent(VacancyInfo.self, forKey: .vacancyInfo)
     }
 }
 
