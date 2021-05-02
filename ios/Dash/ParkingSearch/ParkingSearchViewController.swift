@@ -177,22 +177,6 @@ class ParkingSearchViewController: UIViewController {
         mapView.annotations.filter { $0 is ParkingAnnotation } as! [ParkingAnnotation]
     }
 
-    @objc func departureButtonDidTap() {
-        guard let selectedParking = (mapView.selectedAnnotations.first as? ParkingAnnotation)?.parking else { return }
-        openDirectionsInMaps(to: selectedParking)
-    }
-
-    func openDirectionsInMaps(to parking: Parking) {
-        let placemark = MKPlacemark(coordinate: parking.coordinate)
-        let mapItem = MKMapItem(placemark: placemark)
-        mapItem.name = parking.name
-
-        mapItem.openInMaps(launchOptions: [
-            MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,
-            MKLaunchOptionsMapTypeKey: Defaults.shared.mapTypeForDirections?.rawValue ?? MKMapType.standard
-        ])
-    }
-
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
@@ -238,9 +222,7 @@ extension ParkingSearchViewController: MKMapViewDelegate {
             view.annotation = annotation
             return view
         } else {
-            let view = ParkingAnnotationView(annotation: annotation, reuseIdentifier: "MKMarkerAnnotationView")
-            view.departureButton.addTarget(self, action: #selector(departureButtonDidTap), for: .touchUpInside)
-            return view
+            return ParkingAnnotationView(annotation: annotation, reuseIdentifier: "MKMarkerAnnotationView")
         }
     }
 
@@ -290,102 +272,13 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
         return (annotation as? ParkingAnnotation)?.parking
     }
 
-    lazy var departureButton: UIButton = {
-        let carImage = UIImage(systemName: "car.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 42))
-
-        let button = UIButton()
-        button.setImage(carImage, for: .normal)
-        button.tintColor = UIColor(named: "Departure Color")!
-        button.sizeToFit()
-        return button
-    }()
-
-    lazy var detailView: UIView = {
-        let stackView = UIStackView(arrangedSubviews: [
-            headerView,
-            makeRulerView(),
-            makeItemLabels(heading: "台数", contentLabel: capacityLabel),
-            makeItemLabels(heading: "営業時間", contentLabel: openingHoursLabel),
-            makeItemLabels(heading: "料金", contentLabel: priceDescriptionLabel)
-        ])
-
-        stackView.axis = .vertical
-        stackView.alignment = .fill
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 8
-        return stackView
-    }()
-
-    lazy var headerView: UIView = {
-        let headerView = UIStackView(arrangedSubviews: [nameLabel, tagsView])
-        headerView.axis = .vertical
-        headerView.alignment = .leading
-        headerView.distribution = .equalSpacing
-        headerView.spacing = 3
-        return headerView
-    }()
-
-    lazy var nameLabel = makeContentLabel(multiline: false)
-
-    lazy var tagsView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [
-            reservationTagView,
-            fullTagView,
-            crowdedTagView,
-            vacantTagView
-        ])
-
-        stackView.axis = .horizontal
-        stackView.spacing = 6
-        return stackView
-    }()
-
-    lazy var reservationTagView = TagView(name: "予約制", color: .systemGreen)
-    lazy var fullTagView = TagView(name: "満車", color: .systemRed)
-    lazy var crowdedTagView = TagView(name: "混雑", color: .systemOrange)
-    lazy var vacantTagView = TagView(name: "空車", color: .systemBlue)
-
-    lazy var capacityLabel = makeContentLabel()
-    lazy var openingHoursLabel = makeContentLabel()
-    lazy var priceDescriptionLabel = makeContentLabel()
-
-    func makeItemLabels(heading: String, contentLabel: UILabel) -> UIView {
-        let headingLabel = UILabel()
-        headingLabel.adjustsFontForContentSizeCategory = true
-        headingLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
-        headingLabel.text = heading
-        headingLabel.textColor = .secondaryLabel
-
-        let stackView = UIStackView(arrangedSubviews: [headingLabel, contentLabel])
-        stackView.axis = .vertical
-        stackView.distribution = .fill
-        return stackView
-    }
-
-    func makeContentLabel(multiline: Bool = true) -> UILabel {
-        let label = UILabel()
-        label.adjustsFontForContentSizeCategory = true
-        label.font = UIFont.preferredFont(forTextStyle: .footnote)
-        label.numberOfLines = multiline ? 0 : 1
-        return label
-    }
-
-    func makeRulerView() -> UIView {
-        let view = UIView()
-        view.backgroundColor = .tertiaryLabel
-        view.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale).isActive = true
-        return view
-    }
+    lazy var callout = Callout(annotationView: self)
 
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
 
-        canShowCallout = true
         animatesWhenAdded = true
         displayPriority = .required
-
-        rightCalloutAccessoryView = departureButton
-        detailCalloutAccessoryView = detailView
 
         update()
     }
@@ -397,12 +290,10 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
     func update() {
         guard let parking = parking else { return }
 
-        var rankColor: UIColor!
-
         if let rank = parking.rank {
             glyphText = "\(rank)位"
 
-            rankColor = UIColor.link.blend(
+            markerTintColor = UIColor.link.blend(
                 with: UIColor.systemGray,
                 ratio: 1.0 - CGFloat(rank - 1) * 0.2
             )
@@ -416,49 +307,191 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
                 glyphImage = UIImage(systemName: "questionmark")
             }
 
-            rankColor = .systemGray
+            markerTintColor = .systemGray
             zPriority = .min
         }
 
-        markerTintColor = rankColor
-
-        nameLabel.text = parking.name
-        capacityLabel.text = normalizeDescription(parking.capacityDescription) ?? "-"
-        openingHoursLabel.text = normalizeDescription(parking.openingHoursDescription) ?? "-"
-        priceDescriptionLabel.text = normalizedPriceDescription ?? "-"
-
-        reservationTagView.isHidden = parking.reservationInfo == nil
-        fullTagView.isHidden = parking.reservationInfo?.status != .full && parking.vacancyInfo?.status != .full
-        crowdedTagView.isHidden = parking.vacancyInfo?.status != .crowded
-        vacantTagView.isHidden = parking.reservationInfo?.status != .vacant && parking.vacancyInfo?.status != .vacant
-
-        tagsView.isHidden = tagsView.arrangedSubviews.allSatisfy { $0.isHidden }
+        callout.update()
     }
+}
 
-    func normalizeDescription(_ text: String?) -> String? {
-        guard let text = text else { return nil }
+extension ParkingAnnotationView {
+    class Callout {
+        weak var annotationView: ParkingAnnotationView?
 
-        let lines = text.split(separator: "\n")
-        let normalizedLines = lines.map { $0.trimmingCharacters(in: .whitespaces) }.compactMap { $0 }
-        return normalizedLines.joined(separator: "\n")
+        var parking: Parking? {
+            return annotationView?.parking
+        }
+
+        init(annotationView: ParkingAnnotationView) {
+            self.annotationView = annotationView
+
+            annotationView.canShowCallout = true
+            annotationView.detailCalloutAccessoryView = detailView
+            annotationView.rightCalloutAccessoryView = departureButton
+        }
+
+        lazy var detailView: UIView = {
+            let stackView = UIStackView(arrangedSubviews: [
+                headerView,
+                rulerView,
+                makeItemLabels(heading: "台数", contentLabel: capacityLabel),
+                makeItemLabels(heading: "営業時間", contentLabel: openingHoursLabel),
+                makeItemLabels(heading: "料金", contentLabel: priceDescriptionLabel)
+            ])
+
+            stackView.axis = .vertical
+            stackView.alignment = .fill
+            stackView.distribution = .equalSpacing
+            stackView.spacing = 8
+            return stackView
+        }()
+
+        lazy var headerView: UIView = {
+            let stackView = UIStackView(arrangedSubviews: [nameLabel, tagListView])
+            stackView.axis = .vertical
+            stackView.alignment = .leading
+            stackView.distribution = .equalSpacing
+            stackView.spacing = 3
+            return stackView
+        }()
+
+        lazy var nameLabel = makeContentLabel(multiline: false)
+
+        lazy var tagListView = TagListView()
+
+        lazy var rulerView: UIView = {
+            let view = UIView()
+            view.backgroundColor = .tertiaryLabel
+            view.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale).isActive = true
+            return view
+        }()
+
+        lazy var capacityLabel = makeContentLabel()
+        lazy var openingHoursLabel = makeContentLabel()
+        lazy var priceDescriptionLabel = makeContentLabel()
+
+        func makeItemLabels(heading: String, contentLabel: UILabel) -> UIView {
+            let headingLabel = UILabel()
+            headingLabel.adjustsFontForContentSizeCategory = true
+            headingLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
+            headingLabel.text = heading
+            headingLabel.textColor = .secondaryLabel
+
+            let stackView = UIStackView(arrangedSubviews: [headingLabel, contentLabel])
+            stackView.axis = .vertical
+            stackView.distribution = .fill
+            return stackView
+        }
+
+        func makeContentLabel(multiline: Bool = true) -> UILabel {
+            let label = UILabel()
+            label.adjustsFontForContentSizeCategory = true
+            label.font = UIFont.preferredFont(forTextStyle: .footnote)
+            label.numberOfLines = multiline ? 0 : 1
+            return label
+        }
+
+        lazy var departureButton: UIButton = {
+            let carImage = UIImage(systemName: "car.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 42))
+
+            let button = UIButton()
+            button.setImage(carImage, for: .normal)
+            button.tintColor = UIColor(named: "Departure Color")!
+            button.sizeToFit()
+            button.addTarget(self, action: #selector(openDirectionsInMaps), for: .touchUpInside)
+            return button
+        }()
+
+        func update() {
+            guard let parking = parking else { return }
+
+            nameLabel.text = parking.name
+            capacityLabel.text = normalizeDescription(parking.capacityDescription) ?? "-"
+            openingHoursLabel.text = normalizeDescription(parking.openingHoursDescription) ?? "-"
+            priceDescriptionLabel.text = normalizedPriceDescription ?? "-"
+
+            tagListView.parking = parking
+        }
+
+        func normalizeDescription(_ text: String?) -> String? {
+            guard let text = text else { return nil }
+
+            let lines = text.split(separator: "\n")
+            let normalizedLines = lines.map { $0.trimmingCharacters(in: .whitespaces) }.compactMap { $0 }
+            return normalizedLines.joined(separator: "\n")
+        }
+
+        var normalizedPriceDescription: String? {
+            guard let parking = parking, let text = normalizeDescription(parking.priceDescription) else { return nil }
+
+            let lines = text.split(separator: "\n")
+
+            let linePrefixToRemove = "全日 "
+
+            let normalizedLines: [String] = lines.map { (line) in
+                if line.hasPrefix(linePrefixToRemove) {
+                    return String(line.dropFirst(linePrefixToRemove.count))
+                } else {
+                    return String(line)
+                }
+            }
+
+            return normalizedLines.joined(separator: "\n")
+        }
+
+        @objc func openDirectionsInMaps() {
+            guard let parking = parking else { return }
+
+            let placemark = MKPlacemark(coordinate: parking.coordinate)
+            let mapItem = MKMapItem(placemark: placemark)
+            mapItem.name = parking.name
+
+            mapItem.openInMaps(launchOptions: [
+                MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,
+                MKLaunchOptionsMapTypeKey: Defaults.shared.mapTypeForDirections?.rawValue ?? MKMapType.standard
+            ])
+        }
     }
+}
 
-    var normalizedPriceDescription: String? {
-        guard let parking = parking, let text = normalizeDescription(parking.priceDescription) else { return nil }
-
-        let lines = text.split(separator: "\n")
-
-        let linePrefixToRemove = "全日 "
-
-        let normalizedLines: [String] = lines.map { (line) in
-            if line.hasPrefix(linePrefixToRemove) {
-                return String(line.dropFirst(linePrefixToRemove.count))
-            } else {
-                return String(line)
+extension ParkingAnnotationView.Callout {
+    class TagListView: UIStackView {
+        var parking: Parking? {
+            didSet {
+                update()
             }
         }
 
-        return normalizedLines.joined(separator: "\n")
+        init() {
+            super.init(frame: .zero)
+
+            axis = .horizontal
+            spacing = 6
+
+            addArrangedSubview(reservationTagView)
+            addArrangedSubview(fullTagView)
+            addArrangedSubview(crowdedTagView)
+            addArrangedSubview(vacantTagView)
+        }
+
+        required init(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+
+        func update() {
+            guard let parking = parking else { return }
+
+            reservationTagView.isHidden = parking.reservationInfo == nil
+            fullTagView.isHidden = parking.reservationInfo?.status != .full && parking.vacancyInfo?.status != .full
+            crowdedTagView.isHidden = parking.vacancyInfo?.status != .crowded
+            vacantTagView.isHidden = parking.reservationInfo?.status != .vacant && parking.vacancyInfo?.status != .vacant
+        }
+
+        lazy var reservationTagView = TagView(name: "予約制", color: .systemGreen)
+        lazy var fullTagView = TagView(name: "満車", color: .systemRed)
+        lazy var crowdedTagView = TagView(name: "混雑", color: .systemOrange)
+        lazy var vacantTagView = TagView(name: "空車", color: .systemBlue)
     }
 
     class TagView: UIView {
