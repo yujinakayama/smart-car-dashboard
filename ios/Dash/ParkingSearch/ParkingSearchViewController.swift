@@ -301,40 +301,72 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
     }()
 
     lazy var detailView: UIView = {
-        let view = UIStackView(arrangedSubviews: [
-            nameLabel,
+        let stackView = UIStackView(arrangedSubviews: [
+            headerView,
             makeRulerView(),
             makeItemLabels(heading: "台数", contentLabel: capacityLabel),
             makeItemLabels(heading: "営業時間", contentLabel: openingHoursLabel),
             makeItemLabels(heading: "料金", contentLabel: priceDescriptionLabel)
         ])
 
-        view.axis = .vertical
-        view.alignment = .fill
-        view.distribution = .equalSpacing
-        view.spacing = 8
-        return view
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 8
+        return stackView
     }()
 
-    lazy var nameLabel = makeContentLabel()
+    lazy var headerView: UIView = {
+        let headerView = UIStackView(arrangedSubviews: [nameLabel, tagsView])
+        headerView.axis = .vertical
+        headerView.alignment = .leading
+        headerView.distribution = .equalSpacing
+        headerView.spacing = 3
+        return headerView
+    }()
+
+    lazy var nameLabel = makeContentLabel(multiline: false)
+
+    lazy var tagsView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [
+            reservationTagView,
+            fullTagView,
+            crowdedTagView,
+            vacantTagView
+        ])
+
+        stackView.axis = .horizontal
+        stackView.spacing = 6
+        return stackView
+    }()
+
+    lazy var reservationTagView = TagView(name: "予約制", color: .systemGreen)
+    lazy var fullTagView = TagView(name: "満車", color: .systemRed)
+    lazy var crowdedTagView = TagView(name: "混雑", color: .systemOrange)
+    lazy var vacantTagView = TagView(name: "空車", color: .systemBlue)
+
     lazy var capacityLabel = makeContentLabel()
     lazy var openingHoursLabel = makeContentLabel()
     lazy var priceDescriptionLabel = makeContentLabel()
 
     func makeItemLabels(heading: String, contentLabel: UILabel) -> UIView {
-        let headinglabel = UILabel()
-        headinglabel.text = heading
-        headinglabel.textColor = .secondaryLabel
+        let headingLabel = UILabel()
+        headingLabel.adjustsFontForContentSizeCategory = true
+        headingLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
+        headingLabel.text = heading
+        headingLabel.textColor = .secondaryLabel
 
-        let stackView = UIStackView(arrangedSubviews: [headinglabel, contentLabel])
+        let stackView = UIStackView(arrangedSubviews: [headingLabel, contentLabel])
         stackView.axis = .vertical
         stackView.distribution = .fill
         return stackView
     }
 
-    func makeContentLabel() -> UILabel {
+    func makeContentLabel(multiline: Bool = true) -> UILabel {
         let label = UILabel()
-        label.numberOfLines = 0
+        label.adjustsFontForContentSizeCategory = true
+        label.font = UIFont.preferredFont(forTextStyle: .footnote)
+        label.numberOfLines = multiline ? 0 : 1
         return label
     }
 
@@ -351,6 +383,7 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
         canShowCallout = true
         animatesWhenAdded = true
         displayPriority = .required
+
         rightCalloutAccessoryView = departureButton
         detailCalloutAccessoryView = detailView
 
@@ -364,10 +397,12 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
     func update() {
         guard let parking = parking else { return }
 
+        var rankColor: UIColor!
+
         if let rank = parking.rank {
             glyphText = "\(rank)位"
 
-            markerTintColor = UIColor.link.blend(
+            rankColor = UIColor.link.blend(
                 with: UIColor.systemGray,
                 ratio: 1.0 - CGFloat(rank - 1) * 0.2
             )
@@ -381,14 +416,23 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
                 glyphImage = UIImage(systemName: "questionmark")
             }
 
-            markerTintColor = .systemGray
+            rankColor = .systemGray
             zPriority = .min
         }
+
+        markerTintColor = rankColor
 
         nameLabel.text = parking.name
         capacityLabel.text = normalizeDescription(parking.capacityDescription) ?? "-"
         openingHoursLabel.text = normalizeDescription(parking.openingHoursDescription) ?? "-"
         priceDescriptionLabel.text = normalizedPriceDescription ?? "-"
+
+        reservationTagView.isHidden = parking.reservationInfo == nil
+        fullTagView.isHidden = parking.reservationInfo?.status != .full && parking.vacancyInfo?.status != .full
+        crowdedTagView.isHidden = parking.vacancyInfo?.status != .crowded
+        vacantTagView.isHidden = parking.reservationInfo?.status != .vacant && parking.vacancyInfo?.status != .vacant
+
+        tagsView.isHidden = tagsView.arrangedSubviews.allSatisfy { $0.isHidden }
     }
 
     func normalizeDescription(_ text: String?) -> String? {
@@ -415,6 +459,46 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
         }
 
         return normalizedLines.joined(separator: "\n")
+    }
+
+    class TagView: UIView {
+        let horizontalPadding: CGFloat = 5
+        let verticalPadding: CGFloat = 3
+
+        lazy var label: UILabel = {
+            let label = UILabel()
+            let fontMetrics = UIFontMetrics(forTextStyle: .footnote)
+            label.adjustsFontForContentSizeCategory = true
+            label.font = fontMetrics.scaledFont(for: UIFont.systemFont(ofSize: 12, weight: .bold))
+            label.textAlignment = .center
+            label.textColor = .white
+            return label
+        }()
+
+        init(name: String, color: UIColor) {
+            super.init(frame: .zero)
+
+            backgroundColor = color
+            clipsToBounds = true
+            layer.cornerRadius = 6
+
+            label.text = name
+
+            addSubview(label)
+
+            label.translatesAutoresizingMaskIntoConstraints = false
+
+            NSLayoutConstraint.activate([
+                label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalPadding),
+                trailingAnchor.constraint(equalTo: label.trailingAnchor, constant: horizontalPadding),
+                label.topAnchor.constraint(equalTo: topAnchor, constant: verticalPadding),
+                bottomAnchor.constraint(equalTo: label.bottomAnchor, constant: verticalPadding),
+            ])
+        }
+
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
     }
 }
 
