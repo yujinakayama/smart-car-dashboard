@@ -356,7 +356,7 @@ extension ParkingAnnotationView {
             return stackView
         }()
 
-        lazy var nameLabel = makeContentLabel(multiline: false)
+        lazy var nameLabel = makeContentLabel(textColor: .secondaryLabel, multiline: false)
 
         lazy var tagListView = TagListView()
         let tagListViewConstraints = WeakReferenceArray<NSLayoutConstraint>()
@@ -385,11 +385,12 @@ extension ParkingAnnotationView {
             return stackView
         }
 
-        func makeContentLabel(multiline: Bool = true) -> UILabel {
+        func makeContentLabel(textColor: UIColor = .label, multiline: Bool = true) -> UILabel {
             let label = UILabel()
             label.adjustsFontForContentSizeCategory = true
             label.font = UIFont.preferredFont(forTextStyle: .footnote)
             label.numberOfLines = multiline ? 0 : 1
+            label.textColor = textColor
             return label
         }
 
