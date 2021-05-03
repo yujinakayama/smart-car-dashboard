@@ -325,6 +325,11 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
 
         callout.update()
     }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        callout.annotationViewDidSetSelected(selected, animated: animated)
+    }
 }
 
 extension ParkingAnnotationView {
@@ -338,19 +343,15 @@ extension ParkingAnnotationView {
         init(annotationView: ParkingAnnotationView) {
             self.annotationView = annotationView
 
+            hideDetails()
+
             annotationView.canShowCallout = true
-            annotationView.detailCalloutAccessoryView = detailView
+            annotationView.detailCalloutAccessoryView = contentView
             annotationView.rightCalloutAccessoryView = departureButton
         }
 
-        lazy var detailView: UIView = {
-            let stackView = UIStackView(arrangedSubviews: [
-                nameLabel,
-                rulerView,
-                makeItemLabels(heading: "台数", contentLabel: capacityLabel),
-                makeItemLabels(heading: "営業時間", contentLabel: openingHoursLabel),
-                makeItemLabels(heading: "料金", contentLabel: priceDescriptionLabel)
-            ])
+        lazy var contentView: UIView = {
+            let stackView = UIStackView(arrangedSubviews: [headerView, detailView])
 
             // Not arrannged
             tagListView.translatesAutoresizingMaskIntoConstraints = false
@@ -363,16 +364,51 @@ extension ParkingAnnotationView {
             return stackView
         }()
 
-        lazy var nameLabel = makeContentLabel(textColor: .secondaryLabel, multiline: false)
-
         lazy var tagListView = TagListView()
         let tagListViewConstraints = WeakReferenceArray<NSLayoutConstraint>()
+
+        lazy var headerView: UIView = {
+            let stackView = UIStackView(arrangedSubviews: [nameLabel, ellipsisButton])
+            stackView.axis = .horizontal
+            stackView.alignment = .center
+            stackView.distribution = .fill
+            stackView.spacing = 8
+            return stackView
+        }()
+
+        lazy var nameLabel = makeContentLabel(textColor: .secondaryLabel, multiline: false)
+
+        lazy var ellipsisButton: UIButton = {
+            let image = UIImage(systemName: "ellipsis.rectangle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20))
+
+            let button = UIButton()
+            button.setImage(image, for: .normal)
+            button.tintColor = .tertiaryLabel
+            button.addTarget(self, action: #selector(showDetails), for: .touchUpInside)
+            button.setContentCompressionResistancePriority(.required, for: .horizontal)
+            return button
+        }()
 
         lazy var rulerView: UIView = {
             let view = UIView()
             view.backgroundColor = .tertiaryLabel
             view.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale).isActive = true
             return view
+        }()
+
+        lazy var detailView: UIView = {
+            let stackView = UIStackView(arrangedSubviews: [
+                rulerView,
+                makeItemLabels(heading: "台数", contentLabel: capacityLabel),
+                makeItemLabels(heading: "営業時間", contentLabel: openingHoursLabel),
+                makeItemLabels(heading: "料金", contentLabel: priceDescriptionLabel)
+            ])
+
+            stackView.axis = .vertical
+            stackView.alignment = .fill
+            stackView.distribution = .equalSpacing
+            stackView.spacing = 8
+            return stackView
         }()
 
         lazy var capacityLabel = makeContentLabel()
@@ -430,7 +466,7 @@ extension ParkingAnnotationView {
         }
 
         var privateCalloutView: UIView? {
-            var currentView: UIView? = detailView.superview
+            var currentView: UIView? = contentView.superview
 
             for _ in 0..<10 {
                 guard let view = currentView else { return nil }
@@ -480,6 +516,29 @@ extension ParkingAnnotationView {
             }
 
             return normalizedLines.joined(separator: "\n")
+        }
+
+        @objc func showDetails() {
+            detailView.isHidden = false
+            ellipsisButton.isHidden = true
+            forceLayout()
+        }
+
+        func forceLayout() {
+            guard let annotationView = annotationView else { return }
+            annotationView.detailCalloutAccessoryView = nil
+            annotationView.detailCalloutAccessoryView = contentView
+        }
+
+        func annotationViewDidSetSelected(_ selected: Bool, animated: Bool) {
+            if !selected {
+                hideDetails()
+            }
+        }
+
+        func hideDetails() {
+            detailView.isHidden = true
+            ellipsisButton.isHidden = false
         }
 
         @objc func openDirectionsInMaps() {
