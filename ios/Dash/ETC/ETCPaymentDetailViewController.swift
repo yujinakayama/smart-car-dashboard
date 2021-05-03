@@ -46,6 +46,13 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
         configureView()
     }
 
+    deinit {
+        // > Before releasing an MKMapView object for which you have set a delegate,
+        // > remember to set that object’s delegate property to nil.
+        // https://developer.apple.com/documentation/mapkit/mkmapviewdelegate
+        mapView.delegate = nil
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         mapView.showsUserLocation = true
