@@ -287,6 +287,11 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        callout.annotationViewDidLayoutSubviews()
+    }
+
     func update() {
         guard let parking = parking else { return }
 
@@ -333,12 +338,16 @@ extension ParkingAnnotationView {
 
         lazy var detailView: UIView = {
             let stackView = UIStackView(arrangedSubviews: [
-                headerView,
+                nameLabel,
                 rulerView,
                 makeItemLabels(heading: "台数", contentLabel: capacityLabel),
                 makeItemLabels(heading: "営業時間", contentLabel: openingHoursLabel),
                 makeItemLabels(heading: "料金", contentLabel: priceDescriptionLabel)
             ])
+
+            // Not arrannged
+            tagListView.translatesAutoresizingMaskIntoConstraints = false
+            stackView.addSubview(tagListView)
 
             stackView.axis = .vertical
             stackView.alignment = .fill
@@ -347,18 +356,10 @@ extension ParkingAnnotationView {
             return stackView
         }()
 
-        lazy var headerView: UIView = {
-            let stackView = UIStackView(arrangedSubviews: [nameLabel, tagListView])
-            stackView.axis = .vertical
-            stackView.alignment = .leading
-            stackView.distribution = .equalSpacing
-            stackView.spacing = 3
-            return stackView
-        }()
-
         lazy var nameLabel = makeContentLabel(multiline: false)
 
         lazy var tagListView = TagListView()
+        let tagListViewConstraints = WeakReferenceArray<NSLayoutConstraint>()
 
         lazy var rulerView: UIView = {
             let view = UIView()
@@ -402,6 +403,39 @@ extension ParkingAnnotationView {
             button.addTarget(self, action: #selector(openDirectionsInMaps), for: .touchUpInside)
             return button
         }()
+
+        func annotationViewDidLayoutSubviews() {
+            if let titleLabel = privateTitleLabel, tagListViewConstraints.isEmpty {
+                // We need to reconfigure constraints when titleLabel instance is recreated
+                let constraints = [
+                    tagListView.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 6),
+                    tagListView.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor)
+                ]
+
+                NSLayoutConstraint.activate(constraints)
+                tagListViewConstraints.append(contentsOf: constraints)
+            }
+        }
+
+        var privateTitleLabel: UILabel? {
+            return privateCalloutView?.value(forKey: "_titleLabel") as? UILabel
+        }
+
+        var privateCalloutView: UIView? {
+            var currentView: UIView? = detailView.superview
+
+            for _ in 0..<10 {
+                guard let view = currentView else { return nil }
+
+                if String(describing: type(of: view)) == "MKSmallCalloutView" {
+                    return view
+                }
+
+                currentView = view.superview
+            }
+
+            return nil
+        }
 
         func update() {
             guard let parking = parking else { return }
@@ -495,14 +529,14 @@ extension ParkingAnnotationView.Callout {
     }
 
     class TagView: UIView {
-        let horizontalPadding: CGFloat = 5
-        let verticalPadding: CGFloat = 3
+        let horizontalPadding: CGFloat = 4
+        let verticalPadding: CGFloat = 1
 
         lazy var label: UILabel = {
             let label = UILabel()
             let fontMetrics = UIFontMetrics(forTextStyle: .footnote)
             label.adjustsFontForContentSizeCategory = true
-            label.font = fontMetrics.scaledFont(for: UIFont.systemFont(ofSize: 12, weight: .bold))
+            label.font = fontMetrics.scaledFont(for: UIFont.systemFont(ofSize: 11, weight: .semibold))
             label.textAlignment = .center
             label.textColor = .white
             return label
@@ -513,7 +547,7 @@ extension ParkingAnnotationView.Callout {
 
             backgroundColor = color
             clipsToBounds = true
-            layer.cornerRadius = 6
+            layer.cornerRadius = 3
 
             label.text = name
 
@@ -557,6 +591,33 @@ fileprivate extension UIColor {
             )
         } else {
             return nil
+        }
+    }
+}
+
+class WeakReferenceArray<Element: AnyObject> {
+    private let pointerArray = NSPointerArray.weakObjects()
+
+    var objects: [Element] {
+        return (pointerArray.allObjects as? [Element]) ?? []
+    }
+
+    var count: Int {
+        return objects.count
+    }
+
+    var isEmpty: Bool {
+        return count == 0
+    }
+
+    func append(_ newElement: Element) {
+        let pointer = Unmanaged.passUnretained(newElement).toOpaque()
+        pointerArray.addPointer(pointer)
+    }
+
+    func append<S>(contentsOf newElements: S) where Element == S.Element, S : Sequence {
+        for newElement in newElements {
+            append(newElement)
         }
     }
 }
