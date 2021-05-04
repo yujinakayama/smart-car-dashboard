@@ -63,6 +63,7 @@ class ParkingSearchViewController: UIViewController {
             720,
             1440
         ].map { TimeInterval($0 * 60) }
+        timeDurationPicker.selectRow(1, animated: false)
 
         entranceDatePicker.addTarget(self, action: #selector(searchParkings), for: .valueChanged)
         timeDurationPicker.addTarget(self, action: #selector(searchParkings), for: .valueChanged)

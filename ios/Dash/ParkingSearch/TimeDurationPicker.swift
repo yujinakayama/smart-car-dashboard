@@ -97,6 +97,10 @@ import UIKit
         return widths.max() ?? 0
     }
 
+    func selectRow(_ row: Int, animated: Bool) {
+        pickerView.selectRow(row, inComponent: 0, animated: animated)
+    }
+
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
