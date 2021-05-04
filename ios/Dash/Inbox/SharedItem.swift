@@ -43,7 +43,8 @@ extension SharedItemProtocol {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle(for: WebViewController.self))
         let navigationController = storyboard.instantiateViewController(withIdentifier: "WebViewNavigationController") as! UINavigationController
         let webViewController = navigationController.viewControllers.first as! WebViewController
-        webViewController.item = self
+        webViewController.url = url
+        webViewController.navigationItem.title = title
         viewController.present(navigationController, animated: true)
     }
 

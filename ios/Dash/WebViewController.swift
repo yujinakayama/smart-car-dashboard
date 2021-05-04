@@ -18,17 +18,15 @@ class WebViewController: UIViewController {
 
     @IBOutlet weak var backwardBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var forwardBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var reloadOrStopLoadingBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var openInSafariBarButtonItem: UIBarButtonItem!
-    @IBOutlet weak var openDirectionsInMapsBarButtonItem: UIBarButtonItem!
 
-    var item: SharedItemProtocol!
+    var url: URL!
 
     var keyValueObservations: [NSKeyValueObservation] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        navigationItem.title = item.title
 
         configureBarButtonItems()
 
@@ -57,8 +55,6 @@ class WebViewController: UIViewController {
         keyValueObservations.append(webView.observe(\.url, options: .initial, changeHandler: { [unowned self] (webView, change) in
             openInSafariBarButtonItem.isEnabled = webView.url != nil
         }))
-
-        openDirectionsInMapsBarButtonItem.isEnabled = item is Location
     }
 
     func configureWebView(completion: @escaping () -> Void) {
@@ -98,27 +94,19 @@ class WebViewController: UIViewController {
     }
 
     func startLoadingPage() {
-        webView.load(URLRequest(url: item.url))
+        webView.load(URLRequest(url: url))
     }
 
     func updateReloadOrStopLoadingBarButtonItem() {
         let symbolConfiguration = UIImage.SymbolConfiguration(scale: .default)
 
         if webView.isLoading {
-            let image = UIImage(systemName: "xmark", withConfiguration: symbolConfiguration)
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(stopLoading))
+            reloadOrStopLoadingBarButtonItem.image = UIImage(systemName: "xmark", withConfiguration: symbolConfiguration)
+            reloadOrStopLoadingBarButtonItem.action = #selector(stopLoading)
         } else {
-            let image = UIImage(systemName: "arrow.clockwise", withConfiguration: symbolConfiguration)
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(reload))
+            reloadOrStopLoadingBarButtonItem.image = UIImage(systemName: "arrow.clockwise", withConfiguration: symbolConfiguration)
+            reloadOrStopLoadingBarButtonItem.action = #selector(reload)
         }
-    }
-
-    @IBAction func reload() {
-        webView.reload()
-    }
-
-    @IBAction func stopLoading() {
-        webView.stopLoading()
     }
 
     @IBAction func done() {
@@ -133,13 +121,16 @@ class WebViewController: UIViewController {
         webView.goForward()
     }
 
+    @IBAction func reload() {
+        webView.reload()
+    }
+
+    @IBAction func stopLoading() {
+        webView.stopLoading()
+    }
+
     @IBAction func openInSafari() {
         guard let url = webView.url else { return }
         UIApplication.shared.open(url, options: [:])
-    }
-
-    @IBAction func openDirectionsInMaps() {
-        guard let location = item as? Location else { return }
-        location.open(from: nil)
     }
 }

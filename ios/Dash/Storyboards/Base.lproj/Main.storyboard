@@ -1113,7 +1113,7 @@
                                             <action selector="goBackward" destination="cu8-Rq-Mp0" id="ziR-L2-S7w"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Mvr-bv-9Tf"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="21A-XB-mxr"/>
                                     <barButtonItem id="x5H-vE-j2f">
                                         <imageReference key="image" image="chevron.forward" catalog="system" symbolScale="default"/>
                                         <connections>
@@ -1121,17 +1121,14 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="jZg-mZ-MDa"/>
+                                    <barButtonItem id="d25-pT-3PN">
+                                        <imageReference key="image" image="arrow.clockwise" catalog="system" symbolScale="default"/>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Vs1-9g-cWH"/>
                                     <barButtonItem id="dEx-dT-cIF">
                                         <imageReference key="image" image="safari" catalog="system" symbolScale="default"/>
                                         <connections>
                                             <action selector="openInSafari" destination="cu8-Rq-Mp0" id="aYj-wQ-EGJ"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="wNA-Va-MTQ"/>
-                                    <barButtonItem id="kLK-lT-aN9">
-                                        <imageReference key="image" image="car.fill" catalog="system" symbolScale="default"/>
-                                        <connections>
-                                            <action selector="openDirectionsInMaps" destination="cu8-Rq-Mp0" id="h8m-Af-VBe"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -1151,7 +1148,7 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="tHB-Iz-S3x">
-                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="done" id="1sv-7f-wgo">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="1sv-7f-wgo">
                             <connections>
                                 <action selector="done" destination="cu8-Rq-Mp0" id="qnj-l2-wY6"/>
                             </connections>
@@ -1161,14 +1158,14 @@
                         <outlet property="backwardBarButtonItem" destination="ieO-WG-slj" id="WyK-Ac-Cqi"/>
                         <outlet property="doneBarButtonItem" destination="1sv-7f-wgo" id="7xf-Xl-IpR"/>
                         <outlet property="forwardBarButtonItem" destination="x5H-vE-j2f" id="fMo-aH-iy1"/>
-                        <outlet property="openDirectionsInMapsBarButtonItem" destination="kLK-lT-aN9" id="22S-qR-NzW"/>
                         <outlet property="openInSafariBarButtonItem" destination="dEx-dT-cIF" id="9um-2u-yn1"/>
+                        <outlet property="reloadOrStopLoadingBarButtonItem" destination="d25-pT-3PN" id="LA5-Fb-TIj"/>
                         <outlet property="webView" destination="d4F-Zy-sJE" id="G0N-43-Iyp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0f4-dA-OL2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1952.8" y="1677.5390625"/>
+            <point key="canvasLocation" x="84" y="5010"/>
         </scene>
         <!--Google Sign In View Controller-->
         <scene sceneID="8w7-6e-CcP">
@@ -1615,7 +1612,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BrN-Gu-m6g" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1013.6" y="1677.5390625"/>
+            <point key="canvasLocation" x="-857" y="5010"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="0ak-zI-CnN">
@@ -1750,8 +1747,8 @@
     <resources>
         <image name="Mastercard" width="117" height="73"/>
         <image name="Visa" width="496" height="161"/>
+        <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
         <image name="arrow.right" catalog="system" width="128" height="98"/>
-        <image name="car.fill" catalog="system" width="128" height="93"/>
         <image name="checkmark" catalog="system" width="128" height="114"/>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
         <image name="chevron.forward" catalog="system" width="96" height="128"/>

@@ -184,6 +184,18 @@ class ParkingSearchViewController: UIViewController {
         mapView.annotations.filter { $0 is ParkingAnnotation } as! [ParkingAnnotation]
     }
 
+    @objc func openReservationPage() {
+        guard let parking = (mapView.selectedAnnotations.first as? ParkingAnnotation)?.parking else { return }
+        guard let reservationURL = parking.reservationInfo?.url else { return }
+
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle(for: WebViewController.self))
+        let navigationController = storyboard.instantiateViewController(withIdentifier: "WebViewNavigationController") as! UINavigationController
+        let webViewController = navigationController.viewControllers.first as! WebViewController
+        webViewController.url = reservationURL
+        webViewController.navigationItem.title = parking.name
+        present(navigationController, animated: true)
+    }
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
@@ -229,7 +241,9 @@ extension ParkingSearchViewController: MKMapViewDelegate {
             view.annotation = annotation
             return view
         } else {
-            return ParkingAnnotationView(annotation: annotation, reuseIdentifier: "MKMarkerAnnotationView")
+            let view = ParkingAnnotationView(annotation: annotation, reuseIdentifier: "MKMarkerAnnotationView")
+            view.callout.reservationButton.addTarget(self, action: #selector(openReservationPage), for: .touchUpInside)
+            return view
         }
     }
 
@@ -409,6 +423,7 @@ extension ParkingAnnotationView {
                 capacityItemView,
                 openingHoursItemView,
                 priceDescriptionItemView,
+                reservationView,
             ])
 
             stackView.axis = .vertical
@@ -421,6 +436,36 @@ extension ParkingAnnotationView {
         lazy var capacityItemView = makeItemView(heading: "台数", contentLabel: capacityLabel)
         lazy var openingHoursItemView = makeItemView(heading: "営業時間", contentLabel: openingHoursLabel)
         lazy var priceDescriptionItemView = makeItemView(heading: "料金", contentLabel: priceDescriptionLabel)
+
+        // Not sure why but adding a button without wrapper view to stack view breaks layout
+        lazy var reservationView: UIView = {
+            let view = UIView()
+
+            view.addSubview(reservationButton)
+
+            reservationButton.translatesAutoresizingMaskIntoConstraints = false
+
+            NSLayoutConstraint.activate([
+                reservationButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                view.bottomAnchor.constraint(equalTo: reservationButton.bottomAnchor),
+                reservationButton.topAnchor.constraint(equalTo: view.topAnchor),
+                view.trailingAnchor.constraint(equalTo: reservationButton.trailingAnchor),
+            ])
+
+            return view
+        }()
+
+        lazy var reservationButton: UIButton = {
+            let fontMetrics = UIFontMetrics(forTextStyle: .footnote)
+
+            let button = UIButton()
+            button.backgroundColor = .link
+            button.setTitleColor(.white, for: .normal)
+            button.titleLabel?.adjustsFontSizeToFitWidth = true
+            button.titleLabel?.font = fontMetrics.scaledFont(for: UIFont.systemFont(ofSize: 13, weight: .semibold))
+            button.layer.cornerRadius = 6
+            return button
+        }()
 
         lazy var capacityLabel = makeContentLabel()
         lazy var openingHoursLabel = makeContentLabel()
@@ -524,6 +569,14 @@ extension ParkingAnnotationView {
             } else {
                 priceDescriptionLabel.text = nil
                 priceDescriptionItemView.isHidden = true
+            }
+
+            if let provider = parking.reservationInfo?.provider, parking.reservationInfo?.url != nil {
+                reservationButton.setTitle("\(provider)で予約する", for: .normal)
+                reservationView.isHidden = false
+            } else {
+                reservationButton.setTitle(nil, for: .normal)
+                reservationView.isHidden = true
             }
         }
 
