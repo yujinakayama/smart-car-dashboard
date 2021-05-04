@@ -73,7 +73,10 @@ class ParkingSearchViewController: UIViewController {
 
         calculateExpectedTravelTime { (travelTime) in
             DispatchQueue.main.async {
-                self.entranceDatePicker.date = Date() + travelTime
+                if let travelTime = travelTime {
+                    self.entranceDatePicker.date = Date() + travelTime
+                }
+
                 self.searchParkings()
             }
         }
@@ -93,7 +96,7 @@ class ParkingSearchViewController: UIViewController {
         mapView.setRegion(region, animated: false)
     }
 
-    func calculateExpectedTravelTime(completion: @escaping (TimeInterval) -> Void) {
+    func calculateExpectedTravelTime(completion: @escaping (TimeInterval?) -> Void) {
         activityIndicatorView.startAnimating()
 
         let request = MKDirections.Request()
@@ -108,12 +111,9 @@ class ParkingSearchViewController: UIViewController {
 
             if let error = error {
                 logger.error(error)
-                return
             }
 
-            if let route = response?.routes.first {
-                completion(route.expectedTravelTime)
-            }
+            completion(response?.routes.first?.expectedTravelTime)
         }
     }
 
