@@ -329,9 +329,9 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
             zPriority = MKAnnotationViewZPriority(rawValue: zPriorityValue)
         } else {
             if parking.isClosed {
-                glyphImage = UIImage(systemName: "xmark")
+                glyphText = "×"
             } else {
-                glyphImage = UIImage(systemName: "questionmark")
+                glyphText = "?"
             }
 
             markerTintColor = .systemGray
@@ -541,7 +541,7 @@ extension ParkingAnnotationView {
         func update() {
             guard let parking = parking else { return }
 
-            rankView.rank = parking.rank
+            rankView.label.text = annotationView?.glyphText
             rankView.tintColor = annotationView?.markerTintColor
 
             tagListView.parking = parking
@@ -647,16 +647,6 @@ extension ParkingAnnotationView {
 
 extension ParkingAnnotationView.Callout {
     class RankView: UIView {
-        var rank: Int? {
-            didSet {
-                if let rank = rank {
-                    label.text = "\(rank)位"
-                } else {
-                    label.text = nil
-                }
-            }
-        }
-
         override var frame: CGRect {
             didSet {
                 layer.cornerRadius = frame.width / 2
