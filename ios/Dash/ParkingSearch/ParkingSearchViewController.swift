@@ -406,9 +406,9 @@ extension ParkingAnnotationView {
         lazy var detailView: UIView = {
             let stackView = UIStackView(arrangedSubviews: [
                 rulerView,
-                makeItemLabels(heading: "台数", contentLabel: capacityLabel),
-                makeItemLabels(heading: "営業時間", contentLabel: openingHoursLabel),
-                makeItemLabels(heading: "料金", contentLabel: priceDescriptionLabel)
+                capacityItemView,
+                openingHoursItemView,
+                priceDescriptionItemView,
             ])
 
             stackView.axis = .vertical
@@ -418,11 +418,15 @@ extension ParkingAnnotationView {
             return stackView
         }()
 
+        lazy var capacityItemView = makeItemView(heading: "台数", contentLabel: capacityLabel)
+        lazy var openingHoursItemView = makeItemView(heading: "営業時間", contentLabel: openingHoursLabel)
+        lazy var priceDescriptionItemView = makeItemView(heading: "料金", contentLabel: priceDescriptionLabel)
+
         lazy var capacityLabel = makeContentLabel()
         lazy var openingHoursLabel = makeContentLabel()
         lazy var priceDescriptionLabel = makeContentLabel()
 
-        func makeItemLabels(heading: String, contentLabel: UILabel) -> UIView {
+        func makeItemView(heading: String, contentLabel: UILabel) -> UIView {
             let headingLabel = UILabel()
             headingLabel.adjustsFontForContentSizeCategory = true
             headingLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
@@ -494,12 +498,33 @@ extension ParkingAnnotationView {
             rankView.rank = parking.rank
             rankView.tintColor = annotationView?.markerTintColor
 
-            nameLabel.text = parking.name
-            capacityLabel.text = normalizeDescription(parking.capacityDescription) ?? "-"
-            openingHoursLabel.text = normalizeDescription(parking.openingHoursDescription) ?? "-"
-            priceDescriptionLabel.text = normalizedPriceDescription ?? "-"
-
             tagListView.parking = parking
+
+            nameLabel.text = parking.name
+
+            if tagListView.capacityTagView.isHidden, let description = normalizeDescription(parking.capacityDescription) {
+                capacityLabel.text = description
+                capacityItemView.isHidden = false
+            } else {
+                capacityLabel.text = nil
+                capacityItemView.isHidden = true
+            }
+
+            if let description = normalizeDescription(parking.openingHoursDescription) {
+                openingHoursLabel.text = description
+                openingHoursItemView.isHidden = false
+            } else {
+                openingHoursLabel.text = nil
+                openingHoursItemView.isHidden = true
+            }
+
+            if let description = normalizedPriceDescription {
+                priceDescriptionLabel.text = description
+                priceDescriptionItemView.isHidden = false
+            } else {
+                priceDescriptionLabel.text = nil
+                priceDescriptionItemView.isHidden = true
+            }
         }
 
         func normalizeDescription(_ text: String?) -> String? {
