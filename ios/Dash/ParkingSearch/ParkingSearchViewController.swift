@@ -346,9 +346,16 @@ extension ParkingAnnotationView {
             hideDetails()
 
             annotationView.canShowCallout = true
+            annotationView.leftCalloutAccessoryView = rankView
             annotationView.detailCalloutAccessoryView = contentView
             annotationView.rightCalloutAccessoryView = departureButton
         }
+
+        lazy var rankView: RankView = {
+            let rankView = RankView()
+            rankView.frame = CGRect(x: 0, y: 0, width: 41, height: 41)
+            return rankView
+        }()
 
         lazy var contentView: UIView = {
             let stackView = UIStackView(arrangedSubviews: [headerView, detailView])
@@ -484,6 +491,9 @@ extension ParkingAnnotationView {
         func update() {
             guard let parking = parking else { return }
 
+            rankView.rank = parking.rank
+            rankView.tintColor = annotationView?.markerTintColor
+
             nameLabel.text = parking.name
             capacityLabel.text = normalizeDescription(parking.capacityDescription) ?? "-"
             openingHoursLabel.text = normalizeDescription(parking.openingHoursDescription) ?? "-"
@@ -552,6 +562,60 @@ extension ParkingAnnotationView {
                 MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,
                 MKLaunchOptionsMapTypeKey: Defaults.shared.mapTypeForDirections?.rawValue ?? MKMapType.standard
             ])
+        }
+    }
+}
+
+extension ParkingAnnotationView.Callout {
+    class RankView: UIView {
+        var rank: Int? {
+            didSet {
+                if let rank = rank {
+                    label.text = "\(rank)位"
+                } else {
+                    label.text = nil
+                }
+            }
+        }
+
+        override var frame: CGRect {
+            didSet {
+                layer.cornerRadius = frame.width / 2
+            }
+        }
+
+        lazy var label: UILabel = {
+            let label = UILabel()
+            label.adjustsFontSizeToFitWidth = true
+            label.font = UIFont.systemFont(ofSize: 19, weight: .semibold)
+            label.textAlignment = .center
+            label.textColor = .white
+            return label
+        }()
+
+        init() {
+            super.init(frame: .zero)
+
+            clipsToBounds = true
+
+            label.translatesAutoresizingMaskIntoConstraints = false
+
+            addSubview(label)
+
+            NSLayoutConstraint.activate([
+                label.centerXAnchor.constraint(equalTo: centerXAnchor),
+                label.centerYAnchor.constraint(equalTo: centerYAnchor),
+                label.widthAnchor.constraint(lessThanOrEqualTo: widthAnchor, multiplier: 0.8),
+            ])
+        }
+
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+
+        override func tintColorDidChange() {
+            super.tintColorDidChange()
+            backgroundColor = tintColor
         }
     }
 }
