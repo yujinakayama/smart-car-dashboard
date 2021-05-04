@@ -622,6 +622,8 @@ extension ParkingAnnotationView.Callout {
 
 extension ParkingAnnotationView.Callout {
     class TagListView: UIStackView {
+        let simpleCapacityRegularExpression = try! NSRegularExpression(pattern: "^\\d+台$")
+
         var parking: Parking? {
             didSet {
                 update()
@@ -634,6 +636,7 @@ extension ParkingAnnotationView.Callout {
             axis = .horizontal
             spacing = 6
 
+            addArrangedSubview(capacityTagView)
             addArrangedSubview(reservationTagView)
             addArrangedSubview(fullTagView)
             addArrangedSubview(crowdedTagView)
@@ -647,40 +650,78 @@ extension ParkingAnnotationView.Callout {
         func update() {
             guard let parking = parking else { return }
 
+            if hasSimpleCapacityDescription {
+                capacityTagView.text = parking.capacityDescription
+                capacityTagView.isHidden = false
+            } else {
+                capacityTagView.isHidden = true
+            }
+
             reservationTagView.isHidden = parking.reservationInfo == nil
             fullTagView.isHidden = parking.reservationInfo?.status != .full && parking.vacancyInfo?.status != .full
             crowdedTagView.isHidden = parking.vacancyInfo?.status != .crowded
             vacantTagView.isHidden = parking.reservationInfo?.status != .vacant && parking.vacancyInfo?.status != .vacant
         }
 
-        lazy var reservationTagView = TagView(name: "予約制", color: .systemGreen)
-        lazy var fullTagView = TagView(name: "満車", color: .systemRed)
-        lazy var crowdedTagView = TagView(name: "混雑", color: .systemOrange)
-        lazy var vacantTagView = TagView(name: "空車", color: .systemBlue)
+        var hasSimpleCapacityDescription: Bool {
+            guard let capacityDescription = parking?.capacityDescription else { return false }
+
+            let numberOfMatches = simpleCapacityRegularExpression.numberOfMatches(
+                in: capacityDescription,
+                range: NSRange(0..<capacityDescription.count)
+            )
+
+            return numberOfMatches == 1
+        }
+
+        lazy var capacityTagView = TagView(textColor: .secondaryLabel, borderColor: .secondaryLabel)
+        lazy var reservationTagView = TagView(text: "予約制", textColor: .white, backgroundColor: .systemGreen)
+        lazy var fullTagView = TagView(text: "満車", textColor: .white, backgroundColor: .systemRed)
+        lazy var crowdedTagView = TagView(text: "混雑", textColor: .white, backgroundColor: .systemOrange)
+        lazy var vacantTagView = TagView(text: "空車", textColor: .white, backgroundColor: .systemBlue)
     }
 
     class TagView: UIView {
         let horizontalPadding: CGFloat = 4
         let verticalPadding: CGFloat = 1
 
+        var text: String? {
+            get {
+                return label.text
+            }
+
+            set {
+                label.text = newValue
+            }
+        }
+
         lazy var label: UILabel = {
             let label = UILabel()
             let fontMetrics = UIFontMetrics(forTextStyle: .footnote)
             label.adjustsFontForContentSizeCategory = true
-            label.font = fontMetrics.scaledFont(for: UIFont.systemFont(ofSize: 11, weight: .semibold))
+            label.font = fontMetrics.scaledFont(for: UIFont.systemFont(ofSize: 11.5, weight: .semibold))
             label.textAlignment = .center
             label.textColor = .white
             return label
         }()
 
-        init(name: String, color: UIColor) {
+        private var borderColor: UIColor?
+
+        init(text: String? = nil, textColor: UIColor? = nil, backgroundColor: UIColor? = nil, borderColor: UIColor? = nil) {
             super.init(frame: .zero)
 
-            backgroundColor = color
+            label.text = text
+            label.textColor = textColor
+            self.backgroundColor = backgroundColor
+            self.borderColor = borderColor
+            applyBorderColor()
+
+            if borderColor != nil {
+                layer.borderWidth = 1
+            }
+
             clipsToBounds = true
             layer.cornerRadius = 3
-
-            label.text = name
 
             addSubview(label)
 
@@ -696,6 +737,19 @@ extension ParkingAnnotationView.Callout {
 
         required init?(coder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
+        }
+
+        override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+            super.traitCollectionDidChange(previousTraitCollection)
+
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                applyBorderColor()
+            }
+        }
+
+        func applyBorderColor() {
+            guard let borderColor = borderColor else { return }
+            layer.borderColor = borderColor.cgColor
         }
     }
 }
