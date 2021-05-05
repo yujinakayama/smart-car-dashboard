@@ -195,14 +195,18 @@ extension Parking {
                 lastUpdateDate = Self.dateFormatter.date(from: lastUpdateDateString)!
             }
 
-            status = try values.decodeIfPresent(VacancyStatus.self, forKey: .status)
+            if let statusRawValue = try values.decodeIfPresent(Int.self, forKey: .status) {
+                status = VacancyStatus(rawValue: statusRawValue) ?? .unsupported
+            }
         }
     }
 
     enum VacancyStatus: Int, Decodable {
+        case unsupported = -1
         case vacant = 0
         case crowded = 1
         case full = 2
+        case closed = 7
     }
 }
 
@@ -211,9 +215,28 @@ extension Parking {
         var provider: String
         var status: ReservationStatus?
         var url: URL?
+
+        enum CodingKeys: String, CodingKey {
+            case provider
+            case status
+            case url
+        }
+
+        init(from decoder: Decoder) throws {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+
+            provider = try values.decode(String.self, forKey: .provider)
+
+            if let statusRawValue = try values.decodeIfPresent(Int.self, forKey: .status) {
+                status = ReservationStatus(rawValue: statusRawValue) ?? .unsupported
+            }
+
+            url = try values.decodeIfPresent(URL.self, forKey: .url)
+        }
     }
 
     enum ReservationStatus: Int, Decodable {
+        case unsupported = -1
         case vacant = 1
         case full = 2
         case unknown = 3
