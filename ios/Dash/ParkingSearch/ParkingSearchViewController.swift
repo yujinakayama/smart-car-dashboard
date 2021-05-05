@@ -378,6 +378,7 @@ extension ParkingAnnotationView {
             // Not arrannged
             tagListView.translatesAutoresizingMaskIntoConstraints = false
             stackView.addSubview(tagListView)
+            stackView.trailingAnchor.constraint(equalTo: tagListView.trailingAnchor).isActive = true
 
             stackView.axis = .vertical
             stackView.alignment = .fill
@@ -390,11 +391,11 @@ extension ParkingAnnotationView {
         let tagListViewConstraints = WeakReferenceArray<NSLayoutConstraint>()
 
         lazy var headerView: UIView = {
-            let stackView = UIStackView(arrangedSubviews: [nameLabel, ellipsisButton])
+            let stackView = UIStackView(arrangedSubviews: [nameLabel, ellipsisButton, UIView()])
             stackView.axis = .horizontal
             stackView.alignment = .center
             stackView.distribution = .fill
-            stackView.spacing = 8
+            stackView.spacing = 6
             return stackView
         }()
 
@@ -411,13 +412,6 @@ extension ParkingAnnotationView {
             return button
         }()
 
-        lazy var rulerView: UIView = {
-            let view = UIView()
-            view.backgroundColor = .tertiaryLabel
-            view.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale).isActive = true
-            return view
-        }()
-
         lazy var detailView: UIView = {
             let stackView = UIStackView(arrangedSubviews: [
                 rulerView,
@@ -432,6 +426,13 @@ extension ParkingAnnotationView {
             stackView.distribution = .equalSpacing
             stackView.spacing = 8
             return stackView
+        }()
+
+        lazy var rulerView: UIView = {
+            let view = UIView()
+            view.backgroundColor = .tertiaryLabel
+            view.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale).isActive = true
+            return view
         }()
 
         lazy var capacityItemView = makeItemView(heading: "台数", contentLabel: capacityLabel)
@@ -507,6 +508,8 @@ extension ParkingAnnotationView {
 
         func annotationViewDidLayoutSubviews() {
             if let titleLabel = privateTitleLabel, tagListViewConstraints.isEmpty {
+                titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+
                 // We need to reconfigure constraints when titleLabel instance is recreated
                 let constraints = [
                     tagListView.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 6),
@@ -515,6 +518,8 @@ extension ParkingAnnotationView {
 
                 NSLayoutConstraint.activate(constraints)
                 tagListViewConstraints.append(contentsOf: constraints)
+
+                forceLayout()
             }
         }
 
@@ -710,6 +715,7 @@ extension ParkingAnnotationView.Callout {
             addArrangedSubview(fullTagView)
             addArrangedSubview(crowdedTagView)
             addArrangedSubview(vacantTagView)
+            addArrangedSubview(UIView())
         }
 
         required init(coder: NSCoder) {
