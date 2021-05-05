@@ -25,6 +25,7 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
 
         animatesWhenAdded = true
+        collisionMode = .none
         displayPriority = .required
 
         update()
