@@ -67,6 +67,7 @@
 		B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93321ED2323C9D500BFAB21 /* BorderedView.swift */; };
 		B940A460250E5B57006BDFBB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B940A45F250E5B57006BDFBB /* Settings.bundle */; };
 		B940A462250E5CDD006BDFBB /* RearviewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */; };
+		B94215F126423A58003F94A0 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94215F026423A58003F94A0 /* StringExtension.swift */; };
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
 		B942554522B8ED10008B053B /* ETCMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554422B8ED10008B053B /* ETCMessageTests.swift */; };
 		B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554F22BAA5D1008B053B /* LocalNotification.swift */; };
@@ -382,6 +383,7 @@
 		B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewDefaults.swift; sourceTree = "<group>"; };
 		B940A465250F0EBB006BDFBB /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		B941AEADBC8F07DBE594C95A /* Pods_DashRemote_ShareExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DashRemote_ShareExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B94215F026423A58003F94A0 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		B942553C22B8C3E2008B053B /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B942554422B8ED10008B053B /* ETCMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCMessageTests.swift; sourceTree = "<group>"; };
 		B942554F22BAA5D1008B053B /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
@@ -868,6 +870,7 @@
 		B9CEA76922D8F1F50055C9A3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				B94215F026423A58003F94A0 /* StringExtension.swift */,
 				B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */,
 				B9D8E43923D345D70078A057 /* UUIDExtension.swift */,
 				B92E2AFB23E4958200BB4C0E /* UNNotificationContentExtension.swift */,
@@ -1672,6 +1675,7 @@
 				B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift in Sources */,
 				B92C6EC324AC2F0A001E9675 /* ArtworkView.swift in Sources */,
 				B94E69D123F7A313004CCC7C /* WebsiteIcon.swift in Sources */,
+				B94215F126423A58003F94A0 /* StringExtension.swift in Sources */,
 				B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */,
 				B95F514E23E5BBF70063CB3D /* SharedItem.swift in Sources */,
 				B944C69024A9E4C8000D1E99 /* MusicViewController.swift in Sources */,

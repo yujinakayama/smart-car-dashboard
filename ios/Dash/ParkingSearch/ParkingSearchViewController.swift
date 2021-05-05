@@ -544,16 +544,16 @@ extension ParkingAnnotationView {
         }
 
         func update() {
-            guard let parking = parking else { return }
+            guard let annotationView = annotationView, let parking = parking else { return }
 
-            rankView.label.text = annotationView?.glyphText
-            rankView.tintColor = annotationView?.markerTintColor
+            rankView.label.text = annotationView.glyphText
+            rankView.tintColor = annotationView.markerTintColor
 
             tagListView.parking = parking
 
-            nameLabel.text = parking.name
+            nameLabel.text = normalizeText(parking.name)
 
-            if tagListView.capacityTagView.isHidden, let description = normalizeDescription(parking.capacityDescription) {
+            if tagListView.capacityTagView.isHidden, let description = normalizeText(parking.capacityDescription) {
                 capacityLabel.text = description
                 capacityItemView.isHidden = false
             } else {
@@ -561,7 +561,7 @@ extension ParkingAnnotationView {
                 capacityItemView.isHidden = true
             }
 
-            if let description = normalizeDescription(parking.openingHoursDescription) {
+            if let description = normalizeText(parking.openingHoursDescription) {
                 openingHoursLabel.text = description
                 openingHoursItemView.isHidden = false
             } else {
@@ -586,16 +586,18 @@ extension ParkingAnnotationView {
             }
         }
 
-        func normalizeDescription(_ text: String?) -> String? {
+        func normalizeText(_ text: String?) -> String? {
             guard let text = text else { return nil }
 
-            let lines = text.split(separator: "\n")
-            let normalizedLines = lines.map { $0.trimmingCharacters(in: .whitespaces) }.compactMap { $0 }
-            return normalizedLines.joined(separator: "\n")
+            let normalizedText = text.covertFullwidthAlphanumericsToHalfwidth().convertFullwidthWhitespacesToHalfwidth()
+
+            let lines = normalizedText.split(separator: "\n")
+            let trimmedLines = lines.map { $0.trimmingCharacters(in: .whitespaces) }.compactMap { $0 }
+            return trimmedLines.joined(separator: "\n")
         }
 
         var normalizedPriceDescription: String? {
-            guard let parking = parking, let text = normalizeDescription(parking.priceDescription) else { return nil }
+            guard let parking = parking, let text = normalizeText(parking.priceDescription) else { return nil }
 
             let lines = text.split(separator: "\n")
 
