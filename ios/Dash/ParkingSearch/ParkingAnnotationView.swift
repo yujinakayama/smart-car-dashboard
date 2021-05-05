@@ -94,7 +94,7 @@ extension ParkingAnnotationView {
 
         lazy var rankView: RankView = {
             let rankView = RankView()
-            rankView.frame = CGRect(x: 0, y: 0, width: 41, height: 41)
+            rankView.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
             return rankView
         }()
 
@@ -178,6 +178,7 @@ extension ParkingAnnotationView {
                 view.bottomAnchor.constraint(equalTo: reservationButton.bottomAnchor),
                 reservationButton.topAnchor.constraint(equalTo: view.topAnchor),
                 view.trailingAnchor.constraint(equalTo: reservationButton.trailingAnchor),
+                reservationButton.heightAnchor.constraint(equalToConstant: 28),
             ])
 
             return view
@@ -187,11 +188,17 @@ extension ParkingAnnotationView {
             let fontMetrics = UIFontMetrics(forTextStyle: .footnote)
 
             let button = UIButton()
-            button.backgroundColor = .link
+
+            button.setBackgroundColor(.link, for: .normal)
             button.setTitleColor(.white, for: .normal)
+
+            button.titleLabel?.adjustsFontForContentSizeCategory = true
             button.titleLabel?.adjustsFontSizeToFitWidth = true
             button.titleLabel?.font = fontMetrics.scaledFont(for: UIFont.systemFont(ofSize: 13, weight: .semibold))
+
+            button.clipsToBounds = true
             button.layer.cornerRadius = 6
+
             return button
         }()
 
@@ -222,13 +229,19 @@ extension ParkingAnnotationView {
         }
 
         lazy var departureButton: UIButton = {
-            let carImage = UIImage(systemName: "car.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 42))
+            let image = UIImage(systemName: "car.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 24))
 
             let button = UIButton()
-            button.setImage(carImage, for: .normal)
-            button.tintColor = UIColor(named: "Departure Color")!
-            button.sizeToFit()
+            button.setImage(image, for: .normal)
+            button.tintColor = .white
+            button.setBackgroundColor(UIColor(named: "Departure Color")!, for: .normal)
+
+            button.frame.size = CGSize(width: 40, height: 40)
+            button.clipsToBounds = true
+            button.layer.cornerRadius = 8
+
             button.addTarget(self, action: #selector(openDirectionsInMaps), for: .touchUpInside)
+
             return button
         }()
 

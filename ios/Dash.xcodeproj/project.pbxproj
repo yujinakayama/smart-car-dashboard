@@ -67,6 +67,7 @@
 		B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93321ED2323C9D500BFAB21 /* BorderedView.swift */; };
 		B93C04632642CD32002CD861 /* ParkingAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04622642CD32002CD861 /* ParkingAnnotation.swift */; };
 		B93C04652642CD55002CD861 /* ParkingAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */; };
+		B93C04672642D5FA002CD861 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04662642D5FA002CD861 /* UIButtonExtension.swift */; };
 		B940A460250E5B57006BDFBB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B940A45F250E5B57006BDFBB /* Settings.bundle */; };
 		B940A462250E5CDD006BDFBB /* RearviewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */; };
 		B94215F126423A58003F94A0 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94215F026423A58003F94A0 /* StringExtension.swift */; };
@@ -383,6 +384,7 @@
 		B939F0CF23EC5C7F00AA3E8E /* DashV3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DashV3.xcdatamodel; sourceTree = "<group>"; };
 		B93C04622642CD32002CD861 /* ParkingAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAnnotation.swift; sourceTree = "<group>"; };
 		B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAnnotationView.swift; sourceTree = "<group>"; };
+		B93C04662642D5FA002CD861 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
 		B940A45F250E5B57006BDFBB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewDefaults.swift; sourceTree = "<group>"; };
 		B940A465250F0EBB006BDFBB /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
@@ -879,6 +881,7 @@
 				B9D8E43923D345D70078A057 /* UUIDExtension.swift */,
 				B92E2AFB23E4958200BB4C0E /* UNNotificationContentExtension.swift */,
 				B90C297125E3FB80004466C9 /* SIMDExtension.swift */,
+				B93C04662642D5FA002CD861 /* UIButtonExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1681,6 +1684,7 @@
 				B9DC5B46229EB8B200B645D5 /* SerialPortManager.swift in Sources */,
 				B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift in Sources */,
 				B92C6EC324AC2F0A001E9675 /* ArtworkView.swift in Sources */,
+				B93C04672642D5FA002CD861 /* UIButtonExtension.swift in Sources */,
 				B94E69D123F7A313004CCC7C /* WebsiteIcon.swift in Sources */,
 				B94215F126423A58003F94A0 /* StringExtension.swift in Sources */,
 				B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */,
