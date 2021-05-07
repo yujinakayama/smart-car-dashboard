@@ -814,7 +814,6 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="1Lp-b1-rnx" firstAttribute="leading" secondItem="yXL-mj-wgO" secondAttribute="trailing" id="7RC-CX-yqK"/>
                                                 <constraint firstAttribute="bottom" secondItem="yXL-mj-wgO" secondAttribute="bottom" id="BWs-pD-zE5"/>
