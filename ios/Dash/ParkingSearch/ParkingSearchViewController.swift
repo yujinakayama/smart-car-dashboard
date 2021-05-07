@@ -83,6 +83,11 @@ class ParkingSearchViewController: UIViewController {
         }
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        currentSearchTask?.cancel()
+    }
+
     deinit {
         // > Before releasing an MKMapView object for which you have set a delegate,
         // > remember to set that object’s delegate property to nil.
