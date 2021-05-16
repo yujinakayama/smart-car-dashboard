@@ -141,7 +141,7 @@ void GarageRemote::open() {
   delay(100);
 
   gpio_set_level(this->openButtonPin, 1);
-  performLater(500, _turnOffOpenButton, this);
+  performLater(3000, _turnOffOpenButton, this);
 }
 
 void GarageRemote::turnOffOpenButton() {
