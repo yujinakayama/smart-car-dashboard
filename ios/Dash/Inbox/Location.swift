@@ -50,8 +50,7 @@ class Location: SharedItemProtocol {
 
         markAsOpened()
 
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let parkingSearchViewController = storyboard.instantiateViewController(identifier: "ParkingSearchViewController") as ParkingSearchViewController
+        let parkingSearchViewController = ParkingSearchViewController()
         parkingSearchViewController.destination = self
 
         if let navigationController = viewController.navigationController {

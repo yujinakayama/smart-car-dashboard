@@ -68,6 +68,7 @@
 		B93C04632642CD32002CD861 /* ParkingAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04622642CD32002CD861 /* ParkingAnnotation.swift */; };
 		B93C04652642CD55002CD861 /* ParkingAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */; };
 		B93C04672642D5FA002CD861 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04662642D5FA002CD861 /* UIButtonExtension.swift */; };
+		B93C0461264295CD002CD861 /* NSLayoutConstraintExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C0460264295CD002CD861 /* NSLayoutConstraintExtension.swift */; };
 		B940A460250E5B57006BDFBB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B940A45F250E5B57006BDFBB /* Settings.bundle */; };
 		B940A462250E5CDD006BDFBB /* RearviewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */; };
 		B94215F126423A58003F94A0 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94215F026423A58003F94A0 /* StringExtension.swift */; };
@@ -385,6 +386,7 @@
 		B93C04622642CD32002CD861 /* ParkingAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAnnotation.swift; sourceTree = "<group>"; };
 		B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAnnotationView.swift; sourceTree = "<group>"; };
 		B93C04662642D5FA002CD861 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
+		B93C0460264295CD002CD861 /* NSLayoutConstraintExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraintExtension.swift; sourceTree = "<group>"; };
 		B940A45F250E5B57006BDFBB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewDefaults.swift; sourceTree = "<group>"; };
 		B940A465250F0EBB006BDFBB /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
@@ -877,6 +879,7 @@
 			isa = PBXGroup;
 			children = (
 				B94215F026423A58003F94A0 /* StringExtension.swift */,
+				B93C0460264295CD002CD861 /* NSLayoutConstraintExtension.swift */,
 				B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */,
 				B9D8E43923D345D70078A057 /* UUIDExtension.swift */,
 				B92E2AFB23E4958200BB4C0E /* UNNotificationContentExtension.swift */,
@@ -1680,6 +1683,7 @@
 				B9B154EE2575FCED0031761F /* FirebaseMessaging.swift in Sources */,
 				B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */,
 				B9F272C4259C91990098CB3B /* AltitudeWidgetViewController.swift in Sources */,
+				B93C0461264295CD002CD861 /* NSLayoutConstraintExtension.swift in Sources */,
 				B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */,
 				B9DC5B46229EB8B200B645D5 /* SerialPortManager.swift in Sources */,
 				B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift in Sources */,

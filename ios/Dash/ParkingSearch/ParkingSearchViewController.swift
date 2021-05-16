@@ -17,13 +17,131 @@ class ParkingSearchViewController: UIViewController {
         return destination.coordinate.clLocationCoordinate2D
     }
 
-    @IBOutlet weak var mapView: MKMapView!
+    lazy var mapView: MKMapView = {
+        let mapView = MKMapView()
 
-    @IBOutlet weak var controlView: UIView!
+        mapView.delegate = self
 
-    @IBOutlet weak var entranceDatePicker: UIDatePicker!
-    @IBOutlet weak var timeDurationPicker: TimeDurationPicker!
-    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+        mapView.isPitchEnabled = false
+        mapView.isRotateEnabled = false
+        mapView.showsScale = true
+        mapView.showsTraffic = true
+
+        mapView.pointOfInterestFilter = MKPointOfInterestFilter(including: [.parking])
+
+        mapView.register(DirectionalUserLocationAnnotationView.self, forAnnotationViewWithReuseIdentifier: "DirectionalUserLocationAnnotationView")
+        mapView.register(MKPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: "MKPinAnnotationView")
+
+        return mapView
+    }()
+
+    lazy var controlView: UIView = {
+        let view = UIView()
+
+        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+
+        let stackView = UIStackView(arrangedSubviews: [
+            controlViewLeftMarginView,
+            entranceDatePicker,
+            conjunctionLabel,
+            timeDurationPicker,
+            controlViewRightMarginView,
+        ])
+
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fill
+
+        view.addSubview(visualEffectView)
+        view.addSubview(stackView)
+
+        view.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+
+        NSLayoutConstraint.activate([
+            visualEffectView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: visualEffectView.trailingAnchor),
+            visualEffectView.topAnchor.constraint(equalTo: view.topAnchor),
+            view.bottomAnchor.constraint(equalTo: visualEffectView.bottomAnchor),
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.widthAnchor.constraint(lessThanOrEqualToConstant: 400),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor).withPriority(.defaultLow),
+            view.trailingAnchor.constraint(equalTo: stackView.trailingAnchor).withPriority(.defaultLow),
+            stackView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
+            view.layoutMarginsGuide.bottomAnchor.constraint(equalTo: stackView.bottomAnchor),
+        ])
+
+        return view
+    }()
+
+    lazy var entranceDatePicker: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .time
+        datePicker.minuteInterval = 10
+        datePicker.preferredDatePickerStyle = .inline
+        datePicker.addTarget(self, action: #selector(searchParkings), for: .valueChanged)
+        return datePicker
+    }()
+
+    lazy var conjunctionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "から"
+        label.adjustsFontForContentSizeCategory = true
+        label.font = UIFont.preferredFont(forTextStyle: .title3)
+        label.textAlignment = .center
+        return label
+    }()
+
+    lazy var timeDurationPicker: TimeDurationPicker = {
+        let timeDurationPicker = TimeDurationPicker()
+
+        timeDurationPicker.durations = [
+            30,
+            60,
+            120,
+            180,
+            360,
+            720,
+            1440
+        ].map { TimeInterval($0 * 60) }
+
+        timeDurationPicker.selectRow(1, animated: false)
+
+        timeDurationPicker.addTarget(self, action: #selector(searchParkings), for: .valueChanged)
+
+        timeDurationPicker.setContentHuggingPriority(.required, for: .horizontal)
+        timeDurationPicker.setContentHuggingPriority(.required, for: .vertical)
+
+        return timeDurationPicker
+    }()
+
+    lazy var controlViewLeftMarginView: UIView = {
+        let view = UIView()
+
+        NSLayoutConstraint.activate([
+            view.widthAnchor.constraint(equalToConstant: 20),
+            view.heightAnchor.constraint(equalTo: view.widthAnchor),
+        ])
+
+        return view
+    }()
+
+    lazy var controlViewRightMarginView: UIView = {
+        let view = UIView()
+
+        view.addSubview(activityIndicatorView)
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            view.widthAnchor.constraint(equalToConstant: 20),
+            view.heightAnchor.constraint(equalTo: view.widthAnchor),
+            activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+
+        return view
+    }()
+
+    lazy var activityIndicatorView = UIActivityIndicatorView()
 
     let locationManager = CLLocationManager()
 
@@ -43,30 +161,28 @@ class ParkingSearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.addSubview(mapView)
+        view.addSubview(controlView)
+
+        view.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+
+        NSLayoutConstraint.activate([
+            mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: mapView.trailingAnchor),
+            mapView.topAnchor.constraint(equalTo: view.topAnchor),
+            view.bottomAnchor.constraint(equalTo: mapView.bottomAnchor),
+            controlView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: controlView.trailingAnchor),
+            view.bottomAnchor.constraint(equalTo: controlView.bottomAnchor),
+        ])
+
+        navigationItem.largeTitleDisplayMode = .never
+
         if let locationName = destination.name {
             navigationItem.title = "”\(locationName)“ 周辺の駐車場"
         } else {
             navigationItem.title = "周辺の駐車場"
         }
-
-        mapView.delegate = self
-        mapView.register(DirectionalUserLocationAnnotationView.self, forAnnotationViewWithReuseIdentifier: "DirectionalUserLocationAnnotationView")
-        mapView.register(MKPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: "MKPinAnnotationView")
-        mapView.pointOfInterestFilter = MKPointOfInterestFilter(including: [.parking])
-
-        timeDurationPicker.durations = [
-            30,
-            60,
-            120,
-            180,
-            360,
-            720,
-            1440
-        ].map { TimeInterval($0 * 60) }
-        timeDurationPicker.selectRow(1, animated: false)
-
-        entranceDatePicker.addTarget(self, action: #selector(searchParkings), for: .valueChanged)
-        timeDurationPicker.addTarget(self, action: #selector(searchParkings), for: .valueChanged)
 
         locationManager.requestWhenInUseAuthorization()
 
