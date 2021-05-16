@@ -11,8 +11,12 @@ import MapKit
 import CoreLocation
 import DirectionalUserLocationAnnotationView
 
-class ParkingSearchViewController: UIViewController {
-    var destination: Location!
+public class ParkingSearchViewController: UIViewController {
+    public var destination: MKMapItem!
+
+    var destinationCoordinate: CLLocationCoordinate2D {
+        return destination.placemark.coordinate
+    }
 
     lazy var mapView: MKMapView = {
         let mapView = MKMapView()
@@ -76,6 +80,7 @@ class ParkingSearchViewController: UIViewController {
         datePicker.datePickerMode = .time
         datePicker.minuteInterval = 10
         datePicker.preferredDatePickerStyle = .inline
+        datePicker.locale = Locale(identifier: "en_GB")
         datePicker.addTarget(self, action: #selector(searchParkings), for: .valueChanged)
         return datePicker
     }()
@@ -145,18 +150,16 @@ class ParkingSearchViewController: UIViewController {
 
     let ppparkClient = PPParkClient(clientKey: "IdkUdfal673kUdj00")
 
-    let markerBaseColor = UIColor(named: "Location Icon Color")!
-
     lazy var destinationAnnotation: MKPointAnnotation = {
         let annotation = MKPointAnnotation()
-        annotation.coordinate = destination.coordinate
+        annotation.coordinate = destinationCoordinate
         annotation.title = destination.name
         return annotation
     }()
 
     var currentSearchTask: URLSessionTask?
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
 
         view.addSubview(mapView)
@@ -197,7 +200,7 @@ class ParkingSearchViewController: UIViewController {
         }
     }
 
-    override func viewDidDisappear(_ animated: Bool) {
+    public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         currentSearchTask?.cancel()
     }
@@ -212,7 +215,7 @@ class ParkingSearchViewController: UIViewController {
     func showDestination() {
         mapView.addAnnotation(destinationAnnotation)
 
-        let region = MKCoordinateRegion(center: destination.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
+        let region = MKCoordinateRegion(center: destinationCoordinate, latitudinalMeters: 500, longitudinalMeters: 500)
         mapView.setRegion(region, animated: false)
     }
 
@@ -221,7 +224,7 @@ class ParkingSearchViewController: UIViewController {
 
         let request = MKDirections.Request()
         request.source = MKMapItem.forCurrentLocation()
-        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: destination.coordinate))
+        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: destinationCoordinate))
         request.transportType = .automobile
 
         MKDirections(request: request).calculate { (response, error) in
@@ -230,7 +233,7 @@ class ParkingSearchViewController: UIViewController {
             }
 
             if let error = error {
-                logger.error(error)
+                print(error)
             }
 
             completion(response?.routes.first?.expectedTravelTime)
@@ -247,7 +250,7 @@ class ParkingSearchViewController: UIViewController {
         activityIndicatorView.startAnimating()
 
         currentSearchTask = ppparkClient.searchParkings(
-            around: destination.coordinate,
+            around: destinationCoordinate,
             entranceDate: entranceDatePicker.date,
             exitDate: entranceDatePicker.date + timeDuration
         ) { [weak self] (result) in
@@ -261,7 +264,7 @@ class ParkingSearchViewController: UIViewController {
                     self.showParkings(parkings)
                 }
             case .failure(let error):
-                logger.error(error)
+                print(error)
 
                 if let urlError = error as? URLError, urlError.code == .cancelled {
                     isCancelled = true
@@ -316,7 +319,7 @@ class ParkingSearchViewController: UIViewController {
         present(navigationController, animated: true)
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
@@ -336,7 +339,7 @@ class ParkingSearchViewController: UIViewController {
 }
 
 extension ParkingSearchViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         switch annotation {
         case let userLocation as MKUserLocation:
             return viewForUserLocation(userLocation)
@@ -347,7 +350,7 @@ extension ParkingSearchViewController: MKMapViewDelegate {
         }
     }
 
-    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+    public func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         guard let userLocationView = mapView.view(for: userLocation) as? DirectionalUserLocationAnnotationView else { return }
         userLocationView.updateDirection(animated: true)
     }

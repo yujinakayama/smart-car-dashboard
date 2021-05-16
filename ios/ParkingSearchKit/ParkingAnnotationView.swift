@@ -75,6 +75,8 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
 
 extension ParkingAnnotationView {
     class Callout {
+        static let departureColor = UIColor(displayP3Red: 76 / 256, green: 217 / 256, blue: 100 / 256, alpha: 1)
+
         weak var annotationView: ParkingAnnotationView?
 
         var parking: Parking? {
@@ -234,7 +236,7 @@ extension ParkingAnnotationView {
             let button = UIButton()
             button.setImage(image, for: .normal)
             button.tintColor = .white
-            button.setBackgroundColor(UIColor(named: "Departure Color")!, for: .normal)
+            button.setBackgroundColor(Self.departureColor, for: .normal)
 
             button.frame.size = CGSize(width: 40, height: 40)
             button.clipsToBounds = true
