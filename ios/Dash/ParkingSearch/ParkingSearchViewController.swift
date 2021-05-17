@@ -311,11 +311,11 @@ class ParkingSearchViewController: UIViewController {
         guard let parking = (mapView.selectedAnnotations.first as? ParkingAnnotation)?.parking else { return }
         guard let reservationURL = parking.reservationInfo?.url else { return }
 
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle(for: WebViewController.self))
-        let navigationController = storyboard.instantiateViewController(withIdentifier: "WebViewNavigationController") as! UINavigationController
-        let webViewController = navigationController.viewControllers.first as! WebViewController
-        webViewController.url = reservationURL
+        let webViewController = WebViewController(url: reservationURL)
         webViewController.navigationItem.title = parking.name
+
+        let navigationController = UINavigationController(rootViewController: webViewController)
+        navigationController.isToolbarHidden = false
         present(navigationController, animated: true)
     }
 

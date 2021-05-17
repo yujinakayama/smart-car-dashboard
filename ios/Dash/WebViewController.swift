@@ -12,30 +12,59 @@ import WebKit
 class WebViewController: UIViewController {
     static var defaultUserAgent: String?
 
-    @IBOutlet weak var webView: WKWebView!
+    lazy var webView: WKWebView = {
+        let configuration = WKWebViewConfiguration()
+        configuration.dataDetectorTypes = [.address, .link, .phoneNumber]
+        configuration.mediaTypesRequiringUserActionForPlayback = .all
 
-    @IBOutlet weak var doneBarButtonItem: UIBarButtonItem!
+        let webView = WKWebView(frame: .zero, configuration: configuration)
+        webView.allowsBackForwardNavigationGestures = true
+        return webView
+    }()
 
-    @IBOutlet weak var backwardBarButtonItem: UIBarButtonItem!
-    @IBOutlet weak var forwardBarButtonItem: UIBarButtonItem!
-    @IBOutlet weak var reloadOrStopLoadingBarButtonItem: UIBarButtonItem!
-    @IBOutlet weak var openInSafariBarButtonItem: UIBarButtonItem!
+    lazy var doneBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
 
-    var url: URL!
+    lazy var backwardBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(goBackward))
+    lazy var forwardBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.forward"), style: .plain, target: self, action: #selector(goForward))
+    lazy var reloadOrStopLoadingBarButtonItem = UIBarButtonItem()
+    lazy var openInSafariBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "safari"), style: .plain, target: self, action: #selector(openInSafari))
+
+    let url: URL
 
     var keyValueObservations: [NSKeyValueObservation] = []
+
+    init(url: URL) {
+        self.url = url
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configureBarButtonItems()
+        navigationItem.rightBarButtonItem = doneBarButtonItem
+
+        configureToolBarButtonItems()
 
         configureWebView { [weak self] in
             self?.startLoadingPage()
         }
     }
 
-    func configureBarButtonItems() {
+    func configureToolBarButtonItems() {
+        toolbarItems = [
+            backwardBarButtonItem,
+            .flexibleSpace(),
+            forwardBarButtonItem,
+            .flexibleSpace(),
+            reloadOrStopLoadingBarButtonItem,
+            .flexibleSpace(),
+            openInSafariBarButtonItem
+        ]
+
         keyValueObservations.append(webView.observe(\.title, changeHandler: { [unowned self] (webView, change) in
             navigationItem.title = webView.title
         }))
@@ -58,6 +87,17 @@ class WebViewController: UIViewController {
     }
 
     func configureWebView(completion: @escaping () -> Void) {
+        view.addSubview(webView)
+
+        webView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            webView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            view.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
+            webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: webView.bottomAnchor),
+        ])
+
         guard traitCollection.horizontalSizeClass == .compact else {
             completion()
             return
@@ -83,10 +123,6 @@ class WebViewController: UIViewController {
             return
         }
 
-        let webPagePreferences = WKWebpagePreferences()
-        webPagePreferences.preferredContentMode = .mobile
-        webView.configuration.defaultWebpagePreferences = webPagePreferences
-
         webView.evaluateJavaScript("navigator.userAgent", completionHandler: { (userAgent, error) in
             WebViewController.defaultUserAgent = userAgent as? String
             completion(WebViewController.defaultUserAgent)
@@ -109,27 +145,27 @@ class WebViewController: UIViewController {
         }
     }
 
-    @IBAction func done() {
+    @objc func done() {
         dismiss(animated: true)
     }
 
-    @IBAction func goBackward() {
+    @objc func goBackward() {
         webView.goBack()
     }
 
-    @IBAction func goForward() {
+    @objc func goForward() {
         webView.goForward()
     }
 
-    @IBAction func reload() {
+    @objc func reload() {
         webView.reload()
     }
 
-    @IBAction func stopLoading() {
+    @objc func stopLoading() {
         webView.stopLoading()
     }
 
-    @IBAction func openInSafari() {
+    @objc func openInSafari() {
         guard let url = webView.url else { return }
         UIApplication.shared.open(url, options: [:])
     }
