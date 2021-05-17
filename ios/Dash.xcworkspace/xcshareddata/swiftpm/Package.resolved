@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "DirectionalUserLocationAnnotationView",
+        "repositoryURL": "https://github.com/yujinakayama/DirectionalUserLocationAnnotationView.git",
+        "state": {
+          "branch": null,
+          "revision": "96fe454b67205652c39e13236e387834c0c161d6",
+          "version": "1.0.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import DirectionalUserLocationAnnotationView
 
 class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate, TabReselectionRespondable {
     enum RestorationCodingKeys: String {
