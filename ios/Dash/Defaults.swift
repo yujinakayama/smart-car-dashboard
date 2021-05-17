@@ -58,14 +58,14 @@ struct Defaults {
         }
     }
 
-    var mapTypeForETCRoute: MKMapType? {
+    var mapTypeForETCRoute: MKMapType {
         get {
             let integer = userDefaults.integer(forKey: Key.mapTypeForETCRoute)
-            return MKMapType(rawValue: UInt(integer))
+            return MKMapType(rawValue: UInt(integer)) ?? .standard
         }
 
         set {
-            userDefaults.set(newValue?.rawValue, forKey: Key.mapTypeForETCRoute)
+            userDefaults.set(newValue.rawValue, forKey: Key.mapTypeForETCRoute)
         }
     }
 

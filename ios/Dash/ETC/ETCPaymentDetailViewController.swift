@@ -71,13 +71,8 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
     }
 
     func restoreMapType() {
-        if let previousMapType = Defaults.shared.mapTypeForETCRoute {
-            let index = MapTypeSegmentedControlIndex(previousMapType)!
-            mapTypeSegmentedControl.selectedSegmentIndex = index.rawValue
-        } else {
-            mapTypeSegmentedControl.selectedSegmentIndex = MapTypeSegmentedControlIndex.standard.rawValue
-        }
-
+        let index = MapTypeSegmentedControlIndex(Defaults.shared.mapTypeForETCRoute)!
+        mapTypeSegmentedControl.selectedSegmentIndex = index.rawValue
         mapTypeSegmentedControlDidChange()
     }
 
