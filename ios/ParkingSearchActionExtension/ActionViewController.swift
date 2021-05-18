@@ -8,50 +8,55 @@
 
 import UIKit
 import MobileCoreServices
+import MapKit
+import ParkingSearchKit
 
-class ActionViewController: UIViewController {
-
-    @IBOutlet weak var imageView: UIImageView!
+class ActionViewController: ParkingSearchViewController {
+    var extensionItem: NSExtensionItem {
+        let extensionItems = self.extensionContext!.inputItems as! [NSExtensionItem]
+        return extensionItems.first!
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        // Get the item[s] we're handling from the extension context.
-        
-        // For example, look for an image and place it into an image view.
-        // Replace this with something appropriate for the type[s] your extension supports.
-        var imageFound = false
-        for item in self.extensionContext!.inputItems as! [NSExtensionItem] {
-            for provider in item.attachments! {
-                if provider.hasItemConformingToTypeIdentifier(kUTTypeImage as String) {
-                    // This is an image. We'll load it, then place it in our image view.
-                    weak var weakImageView = self.imageView
-                    provider.loadItem(forTypeIdentifier: kUTTypeImage as String, options: nil, completionHandler: { (imageURL, error) in
-                        OperationQueue.main.addOperation {
-                            if let strongImageView = weakImageView {
-                                if let imageURL = imageURL as? URL {
-                                    strongImageView.image = UIImage(data: try! Data(contentsOf: imageURL))
-                                }
-                            }
-                        }
-                    })
-                    
-                    imageFound = true
-                    break
-                }
-            }
-            
-            if (imageFound) {
-                // We only handle one image, so stop looking for more.
-                break
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+
+        loadMapItem { (result) in
+            switch result {
+            case .success(let mapItem):
+                self.destination = mapItem
+            case .failure(let error):
+                self.extensionContext!.cancelRequest(withError: error)
             }
         }
     }
 
-    @IBAction func done() {
-        // Return any edited content to the host app.
-        // This template doesn't do anything, so we just echo the passed in items.
-        self.extensionContext!.completeRequest(returningItems: self.extensionContext!.inputItems, completionHandler: nil)
+    func loadMapItem(completion: @escaping (Result<MKMapItem, Error>) -> Void) {
+        guard let attachments = extensionItem.attachments else { return }
+
+        for attachment in attachments {
+            guard let typeIdentifier = attachment.registeredTypeIdentifiers.first,
+                  typeIdentifier == "com.apple.mapkit.map-item"
+            else { continue }
+
+            _ = attachment.loadObject(ofClass: MKMapItem.self) { (mapItem, error) in
+                DispatchQueue.main.async {
+                    if let mapItem = mapItem as? MKMapItem {
+                        completion(.success(mapItem))
+                    }
+
+                    if let error = error {
+                        completion(.failure(error))
+                    }
+                }
+            }
+
+            break
+        }
     }
 
+    @IBAction func done() {
+        extensionContext!.completeRequest(returningItems: nil)
+    }
 }

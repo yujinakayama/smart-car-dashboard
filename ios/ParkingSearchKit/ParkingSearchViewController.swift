@@ -11,8 +11,14 @@ import MapKit
 import CoreLocation
 import DirectionalUserLocationAnnotationView
 
-public class ParkingSearchViewController: UIViewController {
-    public var destination: MKMapItem!
+open class ParkingSearchViewController: UIViewController {
+    open var destination: MKMapItem! {
+        didSet {
+            if isViewLoaded {
+                applyDestination()
+            }
+        }
+    }
 
     var destinationCoordinate: CLLocationCoordinate2D {
         return destination.placemark.coordinate
@@ -35,6 +41,12 @@ public class ParkingSearchViewController: UIViewController {
         mapView.register(MKPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: "MKPinAnnotationView")
 
         return mapView
+    }()
+
+    lazy var navigationBar: UINavigationBar = {
+        let navigationBar = UINavigationBar()
+
+        return navigationBar
     }()
 
     lazy var controlView: UIView = {
@@ -159,11 +171,12 @@ public class ParkingSearchViewController: UIViewController {
 
     var currentSearchTask: URLSessionTask?
 
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
 
         view.addSubview(mapView)
         view.addSubview(controlView)
+        view.addSubview(navigationBar)
 
         view.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
 
@@ -175,17 +188,49 @@ public class ParkingSearchViewController: UIViewController {
             controlView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             view.trailingAnchor.constraint(equalTo: controlView.trailingAnchor),
             view.bottomAnchor.constraint(equalTo: controlView.bottomAnchor),
+            navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: navigationBar.trailingAnchor),
+            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
         ])
 
         navigationItem.largeTitleDisplayMode = .never
 
+        locationManager.requestWhenInUseAuthorization()
+
+        if destination != nil {
+            applyDestination()
+        }
+    }
+
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if navigationController == nil {
+            navigationBar.items = [navigationItem]
+            navigationBar.isHidden = false
+        } else {
+            navigationBar.isHidden = true
+        }
+    }
+
+    open override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        currentSearchTask?.cancel()
+    }
+
+    deinit {
+        // > Before releasing an MKMapView object for which you have set a delegate,
+        // > remember to set that object’s delegate property to nil.
+        // https://developer.apple.com/documentation/mapkit/mkmapviewdelegate
+        mapView.delegate = nil
+    }
+
+    func applyDestination() {
         if let locationName = destination.name {
             navigationItem.title = "”\(locationName)“ 周辺の駐車場"
         } else {
             navigationItem.title = "周辺の駐車場"
         }
-
-        locationManager.requestWhenInUseAuthorization()
 
         showDestination()
 
@@ -198,18 +243,6 @@ public class ParkingSearchViewController: UIViewController {
                 self.searchParkings()
             }
         }
-    }
-
-    public override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        currentSearchTask?.cancel()
-    }
-
-    deinit {
-        // > Before releasing an MKMapView object for which you have set a delegate,
-        // > remember to set that object’s delegate property to nil.
-        // https://developer.apple.com/documentation/mapkit/mkmapviewdelegate
-        mapView.delegate = nil
     }
 
     func showDestination() {
@@ -319,7 +352,7 @@ public class ParkingSearchViewController: UIViewController {
         present(navigationController, animated: true)
     }
 
-    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
@@ -339,7 +372,7 @@ public class ParkingSearchViewController: UIViewController {
 }
 
 extension ParkingSearchViewController: MKMapViewDelegate {
-    public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    open func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         switch annotation {
         case let userLocation as MKUserLocation:
             return viewForUserLocation(userLocation)
@@ -350,7 +383,7 @@ extension ParkingSearchViewController: MKMapViewDelegate {
         }
     }
 
-    public func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+    open func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         guard let userLocationView = mapView.view(for: userLocation) as? DirectionalUserLocationAnnotationView else { return }
         userLocationView.updateDirection(animated: true)
     }
