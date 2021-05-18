@@ -15,9 +15,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B964BCD723E067EB00288E0D"
-               BuildableName = "ShareExtension.appex"
-               BlueprintName = "ShareExtension"
+               BlueprintIdentifier = "B9A3B67826537A9B00D1D64C"
+               BuildableName = "ParkingSearchActionExtension.appex"
+               BlueprintName = "ParkingSearchActionExtension"
                ReferencedContainer = "container:Dash.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,9 +29,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B964BCBF23E066FF00288E0D"
-               BuildableName = "Dash Remote.app"
-               BlueprintName = "DashRemote"
+               BlueprintIdentifier = "B9DC5B20229D59BE00B645D5"
+               BuildableName = "Dash.app"
+               BlueprintName = "Dash"
                ReferencedContainer = "container:Dash.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -61,9 +61,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B964BCBF23E066FF00288E0D"
-            BuildableName = "Dash Remote.app"
-            BlueprintName = "DashRemote"
+            BlueprintIdentifier = "B9DC5B20229D59BE00B645D5"
+            BuildableName = "Dash.app"
+            BlueprintName = "Dash"
             ReferencedContainer = "container:Dash.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -79,9 +79,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B964BCBF23E066FF00288E0D"
-            BuildableName = "Dash Remote.app"
-            BlueprintName = "DashRemote"
+            BlueprintIdentifier = "B9DC5B20229D59BE00B645D5"
+            BuildableName = "Dash.app"
+            BlueprintName = "Dash"
             ReferencedContainer = "container:Dash.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
