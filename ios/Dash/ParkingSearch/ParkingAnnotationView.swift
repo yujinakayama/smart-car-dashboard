@@ -381,7 +381,7 @@ extension ParkingAnnotationView {
 
             let placemark = MKPlacemark(coordinate: parking.coordinate)
             let mapItem = MKMapItem(placemark: placemark)
-            mapItem.name = parking.name
+            mapItem.name = normalizeText(parking.name)
 
             mapItem.openInMaps(launchOptions: [
                 MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,
