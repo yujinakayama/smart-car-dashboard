@@ -19,7 +19,6 @@ struct Defaults {
     private struct Key {
         static let lastBackgroundEntranceTime = "lastBackgroundEntranceTime"
         static let mapTypeForETCRoute = "mapTypeForETCRoute"
-        static let mapTypeForDirections = "mapTypeForDirections"
         static let automaticallyOpensUnopenedLocationWhenAppIsOpened = "automaticallyOpensUnopenedLocationWhenAppIsOpened"
         static let snapLocationToPointOfInterest = "snapLocationToPointOfInterest"
         static let mainETCCardUUID = "mainETCCardUUID"
@@ -67,13 +66,6 @@ struct Defaults {
 
         set {
             userDefaults.set(newValue?.rawValue, forKey: Key.mapTypeForETCRoute)
-        }
-    }
-
-    var mapTypeForDirections: MKMapType? {
-        get {
-            let integer = userDefaults.integer(forKey: Key.mapTypeForDirections)
-            return MKMapType(rawValue: UInt(integer))
         }
     }
 

@@ -384,8 +384,7 @@ extension ParkingAnnotationView {
             mapItem.name = normalizeText(parking.name)
 
             mapItem.openInMaps(launchOptions: [
-                MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,
-                MKLaunchOptionsMapTypeKey: Defaults.shared.mapTypeForDirections?.rawValue ?? MKMapType.standard
+                MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
             ])
         }
     }
