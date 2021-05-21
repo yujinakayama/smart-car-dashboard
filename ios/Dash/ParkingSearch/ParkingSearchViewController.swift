@@ -14,10 +14,6 @@ import DirectionalUserLocationAnnotationView
 class ParkingSearchViewController: UIViewController {
     var destination: Location!
 
-    var destinationCoordinate: CLLocationCoordinate2D {
-        return destination.coordinate.clLocationCoordinate2D
-    }
-
     lazy var mapView: MKMapView = {
         let mapView = MKMapView()
 
@@ -152,7 +148,7 @@ class ParkingSearchViewController: UIViewController {
 
     lazy var destinationAnnotation: MKPointAnnotation = {
         let annotation = MKPointAnnotation()
-        annotation.coordinate = destinationCoordinate
+        annotation.coordinate = destination.coordinate
         annotation.title = destination.name
         return annotation
     }()
@@ -215,7 +211,7 @@ class ParkingSearchViewController: UIViewController {
     func showDestination() {
         mapView.addAnnotation(destinationAnnotation)
 
-        let region = MKCoordinateRegion(center: destinationCoordinate, latitudinalMeters: 500, longitudinalMeters: 500)
+        let region = MKCoordinateRegion(center: destination.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
         mapView.setRegion(region, animated: false)
     }
 
@@ -224,7 +220,7 @@ class ParkingSearchViewController: UIViewController {
 
         let request = MKDirections.Request()
         request.source = MKMapItem.forCurrentLocation()
-        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: destinationCoordinate))
+        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: destination.coordinate))
         request.transportType = .automobile
 
         MKDirections(request: request).calculate { (response, error) in
@@ -250,7 +246,7 @@ class ParkingSearchViewController: UIViewController {
         activityIndicatorView.startAnimating()
 
         currentSearchTask = ppparkClient.searchParkings(
-            around: destinationCoordinate,
+            around: destination.coordinate,
             entranceDate: entranceDatePicker.date,
             exitDate: entranceDatePicker.date + timeDuration
         ) { [weak self] (result) in

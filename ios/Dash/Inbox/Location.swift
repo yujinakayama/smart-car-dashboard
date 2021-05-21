@@ -16,7 +16,7 @@ class Location: SharedItemProtocol {
     var identifier: String!
 
     let address: Address
-    let coordinate: Coordinate
+    let coordinate: CLLocationCoordinate2D
     let name: String?
     let url: URL
     let websiteURL: URL?
@@ -27,7 +27,7 @@ class Location: SharedItemProtocol {
 
     lazy var pointOfInterestFinder: PointOfInterestFinder? = {
         guard let name = name else { return nil }
-        return PointOfInterestFinder(name: name, coordinate: coordinate.clLocationCoordinate2D, maxDistance: 50)
+        return PointOfInterestFinder(name: name, coordinate: coordinate, maxDistance: 50)
     }()
 
     var title: String? {
@@ -76,7 +76,7 @@ class Location: SharedItemProtocol {
     }
 
     private var mapItem: MKMapItem {
-        let placemark = MKPlacemark(coordinate: coordinate.clLocationCoordinate2D)
+        let placemark = MKPlacemark(coordinate: coordinate)
 
         let mapItem = MKMapItem(placemark: placemark)
         mapItem.name = name
@@ -202,14 +202,5 @@ struct Address: Decodable {
 
             components.append(currentComponent)
         }.joined()
-    }
-}
-
-struct Coordinate: Decodable {
-    let latitude: CLLocationDegrees
-    let longitude: CLLocationDegrees
-
-    var clLocationCoordinate2D: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 }
