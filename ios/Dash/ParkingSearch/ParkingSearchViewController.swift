@@ -23,6 +23,7 @@ class ParkingSearchViewController: UIViewController {
         mapView.isRotateEnabled = false
         mapView.showsScale = true
         mapView.showsTraffic = true
+        mapView.showsUserLocation = true
 
         mapView.pointOfInterestFilter = MKPointOfInterestFilter(including: [.parking])
 
