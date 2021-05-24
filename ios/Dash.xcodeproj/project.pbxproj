@@ -2344,8 +2344,10 @@
 		B9A3B68726537A9B00D1D64C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = ParkingSearchActionExtension/Media.xcassets;
 				DEVELOPMENT_TEAM = 8LSN3WQC77;
 				INFOPLIST_FILE = ParkingSearchActionExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -2365,8 +2367,10 @@
 		B9A3B68826537A9B00D1D64C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = ParkingSearchActionExtension/Media.xcassets;
 				DEVELOPMENT_TEAM = 8LSN3WQC77;
 				INFOPLIST_FILE = ParkingSearchActionExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
