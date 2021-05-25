@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  Dash
+
+  Created by Yuji Nakayama on 2021/05/24.
+  Copyright © 2021 Yuji Nakayama. All rights reserved.
+*/
+CFBundleDisplayName = "近くの駐車場を検索";

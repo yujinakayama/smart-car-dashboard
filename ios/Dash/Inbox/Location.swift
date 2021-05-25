@@ -10,6 +10,7 @@ import Foundation
 import MapKit
 import FirebaseFirestore
 import CommonCrypto
+import ParkingSearchKit
 
 class Location: SharedItemProtocol {
     var firebaseDocument: DocumentReference?
@@ -50,7 +51,7 @@ class Location: SharedItemProtocol {
         markAsOpened()
 
         let parkingSearchViewController = ParkingSearchViewController()
-        parkingSearchViewController.destination = self
+        parkingSearchViewController.destination = mapItem
 
         if let navigationController = viewController.navigationController {
             navigationController.pushViewController(parkingSearchViewController, animated: true)

@@ -13,6 +13,9 @@
 		66DA20D749E1EF848B3B203E /* Pods_RearviewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0198292C4BC2FEDD3C5A08E3 /* Pods_RearviewKit.framework */; };
 		75D3A42AAA73CA0E953322EA /* Pods_Rearview.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C66DD7AC35DF7FDDB0FB1B /* Pods_Rearview.framework */; };
 		B9008EAF25FBB6D7005DAD13 /* NoMainETCCard.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9008EAE25FBB6D7005DAD13 /* NoMainETCCard.wav */; };
+		B900A13A26529C38000ED1B9 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04662642D5FA002CD861 /* UIButtonExtension.swift */; };
+		B900A13C26529C4E000ED1B9 /* NSLayoutConstraintExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B900A13B26529C4E000ED1B9 /* NSLayoutConstraintExtension.swift */; };
+		B900A13D2652BCF4000ED1B9 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94215F026423A58003F94A0 /* StringExtension.swift */; };
 		B9025F63254D21E1001E25DF /* PairedVehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A676254D0EB30012A4CB /* PairedVehicle.swift */; };
 		B9025F68254D2260001E25DF /* PairedVehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A676254D0EB30012A4CB /* PairedVehicle.swift */; };
 		B90265AB23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90265AA23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift */; };
@@ -26,6 +29,8 @@
 		B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
 		B91BD8092323FD820064D2B5 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
 		B91E0B62254D047D002928D3 /* PairingURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E0B61254D047D002928D3 /* PairingURLItem.swift */; };
+		B91F7EBE2652F0FB00B1233D /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C04B41257775B8001D6E0F /* WebViewController.swift */; };
+		B91F7EC02652F2B400B1233D /* DirectionalUserLocationAnnotationView in Frameworks */ = {isa = PBXBuildFile; productRef = B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */; };
 		B92451D423E30ACE007556D5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B92451D323E30ACE007556D5 /* Settings.bundle */; };
 		B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */; };
 		B929FAFA24CECAC800BC773A /* AppleMusic.h in Headers */ = {isa = PBXBuildFile; fileRef = B929FAF824CECAC800BC773A /* AppleMusic.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -66,13 +71,8 @@
 		B932E5F023F9082600726615 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932E5EF23F9082600726615 /* Location.swift */; };
 		B932EE4B26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */; };
 		B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93321ED2323C9D500BFAB21 /* BorderedView.swift */; };
-		B93C0461264295CD002CD861 /* NSLayoutConstraintExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C0460264295CD002CD861 /* NSLayoutConstraintExtension.swift */; };
-		B93C04632642CD32002CD861 /* ParkingAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04622642CD32002CD861 /* ParkingAnnotation.swift */; };
-		B93C04652642CD55002CD861 /* ParkingAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */; };
-		B93C04672642D5FA002CD861 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04662642D5FA002CD861 /* UIButtonExtension.swift */; };
 		B940A460250E5B57006BDFBB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B940A45F250E5B57006BDFBB /* Settings.bundle */; };
 		B940A462250E5CDD006BDFBB /* RearviewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */; };
-		B94215F126423A58003F94A0 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94215F026423A58003F94A0 /* StringExtension.swift */; };
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
 		B942554522B8ED10008B053B /* ETCMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554422B8ED10008B053B /* ETCMessageTests.swift */; };
 		B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554F22BAA5D1008B053B /* LocalNotification.swift */; };
@@ -107,7 +107,6 @@
 		B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */; };
 		B9741F7523DF200600F061E7 /* SharedItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */; };
 		B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97BAE6124B61DB100AE7D13 /* Vehicle.swift */; };
-		B984C01A263DA08D00AF79AE /* TimeDurationPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B984C019263DA08D00AF79AE /* TimeDurationPicker.swift */; };
 		B988A66C254D0E570012A4CB /* PairingRequirementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A66B254D0E570012A4CB /* PairingRequirementViewController.swift */; };
 		B98B783723ED4C3F00A5102F /* DashShareKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B98B783523ED4C3F00A5102F /* DashShareKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B98B783A23ED4C3F00A5102F /* DashShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashShareKit.framework */; };
@@ -127,6 +126,9 @@
 		B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */; };
 		B9989E3E23E8752100FAFD06 /* Share.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9989E3D23E8752100FAFD06 /* Share.wav */; };
 		B99D4F2824C0526200647A10 /* BluetoothAudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99D4F2724C0526200647A10 /* BluetoothAudioDevice.swift */; };
+		B9A3B67C26537A9B00D1D64C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9A3B67B26537A9B00D1D64C /* Media.xcassets */; };
+		B9A3B67E26537A9B00D1D64C /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A3B67D26537A9B00D1D64C /* ActionViewController.swift */; };
+		B9A3B68526537A9B00D1D64C /* ParkingSearchActionExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B9A3B67926537A9B00D1D64C /* ParkingSearchActionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B9A45A9B252C229200CA7921 /* SharedItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A45A9A252C229200CA7921 /* SharedItemDatabase.swift */; };
 		B9A481FE23EF01DB00AA7590 /* SuccessCheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */; };
 		B9A4820023EF025200AA7590 /* SuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FF23EF025200AA7590 /* SuccessViewController.swift */; };
@@ -140,6 +142,8 @@
 		B9BA819E2350931A00657DEB /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
 		B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */; };
 		B9BC920923250A0A006F22FC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BC920823250A0A006F22FC /* Defaults.swift */; };
+		B9BD54A5265BB0D9002C2A8F /* ParkingSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9DD4CCA26517F920010B120 /* ParkingSearchKit.framework */; };
+		B9BD54A6265BB0D9002C2A8F /* ParkingSearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B9DD4CCA26517F920010B120 /* ParkingSearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B9BF2F0523F6946100967316 /* GradientPathRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BF2F0423F6946100967316 /* GradientPathRenderer.swift */; };
 		B9C04B42257775B8001D6E0F /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C04B41257775B8001D6E0F /* WebViewController.swift */; };
 		B9C0CED92508F63F006D246E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CED82508F63F006D246E /* AppDelegate.swift */; };
@@ -172,8 +176,17 @@
 		B9DC5B3F229D9E4F00B645D5 /* BLERemotePeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B3E229D9E4F00B645D5 /* BLERemotePeripheralManager.swift */; };
 		B9DC5B46229EB8B200B645D5 /* SerialPortManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B45229EB8B200B645D5 /* SerialPortManager.swift */; };
 		B9DC5B4A229EDA0000B645D5 /* SerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B49229EDA0000B645D5 /* SerialPort.swift */; };
+		B9DD4CCE26517F920010B120 /* ParkingSearchKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B9DD4CCC26517F920010B120 /* ParkingSearchKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B9DD4CD126517F920010B120 /* ParkingSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9DD4CCA26517F920010B120 /* ParkingSearchKit.framework */; };
+		B9DD4CD226517F920010B120 /* ParkingSearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B9DD4CCA26517F920010B120 /* ParkingSearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B9DD4CD626517FBF0010B120 /* ParkingAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04622642CD32002CD861 /* ParkingAnnotation.swift */; };
+		B9DD4CD726517FBF0010B120 /* TimeDurationPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B984C019263DA08D00AF79AE /* TimeDurationPicker.swift */; };
+		B9DD4CD826517FBF0010B120 /* ParkingSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F8DC1225EA847E00F6FA55 /* ParkingSearchViewController.swift */; };
+		B9DD4CD926517FBF0010B120 /* ParkingAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */; };
+		B9DD4CDA26517FBF0010B120 /* PPParkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F8DBE725EA288B00F6FA55 /* PPParkClient.swift */; };
 		B9E6CC9C234F65A000E18603 /* TollgatePassingThrough.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9E6CC9B234F65A000E18603 /* TollgatePassingThrough.wav */; };
 		B9E6CCA1234F69B800E18603 /* Payment.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9E6CCA0234F69B800E18603 /* Payment.wav */; };
+		B9E8A077265B855E00709838 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B9E8A079265B855E00709838 /* InfoPlist.strings */; };
 		B9E96CBB22A3CE7500C2E009 /* DashTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CBA22A3CE7500C2E009 /* DashTests.swift */; };
 		B9E96CC822A4EF1300C2E009 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
 		B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */; };
@@ -192,8 +205,6 @@
 		B9F4379425D41C42004B9140 /* RearviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEDC2508F63F006D246E /* RearviewViewController.swift */; };
 		B9F4379525D41C42004B9140 /* CameraSensitivityMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F4376C25D4170D004B9140 /* CameraSensitivityMode.swift */; };
 		B9F4379625D41C42004B9140 /* CameraOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B399CB25965BDC00C7977F /* CameraOptions.swift */; };
-		B9F8DBE825EA288B00F6FA55 /* PPParkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F8DBE725EA288B00F6FA55 /* PPParkClient.swift */; };
-		B9F8DC1325EA847E00F6FA55 /* ParkingSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F8DC1225EA847E00F6FA55 /* ParkingSearchViewController.swift */; };
 		B9F9EFD6256D3D6B00C33781 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F9EFD5256D3D6B00C33781 /* Cache.swift */; };
 		B9FA6CC824CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FA6CC724CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift */; };
 		B9FACF4C25D4299900F05CAE /* RearviewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9F4377B25D41C19004B9140 /* RearviewKit.framework */; };
@@ -230,12 +241,33 @@
 			remoteGlobalIDString = B98B783223ED4C3F00A5102F;
 			remoteInfo = DashShareKit;
 		};
+		B9A3B68326537A9B00D1D64C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9A3B67826537A9B00D1D64C;
+			remoteInfo = ParkingSearchActionExtension;
+		};
 		B9B18DD523EDFFF40096D603 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = B98B783223ED4C3F00A5102F;
 			remoteInfo = DashShareKit;
+		};
+		B9BD54A7265BB0D9002C2A8F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9DD4CC926517F920010B120;
+			remoteInfo = ParkingSearchKit;
+		};
+		B9DD4CCF26517F920010B120 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9DD4CC926517F920010B120;
+			remoteInfo = ParkingSearchKit;
 		};
 		B9E96CBD22A3CE7500C2E009 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -278,6 +310,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				B9DD4CD226517F920010B120 /* ParkingSearchKit.framework in Embed Frameworks */,
 				B9FACF4D25D4299900F05CAE /* RearviewKit.framework in Embed Frameworks */,
 				B98B783B23ED4C3F00A5102F /* DashShareKit.framework in Embed Frameworks */,
 				B929FAFE24CECAC800BC773A /* AppleMusic.framework in Embed Frameworks */,
@@ -295,6 +328,17 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B9A3B68626537A9B00D1D64C /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B9A3B68526537A9B00D1D64C /* ParkingSearchActionExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B9B18DD723EDFFF60096D603 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -302,6 +346,17 @@
 			dstSubfolderSpec = 10;
 			files = (
 				B9B18DD423EDFFF40096D603 /* DashShareKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9BD54A9265BB0D9002C2A8F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B9BD54A6265BB0D9002C2A8F /* ParkingSearchKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,6 +386,7 @@
 		869C973AA26AD90E148028FB /* Pods-Dash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dash.release.xcconfig"; path = "Target Support Files/Pods-Dash/Pods-Dash.release.xcconfig"; sourceTree = "<group>"; };
 		A383EF13705DD2A97098F1F8 /* Pods-DashRemote-ShareExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote-ShareExtension.release.xcconfig"; path = "Target Support Files/Pods-DashRemote-ShareExtension/Pods-DashRemote-ShareExtension.release.xcconfig"; sourceTree = "<group>"; };
 		B9008EAE25FBB6D7005DAD13 /* NoMainETCCard.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = NoMainETCCard.wav; sourceTree = "<group>"; };
+		B900A13B26529C4E000ED1B9 /* NSLayoutConstraintExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraintExtension.swift; sourceTree = "<group>"; };
 		B9025F62254D2180001E25DF /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
 		B90265AA23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemTableViewDataSource.swift; sourceTree = "<group>"; };
 		B904A2A5243968990087BD4A /* MapsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsViewController.swift; sourceTree = "<group>"; };
@@ -385,7 +441,6 @@
 		B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocationCoordinate2DExtension.swift; sourceTree = "<group>"; };
 		B93321ED2323C9D500BFAB21 /* BorderedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedView.swift; sourceTree = "<group>"; };
 		B939F0CF23EC5C7F00AA3E8E /* DashV3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DashV3.xcdatamodel; sourceTree = "<group>"; };
-		B93C0460264295CD002CD861 /* NSLayoutConstraintExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraintExtension.swift; sourceTree = "<group>"; };
 		B93C04622642CD32002CD861 /* ParkingAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAnnotation.swift; sourceTree = "<group>"; };
 		B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAnnotationView.swift; sourceTree = "<group>"; };
 		B93C04662642D5FA002CD861 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
@@ -451,6 +506,10 @@
 		B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCPaymentTableViewCell.swift; sourceTree = "<group>"; };
 		B9989E3D23E8752100FAFD06 /* Share.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Share.wav; sourceTree = "<group>"; };
 		B99D4F2724C0526200647A10 /* BluetoothAudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothAudioDevice.swift; sourceTree = "<group>"; };
+		B9A3B67926537A9B00D1D64C /* ParkingSearchActionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ParkingSearchActionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9A3B67B26537A9B00D1D64C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		B9A3B67D26537A9B00D1D64C /* ActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionViewController.swift; sourceTree = "<group>"; };
+		B9A3B68226537A9B00D1D64C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9A3C09423E163F500EF1C4A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../ShareExtension/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9A45A9A252C229200CA7921 /* SharedItemDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemDatabase.swift; sourceTree = "<group>"; };
 		B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessCheckmarkView.swift; sourceTree = "<group>"; };
@@ -507,8 +566,13 @@
 		B9DC5B3E229D9E4F00B645D5 /* BLERemotePeripheralManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLERemotePeripheralManager.swift; sourceTree = "<group>"; };
 		B9DC5B45229EB8B200B645D5 /* SerialPortManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerialPortManager.swift; sourceTree = "<group>"; };
 		B9DC5B49229EDA0000B645D5 /* SerialPort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerialPort.swift; sourceTree = "<group>"; };
+		B9DD4CCA26517F920010B120 /* ParkingSearchKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ParkingSearchKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9DD4CCC26517F920010B120 /* ParkingSearchKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParkingSearchKit.h; sourceTree = "<group>"; };
+		B9DD4CCD26517F920010B120 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9E6CC9B234F65A000E18603 /* TollgatePassingThrough.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = TollgatePassingThrough.wav; sourceTree = "<group>"; };
 		B9E6CCA0234F69B800E18603 /* Payment.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Payment.wav; sourceTree = "<group>"; };
+		B9E8A078265B855E00709838 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B9E8A07A265B857C00709838 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B9E96CB822A3CE7500C2E009 /* DashTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DashTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9E96CBA22A3CE7500C2E009 /* DashTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashTests.swift; sourceTree = "<group>"; };
 		B9E96CBC22A3CE7500C2E009 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -567,6 +631,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B9A3B67626537A9B00D1D64C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9BD54A5265BB0D9002C2A8F /* ParkingSearchKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B9C0CED32508F63F006D246E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -583,8 +655,17 @@
 				B968655F26529621007182BC /* DirectionalUserLocationAnnotationView in Frameworks */,
 				B929FAFD24CECAC800BC773A /* AppleMusic.framework in Frameworks */,
 				B98B783A23ED4C3F00A5102F /* DashShareKit.framework in Frameworks */,
+				B9DD4CD126517F920010B120 /* ParkingSearchKit.framework in Frameworks */,
 				B9FACF4C25D4299900F05CAE /* RearviewKit.framework in Frameworks */,
 				01861A4B14032E6339D8E511 /* Pods_Dash.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9DD4CC726517F920010B120 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B91F7EC02652F2B400B1233D /* DirectionalUserLocationAnnotationView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -787,6 +868,17 @@
 			path = DashShareKit;
 			sourceTree = "<group>";
 		};
+		B9A3B67A26537A9B00D1D64C /* ParkingSearchActionExtension */ = {
+			isa = PBXGroup;
+			children = (
+				B9A3B67B26537A9B00D1D64C /* Media.xcassets */,
+				B9A3B67D26537A9B00D1D64C /* ActionViewController.swift */,
+				B9A3B68226537A9B00D1D64C /* Info.plist */,
+				B9E8A079265B855E00709838 /* InfoPlist.strings */,
+			);
+			path = ParkingSearchActionExtension;
+			sourceTree = "<group>";
+		};
 		B9B4A88C2569306500FE0C9F /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -879,14 +971,11 @@
 		B9CEA76922D8F1F50055C9A3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				B94215F026423A58003F94A0 /* StringExtension.swift */,
-				B93C0460264295CD002CD861 /* NSLayoutConstraintExtension.swift */,
 				B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */,
 				B9D8E43923D345D70078A057 /* UUIDExtension.swift */,
 				B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */,
 				B92E2AFB23E4958200BB4C0E /* UNNotificationContentExtension.swift */,
 				B90C297125E3FB80004466C9 /* SIMDExtension.swift */,
-				B93C04662642D5FA002CD861 /* UIButtonExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -914,6 +1003,8 @@
 			children = (
 				B9DC5B23229D59BE00B645D5 /* Dash */,
 				B9E96CB922A3CE7500C2E009 /* DashTests */,
+				B9A3B67A26537A9B00D1D64C /* ParkingSearchActionExtension */,
+				B9DD4CCB26517F920010B120 /* ParkingSearchKit */,
 				B964BCC123E066FF00288E0D /* DashRemote */,
 				B964BCD923E067EB00288E0D /* ShareExtension */,
 				B98B783423ED4C3F00A5102F /* DashShareKit */,
@@ -937,6 +1028,8 @@
 				B929FAF624CECAC800BC773A /* AppleMusic.framework */,
 				B9C0CED62508F63F006D246E /* Rearview.app */,
 				B9F4377B25D41C19004B9140 /* RearviewKit.framework */,
+				B9DD4CCA26517F920010B120 /* ParkingSearchKit.framework */,
+				B9A3B67926537A9B00D1D64C /* ParkingSearchActionExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -951,7 +1044,6 @@
 				B9CEA76822D8F1990055C9A3 /* ETC */,
 				B9741F7623DF201A00F061E7 /* Inbox */,
 				B904A2A4243968840087BD4A /* Maps */,
-				B9F8DC1125EA845E00F6FA55 /* ParkingSearch */,
 				B97B0D8724C040A9006B675B /* BluetoothAudio */,
 				B9C04B41257775B8001D6E0F /* WebViewController.swift */,
 				B97BAE6124B61DB100AE7D13 /* Vehicle.swift */,
@@ -980,6 +1072,23 @@
 				B96793E824AF6ACC0019BFE5 /* apple_music_developer_token.txt */,
 			);
 			path = Dash;
+			sourceTree = "<group>";
+		};
+		B9DD4CCB26517F920010B120 /* ParkingSearchKit */ = {
+			isa = PBXGroup;
+			children = (
+				B9DD4CCC26517F920010B120 /* ParkingSearchKit.h */,
+				B9F8DC1225EA847E00F6FA55 /* ParkingSearchViewController.swift */,
+				B93C04622642CD32002CD861 /* ParkingAnnotation.swift */,
+				B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */,
+				B9F8DBE725EA288B00F6FA55 /* PPParkClient.swift */,
+				B984C019263DA08D00AF79AE /* TimeDurationPicker.swift */,
+				B94215F026423A58003F94A0 /* StringExtension.swift */,
+				B900A13B26529C4E000ED1B9 /* NSLayoutConstraintExtension.swift */,
+				B93C04662642D5FA002CD861 /* UIButtonExtension.swift */,
+				B9DD4CCD26517F920010B120 /* Info.plist */,
+			);
+			path = ParkingSearchKit;
 			sourceTree = "<group>";
 		};
 		B9E96CB922A3CE7500C2E009 /* DashTests */ = {
@@ -1015,18 +1124,6 @@
 			path = RearviewKit;
 			sourceTree = "<group>";
 		};
-		B9F8DC1125EA845E00F6FA55 /* ParkingSearch */ = {
-			isa = PBXGroup;
-			children = (
-				B9F8DC1225EA847E00F6FA55 /* ParkingSearchViewController.swift */,
-				B93C04622642CD32002CD861 /* ParkingAnnotation.swift */,
-				B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */,
-				B9F8DBE725EA288B00F6FA55 /* PPParkClient.swift */,
-				B984C019263DA08D00AF79AE /* TimeDurationPicker.swift */,
-			);
-			path = ParkingSearch;
-			sourceTree = "<group>";
-		};
 		FC2BACFC9EC4F82C9699C39B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1060,6 +1157,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B98B783723ED4C3F00A5102F /* DashShareKit.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9DD4CC526517F920010B120 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9DD4CCE26517F920010B120 /* ParkingSearchKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1153,6 +1258,25 @@
 			productReference = B98B783323ED4C3F00A5102F /* DashShareKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		B9A3B67826537A9B00D1D64C /* ParkingSearchActionExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B9A3B68926537A9B00D1D64C /* Build configuration list for PBXNativeTarget "ParkingSearchActionExtension" */;
+			buildPhases = (
+				B9A3B67526537A9B00D1D64C /* Sources */,
+				B9A3B67626537A9B00D1D64C /* Frameworks */,
+				B9A3B67726537A9B00D1D64C /* Resources */,
+				B9BD54A9265BB0D9002C2A8F /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B9BD54A8265BB0D9002C2A8F /* PBXTargetDependency */,
+			);
+			name = ParkingSearchActionExtension;
+			productName = ParkingSearchActionExtension;
+			productReference = B9A3B67926537A9B00D1D64C /* ParkingSearchActionExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		B9C0CED52508F63F006D246E /* Rearview */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B9C0CEE92508F641006D246E /* Build configuration list for PBXNativeTarget "Rearview" */;
@@ -1187,6 +1311,7 @@
 				BCC6DA0CF269B8E30DEAAA76 /* [CP] Embed Pods Frameworks */,
 				E91B1395BB80F0EC9C3C912C /* [CP] Copy Pods Resources */,
 				B98B783C23ED4C3F00A5102F /* Embed Frameworks */,
+				B9A3B68626537A9B00D1D64C /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
@@ -1194,6 +1319,8 @@
 				B98B783923ED4C3F00A5102F /* PBXTargetDependency */,
 				B929FAFC24CECAC800BC773A /* PBXTargetDependency */,
 				B9FACF4F25D4299900F05CAE /* PBXTargetDependency */,
+				B9DD4CD026517F920010B120 /* PBXTargetDependency */,
+				B9A3B68426537A9B00D1D64C /* PBXTargetDependency */,
 			);
 			name = Dash;
 			packageProductDependencies = (
@@ -1202,6 +1329,27 @@
 			productName = ETC;
 			productReference = B9DC5B21229D59BE00B645D5 /* Dash.app */;
 			productType = "com.apple.product-type.application";
+		};
+		B9DD4CC926517F920010B120 /* ParkingSearchKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B9DD4CD526517F920010B120 /* Build configuration list for PBXNativeTarget "ParkingSearchKit" */;
+			buildPhases = (
+				B9DD4CC526517F920010B120 /* Headers */,
+				B9DD4CC626517F920010B120 /* Sources */,
+				B9DD4CC726517F920010B120 /* Frameworks */,
+				B9DD4CC826517F920010B120 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ParkingSearchKit;
+			packageProductDependencies = (
+				B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */,
+			);
+			productName = ParkingSearchKit;
+			productReference = B9DD4CCA26517F920010B120 /* ParkingSearchKit.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 		B9E96CB722A3CE7500C2E009 /* DashTests */ = {
 			isa = PBXNativeTarget;
@@ -1246,8 +1394,8 @@
 		B9DC5B19229D59BE00B645D5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1170;
-				LastUpgradeCheck = 1200;
+				LastSwiftUpdateCheck = 1250;
+				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = "Yuji Nakayama";
 				TargetAttributes = {
 					B929FAF524CECAC800BC773A = {
@@ -1263,11 +1411,17 @@
 						CreatedOnToolsVersion = 11.3.1;
 						LastSwiftMigration = 1130;
 					};
+					B9A3B67826537A9B00D1D64C = {
+						CreatedOnToolsVersion = 12.5;
+					};
 					B9C0CED52508F63F006D246E = {
 						CreatedOnToolsVersion = 11.7;
 					};
 					B9DC5B20229D59BE00B645D5 = {
 						CreatedOnToolsVersion = 10.2.1;
+					};
+					B9DD4CC926517F920010B120 = {
+						CreatedOnToolsVersion = 12.5;
 					};
 					B9E96CB722A3CE7500C2E009 = {
 						CreatedOnToolsVersion = 10.2.1;
@@ -1285,6 +1439,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = B9DC5B18229D59BE00B645D5;
 			packageReferences = (
@@ -1296,6 +1451,8 @@
 			targets = (
 				B9DC5B20229D59BE00B645D5 /* Dash */,
 				B9E96CB722A3CE7500C2E009 /* DashTests */,
+				B9A3B67826537A9B00D1D64C /* ParkingSearchActionExtension */,
+				B9DD4CC926517F920010B120 /* ParkingSearchKit */,
 				B964BCBF23E066FF00288E0D /* DashRemote */,
 				B964BCD723E067EB00288E0D /* ShareExtension */,
 				B98B783223ED4C3F00A5102F /* DashShareKit */,
@@ -1340,6 +1497,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B9A3B67726537A9B00D1D64C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9A3B67C26537A9B00D1D64C /* Media.xcassets in Resources */,
+				B9E8A077265B855E00709838 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B9C0CED42508F63F006D246E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1365,6 +1531,13 @@
 				B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */,
 				B9989E3E23E8752100FAFD06 /* Share.wav in Resources */,
 				B9008EAF25FBB6D7005DAD13 /* NoMainETCCard.wav in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9DD4CC826517F920010B120 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1669,6 +1842,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B9A3B67526537A9B00D1D64C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9A3B67E26537A9B00D1D64C /* ActionViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B9C0CED22508F63F006D246E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1683,7 +1864,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B93C04652642CD55002CD861 /* ParkingAnnotationView.swift in Sources */,
 				B9DB8E5922D7A481003E4BD8 /* ETCPaymentManagedObject.swift in Sources */,
 				B95F514A23E5B2C10063CB3D /* Website.swift in Sources */,
 				B99356E622A9525C00BA08AB /* ETCMessage.swift in Sources */,
@@ -1691,14 +1871,11 @@
 				B9B154EE2575FCED0031761F /* FirebaseMessaging.swift in Sources */,
 				B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */,
 				B9F272C4259C91990098CB3B /* AltitudeWidgetViewController.swift in Sources */,
-				B93C0461264295CD002CD861 /* NSLayoutConstraintExtension.swift in Sources */,
 				B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */,
 				B9DC5B46229EB8B200B645D5 /* SerialPortManager.swift in Sources */,
 				B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift in Sources */,
 				B92C6EC324AC2F0A001E9675 /* ArtworkView.swift in Sources */,
-				B93C04672642D5FA002CD861 /* UIButtonExtension.swift in Sources */,
 				B94E69D123F7A313004CCC7C /* WebsiteIcon.swift in Sources */,
-				B94215F126423A58003F94A0 /* StringExtension.swift in Sources */,
 				B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */,
 				B95F514E23E5BBF70063CB3D /* SharedItem.swift in Sources */,
 				B944C69024A9E4C8000D1E99 /* MusicViewController.swift in Sources */,
@@ -1721,13 +1898,11 @@
 				B9F9EFD6256D3D6B00C33781 /* Cache.swift in Sources */,
 				B9FA6CC824CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift in Sources */,
 				B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */,
-				B93C04632642CD32002CD861 /* ParkingAnnotation.swift in Sources */,
 				B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */,
 				B9B154F82576075C0031761F /* TabBarBadgeManager.swift in Sources */,
 				B95F514C23E5B53F0063CB3D /* RemoteNotification.swift in Sources */,
 				B9DC5B27229D59BE00B645D5 /* ETCPaymentTableViewController.swift in Sources */,
 				B92A61112576472A0073AB7B /* Assistant.swift in Sources */,
-				B9F8DBE825EA288B00F6FA55 /* PPParkClient.swift in Sources */,
 				B9A45A9B252C229200CA7921 /* SharedItemDatabase.swift in Sources */,
 				B9BF2F0523F6946100967316 /* GradientPathRenderer.swift in Sources */,
 				B9D0260F24BF7704005C03B1 /* ClassicBluetoothManager.swift in Sources */,
@@ -1739,7 +1914,6 @@
 				B99D4F2824C0526200647A10 /* BluetoothAudioDevice.swift in Sources */,
 				B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */,
 				B9640AAB2575D9E800B779AD /* Firebase.swift in Sources */,
-				B984C01A263DA08D00AF79AE /* TimeDurationPicker.swift in Sources */,
 				B9FB33E124AE2ACD00FEB782 /* PlaybackModeButton.swift in Sources */,
 				B92A97DA25E0AE8900D70A14 /* GForceMeterWidgetViewController.swift in Sources */,
 				B91E0B62254D047D002928D3 /* PairingURLItem.swift in Sources */,
@@ -1753,7 +1927,6 @@
 				B9DC5B39229D5D8100B645D5 /* ETCDeviceConnection.swift in Sources */,
 				B9D8E43823D345940078A057 /* ETCCardManagedObject.swift in Sources */,
 				B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */,
-				B9F8DC1325EA847E00F6FA55 /* ParkingSearchViewController.swift in Sources */,
 				B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */,
 				B942553D22B8C3E2008B053B /* Logger.swift in Sources */,
 				B9BC920923250A0A006F22FC /* Defaults.swift in Sources */,
@@ -1773,6 +1946,22 @@
 				B954CA3225693EDA00BAD0F0 /* RearviewWidgetViewController.swift in Sources */,
 				B9DC5B4A229EDA0000B645D5 /* SerialPort.swift in Sources */,
 				B9640AC22575EC0400B779AD /* FirebaseAuthentication.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9DD4CC626517F920010B120 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9DD4CD926517FBF0010B120 /* ParkingAnnotationView.swift in Sources */,
+				B91F7EBE2652F0FB00B1233D /* WebViewController.swift in Sources */,
+				B9DD4CD826517FBF0010B120 /* ParkingSearchViewController.swift in Sources */,
+				B9DD4CDA26517FBF0010B120 /* PPParkClient.swift in Sources */,
+				B900A13C26529C4E000ED1B9 /* NSLayoutConstraintExtension.swift in Sources */,
+				B900A13D2652BCF4000ED1B9 /* StringExtension.swift in Sources */,
+				B9DD4CD726517FBF0010B120 /* TimeDurationPicker.swift in Sources */,
+				B9DD4CD626517FBF0010B120 /* ParkingAnnotation.swift in Sources */,
+				B900A13A26529C38000ED1B9 /* UIButtonExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1833,10 +2022,25 @@
 			target = B98B783223ED4C3F00A5102F /* DashShareKit */;
 			targetProxy = B98B784823ED4F1200A5102F /* PBXContainerItemProxy */;
 		};
+		B9A3B68426537A9B00D1D64C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9A3B67826537A9B00D1D64C /* ParkingSearchActionExtension */;
+			targetProxy = B9A3B68326537A9B00D1D64C /* PBXContainerItemProxy */;
+		};
 		B9B18DD623EDFFF40096D603 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B98B783223ED4C3F00A5102F /* DashShareKit */;
 			targetProxy = B9B18DD523EDFFF40096D603 /* PBXContainerItemProxy */;
+		};
+		B9BD54A8265BB0D9002C2A8F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9DD4CC926517F920010B120 /* ParkingSearchKit */;
+			targetProxy = B9BD54A7265BB0D9002C2A8F /* PBXContainerItemProxy */;
+		};
+		B9DD4CD026517F920010B120 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9DD4CC926517F920010B120 /* ParkingSearchKit */;
+			targetProxy = B9DD4CCF26517F920010B120 /* PBXContainerItemProxy */;
 		};
 		B9E96CBE22A3CE7500C2E009 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1902,6 +2106,15 @@
 				B9DC5B30229D59BF00B645D5 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		B9E8A079265B855E00709838 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B9E8A078265B855E00709838 /* en */,
+				B9E8A07A265B857C00709838 /* ja */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -2128,6 +2341,54 @@
 			};
 			name = Release;
 		};
+		B9A3B68726537A9B00D1D64C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = ParkingSearchActionExtension/Media.xcassets;
+				DEVELOPMENT_TEAM = 8LSN3WQC77;
+				INFOPLIST_FILE = ParkingSearchActionExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 4.21.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash.ParkingSearchActionExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B9A3B68826537A9B00D1D64C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = ParkingSearchActionExtension/Media.xcassets;
+				DEVELOPMENT_TEAM = 8LSN3WQC77;
+				INFOPLIST_FILE = ParkingSearchActionExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 4.21.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash.ParkingSearchActionExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		B9C0CEE72508F641006D246E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 425C056D1C977242B289F14E /* Pods-Rearview.debug.xcconfig */;
@@ -2178,6 +2439,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -2240,6 +2502,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -2296,6 +2559,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FDB9D0E23106CE353F300B76 /* Pods-Dash.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Dash/Dash.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -2323,6 +2587,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 869C973AA26AD90E148028FB /* Pods-Dash.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Dash/Dash.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -2343,6 +2608,68 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Dash/BluetoothAudio/BeeTee-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B9DD4CD326517F920010B120 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8LSN3WQC77;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ParkingSearchKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.ParkingSearchKit;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		B9DD4CD426517F920010B120 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8LSN3WQC77;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ParkingSearchKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.ParkingSearchKit;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -2485,6 +2812,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		B9A3B68926537A9B00D1D64C /* Build configuration list for PBXNativeTarget "ParkingSearchActionExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9A3B68726537A9B00D1D64C /* Debug */,
+				B9A3B68826537A9B00D1D64C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B9C0CEE92508F641006D246E /* Build configuration list for PBXNativeTarget "Rearview" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2508,6 +2844,15 @@
 			buildConfigurations = (
 				B9DC5B36229D59BF00B645D5 /* Debug */,
 				B9DC5B37229D59BF00B645D5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B9DD4CD526517F920010B120 /* Build configuration list for PBXNativeTarget "ParkingSearchKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9DD4CD326517F920010B120 /* Debug */,
+				B9DD4CD426517F920010B120 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2544,6 +2889,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */;
+			productName = DirectionalUserLocationAnnotationView;
+		};
 		B968655E26529621007182BC /* DirectionalUserLocationAnnotationView */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */;
