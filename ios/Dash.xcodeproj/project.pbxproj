@@ -142,7 +142,6 @@
 		B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */; };
 		B9BC920923250A0A006F22FC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BC920823250A0A006F22FC /* Defaults.swift */; };
 		B9BD54A5265BB0D9002C2A8F /* ParkingSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9DD4CCA26517F920010B120 /* ParkingSearchKit.framework */; };
-		B9BD54A6265BB0D9002C2A8F /* ParkingSearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B9DD4CCA26517F920010B120 /* ParkingSearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B9BF2F0523F6946100967316 /* GradientPathRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BF2F0423F6946100967316 /* GradientPathRenderer.swift */; };
 		B9C04B42257775B8001D6E0F /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C04B41257775B8001D6E0F /* WebViewController.swift */; };
 		B9C0CED92508F63F006D246E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CED82508F63F006D246E /* AppDelegate.swift */; };
@@ -345,17 +344,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				B9B18DD423EDFFF40096D603 /* DashShareKit.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B9BD54A9265BB0D9002C2A8F /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				B9BD54A6265BB0D9002C2A8F /* ParkingSearchKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1263,7 +1251,6 @@
 				B9A3B67526537A9B00D1D64C /* Sources */,
 				B9A3B67626537A9B00D1D64C /* Frameworks */,
 				B9A3B67726537A9B00D1D64C /* Resources */,
-				B9BD54A9265BB0D9002C2A8F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
