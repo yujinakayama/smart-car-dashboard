@@ -103,7 +103,6 @@
 		B96793E924AF6ACC0019BFE5 /* apple_music_developer_token.txt in Resources */ = {isa = PBXBuildFile; fileRef = B96793E824AF6ACC0019BFE5 /* apple_music_developer_token.txt */; };
 		B967D08225D51508000D9007 /* RearviewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */; };
 		B96810752614C5C300D647FA /* ImageFilterChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96810742614C5C300D647FA /* ImageFilterChain.swift */; };
-		B968655F26529621007182BC /* DirectionalUserLocationAnnotationView in Frameworks */ = {isa = PBXBuildFile; productRef = B968655E26529621007182BC /* DirectionalUserLocationAnnotationView */; };
 		B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */; };
 		B9741F7523DF200600F061E7 /* SharedItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */; };
 		B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97BAE6124B61DB100AE7D13 /* Vehicle.swift */; };
@@ -652,7 +651,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B968655F26529621007182BC /* DirectionalUserLocationAnnotationView in Frameworks */,
 				B929FAFD24CECAC800BC773A /* AppleMusic.framework in Frameworks */,
 				B98B783A23ED4C3F00A5102F /* DashShareKit.framework in Frameworks */,
 				B9DD4CD126517F920010B120 /* ParkingSearchKit.framework in Frameworks */,
@@ -1324,7 +1322,6 @@
 			);
 			name = Dash;
 			packageProductDependencies = (
-				B968655E26529621007182BC /* DirectionalUserLocationAnnotationView */,
 			);
 			productName = ETC;
 			productReference = B9DC5B21229D59BE00B645D5 /* Dash.app */;
@@ -2890,11 +2887,6 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */;
-			productName = DirectionalUserLocationAnnotationView;
-		};
-		B968655E26529621007182BC /* DirectionalUserLocationAnnotationView */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */;
 			productName = DirectionalUserLocationAnnotationView;
