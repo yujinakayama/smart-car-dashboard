@@ -43,12 +43,6 @@ open class ParkingSearchViewController: UIViewController {
         return mapView
     }()
 
-    lazy var navigationBar: UINavigationBar = {
-        let navigationBar = UINavigationBar()
-
-        return navigationBar
-    }()
-
     lazy var controlView: UIView = {
         let view = UIView()
 
@@ -176,7 +170,6 @@ open class ParkingSearchViewController: UIViewController {
 
         view.addSubview(mapView)
         view.addSubview(controlView)
-        view.addSubview(navigationBar)
 
         view.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
 
@@ -188,9 +181,6 @@ open class ParkingSearchViewController: UIViewController {
             controlView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             view.trailingAnchor.constraint(equalTo: controlView.trailingAnchor),
             view.bottomAnchor.constraint(equalTo: controlView.bottomAnchor),
-            navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: navigationBar.trailingAnchor),
-            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
         ])
 
         navigationItem.largeTitleDisplayMode = .never
@@ -199,17 +189,6 @@ open class ParkingSearchViewController: UIViewController {
 
         if destination != nil {
             applyDestination()
-        }
-    }
-
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        if navigationController == nil {
-            navigationBar.items = [navigationItem]
-            navigationBar.isHidden = false
-        } else {
-            navigationBar.isHidden = true
         }
     }
 
