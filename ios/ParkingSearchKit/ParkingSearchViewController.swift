@@ -292,7 +292,8 @@ open class ParkingSearchViewController: UIViewController {
     }
 
     func showParkings(_ parkings: [Parking]) {
-        addParkings(parkings)
+        let openParkings = parkings.filter { !$0.isClosed }
+        addParkings(openParkings)
         mapView.showAnnotations(parkingAnnotations + [destinationAnnotation], animated: true)
         selectBestParking()
     }
