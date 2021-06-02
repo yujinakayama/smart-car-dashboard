@@ -40,7 +40,7 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.ui-services</string>
 		<key>NSExtensionPrincipalClass</key>
-		<string>$(PRODUCT_MODULE_NAME).NavigationController</string>
+		<string>$(PRODUCT_MODULE_NAME).ActionViewController</string>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs to access to your location to show the current location on maps.</string>

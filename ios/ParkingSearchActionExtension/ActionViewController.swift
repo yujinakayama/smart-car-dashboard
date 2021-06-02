@@ -7,11 +7,9 @@
 //
 
 import UIKit
-import MobileCoreServices
 import MapKit
-import ParkingSearchKit
 
-class ActionViewController: ParkingSearchViewController {
+class ActionViewController: UIViewController {
     var extensionItem: NSExtensionItem {
         let extensionItems = self.extensionContext!.inputItems as! [NSExtensionItem]
         return extensionItems.first!
@@ -20,12 +18,10 @@ class ActionViewController: ParkingSearchViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
-
         loadMapItem { (result) in
             switch result {
             case .success(let mapItem):
-                self.destination = mapItem
+                self.openInDash(mapItem: mapItem)
             case .failure(let error):
                 self.extensionContext!.cancelRequest(withError: error)
             }
@@ -56,7 +52,30 @@ class ActionViewController: ParkingSearchViewController {
         }
     }
 
-    @IBAction func done() {
-        extensionContext!.completeRequest(returningItems: nil)
+    func openInDash(mapItem: MKMapItem) {
+        let urlItem = ParkingSearchURLItem(mapItem: mapItem)
+        open(urlItem.url)
+        self.extensionContext!.completeRequest(returningItems: nil)
+    }
+
+    func open(_ url: URL) {
+        guard let application = sharedApplication else { return }
+        application.perform(sel_registerName("openURL:"), with: url)
+    }
+
+    // We cannot use UIApplication.shared.open(_:options:completionHandler:) in app extensions
+    // https://stackoverflow.com/a/44499289/784241
+    var sharedApplication: UIApplication? {
+        var responder: UIResponder? = self
+
+        while responder != nil {
+           if let application = responder as? UIApplication {
+               return application
+           }
+
+            responder = responder?.next
+       }
+
+        return nil
     }
 }

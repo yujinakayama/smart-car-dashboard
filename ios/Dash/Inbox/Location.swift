@@ -50,8 +50,7 @@ class Location: SharedItemProtocol {
 
         markAsOpened()
 
-        let parkingSearchViewController = ParkingSearchViewController()
-        parkingSearchViewController.destination = mapItem
+        let parkingSearchViewController = ParkingSearchViewController(destination: mapItem)
 
         if let navigationController = viewController.navigationController {
             navigationController.pushViewController(parkingSearchViewController, animated: true)

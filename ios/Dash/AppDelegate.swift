@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import ParkingSearchKit
+import MapKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -19,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     lazy var tabBarBadgeManager = TabBarBadgeManager(tabBarController: tabBarController)
 
     let assistant = Assistant()
+
+    var modalViewController: UIViewController?
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         _ = Firebase.shared
@@ -71,10 +75,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
 
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
-        return Firebase.shared.authentication.handle(url)
+        if Firebase.shared.authentication.handle(url) {
+            return true
+        } else if let urlItem = ParkingSearchURLItem(url: url) {
+            presentParkingSearchViewController(mapItem: urlItem.mapItem)
+            return true
+        } else {
+            return false
+        }
     }
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Firebase.shared.messaging.deviceToken = deviceToken
+    }
+
+    private func presentParkingSearchViewController(mapItem: MKMapItem) {
+        let parkingSearchViewController = ParkingSearchViewController(destination: mapItem)
+
+        parkingSearchViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .done,
+            target: self,
+            action: #selector(dismissModalViewController)
+        )
+
+        modalViewController = parkingSearchViewController
+
+        let navigationController = UINavigationController(rootViewController: parkingSearchViewController)
+        navigationController.modalPresentationStyle = .fullScreen
+
+        window?.rootViewController?.present(navigationController, animated: true)
+    }
+
+
+    @objc func dismissModalViewController() {
+        modalViewController?.dismiss(animated: true)
     }
 }
