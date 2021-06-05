@@ -178,7 +178,7 @@ async function normalizeLocationWithCoordinate(expandedURL: URL, inputData: Inpu
             latitude: place.geometry.location.lat,
             longitude: place.geometry.location.lng
         },
-        name: convertAlphanumericsToAscii(inputData.rawData['public.plain-text']),
+        name: convertAlphanumericsToAscii(inputData.attachments['public.plain-text']),
         url: expandedURL.toString(),
         websiteURL: null
     };
