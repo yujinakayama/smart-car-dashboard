@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import DashShareKit
+import DashCloudKit
 import JGProgressHUD
 
 enum ShareError: Error {
