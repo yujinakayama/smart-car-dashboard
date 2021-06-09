@@ -101,13 +101,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, AccountDelegate {
     func share(mapItem: MKMapItem, url: URL) {
         guard let vehicleID = PairedVehicle.defaultVehicleID else { return }
 
-        let encoder = SharingItem.Encoder()
-        encoder.add(mapItem)
-        encoder.add(url)
+        let item = Item(url: url, mapItem: mapItem)
 
-        let sharingItem = SharingItem(encoder: encoder)
-
-        sharingItem.share(with: vehicleID) { (error) in
+        cloudClient.share(item, with: vehicleID) { (error) in
             if error != nil {
                 self.pickUpButton.stopAnimation(animationStyle: .shake, revertAfterDelay: 1)
             } else {
@@ -117,4 +113,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, AccountDelegate {
             }
         }
     }
+
+    lazy var cloudClient = DashCloudClient()
 }

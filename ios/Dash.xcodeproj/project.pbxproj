@@ -110,7 +110,7 @@
 		B98B783723ED4C3F00A5102F /* DashCloudKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B98B783523ED4C3F00A5102F /* DashCloudKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B98B783A23ED4C3F00A5102F /* DashCloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashCloudKit.framework */; };
 		B98B783B23ED4C3F00A5102F /* DashCloudKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashCloudKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B98B784123ED4C5000A5102F /* SharingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98B784023ED4C5000A5102F /* SharingItem.swift */; };
+		B98B784123ED4C5000A5102F /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98B784023ED4C5000A5102F /* Item.swift */; };
 		B98B784223ED4C5A00A5102F /* GoogleServieInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92451D523E3204D007556D5 /* GoogleServieInfo.swift */; };
 		B98B784323ED4C6600A5102F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9A3C09423E163F500EF1C4A /* GoogleService-Info.plist */; };
 		B98B784623ED4F1200A5102F /* DashCloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashCloudKit.framework */; platformFilter = ios; };
@@ -161,6 +161,7 @@
 		B9D0260F24BF7704005C03B1 /* ClassicBluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D0260624BF7704005C03B1 /* ClassicBluetoothManager.swift */; };
 		B9D0261024BF7704005C03B1 /* ClassicBluetoothDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D0260A24BF7704005C03B1 /* ClassicBluetoothDevice.swift */; };
 		B9D0261124BF7704005C03B1 /* BluetoothManagerHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B9D0260D24BF7704005C03B1 /* BluetoothManagerHandler.m */; };
+		B9D4AF22267124FC00849129 /* DashCloudClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D4AF21267124FC00849129 /* DashCloudClient.swift */; };
 		B9D8E43823D345940078A057 /* ETCCardManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43723D345940078A057 /* ETCCardManagedObject.swift */; };
 		B9D8E43A23D345D70078A057 /* UUIDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43923D345D70078A057 /* UUIDExtension.swift */; };
 		B9DB8E5522D7A410003E4BD8 /* Dash.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B9DB8E5322D7A410003E4BD8 /* Dash.xcdatamodeld */; };
@@ -482,7 +483,7 @@
 		B98B783323ED4C3F00A5102F /* DashCloudKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DashCloudKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B98B783523ED4C3F00A5102F /* DashCloudKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DashCloudKit.h; sourceTree = "<group>"; };
 		B98B783623ED4C3F00A5102F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B98B784023ED4C5000A5102F /* SharingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingItem.swift; sourceTree = "<group>"; };
+		B98B784023ED4C5000A5102F /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		B98B784B23ED521A00A5102F /* Dash Remote.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Dash Remote.entitlements"; sourceTree = "<group>"; };
 		B98B784C23ED530E00A5102F /* SignInWithAppleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleViewController.swift; sourceTree = "<group>"; };
 		B98B784E23ED583600A5102F /* AppIconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconImageView.swift; sourceTree = "<group>"; };
@@ -538,6 +539,7 @@
 		B9D0260B24BF7704005C03B1 /* BeeTee-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BeeTee-Bridging-Header.h"; sourceTree = "<group>"; };
 		B9D0260C24BF7704005C03B1 /* BluetoothDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothDevice.h; sourceTree = "<group>"; };
 		B9D0260D24BF7704005C03B1 /* BluetoothManagerHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothManagerHandler.m; sourceTree = "<group>"; };
+		B9D4AF21267124FC00849129 /* DashCloudClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashCloudClient.swift; sourceTree = "<group>"; };
 		B9D8E43723D345940078A057 /* ETCCardManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCCardManagedObject.swift; sourceTree = "<group>"; };
 		B9D8E43923D345D70078A057 /* UUIDExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUIDExtension.swift; sourceTree = "<group>"; };
 		B9D8E43B23D345EC0078A057 /* DashV2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DashV2.xcdatamodel; sourceTree = "<group>"; };
@@ -849,7 +851,8 @@
 			isa = PBXGroup;
 			children = (
 				B98B783523ED4C3F00A5102F /* DashCloudKit.h */,
-				B98B784023ED4C5000A5102F /* SharingItem.swift */,
+				B9D4AF21267124FC00849129 /* DashCloudClient.swift */,
+				B98B784023ED4C5000A5102F /* Item.swift */,
 				B92451D523E3204D007556D5 /* GoogleServieInfo.swift */,
 				B9A3C09423E163F500EF1C4A /* GoogleService-Info.plist */,
 				B98B783623ED4C3F00A5102F /* Info.plist */,
@@ -1825,8 +1828,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9D4AF22267124FC00849129 /* DashCloudClient.swift in Sources */,
 				B98B784223ED4C5A00A5102F /* GoogleServieInfo.swift in Sources */,
-				B98B784123ED4C5000A5102F /* SharingItem.swift in Sources */,
+				B98B784123ED4C5000A5102F /* Item.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,72 +10,37 @@ import Foundation
 import MobileCoreServices
 import MapKit
 
-enum SharingItemError: Error {
-    case serverError
-}
-
-public class SharingItem {
+public class Item {
     private let encoder: SharingItemEncoderProtocol
 
-    public init(encoder: SharingItemEncoderProtocol) {
+    public init(extensionItem: NSExtensionItem) {
+        encoder = ExtensionItemEncoder(extensionItem: extensionItem)
+    }
+
+    public init(url: URL? = nil, plainText: String? = nil, mapItem: MKMapItem? = nil) {
+        let encoder = Encoder()
+
+        if let url = url {
+            encoder.add(url)
+        }
+
+        if let plainText = plainText {
+            encoder.add(plainText)
+        }
+
+        if let mapItem = mapItem {
+            encoder.add(mapItem)
+        }
+
         self.encoder = encoder
     }
 
-    public func share(with vehicleID: String, completionHandler: @escaping (Error?) -> Void) {
-        encoder.encode { (result) in
-            switch result {
-            case .success(let attachments):
-                self.send(attachments, to: vehicleID, completionHandler: completionHandler)
-            case .failure(let error):
-                completionHandler(error)
-            }
-        }
-    }
-
-    private func send(_ attachments: [String: Any], to vehicleID: String, completionHandler: @escaping (Error?) -> Void) {
-        var request = URLRequest(url: endPointURL)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let payload: [String: Any] = [
-            "vehicleID": vehicleID,
-            "attachments": attachments
-        ]
-
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: payload)
-        } catch {
-            completionHandler(error)
-        }
-
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            DispatchQueue.main.async {
-                if let error = error {
-                    completionHandler(error)
-                    return
-                }
-
-                if let response = response as? HTTPURLResponse, response.statusCode != 200 {
-                    completionHandler(SharingItemError.serverError)
-                    return
-                }
-
-                completionHandler(nil)
-            }
-        }
-
-        task.resume()
-    }
-
-    private var endPointURL: URL {
-        let bundle = Bundle(for: GoogleServiceInfo.self)
-        let googleServiceInfo = GoogleServiceInfo(path: bundle.path(forResource: "GoogleService-Info", ofType: "plist")!)
-        let endPointURLString = "https://asia-northeast1-\(googleServiceInfo.projectID).cloudfunctions.net/share"
-        return URL(string: endPointURLString)!
+    func encode(completionHandler: @escaping (Result<[String: Any], Error>) -> Void) {
+        encoder.encode(completionHandler: completionHandler)
     }
 }
 
-extension SharingItem {
+extension Item {
     enum TypeIdentifier: String {
         case url = "public.url"
         case plainText = "public.plain-text"
@@ -83,30 +48,27 @@ extension SharingItem {
     }
 }
 
-public protocol SharingItemEncoderProtocol {
+protocol SharingItemEncoderProtocol {
     func encode(completionHandler: @escaping (Result<[String: Any], Error>) -> Void)
 }
 
-extension SharingItem {
-    public class Encoder: SharingItemEncoderProtocol {
+extension Item {
+    class Encoder: SharingItemEncoderProtocol {
         var encodedDictionary: [String: Any] = [:]
 
-        public init() {
-        }
-
-        public func encode(completionHandler: @escaping (Result<[String: Any], Error>) -> Void) {
+        func encode(completionHandler: @escaping (Result<[String: Any], Error>) -> Void) {
             completionHandler(.success(encodedDictionary))
         }
 
-        public func add(_ url: URL) {
+        func add(_ url: URL) {
             add(url.absoluteString, for: .url)
         }
 
-        public func add(_ string: String) {
+        func add(_ string: String) {
             add(string, for: .plainText)
         }
 
-        public func add(_ mapItem: MKMapItem) {
+        func add(_ mapItem: MKMapItem) {
             let dictionary = [
                 "placemark": [
                     "coordinate": [
@@ -132,7 +94,7 @@ extension SharingItem {
             add(dictionary, for: .mapItem)
         }
 
-        private let serialQueue = DispatchQueue(label: "com.yujinakayama.ShareKit.SharingItem.Encoder")
+        private let serialQueue = DispatchQueue(label: "com.yujinakayama.DashCloudKit.Item.Encoder")
 
         private func add(_ value: Any, for typeIdentifier: TypeIdentifier) {
             serialQueue.sync {
@@ -142,21 +104,21 @@ extension SharingItem {
     }
 }
 
-extension SharingItem {
+extension Item {
     enum ExtensionItemEncoderError: Error {
         case noAttachments
     }
 
-    public class ExtensionItemEncoder: SharingItemEncoderProtocol {
+    class ExtensionItemEncoder: SharingItemEncoderProtocol {
         let extensionItem: NSExtensionItem
 
         private let encoder = Encoder()
 
-        public init(extensionItem: NSExtensionItem) {
+        init(extensionItem: NSExtensionItem) {
             self.extensionItem = extensionItem
         }
 
-        public func encode(completionHandler: @escaping (Result<[String: Any], Error>) -> Void) {
+        func encode(completionHandler: @escaping (Result<[String: Any], Error>) -> Void) {
             guard let attachments = extensionItem.attachments else {
                 completionHandler(.failure(ExtensionItemEncoderError.noAttachments))
                 return
