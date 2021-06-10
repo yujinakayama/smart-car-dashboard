@@ -164,6 +164,8 @@
 		B9D4AF22267124FC00849129 /* DashCloudClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D4AF21267124FC00849129 /* DashCloudClient.swift */; };
 		B9D4AF2E2673203400849129 /* UTTypeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D4AF2D2673203400849129 /* UTTypeExtension.swift */; };
 		B9D4AF232671313900849129 /* CLLocationCoordinate2DExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */; };
+		B9D4AF242671324B00849129 /* DashCloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashCloudKit.framework */; };
+		B9D4AF2A26727D8000849129 /* MapItemFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D4AF2926727D8000849129 /* MapItemFetcher.swift */; };
 		B9D8E43823D345940078A057 /* ETCCardManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43723D345940078A057 /* ETCCardManagedObject.swift */; };
 		B9D8E43A23D345D70078A057 /* UUIDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43923D345D70078A057 /* UUIDExtension.swift */; };
 		B9DB8E5522D7A410003E4BD8 /* Dash.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B9DB8E5322D7A410003E4BD8 /* Dash.xcdatamodeld */; };
@@ -264,6 +266,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = B9DD4CC926517F920010B120;
 			remoteInfo = ParkingSearchKit;
+		};
+		B9D4AF262671324B00849129 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B98B783223ED4C3F00A5102F;
+			remoteInfo = DashCloudKit;
 		};
 		B9DD4CCF26517F920010B120 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -543,6 +552,7 @@
 		B9D0260D24BF7704005C03B1 /* BluetoothManagerHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothManagerHandler.m; sourceTree = "<group>"; };
 		B9D4AF21267124FC00849129 /* DashCloudClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashCloudClient.swift; sourceTree = "<group>"; };
 		B9D4AF2D2673203400849129 /* UTTypeExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UTTypeExtension.swift; sourceTree = "<group>"; };
+		B9D4AF2926727D8000849129 /* MapItemFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItemFetcher.swift; sourceTree = "<group>"; };
 		B9D8E43723D345940078A057 /* ETCCardManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCCardManagedObject.swift; sourceTree = "<group>"; };
 		B9D8E43923D345D70078A057 /* UUIDExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUIDExtension.swift; sourceTree = "<group>"; };
 		B9D8E43B23D345EC0078A057 /* DashV2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DashV2.xcdatamodel; sourceTree = "<group>"; };
@@ -631,6 +641,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9BD54A5265BB0D9002C2A8F /* ParkingSearchKit.framework in Frameworks */,
+				B9D4AF242671324B00849129 /* DashCloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -869,6 +880,7 @@
 			children = (
 				B9A3B67B26537A9B00D1D64C /* Media.xcassets */,
 				B9A3B67D26537A9B00D1D64C /* ActionViewController.swift */,
+				B9D4AF2926727D8000849129 /* MapItemFetcher.swift */,
 				B9A3B68226537A9B00D1D64C /* Info.plist */,
 				B9E8A079265B855E00709838 /* InfoPlist.strings */,
 			);
@@ -1267,6 +1279,7 @@
 			);
 			dependencies = (
 				B9BD54A8265BB0D9002C2A8F /* PBXTargetDependency */,
+				B9D4AF272671324B00849129 /* PBXTargetDependency */,
 			);
 			name = ParkingSearchActionExtension;
 			productName = ParkingSearchActionExtension;
@@ -1846,6 +1859,7 @@
 			files = (
 				B9A3B67E26537A9B00D1D64C /* ActionViewController.swift in Sources */,
 				B9C87A1826671CCE00ABCBB4 /* ParkingSearchURLItem.swift in Sources */,
+				B9D4AF2A26727D8000849129 /* MapItemFetcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2036,6 +2050,11 @@
 			isa = PBXTargetDependency;
 			target = B9DD4CC926517F920010B120 /* ParkingSearchKit */;
 			targetProxy = B9BD54A7265BB0D9002C2A8F /* PBXContainerItemProxy */;
+		};
+		B9D4AF272671324B00849129 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B98B783223ED4C3F00A5102F /* DashCloudKit */;
+			targetProxy = B9D4AF262671324B00849129 /* PBXContainerItemProxy */;
 		};
 		B9DD4CD026517F920010B120 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
