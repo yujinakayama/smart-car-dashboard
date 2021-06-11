@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B98B783223ED4C3F00A5102F"
-               BuildableName = "DashShareKit.framework"
-               BlueprintName = "DashShareKit"
+               BuildableName = "DashCloudKit.framework"
+               BlueprintName = "DashCloudKit"
                ReferencedContainer = "container:Dash.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -51,8 +51,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B98B783223ED4C3F00A5102F"
-            BuildableName = "DashShareKit.framework"
-            BlueprintName = "DashShareKit"
+            BuildableName = "DashCloudKit.framework"
+            BlueprintName = "DashCloudKit"
             ReferencedContainer = "container:Dash.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

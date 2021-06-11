@@ -21,14 +21,15 @@ export const share = functions.region('asia-northeast1').https.onRequest(async (
 
     console.log('request:', request);
 
-    const inputData = new InputData(request.item);
+    const attachments = request.attachments || request.item || {};
+    const inputData = new InputData(attachments);
     const normalizedData = await normalize(inputData);
 
     console.log('normalizedData:', normalizedData);
 
     const item = {
         hasBeenOpened: false,
-        raw: request.item,
+        raw: attachments,
         ...normalizedData
     };
 

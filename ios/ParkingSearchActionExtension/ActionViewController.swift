@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import DashCloudKit
 
 class ActionViewController: UIViewController {
     var extensionItem: NSExtensionItem {
@@ -15,40 +16,18 @@ class ActionViewController: UIViewController {
         return extensionItems.first!
     }
 
+    lazy var mapItemFetcher = MapItemFetcher(extensionItem: extensionItem)
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        loadMapItem { (result) in
+        mapItemFetcher.fetchMapItem { (result) in
             switch result {
             case .success(let mapItem):
                 self.openInDash(mapItem: mapItem)
             case .failure(let error):
                 self.extensionContext!.cancelRequest(withError: error)
             }
-        }
-    }
-
-    func loadMapItem(completion: @escaping (Result<MKMapItem, Error>) -> Void) {
-        guard let attachments = extensionItem.attachments else { return }
-
-        for attachment in attachments {
-            guard let typeIdentifier = attachment.registeredTypeIdentifiers.first,
-                  typeIdentifier == "com.apple.mapkit.map-item"
-            else { continue }
-
-            _ = attachment.loadObject(ofClass: MKMapItem.self) { (mapItem, error) in
-                DispatchQueue.main.async {
-                    if let mapItem = mapItem as? MKMapItem {
-                        completion(.success(mapItem))
-                    }
-
-                    if let error = error {
-                        completion(.failure(error))
-                    }
-                }
-            }
-
-            break
         }
     }
 

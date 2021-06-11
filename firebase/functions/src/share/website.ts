@@ -16,7 +16,7 @@ export async function normalizeWebpage(inputData: InputData): Promise<Website> {
 async function getTitle(inputData: InputData): Promise<string | null> {
     let title;
 
-    const plainText = inputData.rawData['public.plain-text'];
+    const plainText = inputData.attachments['public.plain-text'];
 
     if (plainText && !urlPattern.test(plainText)) {
         title = plainText;

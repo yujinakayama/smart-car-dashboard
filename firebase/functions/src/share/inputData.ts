@@ -4,36 +4,37 @@ import { urlPattern } from './util';
 
 export interface Request {
     vehicleID: string;
-    item: RawInputData;
+    attachments?: Attachments;
+    item?: Attachments; // For backward compatibility
 }
 
 export class InputData {
-    rawData: RawInputData;
+    attachments: Attachments;
     url: URL;
 
-    constructor(rawData: RawInputData) {
-        this.rawData = rawData;
+    constructor(attachments: Attachments) {
+        this.attachments = attachments;
         this.url = new URL(this.extractURL());
     }
 
     private extractURL(): string {
-        if (this.rawData['public.url']) {
-            return this.rawData['public.url'];
+        if (this.attachments['public.url']) {
+            return this.attachments['public.url'];
         }
 
-        if (this.rawData['public.plain-text']) {
-            const urls = this.rawData['public.plain-text'].match(urlPattern);
+        if (this.attachments['public.plain-text']) {
+            const urls = this.attachments['public.plain-text'].match(urlPattern);
 
             if (urls && urls[0]) {
                 return urls[0];
             }
         }
 
-        throw new Error('RawInputData has no URL');
+        throw new Error('Attachments have no URL');
     }
 }
 
-export interface RawInputData {
+export interface Attachments {
     'public.url'?: string;
     'public.plain-text'?: string;
     'com.apple.mapkit.map-item'?: {
