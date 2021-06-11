@@ -162,6 +162,7 @@
 		B9D0261024BF7704005C03B1 /* ClassicBluetoothDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D0260A24BF7704005C03B1 /* ClassicBluetoothDevice.swift */; };
 		B9D0261124BF7704005C03B1 /* BluetoothManagerHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B9D0260D24BF7704005C03B1 /* BluetoothManagerHandler.m */; };
 		B9D4AF22267124FC00849129 /* DashCloudClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D4AF21267124FC00849129 /* DashCloudClient.swift */; };
+		B9D4AF2E2673203400849129 /* UTTypeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D4AF2D2673203400849129 /* UTTypeExtension.swift */; };
 		B9D8E43823D345940078A057 /* ETCCardManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43723D345940078A057 /* ETCCardManagedObject.swift */; };
 		B9D8E43A23D345D70078A057 /* UUIDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43923D345D70078A057 /* UUIDExtension.swift */; };
 		B9DB8E5522D7A410003E4BD8 /* Dash.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B9DB8E5322D7A410003E4BD8 /* Dash.xcdatamodeld */; };
@@ -540,6 +541,7 @@
 		B9D0260C24BF7704005C03B1 /* BluetoothDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothDevice.h; sourceTree = "<group>"; };
 		B9D0260D24BF7704005C03B1 /* BluetoothManagerHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothManagerHandler.m; sourceTree = "<group>"; };
 		B9D4AF21267124FC00849129 /* DashCloudClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashCloudClient.swift; sourceTree = "<group>"; };
+		B9D4AF2D2673203400849129 /* UTTypeExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UTTypeExtension.swift; sourceTree = "<group>"; };
 		B9D8E43723D345940078A057 /* ETCCardManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCCardManagedObject.swift; sourceTree = "<group>"; };
 		B9D8E43923D345D70078A057 /* UUIDExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUIDExtension.swift; sourceTree = "<group>"; };
 		B9D8E43B23D345EC0078A057 /* DashV2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DashV2.xcdatamodel; sourceTree = "<group>"; };
@@ -853,6 +855,7 @@
 				B98B783523ED4C3F00A5102F /* DashCloudKit.h */,
 				B9D4AF21267124FC00849129 /* DashCloudClient.swift */,
 				B98B784023ED4C5000A5102F /* Item.swift */,
+				B9D4AF2D2673203400849129 /* UTTypeExtension.swift */,
 				B92451D523E3204D007556D5 /* GoogleServieInfo.swift */,
 				B9A3C09423E163F500EF1C4A /* GoogleService-Info.plist */,
 				B98B783623ED4C3F00A5102F /* Info.plist */,
@@ -1828,6 +1831,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9D4AF2E2673203400849129 /* UTTypeExtension.swift in Sources */,
 				B9D4AF22267124FC00849129 /* DashCloudClient.swift in Sources */,
 				B98B784223ED4C5A00A5102F /* GoogleServieInfo.swift in Sources */,
 				B98B784123ED4C5000A5102F /* Item.swift in Sources */,
@@ -2182,7 +2186,7 @@
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 8LSN3WQC77;
 				INFOPLIST_FILE = DashRemote/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2206,7 +2210,7 @@
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 8LSN3WQC77;
 				INFOPLIST_FILE = DashRemote/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2284,7 +2288,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DashCloudKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2317,7 +2321,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DashCloudKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

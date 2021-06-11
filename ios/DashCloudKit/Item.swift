@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import MobileCoreServices
+import UniformTypeIdentifiers
 import MapKit
 
 public class Item {
@@ -37,14 +37,6 @@ public class Item {
 
     func encode(completionHandler: @escaping (Result<[String: Any], Error>) -> Void) {
         encoder.encode(completionHandler: completionHandler)
-    }
-}
-
-extension Item {
-    enum TypeIdentifier: String {
-        case url = "public.url"
-        case plainText = "public.plain-text"
-        case mapItem = "com.apple.mapkit.map-item"
     }
 }
 
@@ -96,9 +88,9 @@ extension Item {
 
         private let serialQueue = DispatchQueue(label: "com.yujinakayama.DashCloudKit.Item.Encoder")
 
-        private func add(_ value: Any, for typeIdentifier: TypeIdentifier) {
+        private func add(_ value: Any, for type: UTType) {
             serialQueue.sync {
-                encodedDictionary[typeIdentifier.rawValue] = value
+                encodedDictionary[type.identifier] = value
             }
         }
     }
@@ -140,17 +132,17 @@ extension Item {
         }
 
         private func encode(_ attachment: NSItemProvider, completionHandler: @escaping () -> Void) {
-            guard let typeIdentifierString = attachment.registeredTypeIdentifiers.first else {
+            guard let typeIdentifier = attachment.registeredTypeIdentifiers.first else {
                 completionHandler()
                 return
             }
 
-            guard let typeIdentifier = TypeIdentifier(rawValue: typeIdentifierString) else {
+            guard let type = UTType(typeIdentifier) else {
                 completionHandler()
                 return
             }
 
-            switch typeIdentifier {
+            switch type {
             case .url:
                 // Not sure why but loadItem(forTypeIdentifier:options:) does not work on Mac
                 _ = attachment.loadObject(ofClass: URL.self) { (url, error) in
@@ -160,7 +152,7 @@ extension Item {
                     completionHandler()
                 }
             case .plainText:
-                attachment.loadItem(forTypeIdentifier: typeIdentifier.rawValue, options: nil) { (string, error) in
+                attachment.loadItem(forTypeIdentifier: type.identifier, options: nil) { (string, error) in
                     if let string = string as? String {
                         self.encoder.add(string)
                     }
@@ -173,6 +165,8 @@ extension Item {
                     }
                     completionHandler()
                 }
+            default:
+                break
             }
         }
     }
