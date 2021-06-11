@@ -17,6 +17,7 @@ struct Defaults {
     private let userDefaults = UserDefaults.standard
 
     private struct Key {
+        static let etcIntegrationEnabled = "etcIntegrationEnabled"
         static let lastBackgroundEntranceTime = "lastBackgroundEntranceTime"
         static let mapTypeForETCRoute = "mapTypeForETCRoute"
         static let automaticallyOpensUnopenedLocationWhenAppIsOpened = "automaticallyOpensUnopenedLocationWhenAppIsOpened"
@@ -45,6 +46,12 @@ struct Defaults {
         }
 
         userDefaults.register(defaults: defaultValues)
+    }
+
+    var isETCIntegrationEnabled: Bool {
+        get {
+            return userDefaults.bool(forKey: Key.etcIntegrationEnabled)
+        }
     }
 
     var lastBackgroundEntranceTime: Date {

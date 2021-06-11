@@ -9,7 +9,18 @@
 import UIKit
 
 class TabBarController: UITabBarController, UITabBarControllerDelegate {
+    enum Tab: Int {
+        case dashboard
+        case etc
+        case inbox
+        case maps
+    }
+
     private var previousSelectedIndex: Int?
+
+    func removeTab(_ tab: Tab) {
+        viewControllers = viewControllers?.filter { $0.tabBarItem.tag != tab.rawValue }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

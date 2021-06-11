@@ -14,8 +14,8 @@ import MapKit
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
     var window: UIWindow?
 
-    var tabBarController: UITabBarController {
-        return window?.rootViewController as! UITabBarController
+    var tabBarController: TabBarController {
+        return window?.rootViewController as! TabBarController
     }
 
     lazy var tabBarBadgeManager = TabBarBadgeManager(tabBarController: tabBarController)
@@ -30,6 +30,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        if !Defaults.shared.isETCIntegrationEnabled {
+            tabBarController.removeTab(.etc)
+        }
+
         UserNotificationCenter.shared.setUp()
 
         Vehicle.default.connect()

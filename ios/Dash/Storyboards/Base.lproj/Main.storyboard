@@ -745,7 +745,7 @@
         <scene sceneID="Nki-YV-4Qg">
             <objects>
                 <splitViewController restorationIdentifier="ETCSplitViewController" id="H1p-Uh-vWS" userLabel="ETC Split View Controller" customClass="ETCSplitViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="ETC" image="yensign.square.fill" catalog="system" id="lhA-Mw-Pck"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="ETC" image="yensign.square.fill" catalog="system" id="lhA-Mw-Pck"/>
                     <toolbarItems/>
                     <connections>
                         <segue destination="RMx-3f-FxP" kind="relationship" relationship="masterViewController" id="BlO-5A-QYV"/>
@@ -1189,7 +1189,7 @@
                             <constraint firstItem="uB9-Wf-7JO" firstAttribute="top" secondItem="aIe-nH-B5z" secondAttribute="top" constant="20" id="xhc-KO-ISg"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Maps" image="map.fill" catalog="system" id="0TL-LK-2HM"/>
+                    <tabBarItem key="tabBarItem" tag="3" title="Maps" image="map.fill" catalog="system" id="0TL-LK-2HM"/>
                     <connections>
                         <outlet property="mapTypeSegmentedControl" destination="uB9-Wf-7JO" id="im0-di-mqh"/>
                         <outlet property="mapView" destination="kbs-HW-7zk" id="Tlp-yt-Ded"/>

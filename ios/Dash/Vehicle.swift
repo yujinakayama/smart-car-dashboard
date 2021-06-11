@@ -22,12 +22,10 @@ class Vehicle {
         NotificationCenter.default.addObserver(self, selector: #selector(etcDeviceDidConnect), name: .ETCDeviceDidConnect, object: nil)
     }
 
-    var isEngineStarted: Bool {
-        return etcDevice.isConnected
-    }
-
     func connect() {
-        etcDevice.startPreparation()
+        if Defaults.shared.isETCIntegrationEnabled {
+            etcDevice.startPreparation()
+        }
     }
 
     @objc func etcDeviceDidConnect() {
