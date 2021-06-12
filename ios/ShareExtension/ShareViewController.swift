@@ -59,7 +59,7 @@ class ShareViewController: UIViewController {
 
         hud.textLabel.text = "Sending"
 
-        cloudClient.share(sharingItem, with: vehicleID) { (error) in
+        cloudClient.share(item, with: vehicleID) { (error) in
             if let error = error {
                 self.cancelRequest(withError: error, message: "Failed")
             } else {
@@ -70,9 +70,9 @@ class ShareViewController: UIViewController {
 
     lazy var cloudClient = DashCloudClient()
 
-    lazy var sharingItem: SharingItem = {
+    lazy var item: Item = {
         let extensionItems = self.extensionContext!.inputItems as! [NSExtensionItem]
-        return SharingItem(extensionItem: extensionItems.first!)
+        return Item(extensionItem: extensionItems.first!)
     }()
 
     func completeRequest() {
