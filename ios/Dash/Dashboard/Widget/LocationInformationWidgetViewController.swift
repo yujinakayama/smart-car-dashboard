@@ -14,6 +14,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     @IBOutlet weak var canonicalRoadNameView: UIView!
     @IBOutlet weak var canonicalRoadNameLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
 
     // https://opencagedata.com/pricing
     let maximumRequestCountPerDay = 2500
@@ -51,6 +52,9 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
             canonicalRoadNameView.isHidden = true
             addressLabel.text = nil
             addressLabel.isHidden = true
+
+            activityIndicatorView.startAnimating()
+
             startMetering()
         }
     }
@@ -104,7 +108,6 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
             guard currentDate >= lastRequestSituation.date + minimumRequestInterval,
                   location.distance(from: lastRequestSituation.location) >= minimumMovementDistanceForNextUpdate
             else { return }
-
         }
 
         openCageClient.reverseGeocode(coordinate: location.coordinate) { (result) in
@@ -124,6 +127,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     }
 
     func updateLabels(for location: OpenCageClient.Location) {
+        activityIndicatorView.stopAnimating()
         updateRoadNameLabels(for: location)
         updateAddressLabel(for: location)
     }
