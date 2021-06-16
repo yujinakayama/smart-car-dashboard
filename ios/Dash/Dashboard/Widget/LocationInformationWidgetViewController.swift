@@ -223,10 +223,8 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
             return "生活道路"
         case .track:
             return "農道・林道"
-        case .unclassified:
-            return "一般道路"
         default:
-            return nil
+            return "一般道路"
         }
     }
 
