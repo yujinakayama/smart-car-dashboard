@@ -39,8 +39,9 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         return OpenCageClient(apiKey: apiKey)
     }()
 
-    typealias RequestSituation = (location: CLLocation, date: Date)
-    var lastRequestSituation: RequestSituation?
+    var lastRequestLocation: CLLocation?
+
+    let vehicleMovement = VehicleMovement()
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -80,7 +81,8 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         logger.info()
         locationManager.stopUpdatingLocation()
         isMetering = false
-        lastRequestSituation = nil
+        lastRequestLocation = nil
+        vehicleMovement.reset()
     }
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
@@ -102,14 +104,33 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     }
 
     func updateIfNeeded(location: CLLocation) {
-        let currentDate = Date()
+        vehicleMovement.record(location)
 
-        if let lastRequestSituation = lastRequestSituation {
-            guard currentDate >= lastRequestSituation.date + minimumRequestInterval,
-                  location.distance(from: lastRequestSituation.location) >= minimumMovementDistanceForNextUpdate
-            else { return }
+        if let lastRequestLocation = lastRequestLocation {
+            if location.timestamp >= lastRequestLocation.timestamp + minimumRequestInterval,
+               location.distance(from: lastRequestLocation) >= minimumMovementDistanceForNextUpdate
+            {
+                performRequest(for: location)
+                return
+            }
+        } else {
+            performRequest(for: location)
+            return
         }
 
+        if vehicleMovement.isEstimatedToHaveJustTurned {
+            logger.info("VehicleMovement.isEstimatedToHaveJustTurned")
+            vehicleMovement.reset()
+
+            DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
+                self.performRequest(for: self.locationManager.location ?? location)
+            }
+
+            return
+        }
+    }
+
+    func performRequest(for location: CLLocation) {
         openCageClient.reverseGeocode(coordinate: location.coordinate) { (result) in
             logger.debug(result)
 
@@ -123,7 +144,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
             }
         }
 
-        lastRequestSituation = RequestSituation(location: location, date: currentDate)
+        lastRequestLocation = location
     }
 
     func updateLabels(for location: OpenCageClient.Location) {
@@ -205,5 +226,54 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
 
     func format(_ address: OpenCageClient.Address) -> String {
         return [address.prefecture, address.city, address.suburb, address.neighbourhood].compactMap { $0 }.joined(separator: " ")
+    }
+}
+
+extension LocationInformationWidgetViewController {
+    class VehicleMovement {
+        private var locations: [CLLocation] = []
+
+        let dropOutTimeInterval: TimeInterval = 5
+
+        // 25km/h
+        let maxTurnSpeed: CLLocationSpeed = 25 * (1000 / (60 * 60))
+
+        let minTurnAngle: CLLocationDirection = 50
+
+        func record(_ location: CLLocation) {
+            locations.append(location)
+
+            while let oldestLocation = locations.first, oldestLocation.timestamp.distance(to: location.timestamp) > dropOutTimeInterval {
+                locations.removeFirst()
+            }
+        }
+
+        func reset() {
+            locations = []
+        }
+
+        var isEstimatedToHaveJustTurned: Bool {
+            guard let averageSpeed = averageSpeed, let angleDelta = angleDelta else { return false }
+            logger.debug("averageSpeed: \(String(format: "%.0f", averageSpeed / 1000 * 60 * 60))km/h, angleDelta: \(String(format: "%.0f", angleDelta))")
+            return averageSpeed <= maxTurnSpeed && angleDelta >= minTurnAngle
+        }
+
+        var averageSpeed: CLLocationSpeed? {
+            guard !locations.isEmpty else { return nil }
+
+            return locations.reduce(CLLocationSpeed(0)) { (averageSpeed, location) in
+                averageSpeed + location.speed / Double(locations.count)
+            }
+        }
+
+        var angleDelta: CLLocationDirection? {
+            guard let firstLocation = locations.first, let lastLocation = locations.last else { return nil }
+            return angleDelta(firstLocation.course, lastLocation.course)
+        }
+
+        private func angleDelta(_ a: CLLocationDirection, _ b: CLLocationDirection) -> CLLocationDirection {
+            let delta = abs(b - a).truncatingRemainder(dividingBy: 360)
+            return delta > 180 ? 360 - delta : delta
+        }
     }
 }
