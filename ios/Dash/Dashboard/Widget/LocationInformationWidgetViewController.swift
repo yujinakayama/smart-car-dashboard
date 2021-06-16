@@ -22,7 +22,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     // 34.56 seconds
     lazy var minimumRequestInterval: TimeInterval = TimeInterval((60 * 60 * 24) / maximumRequestCountPerDay)
 
-    let minimumMovementDistanceForNextUpdate: CLLocationDistance = 100
+    let minimumMovementDistanceForNextUpdate: CLLocationDistance = 10
 
     lazy var locationManager: CLLocationManager = {
         let locationManager = CLLocationManager()
