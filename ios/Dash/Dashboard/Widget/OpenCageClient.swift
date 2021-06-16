@@ -60,7 +60,26 @@ extension OpenCageClient {
     }
 
     struct ReverseGeocodingAnnotation: Decodable {
-        let roadinfo: Road
+        static let nationWideRoadKeys = Set<Road.CodingKeys>([.trafficSide, .speedUnit])
+
+        let roadinfo: Road?
+
+        enum CodingKeys: String, CodingKey {
+            case roadinfo
+        }
+
+        init(from decoder: Decoder) throws {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+
+            let roadValues = try values.nestedContainer(keyedBy: Road.CodingKeys.self, forKey: .roadinfo)
+
+            // OpenCage returns `drive_on` and `speed_in` values even in the sea
+            if !Set(roadValues.allKeys).subtracting(Self.nationWideRoadKeys).isEmpty {
+                roadinfo = try values.decode(Road.self, forKey: .roadinfo)
+            } else {
+                roadinfo = nil
+            }
+        }
     }
 
     struct Road: Decodable {
