@@ -71,6 +71,7 @@
 		B932E5F023F9082600726615 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932E5EF23F9082600726615 /* Location.swift */; };
 		B932EE4B26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */; };
 		B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93321ED2323C9D500BFAB21 /* BorderedView.swift */; };
+		B93DB880267A0BA900298980 /* opencage_api_key.txt in Resources */ = {isa = PBXBuildFile; fileRef = B93DB87F267A0BA900298980 /* opencage_api_key.txt */; };
 		B940A460250E5B57006BDFBB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B940A45F250E5B57006BDFBB /* Settings.bundle */; };
 		B940A462250E5CDD006BDFBB /* RearviewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */; };
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
@@ -106,6 +107,8 @@
 		B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */; };
 		B9741F7523DF200600F061E7 /* SharedItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */; };
 		B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97BAE6124B61DB100AE7D13 /* Vehicle.swift */; };
+		B980071E2678B81C00FC703E /* OpenCageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B980071D2678B81C00FC703E /* OpenCageClient.swift */; };
+		B98007202678D6AF00FC703E /* LocationInformationWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B980071F2678D6AF00FC703E /* LocationInformationWidgetViewController.swift */; };
 		B988A66C254D0E570012A4CB /* PairingRequirementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A66B254D0E570012A4CB /* PairingRequirementViewController.swift */; };
 		B98B783723ED4C3F00A5102F /* DashCloudKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B98B783523ED4C3F00A5102F /* DashCloudKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B98B783A23ED4C3F00A5102F /* DashCloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashCloudKit.framework */; };
@@ -445,6 +448,7 @@
 		B93C04622642CD32002CD861 /* ParkingAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAnnotation.swift; sourceTree = "<group>"; };
 		B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAnnotationView.swift; sourceTree = "<group>"; };
 		B93C04662642D5FA002CD861 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
+		B93DB87F267A0BA900298980 /* opencage_api_key.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = opencage_api_key.txt; sourceTree = "<group>"; };
 		B940A45F250E5B57006BDFBB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewDefaults.swift; sourceTree = "<group>"; };
 		B940A465250F0EBB006BDFBB /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
@@ -488,6 +492,8 @@
 		B97A82232553F8A900CD2870 /* Sun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sun.swift; sourceTree = "<group>"; };
 		B97A8229255449C800CD2870 /* CameraOptionsAdjuster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOptionsAdjuster.swift; sourceTree = "<group>"; };
 		B97BAE6124B61DB100AE7D13 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
+		B980071D2678B81C00FC703E /* OpenCageClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenCageClient.swift; sourceTree = "<group>"; };
+		B980071F2678D6AF00FC703E /* LocationInformationWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInformationWidgetViewController.swift; sourceTree = "<group>"; };
 		B984C019263DA08D00AF79AE /* TimeDurationPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDurationPicker.swift; sourceTree = "<group>"; };
 		B988A66B254D0E570012A4CB /* PairingRequirementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingRequirementViewController.swift; sourceTree = "<group>"; };
 		B988A676254D0EB30012A4CB /* PairedVehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairedVehicle.swift; sourceTree = "<group>"; };
@@ -776,8 +782,10 @@
 			children = (
 				B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */,
 				B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */,
+				B980071F2678D6AF00FC703E /* LocationInformationWidgetViewController.swift */,
 				B92A97D925E0AE8900D70A14 /* GForceMeterWidgetViewController.swift */,
 				B9F272C3259C91990098CB3B /* AltitudeWidgetViewController.swift */,
+				B980071D2678B81C00FC703E /* OpenCageClient.swift */,
 			);
 			path = Widget;
 			sourceTree = "<group>";
@@ -1079,6 +1087,7 @@
 				B9253D7923E015A80037E156 /* Dash.entitlements */,
 				B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */,
 				B96793E824AF6ACC0019BFE5 /* apple_music_developer_token.txt */,
+				B93DB87F267A0BA900298980 /* opencage_api_key.txt */,
 			);
 			path = Dash;
 			sourceTree = "<group>";
@@ -1533,6 +1542,7 @@
 				B9E6CCA1234F69B800E18603 /* Payment.wav in Resources */,
 				B99356D922A9483F00BA08AB /* japan_etc_tollbooths.csv in Resources */,
 				B96793E924AF6ACC0019BFE5 /* apple_music_developer_token.txt in Resources */,
+				B93DB880267A0BA900298980 /* opencage_api_key.txt in Resources */,
 				B9DC5B2E229D59BF00B645D5 /* Assets.xcassets in Resources */,
 				B9E6CC9C234F65A000E18603 /* TollgatePassingThrough.wav in Resources */,
 				B9DC5B2C229D59BE00B645D5 /* Main.storyboard in Resources */,
@@ -1909,6 +1919,7 @@
 				B95BF23823EBF43900A30DE0 /* ETCCardEditViewController.swift in Sources */,
 				B9D0261024BF7704005C03B1 /* ClassicBluetoothDevice.swift in Sources */,
 				B9F9EFD6256D3D6B00C33781 /* Cache.swift in Sources */,
+				B980071E2678B81C00FC703E /* OpenCageClient.swift in Sources */,
 				B9FA6CC824CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift in Sources */,
 				B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */,
 				B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */,
@@ -1957,6 +1968,7 @@
 				B99356E422A94D6900BA08AB /* BLESerialPort.swift in Sources */,
 				B932E5EC23F86C5F00726615 /* MusicItem.swift in Sources */,
 				B92FB3C023E95BE900EA702C /* SharedItemTableViewCell.swift in Sources */,
+				B98007202678D6AF00FC703E /* LocationInformationWidgetViewController.swift in Sources */,
 				B954CA3225693EDA00BAD0F0 /* RearviewWidgetViewController.swift in Sources */,
 				B9DC5B4A229EDA0000B645D5 /* SerialPort.swift in Sources */,
 				B9640AC22575EC0400B779AD /* FirebaseAuthentication.swift in Sources */,

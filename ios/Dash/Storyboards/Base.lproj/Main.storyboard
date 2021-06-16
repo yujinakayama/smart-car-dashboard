@@ -1509,6 +1509,50 @@
             </objects>
             <point key="canvasLocation" x="2772" y="-2909"/>
         </scene>
+        <!--Location Information Widget View Controller-->
+        <scene sceneID="Z4q-E4-mKI">
+            <objects>
+                <viewController storyboardIdentifier="LocationInformationWidgetViewController" id="3x2-qD-p4D" customClass="LocationInformationWidgetViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mhd-D5-c1S">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="RZr-ov-Imt">
+                                <rect key="frame" x="36" y="74.5" width="303" height="62.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東名高速道路" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9at-Od-YIK">
+                                        <rect key="frame" x="75.5" y="0.0" width="152" height="30"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東京都 世田谷区 岡本1丁目" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9la-1g-ZNa">
+                                        <rect key="frame" x="48" y="42" width="207" height="20.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="uSu-KT-kgu"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="uSu-KT-kgu" firstAttribute="trailing" secondItem="RZr-ov-Imt" secondAttribute="trailing" constant="36" id="18P-PS-HwT"/>
+                            <constraint firstItem="RZr-ov-Imt" firstAttribute="leading" secondItem="uSu-KT-kgu" secondAttribute="leading" constant="36" id="KHp-yv-PoA"/>
+                            <constraint firstItem="RZr-ov-Imt" firstAttribute="centerX" secondItem="mhd-D5-c1S" secondAttribute="centerX" id="cvA-O0-gax"/>
+                            <constraint firstItem="RZr-ov-Imt" firstAttribute="centerY" secondItem="mhd-D5-c1S" secondAttribute="centerY" id="dYA-xf-zmv"/>
+                        </constraints>
+                    </view>
+                    <size key="freeformSize" width="375" height="211"/>
+                    <connections>
+                        <outlet property="addressLabel" destination="9la-1g-ZNa" id="R6Z-Qg-OdM"/>
+                        <outlet property="roadNameLabel" destination="9at-Od-YIK" id="oAS-K7-jyh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xvh-h9-CZ8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2772" y="-2700"/>
+        </scene>
     </scenes>
     <designables>
         <designable name="3d5-rM-KEm">
