@@ -1517,17 +1517,50 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="RZr-ov-Imt">
-                                <rect key="frame" x="36" y="74.5" width="303" height="62.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="RZr-ov-Imt">
+                                <rect key="frame" x="30" y="78.5" width="315" height="66"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東名高速道路" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9at-Od-YIK">
-                                        <rect key="frame" x="75.5" y="0.0" width="152" height="30"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東京都 世田谷区 岡本1丁目" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9la-1g-ZNa">
-                                        <rect key="frame" x="48" y="42" width="207" height="20.5"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="43e-NT-N9W">
+                                        <rect key="frame" x="60" y="0.0" width="195.5" height="31.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東名高速道路" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9at-Od-YIK">
+                                                <rect key="frame" x="0.0" y="0.0" width="158.5" height="31.5"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="26"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="SxX-HK-15g" customClass="BorderedView" customModule="Dash" customModuleProvider="target">
+                                                <rect key="frame" x="164.5" y="2.5" width="31" height="26.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" verticalCompressionResistancePriority="250" text="E1" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="fDi-RM-ZJK">
+                                                        <rect key="frame" x="7" y="3" width="18" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="fDi-RM-ZJK" firstAttribute="top" secondItem="SxX-HK-15g" secondAttribute="top" constant="3" id="XxN-c4-OYD"/>
+                                                    <constraint firstItem="fDi-RM-ZJK" firstAttribute="leading" secondItem="SxX-HK-15g" secondAttribute="leading" constant="7" id="YRv-Rl-Llm"/>
+                                                    <constraint firstAttribute="bottom" secondItem="fDi-RM-ZJK" secondAttribute="bottom" constant="3" id="rbR-Jq-0ws"/>
+                                                    <constraint firstAttribute="trailing" secondItem="fDi-RM-ZJK" secondAttribute="trailing" constant="6" id="wLe-vz-jmP"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                        <color key="value" systemColor="secondaryLabelColor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                        <real key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東京都 世田谷区 岡本1丁目" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9la-1g-ZNa">
+                                        <rect key="frame" x="54" y="45.5" width="207" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" systemColor="secondaryLabelColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1537,15 +1570,17 @@
                         <viewLayoutGuide key="safeArea" id="uSu-KT-kgu"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="uSu-KT-kgu" firstAttribute="trailing" secondItem="RZr-ov-Imt" secondAttribute="trailing" constant="36" id="18P-PS-HwT"/>
-                            <constraint firstItem="RZr-ov-Imt" firstAttribute="leading" secondItem="uSu-KT-kgu" secondAttribute="leading" constant="36" id="KHp-yv-PoA"/>
+                            <constraint firstItem="uSu-KT-kgu" firstAttribute="trailing" secondItem="RZr-ov-Imt" secondAttribute="trailing" constant="30" id="18P-PS-HwT"/>
+                            <constraint firstItem="RZr-ov-Imt" firstAttribute="leading" secondItem="uSu-KT-kgu" secondAttribute="leading" constant="30" id="KHp-yv-PoA"/>
                             <constraint firstItem="RZr-ov-Imt" firstAttribute="centerX" secondItem="mhd-D5-c1S" secondAttribute="centerX" id="cvA-O0-gax"/>
-                            <constraint firstItem="RZr-ov-Imt" firstAttribute="centerY" secondItem="mhd-D5-c1S" secondAttribute="centerY" id="dYA-xf-zmv"/>
+                            <constraint firstItem="RZr-ov-Imt" firstAttribute="centerY" secondItem="mhd-D5-c1S" secondAttribute="centerY" constant="6" id="dYA-xf-zmv"/>
                         </constraints>
                     </view>
                     <size key="freeformSize" width="375" height="211"/>
                     <connections>
                         <outlet property="addressLabel" destination="9la-1g-ZNa" id="R6Z-Qg-OdM"/>
+                        <outlet property="canonicalRoadNameLabel" destination="fDi-RM-ZJK" id="oh6-2n-VUa"/>
+                        <outlet property="canonicalRoadNameView" destination="SxX-HK-15g" id="Pev-pH-mp6"/>
                         <outlet property="roadNameLabel" destination="9at-Od-YIK" id="oAS-K7-jyh"/>
                     </connections>
                 </viewController>

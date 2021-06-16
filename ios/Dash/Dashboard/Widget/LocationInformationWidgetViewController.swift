@@ -11,6 +11,8 @@ import CoreLocation
 
 class LocationInformationWidgetViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var roadNameLabel: UILabel!
+    @IBOutlet weak var canonicalRoadNameView: UIView!
+    @IBOutlet weak var canonicalRoadNameLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
 
     // https://opencagedata.com/pricing
@@ -45,6 +47,8 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         if !isMetering {
             roadNameLabel.text = nil
             roadNameLabel.isHidden = true
+            canonicalRoadNameLabel.text = nil
+            canonicalRoadNameView.isHidden = true
             addressLabel.text = nil
             addressLabel.isHidden = true
             startMetering()
@@ -120,33 +124,34 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     }
 
     func updateLabels(for location: OpenCageClient.Location) {
-        roadNameLabel.text = roadNameText(for: location)
-        roadNameLabel.isHidden = roadNameLabel.text == nil
+        updateRoadNameLabels(for: location)
+        updateAddressLabel(for: location)
+    }
 
+    func updateRoadNameLabels(for location: OpenCageClient.Location) {
+        if let popularName = location.road?.popularName {
+            roadNameLabel.text = popularName
+            canonicalRoadNameLabel.text = canonicalRoadName(for: location)
+        } else if let canonicalRoadName = canonicalRoadName(for: location) {
+            roadNameLabel.text = canonicalRoadName
+            canonicalRoadNameLabel.text = nil
+        } else if let unnumberedRouteName = unnumberedRouteName(for: location) {
+            roadNameLabel.text = unnumberedRouteName
+            canonicalRoadNameLabel.text = nil
+        }
+
+        roadNameLabel.isHidden = roadNameLabel.text == nil
+        canonicalRoadNameView.isHidden = canonicalRoadNameLabel.text == nil
+    }
+
+    func updateAddressLabel(for location: OpenCageClient.Location) {
         if let address = location.address {
             addressLabel.text = format(address)
         } else {
             addressLabel.text = nil
         }
+
         addressLabel.isHidden = addressLabel.text == nil
-    }
-
-    func roadNameText(for location: OpenCageClient.Location) -> String? {
-        guard let road = location.road else { return nil }
-
-        if let popularName = road.popularName {
-            if let canonicalName = canonicalRoadName(for: location) {
-                return "\(popularName)\n\(canonicalName)"
-            } else {
-                return popularName
-            }
-        } else if let canonicalName = canonicalRoadName(for: location) {
-            return canonicalName
-        } else if let prefecture = location.address?.prefecture {
-            return "\(prefecture)道"
-        } else {
-            return nil
-        }
     }
 
     func canonicalRoadName(for location: OpenCageClient.Location) -> String? {
@@ -174,17 +179,24 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         }
     }
 
-    func format(_ address: OpenCageClient.Address) -> String {
-        let lines = [
-            join([address.prefecture, address.city]),
-            join([address.suburb, address.neighbourhood])
-        ].compactMap { $0 }
+    func unnumberedRouteName(for location: OpenCageClient.Location) -> String? {
+        guard let road = location.road else { return nil }
 
-        return lines.joined(separator: "\n")
+        switch road.roadType {
+        case .trunk:
+            return "国道"
+        case .primary, .secondary:
+            let prefecture = location.address?.prefecture ?? "都道府県"
+            return "\(prefecture)道"
+        case .tertiary:
+            let city = location.address?.city ?? "市町村"
+            return "\(city)道"
+        default:
+            return nil
+        }
     }
 
-    func join(_ components: [String?]) -> String? {
-        let string = components.compactMap { $0 }.joined(separator: " ")
-        return string.isEmpty ? nil : string
+    func format(_ address: OpenCageClient.Address) -> String {
+        return [address.prefecture, address.city, address.suburb, address.neighbourhood].compactMap { $0 }.joined(separator: " ")
     }
 }
