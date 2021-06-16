@@ -142,6 +142,9 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         } else if let unnumberedRouteName = unnumberedRouteName(for: location) {
             roadNameLabel.text = unnumberedRouteName
             canonicalRoadNameLabel.text = nil
+        } else {
+            roadNameLabel.text = nil
+            canonicalRoadNameLabel.text = nil
         }
 
         roadNameLabel.isHidden = roadNameLabel.text == nil
