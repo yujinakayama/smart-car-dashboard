@@ -1566,18 +1566,24 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="1xI-gO-E5D">
+                                <rect key="frame" x="169" y="87" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="uSu-KT-kgu"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="uSu-KT-kgu" firstAttribute="trailing" secondItem="RZr-ov-Imt" secondAttribute="trailing" constant="30" id="18P-PS-HwT"/>
+                            <constraint firstItem="1xI-gO-E5D" firstAttribute="centerY" secondItem="mhd-D5-c1S" secondAttribute="centerY" id="Flz-nP-V4Z"/>
                             <constraint firstItem="RZr-ov-Imt" firstAttribute="leading" secondItem="uSu-KT-kgu" secondAttribute="leading" constant="30" id="KHp-yv-PoA"/>
                             <constraint firstItem="RZr-ov-Imt" firstAttribute="centerX" secondItem="mhd-D5-c1S" secondAttribute="centerX" id="cvA-O0-gax"/>
                             <constraint firstItem="RZr-ov-Imt" firstAttribute="centerY" secondItem="mhd-D5-c1S" secondAttribute="centerY" constant="6" id="dYA-xf-zmv"/>
+                            <constraint firstItem="1xI-gO-E5D" firstAttribute="centerX" secondItem="mhd-D5-c1S" secondAttribute="centerX" id="sH5-h5-zBb"/>
                         </constraints>
                     </view>
                     <size key="freeformSize" width="375" height="211"/>
                     <connections>
+                        <outlet property="activityIndicatorView" destination="1xI-gO-E5D" id="BAR-8I-PB9"/>
                         <outlet property="addressLabel" destination="9la-1g-ZNa" id="R6Z-Qg-OdM"/>
                         <outlet property="canonicalRoadNameLabel" destination="fDi-RM-ZJK" id="oh6-2n-VUa"/>
                         <outlet property="canonicalRoadNameView" destination="SxX-HK-15g" id="Pev-pH-mp6"/>
