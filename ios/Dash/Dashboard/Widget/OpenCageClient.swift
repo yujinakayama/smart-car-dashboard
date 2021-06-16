@@ -124,6 +124,7 @@ extension OpenCageClient {
         case rightHand = "right"
     }
 
+    // https://wiki.openstreetmap.org/wiki/JA:Key:highway
     // https://qiita.com/nyampire/items/7fa6efd944086aea820e
     enum RoadType: String, Decodable {
         case motorway // 高速道路
@@ -133,6 +134,7 @@ extension OpenCageClient {
         case tertiary // 市町村道
         case unclassified
         case residential
+        case livingStreet = "living_street"
         case service
         case track
         case pedestrian

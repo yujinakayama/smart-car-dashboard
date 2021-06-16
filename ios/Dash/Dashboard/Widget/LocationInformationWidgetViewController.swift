@@ -219,6 +219,10 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         case .tertiary:
             let city = location.address?.city ?? "市町村"
             return "\(city)道"
+        case .residential, .livingStreet:
+            return "生活道路"
+        case .track:
+            return "農道・林道"
         default:
             return nil
         }
