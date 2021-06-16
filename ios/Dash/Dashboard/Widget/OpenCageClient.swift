@@ -112,7 +112,7 @@ extension OpenCageClient {
                 identifier = try? values.decodeIfPresent(String.self, forKey: .roadReference)
             }
 
-            roadType = try values.decodeIfPresent(RoadType.self, forKey: .roadType)
+            roadType = try? values.decodeIfPresent(RoadType.self, forKey: .roadType)
             speedLimit = try values.decodeIfPresent(Int.self, forKey: .speedLimit)
             speedUnit = try values.decodeIfPresent(SpeedUnit.self, forKey: .speedUnit)
             surfaceType = try values.decodeIfPresent(String.self, forKey: .surfaceType)
@@ -135,6 +135,7 @@ extension OpenCageClient {
         case residential
         case service
         case track
+        case pedestrian
     }
 
     enum SpeedUnit: String, Decodable {
