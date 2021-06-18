@@ -154,13 +154,15 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     }
 
     func updateRoadNameLabels(for location: OpenCageClient.Location) {
-        if let popularName = location.road?.popularName {
+        let roadName = RoadName(location: location)
+
+        if let popularName = roadName.popularName {
             roadNameLabel.text = popularName
-            canonicalRoadNameLabel.text = canonicalRoadName(for: location)
-        } else if let canonicalRoadName = canonicalRoadName(for: location) {
+            canonicalRoadNameLabel.text = roadName.canonicalRoadName
+        } else if let canonicalRoadName = roadName.canonicalRoadName {
             roadNameLabel.text = canonicalRoadName
             canonicalRoadNameLabel.text = nil
-        } else if let unnumberedRouteName = unnumberedRouteName(for: location) {
+        } else if let unnumberedRouteName = roadName.unnumberedRouteName {
             roadNameLabel.text = unnumberedRouteName
             canonicalRoadNameLabel.text = nil
         } else {
@@ -182,54 +184,68 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         addressLabel.isHidden = addressLabel.text == nil
     }
 
-    func canonicalRoadName(for location: OpenCageClient.Location) -> String? {
-        guard let road = location.road else { return nil }
-
-        if let roadIdentifier = road.identifier {
-            return roadIdentifier
-        }
-
-        guard let routeNumber = road.routeNumber else { return nil }
-
-        let address = location.address
-
-        switch road.roadType {
-        case .trunk:
-            return "国道\(routeNumber)号"
-        case .primary, .secondary:
-            let prefecture = address?.prefecture ?? "都道府県"
-            return "\(prefecture)道\(routeNumber)号"
-        case .tertiary:
-            let city = address?.city ?? "市町村"
-            return "\(city)道\(routeNumber)号"
-        default:
-            return nil
-        }
-    }
-
-    func unnumberedRouteName(for location: OpenCageClient.Location) -> String? {
-        guard let road = location.road else { return nil }
-
-        switch road.roadType {
-        case .trunk:
-            return "国道"
-        case .primary, .secondary:
-            let prefecture = location.address?.prefecture ?? "都道府県"
-            return "\(prefecture)道"
-        case .tertiary:
-            let city = location.address?.city ?? "市町村"
-            return "\(city)道"
-        case .residential, .livingStreet:
-            return "生活道路"
-        case .track:
-            return "農道・林道"
-        default:
-            return "一般道路"
-        }
-    }
-
     func format(_ address: OpenCageClient.Address) -> String {
         return [address.prefecture, address.city, address.suburb, address.neighbourhood].compactMap { $0 }.joined(separator: " ")
+    }
+}
+
+extension LocationInformationWidgetViewController {
+    class RoadName {
+        let road: OpenCageClient.Road?
+        let address: OpenCageClient.Address?
+
+        init(location: OpenCageClient.Location) {
+            road = location.road
+            address = location.address
+        }
+
+        var popularName: String? {
+            return road?.popularName
+        }
+
+        var canonicalRoadName: String? {
+            guard let road = road else { return nil }
+
+            if let roadIdentifier = road.identifier {
+                return roadIdentifier
+            }
+
+            guard let routeNumber = road.routeNumber else { return nil }
+
+            switch road.roadType {
+            case .trunk:
+                return "国道\(routeNumber)号"
+            case .primary, .secondary:
+                let prefecture = address?.prefecture ?? "都道府県"
+                return "\(prefecture)道\(routeNumber)号"
+            case .tertiary:
+                let city = address?.city ?? "市町村"
+                return "\(city)道\(routeNumber)号"
+            default:
+                return nil
+            }
+        }
+
+        var unnumberedRouteName: String? {
+            guard let road = road else { return nil }
+
+            switch road.roadType {
+            case .trunk:
+                return "国道"
+            case .primary, .secondary:
+                let prefecture = address?.prefecture ?? "都道府県"
+                return "\(prefecture)道"
+            case .tertiary:
+                let city = address?.city ?? "市町村"
+                return "\(city)道"
+            case .residential, .livingStreet:
+                return "生活道路"
+            case .track:
+                return "農道・林道"
+            default:
+                return "一般道路"
+            }
+        }
     }
 }
 
