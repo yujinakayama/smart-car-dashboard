@@ -207,7 +207,9 @@ extension LocationInformationWidgetViewController {
             guard let road = road, let rawPopularName = road.popularName else { return [] }
 
             // Some roads have popular name properly containing multiple names (e.g. "目黒通り;東京都道312号白金台町等々力線")
-            let rawPopularNames = rawPopularName.split(separator: ";").map { String($0) }
+            let rawPopularNames = rawPopularName.split(separator: ";").map { (name) in
+                return String(name).covertFullwidthAlphanumericsToHalfwidth()
+            }
 
             if let routeNumber = road.routeNumber {
                 // Some roads have popular name only with route number (e.g. Popular name "123" for 国道123号),

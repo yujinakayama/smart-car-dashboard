@@ -25,6 +25,7 @@
 		B90E21F924CBB1BF008330AD /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90E21F824CBB1BF008330AD /* TabBarController.swift */; };
 		B90F5FD525EFF13D00C2578C /* CIImageDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F5FD425EFF13D00C2578C /* CIImageDisplayView.swift */; };
 		B90F5FFF25F3CA4D00C2578C /* SampleBufferDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F5FFE25F3CA4D00C2578C /* SampleBufferDecoder.swift */; };
+		B915BEF5267F8754007068D7 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94215F026423A58003F94A0 /* StringExtension.swift */; };
 		B91B5DD523ED7886003F4AEF /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91B5DD423ED7886003F4AEF /* Account.swift */; };
 		B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
 		B91BD8092323FD820064D2B5 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
@@ -987,6 +988,7 @@
 		B9CEA76922D8F1F50055C9A3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				B94215F026423A58003F94A0 /* StringExtension.swift */,
 				B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */,
 				B9D8E43923D345D70078A057 /* UUIDExtension.swift */,
 				B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */,
@@ -1101,7 +1103,6 @@
 				B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */,
 				B9F8DBE725EA288B00F6FA55 /* PPParkClient.swift */,
 				B984C019263DA08D00AF79AE /* TimeDurationPicker.swift */,
-				B94215F026423A58003F94A0 /* StringExtension.swift */,
 				B900A13B26529C4E000ED1B9 /* NSLayoutConstraintExtension.swift */,
 				B93C04662642D5FA002CD861 /* UIButtonExtension.swift */,
 				B9DD4CCD26517F920010B120 /* Info.plist */,
@@ -1899,6 +1900,7 @@
 				B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift in Sources */,
 				B92C6EC324AC2F0A001E9675 /* ArtworkView.swift in Sources */,
 				B94E69D123F7A313004CCC7C /* WebsiteIcon.swift in Sources */,
+				B915BEF5267F8754007068D7 /* StringExtension.swift in Sources */,
 				B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */,
 				B95F514E23E5BBF70063CB3D /* SharedItem.swift in Sources */,
 				B944C69024A9E4C8000D1E99 /* MusicViewController.swift in Sources */,
