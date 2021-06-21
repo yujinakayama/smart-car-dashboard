@@ -144,15 +144,15 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         lastRequestLocation = location
     }
 
-    func updateLabels(for location: OpenCageClient.Location) {
+    func updateLabels(for place: OpenCageClient.Place) {
         activityIndicatorView.stopAnimating()
-        updateRoadNameLabels(for: location)
-        updateAddressLabel(for: location)
+        updateRoadNameLabels(for: place)
+        updateAddressLabel(for: place)
         hideLabelsWithNoContent()
     }
 
-    func updateRoadNameLabels(for location: OpenCageClient.Location) {
-        let roadName = RoadName(location: location)
+    func updateRoadNameLabels(for place: OpenCageClient.Place) {
+        let roadName = RoadName(place: place)
 
         if let popularName = roadName.popularName {
             roadNameLabel.text = popularName
@@ -169,8 +169,8 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         }
     }
 
-    func updateAddressLabel(for location: OpenCageClient.Location) {
-        if let address = location.address {
+    func updateAddressLabel(for place: OpenCageClient.Place) {
+        if let address = place.address {
             addressLabel.text = format(address)
         } else {
             addressLabel.text = nil
@@ -193,9 +193,9 @@ extension LocationInformationWidgetViewController {
         let road: OpenCageClient.Road?
         let address: OpenCageClient.Address?
 
-        init(location: OpenCageClient.Location) {
-            road = location.road
-            address = location.address
+        init(place: OpenCageClient.Place) {
+            road = place.road
+            address = place.address
         }
 
         var popularName: String? {

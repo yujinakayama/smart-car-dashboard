@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import MapKit
 
 class OpenCageClient {
     let apiKey: String
@@ -16,7 +17,7 @@ class OpenCageClient {
         self.apiKey = apiKey
     }
 
-    func reverseGeocode(coordinate: CLLocationCoordinate2D, completionHandler: @escaping (Result<Location, Error>) -> Void) {
+    func reverseGeocode(coordinate: CLLocationCoordinate2D, completionHandler: @escaping (Result<Place, Error>) -> Void) {
         var urlComponents = URLComponents(string: "https://api.opencagedata.com/geocode/v1/json")!
 
         urlComponents.queryItems = [
@@ -33,11 +34,14 @@ class OpenCageClient {
                 return
             }
 
-            let result = Result<Location, Error>(catching: {
+            let result = Result<Place, Error>(catching: {
                 let response = try JSONDecoder().decode(ReverseGeocodingResponse.self, from: data!)
+
                 let address = response.results.first?.components
+                let region = response.results.first?.bounds
                 let road = response.results.first?.annotations.roadinfo
-                return (address: address, road: road)
+
+                return (address: address, region: region, road: road)
             })
 
             completionHandler(result)
@@ -48,25 +52,40 @@ class OpenCageClient {
 }
 
 extension OpenCageClient {
-    typealias Location = (address: Address?, road: Road?)
+    typealias Place = (address: Address?, region: Region?, road: Road?)
 
     struct ReverseGeocodingResponse: Decodable {
         let results: [ReverseGeocodingResult]
     }
 
     struct ReverseGeocodingResult: Decodable {
+        enum CodingKeys: String, CodingKey {
+            case annotations
+            case bounds
+            case components
+        }
+
         let annotations: ReverseGeocodingAnnotation
+        let bounds: Region
         let components: Address
+
+        init(from decoder: Decoder) throws {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+
+            annotations = try values.decode(ReverseGeocodingAnnotation.self, forKey: .annotations)
+            bounds = try values.decode(Region.self, forKey: .bounds)
+            components = try values.decode(Address.self, forKey: .components)
+        }
     }
 
     struct ReverseGeocodingAnnotation: Decodable {
         static let nationWideRoadKeys = Set<Road.CodingKeys>([.trafficSide, .speedUnit])
 
-        let roadinfo: Road?
-
         enum CodingKeys: String, CodingKey {
             case roadinfo
         }
+
+        let roadinfo: Road?
 
         init(from decoder: Decoder) throws {
             let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -164,6 +183,30 @@ extension OpenCageClient {
         case milesPerHour = "mph"
     }
 
+    struct Region: Decodable {
+        enum CodingKeys: String, CodingKey {
+            case northeast
+            case southwest
+        }
+
+        let latitudeRange: ClosedRange<CLLocationDegrees>
+        let longitudeRange: ClosedRange<CLLocationDegrees>
+
+        init(from decoder: Decoder) throws {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+
+            let northeast = try decodeCoordinate(from: values, forKey: .northeast)
+            let southwest = try decodeCoordinate(from: values, forKey: .southwest)
+
+            latitudeRange = southwest.latitude...northeast.latitude
+            longitudeRange = southwest.longitude...northeast.longitude
+        }
+
+        func contains(_ coordinate: CLLocationCoordinate2D) -> Bool {
+            return latitudeRange.contains(coordinate.latitude) && longitudeRange.contains(coordinate.longitude)
+        }
+    }
+
     struct Address: Decodable {
         let country: String?
         let postcode: String?
@@ -185,4 +228,17 @@ extension OpenCageClient {
             return nil
         }
     }
+}
+
+fileprivate func decodeCoordinate<SuperKey: CodingKey>(from superContainer: KeyedDecodingContainer<SuperKey>, forKey superKey: SuperKey) throws -> CLLocationCoordinate2D {
+    let container = try superContainer.nestedContainer(keyedBy: CoordinateCodingKeys.self, forKey: superKey)
+
+    let latitude = try container.decode(CLLocationDegrees.self, forKey: .latitude)
+    let longitude = try container.decode(CLLocationDegrees.self, forKey: .longitude)
+    return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+}
+
+fileprivate enum CoordinateCodingKeys: String, CodingKey {
+    case latitude = "lat"
+    case longitude = "lng"
 }
