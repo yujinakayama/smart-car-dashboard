@@ -80,6 +80,7 @@
 		B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554F22BAA5D1008B053B /* LocalNotification.swift */; };
 		B944C69024A9E4C8000D1E99 /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B944C68F24A9E4C8000D1E99 /* MusicViewController.swift */; };
 		B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B944C69124A9E647000D1E99 /* PlaybackControlView.swift */; };
+		B94BD2E92680486700B768A2 /* BorderedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94BD2E82680486700B768A2 /* BorderedLabel.swift */; };
 		B94E69D123F7A313004CCC7C /* WebsiteIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */; };
 		B954CA2325693CCC00BAD0F0 /* WidgetPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */; };
 		B954CA3225693EDA00BAD0F0 /* RearviewWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */; };
@@ -460,6 +461,7 @@
 		B942554F22BAA5D1008B053B /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		B944C68F24A9E4C8000D1E99 /* MusicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
 		B944C69124A9E647000D1E99 /* PlaybackControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackControlView.swift; sourceTree = "<group>"; };
+		B94BD2E82680486700B768A2 /* BorderedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedLabel.swift; sourceTree = "<group>"; };
 		B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteIcon.swift; sourceTree = "<group>"; };
 		B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetPageViewController.swift; sourceTree = "<group>"; };
 		B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewWidgetViewController.swift; sourceTree = "<group>"; };
@@ -1074,6 +1076,7 @@
 				B9F9EFD5256D3D6B00C33781 /* Cache.swift */,
 				B942553C22B8C3E2008B053B /* Logger.swift */,
 				B93321ED2323C9D500BFAB21 /* BorderedView.swift */,
+				B94BD2E82680486700B768A2 /* BorderedLabel.swift */,
 				B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */,
 				B90666DD247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift */,
 				B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */,
@@ -1969,6 +1972,7 @@
 				B9741F7523DF200600F061E7 /* SharedItemTableViewController.swift in Sources */,
 				B99356E422A94D6900BA08AB /* BLESerialPort.swift in Sources */,
 				B932E5EC23F86C5F00726615 /* MusicItem.swift in Sources */,
+				B94BD2E92680486700B768A2 /* BorderedLabel.swift in Sources */,
 				B92FB3C023E95BE900EA702C /* SharedItemTableViewCell.swift in Sources */,
 				B98007202678D6AF00FC703E /* LocationInformationWidgetViewController.swift in Sources */,
 				B954CA3225693EDA00BAD0F0 /* RearviewWidgetViewController.swift in Sources */,

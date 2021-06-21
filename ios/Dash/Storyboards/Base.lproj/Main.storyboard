@@ -1520,30 +1520,19 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="RZr-ov-Imt">
                                 <rect key="frame" x="30" y="76" width="315" height="71.5"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="43e-NT-N9W">
-                                        <rect key="frame" x="52.5" y="0.0" width="210.5" height="33.5"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="43e-NT-N9W">
+                                        <rect key="frame" x="59" y="0.0" width="197.5" height="33.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東名高速道路" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9at-Od-YIK">
                                                 <rect key="frame" x="0.0" y="0.0" width="170.5" height="33.5"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="28"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="SxX-HK-15g" customClass="BorderedView" customModule="Dash" customModuleProvider="target">
-                                                <rect key="frame" x="176.5" y="1.5" width="34" height="30"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" verticalCompressionResistancePriority="250" text="E1" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="fDi-RM-ZJK">
-                                                        <rect key="frame" x="7" y="3" width="21" height="24"/>
-                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
-                                                        <color key="textColor" systemColor="secondaryLabelColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="fDi-RM-ZJK" firstAttribute="top" secondItem="SxX-HK-15g" secondAttribute="top" constant="3" id="XxN-c4-OYD"/>
-                                                    <constraint firstItem="fDi-RM-ZJK" firstAttribute="leading" secondItem="SxX-HK-15g" secondAttribute="leading" constant="7" id="YRv-Rl-Llm"/>
-                                                    <constraint firstAttribute="bottom" secondItem="fDi-RM-ZJK" secondAttribute="bottom" constant="3" id="rbR-Jq-0ws"/>
-                                                    <constraint firstAttribute="trailing" secondItem="fDi-RM-ZJK" secondAttribute="trailing" constant="6" id="wLe-vz-jmP"/>
-                                                </constraints>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="E1" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="fDi-RM-ZJK" customClass="BorderedLabel" customModule="Dash" customModuleProvider="target">
+                                                <rect key="frame" x="176.5" y="4.5" width="21" height="24"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                <nil key="highlightedColor"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                                         <color key="value" systemColor="secondaryLabelColor"/>
@@ -1554,8 +1543,20 @@
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                         <real key="value" value="5"/>
                                                     </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="leftPaddingInset">
+                                                        <real key="value" value="7"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="rightPaddingInset">
+                                                        <real key="value" value="6"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="bottomPaddingInset">
+                                                        <real key="value" value="3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="topPaddingInset">
+                                                        <real key="value" value="3"/>
+                                                    </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
-                                            </view>
+                                            </label>
                                         </subviews>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東京都 世田谷区 岡本1丁目" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9la-1g-ZNa">
@@ -1586,7 +1587,6 @@
                         <outlet property="activityIndicatorView" destination="1xI-gO-E5D" id="BAR-8I-PB9"/>
                         <outlet property="addressLabel" destination="9la-1g-ZNa" id="R6Z-Qg-OdM"/>
                         <outlet property="canonicalRoadNameLabel" destination="fDi-RM-ZJK" id="oh6-2n-VUa"/>
-                        <outlet property="canonicalRoadNameView" destination="SxX-HK-15g" id="Pev-pH-mp6"/>
                         <outlet property="roadNameLabel" destination="9at-Od-YIK" id="oAS-K7-jyh"/>
                     </connections>
                 </viewController>

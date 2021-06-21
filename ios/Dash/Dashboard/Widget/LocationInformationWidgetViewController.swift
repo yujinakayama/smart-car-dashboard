@@ -11,7 +11,6 @@ import CoreLocation
 
 class LocationInformationWidgetViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var roadNameLabel: UILabel!
-    @IBOutlet weak var canonicalRoadNameView: UIView!
     @IBOutlet weak var canonicalRoadNameLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
@@ -48,11 +47,9 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
 
         if !isMetering {
             roadNameLabel.text = nil
-            roadNameLabel.isHidden = true
             canonicalRoadNameLabel.text = nil
-            canonicalRoadNameView.isHidden = true
             addressLabel.text = nil
-            addressLabel.isHidden = true
+            hideLabelsWithNoContent()
 
             activityIndicatorView.startAnimating()
 
@@ -151,6 +148,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         activityIndicatorView.stopAnimating()
         updateRoadNameLabels(for: location)
         updateAddressLabel(for: location)
+        hideLabelsWithNoContent()
     }
 
     func updateRoadNameLabels(for location: OpenCageClient.Location) {
@@ -169,9 +167,6 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
             roadNameLabel.text = nil
             canonicalRoadNameLabel.text = nil
         }
-
-        roadNameLabel.isHidden = roadNameLabel.text == nil
-        canonicalRoadNameView.isHidden = canonicalRoadNameLabel.text == nil
     }
 
     func updateAddressLabel(for location: OpenCageClient.Location) {
@@ -180,7 +175,11 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         } else {
             addressLabel.text = nil
         }
+    }
 
+    func hideLabelsWithNoContent() {
+        roadNameLabel.isHidden = roadNameLabel.text == nil
+        canonicalRoadNameLabel.isHidden = canonicalRoadNameLabel.text == nil
         addressLabel.isHidden = addressLabel.text == nil
     }
 
