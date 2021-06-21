@@ -28,7 +28,7 @@ class OpenCageClient {
             URLQueryItem(name: "key", value: apiKey)
         ]
 
-        let task = URLSession.shared.dataTask(with: urlComponents.url!) { (data, response, error) in
+        let task = urlSession.dataTask(with: urlComponents.url!) { (data, response, error) in
             if let error = error {
                 completionHandler(.failure(error))
                 return
@@ -49,6 +49,16 @@ class OpenCageClient {
 
         task.resume()
     }
+
+    private lazy var urlSession = URLSession(configuration: urlSessionConfiguration)
+
+    private lazy var urlSessionConfiguration: URLSessionConfiguration = {
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.timeoutIntervalForRequest = 10
+        configuration.urlCache = nil
+        return configuration
+    }()
+
 }
 
 extension OpenCageClient {
