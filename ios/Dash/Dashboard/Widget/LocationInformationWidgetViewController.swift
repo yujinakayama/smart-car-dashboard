@@ -38,8 +38,9 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         return OpenCageClient(apiKey: apiKey)
     }()
 
+    var currentRequestTask: URLSessionTask?
+    var currentPlace: OpenCageClient.Place?
     var lastRequestLocation: CLLocation?
-
     let vehicleMovement = VehicleMovement()
 
     override func viewWillAppear(_ animated: Bool) {
@@ -76,8 +77,13 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
 
     func stopMetering() {
         logger.info()
+
         locationManager.stopUpdatingLocation()
         isMetering = false
+
+        currentRequestTask?.cancel()
+        currentRequestTask = nil
+        currentPlace = nil
         lastRequestLocation = nil
         vehicleMovement.reset()
     }
@@ -103,6 +109,19 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     func updateIfNeeded(location: CLLocation) {
         vehicleMovement.record(location)
 
+        // Avoid parallel requests
+        guard currentRequestTask == nil else { return }
+
+        // If we have moved from the region of the previous road, update.
+        if let currentRegion = currentPlace?.region, !currentRegion.contains(location.coordinate) {
+            performRequest(for: location)
+            return
+        }
+
+        // Even if we are still considered to be inside of the region of the current road,
+        // update in a fixed interval because:
+        // * The region is rectangular but actual road is not
+        // * The current road may be wrong
         if let lastRequestLocation = lastRequestLocation {
             if location.timestamp >= lastRequestLocation.timestamp + minimumRequestInterval,
                location.distance(from: lastRequestLocation) >= minimumMovementDistanceForNextUpdate
@@ -115,6 +134,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
             return
         }
 
+        // If we turned at an intersection, update
         if vehicleMovement.isEstimatedToHaveJustTurned {
             logger.info("VehicleMovement.isEstimatedToHaveJustTurned")
             vehicleMovement.reset()
@@ -128,7 +148,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     }
 
     func performRequest(for location: CLLocation) {
-        openCageClient.reverseGeocode(coordinate: location.coordinate) { (result) in
+        currentRequestTask = openCageClient.reverseGeocode(coordinate: location.coordinate) { (result) in
             logger.debug(result)
 
             switch result {
@@ -139,6 +159,8 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
             case .failure(let error):
                 logger.error(error)
             }
+
+            self.currentRequestTask = nil
         }
 
         lastRequestLocation = location

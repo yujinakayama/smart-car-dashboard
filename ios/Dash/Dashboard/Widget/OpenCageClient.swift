@@ -17,7 +17,7 @@ class OpenCageClient {
         self.apiKey = apiKey
     }
 
-    func reverseGeocode(coordinate: CLLocationCoordinate2D, completionHandler: @escaping (Result<Place, Error>) -> Void) {
+    func reverseGeocode(coordinate: CLLocationCoordinate2D, completionHandler: @escaping (Result<Place, Error>) -> Void) -> URLSessionTask {
         var urlComponents = URLComponents(string: "https://api.opencagedata.com/geocode/v1/json")!
 
         urlComponents.queryItems = [
@@ -48,6 +48,8 @@ class OpenCageClient {
         }
 
         task.resume()
+
+        return task
     }
 
     private lazy var urlSession = URLSession(configuration: urlSessionConfiguration)
