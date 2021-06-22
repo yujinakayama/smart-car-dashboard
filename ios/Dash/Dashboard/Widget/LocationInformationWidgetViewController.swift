@@ -309,7 +309,6 @@ extension LocationInformationWidgetViewController {
 
         var isEstimatedToHaveJustTurned: Bool {
             guard let averageSpeed = averageSpeed, let angleDelta = angleDelta else { return false }
-            logger.debug("averageSpeed: \(String(format: "%.0f", averageSpeed / 1000 * 60 * 60))km/h, angleDelta: \(String(format: "%.0f", angleDelta))")
             return averageSpeed <= maxTurnSpeed && angleDelta >= minTurnAngle
         }
 
