@@ -219,17 +219,61 @@ extension OpenCageClient {
         }
     }
 
+    // https://github.com/OpenCageData/address-formatting/blob/c379c9f/conf/components.yaml
     struct Address: Decodable {
         let country: String?
         let postcode: String?
-        private let state: String?
+        let state: String?
+        let province: String?
         let city: String?
+        let city_block: String?
+        let county: String?
+        let town: String?
         let suburb: String?
         let neighbourhood: String?
+        let quarter: String?
+
+        // 35.63755713321449, 139.7048284895448
+        // "city"=>"目黒区",
+        // "neighbourhood"=>"中目黒四丁目",
+
+        // 36.05906586478792, 138.349589583782
+        // "county"=>"南佐久郡",
+        // "province"=>"長野県",
+        // "state"=>"長野県",
+        // "town"=>"佐久穂町",
+
+        // 35.628379512272765, 139.79711613490383
+        // "city"=>"江東区",
+        // "city_block"=>"有明3",
+        // "quarter"=>"有明",
+
+        // 35.680786103826414, 139.75836050256484
+        // "city"=>"千代田区",
+        // "neighbourhood"=>"丸の内1",
+        // "quarter"=>"皇居外苑",
+        // "suburb"=>"神田",
+
+        // 35.533175370219716, 139.69416757984942
+        // "city"=>"川崎市",
+        // "neighbourhood"=>"中幸町三丁目",
+        // "province"=>"神奈川県",
+        // "state"=>"神奈川県",
+        // "suburb"=>"幸区",
+
+        // https://github.com/OpenCageData/address-formatting/blob/c379c9f/conf/countries/worldwide.yaml#L1116-L1124
+        var components: [String] {
+            return [
+                prefecture,
+                city, county, town,
+                [suburb, city_block, quarter].first { $0 != nil } ?? nil,
+                neighbourhood
+            ].compactMap { $0 }
+        }
 
         var prefecture: String? {
-            if let state = state {
-                return state
+            if let prefecture = state ?? province {
+                return prefecture
             }
 
             // OpenCage doesn't return "東京都" for `state` property

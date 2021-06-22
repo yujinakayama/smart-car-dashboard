@@ -193,7 +193,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
 
     func updateAddressLabel(for place: OpenCageClient.Place) {
         if let address = place.address {
-            addressLabel.text = format(address)
+            addressLabel.text = address.components.joined(separator: " ")
         } else {
             addressLabel.text = nil
         }
@@ -203,10 +203,6 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         roadNameLabel.isHidden = roadNameLabel.text == nil
         canonicalRoadNameLabel.isHidden = canonicalRoadNameLabel.text == nil
         addressLabel.isHidden = addressLabel.text == nil
-    }
-
-    func format(_ address: OpenCageClient.Address) -> String {
-        return [address.prefecture, address.city, address.suburb, address.neighbourhood].compactMap { $0 }.joined(separator: " ")
     }
 }
 
