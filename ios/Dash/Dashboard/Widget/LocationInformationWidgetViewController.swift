@@ -19,9 +19,9 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     let maximumRequestCountPerDay = 2500
 
     // 34.56 seconds
-    lazy var minimumRequestInterval: TimeInterval = TimeInterval((60 * 60 * 24) / maximumRequestCountPerDay)
+    lazy var fixedUpdateInterval: TimeInterval = TimeInterval((60 * 60 * 24) / maximumRequestCountPerDay)
 
-    let minimumMovementDistanceForNextUpdate: CLLocationDistance = 10
+    let minimumMovementDistanceForIntervalUpdate: CLLocationDistance = 10
 
     lazy var locationManager: CLLocationManager = {
         let locationManager = CLLocationManager()
@@ -124,8 +124,8 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         // * The region is rectangular but actual road is not
         // * The current road may be wrong
         if let lastRequestLocation = lastRequestLocation {
-            if location.timestamp >= lastRequestLocation.timestamp + minimumRequestInterval,
-               location.distance(from: lastRequestLocation) >= minimumMovementDistanceForNextUpdate
+            if location.timestamp >= lastRequestLocation.timestamp + fixedUpdateInterval,
+               location.distance(from: lastRequestLocation) >= minimumMovementDistanceForIntervalUpdate
             {
                 logger.debug("Request reason: Fixed time and distance have passed since previous request")
                 performRequest(for: location)
