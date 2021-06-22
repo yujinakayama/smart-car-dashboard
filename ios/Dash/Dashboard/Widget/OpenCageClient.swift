@@ -201,14 +201,17 @@ extension OpenCageClient {
             case southwest
         }
 
+        let northeast: CLLocationCoordinate2D
+        let southwest: CLLocationCoordinate2D
+
         let latitudeRange: ClosedRange<CLLocationDegrees>
         let longitudeRange: ClosedRange<CLLocationDegrees>
 
         init(from decoder: Decoder) throws {
             let values = try decoder.container(keyedBy: CodingKeys.self)
 
-            let northeast = try decodeCoordinate(from: values, forKey: .northeast)
-            let southwest = try decodeCoordinate(from: values, forKey: .southwest)
+            northeast = try decodeCoordinate(from: values, forKey: .northeast)
+            southwest = try decodeCoordinate(from: values, forKey: .southwest)
 
             latitudeRange = southwest.latitude...northeast.latitude
             longitudeRange = southwest.longitude...northeast.longitude

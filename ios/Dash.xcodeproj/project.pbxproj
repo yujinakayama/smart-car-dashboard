@@ -80,6 +80,7 @@
 		B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554F22BAA5D1008B053B /* LocalNotification.swift */; };
 		B944C69024A9E4C8000D1E99 /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B944C68F24A9E4C8000D1E99 /* MusicViewController.swift */; };
 		B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B944C69124A9E647000D1E99 /* PlaybackControlView.swift */; };
+		B94A59A026826E960074368A /* LocationInformationDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94A599F26826E960074368A /* LocationInformationDebugViewController.swift */; };
 		B94BD2E92680486700B768A2 /* BorderedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94BD2E82680486700B768A2 /* BorderedLabel.swift */; };
 		B94E69D123F7A313004CCC7C /* WebsiteIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */; };
 		B954CA2325693CCC00BAD0F0 /* WidgetPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */; };
@@ -461,6 +462,7 @@
 		B942554F22BAA5D1008B053B /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		B944C68F24A9E4C8000D1E99 /* MusicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
 		B944C69124A9E647000D1E99 /* PlaybackControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackControlView.swift; sourceTree = "<group>"; };
+		B94A599F26826E960074368A /* LocationInformationDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInformationDebugViewController.swift; sourceTree = "<group>"; };
 		B94BD2E82680486700B768A2 /* BorderedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedLabel.swift; sourceTree = "<group>"; };
 		B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteIcon.swift; sourceTree = "<group>"; };
 		B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetPageViewController.swift; sourceTree = "<group>"; };
@@ -786,6 +788,7 @@
 				B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */,
 				B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */,
 				B980071F2678D6AF00FC703E /* LocationInformationWidgetViewController.swift */,
+				B94A599F26826E960074368A /* LocationInformationDebugViewController.swift */,
 				B92A97D925E0AE8900D70A14 /* GForceMeterWidgetViewController.swift */,
 				B9F272C3259C91990098CB3B /* AltitudeWidgetViewController.swift */,
 				B980071D2678B81C00FC703E /* OpenCageClient.swift */,
@@ -1975,6 +1978,7 @@
 				B94BD2E92680486700B768A2 /* BorderedLabel.swift in Sources */,
 				B92FB3C023E95BE900EA702C /* SharedItemTableViewCell.swift in Sources */,
 				B98007202678D6AF00FC703E /* LocationInformationWidgetViewController.swift in Sources */,
+				B94A59A026826E960074368A /* LocationInformationDebugViewController.swift in Sources */,
 				B954CA3225693EDA00BAD0F0 /* RearviewWidgetViewController.swift in Sources */,
 				B9DC5B4A229EDA0000B645D5 /* SerialPort.swift in Sources */,
 				B9640AC22575EC0400B779AD /* FirebaseAuthentication.swift in Sources */,

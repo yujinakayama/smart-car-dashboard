@@ -9,11 +9,17 @@
 import UIKit
 import CoreLocation
 
+protocol LocationInformationWidgetViewControllerDelegate: NSObjectProtocol {
+    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentPlace place: OpenCageClient.Place?)
+}
+
 class LocationInformationWidgetViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var roadNameLabel: UILabel!
     @IBOutlet weak var canonicalRoadNameLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+
+    weak var delegate: LocationInformationWidgetViewControllerDelegate?
 
     // https://opencagedata.com/pricing
     let maximumRequestCountPerDay = 2500
@@ -39,9 +45,26 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     }()
 
     var currentRequestTask: URLSessionTask?
-    var currentPlace: OpenCageClient.Place?
+
+    var currentPlace: OpenCageClient.Place? {
+        didSet {
+            if let delegate = delegate {
+                DispatchQueue.main.async {
+                    delegate.locationInformationWidget(self, didUpdateCurrentPlace: self.currentPlace)
+                }
+            }
+        }
+    }
+
     var lastRequestLocation: CLLocation?
+
     let vehicleMovement = VehicleMovement()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.addInteraction(UIContextMenuInteraction(delegate: self))
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -207,6 +230,26 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         roadNameLabel.isHidden = roadNameLabel.text == nil
         canonicalRoadNameLabel.isHidden = canonicalRoadNameLabel.text == nil
         addressLabel.isHidden = addressLabel.text == nil
+    }
+}
+
+extension LocationInformationWidgetViewController: UIContextMenuInteractionDelegate {
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        let actionProvider: UIContextMenuActionProvider = { (suggestedActions) in
+            let action = UIAction(title: "Debug", image: UIImage(systemName: "ladybug")) { (action) in
+                let debugViewContoller = LocationInformationDebugViewController()
+                debugViewContoller.currentPlace = self.currentPlace
+                self.delegate = debugViewContoller
+
+                let navigationController = UINavigationController(rootViewController: debugViewContoller)
+                navigationController.modalPresentationStyle = .overCurrentContext
+                self.present(navigationController, animated: true)
+            }
+
+            return UIMenu(title: "", children: [action])
+        }
+
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: actionProvider)
     }
 }
 
