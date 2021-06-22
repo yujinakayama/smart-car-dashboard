@@ -101,7 +101,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        logger.info()
+        logger.debug()
         guard let location = locations.last else { return }
         updateIfNeeded(location: location)
     }
@@ -156,6 +156,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
 
             switch result {
             case .success(let place):
+                self.currentPlace = place
                 self.lastRequestLocation = location
 
                 DispatchQueue.main.async {
