@@ -114,6 +114,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
 
         // If we have moved from the region of the previous road, update.
         if let currentRegion = currentPlace?.region, !currentRegion.contains(location.coordinate) {
+            logger.debug("Request reason: Moved out from previous road")
             performRequest(for: location)
             return
         }
@@ -126,17 +127,19 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
             if location.timestamp >= lastRequestLocation.timestamp + minimumRequestInterval,
                location.distance(from: lastRequestLocation) >= minimumMovementDistanceForNextUpdate
             {
+                logger.debug("Request reason: Fixed time and distance have passed since previous request")
                 performRequest(for: location)
                 return
             }
         } else {
+            logger.debug("Request reason: Initial")
             performRequest(for: location)
             return
         }
 
         // If we turned at an intersection, update
         if vehicleMovement.isEstimatedToHaveJustTurned {
-            logger.info("VehicleMovement.isEstimatedToHaveJustTurned")
+            logger.debug("Request reason: Made a turn")
             vehicleMovement.reset()
 
             DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
