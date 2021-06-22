@@ -155,9 +155,11 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
             logger.debug(result)
 
             switch result {
-            case .success(let location):
+            case .success(let place):
+                self.lastRequestLocation = location
+
                 DispatchQueue.main.async {
-                    self.updateLabels(for: location)
+                    self.updateLabels(for: place)
                 }
             case .failure(let error):
                 logger.error(error)
@@ -165,8 +167,6 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
 
             self.currentRequestTask = nil
         }
-
-        lastRequestLocation = location
     }
 
     func updateLabels(for place: OpenCageClient.Place) {
