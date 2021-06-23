@@ -37,6 +37,9 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         return locationManager
     }()
 
+    // horizontalAccuracy returns fixed value 65.0 in reinforced concrete buildings, which is unstable
+    let requiredLocationAccuracy: CLLocationAccuracy = 65
+
     var isMetering = false
 
     lazy var openCage: OpenCage = {
@@ -136,7 +139,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         logger.debug()
         guard let location = locations.last else { return }
         delegate?.locationInformationWidget(self, didUpdateCurrentLocation: location)
-        guard location.horizontalAccuracy < kCLLocationAccuracyNearestTenMeters else { return }
+        guard location.horizontalAccuracy < requiredLocationAccuracy else { return }
         updateIfNeeded(location: location)
     }
 
