@@ -135,6 +135,10 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
     }
 
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        if let userLocationView = mapView.view(for: userLocation) as? DirectionalUserLocationAnnotationView {
+            userLocationView.updateDirection(animated: true)
+        }
+
         if !hasZoomedToUserLocation {
             mapView.region = MKCoordinateRegion(center: userLocation.coordinate, latitudinalMeters: 800, longitudinalMeters: 800)
             hasZoomedToUserLocation = true
