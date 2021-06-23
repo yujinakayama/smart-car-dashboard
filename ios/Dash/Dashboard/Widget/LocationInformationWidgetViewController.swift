@@ -130,7 +130,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         logger.debug()
         guard let location = locations.last else { return }
-        guard location.horizontalAccuracy < 10 { return }
+        guard location.horizontalAccuracy < kCLLocationAccuracyNearestTenMeters else { return }
         updateIfNeeded(location: location)
     }
 
