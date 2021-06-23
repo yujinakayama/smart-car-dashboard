@@ -36,10 +36,11 @@ class OpenCage {
 
             let result = Result<Place, Error>(catching: {
                 let response = try JSONDecoder().decode(ReverseGeocodingResponse.self, from: data!)
+                let result = response.results.first!
 
-                let address = response.results.first?.components
-                let region = response.results.first?.bounds
-                let road = response.results.first?.annotations.roadinfo
+                let address = result.components
+                let region = result.bounds
+                let road = result.annotations.roadinfo
 
                 return (address: address, region: region, road: road)
             })
@@ -64,7 +65,7 @@ class OpenCage {
 }
 
 extension OpenCage {
-    typealias Place = (address: Address?, region: Region?, road: Road?)
+    typealias Place = (address: Address, region: Region, road: Road?)
 
     struct ReverseGeocodingResponse: Decodable {
         let results: [ReverseGeocodingResult]

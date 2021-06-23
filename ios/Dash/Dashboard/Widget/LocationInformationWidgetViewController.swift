@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 
 protocol LocationInformationWidgetViewControllerDelegate: NSObjectProtocol {
-    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentRegion region: OpenCage.Region?)
+    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentPlace place: OpenCage.Place?)
 }
 
 class LocationInformationWidgetViewController: UIViewController, CLLocationManagerDelegate {
@@ -46,19 +46,23 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
 
     var currentRequestTask: URLSessionTask?
 
-    var currentRegion: OpenCage.Region? {
+    var currentPlace: OpenCage.Place? {
         didSet {
+            currentRegion = currentPlace?.region.extended(by: Self.regionExtensionDistance)
+
             if let delegate = delegate {
                 DispatchQueue.main.async {
-                    delegate.locationInformationWidget(self, didUpdateCurrentRegion: self.currentRegion)
+                    delegate.locationInformationWidget(self, didUpdateCurrentPlace: self.currentPlace)
                 }
             }
         }
     }
 
+    var currentRegion: OpenCage.Region?
+
     // We should extend original regions to avoid too frequent boundary detection caused by GPS errors
     // especially on roads running through north to south, or east to west, which tend to have very narrow region.
-    let regionExtensionDistance: CLLocationDistance = 5
+    static let regionExtensionDistance: CLLocationDistance = 5
 
     var lastRequestLocation: CLLocation?
 
@@ -110,7 +114,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
 
         currentRequestTask?.cancel()
         currentRequestTask = nil
-        currentRegion = nil
+        currentPlace = nil
         lastRequestLocation = nil
         vehicleMovement.reset()
     }
@@ -186,7 +190,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
 
             switch result {
             case .success(let place):
-                self.currentRegion = place.region?.extended(by: self.regionExtensionDistance)
+                self.currentPlace = place
                 self.lastRequestLocation = location
 
                 DispatchQueue.main.async {
@@ -226,11 +230,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     }
 
     func updateAddressLabel(for place: OpenCage.Place) {
-        if let address = place.address {
-            addressLabel.text = address.components.joined(separator: " ")
-        } else {
-            addressLabel.text = nil
-        }
+        addressLabel.text = currentPlace?.address.components.joined(separator: " ")
     }
 
     func hideLabelsWithNoContent() {
@@ -245,7 +245,7 @@ extension LocationInformationWidgetViewController: UIContextMenuInteractionDeleg
         let actionProvider: UIContextMenuActionProvider = { (suggestedActions) in
             let action = UIAction(title: "Debug", image: UIImage(systemName: "ladybug")) { (action) in
                 let debugViewContoller = LocationInformationDebugViewController()
-                debugViewContoller.currentRegion = self.currentRegion
+                debugViewContoller.currentPlace = self.currentPlace
                 self.delegate = debugViewContoller
 
                 let navigationController = UINavigationController(rootViewController: debugViewContoller)

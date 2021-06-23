@@ -21,41 +21,41 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
         return mapView
     }()
 
-    var currentRegion: OpenCage.Region? {
+    var currentPlace: OpenCage.Place? {
         didSet {
-            if let currentRegionOverlay = currentRegionOverlay {
-                mapView.removeOverlay(currentRegionOverlay)
+            if let currentPlaceOverlay = currentPlaceOverlay {
+                mapView.removeOverlay(currentPlaceOverlay)
             }
 
-            currentRegionOverlay = nil
+            currentPlaceOverlay = nil
 
-            if let region = currentRegion {
-                let overlay = makeOverlay(for: region)
-                currentRegionOverlay = overlay
+            if let currentPlace = currentPlace, let overlay = makeOverlay(for: currentPlace) {
+                currentPlaceOverlay = overlay
+                mapView.addOverlay(overlay)
+            }
+
+            updateNavigationBarTitle()
+        }
+    }
+
+    var currentPlaceOverlay: MKOverlay?
+
+    var previousPlace: OpenCage.Place? {
+        didSet {
+            if let previousPlaceOverlay = previousPlaceOverlay {
+                mapView.removeOverlay(previousPlaceOverlay)
+            }
+
+            previousPlaceOverlay = nil
+
+            if let previousPlace = previousPlace, let overlay = makeOverlay(for: previousPlace) {
+                previousPlaceOverlay = overlay
                 mapView.addOverlay(overlay)
             }
         }
     }
 
-    var currentRegionOverlay: MKOverlay?
-
-    var previousRegion: OpenCage.Region? {
-        didSet {
-            if let previousRegionOverlay = previousRegionOverlay {
-                mapView.removeOverlay(previousRegionOverlay)
-            }
-
-            previousRegionOverlay = nil
-
-            if let region = previousRegion {
-                let overlay = makeOverlay(for: region)
-                previousRegionOverlay = overlay
-                mapView.addOverlay(overlay)
-            }
-        }
-    }
-
-    var previousRegionOverlay: MKOverlay?
+    var previousPlaceOverlay: MKOverlay?
 
     var hasZoomedToUserLocation = false
 
@@ -104,12 +104,31 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
         }
     }
 
-    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentRegion region: OpenCage.Region?) {
-        previousRegion = currentRegion
-        currentRegion = region
+    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentPlace place: OpenCage.Place?) {
+        previousPlace = currentPlace
+        currentPlace = place
     }
 
-    func makeOverlay(for region: OpenCage.Region) -> MKOverlay {
+    func updateNavigationBarTitle() {
+        guard let place = currentPlace else {
+            navigationItem.title = nil
+            return
+        }
+
+        let roadName = LocationInformationWidgetViewController.RoadName(place: place)
+
+        if let popularName = roadName.popularName, let canonicalName = roadName.canonicalRoadName {
+            navigationItem.title = "\(popularName) - \(canonicalName)"
+        } else if let canonicalName = roadName.canonicalRoadName {
+            navigationItem.title = canonicalName
+        } else {
+            navigationItem.title = roadName.unnumberedRouteName
+        }
+    }
+
+    func makeOverlay(for place: OpenCage.Place) -> MKOverlay? {
+        let region = place.region.extended(by: LocationInformationWidgetViewController.regionExtensionDistance)
+
         let northeast = region.northeast
         let southwest = region.southwest
 
@@ -123,7 +142,7 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         switch overlay {
         case let polygon as MKPolygon:
-            let baseColor: UIColor = (polygon === currentRegionOverlay) ? .systemBlue : .systemGray
+            let baseColor: UIColor = (polygon === currentPlaceOverlay) ? .systemBlue : .systemGray
             let renderer = MKPolygonRenderer(polygon: polygon)
             renderer.strokeColor = baseColor.withAlphaComponent(0.6)
             renderer.fillColor = baseColor.withAlphaComponent(0.3)
