@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 
 protocol LocationInformationWidgetViewControllerDelegate: NSObjectProtocol {
-    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentRegion region: OpenCageClient.Region?)
+    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentRegion region: OpenCage.Region?)
 }
 
 class LocationInformationWidgetViewController: UIViewController, CLLocationManagerDelegate {
@@ -38,15 +38,15 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
 
     var isMetering = false
 
-    lazy var openCageClient: OpenCageClient = {
+    lazy var openCageClient: OpenCage = {
         let path = Bundle.main.path(forResource: "opencage_api_key", ofType: "txt")!
         let apiKey = try! String(contentsOfFile: path)
-        return OpenCageClient(apiKey: apiKey)
+        return OpenCage(apiKey: apiKey)
     }()
 
     var currentRequestTask: URLSessionTask?
 
-    var currentRegion: OpenCageClient.Region? {
+    var currentRegion: OpenCage.Region? {
         didSet {
             if let delegate = delegate {
                 DispatchQueue.main.async {
@@ -199,14 +199,14 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         }
     }
 
-    func updateLabels(for place: OpenCageClient.Place) {
+    func updateLabels(for place: OpenCage.Place) {
         activityIndicatorView.stopAnimating()
         updateRoadNameLabels(for: place)
         updateAddressLabel(for: place)
         hideLabelsWithNoContent()
     }
 
-    func updateRoadNameLabels(for place: OpenCageClient.Place) {
+    func updateRoadNameLabels(for place: OpenCage.Place) {
         let roadName = RoadName(place: place)
 
         if let popularName = roadName.popularName {
@@ -224,7 +224,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         }
     }
 
-    func updateAddressLabel(for place: OpenCageClient.Place) {
+    func updateAddressLabel(for place: OpenCage.Place) {
         if let address = place.address {
             addressLabel.text = address.components.joined(separator: " ")
         } else {
@@ -261,10 +261,10 @@ extension LocationInformationWidgetViewController: UIContextMenuInteractionDeleg
 
 extension LocationInformationWidgetViewController {
     class RoadName {
-        let road: OpenCageClient.Road?
-        let address: OpenCageClient.Address?
+        let road: OpenCage.Road?
+        let address: OpenCage.Address?
 
-        init(place: OpenCageClient.Place) {
+        init(place: OpenCage.Place) {
             road = place.road
             address = place.address
         }

@@ -21,7 +21,7 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
         return mapView
     }()
 
-    var currentRegion: OpenCageClient.Region? {
+    var currentRegion: OpenCage.Region? {
         didSet {
             if let currentRegionOverlay = currentRegionOverlay {
                 mapView.removeOverlay(currentRegionOverlay)
@@ -39,7 +39,7 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
 
     var currentRegionOverlay: MKOverlay?
 
-    var previousRegion: OpenCageClient.Region? {
+    var previousRegion: OpenCage.Region? {
         didSet {
             if let previousRegionOverlay = previousRegionOverlay {
                 mapView.removeOverlay(previousRegionOverlay)
@@ -104,12 +104,12 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
         }
     }
 
-    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentRegion region: OpenCageClient.Region?) {
+    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentRegion region: OpenCage.Region?) {
         previousRegion = currentRegion
         currentRegion = region
     }
 
-    func makeOverlay(for region: OpenCageClient.Region) -> MKOverlay {
+    func makeOverlay(for region: OpenCage.Region) -> MKOverlay {
         let northeast = region.northeast
         let southwest = region.southwest
 

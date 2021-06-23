@@ -1,5 +1,5 @@
 //
-//  OpenCageClient.swift
+//  OpenCage.swift
 //  Dash
 //
 //  Created by Yuji Nakayama on 2019/07/25.
@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 import MapKit
 
-class OpenCageClient {
+class OpenCage {
     let apiKey: String
 
     init(apiKey: String) {
@@ -63,7 +63,7 @@ class OpenCageClient {
 
 }
 
-extension OpenCageClient {
+extension OpenCage {
     typealias Place = (address: Address?, region: Region?, road: Road?)
 
     struct ReverseGeocodingResponse: Decodable {
