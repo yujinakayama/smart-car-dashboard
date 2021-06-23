@@ -21,6 +21,13 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
         return mapView
     }()
 
+    lazy var locationAccuracyLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .label
+        label.font = .systemFont(ofSize: 16, weight: .medium)
+        return label
+    }()
+
     var currentPlace: OpenCage.Place? {
         didSet {
             if let currentPlaceOverlay = currentPlaceOverlay {
@@ -72,6 +79,10 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
         gestureRecognizer.delegate = self
         mapView.addGestureRecognizer(gestureRecognizer)
 
+        configureSubviews()
+    }
+
+    func configureSubviews() {
         view.addSubview(mapView)
 
         mapView.translatesAutoresizingMaskIntoConstraints = false
@@ -81,6 +92,15 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
             view.trailingAnchor.constraint(equalTo: mapView.trailingAnchor),
             mapView.topAnchor.constraint(equalTo: view.topAnchor),
             view.bottomAnchor.constraint(equalTo: mapView.bottomAnchor),
+        ])
+
+        view.addSubview(locationAccuracyLabel)
+
+        locationAccuracyLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            view.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: locationAccuracyLabel.trailingAnchor, constant: 12),
+            locationAccuracyLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12),
         ])
     }
 
@@ -102,6 +122,10 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
         } else {
             return nil
         }
+    }
+
+    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentLocation location: CLLocation) {
+        locationAccuracyLabel.text = String(format: "Location Accuracy: %.1f", location.horizontalAccuracy)
     }
 
     func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentPlace place: OpenCage.Place?) {

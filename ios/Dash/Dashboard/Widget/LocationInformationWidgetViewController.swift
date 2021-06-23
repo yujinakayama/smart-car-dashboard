@@ -10,6 +10,7 @@ import UIKit
 import CoreLocation
 
 protocol LocationInformationWidgetViewControllerDelegate: NSObjectProtocol {
+    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentLocation location: CLLocation)
     func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentPlace place: OpenCage.Place?)
 }
 
@@ -134,6 +135,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         logger.debug()
         guard let location = locations.last else { return }
+        delegate?.locationInformationWidget(self, didUpdateCurrentLocation: location)
         guard location.horizontalAccuracy < kCLLocationAccuracyNearestTenMeters else { return }
         updateIfNeeded(location: location)
     }
