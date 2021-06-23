@@ -155,15 +155,7 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
             return
         }
 
-        let roadName = LocationInformationWidgetViewController.RoadName(place: place)
-
-        if let popularName = roadName.popularName, let canonicalName = roadName.canonicalRoadName {
-            navigationItem.title = "\(popularName) - \(canonicalName)"
-        } else if let canonicalName = roadName.canonicalRoadName {
-            navigationItem.title = canonicalName
-        } else {
-            navigationItem.title = roadName.unnumberedRouteName
-        }
+        navigationItem.title = roadName(for: place)
     }
 
     func makeOverlayForRecentLocations() -> MKOverlay {
@@ -188,7 +180,9 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
         switch overlay {
         case let polygon as MKPolygon:
             let baseColor: UIColor = (polygon === currentPlaceOverlay) ? .systemBlue : .systemGray
-            let renderer = MKPolygonRenderer(polygon: polygon)
+            let place = (polygon === currentPlaceOverlay) ? currentPlace : previousPlace
+
+            let renderer = PlaceRenderer(polygon: polygon, place: place)
             renderer.strokeColor = baseColor.withAlphaComponent(0.6)
             renderer.fillColor = baseColor.withAlphaComponent(0.3)
             renderer.lineWidth = 1
@@ -232,5 +226,59 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
 
     @objc func done() {
         dismiss(animated: true)
+    }
+}
+
+fileprivate class PlaceRenderer: MKPolygonRenderer {
+    let place: OpenCage.Place?
+
+    init(polygon: MKPolygon, place: OpenCage.Place?) {
+        self.place = place
+        super.init(polygon: polygon)
+    }
+
+    override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
+        super.draw(mapRect, zoomScale: zoomScale, in: context)
+
+        guard let place = place, let roadName = roadName(for: place) as NSString? else { return }
+
+        let font = UIFont.systemFont(ofSize: 35 / zoomScale, weight: .medium)
+
+        var point = point(for: overlay.boundingMapRect.origin)
+        point.y -= height(of: roadName, with: font) * 1.1
+
+        UIGraphicsPushContext(context)
+
+        roadName.draw(at: point, withAttributes: [
+            .font: font,
+            .foregroundColor: UIColor.systemBlue
+        ])
+
+        UIGraphicsPopContext()
+    }
+
+    func height(of text: NSString, with font: UIFont) -> CGFloat {
+        let infiniteSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+
+        let boundingRect = text.boundingRect(
+            with: infiniteSize,
+            options: .usesLineFragmentOrigin,
+            attributes: [.font: font],
+            context: nil
+        )
+
+        return ceil(boundingRect.height)
+    }
+}
+
+fileprivate func roadName(for place: OpenCage.Place) -> String? {
+    let roadName = LocationInformationWidgetViewController.RoadName(place: place)
+
+    if let popularName = roadName.popularName, let canonicalName = roadName.canonicalRoadName {
+        return "\(popularName) - \(canonicalName)"
+    } else if let canonicalName = roadName.canonicalRoadName {
+        return canonicalName
+    } else {
+        return roadName.unnumberedRouteName
     }
 }
