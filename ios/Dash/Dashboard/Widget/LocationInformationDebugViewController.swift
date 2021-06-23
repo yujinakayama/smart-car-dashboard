@@ -21,39 +21,41 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
         return mapView
     }()
 
-    var currentPlace: OpenCageClient.Place? {
+    var currentRegion: OpenCageClient.Region? {
         didSet {
-            if let currentPlaceOverlay = currentPlaceOverlay {
-                mapView.removeOverlay(currentPlaceOverlay)
+            if let currentRegionOverlay = currentRegionOverlay {
+                mapView.removeOverlay(currentRegionOverlay)
             }
 
-            currentPlaceOverlay = nil
+            currentRegionOverlay = nil
 
-            if let currentPlace = currentPlace, let overlay = makeOverlay(for: currentPlace) {
-                currentPlaceOverlay = overlay
+            if let region = currentRegion {
+                let overlay = makeOverlay(for: region)
+                currentRegionOverlay = overlay
                 mapView.addOverlay(overlay)
             }
         }
     }
 
-    var currentPlaceOverlay: MKOverlay?
+    var currentRegionOverlay: MKOverlay?
 
-    var previousPlace: OpenCageClient.Place? {
+    var previousRegion: OpenCageClient.Region? {
         didSet {
-            if let previousPlaceOverlay = previousPlaceOverlay {
-                mapView.removeOverlay(previousPlaceOverlay)
+            if let previousRegionOverlay = previousRegionOverlay {
+                mapView.removeOverlay(previousRegionOverlay)
             }
 
-            previousPlaceOverlay = nil
+            previousRegionOverlay = nil
 
-            if let previousPlace = previousPlace, let overlay = makeOverlay(for: previousPlace) {
-                previousPlaceOverlay = overlay
+            if let region = previousRegion {
+                let overlay = makeOverlay(for: region)
+                previousRegionOverlay = overlay
                 mapView.addOverlay(overlay)
             }
         }
     }
 
-    var previousPlaceOverlay: MKOverlay?
+    var previousRegionOverlay: MKOverlay?
 
     var hasZoomedToUserLocation = false
 
@@ -102,14 +104,12 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
         }
     }
 
-    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentPlace place: OpenCageClient.Place?) {
-        previousPlace = currentPlace
-        currentPlace = place
+    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentRegion region: OpenCageClient.Region?) {
+        previousRegion = currentRegion
+        currentRegion = region
     }
 
-    func makeOverlay(for place: OpenCageClient.Place) -> MKOverlay? {
-        guard let region = place.region else { return nil }
-
+    func makeOverlay(for region: OpenCageClient.Region) -> MKOverlay {
         let northeast = region.northeast
         let southwest = region.southwest
 
@@ -123,7 +123,7 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         switch overlay {
         case let polygon as MKPolygon:
-            let baseColor: UIColor = (polygon === currentPlaceOverlay) ? .systemRed : .label
+            let baseColor: UIColor = (polygon === currentRegionOverlay) ? .systemRed : .label
             let renderer = MKPolygonRenderer(polygon: polygon)
             renderer.strokeColor = baseColor.withAlphaComponent(0.5)
             renderer.fillColor = baseColor.withAlphaComponent(0.2)

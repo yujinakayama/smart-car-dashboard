@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 
 protocol LocationInformationWidgetViewControllerDelegate: NSObjectProtocol {
-    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentPlace place: OpenCageClient.Place?)
+    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentRegion region: OpenCageClient.Region?)
 }
 
 class LocationInformationWidgetViewController: UIViewController, CLLocationManagerDelegate {
@@ -46,15 +46,19 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
 
     var currentRequestTask: URLSessionTask?
 
-    var currentPlace: OpenCageClient.Place? {
+    var currentRegion: OpenCageClient.Region? {
         didSet {
             if let delegate = delegate {
                 DispatchQueue.main.async {
-                    delegate.locationInformationWidget(self, didUpdateCurrentPlace: self.currentPlace)
+                    delegate.locationInformationWidget(self, didUpdateCurrentRegion: self.currentRegion)
                 }
             }
         }
     }
+
+    // We should extend original regions to avoid too frequent boundary detection caused by GPS errors
+    // especially on roads running through north to south, or east to west, which tend to have very narrow region.
+    let regionExtensionDistance: CLLocationDistance = 5
 
     var lastRequestLocation: CLLocation?
 
@@ -106,7 +110,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
 
         currentRequestTask?.cancel()
         currentRequestTask = nil
-        currentPlace = nil
+        currentRegion = nil
         lastRequestLocation = nil
         vehicleMovement.reset()
     }
@@ -136,7 +140,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         guard currentRequestTask == nil else { return }
 
         // If we have moved out from the region of the previous road, update.
-        if let currentRegion = currentPlace?.region, let lastRequestLocation = lastRequestLocation,
+        if let currentRegion = currentRegion, let lastRequestLocation = lastRequestLocation,
            currentRegion.contains(lastRequestLocation.coordinate), !currentRegion.contains(location.coordinate)
         {
             logger.debug("Request reason: Moved out from previous road region")
@@ -181,7 +185,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
 
             switch result {
             case .success(let place):
-                self.currentPlace = place
+                self.currentRegion = place.region?.extended(by: self.regionExtensionDistance)
                 self.lastRequestLocation = location
 
                 DispatchQueue.main.async {
@@ -240,7 +244,7 @@ extension LocationInformationWidgetViewController: UIContextMenuInteractionDeleg
         let actionProvider: UIContextMenuActionProvider = { (suggestedActions) in
             let action = UIAction(title: "Debug", image: UIImage(systemName: "ladybug")) { (action) in
                 let debugViewContoller = LocationInformationDebugViewController()
-                debugViewContoller.currentPlace = self.currentPlace
+                debugViewContoller.currentRegion = self.currentRegion
                 self.delegate = debugViewContoller
 
                 let navigationController = UINavigationController(rootViewController: debugViewContoller)

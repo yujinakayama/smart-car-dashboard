@@ -196,6 +196,9 @@ extension OpenCageClient {
     }
 
     struct Region: Decodable {
+        static let earthCircumference: CLLocationDistance = 40000 * 1000
+        static let degreesPerMeter: CLLocationDistance = 360 / earthCircumference
+
         enum CodingKeys: String, CodingKey {
             case northeast
             case southwest
@@ -210,15 +213,46 @@ extension OpenCageClient {
         init(from decoder: Decoder) throws {
             let values = try decoder.container(keyedBy: CodingKeys.self)
 
-            northeast = try decodeCoordinate(from: values, forKey: .northeast)
-            southwest = try decodeCoordinate(from: values, forKey: .southwest)
+            let northeast = try decodeCoordinate(from: values, forKey: .northeast)
+            let southwest = try decodeCoordinate(from: values, forKey: .southwest)
 
+            self.init(northeast: northeast, southwest: southwest)
+        }
+
+        init(northeast: CLLocationCoordinate2D, southwest: CLLocationCoordinate2D) {
+            self.northeast = northeast
+            self.southwest = southwest
             latitudeRange = southwest.latitude...northeast.latitude
             longitudeRange = southwest.longitude...northeast.longitude
         }
 
         func contains(_ coordinate: CLLocationCoordinate2D) -> Bool {
             return latitudeRange.contains(coordinate.latitude) && longitudeRange.contains(coordinate.longitude)
+        }
+
+        func extended(by distance: CLLocationDistance) -> Region {
+            let newNortheast = CLLocationCoordinate2D(
+                latitude: northeast.latitude + latitudeDelta(for: distance),
+                longitude: northeast.longitude + longitudeDelta(for: distance, at: northeast)
+            )
+
+            let newSouthwest = CLLocationCoordinate2D(
+                latitude: southwest.latitude - latitudeDelta(for: distance),
+                longitude: southwest.longitude - longitudeDelta(for: distance, at: southwest)
+            )
+
+            return Region(
+                northeast: newNortheast,
+                southwest: newSouthwest
+            )
+        }
+
+        private func latitudeDelta(for meters: CLLocationDistance) -> CLLocationDegrees {
+            return meters * Self.degreesPerMeter
+        }
+
+        private func longitudeDelta(for meters: CLLocationDistance, at coordinate: CLLocationCoordinate2D) -> CLLocationDegrees {
+            return meters * Self.degreesPerMeter / cos(coordinate.latitude * .pi / 180)
         }
     }
 
