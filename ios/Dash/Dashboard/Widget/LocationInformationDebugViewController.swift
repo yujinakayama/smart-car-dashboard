@@ -123,10 +123,10 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         switch overlay {
         case let polygon as MKPolygon:
-            let baseColor: UIColor = (polygon === currentRegionOverlay) ? .systemRed : .label
+            let baseColor: UIColor = (polygon === currentRegionOverlay) ? .systemBlue : .systemGray
             let renderer = MKPolygonRenderer(polygon: polygon)
-            renderer.strokeColor = baseColor.withAlphaComponent(0.5)
-            renderer.fillColor = baseColor.withAlphaComponent(0.2)
+            renderer.strokeColor = baseColor.withAlphaComponent(0.6)
+            renderer.fillColor = baseColor.withAlphaComponent(0.3)
             renderer.lineWidth = 1
             return renderer
         default:
