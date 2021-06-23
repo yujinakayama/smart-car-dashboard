@@ -28,6 +28,9 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
         return label
     }()
 
+    var recentLocations: [CLLocation] = []
+    var recentLocationsOverlay: MKOverlay?
+
     var currentPlace: OpenCage.Place? {
         didSet {
             if let currentPlaceOverlay = currentPlaceOverlay {
@@ -125,12 +128,25 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
     }
 
     func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentLocation location: CLLocation) {
+        appendToRecentLocations(location)
+
+        if let recentLocationsOverlay = recentLocationsOverlay {
+            mapView.removeOverlay(recentLocationsOverlay)
+        }
+
+        mapView.addOverlay(makeOverlayForRecentLocations())
+
         locationAccuracyLabel.text = String(format: "Location Accuracy: %.1f", location.horizontalAccuracy)
     }
 
     func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentPlace place: OpenCage.Place?) {
         previousPlace = currentPlace
         currentPlace = place
+    }
+
+    func appendToRecentLocations(_ location: CLLocation) {
+        recentLocations.append(location)
+        recentLocations = Array(recentLocations.drop { $0.timestamp.distance(to: location.timestamp) > 30 })
     }
 
     func updateNavigationBarTitle() {
@@ -148,6 +164,11 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
         } else {
             navigationItem.title = roadName.unnumberedRouteName
         }
+    }
+
+    func makeOverlayForRecentLocations() -> MKOverlay {
+        let coordinates = recentLocations.map { $0.coordinate }
+        return MKPolyline(coordinates: coordinates, count: coordinates.count)
     }
 
     func makeOverlay(for place: OpenCage.Place) -> MKOverlay? {
@@ -171,6 +192,11 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
             renderer.strokeColor = baseColor.withAlphaComponent(0.6)
             renderer.fillColor = baseColor.withAlphaComponent(0.3)
             renderer.lineWidth = 1
+            return renderer
+        case let polyline as MKPolyline:
+            let renderer = MKPolylineRenderer(polyline: polyline)
+            renderer.strokeColor = .systemBlue
+            renderer.lineWidth = 4
             return renderer
         default:
             return MKOverlayRenderer()
