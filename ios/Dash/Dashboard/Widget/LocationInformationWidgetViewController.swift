@@ -38,7 +38,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
 
     var isMetering = false
 
-    lazy var openCageClient: OpenCage = {
+    lazy var openCage: OpenCage = {
         let path = Bundle.main.path(forResource: "opencage_api_key", ofType: "txt")!
         let apiKey = try! String(contentsOfFile: path)
         return OpenCage(apiKey: apiKey)
@@ -130,6 +130,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         logger.debug()
         guard let location = locations.last else { return }
+        guard location.horizontalAccuracy < 10 { return }
         updateIfNeeded(location: location)
     }
 
@@ -180,7 +181,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     }
 
     func performRequest(for location: CLLocation) {
-        currentRequestTask = openCageClient.reverseGeocode(coordinate: location.coordinate) { (result) in
+        currentRequestTask = openCage.reverseGeocode(coordinate: location.coordinate) { (result) in
             logger.debug(result)
 
             switch result {
