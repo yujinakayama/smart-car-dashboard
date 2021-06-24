@@ -391,5 +391,14 @@ extension LocationInformationWidgetViewController {
         case interval
         case turn
         case outOfRegion
+
+        var description: String {
+            switch self {
+            case .outOfRegion:
+                return "Out of Region"
+            default:
+                return rawValue.capitalized
+            }
+        }
     }
 }

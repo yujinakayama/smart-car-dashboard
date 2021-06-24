@@ -335,7 +335,7 @@ fileprivate class RequestLocationRenderer: MKCircleRenderer {
     override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
         super.draw(mapRect, zoomScale: zoomScale, in: context)
 
-        let text = requestContext.updateReason.rawValue.capitalized as NSString
+        let text = requestContext.updateReason.description as NSString
 
         let font = UIFont.systemFont(ofSize: 35 / zoomScale, weight: .semibold)
 
