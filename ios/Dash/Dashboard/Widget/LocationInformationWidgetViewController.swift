@@ -11,7 +11,7 @@ import CoreLocation
 
 protocol LocationInformationWidgetViewControllerDelegate: NSObjectProtocol {
     func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentLocation location: CLLocation)
-    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentPlace place: OpenCage.Place?)
+    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentPlace place: OpenCage.Place, for location: CLLocation, reason: LocationInformationWidgetViewController.UpdateReason)
 }
 
 class LocationInformationWidgetViewController: UIViewController, CLLocationManagerDelegate {
@@ -53,12 +53,6 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     var currentPlace: OpenCage.Place? {
         didSet {
             currentRegion = currentPlace?.region.extended(by: Self.regionExtensionDistance)
-
-            if let delegate = delegate {
-                DispatchQueue.main.async {
-                    delegate.locationInformationWidget(self, didUpdateCurrentPlace: self.currentPlace)
-                }
-            }
         }
     }
 
@@ -154,7 +148,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
            currentRegion.contains(lastRequestLocation.coordinate), !currentRegion.contains(location.coordinate)
         {
             logger.debug("Request reason: Moved out from previous road region")
-            performRequest(for: location)
+            performRequest(for: location, reason: .outOfRegion)
             return
         }
 
@@ -167,12 +161,12 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
                location.distance(from: lastRequestLocation) >= minimumMovementDistanceForIntervalUpdate
             {
                 logger.debug("Request reason: Fixed time and distance have passed since previous request")
-                performRequest(for: location)
+                performRequest(for: location, reason: .interval)
                 return
             }
         } else {
             logger.debug("Request reason: Initial")
-            performRequest(for: location)
+            performRequest(for: location, reason: .initial)
             return
         }
 
@@ -182,14 +176,14 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
             vehicleMovement.reset()
 
             DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
-                self.performRequest(for: self.locationManager.location ?? location)
+                self.performRequest(for: self.locationManager.location ?? location, reason: .turn)
             }
 
             return
         }
     }
 
-    func performRequest(for location: CLLocation) {
+    func performRequest(for location: CLLocation, reason: UpdateReason) {
         currentRequestTask = openCage.reverseGeocode(coordinate: location.coordinate) { (result) in
             logger.debug(result)
 
@@ -200,6 +194,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
 
                 DispatchQueue.main.async {
                     self.updateLabels(for: place)
+                    self.delegate?.locationInformationWidget(self, didUpdateCurrentPlace: place, for: location, reason: reason)
                 }
             case .failure(let error):
                 logger.error(error)
@@ -250,7 +245,6 @@ extension LocationInformationWidgetViewController: UIContextMenuInteractionDeleg
         let actionProvider: UIContextMenuActionProvider = { (suggestedActions) in
             let action = UIAction(title: "Debug", image: UIImage(systemName: "ladybug")) { (action) in
                 let debugViewContoller = LocationInformationDebugViewController()
-                debugViewContoller.currentPlace = self.currentPlace
                 self.delegate = debugViewContoller
 
                 let navigationController = UINavigationController(rootViewController: debugViewContoller)
@@ -388,5 +382,14 @@ extension LocationInformationWidgetViewController {
             let delta = abs(b - a).truncatingRemainder(dividingBy: 360)
             return delta > 180 ? 360 - delta : delta
         }
+    }
+}
+
+extension LocationInformationWidgetViewController {
+    enum UpdateReason: String {
+        case initial
+        case interval
+        case turn
+        case outOfRegion
     }
 }

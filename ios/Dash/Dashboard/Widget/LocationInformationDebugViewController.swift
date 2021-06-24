@@ -31,7 +31,9 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
     var recentLocations: [CLLocation] = []
     var recentLocationsOverlay: MKOverlay?
 
-    var currentPlace: OpenCage.Place? {
+    typealias RequestContext = (place: OpenCage.Place, location: CLLocation, updateReason: LocationInformationWidgetViewController.UpdateReason)
+
+    var currentRequestContext: RequestContext? {
         didSet {
             if let currentPlaceOverlay = currentPlaceOverlay {
                 mapView.removeOverlay(currentPlaceOverlay)
@@ -39,18 +41,37 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
 
             currentPlaceOverlay = nil
 
-            if let currentPlace = currentPlace, let overlay = makeOverlay(for: currentPlace) {
+            if let currentRequestLocationOverlay = currentRequestLocationOverlay {
+                mapView.removeOverlay(currentRequestLocationOverlay)
+            }
+
+            currentRequestLocationOverlay = nil
+
+            if let currentPlace = currentPlace {
+                let overlay = makeOverlay(for: currentPlace)
                 currentPlaceOverlay = overlay
-                mapView.addOverlay(overlay)
+                mapView.insertOverlay(overlay, at: 11)
+            }
+
+            if let location = currentRequestContext?.location {
+                let overlay = makeOverlay(for: location)
+                currentRequestLocationOverlay = overlay
+                mapView.insertOverlay(overlay, at: 21)
             }
 
             updateNavigationBarTitle()
         }
     }
 
+    var currentPlace: OpenCage.Place? {
+        return currentRequestContext?.place
+    }
+
     var currentPlaceOverlay: MKOverlay?
 
-    var previousPlace: OpenCage.Place? {
+    var currentRequestLocationOverlay: MKOverlay?
+
+    var previousRequestContext: RequestContext? {
         didSet {
             if let previousPlaceOverlay = previousPlaceOverlay {
                 mapView.removeOverlay(previousPlaceOverlay)
@@ -58,14 +79,33 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
 
             previousPlaceOverlay = nil
 
-            if let previousPlace = previousPlace, let overlay = makeOverlay(for: previousPlace) {
+            if let previousRequestLocationOverlay = previousRequestLocationOverlay {
+                mapView.removeOverlay(previousRequestLocationOverlay)
+            }
+
+            previousRequestLocationOverlay = nil
+
+            if let previousPlace = previousPlace {
+                let overlay = makeOverlay(for: previousPlace)
                 previousPlaceOverlay = overlay
-                mapView.addOverlay(overlay)
+                mapView.insertOverlay(overlay, at: 10)
+            }
+
+            if let location = previousRequestContext?.location {
+                let overlay = makeOverlay(for: location)
+                previousRequestLocationOverlay = overlay
+                mapView.insertOverlay(overlay, at: 20)
             }
         }
     }
 
+    var previousPlace: OpenCage.Place? {
+        return previousRequestContext?.place
+    }
+
     var previousPlaceOverlay: MKOverlay?
+
+    var previousRequestLocationOverlay: MKOverlay?
 
     var hasZoomedToUserLocation = false
 
@@ -134,14 +174,14 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
             mapView.removeOverlay(recentLocationsOverlay)
         }
 
-        mapView.addOverlay(makeOverlayForRecentLocations())
+        mapView.insertOverlay(makeOverlayForRecentLocations(), at: 1)
 
         locationAccuracyLabel.text = String(format: "Location Accuracy: %.1f", location.horizontalAccuracy)
     }
 
-    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentPlace place: OpenCage.Place?) {
-        previousPlace = currentPlace
-        currentPlace = place
+    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentPlace place: OpenCage.Place, for location: CLLocation, reason: LocationInformationWidgetViewController.UpdateReason) {
+        previousRequestContext = currentRequestContext
+        currentRequestContext = (place: place, location: location, updateReason: reason)
     }
 
     func appendToRecentLocations(_ location: CLLocation) {
@@ -163,7 +203,7 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
         return MKPolyline(coordinates: coordinates, count: coordinates.count)
     }
 
-    func makeOverlay(for place: OpenCage.Place) -> MKOverlay? {
+    func makeOverlay(for place: OpenCage.Place) -> MKOverlay {
         let region = place.region.extended(by: LocationInformationWidgetViewController.regionExtensionDistance)
 
         let northeast = region.northeast
@@ -176,25 +216,30 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
         return MKPolygon(coordinates: coordinates, count: coordinates.count)
     }
 
+    func makeOverlay(for location: CLLocation) -> MKOverlay {
+        return MKCircle(center: location.coordinate, radius: 6)
+    }
+
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         switch overlay {
         case let polygon as MKPolygon:
+            guard let place = (polygon === currentPlaceOverlay) ? currentPlace : previousPlace else { break }
             let baseColor: UIColor = (polygon === currentPlaceOverlay) ? .systemBlue : .systemGray
-            let place = (polygon === currentPlaceOverlay) ? currentPlace : previousPlace
-
-            let renderer = PlaceRenderer(polygon: polygon, place: place)
-            renderer.strokeColor = baseColor.withAlphaComponent(0.6)
-            renderer.fillColor = baseColor.withAlphaComponent(0.3)
-            renderer.lineWidth = 1
-            return renderer
+            return PlaceRenderer(polygon: polygon, place: place, baseColor: baseColor)
         case let polyline as MKPolyline:
             let renderer = MKPolylineRenderer(polyline: polyline)
-            renderer.strokeColor = .systemBlue
+            renderer.strokeColor = .secondaryLabel
             renderer.lineWidth = 4
             return renderer
+        case let circle as MKCircle:
+            guard let requestContext = (circle === currentRequestLocationOverlay) ? currentRequestContext : previousRequestContext else { break }
+            let baseColor: UIColor = (circle === currentRequestLocationOverlay) ? .systemBlue : .systemGray
+            return RequestLocationRenderer(circle: circle, requestContext: requestContext, baseColor: baseColor)
         default:
-            return MKOverlayRenderer()
+            break
         }
+
+        return MKOverlayRenderer()
     }
 
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
@@ -230,19 +275,31 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
 }
 
 fileprivate class PlaceRenderer: MKPolygonRenderer {
-    let place: OpenCage.Place?
+    let place: OpenCage.Place
+    let baseColor: UIColor
 
-    init(polygon: MKPolygon, place: OpenCage.Place?) {
+    init(polygon: MKPolygon, place: OpenCage.Place, baseColor: UIColor) {
         self.place = place
+        self.baseColor = baseColor
+
         super.init(polygon: polygon)
+
+        strokeColor = baseColor.withAlphaComponent(0.6)
+        fillColor = baseColor.withAlphaComponent(0.3)
+        lineWidth = 1
     }
 
     override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
         super.draw(mapRect, zoomScale: zoomScale, in: context)
 
-        guard let place = place, let roadName = roadName(for: place) as NSString? else { return }
+        guard let roadName = roadName(for: place) as NSString? else { return }
 
-        let font = UIFont.systemFont(ofSize: 35 / zoomScale, weight: .medium)
+        let font = UIFont.systemFont(ofSize: 35 / zoomScale, weight: .semibold)
+
+        let shadow = NSShadow()
+        shadow.shadowColor = UIColor.systemBackground
+        shadow.shadowOffset = .zero
+        shadow.shadowBlurRadius = 8 / zoomScale
 
         var point = point(for: overlay.boundingMapRect.origin)
         point.y -= height(of: roadName, with: font) * 1.1
@@ -251,7 +308,8 @@ fileprivate class PlaceRenderer: MKPolygonRenderer {
 
         roadName.draw(at: point, withAttributes: [
             .font: font,
-            .foregroundColor: UIColor.systemBlue
+            .foregroundColor: baseColor,
+            .shadow: shadow
         ])
 
         UIGraphicsPopContext()
@@ -268,6 +326,44 @@ fileprivate class PlaceRenderer: MKPolygonRenderer {
         )
 
         return ceil(boundingRect.height)
+    }
+}
+
+fileprivate class RequestLocationRenderer: MKCircleRenderer {
+    let requestContext: LocationInformationDebugViewController.RequestContext
+    let baseColor: UIColor
+
+    init(circle: MKCircle, requestContext: LocationInformationDebugViewController.RequestContext, baseColor: UIColor) {
+        self.requestContext = requestContext
+        self.baseColor = baseColor
+        super.init(circle: circle)
+        fillColor = baseColor
+    }
+
+    override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
+        super.draw(mapRect, zoomScale: zoomScale, in: context)
+
+        let text = requestContext.updateReason.rawValue as NSString
+
+        let font = UIFont.systemFont(ofSize: 25 / zoomScale, weight: .semibold)
+
+        let shadow = NSShadow()
+        shadow.shadowColor = UIColor.systemBackground
+        shadow.shadowOffset = .zero
+        shadow.shadowBlurRadius = 8 / zoomScale
+
+        let rect = rect(for: overlay.boundingMapRect)
+        let point = CGPoint(x: rect.maxX + 10, y: rect.midY)
+
+        UIGraphicsPushContext(context)
+
+        text.draw(at: point, withAttributes: [
+            .font: font,
+            .foregroundColor: baseColor,
+            .shadow: shadow
+        ])
+
+        UIGraphicsPopContext()
     }
 }
 
