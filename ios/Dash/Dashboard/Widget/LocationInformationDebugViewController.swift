@@ -14,10 +14,15 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
     lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.delegate = self
+
         mapView.showsUserLocation = true
         mapView.isPitchEnabled = false
         mapView.isRotateEnabled = false
+
+        mapView.pointOfInterestFilter = MKPointOfInterestFilter.excludingAll
+
         mapView.register(DirectionalUserLocationAnnotationView.self, forAnnotationViewWithReuseIdentifier: "DirectionalUserLocationAnnotationView")
+
         return mapView
     }()
 
@@ -294,7 +299,7 @@ fileprivate class PlaceRenderer: MKPolygonRenderer {
 
         guard let roadName = roadName(for: place) as NSString? else { return }
 
-        let font = UIFont.systemFont(ofSize: 35 / zoomScale, weight: .semibold)
+        let font = UIFont.systemFont(ofSize: 50 / zoomScale, weight: .semibold)
 
         let shadow = NSShadow()
         shadow.shadowColor = UIColor.systemBackground
@@ -314,19 +319,6 @@ fileprivate class PlaceRenderer: MKPolygonRenderer {
 
         UIGraphicsPopContext()
     }
-
-    func height(of text: NSString, with font: UIFont) -> CGFloat {
-        let infiniteSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
-
-        let boundingRect = text.boundingRect(
-            with: infiniteSize,
-            options: .usesLineFragmentOrigin,
-            attributes: [.font: font],
-            context: nil
-        )
-
-        return ceil(boundingRect.height)
-    }
 }
 
 fileprivate class RequestLocationRenderer: MKCircleRenderer {
@@ -343,9 +335,9 @@ fileprivate class RequestLocationRenderer: MKCircleRenderer {
     override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
         super.draw(mapRect, zoomScale: zoomScale, in: context)
 
-        let text = requestContext.updateReason.rawValue as NSString
+        let text = requestContext.updateReason.rawValue.capitalized as NSString
 
-        let font = UIFont.systemFont(ofSize: 25 / zoomScale, weight: .semibold)
+        let font = UIFont.systemFont(ofSize: 35 / zoomScale, weight: .semibold)
 
         let shadow = NSShadow()
         shadow.shadowColor = UIColor.systemBackground
@@ -353,7 +345,7 @@ fileprivate class RequestLocationRenderer: MKCircleRenderer {
         shadow.shadowBlurRadius = 8 / zoomScale
 
         let rect = rect(for: overlay.boundingMapRect)
-        let point = CGPoint(x: rect.maxX + 10, y: rect.midY)
+        let point = CGPoint(x: rect.maxX + 30 / zoomScale, y: rect.midY - height(of: text, with: font) / 2)
 
         UIGraphicsPushContext(context)
 
@@ -377,4 +369,17 @@ fileprivate func roadName(for place: OpenCage.Place) -> String? {
     } else {
         return roadName.unnumberedRouteName
     }
+}
+
+fileprivate func height(of text: NSString, with font: UIFont) -> CGFloat {
+    let infiniteSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+
+    let boundingRect = text.boundingRect(
+        with: infiniteSize,
+        options: .usesLineFragmentOrigin,
+        attributes: [.font: font],
+        context: nil
+    )
+
+    return ceil(boundingRect.height)
 }
