@@ -296,7 +296,10 @@ fileprivate class PlaceRenderer: MKPolygonRenderer {
 
     override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
         super.draw(mapRect, zoomScale: zoomScale, in: context)
+        drawRoadName(zoomScale: zoomScale, in: context)
+    }
 
+    private func drawRoadName(zoomScale: MKZoomScale, in context: CGContext) {
         guard let roadName = roadName(for: place) as NSString? else { return }
 
         let font = UIFont.systemFont(ofSize: 50 / zoomScale, weight: .semibold)
@@ -334,7 +337,10 @@ fileprivate class RequestLocationRenderer: MKCircleRenderer {
 
     override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
         super.draw(mapRect, zoomScale: zoomScale, in: context)
+        drawUpdateReason(zoomScale: zoomScale, in: context)
+    }
 
+    private func drawUpdateReason(zoomScale: MKZoomScale, in context: CGContext) {
         let text = requestContext.updateReason.description as NSString
 
         let font = UIFont.systemFont(ofSize: 35 / zoomScale, weight: .semibold)
