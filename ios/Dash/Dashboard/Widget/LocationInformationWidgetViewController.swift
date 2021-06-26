@@ -19,6 +19,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     @IBOutlet weak var canonicalRoadNameLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var lowLocationAccuracyLabel: UILabel!
 
     weak var delegate: LocationInformationWidgetViewControllerDelegate?
 
@@ -38,7 +39,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     }()
 
     // horizontalAccuracy returns fixed value 65.0 in reinforced concrete buildings, which is unstable
-    let requiredLocationAccuracy: CLLocationAccuracy = 65
+    let unreliableLocationAccuracy: CLLocationAccuracy = 65
 
     var isMetering = false
 
@@ -69,7 +70,19 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setLowLocationAccuracyLabelText()
+
         view.addInteraction(UIContextMenuInteraction(delegate: self))
+    }
+
+    func setLowLocationAccuracyLabelText() {
+        let imageAttachment = NSTextAttachment()
+        imageAttachment.image = UIImage(systemName: "mappin.slash")?.withTintColor(lowLocationAccuracyLabel.textColor, renderingMode: .alwaysTemplate)
+
+        let attributedText = NSMutableAttributedString(attachment: imageAttachment)
+        attributedText.append(NSAttributedString(string: " Low Location Accuracy"))
+
+        lowLocationAccuracyLabel.attributedText = attributedText
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -80,6 +93,8 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
             canonicalRoadNameLabel.text = nil
             addressLabel.text = nil
             hideLabelsWithNoContent()
+
+            lowLocationAccuracyLabel.isHidden = true
 
             activityIndicatorView.startAnimating()
 
@@ -133,11 +148,13 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         logger.debug()
         guard let location = locations.last else { return }
         delegate?.locationInformationWidget(self, didUpdateCurrentLocation: location)
-        guard location.horizontalAccuracy < requiredLocationAccuracy else { return }
         updateIfNeeded(location: location)
     }
 
     func updateIfNeeded(location: CLLocation) {
+        let isLocationAccuracyReliable = location.horizontalAccuracy < unreliableLocationAccuracy
+        lowLocationAccuracyLabel.isHidden = isLocationAccuracyReliable
+
         vehicleMovement.record(location)
 
         // Avoid parallel requests
