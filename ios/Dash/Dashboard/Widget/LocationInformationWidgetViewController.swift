@@ -161,7 +161,8 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         guard currentRequestTask == nil else { return }
 
         // If we have moved out from the region of the previous road, update.
-        if let currentRegion = currentRegion, let lastRequestLocation = lastRequestLocation,
+        if isLocationAccuracyReliable,
+           let currentRegion = currentRegion, let lastRequestLocation = lastRequestLocation,
            currentRegion.contains(lastRequestLocation.coordinate), !currentRegion.contains(location.coordinate)
         {
             logger.debug("Request reason: Moved out from previous road region")
@@ -188,7 +189,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         }
 
         // If we turned at an intersection, update
-        if vehicleMovement.isEstimatedToHaveJustTurned {
+        if isLocationAccuracyReliable, vehicleMovement.isEstimatedToHaveJustTurned {
             logger.debug("Request reason: Made a turn")
             vehicleMovement.reset()
 
