@@ -240,6 +240,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
     func flushImage() {
         DispatchQueue.main.async {
+            self.sampleBufferDecoder.flushAsynchronousFrames()
             self.imageDisplayView.image = nil
         }
     }

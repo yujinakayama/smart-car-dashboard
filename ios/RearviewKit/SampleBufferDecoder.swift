@@ -13,6 +13,8 @@ import CoreImage
 class SampleBufferDecoder {
     private var session: VTDecompressionSession?
 
+    private var shouldEmitDecodedImage = false
+
     func decode(_ sampleBuffer: CMSampleBuffer, completion: @escaping (CIImage?) -> Void) {
         if session == nil {
             VTDecompressionSessionCreate(
@@ -27,19 +29,25 @@ class SampleBufferDecoder {
 
         guard let session = session else { abort() }
 
+        shouldEmitDecodedImage = true
+
         VTDecompressionSessionDecodeFrame(
             session,
             sampleBuffer: sampleBuffer,
             flags: [._EnableAsynchronousDecompression, ._EnableTemporalProcessing],
             infoFlagsOut: nil
         ) { (status, infoFlags, imageBuffer, presentationTimeStamp, presentationDuration) in
-            if let imageBuffer = imageBuffer {
+            if self.shouldEmitDecodedImage, let imageBuffer = imageBuffer {
                 let image = CIImage(cvImageBuffer: imageBuffer)
                 completion(image)
             } else {
                 completion(nil)
             }
         }
+    }
+
+    func flushAsynchronousFrames() {
+        shouldEmitDecodedImage = false
     }
 
     deinit {
