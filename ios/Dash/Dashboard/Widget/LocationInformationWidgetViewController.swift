@@ -15,6 +15,7 @@ protocol LocationInformationWidgetViewControllerDelegate: NSObjectProtocol {
 }
 
 class LocationInformationWidgetViewController: UIViewController, CLLocationManagerDelegate {
+    @IBOutlet weak var roadView: UIView!
     @IBOutlet weak var roadNameLabel: UILabel!
     @IBOutlet weak var canonicalRoadNameLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
@@ -54,6 +55,20 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     var currentPlace: OpenCage.Place? {
         didSet {
             currentRegion = currentPlace?.region.extended(by: Self.regionExtensionDistance)
+
+            guard let newPlace = currentPlace else { return }
+
+            var shouldAnimate = false
+
+            if let oldPlace = oldValue {
+                shouldAnimate = RoadName(place: oldPlace) != RoadName(place: newPlace)
+            } else {
+                shouldAnimate = true
+            }
+
+            DispatchQueue.main.async {
+                self.updateLabels(for: newPlace, animated: shouldAnimate)
+            }
         }
     }
 
@@ -207,7 +222,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
                 self.lastRequestLocation = location
 
                 DispatchQueue.main.async {
-                    self.updateLabels(for: place)
+                    self.activityIndicatorView.stopAnimating()
                     self.delegate?.locationInformationWidget(self, didUpdateCurrentPlace: place, for: location, reason: reason)
                 }
             case .failure(let error):
@@ -218,11 +233,43 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
         }
     }
 
+    func updateLabels(for place: OpenCage.Place, animated: Bool) {
+        if animated {
+            withAnimation {
+                self.updateLabels(for: place)
+            }
+        } else {
+            updateLabels(for: place)
+        }
+    }
+
     func updateLabels(for place: OpenCage.Place) {
-        activityIndicatorView.stopAnimating()
         updateRoadNameLabels(for: place)
         updateAddressLabel(for: place)
         hideLabelsWithNoContent()
+    }
+
+    func withAnimation(_ changes: @escaping () -> Void) {
+        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut) {
+            self.roadView.layer.setAffineTransform(.init(scaleX: 1.4, y: 1.4))
+            self.roadView.layer.opacity = 0
+            self.addressLabel.layer.opacity = 0
+        } completion: { (finished) in
+            guard finished else { return }
+
+            self.roadView.layer.setAffineTransform(.init(scaleX: 0.85, y: 0.85))
+
+            changes()
+
+            UIView.animate(withDuration: 0.7, delay: 0, options: .curveEaseOut) {
+                self.roadView.layer.setAffineTransform(.identity)
+                self.roadView.layer.opacity = 1
+            }
+
+            UIView.animate(withDuration: 1, delay: 0.4, options: .curveEaseInOut) {
+                self.addressLabel.layer.opacity = 1
+            }
+        }
     }
 
     func updateRoadNameLabels(for place: OpenCage.Place) {
@@ -274,9 +321,23 @@ extension LocationInformationWidgetViewController: UIContextMenuInteractionDeleg
 }
 
 extension LocationInformationWidgetViewController {
-    class RoadName {
+    class RoadName: Equatable {
         let road: OpenCage.Road?
         let address: OpenCage.Address?
+
+        static func == (lhs: RoadName, rhs: RoadName) -> Bool {
+            guard let lhsRoad = lhs.road, let rhsRoad = rhs.road else { return false }
+
+            if let lhsPopularName = lhs.popularName {
+                return lhsPopularName == rhs.popularName
+            }
+
+            if let lhsIdentifier = lhsRoad.identifier {
+                return lhsIdentifier == rhsRoad.identifier
+            }
+
+            return lhsRoad.roadType == rhsRoad.roadType && lhsRoad.routeNumber == rhsRoad.routeNumber
+        }
 
         init(place: OpenCage.Place) {
             road = place.road
