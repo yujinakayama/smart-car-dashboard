@@ -16,8 +16,6 @@
 		B900A13A26529C38000ED1B9 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04662642D5FA002CD861 /* UIButtonExtension.swift */; };
 		B900A13C26529C4E000ED1B9 /* NSLayoutConstraintExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B900A13B26529C4E000ED1B9 /* NSLayoutConstraintExtension.swift */; };
 		B900A13D2652BCF4000ED1B9 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94215F026423A58003F94A0 /* StringExtension.swift */; };
-		B9025F63254D21E1001E25DF /* PairedVehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A676254D0EB30012A4CB /* PairedVehicle.swift */; };
-		B9025F68254D2260001E25DF /* PairedVehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A676254D0EB30012A4CB /* PairedVehicle.swift */; };
 		B90265AB23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90265AA23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift */; };
 		B904A2A6243968990087BD4A /* MapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B904A2A5243968990087BD4A /* MapsViewController.swift */; };
 		B90666DE247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90666DD247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift */; };
@@ -143,6 +141,10 @@
 		B9B18DD323EDFFF40096D603 /* DashCloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashCloudKit.framework */; };
 		B9B18DD423EDFFF40096D603 /* DashCloudKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashCloudKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B9B4A89A2569310400FE0C9F /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B4A8992569310400FE0C9F /* DashboardViewController.swift */; };
+		B9B4F700268CB366009C5DC5 /* PairedVehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A676254D0EB30012A4CB /* PairedVehicle.swift */; };
+		B9B4F701268CB367009C5DC5 /* PairedVehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A676254D0EB30012A4CB /* PairedVehicle.swift */; };
+		B9B4F702268CB3D0009C5DC5 /* CLLocationCoordinate2DExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */; };
+		B9B4F703268CB3F5009C5DC5 /* ParkingSearchURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */; };
 		B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B717DD23E6B26900A47207 /* UnknownItem.swift */; };
 		B9BA819E2350931A00657DEB /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
 		B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */; };
@@ -158,7 +160,6 @@
 		B9C2455F23EDA2EA00E00523 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
 		B9C2456523EDBB4800E00523 /* FloatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C2456423EDBB4800E00523 /* FloatButton.swift */; };
 		B9C87A1726671CCE00ABCBB4 /* ParkingSearchURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */; };
-		B9C87A1826671CCE00ABCBB4 /* ParkingSearchURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */; };
 		B9CB753624AA1A17008264F5 /* VolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB753524AA1A17008264F5 /* VolumeView.swift */; };
 		B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */; };
 		B9CEA76622D89A400055C9A3 /* ETCDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */; };
@@ -168,7 +169,6 @@
 		B9D0261024BF7704005C03B1 /* ClassicBluetoothDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D0260A24BF7704005C03B1 /* ClassicBluetoothDevice.swift */; };
 		B9D0261124BF7704005C03B1 /* BluetoothManagerHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B9D0260D24BF7704005C03B1 /* BluetoothManagerHandler.m */; };
 		B9D4AF22267124FC00849129 /* DashCloudClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D4AF21267124FC00849129 /* DashCloudClient.swift */; };
-		B9D4AF232671313900849129 /* CLLocationCoordinate2DExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */; };
 		B9D4AF242671324B00849129 /* DashCloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashCloudKit.framework */; };
 		B9D4AF2A26727D8000849129 /* MapItemFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D4AF2926727D8000849129 /* MapItemFetcher.swift */; };
 		B9D4AF2E2673203400849129 /* UTTypeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D4AF2D2673203400849129 /* UTTypeExtension.swift */; };
@@ -766,6 +766,19 @@
 			path = ResourceObjects;
 			sourceTree = "<group>";
 		};
+		B92B8418268C63870019D050 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				B9C04B41257775B8001D6E0F /* WebViewController.swift */,
+				B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */,
+				B988A676254D0EB30012A4CB /* PairedVehicle.swift */,
+				B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */,
+				B94215F026423A58003F94A0 /* StringExtension.swift */,
+				B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		B944C68E24A9E4C8000D1E99 /* Music */ = {
 			isa = PBXGroup;
 			children = (
@@ -816,7 +829,6 @@
 				B932E5EF23F9082600726615 /* Location.swift */,
 				B9A481FF23EF025200AA7590 /* SuccessViewController.swift */,
 				B988A66B254D0E570012A4CB /* PairingRequirementViewController.swift */,
-				B988A676254D0EB30012A4CB /* PairedVehicle.swift */,
 				B98B784C23ED530E00A5102F /* SignInWithAppleViewController.swift */,
 				B91B5DD423ED7886003F4AEF /* Account.swift */,
 				B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */,
@@ -926,7 +938,6 @@
 				B967D07925D510A7000D9007 /* Rearview.entitlements */,
 				B9C0CED82508F63F006D246E /* AppDelegate.swift */,
 				B9C0CEDA2508F63F006D246E /* SceneDelegate.swift */,
-				B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */,
 				B940A45F250E5B57006BDFBB /* Settings.bundle */,
 				B9C0CEE12508F641006D246E /* Assets.xcassets */,
 				B9C0CEE32508F641006D246E /* LaunchScreen.storyboard */,
@@ -993,10 +1004,8 @@
 		B9CEA76922D8F1F50055C9A3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				B94215F026423A58003F94A0 /* StringExtension.swift */,
 				B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */,
 				B9D8E43923D345D70078A057 /* UUIDExtension.swift */,
-				B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */,
 				B92E2AFB23E4958200BB4C0E /* UNNotificationContentExtension.swift */,
 				B90C297125E3FB80004466C9 /* SIMDExtension.swift */,
 			);
@@ -1034,6 +1043,7 @@
 				B929FAF724CECAC800BC773A /* AppleMusic */,
 				B9C0CED72508F63F006D246E /* Rearview */,
 				B9F4377C25D41C19004B9140 /* RearviewKit */,
+				B92B8418268C63870019D050 /* Shared */,
 				B9DC5B22229D59BE00B645D5 /* Products */,
 				B9CD1D8B22A51AAD00170082 /* Frameworks */,
 				FC2BACFC9EC4F82C9699C39B /* Pods */,
@@ -1068,7 +1078,6 @@
 				B9741F7623DF201A00F061E7 /* Inbox */,
 				B904A2A4243968840087BD4A /* Maps */,
 				B97B0D8724C040A9006B675B /* BluetoothAudio */,
-				B9C04B41257775B8001D6E0F /* WebViewController.swift */,
 				B97BAE6124B61DB100AE7D13 /* Vehicle.swift */,
 				B92A61102576472A0073AB7B /* Assistant.swift */,
 				B9640ABC2575EBF200B779AD /* Firebase */,
@@ -1082,7 +1091,6 @@
 				B94BD2E82680486700B768A2 /* BorderedLabel.swift */,
 				B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */,
 				B90666DD247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift */,
-				B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */,
 				B9CEA76922D8F1F50055C9A3 /* Extensions */,
 				B9BF2F0323F6946100967316 /* Vendor */,
 				B9CEA76A22D8F2380055C9A3 /* Storyboards */,
@@ -1841,7 +1849,7 @@
 				B9A481FE23EF01DB00AA7590 /* SuccessCheckmarkView.swift in Sources */,
 				B9C2456523EDBB4800E00523 /* FloatButton.swift in Sources */,
 				B964BCC323E066FF00288E0D /* AppDelegate.swift in Sources */,
-				B9025F63254D21E1001E25DF /* PairedVehicle.swift in Sources */,
+				B9B4F700268CB366009C5DC5 /* PairedVehicle.swift in Sources */,
 				B988A66C254D0E570012A4CB /* PairingRequirementViewController.swift in Sources */,
 				B964BCC523E066FF00288E0D /* SceneDelegate.swift in Sources */,
 				B98B784D23ED530E00A5102F /* SignInWithAppleViewController.swift in Sources */,
@@ -1854,7 +1862,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B964BCDB23E067EB00288E0D /* ShareViewController.swift in Sources */,
-				B9025F68254D2260001E25DF /* PairedVehicle.swift in Sources */,
+				B9B4F701268CB367009C5DC5 /* PairedVehicle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1863,10 +1871,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9D4AF2E2673203400849129 /* UTTypeExtension.swift in Sources */,
+				B9B4F702268CB3D0009C5DC5 /* CLLocationCoordinate2DExtension.swift in Sources */,
 				B9D4AF22267124FC00849129 /* DashCloudClient.swift in Sources */,
 				B98B784223ED4C5A00A5102F /* GoogleServieInfo.swift in Sources */,
 				B98B784123ED4C5000A5102F /* Item.swift in Sources */,
-				B9D4AF232671313900849129 /* CLLocationCoordinate2DExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1875,7 +1883,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9A3B67E26537A9B00D1D64C /* ActionViewController.swift in Sources */,
-				B9C87A1826671CCE00ABCBB4 /* ParkingSearchURLItem.swift in Sources */,
+				B9B4F703268CB3F5009C5DC5 /* ParkingSearchURLItem.swift in Sources */,
 				B9D4AF2A26727D8000849129 /* MapItemFetcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
