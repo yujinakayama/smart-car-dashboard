@@ -378,12 +378,12 @@ extension LocationInformationWidgetViewController {
             switch road.roadType {
             case .trunk:
                 return "国道\(routeNumber)号"
-            case .primary, .secondary:
+            case .primary, .secondary, .tertiary:
+                // TODO: Roads having route number are mostly 都道府県道,
+                //   but some 市道 that are considered 主要地方道 also have route number (e.g. 横浜市道環状2号).
+                //   Handle those cases with the database: https://www.mlit.go.jp/notice/noticedata/sgml/1993/23015010/23015010.html
                 let prefecture = address?.prefecture ?? "都道府県"
                 return "\(prefecture)道\(routeNumber)号"
-            case .tertiary:
-                let city = address?.city ?? "市町村"
-                return "\(city)道\(routeNumber)号"
             default:
                 return nil
             }

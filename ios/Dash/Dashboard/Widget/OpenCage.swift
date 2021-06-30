@@ -180,9 +180,9 @@ extension OpenCage {
     enum RoadType: String, Decodable {
         case motorway // 高速道路
         case trunk // 国道
-        case primary // 都道府県道
-        case secondary // 都道府県道
-        case tertiary // 市町村道
+        case primary // 主要地方道 (mostly 都道府県道 but some 市道 are included such as 横浜市道環状2号; mostly 2-digits route number)
+        case secondary // 一般都道府県道 (3-digits route number)
+        case tertiary // Mostly 市町村道 having popular name, but some 都道府県道 are included such as 東京都道441号線, which is a 特例都道
         case unclassified
         case residential
         case livingStreet = "living_street"
