@@ -795,16 +795,24 @@
 			path = Music;
 			sourceTree = "<group>";
 		};
+		B94C0B71268C986600BAA450 /* LocationInformationWidget */ = {
+			isa = PBXGroup;
+			children = (
+				B980071F2678D6AF00FC703E /* LocationInformationWidgetViewController.swift */,
+				B94A599F26826E960074368A /* LocationInformationDebugViewController.swift */,
+				B980071D2678B81C00FC703E /* OpenCage.swift */,
+			);
+			path = LocationInformationWidget;
+			sourceTree = "<group>";
+		};
 		B954CA2825693CD100BAD0F0 /* Widget */ = {
 			isa = PBXGroup;
 			children = (
 				B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */,
 				B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */,
-				B980071F2678D6AF00FC703E /* LocationInformationWidgetViewController.swift */,
-				B94A599F26826E960074368A /* LocationInformationDebugViewController.swift */,
+				B94C0B71268C986600BAA450 /* LocationInformationWidget */,
 				B92A97D925E0AE8900D70A14 /* GForceMeterWidgetViewController.swift */,
 				B9F272C3259C91990098CB3B /* AltitudeWidgetViewController.swift */,
-				B980071D2678B81C00FC703E /* OpenCage.swift */,
 			);
 			path = Widget;
 			sourceTree = "<group>";
