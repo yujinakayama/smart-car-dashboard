@@ -9,12 +9,7 @@
 import UIKit
 import CoreLocation
 
-protocol LocationInformationWidgetViewControllerDelegate: NSObjectProtocol {
-    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentLocation location: CLLocation)
-    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentPlace place: OpenCage.Place, for location: CLLocation, reason: LocationInformationWidgetViewController.UpdateReason)
-}
-
-class LocationInformationWidgetViewController: UIViewController, CLLocationManagerDelegate {
+class LocationInformationWidgetViewController: UIViewController, RoadTrackerDelegate {
     @IBOutlet weak var roadView: UIView!
     @IBOutlet weak var roadNameLabel: UILabel!
     @IBOutlet weak var canonicalRoadNameLabel: UILabel!
@@ -22,68 +17,16 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var lowLocationAccuracyLabel: UILabel!
 
-    weak var delegate: LocationInformationWidgetViewControllerDelegate?
+    let roadTracker = RoadTracker()
 
-    // https://opencagedata.com/pricing
-    let maximumRequestCountPerDay = 2500
+    var currentPlace: OpenCage.Place?
 
-    // 34.56 seconds
-    lazy var fixedUpdateInterval: TimeInterval = TimeInterval((60 * 60 * 24) / maximumRequestCountPerDay)
-
-    let minimumMovementDistanceForIntervalUpdate: CLLocationDistance = 10
-
-    lazy var locationManager: CLLocationManager = {
-        let locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        return locationManager
-    }()
-
-    // horizontalAccuracy returns fixed value 65.0 in reinforced concrete buildings, which is unstable
-    let unreliableLocationAccuracy: CLLocationAccuracy = 65
-
-    var isMetering = false
-
-    lazy var openCage: OpenCage = {
-        let path = Bundle.main.path(forResource: "opencage_api_key", ofType: "txt")!
-        let apiKey = try! String(contentsOfFile: path)
-        return OpenCage(apiKey: apiKey)
-    }()
-
-    var currentRequestTask: URLSessionTask?
-
-    var currentPlace: OpenCage.Place? {
-        didSet {
-            currentRegion = currentPlace?.region.extended(by: Self.regionExtensionDistance)
-
-            guard let newPlace = currentPlace else { return }
-
-            var shouldAnimate = false
-
-            if let oldPlace = oldValue {
-                shouldAnimate = RoadName(place: oldPlace) != RoadName(place: newPlace)
-            } else {
-                shouldAnimate = true
-            }
-
-            DispatchQueue.main.async {
-                self.updateLabels(for: newPlace, animated: shouldAnimate)
-            }
-        }
-    }
-
-    var currentRegion: OpenCage.Region?
-
-    // We should extend original regions to avoid too frequent boundary detection caused by GPS errors
-    // especially on roads running through north to south, or east to west, which tend to have very narrow region.
-    static let regionExtensionDistance: CLLocationDistance = 5
-
-    var lastRequestLocation: CLLocation?
-
-    let vehicleMovement = VehicleMovement()
+    weak var debugger: RoadTrackerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        roadTracker.delegate = self
 
         setLowLocationAccuracyLabelText()
 
@@ -103,7 +46,7 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        if !isMetering {
+        if !roadTracker.isTracking {
             roadNameLabel.text = nil
             canonicalRoadNameLabel.text = nil
             addressLabel.text = nil
@@ -113,124 +56,38 @@ class LocationInformationWidgetViewController: UIViewController, CLLocationManag
 
             activityIndicatorView.startAnimating()
 
-            startMetering()
+            roadTracker.startTracking()
         }
     }
 
     override func viewDidDisappear(_ animated: Bool) {
-        stopMetering()
+        roadTracker.stopTracking()
         super.viewDidDisappear(animated)
     }
 
-    func startMetering() {
-        logger.info()
-
-        switch locationManager.authorizationStatus {
-        case .authorizedAlways, .authorizedWhenInUse:
-            locationManager.startUpdatingLocation()
-            isMetering = true
-        default:
-            locationManager.requestWhenInUseAuthorization()
+    func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentLocation location: CLLocation) {
+        DispatchQueue.main.async {
+            self.lowLocationAccuracyLabel.isHidden = roadTracker.considersLocationAccurate(location)
+            self.debugger?.roadTracker(roadTracker, didUpdateCurrentLocation: location)
         }
     }
 
-    func stopMetering() {
-        logger.info()
+    func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentPlace place: OpenCage.Place, for location: CLLocation, with reason: RoadTracker.UpdateReason) {
+        var shouldAnimate = false
 
-        locationManager.stopUpdatingLocation()
-        isMetering = false
-
-        currentRequestTask?.cancel()
-        currentRequestTask = nil
-        currentPlace = nil
-        lastRequestLocation = nil
-        vehicleMovement.reset()
-    }
-
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        logger.info(manager.authorizationStatus.rawValue)
-
-        switch manager.authorizationStatus {
-        case .authorizedAlways, .authorizedWhenInUse:
-            locationManager.startUpdatingLocation()
-            isMetering = true
-        default:
-            break
-        }
-    }
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        logger.debug()
-        guard let location = locations.last else { return }
-        delegate?.locationInformationWidget(self, didUpdateCurrentLocation: location)
-        updateIfNeeded(location: location)
-    }
-
-    func updateIfNeeded(location: CLLocation) {
-        let isLocationAccuracyReliable = location.horizontalAccuracy < unreliableLocationAccuracy
-        lowLocationAccuracyLabel.isHidden = isLocationAccuracyReliable
-
-        vehicleMovement.record(location)
-
-        // Avoid parallel requests
-        guard currentRequestTask == nil else { return }
-
-        // If we have moved out from the region of the previous road, update.
-        if isLocationAccuracyReliable,
-           let currentRegion = currentRegion, let lastRequestLocation = lastRequestLocation,
-           currentRegion.contains(lastRequestLocation.coordinate), !currentRegion.contains(location.coordinate)
-        {
-            performRequest(for: location, reason: .outOfRegion)
-            return
-        }
-
-        // Even if we are still considered to be inside of the region of the current road,
-        // update in a fixed interval because:
-        // * The region is rectangular but actual road is not
-        // * The current road may be wrong
-        if let lastRequestLocation = lastRequestLocation {
-            if location.timestamp >= lastRequestLocation.timestamp + fixedUpdateInterval,
-               location.distance(from: lastRequestLocation) >= minimumMovementDistanceForIntervalUpdate
-            {
-                performRequest(for: location, reason: .interval)
-                return
-            }
+        if let previousPlace = currentPlace {
+            shouldAnimate = RoadName(place: previousPlace) != RoadName(place: place)
         } else {
-            performRequest(for: location, reason: .initial)
-            return
+            shouldAnimate = true
         }
 
-        // If we turned at an intersection, update
-        if isLocationAccuracyReliable, vehicleMovement.isEstimatedToHaveJustTurned {
-            vehicleMovement.reset()
-
-            DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
-                self.performRequest(for: self.locationManager.location ?? location, reason: .turn)
-            }
-
-            return
+        DispatchQueue.main.async {
+            self.activityIndicatorView.stopAnimating()
+            self.updateLabels(for: place, animated: shouldAnimate)
+            self.debugger?.roadTracker(roadTracker, didUpdateCurrentPlace: place, for: location, with: reason)
         }
-    }
 
-    func performRequest(for location: CLLocation, reason: UpdateReason) {
-        currentRequestTask = openCage.reverseGeocode(coordinate: location.coordinate) { (result) in
-            logger.debug(result)
-
-            switch result {
-            case .success(let place):
-                self.currentPlace = place
-                self.lastRequestLocation = location
-
-                DispatchQueue.main.async {
-                    self.activityIndicatorView.stopAnimating()
-                    self.delegate?.locationInformationWidget(self, didUpdateCurrentPlace: place, for: location, reason: reason)
-                }
-            case .failure(let error):
-                logger.error(error)
-            }
-
-            self.currentRequestTask = nil
-        }
+        currentPlace = place
     }
 
     func updateLabels(for place: OpenCage.Place, animated: Bool) {
@@ -306,7 +163,7 @@ extension LocationInformationWidgetViewController: UIContextMenuInteractionDeleg
         let actionProvider: UIContextMenuActionProvider = { (suggestedActions) in
             let action = UIAction(title: "Debug", image: UIImage(systemName: "ladybug")) { (action) in
                 let debugViewContoller = LocationInformationDebugViewController()
-                self.delegate = debugViewContoller
+                self.debugger = debugViewContoller
 
                 let navigationController = UINavigationController(rootViewController: debugViewContoller)
                 navigationController.modalPresentationStyle = .overCurrentContext
@@ -317,23 +174,5 @@ extension LocationInformationWidgetViewController: UIContextMenuInteractionDeleg
         }
 
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: actionProvider)
-    }
-}
-
-extension LocationInformationWidgetViewController {
-    enum UpdateReason: String {
-        case initial
-        case interval
-        case turn
-        case outOfRegion
-
-        var description: String {
-            switch self {
-            case .outOfRegion:
-                return "Out of Region"
-            default:
-                return rawValue.capitalized
-            }
-        }
     }
 }

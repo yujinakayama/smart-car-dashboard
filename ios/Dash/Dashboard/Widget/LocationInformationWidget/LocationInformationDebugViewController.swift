@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import DirectionalUserLocationAnnotationView
 
-class LocationInformationDebugViewController: UIViewController, MKMapViewDelegate, LocationInformationWidgetViewControllerDelegate, UIGestureRecognizerDelegate {
+class LocationInformationDebugViewController: UIViewController, MKMapViewDelegate, RoadTrackerDelegate, UIGestureRecognizerDelegate {
     lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.delegate = self
@@ -36,7 +36,7 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
     var recentLocations: [CLLocation] = []
     var recentLocationsOverlay: MKOverlay?
 
-    typealias RequestContext = (place: OpenCage.Place, location: CLLocation, updateReason: LocationInformationWidgetViewController.UpdateReason)
+    typealias RequestContext = (place: OpenCage.Place, location: CLLocation, updateReason: RoadTracker.UpdateReason)
 
     var currentRequestContext: RequestContext? {
         didSet {
@@ -172,7 +172,7 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
         }
     }
 
-    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentLocation location: CLLocation) {
+    func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentLocation location: CLLocation) {
         appendToRecentLocations(location)
 
         if let recentLocationsOverlay = recentLocationsOverlay {
@@ -184,7 +184,7 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
         locationAccuracyLabel.text = String(format: "Location Accuracy: %.1f", location.horizontalAccuracy)
     }
 
-    func locationInformationWidget(_ viewController: LocationInformationWidgetViewController, didUpdateCurrentPlace place: OpenCage.Place, for location: CLLocation, reason: LocationInformationWidgetViewController.UpdateReason) {
+    func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentPlace place: OpenCage.Place, for location: CLLocation, with reason: RoadTracker.UpdateReason) {
         previousRequestContext = currentRequestContext
         currentRequestContext = (place: place, location: location, updateReason: reason)
     }
@@ -209,7 +209,7 @@ class LocationInformationDebugViewController: UIViewController, MKMapViewDelegat
     }
 
     func makeOverlay(for place: OpenCage.Place) -> MKOverlay {
-        let region = place.region.extended(by: LocationInformationWidgetViewController.regionExtensionDistance)
+        let region = place.region.extended(by: RoadTracker.regionExtensionDistance)
 
         let northeast = region.northeast
         let southwest = region.southwest

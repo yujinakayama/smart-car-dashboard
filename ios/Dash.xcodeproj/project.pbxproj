@@ -165,6 +165,7 @@
 		B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */; };
 		B9CEA76622D89A400055C9A3 /* ETCDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */; };
 		B9CEA76E22D911140055C9A3 /* ETCSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76D22D911140055C9A3 /* ETCSplitViewController.swift */; };
+		B9D02089268CD1850020BF9A /* RoadTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D02088268CD1850020BF9A /* RoadTracker.swift */; };
 		B9D0208B268CD2F60020BF9A /* VehicleMovement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D0208A268CD2F60020BF9A /* VehicleMovement.swift */; };
 		B9D0260E24BF7704005C03B1 /* BluetoothDeviceHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B9D0260524BF7704005C03B1 /* BluetoothDeviceHandler.m */; };
 		B9D0260F24BF7704005C03B1 /* ClassicBluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D0260624BF7704005C03B1 /* ClassicBluetoothManager.swift */; };
@@ -555,6 +556,7 @@
 		B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationCenter.swift; sourceTree = "<group>"; };
 		B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDataStore.swift; sourceTree = "<group>"; };
 		B9CEA76D22D911140055C9A3 /* ETCSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCSplitViewController.swift; sourceTree = "<group>"; };
+		B9D02088268CD1850020BF9A /* RoadTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoadTracker.swift; sourceTree = "<group>"; };
 		B9D0208A268CD2F60020BF9A /* VehicleMovement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleMovement.swift; sourceTree = "<group>"; };
 		B9D0260524BF7704005C03B1 /* BluetoothDeviceHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothDeviceHandler.m; sourceTree = "<group>"; };
 		B9D0260624BF7704005C03B1 /* ClassicBluetoothManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicBluetoothManager.swift; sourceTree = "<group>"; };
@@ -803,6 +805,7 @@
 			isa = PBXGroup;
 			children = (
 				B980071F2678D6AF00FC703E /* LocationInformationWidgetViewController.swift */,
+				B9D02088268CD1850020BF9A /* RoadTracker.swift */,
 				B94A599F26826E960074368A /* LocationInformationDebugViewController.swift */,
 				B9B4F706268CB55D009C5DC5 /* RoadName.swift */,
 				B9D0208A268CD2F60020BF9A /* VehicleMovement.swift */,
@@ -1933,6 +1936,7 @@
 				B9B4F707268CB55D009C5DC5 /* RoadName.swift in Sources */,
 				B95F514E23E5BBF70063CB3D /* SharedItem.swift in Sources */,
 				B944C69024A9E4C8000D1E99 /* MusicViewController.swift in Sources */,
+				B9D02089268CD1850020BF9A /* RoadTracker.swift in Sources */,
 				B9E96CC822A4EF1300C2E009 /* ETCPayment.swift in Sources */,
 				B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */,
 				B9CEA76622D89A400055C9A3 /* ETCDataStore.swift in Sources */,
