@@ -366,7 +366,7 @@ fileprivate class RequestLocationRenderer: MKCircleRenderer {
 }
 
 fileprivate func roadName(for place: OpenCage.Place) -> String? {
-    let roadName = LocationInformationWidgetViewController.RoadName(place: place)
+    let roadName = RoadName(place: place)
 
     if let popularName = roadName.popularName {
         if let canonicalName = roadName.canonicalRoadName {
