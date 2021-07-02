@@ -115,7 +115,7 @@ struct PPParkError: Error, Decodable {
     }
 }
 
-struct Parking: Decodable {
+public struct Parking: Decodable {
     var address: String
     var capacityDescription: String?
     var coordinate: CLLocationCoordinate2D
@@ -147,7 +147,7 @@ struct Parking: Decodable {
         case vacancyInfo = "fv"
     }
 
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
 
         address = try values.decode(String.self, forKey: .address)
