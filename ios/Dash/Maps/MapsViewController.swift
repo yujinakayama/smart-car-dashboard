@@ -43,9 +43,6 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         return gestureRecognizer
     }()
 
-    let userTrackingModeRestorationInterval: TimeInterval = 10
-    var userTrackingModeRestorationTimer: Timer?
-
     lazy var parkingSearchManager: ParkingSearchMapViewManager = {
         let parkingSearchManager = ParkingSearchMapViewManager(mapView: mapView)
         parkingSearchManager.delegate = self
@@ -145,36 +142,12 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         switch currentMode {
         case .standard:
             parkingSearchOptionsSheetView.hide()
-
             parkingSearchManager.clearMapView()
-
-            if mapView.userTrackingMode != .follow {
-                mapView.setUserTrackingMode(.follow, animated: true)
-            }
         case .parkingSearch:
             parkingSearchOptionsSheetView.show()
-            userTrackingModeRestorationTimer?.invalidate()
         }
 
         updatePointOfInterestFilter()
-    }
-
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        mapViewDidTouch()
-        return true
-    }
-
-    private func mapViewDidTouch() {
-        guard currentMode == .standard else { return }
-
-        userTrackingModeRestorationTimer?.invalidate()
-
-        userTrackingModeRestorationTimer = Timer.scheduledTimer(withTimeInterval: userTrackingModeRestorationInterval, repeats: false) { [weak self] (timer) in
-            guard let self = self else { return }
-            if self.mapView.userTrackingMode == .follow { return }
-            self.mapView.setUserTrackingMode(.follow, animated: true)
-            self.userTrackingModeRestorationTimer = nil
-        }
     }
 
     @objc private func gestureRecognizerDidRecognizeLongPress() {
