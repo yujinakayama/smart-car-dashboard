@@ -92,6 +92,10 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         return button
     }()
 
+    private var sharedItemDatabaseObservation: NSKeyValueObservation?
+
+    private var sharedLocationAnnotations: [MKAnnotation] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -99,13 +103,21 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
 
         mapView.delegate = self
         mapView.register(DirectionalUserLocationAnnotationView.self, forAnnotationViewWithReuseIdentifier: "DirectionalUserLocationAnnotationView")
-        mapView.addGestureRecognizer(gestureRecognizer)
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "MKMarkerAnnotationView")
         mapView.setUserTrackingMode(.follow, animated: false)
+
+        mapView.addGestureRecognizer(gestureRecognizer)
 
         mapView.addInteraction(UIDropInteraction(delegate: self))
 
         changeSheetPlacementIfNeeded()
         view.addSubview(parkingSearchOptionsSheetView)
+
+        sharedItemDatabaseObservation = Firebase.shared.observe(\.sharedItemDatabase, options: .initial) { [weak self] (firebase, change) in
+            self?.sharedItemDatabaseDidChange()
+        }
+
+        NotificationCenter.default.addObserver(self, selector: #selector(sharedItemDatabaseDidUpdateItems), name: .SharedItemDatabaseDidUpdateItems, object: nil)
 
         applyCurrentMode()
     }
@@ -176,6 +188,8 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             return mapView.dequeueReusableAnnotationView(withIdentifier: "DirectionalUserLocationAnnotationView", for: annotation)
+        } else if annotation is SharedLocationAnnotation {
+            return mapView.dequeueReusableAnnotationView(withIdentifier: "MKMarkerAnnotationView", for: annotation)
         } else if currentMode == .parkingSearch {
             return parkingSearchManager.view(for: annotation)
         } else {
@@ -240,6 +254,38 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
 
     var pointOfInterestFilterForParkingSearchMode: MKPointOfInterestFilter {
         return MKPointOfInterestFilter(including: [.parking, .publicTransport])
+    }
+
+    func sharedItemDatabaseDidChange() {
+        removeSharedLocationAnnotations()
+    }
+
+    @objc func sharedItemDatabaseDidUpdateItems(notification: Notification) {
+        removeSharedLocationAnnotations()
+
+        guard let database = Firebase.shared.sharedItemDatabase else { return }
+
+        let threeDaysAgo = Date(timeIntervalSinceNow: -3 * 24 * 60 * 60)
+
+        let recentLocations = database.items.filter { (item) in
+            guard item is Location else { return false }
+            guard let creationDate = item.creationDate else { return false }
+            return creationDate >= threeDaysAgo
+        } as! [Location]
+
+        sharedLocationAnnotations = recentLocations.map { (location) in
+            let annotation = SharedLocationAnnotation()
+            annotation.title = location.title
+            annotation.coordinate = location.coordinate
+            return annotation
+        }
+
+        mapView.addAnnotations(sharedLocationAnnotations)
+    }
+
+    func removeSharedLocationAnnotations() {
+        mapView.removeAnnotations(sharedLocationAnnotations)
+        sharedLocationAnnotations = []
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -313,4 +359,7 @@ extension MapsViewController: TabReselectionRespondable {
     func tabBarControllerDidReselectAlreadyVisibleTab(_ tabBarController: UITabBarController) {
         mapView.setUserTrackingMode(.follow, animated: true)
     }
+}
+
+fileprivate class SharedLocationAnnotation: MKPointAnnotation {
 }
