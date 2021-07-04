@@ -82,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         if Firebase.shared.authentication.handle(url) {
             return true
         } else if let urlItem = ParkingSearchURLItem(url: url) {
-            presentParkingSearchViewController(mapItem: urlItem.mapItem)
+            searchParkingsInMaps(mapItem: urlItem.mapItem)
             return true
         } else {
             return false
@@ -93,25 +93,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         Firebase.shared.messaging.deviceToken = deviceToken
     }
 
-    private func presentParkingSearchViewController(mapItem: MKMapItem) {
-        let parkingSearchViewController = ParkingSearchViewController(destination: mapItem)
-
-        parkingSearchViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .done,
-            target: self,
-            action: #selector(dismissModalViewController)
-        )
-
-        modalViewController = parkingSearchViewController
-
-        let navigationController = UINavigationController(rootViewController: parkingSearchViewController)
-        navigationController.modalPresentationStyle = .fullScreen
-
-        window?.rootViewController?.present(navigationController, animated: true)
-    }
-
-
-    @objc func dismissModalViewController() {
-        modalViewController?.dismiss(animated: true)
+    private func searchParkingsInMaps(mapItem: MKMapItem) {
+        let mapsViewController = tabBarController.viewController(for: .maps) as! MapsViewController
+        mapsViewController.parkingSearchDestination = mapItem.placemark.coordinate
+        tabBarController.selectedViewController = mapsViewController
     }
 }
