@@ -102,6 +102,8 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         mapView.addGestureRecognizer(gestureRecognizer)
         mapView.setUserTrackingMode(.follow, animated: false)
 
+        mapView.addInteraction(UIDropInteraction(delegate: self))
+
         changeSheetPlacementIfNeeded()
         view.addSubview(parkingSearchOptionsSheetView)
 
@@ -255,6 +257,24 @@ extension MapsViewController: ParkingSearchMapViewManagerDelegate {
         navigationController.isToolbarHidden = false
 
         present(navigationController, animated: true)
+    }
+}
+
+extension MapsViewController: UIDropInteractionDelegate {
+    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
+        return session.canLoadObjects(ofClass: MKMapItem.self)
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
+        return .init(operation: .copy)
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
+        session.loadObjects(ofClass: MKMapItem.self) { (mapItems) in
+            if let mapItem = mapItems.first as? MKMapItem {
+                self.parkingSearchDestination = mapItem.placemark.coordinate
+            }
+        }
     }
 }
 
