@@ -231,11 +231,20 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
 
     func sharedItemDatabaseDidChange() {
         removeSharedLocationAnnotations()
+        addSharedLocationAnnotations()
     }
 
     @objc func sharedItemDatabaseDidUpdateItems(notification: Notification) {
         removeSharedLocationAnnotations()
+        addSharedLocationAnnotations()
+    }
 
+    private func removeSharedLocationAnnotations() {
+        mapView.removeAnnotations(sharedLocationAnnotations)
+        sharedLocationAnnotations = []
+    }
+
+    private func addSharedLocationAnnotations() {
         guard let database = Firebase.shared.sharedItemDatabase else { return }
 
         let threeDaysAgo = Date(timeIntervalSinceNow: -3 * 24 * 60 * 60)
@@ -254,11 +263,6 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         }
 
         mapView.addAnnotations(sharedLocationAnnotations)
-    }
-
-    func removeSharedLocationAnnotations() {
-        mapView.removeAnnotations(sharedLocationAnnotations)
-        sharedLocationAnnotations = []
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
