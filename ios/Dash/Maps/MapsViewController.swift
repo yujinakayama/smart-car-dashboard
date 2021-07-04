@@ -158,9 +158,7 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
 
         let longPressPoint = gestureRecognizer.location(in: mapView)
         let coordinate = mapView.convert(longPressPoint, toCoordinateFrom: mapView)
-        let destination = MKMapItem(placemark: MKPlacemark(coordinate: coordinate))
-        destination.name = "目的地"
-        parkingSearchManager.setDestination(destination)
+        parkingSearchManager.setDestination(coordinate)
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

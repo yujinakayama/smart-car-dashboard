@@ -38,11 +38,7 @@ public class ParkingSearchMapViewManager {
         return mapView.annotations.filter { $0 is ParkingAnnotation } as! [ParkingAnnotation]
     }
 
-    private var destination: MKMapItem!
-
-    private var destinationCoordinate: CLLocationCoordinate2D {
-        return destination.placemark.coordinate
-    }
+    private var destination: CLLocationCoordinate2D!
 
     private let ppparkClient = PPParkClient(clientKey: "IdkUdfal673kUdj00")
 
@@ -64,8 +60,8 @@ public class ParkingSearchMapViewManager {
         optionsView.timeDurationPicker.addTarget(self, action: #selector(searchParkings), for: .valueChanged)
     }
 
-    public func setDestination(_ mapItem: MKMapItem) {
-        destination = mapItem
+    public func setDestination(_ destionation: CLLocationCoordinate2D) {
+        self.destination = destionation
         applyDestination()
     }
 
@@ -94,10 +90,14 @@ public class ParkingSearchMapViewManager {
 
     private func addDestinationAnnotation() {
         let annotation = MKPointAnnotation()
-        annotation.coordinate = destinationCoordinate
-        annotation.title = destination.name
+        annotation.coordinate = destination
+        annotation.title = "周辺の駐車場を検索中"
 
         mapView.addAnnotation(annotation)
+
+        DispatchQueue.main.async {
+            self.mapView.selectAnnotation(annotation, animated: true)
+        }
 
         destinationAnnotation = annotation
     }
@@ -105,7 +105,7 @@ public class ParkingSearchMapViewManager {
     private func calculateExpectedTravelTime(completion: @escaping (TimeInterval?) -> Void) {
         let request = MKDirections.Request()
         request.source = MKMapItem.forCurrentLocation()
-        request.destination = destination
+        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: destination))
         request.transportType = .automobile
 
         MKDirections(request: request).calculate { (response, error) in
@@ -124,8 +124,12 @@ public class ParkingSearchMapViewManager {
 
         guard let timeDuration = optionsView.timeDurationPicker.selectedDuration else { return }
 
+        if let destinationAnnotation = destinationAnnotation {
+            mapView.selectAnnotation(destinationAnnotation, animated: true)
+        }
+
         currentSearchTask = ppparkClient.searchParkings(
-            around: destinationCoordinate,
+            around: destination,
             entranceDate: optionsView.entranceDatePicker.date,
             exitDate: optionsView.entranceDatePicker.date + timeDuration
         ) { [weak self] (result) in
@@ -138,6 +142,10 @@ public class ParkingSearchMapViewManager {
                 }
             case .failure(let error):
                 print(error)
+            }
+
+            if let destinationAnnotation = self.destinationAnnotation {
+                self.mapView.view(for: destinationAnnotation)?.canShowCallout = false
             }
         }
     }
@@ -192,6 +200,14 @@ public class ParkingSearchMapViewManager {
         view.animatesDrop = true
         view.canShowCallout = true
         view.displayPriority = .required
+
+        let activityIndicatorView = UIActivityIndicatorView()
+        activityIndicatorView.startAnimating()
+        activityIndicatorView.sizeToFit()
+        view.rightCalloutAccessoryView = activityIndicatorView
+
+        view.leftCalloutAccessoryView = UIView() // To balance the horizontal edge spacings
+
         return view
     }
 

@@ -129,7 +129,7 @@ open class ParkingSearchViewController: UIViewController {
         let region = MKCoordinateRegion(center: destination.placemark.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
         mapView.setRegion(region, animated: false)
 
-        searchManager.setDestination(destination)
+        searchManager.setDestination(destination.placemark.coordinate)
     }
 
     open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
