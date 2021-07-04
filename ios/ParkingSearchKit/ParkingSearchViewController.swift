@@ -40,9 +40,26 @@ open class ParkingSearchViewController: UIViewController {
 
     lazy var searchManager = ParkingSearchMapViewManager(mapView: mapView)
 
-    var optionView: UIView {
+    var optionsView: ParkingSearchOptionsView {
         return searchManager.optionsView
     }
+
+    lazy var optionsSheetView: SheetView = {
+        let sheetView = SheetView()
+
+        sheetView.addSubview(optionsView)
+
+        optionsView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            optionsView.leadingAnchor.constraint(equalTo: sheetView.layoutMarginsGuide.leadingAnchor),
+            sheetView.layoutMarginsGuide.trailingAnchor.constraint(equalTo: optionsView.trailingAnchor),
+            optionsView.topAnchor.constraint(equalTo: sheetView.layoutMarginsGuide.topAnchor),
+            sheetView.layoutMarginsGuide.bottomAnchor.constraint(equalTo: optionsView.bottomAnchor),
+        ])
+
+        return sheetView
+    }()
 
     let locationManager = CLLocationManager()
 
@@ -80,7 +97,6 @@ open class ParkingSearchViewController: UIViewController {
 
     func configureSubviews() {
         view.addSubview(mapView)
-        view.addSubview(optionView)
 
         view.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
 
@@ -91,11 +107,16 @@ open class ParkingSearchViewController: UIViewController {
             view.bottomAnchor.constraint(equalTo: mapView.bottomAnchor),
         ])
 
-        NSLayoutConstraint.activate([
-            optionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: optionView.trailingAnchor),
-            view.bottomAnchor.constraint(equalTo: optionView.bottomAnchor),
-        ])
+        changeSheetPlacementIfNeeded()
+        view.addSubview(optionsSheetView)
+    }
+
+    private func changeSheetPlacementIfNeeded() {
+        if traitCollection.horizontalSizeClass == .compact {
+            optionsSheetView.placement = .bottomAttached
+        } else {
+            optionsSheetView.placement = .rightBottom
+        }
     }
 
     func applyDestination() {
@@ -109,6 +130,11 @@ open class ParkingSearchViewController: UIViewController {
         mapView.setRegion(region, animated: false)
 
         searchManager.setDestination(destination)
+    }
+
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        changeSheetPlacementIfNeeded()
     }
 }
 

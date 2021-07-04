@@ -9,21 +9,76 @@
 import UIKit
 import MapKit
 import DirectionalUserLocationAnnotationView
+import ParkingSearchKit
 
-class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate, TabReselectionRespondable {
-    enum RestorationCodingKeys: String {
-        case mapType
-    }
-
+class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mapTypeSegmentedControl: UISegmentedControl!
 
+    var currentMode: Mode = .standard {
+        didSet {
+            applyCurrentMode()
+        }
+    }
+
     let locationManager = CLLocationManager()
 
-    let gestureRecognizer = UIGestureRecognizer()
+    lazy var gestureRecognizer: UIGestureRecognizer = {
+        let gestureRecognizer = UILongPressGestureRecognizer()
+        gestureRecognizer.delegate = self
+        gestureRecognizer.minimumPressDuration = 0.75
+        gestureRecognizer.addTarget(self, action: #selector(gestureRecognizerDidRecognizeLongPress))
+        return gestureRecognizer
+    }()
 
     let userTrackingModeRestorationInterval: TimeInterval = 10
     var userTrackingModeRestorationTimer: Timer?
+
+    lazy var parkingSearchManager: ParkingSearchMapViewManager = {
+        let parkingSearchManager = ParkingSearchMapViewManager(mapView: mapView)
+        parkingSearchManager.delegate = self
+        return parkingSearchManager
+    }()
+
+    lazy var parkingSearchOptionsSheetView: SheetView = {
+        let stackView = UIStackView(arrangedSubviews: [
+            parkingSearchManager.optionsView,
+            parkingSearchQuittingButton,
+        ])
+
+        stackView.axis = .horizontal
+        stackView.alignment = .fill
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 8
+
+        let sheetView = SheetView()
+        sheetView.isHidden = true
+
+        sheetView.addSubview(stackView)
+
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: sheetView.layoutMarginsGuide.leadingAnchor),
+            sheetView.layoutMarginsGuide.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            stackView.topAnchor.constraint(equalTo: sheetView.layoutMarginsGuide.topAnchor),
+            sheetView.layoutMarginsGuide.bottomAnchor.constraint(equalTo: stackView.bottomAnchor),
+        ])
+
+        return sheetView
+    }()
+
+    lazy var parkingSearchQuittingButton: UIButton = {
+        let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 28, weight: .semibold)
+        let image = UIImage(systemName: "xmark.circle.fill", withConfiguration: symbolConfiguration)
+
+        let button = UIButton()
+        button.setImage(image, for: .normal)
+        button.tintColor = .tertiaryLabel
+        button.addTarget(self, action: #selector(parkingSearchQuittingButtonDidPush), for: .touchUpInside)
+        button.setContentHuggingPriority(.required, for: .horizontal)
+        return button
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,11 +87,13 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
 
         mapView.delegate = self
         mapView.register(DirectionalUserLocationAnnotationView.self, forAnnotationViewWithReuseIdentifier: "DirectionalUserLocationAnnotationView")
-
-        gestureRecognizer.delegate = self
         mapView.addGestureRecognizer(gestureRecognizer)
+        mapView.setUserTrackingMode(.follow, animated: false)
 
-        updatePointOfInterestFilter()
+        changeSheetPlacementIfNeeded()
+        view.addSubview(parkingSearchOptionsSheetView)
+
+        applyCurrentMode()
     }
 
     deinit {
@@ -46,39 +103,44 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         mapView.delegate = nil
     }
 
-    override func encodeRestorableState(with coder: NSCoder) {
-        super.encodeRestorableState(with: coder)
-        guard let mapView = mapView else { return } // For some reason mapView might be nil
-        coder.encode(Int(mapView.mapType.rawValue), forKey: RestorationCodingKeys.mapType.rawValue)
+    private func changeSheetPlacementIfNeeded() {
+        if traitCollection.horizontalSizeClass == .compact {
+            parkingSearchOptionsSheetView.placement = .bottomAttached
+        } else {
+            parkingSearchOptionsSheetView.placement = .rightBottom
+        }
     }
 
-    override func decodeRestorableState(with coder: NSCoder) {
-        if coder.containsValue(forKey: RestorationCodingKeys.mapType.rawValue),
-           let mapType = MKMapType(rawValue: UInt(coder.decodeInteger(forKey: RestorationCodingKeys.mapType.rawValue))),
-           let index = MapTypeSegmentedControlIndex(mapType)
-        {
-            mapTypeSegmentedControl.selectedSegmentIndex = index.rawValue
-            mapTypeSegmentedControlDidChange()
+    @objc func parkingSearchQuittingButtonDidPush() {
+        currentMode = .standard
+    }
+
+    func applyCurrentMode() {
+        switch currentMode {
+        case .standard:
+            parkingSearchOptionsSheetView.hide()
+
+            parkingSearchManager.clearMapView()
+
+            if mapView.userTrackingMode != .follow {
+                mapView.setUserTrackingMode(.follow, animated: true)
+            }
+        case .parkingSearch:
+            parkingSearchOptionsSheetView.show()
+            userTrackingModeRestorationTimer?.invalidate()
         }
 
-        super.decodeRestorableState(with: coder)
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        mapView.setUserTrackingMode(.follow, animated: false)
-    }
-
-    func tabBarControllerDidReselectAlreadyVisibleTab(_ tabBarController: UITabBarController) {
-        mapView.setUserTrackingMode(.follow, animated: true)
+        updatePointOfInterestFilter()
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         mapViewDidTouch()
-        return false
+        return true
     }
 
     private func mapViewDidTouch() {
+        guard currentMode == .standard else { return }
+
         userTrackingModeRestorationTimer?.invalidate()
 
         userTrackingModeRestorationTimer = Timer.scheduledTimer(withTimeInterval: userTrackingModeRestorationInterval, repeats: false) { [weak self] (timer) in
@@ -89,9 +151,23 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         }
     }
 
+    @objc private func gestureRecognizerDidRecognizeLongPress() {
+        guard gestureRecognizer.state == .began else { return }
+
+        currentMode = .parkingSearch
+
+        let longPressPoint = gestureRecognizer.location(in: mapView)
+        let coordinate = mapView.convert(longPressPoint, toCoordinateFrom: mapView)
+        let destination = MKMapItem(placemark: MKPlacemark(coordinate: coordinate))
+        destination.name = "目的地"
+        parkingSearchManager.setDestination(destination)
+    }
+
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             return mapView.dequeueReusableAnnotationView(withIdentifier: "DirectionalUserLocationAnnotationView", for: annotation)
+        } else if currentMode == .parkingSearch {
+            return parkingSearchManager.view(for: annotation)
         } else {
             return nil
         }
@@ -109,12 +185,21 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
     }
 
     func updatePointOfInterestFilter() {
-        mapView.pointOfInterestFilter = pointOfInterestFilter(for: mapView.mapType)
+        mapView.pointOfInterestFilter = pointOfInterestFilterForCurrentMode
+    }
+
+    var pointOfInterestFilterForCurrentMode: MKPointOfInterestFilter? {
+        switch currentMode {
+        case .standard:
+            return pointOfInterestFilterForStandardMode
+        case .parkingSearch:
+            return pointOfInterestFilterForParkingSearchMode
+        }
     }
 
     // TODO: Make customizable on UI
-    func pointOfInterestFilter(for mapType: MKMapType) -> MKPointOfInterestFilter? {
-        switch mapType {
+    var pointOfInterestFilterForStandardMode: MKPointOfInterestFilter? {
+        switch mapView.mapType {
         case .standard:
             return nil
         case .hybrid:
@@ -141,5 +226,63 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         default:
             return nil
         }
+    }
+
+    var pointOfInterestFilterForParkingSearchMode: MKPointOfInterestFilter {
+        return MKPointOfInterestFilter(including: [.parking, .publicTransport])
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        changeSheetPlacementIfNeeded()
+    }
+}
+
+extension MapsViewController: ParkingSearchMapViewManagerDelegate {
+    func parkingSearchMapViewManager(_ manager: ParkingSearchMapViewManager, didSelectParking parking: Parking, forReservationWebPage url: URL) {
+        let webViewController = WebViewController(url: url)
+        webViewController.navigationItem.title = parking.name
+
+        let navigationController = UINavigationController(rootViewController: webViewController)
+        navigationController.isToolbarHidden = false
+
+        present(navigationController, animated: true)
+    }
+}
+
+extension MapsViewController {
+    enum Mode: Int {
+        case standard
+        case parkingSearch
+    }
+}
+
+extension MapsViewController {
+    enum RestorationCodingKeys: String {
+        case mapType
+    }
+
+    override func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+        guard let mapView = mapView else { return } // For some reason mapView might be nil
+        coder.encode(Int(mapView.mapType.rawValue), forKey: RestorationCodingKeys.mapType.rawValue)
+    }
+
+    override func decodeRestorableState(with coder: NSCoder) {
+        if coder.containsValue(forKey: RestorationCodingKeys.mapType.rawValue),
+           let mapType = MKMapType(rawValue: UInt(coder.decodeInteger(forKey: RestorationCodingKeys.mapType.rawValue))),
+           let index = MapTypeSegmentedControlIndex(mapType)
+        {
+            mapTypeSegmentedControl.selectedSegmentIndex = index.rawValue
+            mapTypeSegmentedControlDidChange()
+        }
+
+        super.decodeRestorableState(with: coder)
+    }
+}
+
+extension MapsViewController: TabReselectionRespondable {
+    func tabBarControllerDidReselectAlreadyVisibleTab(_ tabBarController: UITabBarController) {
+        mapView.setUserTrackingMode(.follow, animated: true)
     }
 }

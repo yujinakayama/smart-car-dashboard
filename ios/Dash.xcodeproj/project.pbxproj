@@ -158,6 +158,7 @@
 		B9C0CEE22508F641006D246E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9C0CEE12508F641006D246E /* Assets.xcassets */; };
 		B9C0CEE52508F641006D246E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9C0CEE32508F641006D246E /* LaunchScreen.storyboard */; };
 		B9C0CEED250C3A27006D246E /* HeartAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEEC250C3A27006D246E /* HeartAnimation.swift */; };
+		B9C1DD1526922ABA0046E108 /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92650112691CE29005FD73D /* SheetView.swift */; };
 		B9C2455F23EDA2EA00E00523 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
 		B9C2456523EDBB4800E00523 /* FloatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C2456423EDBB4800E00523 /* FloatButton.swift */; };
 		B9C87A1726671CCE00ABCBB4 /* ParkingSearchURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */; };
@@ -414,6 +415,7 @@
 		B92451D523E3204D007556D5 /* GoogleServieInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleServieInfo.swift; sourceTree = "<group>"; };
 		B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexPathExtension.swift; sourceTree = "<group>"; };
 		B9253D7923E015A80037E156 /* Dash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dash.entitlements; sourceTree = "<group>"; };
+		B92650112691CE29005FD73D /* SheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetView.swift; sourceTree = "<group>"; };
 		B929FAF624CECAC800BC773A /* AppleMusic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AppleMusic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B929FAF824CECAC800BC773A /* AppleMusic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppleMusic.h; sourceTree = "<group>"; };
 		B929FAF924CECAC800BC773A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1136,6 +1138,7 @@
 				B9F8DC1225EA847E00F6FA55 /* ParkingSearchViewController.swift */,
 				B9D0208C268F643E0020BF9A /* ParkingSearchMapViewManager.swift */,
 				B9D0208E268F69490020BF9A /* ParkingSearchOptionsView.swift */,
+				B92650112691CE29005FD73D /* SheetView.swift */,
 				B93C04622642CD32002CD861 /* ParkingAnnotation.swift */,
 				B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */,
 				B9F8DBE725EA288B00F6FA55 /* PPParkClient.swift */,
@@ -2033,6 +2036,7 @@
 				B9DD4CD726517FBF0010B120 /* TimeDurationPicker.swift in Sources */,
 				B9DD4CD626517FBF0010B120 /* ParkingAnnotation.swift in Sources */,
 				B9D0208D268F643E0020BF9A /* ParkingSearchMapViewManager.swift in Sources */,
+				B9C1DD1526922ABA0046E108 /* SheetView.swift in Sources */,
 				B900A13A26529C38000ED1B9 /* UIButtonExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

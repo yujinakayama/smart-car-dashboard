@@ -116,19 +116,19 @@ struct PPParkError: Error, Decodable {
 }
 
 public struct Parking: Decodable {
-    var address: String
-    var capacityDescription: String?
-    var coordinate: CLLocationCoordinate2D
-    var distance: CLLocationDistance
-    var vacancyInfo: VacancyInfo?
-    var isClosed: Bool
-    var name: String
-    var openingHoursDescription: String?
-    var price: Int?
-    var priceDescription: String?
-    var priceGap: Int?
-    var rank: Int?
-    var reservationInfo: ReservationInfo?
+    public var address: String
+    public var capacityDescription: String?
+    public var coordinate: CLLocationCoordinate2D
+    public var distance: CLLocationDistance
+    public var vacancyInfo: VacancyInfo?
+    public var isClosed: Bool
+    public var name: String
+    public var openingHoursDescription: String?
+    public var price: Int?
+    public var priceDescription: String?
+    public var priceGap: Int?
+    public var rank: Int?
+    public var reservationInfo: ReservationInfo?
 
     enum CodingKeys: String, CodingKey {
         case address
@@ -172,7 +172,7 @@ public struct Parking: Decodable {
 }
 
 extension Parking {
-    struct VacancyInfo: Decodable {
+    public struct VacancyInfo: Decodable {
         static let dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -180,15 +180,15 @@ extension Parking {
             return formatter
         }()
 
-        var lastUpdateDate: Date?
-        var status: VacancyStatus?
+        public var lastUpdateDate: Date?
+        public var status: VacancyStatus?
 
         enum CodingKeys: String, CodingKey {
             case status
             case lastUpdateDate = "last"
         }
 
-        init(from decoder: Decoder) throws {
+        public init(from decoder: Decoder) throws {
             let values = try decoder.container(keyedBy: CodingKeys.self)
 
             if let lastUpdateDateString = try values.decodeIfPresent(String.self, forKey: .lastUpdateDate) {
@@ -201,7 +201,7 @@ extension Parking {
         }
     }
 
-    enum VacancyStatus: Int, Decodable {
+    public enum VacancyStatus: Int, Decodable {
         case unsupported = -1
         case vacant = 0
         case crowded = 1
@@ -211,10 +211,10 @@ extension Parking {
 }
 
 extension Parking {
-    struct ReservationInfo: Decodable {
-        var provider: String
-        var status: ReservationStatus?
-        var url: URL?
+    public struct ReservationInfo: Decodable {
+        public var provider: String
+        public var status: ReservationStatus?
+        public var url: URL?
 
         enum CodingKeys: String, CodingKey {
             case provider
@@ -222,7 +222,7 @@ extension Parking {
             case url
         }
 
-        init(from decoder: Decoder) throws {
+        public init(from decoder: Decoder) throws {
             let values = try decoder.container(keyedBy: CodingKeys.self)
 
             provider = try values.decode(String.self, forKey: .provider)
@@ -235,7 +235,7 @@ extension Parking {
         }
     }
 
-    enum ReservationStatus: Int, Decodable {
+    public enum ReservationStatus: Int, Decodable {
         case unsupported = -1
         case vacant = 1
         case full = 2

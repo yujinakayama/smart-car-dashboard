@@ -103,18 +103,12 @@ public class ParkingSearchMapViewManager {
     }
 
     private func calculateExpectedTravelTime(completion: @escaping (TimeInterval?) -> Void) {
-        optionsView.activityIndicatorView.startAnimating()
-
         let request = MKDirections.Request()
         request.source = MKMapItem.forCurrentLocation()
         request.destination = destination
         request.transportType = .automobile
 
         MKDirections(request: request).calculate { (response, error) in
-            DispatchQueue.main.async {
-                self.optionsView.activityIndicatorView.stopAnimating()
-            }
-
             if let error = error {
                 print(error)
             }
@@ -130,16 +124,12 @@ public class ParkingSearchMapViewManager {
 
         guard let timeDuration = optionsView.timeDurationPicker.selectedDuration else { return }
 
-        optionsView.activityIndicatorView.startAnimating()
-
         currentSearchTask = ppparkClient.searchParkings(
             around: destinationCoordinate,
             entranceDate: optionsView.entranceDatePicker.date,
             exitDate: optionsView.entranceDatePicker.date + timeDuration
         ) { [weak self] (result) in
             guard let self = self else { return }
-
-            var isCancelled = false
 
             switch result {
             case .success(let parkings):
@@ -148,16 +138,6 @@ public class ParkingSearchMapViewManager {
                 }
             case .failure(let error):
                 print(error)
-
-                if let urlError = error as? URLError, urlError.code == .cancelled {
-                    isCancelled = true
-                }
-            }
-
-            if !isCancelled {
-                DispatchQueue.main.async {
-                    self.optionsView.activityIndicatorView.stopAnimating()
-                }
             }
         }
     }

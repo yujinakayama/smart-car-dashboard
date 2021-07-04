@@ -9,15 +9,11 @@
 import UIKit
 
 public class ParkingSearchOptionsView: UIView {
-    let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
-
     lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
-            leftMarginView,
             entranceDatePicker,
             conjunctionLabel,
             timeDurationPicker,
-            rightMarginView,
         ])
 
         stackView.axis = .horizontal
@@ -40,7 +36,7 @@ public class ParkingSearchOptionsView: UIView {
         let label = UILabel()
         label.text = "から"
         label.adjustsFontForContentSizeCategory = true
-        label.font = UIFont.preferredFont(forTextStyle: .title3)
+        label.font = UIFont.preferredFont(forTextStyle: .body)
         label.textAlignment = .center
         return label
     }()
@@ -66,64 +62,31 @@ public class ParkingSearchOptionsView: UIView {
         return timeDurationPicker
     }()
 
-    lazy var leftMarginView: UIView = {
-        let view = UIView()
-
-        NSLayoutConstraint.activate([
-            view.widthAnchor.constraint(equalToConstant: 20),
-            view.heightAnchor.constraint(equalTo: view.widthAnchor),
-        ])
-
-        return view
-    }()
-
-    lazy var rightMarginView: UIView = {
-        let view = UIView()
-
-        view.addSubview(activityIndicatorView)
-        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            view.widthAnchor.constraint(equalToConstant: 20),
-            view.heightAnchor.constraint(equalTo: view.widthAnchor),
-            activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        ])
-
-        return view
-    }()
-
-    let activityIndicatorView = UIActivityIndicatorView()
-
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        configureSubviews()
+        commonInit()
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        commonInit()
     }
 
-    private func configureSubviews() {
-        addSubview(visualEffectView)
+    private func commonInit() {
+        NSLayoutConstraint.activate([
+            heightAnchor.constraint(equalToConstant: 37)
+        ])
+
         addSubview(stackView)
 
         subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
-
-        NSLayoutConstraint.activate([
-            visualEffectView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            trailingAnchor.constraint(equalTo: visualEffectView.trailingAnchor),
-            visualEffectView.topAnchor.constraint(equalTo: topAnchor),
-            bottomAnchor.constraint(equalTo: visualEffectView.bottomAnchor),
-        ])
 
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             stackView.widthAnchor.constraint(lessThanOrEqualToConstant: 400),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor).withPriority(.defaultLow),
             trailingAnchor.constraint(equalTo: stackView.trailingAnchor).withPriority(.defaultLow),
-            stackView.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor),
-            layoutMarginsGuide.bottomAnchor.constraint(equalTo: stackView.bottomAnchor),
+            stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
     }
 
