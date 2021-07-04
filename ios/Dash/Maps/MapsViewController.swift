@@ -15,9 +15,21 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mapTypeSegmentedControl: UISegmentedControl!
 
-    var currentMode: Mode = .standard {
+    var parkingSearchDestination: CLLocationCoordinate2D? {
         didSet {
+            if let parkingSearchDestination = parkingSearchDestination {
+                parkingSearchManager.setDestination(parkingSearchDestination)
+            }
+
             applyCurrentMode()
+        }
+    }
+
+    private var currentMode: Mode {
+        if parkingSearchDestination == nil {
+            return .standard
+        } else {
+            return .parkingSearch
         }
     }
 
@@ -112,7 +124,7 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
     }
 
     @objc func parkingSearchQuittingButtonDidPush() {
-        currentMode = .standard
+        parkingSearchDestination = nil
     }
 
     func applyCurrentMode() {
@@ -154,11 +166,9 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
     @objc private func gestureRecognizerDidRecognizeLongPress() {
         guard gestureRecognizer.state == .began else { return }
 
-        currentMode = .parkingSearch
-
         let longPressPoint = gestureRecognizer.location(in: mapView)
         let coordinate = mapView.convert(longPressPoint, toCoordinateFrom: mapView)
-        parkingSearchManager.setDestination(coordinate)
+        parkingSearchDestination = coordinate
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
