@@ -162,7 +162,9 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         if annotation is MKUserLocation {
             return mapView.dequeueReusableAnnotationView(withIdentifier: "DirectionalUserLocationAnnotationView", for: annotation)
         } else if annotation is SharedLocationAnnotation {
-            return mapView.dequeueReusableAnnotationView(withIdentifier: "MKMarkerAnnotationView", for: annotation)
+            let view = mapView.dequeueReusableAnnotationView(withIdentifier: "MKMarkerAnnotationView", for: annotation)
+            view.displayPriority = .required
+            return view
         } else if currentMode == .parkingSearch {
             return parkingSearchManager.view(for: annotation)
         } else {
