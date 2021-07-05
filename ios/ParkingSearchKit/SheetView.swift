@@ -49,6 +49,7 @@ import UIKit
         translatesAutoresizingMaskIntoConstraints = false
 
         layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = .init(width: 0, height: 3)
         layer.shadowRadius = 8
         updateShadow()
 
