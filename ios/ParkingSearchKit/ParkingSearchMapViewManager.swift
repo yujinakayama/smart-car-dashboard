@@ -89,7 +89,7 @@ public class ParkingSearchMapViewManager {
     }
 
     private func addDestinationAnnotation() {
-        let annotation = MKPointAnnotation()
+        let annotation = DestinationAnnotation()
         annotation.coordinate = destination
         annotation.title = "周辺の駐車場を検索中"
 
@@ -179,8 +179,10 @@ public class ParkingSearchMapViewManager {
         switch annotation {
         case let parkingAnnotation as ParkingAnnotation:
             return viewForParkingAnnotation(parkingAnnotation)
-        default:
+        case is DestinationAnnotation:
             return viewForDestinationAnnotation(annotation)
+        default:
+            return nil
         }
     }
 
@@ -216,4 +218,7 @@ public class ParkingSearchMapViewManager {
         guard let reservationURL = parking.reservationInfo?.url else { return }
         delegate?.parkingSearchMapViewManager(self, didSelectParking: parking, forReservationWebPage: reservationURL)
     }
+}
+
+fileprivate class DestinationAnnotation: MKPointAnnotation {
 }
