@@ -95,7 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     private func searchParkingsInMaps(mapItem: MKMapItem) {
         let mapsViewController = tabBarController.viewController(for: .maps) as! MapsViewController
-        mapsViewController.parkingSearchDestination = mapItem.placemark.coordinate
+        mapsViewController.startSearchingParkings(destination: mapItem.placemark.coordinate)
         tabBarController.selectedViewController = mapsViewController
     }
 }

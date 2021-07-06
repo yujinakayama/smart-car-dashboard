@@ -32,8 +32,11 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
     }
 
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        if selectedIndex == previousSelectedIndex, let tabReselectionRespondable = viewController as? TabReselectionRespondable {
-            tabReselectionRespondable.tabBarControllerDidReselectAlreadyVisibleTab(self)
+        if selectedIndex == previousSelectedIndex {
+            let tabReselectionRespondable =
+                (viewController as? TabReselectionRespondable) ??
+                (viewController as? UINavigationController)?.topViewController as? TabReselectionRespondable
+            tabReselectionRespondable?.tabBarControllerDidReselectAlreadyVisibleTab(self)
         }
 
         previousSelectedIndex = selectedIndex

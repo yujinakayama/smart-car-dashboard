@@ -15,21 +15,9 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mapTypeSegmentedControl: UISegmentedControl!
 
-    var parkingSearchDestination: CLLocationCoordinate2D? {
+    private var currentMode: Mode = .standard {
         didSet {
-            if let parkingSearchDestination = parkingSearchDestination {
-                parkingSearchManager.setDestination(parkingSearchDestination)
-            }
-
             applyCurrentMode()
-        }
-    }
-
-    private var currentMode: Mode {
-        if parkingSearchDestination == nil {
-            return .standard
-        } else {
-            return .parkingSearch
         }
     }
 
@@ -89,6 +77,8 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         return button
     }()
 
+    private lazy var geocoder = CLGeocoder()
+
     private var sharedItemDatabaseObservation: NSKeyValueObservation?
 
     private var sharedLocationAnnotations: [MKAnnotation] = []
@@ -135,14 +125,16 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
     }
 
     @objc func parkingSearchQuittingButtonDidPush() {
-        parkingSearchDestination = nil
+        currentMode = .standard
     }
 
     func applyCurrentMode() {
         switch currentMode {
         case .standard:
+            navigationController?.setNavigationBarHidden(true, animated: true)
             parkingSearchOptionsSheetView.hide()
             parkingSearchManager.clearMapView()
+            geocoder.cancelGeocode()
         case .parkingSearch:
             parkingSearchOptionsSheetView.show()
         }
@@ -155,7 +147,8 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
 
         let longPressPoint = gestureRecognizer.location(in: mapView)
         let coordinate = mapView.convert(longPressPoint, toCoordinateFrom: mapView)
-        parkingSearchDestination = coordinate
+
+        startSearchingParkings(destination: coordinate)
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -231,6 +224,48 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         return MKPointOfInterestFilter(including: [.parking, .publicTransport])
     }
 
+    func startSearchingParkings(destination: CLLocationCoordinate2D) {
+        currentMode = .parkingSearch
+
+        parkingSearchManager.setDestination(destination)
+
+        reverseGeocode(coordinate: destination) { (result) in
+            guard self.currentMode == .parkingSearch else { return }
+
+            switch result {
+            case .success(let placemark):
+                if let locationName = placemark.name {
+                    self.navigationItem.title = "“\(locationName)” 周辺の駐車場"
+                } else {
+                    self.navigationItem.title = "駐車場検索"
+                }
+            case .failure(let error):
+                logger.error(error)
+                self.navigationItem.title = "駐車場検索"
+            }
+
+            self.navigationController?.setNavigationBarHidden(false, animated: true)
+        }
+    }
+
+    private func reverseGeocode(coordinate: CLLocationCoordinate2D,completion: @escaping (Result<CLPlacemark, Error>) -> Void) {
+        geocoder.cancelGeocode()
+
+        let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        let locale = Locale(identifier: "ja_JP")
+
+        geocoder.reverseGeocodeLocation(location, preferredLocale: locale) { (placemarks, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            if let placemark = placemarks?.first {
+                completion(.success(placemark))
+            }
+        }
+    }
+
     func sharedItemDatabaseDidChange() {
         removeSharedLocationAnnotations()
         addSharedLocationAnnotations()
@@ -297,7 +332,7 @@ extension MapsViewController: UIDropInteractionDelegate {
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
         session.loadObjects(ofClass: MKMapItem.self) { (mapItems) in
             if let mapItem = mapItems.first as? MKMapItem {
-                self.parkingSearchDestination = mapItem.placemark.coordinate
+                self.startSearchingParkings(destination: mapItem.placemark.coordinate)
             }
         }
     }

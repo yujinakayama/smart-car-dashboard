@@ -734,7 +734,7 @@
                         <segue destination="GIS-op-tOW" kind="relationship" relationship="viewControllers" id="UKu-E5-AT2"/>
                         <segue destination="H1p-Uh-vWS" kind="relationship" relationship="viewControllers" id="Yb9-ec-BFu"/>
                         <segue destination="9rv-x1-HX3" kind="relationship" relationship="viewControllers" id="tYp-y0-GC7"/>
-                        <segue destination="0o8-aQ-xh6" kind="relationship" relationship="viewControllers" id="eGv-fE-PSG"/>
+                        <segue destination="rTk-9Z-yGM" kind="relationship" relationship="viewControllers" id="eGv-fE-PSG"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="euK-cN-jp7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1150,7 +1150,7 @@
             </objects>
             <point key="canvasLocation" x="-856" y="1678"/>
         </scene>
-        <!--Maps-->
+        <!--Maps View Controller-->
         <scene sceneID="yXK-kc-Vg4">
             <objects>
                 <viewController restorationIdentifier="MapsViewController" id="0o8-aQ-xh6" customClass="MapsViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
@@ -1189,7 +1189,7 @@
                             <constraint firstItem="uB9-Wf-7JO" firstAttribute="top" secondItem="aIe-nH-B5z" secondAttribute="top" constant="20" id="xhc-KO-ISg"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" tag="3" title="Maps" image="map.fill" catalog="system" id="0TL-LK-2HM"/>
+                    <navigationItem key="navigationItem" id="R4N-jJ-CxA"/>
                     <connections>
                         <outlet property="mapTypeSegmentedControl" destination="uB9-Wf-7JO" id="im0-di-mqh"/>
                         <outlet property="mapView" destination="kbs-HW-7zk" id="Tlp-yt-Ded"/>
@@ -1197,7 +1197,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aK7-R6-ICD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-856.07613469985347" y="3256.640625"/>
+            <point key="canvasLocation" x="82.400000000000006" y="3256.640625"/>
         </scene>
         <!--Card Edit View Controller-->
         <scene sceneID="hkg-2r-mG5">
@@ -1603,6 +1603,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xvh-h9-CZ8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2772" y="-2700"/>
+        </scene>
+        <!--Maps-->
+        <scene sceneID="ZJc-qQ-Y9E">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="rTk-9Z-yGM" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" tag="3" title="Maps" image="map.fill" catalog="system" id="0TL-LK-2HM"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Kbo-eq-Kq7">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="0o8-aQ-xh6" kind="relationship" relationship="rootViewController" id="0ky-4s-tSP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bui-lX-4Sd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-856.79999999999995" y="3256.640625"/>
         </scene>
     </scenes>
     <designables>
