@@ -14,11 +14,12 @@ public class ParkingSearchOptionsView: UIView {
             entranceDatePicker,
             conjunctionLabel,
             timeDurationPicker,
+            parkingLabel,
         ])
 
         stackView.axis = .horizontal
         stackView.alignment = .center
-        stackView.distribution = .fill
+        stackView.distribution = .equalSpacing
 
         return stackView
     }()
@@ -32,14 +33,7 @@ public class ParkingSearchOptionsView: UIView {
         return datePicker
     }()
 
-    lazy var conjunctionLabel: UILabel = {
-        let label = UILabel()
-        label.text = "から"
-        label.adjustsFontForContentSizeCategory = true
-        label.font = UIFont.preferredFont(forTextStyle: .body)
-        label.textAlignment = .center
-        return label
-    }()
+    lazy var conjunctionLabel = makeLabel(text: "から")
 
     lazy var timeDurationPicker: TimeDurationPicker = {
         let timeDurationPicker = TimeDurationPicker()
@@ -56,11 +50,10 @@ public class ParkingSearchOptionsView: UIView {
 
         timeDurationPicker.selectRow(1, animated: false)
 
-        timeDurationPicker.setContentHuggingPriority(.required, for: .horizontal)
-        timeDurationPicker.setContentHuggingPriority(.required, for: .vertical)
-
         return timeDurationPicker
     }()
+
+    lazy var parkingLabel = makeLabel(text: "駐車")
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -74,7 +67,7 @@ public class ParkingSearchOptionsView: UIView {
 
     private func commonInit() {
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: 37)
+            heightAnchor.constraint(equalToConstant: 40)
         ])
 
         addSubview(stackView)
@@ -88,6 +81,29 @@ public class ParkingSearchOptionsView: UIView {
             trailingAnchor.constraint(equalTo: stackView.trailingAnchor).withPriority(.defaultLow),
             stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
+
+        entranceDatePicker.setContentHuggingPriority(.required, for: .horizontal)
+        entranceDatePicker.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+
+        conjunctionLabel.setContentHuggingPriority(.required, for: .horizontal)
+        conjunctionLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+
+        timeDurationPicker.setContentHuggingPriority(.required, for: .horizontal)
+        timeDurationPicker.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+
+        parkingLabel.setContentHuggingPriority(.required, for: .horizontal)
+        parkingLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+    }
+
+    public override func layoutSubviews() {
+        parkingLabel.isHidden = false
+
+        super.layoutSubviews()
+        stackView.layoutIfNeeded()
+
+        if parkingLabel.frame.width < parkingLabel.intrinsicContentSize.width {
+            parkingLabel.isHidden = true
+        }
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -106,5 +122,14 @@ public class ParkingSearchOptionsView: UIView {
             layer.shadowColor = UIColor.black.cgColor
             layer.shadowOpacity = 0.05
         }
+    }
+
+    private func makeLabel(text: String) -> UILabel {
+        let label = UILabel()
+        label.text = text
+        label.adjustsFontForContentSizeCategory = true
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.textAlignment = .center
+        return label
     }
 }
