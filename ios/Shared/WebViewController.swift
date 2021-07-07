@@ -22,6 +22,12 @@ class WebViewController: UIViewController {
         return webView
     }()
 
+    var preferredContentMode: ContentMode = .recommended {
+        didSet {
+            applyContentMode()
+        }
+    }
+
     lazy var doneBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
 
     lazy var backwardBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(goBackward))
@@ -33,12 +39,12 @@ class WebViewController: UIViewController {
 
     private var pendingURL: URL?
 
-    private var hasInitiallyConfiguredUserAgent = false
+    private var hasInitiallyAppliedContentMode = false
 
     init() {
         super.init(nibName: nil, bundle: nil)
         configureToolBarButtonItems()
-        configureUserAgent()
+        applyContentMode()
     }
 
     required init?(coder: NSCoder) {
@@ -46,7 +52,7 @@ class WebViewController: UIViewController {
     }
 
     func loadPage(url: URL) {
-        if hasInitiallyConfiguredUserAgent {
+        if hasInitiallyAppliedContentMode {
             webView.load(URLRequest(url: url))
         } else {
             pendingURL = url
@@ -91,29 +97,47 @@ class WebViewController: UIViewController {
         }))
     }
 
-    private func configureUserAgent() {
-        if traitCollection.horizontalSizeClass == .compact {
-            webView.configuration.defaultWebpagePreferences.preferredContentMode = .mobile
-        } else {
-            webView.configuration.defaultWebpagePreferences.preferredContentMode = .recommended
-        }
-
-        getDefaultUserAgent { (defaultUserAgent) in
-            if let defaultUserAgent = defaultUserAgent {
-                if self.traitCollection.horizontalSizeClass == .compact {
-                    // Some sites like Tabelog checks whether user agent includes "iPhone" or not to determine whether the device is mobile one
-                    self.webView.customUserAgent = defaultUserAgent.replacingOccurrences(of: "iPad", with: "iPhone")
-                } else {
-                    self.webView.customUserAgent = defaultUserAgent
-                }
-            }
-
-            if !self.hasInitiallyConfiguredUserAgent, let pendingURL = self.pendingURL {
+    private func applyContentMode() {
+        let completion = {
+            if !self.hasInitiallyAppliedContentMode, let pendingURL = self.pendingURL {
                 self.webView.load(URLRequest(url: pendingURL))
             }
 
-            self.hasInitiallyConfiguredUserAgent = true
+            self.hasInitiallyAppliedContentMode = true
         }
+
+        switch preferredContentMode {
+        case .recommended:
+            if traitCollection.horizontalSizeClass == .compact {
+                applyContentModeForMobile(completion: completion)
+            } else {
+                applyContentModeForDesktop()
+                completion()
+            }
+        case .mobile:
+            applyContentModeForMobile(completion: completion)
+        case .desktop:
+            applyContentModeForDesktop()
+            completion()
+        }
+    }
+
+    private func applyContentModeForMobile(completion: @escaping () -> Void) {
+        webView.configuration.defaultWebpagePreferences.preferredContentMode = .mobile
+
+        getDefaultUserAgent { (defaultUserAgent) in
+            if let defaultUserAgent = defaultUserAgent {
+                // Some sites like Tabelog checks whether user agent includes "iPhone" or not to determine whether the device is mobile one
+                self.webView.customUserAgent = defaultUserAgent.replacingOccurrences(of: "iPad", with: "iPhone")
+            }
+
+            completion()
+        }
+    }
+
+    private func applyContentModeForDesktop() {
+        webView.configuration.defaultWebpagePreferences.preferredContentMode = .desktop
+        webView.customUserAgent = nil
     }
 
     private func addWebView() {
@@ -200,7 +224,15 @@ class WebViewController: UIViewController {
         super.traitCollectionDidChange(previousTraitCollection)
 
         if traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
-            configureUserAgent()
+            applyContentMode()
         }
+    }
+}
+
+extension WebViewController {
+    enum ContentMode {
+        case recommended
+        case mobile
+        case desktop
     }
 }
