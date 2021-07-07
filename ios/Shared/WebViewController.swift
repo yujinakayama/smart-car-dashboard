@@ -22,6 +22,12 @@ class WebViewController: UIViewController {
         return webView
     }()
 
+    var preferredContentMode: ContentMode = .recommended {
+        didSet {
+            applyContentMode()
+        }
+    }
+
     lazy var doneBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
 
     lazy var backwardBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(goBackward))
@@ -29,32 +35,37 @@ class WebViewController: UIViewController {
     lazy var reloadOrStopLoadingBarButtonItem = UIBarButtonItem()
     lazy var openInSafariBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "safari"), style: .plain, target: self, action: #selector(openInSafari))
 
-    let url: URL
-
     var keyValueObservations: [NSKeyValueObservation] = []
 
-    init(url: URL) {
-        self.url = url
+    private var pendingURL: URL?
+
+    private var hasInitiallyAppliedContentMode = false
+
+    init() {
         super.init(nibName: nil, bundle: nil)
+        configureToolBarButtonItems()
+        applyContentMode()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        navigationItem.rightBarButtonItem = doneBarButtonItem
-
-        configureToolBarButtonItems()
-
-        configureWebView { [weak self] in
-            self?.startLoadingPage()
+    func loadPage(url: URL) {
+        if hasInitiallyAppliedContentMode {
+            webView.load(URLRequest(url: url))
+        } else {
+            pendingURL = url
         }
     }
 
-    func configureToolBarButtonItems() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationItem.rightBarButtonItem = doneBarButtonItem
+        addWebView()
+    }
+
+    private func configureToolBarButtonItems() {
         toolbarItems = [
             backwardBarButtonItem,
             .flexibleSpace(),
@@ -86,26 +97,33 @@ class WebViewController: UIViewController {
         }))
     }
 
-    func configureWebView(completion: @escaping () -> Void) {
-        view.addSubview(webView)
+    private func applyContentMode() {
+        let completion = {
+            if !self.hasInitiallyAppliedContentMode, let pendingURL = self.pendingURL {
+                self.webView.load(URLRequest(url: pendingURL))
+            }
 
-        webView.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            webView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            view.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
-            webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: webView.bottomAnchor),
-        ])
-
-        guard traitCollection.horizontalSizeClass == .compact else {
-            completion()
-            return
+            self.hasInitiallyAppliedContentMode = true
         }
 
-        let webPagePreferences = WKWebpagePreferences()
-        webPagePreferences.preferredContentMode = .mobile
-        webView.configuration.defaultWebpagePreferences = webPagePreferences
+        switch preferredContentMode {
+        case .recommended:
+            if traitCollection.horizontalSizeClass == .compact {
+                applyContentModeForMobile(completion: completion)
+            } else {
+                applyContentModeForDesktop()
+                completion()
+            }
+        case .mobile:
+            applyContentModeForMobile(completion: completion)
+        case .desktop:
+            applyContentModeForDesktop()
+            completion()
+        }
+    }
+
+    private func applyContentModeForMobile(completion: @escaping () -> Void) {
+        webView.configuration.defaultWebpagePreferences.preferredContentMode = .mobile
 
         getDefaultUserAgent { (defaultUserAgent) in
             if let defaultUserAgent = defaultUserAgent {
@@ -117,7 +135,25 @@ class WebViewController: UIViewController {
         }
     }
 
-    func getDefaultUserAgent(completion: @escaping (String?) -> Void) {
+    private func applyContentModeForDesktop() {
+        webView.configuration.defaultWebpagePreferences.preferredContentMode = .desktop
+        webView.customUserAgent = nil
+    }
+
+    private func addWebView() {
+        view.addSubview(webView)
+
+        webView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            webView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            view.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
+            webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: webView.bottomAnchor),
+        ])
+    }
+
+    private func getDefaultUserAgent(completion: @escaping (String?) -> Void) {
         if let userAgent = WebViewController.defaultUserAgent {
             completion(userAgent)
             return
@@ -129,11 +165,7 @@ class WebViewController: UIViewController {
         })
     }
 
-    func startLoadingPage() {
-        webView.load(URLRequest(url: url))
-    }
-
-    func updateReloadOrStopLoadingBarButtonItem() {
+    private func updateReloadOrStopLoadingBarButtonItem() {
         let symbolConfiguration = UIImage.SymbolConfiguration(scale: .default)
 
         reloadOrStopLoadingBarButtonItem.target = self
@@ -174,7 +206,7 @@ class WebViewController: UIViewController {
 
     // We cannot use UIApplication.shared.open(_:options:completionHandler:) in app extensions
     // https://stackoverflow.com/a/44499289/784241
-    var sharedApplication: UIApplication? {
+    private var sharedApplication: UIApplication? {
         var responder: UIResponder? = self
 
         while responder != nil {
@@ -186,5 +218,21 @@ class WebViewController: UIViewController {
        }
 
         return nil
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
+            applyContentMode()
+        }
+    }
+}
+
+extension WebViewController {
+    enum ContentMode {
+        case recommended
+        case mobile
+        case desktop
     }
 }

@@ -109,6 +109,16 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         return button
     }()
 
+    private var officialParkingSearch: OfficialParkingSearch? {
+        didSet {
+            officialParkingSearchStatusView.isHidden = officialParkingSearch == nil
+        }
+    }
+
+    private let officialParkingSearchStatusView = OfficialParkingSearchStatusView()
+
+    private lazy var officialParkingInformationWebViewController = OfficialParkingInformationWebViewController()
+
     private lazy var geocoder = CLGeocoder()
 
     var showsRecentSharedLocations = true {
@@ -129,6 +139,9 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         super.viewDidLoad()
 
         navigationItem.largeTitleDisplayMode = .never
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: officialParkingSearchStatusView)
+        officialParkingSearchStatusView.informationButton.addTarget(self, action: #selector(officialParkingInformationButtonDidPush), for: .touchUpInside)
 
         locationManager.requestWhenInUseAuthorization()
 
@@ -197,6 +210,7 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
             parkingSearchOptionsSheetView.hide()
             parkingSearchManager.clearMapView()
             geocoder.cancelGeocode()
+            officialParkingSearch = nil
         case .parkingSearch:
             parkingSearchOptionsSheetView.show()
         }
@@ -305,6 +319,15 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
 
         parkingSearchManager.setDestination(destination.placemark.coordinate)
 
+        if let officialParkingSearch = try? OfficialParkingSearch(destination: destination, webView: officialParkingInformationWebViewController.webView) {
+            officialParkingSearch.delegate = self
+            officialParkingSearch.start()
+
+            officialParkingSearchStatusView.state = .searching
+
+            self.officialParkingSearch = officialParkingSearch
+        }
+
         navigationItem.title = "“\(destinationName)” 周辺の駐車場"
         navigationController?.setNavigationBarHidden(false, animated: isViewLoaded)
     }
@@ -313,6 +336,8 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         currentMode = .parkingSearch
 
         parkingSearchManager.setDestination(destination)
+
+        officialParkingSearch = nil
 
         reverseGeocode(coordinate: destination) { (result) in
             guard self.currentMode == .parkingSearch else { return }
@@ -349,6 +374,12 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
                 completion(.success(placemark))
             }
         }
+    }
+
+    @objc private func officialParkingInformationButtonDidPush() {
+        let navigationController = UINavigationController(rootViewController: officialParkingInformationWebViewController)
+        navigationController.isToolbarHidden = false
+        present(navigationController, animated: true)
     }
 
     @objc private func updateSharedLocationAnnotations() {
@@ -391,8 +422,9 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
 
 extension MapsViewController: ParkingSearchMapViewManagerDelegate {
     func parkingSearchMapViewManager(_ manager: ParkingSearchMapViewManager, didSelectParking parking: Parking, forReservationWebPage url: URL) {
-        let webViewController = WebViewController(url: url)
+        let webViewController = WebViewController()
         webViewController.navigationItem.title = parking.name
+        webViewController.loadPage(url: url)
 
         let navigationController = UINavigationController(rootViewController: webViewController)
         navigationController.isToolbarHidden = false
@@ -416,6 +448,12 @@ extension MapsViewController: UIDropInteractionDelegate {
                 self.startSearchingParkings(destination: mapItem)
             }
         }
+    }
+}
+
+extension MapsViewController: OfficialParkingSearchDelegate {
+    func officialParkingSearch(_ officialParkingSearch: OfficialParkingSearch, didChange state: OfficialParkingSearch.State) {
+        officialParkingSearchStatusView.state = state
     }
 }
 
@@ -456,4 +494,52 @@ extension MapsViewController: TabReselectionRespondable {
 }
 
 fileprivate class SharedLocationAnnotation: MKPointAnnotation {
+}
+
+fileprivate class OfficialParkingInformationWebViewController: WebViewController {
+    override init() {
+        super.init()
+        preferredContentMode = .mobile
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        scrollToParkingInformation()
+    }
+
+    func scrollToParkingInformation() {
+        scrollToElement(containing: "駐車場")
+    }
+
+    private func scrollToElement(containing text: String) {
+        let script = """
+            const xpath = `//*[text()[contains(., "${searchText}")]]`; // TODO: Escape searchText properly
+            const element = document.evaluate(xpath, document.body, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
+            if (element) {
+                const absoluteElementTop = element.getBoundingClientRect().top + window.pageYOffset;
+                window.scrollTo(0, absoluteElementTop - (window.innerHeight / 2));
+            }
+
+            return element != null;
+        """
+
+        webView.callAsyncJavaScript(
+            script,
+            arguments: ["searchText": text],
+            in: nil,
+            in: .defaultClient)
+        { (result) in
+            switch result {
+            case .success:
+                break
+            case .failure(let error):
+                logger.error(error)
+            }
+        }
+    }
 }

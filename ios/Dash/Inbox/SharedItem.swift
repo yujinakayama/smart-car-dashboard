@@ -40,8 +40,9 @@ extension SharedItemProtocol {
     func openInInAppBrowser(from viewController: UIViewController?) {
         guard let viewController = viewController ?? rootViewController else { return }
 
-        let webViewController = WebViewController(url: url)
+        let webViewController = WebViewController()
         webViewController.navigationItem.title = title
+        webViewController.loadPage(url: url)
 
         let navigationController = UINavigationController(rootViewController: webViewController)
         navigationController.isToolbarHidden = false

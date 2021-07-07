@@ -159,6 +159,9 @@
 		B9C0CEE52508F641006D246E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9C0CEE32508F641006D246E /* LaunchScreen.storyboard */; };
 		B9C0CEED250C3A27006D246E /* HeartAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEEC250C3A27006D246E /* HeartAnimation.swift */; };
 		B9C1DD1526922ABA0046E108 /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92650112691CE29005FD73D /* SheetView.swift */; };
+		B9C1DD1A2692EE350046E108 /* TLDExtract in Frameworks */ = {isa = PBXBuildFile; productRef = B9C1DD192692EE350046E108 /* TLDExtract */; };
+		B9C1DD1C269457910046E108 /* OfficialParkingSearchStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */; };
+		B9C1DD2026948B7D0046E108 /* OfficialParkingSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */; };
 		B9C2455F23EDA2EA00E00523 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
 		B9C2456523EDBB4800E00523 /* FloatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C2456423EDBB4800E00523 /* FloatButton.swift */; };
 		B9C87A1726671CCE00ABCBB4 /* ParkingSearchURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */; };
@@ -552,6 +555,8 @@
 		B9C0CEE62508F641006D246E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9C0CEEA2508F711006D246E /* H264ByteStreamParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = H264ByteStreamParser.swift; sourceTree = "<group>"; };
 		B9C0CEEC250C3A27006D246E /* HeartAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartAnimation.swift; sourceTree = "<group>"; };
+		B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialParkingSearchStatusView.swift; sourceTree = "<group>"; };
+		B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficialParkingSearch.swift; sourceTree = "<group>"; };
 		B9C2455E23EDA2EA00E00523 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		B9C2456423EDBB4800E00523 /* FloatButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatButton.swift; sourceTree = "<group>"; };
 		B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingSearchURLItem.swift; sourceTree = "<group>"; };
@@ -692,6 +697,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B91F7EC02652F2B400B1233D /* DirectionalUserLocationAnnotationView in Frameworks */,
+				B9C1DD1A2692EE350046E108 /* TLDExtract in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1140,6 +1146,8 @@
 				B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */,
 				B9F8DBE725EA288B00F6FA55 /* PPParkClient.swift */,
 				B984C019263DA08D00AF79AE /* TimeDurationPicker.swift */,
+				B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */,
+				B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */,
 				B900A13B26529C4E000ED1B9 /* NSLayoutConstraintExtension.swift */,
 				B93C04662642D5FA002CD861 /* UIButtonExtension.swift */,
 				B9DD4CCD26517F920010B120 /* Info.plist */,
@@ -1401,6 +1409,7 @@
 			name = ParkingSearchKit;
 			packageProductDependencies = (
 				B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */,
+				B9C1DD192692EE350046E108 /* TLDExtract */,
 			);
 			productName = ParkingSearchKit;
 			productReference = B9DD4CCA26517F920010B120 /* ParkingSearchKit.framework */;
@@ -1499,6 +1508,7 @@
 			mainGroup = B9DC5B18229D59BE00B645D5;
 			packageReferences = (
 				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */,
+				B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */,
 			);
 			productRefGroup = B9DC5B22229D59BE00B645D5 /* Products */;
 			projectDirPath = "";
@@ -2023,6 +2033,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9C1DD1C269457910046E108 /* OfficialParkingSearchStatusView.swift in Sources */,
 				B9DD4CD926517FBF0010B120 /* ParkingAnnotationView.swift in Sources */,
 				B91F7EBE2652F0FB00B1233D /* WebViewController.swift in Sources */,
 				B9D0208F268F69490020BF9A /* ParkingSearchOptionsView.swift in Sources */,
@@ -2034,6 +2045,7 @@
 				B9D0208D268F643E0020BF9A /* ParkingSearchMapViewManager.swift in Sources */,
 				B9C1DD1526922ABA0046E108 /* SheetView.swift in Sources */,
 				B900A13A26529C38000ED1B9 /* UIButtonExtension.swift in Sources */,
+				B9C1DD2026948B7D0046E108 /* OfficialParkingSearch.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2965,6 +2977,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gumob/TLDExtractSwift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2972,6 +2992,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */;
 			productName = DirectionalUserLocationAnnotationView;
+		};
+		B9C1DD192692EE350046E108 /* TLDExtract */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */;
+			productName = TLDExtract;
 		};
 /* End XCSwiftPackageProductDependency section */
 
