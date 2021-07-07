@@ -76,7 +76,6 @@ public class ParkingSearchOptionsView: UIView {
 
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            stackView.widthAnchor.constraint(lessThanOrEqualToConstant: 400),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor).withPriority(.defaultLow),
             trailingAnchor.constraint(equalTo: stackView.trailingAnchor).withPriority(.defaultLow),
             stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
