@@ -9,6 +9,24 @@
           "revision": "96fe454b67205652c39e13236e387834c0c161d6",
           "version": "1.0.0"
         }
+      },
+      {
+        "package": "Punycode",
+        "repositoryURL": "https://github.com/gumob/PunycodeSwift.git",
+        "state": {
+          "branch": "master",
+          "revision": "4356ec54e073741449640d3d50a1fd24fd1e1b8b",
+          "version": null
+        }
+      },
+      {
+        "package": "TLDExtract",
+        "repositoryURL": "https://github.com/gumob/TLDExtractSwift",
+        "state": {
+          "branch": "master",
+          "revision": "8c051b60df00a3fd5c568bab657534857eb4287f",
+          "version": null
+        }
       }
     ]
   },
