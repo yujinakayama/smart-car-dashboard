@@ -125,6 +125,7 @@ public class ParkingSearchMapViewManager {
         guard let timeDuration = optionsView.timeDurationPicker.selectedDuration else { return }
 
         if let destinationAnnotation = destinationAnnotation {
+            self.mapView.view(for: destinationAnnotation)?.canShowCallout = true
             mapView.selectAnnotation(destinationAnnotation, animated: true)
         }
 
