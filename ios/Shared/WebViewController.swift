@@ -136,6 +136,8 @@ class WebViewController: UIViewController {
     func updateReloadOrStopLoadingBarButtonItem() {
         let symbolConfiguration = UIImage.SymbolConfiguration(scale: .default)
 
+        reloadOrStopLoadingBarButtonItem.target = self
+
         if webView.isLoading {
             reloadOrStopLoadingBarButtonItem.image = UIImage(systemName: "xmark", withConfiguration: symbolConfiguration)
             reloadOrStopLoadingBarButtonItem.action = #selector(stopLoading)
