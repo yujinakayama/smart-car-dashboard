@@ -29,32 +29,37 @@ class WebViewController: UIViewController {
     lazy var reloadOrStopLoadingBarButtonItem = UIBarButtonItem()
     lazy var openInSafariBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "safari"), style: .plain, target: self, action: #selector(openInSafari))
 
-    let url: URL
-
     var keyValueObservations: [NSKeyValueObservation] = []
 
-    init(url: URL) {
-        self.url = url
+    private var pendingURL: URL?
+
+    private var hasInitiallyConfiguredUserAgent = false
+
+    init() {
         super.init(nibName: nil, bundle: nil)
+        configureToolBarButtonItems()
+        configureUserAgent()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        navigationItem.rightBarButtonItem = doneBarButtonItem
-
-        configureToolBarButtonItems()
-
-        configureWebView { [weak self] in
-            self?.startLoadingPage()
+    func loadPage(url: URL) {
+        if hasInitiallyConfiguredUserAgent {
+            webView.load(URLRequest(url: url))
+        } else {
+            pendingURL = url
         }
     }
 
-    func configureToolBarButtonItems() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationItem.rightBarButtonItem = doneBarButtonItem
+        addWebView()
+    }
+
+    private func configureToolBarButtonItems() {
         toolbarItems = [
             backwardBarButtonItem,
             .flexibleSpace(),
@@ -86,7 +91,32 @@ class WebViewController: UIViewController {
         }))
     }
 
-    func configureWebView(completion: @escaping () -> Void) {
+    private func configureUserAgent() {
+        if traitCollection.horizontalSizeClass == .compact {
+            webView.configuration.defaultWebpagePreferences.preferredContentMode = .mobile
+        } else {
+            webView.configuration.defaultWebpagePreferences.preferredContentMode = .recommended
+        }
+
+        getDefaultUserAgent { (defaultUserAgent) in
+            if let defaultUserAgent = defaultUserAgent {
+                if self.traitCollection.horizontalSizeClass == .compact {
+                    // Some sites like Tabelog checks whether user agent includes "iPhone" or not to determine whether the device is mobile one
+                    self.webView.customUserAgent = defaultUserAgent.replacingOccurrences(of: "iPad", with: "iPhone")
+                } else {
+                    self.webView.customUserAgent = defaultUserAgent
+                }
+            }
+
+            if !self.hasInitiallyConfiguredUserAgent, let pendingURL = self.pendingURL {
+                self.webView.load(URLRequest(url: pendingURL))
+            }
+
+            self.hasInitiallyConfiguredUserAgent = true
+        }
+    }
+
+    private func addWebView() {
         view.addSubview(webView)
 
         webView.translatesAutoresizingMaskIntoConstraints = false
@@ -97,27 +127,9 @@ class WebViewController: UIViewController {
             webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: webView.bottomAnchor),
         ])
-
-        guard traitCollection.horizontalSizeClass == .compact else {
-            completion()
-            return
-        }
-
-        let webPagePreferences = WKWebpagePreferences()
-        webPagePreferences.preferredContentMode = .mobile
-        webView.configuration.defaultWebpagePreferences = webPagePreferences
-
-        getDefaultUserAgent { (defaultUserAgent) in
-            if let defaultUserAgent = defaultUserAgent {
-                // Some sites like Tabelog checks whether user agent includes "iPhone" or not to determine whether the device is mobile one
-                self.webView.customUserAgent = defaultUserAgent.replacingOccurrences(of: "iPad", with: "iPhone")
-            }
-
-            completion()
-        }
     }
 
-    func getDefaultUserAgent(completion: @escaping (String?) -> Void) {
+    private func getDefaultUserAgent(completion: @escaping (String?) -> Void) {
         if let userAgent = WebViewController.defaultUserAgent {
             completion(userAgent)
             return
@@ -129,11 +141,7 @@ class WebViewController: UIViewController {
         })
     }
 
-    func startLoadingPage() {
-        webView.load(URLRequest(url: url))
-    }
-
-    func updateReloadOrStopLoadingBarButtonItem() {
+    private func updateReloadOrStopLoadingBarButtonItem() {
         let symbolConfiguration = UIImage.SymbolConfiguration(scale: .default)
 
         reloadOrStopLoadingBarButtonItem.target = self
@@ -174,7 +182,7 @@ class WebViewController: UIViewController {
 
     // We cannot use UIApplication.shared.open(_:options:completionHandler:) in app extensions
     // https://stackoverflow.com/a/44499289/784241
-    var sharedApplication: UIApplication? {
+    private var sharedApplication: UIApplication? {
         var responder: UIResponder? = self
 
         while responder != nil {
@@ -186,5 +194,13 @@ class WebViewController: UIViewController {
        }
 
         return nil
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
+            configureUserAgent()
+        }
     }
 }

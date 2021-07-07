@@ -391,8 +391,9 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
 
 extension MapsViewController: ParkingSearchMapViewManagerDelegate {
     func parkingSearchMapViewManager(_ manager: ParkingSearchMapViewManager, didSelectParking parking: Parking, forReservationWebPage url: URL) {
-        let webViewController = WebViewController(url: url)
+        let webViewController = WebViewController()
         webViewController.navigationItem.title = parking.name
+        webViewController.loadPage(url: url)
 
         let navigationController = UINavigationController(rootViewController: webViewController)
         navigationController.isToolbarHidden = false
