@@ -12,8 +12,38 @@ import DirectionalUserLocationAnnotationView
 import ParkingSearchKit
 
 class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate {
-    @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var mapTypeSegmentedControl: UISegmentedControl!
+    lazy var mapView: MKMapView = {
+        let mapView = MKMapView()
+        mapView.delegate = self
+
+        mapView.showsBuildings = true
+        mapView.showsCompass = true
+        mapView.showsScale = true
+        mapView.showsTraffic = true
+        mapView.showsUserLocation = true
+
+        mapView.isPitchEnabled = false
+        mapView.isRotateEnabled = false
+        mapView.isScrollEnabled = true
+        mapView.isZoomEnabled = true
+
+        mapView.register(DirectionalUserLocationAnnotationView.self, forAnnotationViewWithReuseIdentifier: "DirectionalUserLocationAnnotationView")
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "MKMarkerAnnotationView")
+
+        mapView.addGestureRecognizer(gestureRecognizer)
+
+        mapView.addInteraction(UIDropInteraction(delegate: self))
+
+        return mapView
+    }()
+
+    lazy var mapTypeSegmentedControl: UISegmentedControl = {
+        let segmentedControl = UISegmentedControl(items: ["マップ", "航空写真"])
+        segmentedControl.backgroundColor = UIColor(named: "Map Type Segmented Control Background Color")
+        segmentedControl.selectedSegmentIndex = MapTypeSegmentedControlIndex(mapView.mapType)!.rawValue
+        segmentedControl.addTarget(self, action: #selector(mapTypeSegmentedControlDidChange), for: .valueChanged)
+        return segmentedControl
+    }()
 
     private var currentMode: Mode = .standard {
         didSet {
@@ -22,6 +52,8 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
     }
 
     let locationManager = CLLocationManager()
+
+    var hasReceivedInitialUserLocation = false
 
     lazy var gestureRecognizer: UIGestureRecognizer = {
         let gestureRecognizer = UILongPressGestureRecognizer()
@@ -79,6 +111,16 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
 
     private lazy var geocoder = CLGeocoder()
 
+    var showsRecentSharedLocations = true {
+        didSet {
+            if showsRecentSharedLocations {
+                updateSharedLocationAnnotations()
+            } else {
+                removeSharedLocationAnnotations()
+            }
+        }
+    }
+
     private var sharedItemDatabaseObservation: NSKeyValueObservation?
 
     private var sharedLocationAnnotations: [MKAnnotation] = []
@@ -86,25 +128,13 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.largeTitleDisplayMode = .never
+
         locationManager.requestWhenInUseAuthorization()
 
-        mapView.delegate = self
-        mapView.register(DirectionalUserLocationAnnotationView.self, forAnnotationViewWithReuseIdentifier: "DirectionalUserLocationAnnotationView")
-        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "MKMarkerAnnotationView")
-        mapView.setUserTrackingMode(.follow, animated: false)
+        configureSubviews()
 
-        mapView.addGestureRecognizer(gestureRecognizer)
-
-        mapView.addInteraction(UIDropInteraction(delegate: self))
-
-        changeSheetPlacementIfNeeded()
-        view.addSubview(parkingSearchOptionsSheetView)
-
-        sharedItemDatabaseObservation = Firebase.shared.observe(\.sharedItemDatabase, options: .initial) { [weak self] (firebase, change) in
-            self?.sharedItemDatabaseDidChange()
-        }
-
-        NotificationCenter.default.addObserver(self, selector: #selector(sharedItemDatabaseDidUpdateItems), name: .SharedItemDatabaseDidUpdateItems, object: nil)
+        configureSharedItemDatabase()
 
         applyCurrentMode()
     }
@@ -116,7 +146,39 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         mapView.delegate = nil
     }
 
-    private func changeSheetPlacementIfNeeded() {
+    private func configureSubviews() {
+        view.addSubview(mapView)
+        view.addSubview(mapTypeSegmentedControl)
+
+        view.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+
+        NSLayoutConstraint.activate([
+            mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: mapView.trailingAnchor),
+            mapView.topAnchor.constraint(equalTo: view.topAnchor),
+            view.bottomAnchor.constraint(equalTo: mapView.bottomAnchor),
+        ])
+
+        NSLayoutConstraint.activate([
+            mapTypeSegmentedControl.leftAnchor.constraint(greaterThanOrEqualTo: view.layoutMarginsGuide.leftAnchor),
+            view.layoutMarginsGuide.rightAnchor.constraint(equalTo: mapTypeSegmentedControl.rightAnchor),
+            mapTypeSegmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            mapTypeSegmentedControl.widthAnchor.constraint(greaterThanOrEqualToConstant: 200),
+        ])
+
+        changeParkingSearchOptionsSheetViewPlacementIfNeeded()
+        view.addSubview(parkingSearchOptionsSheetView)
+    }
+
+    private func configureSharedItemDatabase() {
+        sharedItemDatabaseObservation = Firebase.shared.observe(\.sharedItemDatabase, options: .initial) { [weak self] (firebase, change) in
+            self?.updateSharedLocationAnnotations()
+        }
+
+        NotificationCenter.default.addObserver(self, selector: #selector(updateSharedLocationAnnotations), name: .SharedItemDatabaseDidUpdateItems, object: nil)
+    }
+
+    private func changeParkingSearchOptionsSheetViewPlacementIfNeeded() {
         if traitCollection.horizontalSizeClass == .compact {
             parkingSearchOptionsSheetView.placement = .bottomAttached
         } else {
@@ -166,11 +228,20 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
     }
 
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        guard let userLocationView = mapView.view(for: userLocation) as? DirectionalUserLocationAnnotationView else { return }
-        userLocationView.updateDirection(animated: true)
+        if let userLocationView = mapView.view(for: userLocation) as? DirectionalUserLocationAnnotationView {
+            userLocationView.updateDirection(animated: true)
+        }
+
+        if !hasReceivedInitialUserLocation {
+            if currentMode == .standard {
+                mapView.setUserTrackingMode(.follow, animated: false)
+            }
+
+            hasReceivedInitialUserLocation = true
+        }
     }
 
-    @IBAction func mapTypeSegmentedControlDidChange() {
+    @objc func mapTypeSegmentedControlDidChange() {
         let index = MapTypeSegmentedControlIndex(rawValue: mapTypeSegmentedControl.selectedSegmentIndex)!
         mapView.mapType = index.mapType
         updatePointOfInterestFilter()
@@ -224,6 +295,20 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         return MKPointOfInterestFilter(including: [.parking, .publicTransport])
     }
 
+    func startSearchingParkings(destination: MKMapItem) {
+        guard let destinationName = destination.name else {
+            startSearchingParkings(destination: destination.placemark.coordinate)
+            return
+        }
+
+        currentMode = .parkingSearch
+
+        parkingSearchManager.setDestination(destination.placemark.coordinate)
+
+        navigationItem.title = "“\(destinationName)” 周辺の駐車場"
+        navigationController?.setNavigationBarHidden(false, animated: isViewLoaded)
+    }
+
     func startSearchingParkings(destination: CLLocationCoordinate2D) {
         currentMode = .parkingSearch
 
@@ -244,7 +329,7 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
                 self.navigationItem.title = "駐車場検索"
             }
 
-            self.navigationController?.setNavigationBarHidden(false, animated: true)
+            self.navigationController?.setNavigationBarHidden(false, animated: self.isViewLoaded)
         }
     }
 
@@ -266,12 +351,8 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         }
     }
 
-    func sharedItemDatabaseDidChange() {
-        removeSharedLocationAnnotations()
-        addSharedLocationAnnotations()
-    }
-
-    @objc func sharedItemDatabaseDidUpdateItems(notification: Notification) {
+    @objc private func updateSharedLocationAnnotations() {
+        guard showsRecentSharedLocations else { return }
         removeSharedLocationAnnotations()
         addSharedLocationAnnotations()
     }
@@ -304,7 +385,7 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        changeSheetPlacementIfNeeded()
+        changeParkingSearchOptionsSheetViewPlacementIfNeeded()
     }
 }
 
@@ -332,7 +413,7 @@ extension MapsViewController: UIDropInteractionDelegate {
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
         session.loadObjects(ofClass: MKMapItem.self) { (mapItems) in
             if let mapItem = mapItems.first as? MKMapItem {
-                self.startSearchingParkings(destination: mapItem.placemark.coordinate)
+                self.startSearchingParkings(destination: mapItem)
             }
         }
     }
@@ -352,7 +433,6 @@ extension MapsViewController {
 
     override func encodeRestorableState(with coder: NSCoder) {
         super.encodeRestorableState(with: coder)
-        guard let mapView = mapView else { return } // For some reason mapView might be nil
         coder.encode(Int(mapView.mapType.rawValue), forKey: RestorationCodingKeys.mapType.rawValue)
     }
 

@@ -198,7 +198,6 @@
 		B9DD4CD226517F920010B120 /* ParkingSearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B9DD4CCA26517F920010B120 /* ParkingSearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B9DD4CD626517FBF0010B120 /* ParkingAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04622642CD32002CD861 /* ParkingAnnotation.swift */; };
 		B9DD4CD726517FBF0010B120 /* TimeDurationPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B984C019263DA08D00AF79AE /* TimeDurationPicker.swift */; };
-		B9DD4CD826517FBF0010B120 /* ParkingSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F8DC1225EA847E00F6FA55 /* ParkingSearchViewController.swift */; };
 		B9DD4CD926517FBF0010B120 /* ParkingAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */; };
 		B9DD4CDA26517FBF0010B120 /* PPParkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F8DBE725EA288B00F6FA55 /* PPParkClient.swift */; };
 		B9E6CC9C234F65A000E18603 /* TollgatePassingThrough.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9E6CC9B234F65A000E18603 /* TollgatePassingThrough.wav */; };
@@ -614,7 +613,6 @@
 		B9F4377D25D41C19004B9140 /* RearviewKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RearviewKit.h; sourceTree = "<group>"; };
 		B9F4377E25D41C19004B9140 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9F8DBE725EA288B00F6FA55 /* PPParkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPParkClient.swift; sourceTree = "<group>"; };
-		B9F8DC1225EA847E00F6FA55 /* ParkingSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingSearchViewController.swift; sourceTree = "<group>"; };
 		B9F9EFD5256D3D6B00C33781 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		B9FA6CC724CED3D00038E990 /* OriginalLanguageSongTitleFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OriginalLanguageSongTitleFetcher.swift; sourceTree = "<group>"; };
 		B9FB33E024AE2ACD00FEB782 /* PlaybackModeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackModeButton.swift; sourceTree = "<group>"; };
@@ -1135,7 +1133,6 @@
 			isa = PBXGroup;
 			children = (
 				B9DD4CCC26517F920010B120 /* ParkingSearchKit.h */,
-				B9F8DC1225EA847E00F6FA55 /* ParkingSearchViewController.swift */,
 				B9D0208C268F643E0020BF9A /* ParkingSearchMapViewManager.swift */,
 				B9D0208E268F69490020BF9A /* ParkingSearchOptionsView.swift */,
 				B92650112691CE29005FD73D /* SheetView.swift */,
@@ -2028,7 +2025,6 @@
 			files = (
 				B9DD4CD926517FBF0010B120 /* ParkingAnnotationView.swift in Sources */,
 				B91F7EBE2652F0FB00B1233D /* WebViewController.swift in Sources */,
-				B9DD4CD826517FBF0010B120 /* ParkingSearchViewController.swift in Sources */,
 				B9D0208F268F69490020BF9A /* ParkingSearchOptionsView.swift in Sources */,
 				B9DD4CDA26517FBF0010B120 /* PPParkClient.swift in Sources */,
 				B900A13C26529C4E000ED1B9 /* NSLayoutConstraintExtension.swift in Sources */,

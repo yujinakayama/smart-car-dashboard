@@ -50,13 +50,20 @@ class Location: SharedItemProtocol {
 
         markAsOpened()
 
-        let parkingSearchViewController = ParkingSearchViewController(destination: mapItem)
+        let mapsViewController = MapsViewController()
+        mapsViewController.showsRecentSharedLocations = false
+        mapsViewController.parkingSearchQuittingButton.isHidden = true
+
+        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
+        mapsViewController.mapView.setRegion(region, animated: false)
 
         if let navigationController = viewController.navigationController {
-            navigationController.pushViewController(parkingSearchViewController, animated: true)
+            navigationController.pushViewController(mapsViewController, animated: true)
         } else {
-            viewController.present(parkingSearchViewController, animated: true)
+            viewController.present(mapsViewController, animated: true)
         }
+
+        mapsViewController.startSearchingParkings(destination: mapItem)
     }
 
     private func getNormalizedMapItem(completion: @escaping (MKMapItem) -> Void) {
