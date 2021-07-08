@@ -422,8 +422,18 @@ class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
 
 extension MapsViewController: ParkingSearchMapViewManagerDelegate {
     func parkingSearchMapViewManager(_ manager: ParkingSearchMapViewManager, didSelectParking parking: Parking, forReservationWebPage url: URL) {
+        presentWebViewController(url: url)
+    }
+
+    func parkingSearchMapViewManager(_ manager: ParkingSearchMapViewManager, didSelectParkingForSearchingOnWeb parking: Parking) {
+        var urlComponents = URLComponents(string: "https://google.com/search")!
+        urlComponents.queryItems = [URLQueryItem(name: "q", value: parking.name)]
+        guard let url = urlComponents.url else { return }
+        presentWebViewController(url: url)
+    }
+
+    private func presentWebViewController(url: URL) {
         let webViewController = WebViewController()
-        webViewController.navigationItem.title = parking.name
         webViewController.loadPage(url: url)
 
         let navigationController = UINavigationController(rootViewController: webViewController)

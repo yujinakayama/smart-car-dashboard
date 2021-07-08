@@ -119,7 +119,7 @@ extension ParkingAnnotationView {
         let tagListViewConstraints = WeakReferenceArray<NSLayoutConstraint>()
 
         lazy var headerView: UIView = {
-            let stackView = UIStackView(arrangedSubviews: [nameLabel, ellipsisButton, UIView()])
+            let stackView = UIStackView(arrangedSubviews: [nameLabelControl, ellipsisButton, UIView()])
             stackView.axis = .horizontal
             stackView.alignment = .center
             stackView.distribution = .fill
@@ -127,7 +127,7 @@ extension ParkingAnnotationView {
             return stackView
         }()
 
-        lazy var nameLabel = makeContentLabel(textColor: .secondaryLabel, multiline: false)
+        lazy var nameLabelControl = LabelControl(label: makeContentLabel(textColor: .secondaryLabel, multiline: false))
 
         lazy var ellipsisButton: UIButton = {
             let image = UIImage(systemName: "ellipsis.rectangle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20))
@@ -292,7 +292,7 @@ extension ParkingAnnotationView {
 
             tagListView.parking = parking
 
-            nameLabel.text = normalizeText(parking.name)
+            nameLabelControl.label.text = normalizeText(parking.name)
 
             if tagListView.capacityTagView.isHidden, let description = normalizeText(parking.capacityDescription) {
                 capacityLabel.text = description
@@ -388,6 +388,56 @@ extension ParkingAnnotationView {
             mapItem.openInMaps(launchOptions: [
                 MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
             ])
+        }
+    }
+}
+
+extension ParkingAnnotationView.Callout {
+    // We use this label in the callout view to enable context menu interaction
+    // because MKAnnotationView doesn't allow non-UIControl views in the callout to receive touch events.
+    // See the reference for mapView(_:annotationView:calloutAccessoryControlTapped:).
+    class LabelControl: UIControl {
+        let label: UILabel
+
+        init(label: UILabel) {
+            self.label = label
+            super.init(frame: .zero)
+            addSubview(label)
+        }
+
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+
+        override func layoutSubviews() {
+            label.frame = bounds
+        }
+
+        override var intrinsicContentSize: CGSize {
+            return label.intrinsicContentSize
+        }
+
+        // The followings are needed to avoid superfluous spacing above the label
+        // when the detail view is expanded.
+
+        override func alignmentRect(forFrame frame: CGRect) -> CGRect {
+            return label.alignmentRect(forFrame: frame)
+        }
+
+        override func frame(forAlignmentRect alignmentRect: CGRect) -> CGRect {
+            return label.frame(forAlignmentRect: alignmentRect)
+        }
+
+        override var alignmentRectInsets: UIEdgeInsets {
+            return label.alignmentRectInsets
+        }
+
+        override var forFirstBaselineLayout: UIView {
+            return label.forFirstBaselineLayout
+        }
+
+        override var forLastBaselineLayout: UIView {
+            return label.forLastBaselineLayout
         }
     }
 }

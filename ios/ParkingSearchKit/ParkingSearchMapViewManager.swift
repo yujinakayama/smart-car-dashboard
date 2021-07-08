@@ -11,9 +11,10 @@ import MapKit
 
 public protocol ParkingSearchMapViewManagerDelegate: NSObjectProtocol {
     func parkingSearchMapViewManager(_ manager: ParkingSearchMapViewManager, didSelectParking parking: Parking, forReservationWebPage url: URL)
+    func parkingSearchMapViewManager(_ manager: ParkingSearchMapViewManager, didSelectParkingForSearchingOnWeb parking: Parking)
 }
 
-public class ParkingSearchMapViewManager {
+public class ParkingSearchMapViewManager: NSObject {
     static let pinAnnotationViewIdentifier = "MKPinAnnotationView"
 
     public weak var delegate: ParkingSearchMapViewManagerDelegate?
@@ -46,6 +47,7 @@ public class ParkingSearchMapViewManager {
 
     public init(mapView: MKMapView) {
         self.mapView = mapView
+        super.init()
         configureViews()
     }
 
@@ -193,6 +195,7 @@ public class ParkingSearchMapViewManager {
             return view
         } else {
             let view = ParkingAnnotationView(annotation: annotation, reuseIdentifier: "MKMarkerAnnotationView")
+            view.callout.nameLabelControl.addInteraction(UIContextMenuInteraction(delegate: self))
             view.callout.reservationButton.addTarget(self, action: #selector(notifyDelegateOfReservationPage), for: .touchUpInside)
             return view
         }
@@ -218,6 +221,21 @@ public class ParkingSearchMapViewManager {
         guard let parking = (mapView.selectedAnnotations.first as? ParkingAnnotation)?.parking else { return }
         guard let reservationURL = parking.reservationInfo?.url else { return }
         delegate?.parkingSearchMapViewManager(self, didSelectParking: parking, forReservationWebPage: reservationURL)
+    }
+}
+
+extension ParkingSearchMapViewManager: UIContextMenuInteractionDelegate {
+    public func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        let actionProvider: UIContextMenuActionProvider = { (suggestedActions) in
+            let action = UIAction(title: "Webで検索", image: UIImage(systemName: "magnifyingglass")) { (action) in
+                guard let parking = (self.mapView.selectedAnnotations.first as? ParkingAnnotation)?.parking else { return }
+                self.delegate?.parkingSearchMapViewManager(self, didSelectParkingForSearchingOnWeb: parking)
+            }
+
+            return UIMenu(title: "", children: [action])
+        }
+
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: actionProvider)
     }
 }
 
