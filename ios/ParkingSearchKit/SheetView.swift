@@ -45,7 +45,7 @@ import UIKit
     }
 
     private func commonInit() {
-        layoutMargins = .init(top: 16, left: 16, bottom: 16, right: 16)
+        layoutMargins = .init(top: 12, left: 12, bottom: 12, right: 12)
         translatesAutoresizingMaskIntoConstraints = false
 
         layer.shadowColor = UIColor.black.cgColor
@@ -119,8 +119,6 @@ import UIKit
                 verticalConstraintForHiddenState = topAnchor.constraint(equalTo: superview.bottomAnchor)
                 verticalConstraintForShownState = superview.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: bottomAnchor, constant: placementMargin)
             }
-
-//            otherConstraints.append(widthAnchor.constraint(equalToConstant: 400))
         }
 
         if isHidden {
