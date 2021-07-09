@@ -23,6 +23,7 @@ public class OfficialParkingSearchStatusView: UIStackView {
     public let button: UIButton = {
         let button = UIButton(type: .system)
         button.titleLabel?.adjustsFontForContentSizeCategory = true
+        button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceRightToLeft
         return button
     }()
@@ -53,11 +54,10 @@ public class OfficialParkingSearchStatusView: UIStackView {
         layoutMargins = .init(top: 4, left: 11, bottom: 4, right: 8)
         isLayoutMarginsRelativeArrangement = true
 
-        backgroundColor = .tertiarySystemFill
-        layer.cornerRadius = 8
-
         addArrangedSubview(button)
         addArrangedSubview(activityIndicatorView)
+
+        button.heightAnchor.constraint(equalToConstant: infoImage.size.height + layoutMargins.top + layoutMargins.bottom).isActive = true
     }
 
     func applyState() {
