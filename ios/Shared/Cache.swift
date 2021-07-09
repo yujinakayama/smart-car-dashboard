@@ -11,12 +11,12 @@ import PINCache
 import CommonCrypto
 
 // A cache class that abstracts PINCache and allows caching nil
-class Cache {
-    static func digestString(of string: String) -> String {
+public class Cache {
+    public static func digestString(of string: String) -> String {
         return digestString(of: string.data(using: .utf8)!)
     }
 
-    static func digestString(of data: Data) -> String {
+    public static func digestString(of data: Data) -> String {
         var digest = [UInt8](repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
 
         _ = data.withUnsafeBytes { (dataPointer) in
@@ -28,7 +28,7 @@ class Cache {
 
     let pinCache: PINCache
 
-    init(name: String, ageLimit: TimeInterval) {
+    public init(name: String, ageLimit: TimeInterval) {
         pinCache = PINCache(
             name: name,
             rootPath: NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!,
@@ -40,15 +40,15 @@ class Cache {
         )
     }
 
-    func containsObject(forKey key: String) -> Bool {
+    public func containsObject(forKey key: String) -> Bool {
         return pinCache.containsObject(forKey: key)
     }
 
-    func containsObject(forKeyAsync key: String, completion: @escaping (Bool) -> Void) {
+    public func containsObject(forKeyAsync key: String, completion: @escaping (Bool) -> Void) {
         pinCache.containsObject(forKeyAsync: key, completion: completion)
     }
 
-    func object(forKey key: String) -> Any? {
+    public func object(forKey key: String) -> Any? {
         let object = pinCache.object(forKey: key)
 
         if object is NSNull {
@@ -58,7 +58,7 @@ class Cache {
         return object
     }
 
-    func object(forKeyAsync key: String, completion: @escaping (Any?) -> Void) {
+    public func object(forKeyAsync key: String, completion: @escaping (Any?) -> Void) {
         pinCache.object(forKeyAsync: key) { (cache, key, object) in
             if object is NSNull {
                 completion(nil)
@@ -68,12 +68,12 @@ class Cache {
         }
     }
 
-    func setObject(_ object: Any?, forKey key: String) {
+    public func setObject(_ object: Any?, forKey key: String) {
         let objectToCache = object == nil ? NSNull() : object
         pinCache.setObject(objectToCache, forKey: key)
     }
 
-    func setObjectAsync(_ object: Any?, forKey key: String, completion: (() -> Void)? = nil) {
+    public func setObjectAsync(_ object: Any?, forKey key: String, completion: (() -> Void)? = nil) {
         let objectToCache = object == nil ? NSNull() : object
 
         pinCache.setObjectAsync(objectToCache as Any, forKey: key) { (cache, key, object) in
