@@ -95,13 +95,14 @@ public class ParkingSearchOptionsView: UIView {
     }
 
     public override func layoutSubviews() {
-        parkingLabel.isHidden = false
-
         super.layoutSubviews()
-        stackView.layoutIfNeeded()
 
-        if parkingLabel.frame.width < parkingLabel.intrinsicContentSize.width {
-            parkingLabel.isHidden = true
+        if !parkingLabel.isHidden {
+            stackView.layoutIfNeeded()
+
+            if parkingLabel.frame.width < parkingLabel.intrinsicContentSize.width {
+                parkingLabel.isHidden = true
+            }
         }
     }
 
