@@ -224,7 +224,7 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
         NSLayoutConstraint.activate([
             mapTypeSegmentedControl.leftAnchor.constraint(greaterThanOrEqualTo: view.layoutMarginsGuide.leftAnchor),
             view.layoutMarginsGuide.rightAnchor.constraint(equalTo: mapTypeSegmentedControl.rightAnchor),
-            mapTypeSegmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            mapTypeSegmentedControl.topAnchor.constraint(equalTo: statusBarUnderNavigationBar.bottomAnchor, constant: 20),
             mapTypeSegmentedControl.widthAnchor.constraint(greaterThanOrEqualToConstant: 200),
         ])
 
