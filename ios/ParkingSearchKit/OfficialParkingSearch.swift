@@ -18,9 +18,11 @@ public protocol OfficialParkingSearchDelegate: NSObjectProtocol {
 
 public class OfficialParkingSearch: NSObject {
     static let excludedDomains = [
+        "akippa.com",
         "earth-car.com",
         "its-mo.com",
         "mapfan.com",
+        "mapion.co.jp",
         "navitime.co.jp",
     ]
 
