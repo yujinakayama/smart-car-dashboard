@@ -15,7 +15,6 @@
 		75D3A42AAA73CA0E953322EA /* Pods_Rearview.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C66DD7AC35DF7FDDB0FB1B /* Pods_Rearview.framework */; };
 		B9008EAF25FBB6D7005DAD13 /* NoMainETCCard.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9008EAE25FBB6D7005DAD13 /* NoMainETCCard.wav */; };
 		B900A13A26529C38000ED1B9 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04662642D5FA002CD861 /* UIButtonExtension.swift */; };
-		B900A13C26529C4E000ED1B9 /* NSLayoutConstraintExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B900A13B26529C4E000ED1B9 /* NSLayoutConstraintExtension.swift */; };
 		B900A13D2652BCF4000ED1B9 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94215F026423A58003F94A0 /* StringExtension.swift */; };
 		B90265AB23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90265AA23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift */; };
 		B904A2A6243968990087BD4A /* MapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B904A2A5243968990087BD4A /* MapsViewController.swift */; };
@@ -407,7 +406,6 @@
 		9FA865634C4ECE4F8C5D18EA /* Pods_ParkingSearchKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ParkingSearchKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A383EF13705DD2A97098F1F8 /* Pods-DashRemote-ShareExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote-ShareExtension.release.xcconfig"; path = "Target Support Files/Pods-DashRemote-ShareExtension/Pods-DashRemote-ShareExtension.release.xcconfig"; sourceTree = "<group>"; };
 		B9008EAE25FBB6D7005DAD13 /* NoMainETCCard.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = NoMainETCCard.wav; sourceTree = "<group>"; };
-		B900A13B26529C4E000ED1B9 /* NSLayoutConstraintExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraintExtension.swift; sourceTree = "<group>"; };
 		B9025F62254D2180001E25DF /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
 		B90265AA23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemTableViewDataSource.swift; sourceTree = "<group>"; };
 		B904A2A5243968990087BD4A /* MapsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsViewController.swift; sourceTree = "<group>"; };
@@ -1158,7 +1156,6 @@
 				B984C019263DA08D00AF79AE /* TimeDurationPicker.swift */,
 				B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */,
 				B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */,
-				B900A13B26529C4E000ED1B9 /* NSLayoutConstraintExtension.swift */,
 				B93C04662642D5FA002CD861 /* UIButtonExtension.swift */,
 				B9DD4CCD26517F920010B120 /* Info.plist */,
 			);
@@ -2073,7 +2070,6 @@
 				B91F7EBE2652F0FB00B1233D /* WebViewController.swift in Sources */,
 				B9D0208F268F69490020BF9A /* ParkingSearchOptionsView.swift in Sources */,
 				B9DD4CDA26517FBF0010B120 /* PPParkClient.swift in Sources */,
-				B900A13C26529C4E000ED1B9 /* NSLayoutConstraintExtension.swift in Sources */,
 				B900A13D2652BCF4000ED1B9 /* StringExtension.swift in Sources */,
 				B9DD4CD726517FBF0010B120 /* TimeDurationPicker.swift in Sources */,
 				B9DD4CD626517FBF0010B120 /* ParkingAnnotation.swift in Sources */,
