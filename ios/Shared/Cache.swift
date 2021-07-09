@@ -40,6 +40,10 @@ public class Cache {
         )
     }
 
+    public func clear() {
+        pinCache.removeAllObjects()
+    }
+
     public func containsObject(forKey key: String) -> Bool {
         return pinCache.containsObject(forKey: key)
     }
