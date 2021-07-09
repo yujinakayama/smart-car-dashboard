@@ -24,6 +24,7 @@ public class OfficialParkingSearch: NSObject {
         "mapfan.com",
         "mapion.co.jp",
         "navitime.co.jp",
+        "navitime.com",
     ]
 
     static let cache = Cache(name: "OfficialParkingSearch", ageLimit: 60 * 60 * 24 * 30) // 30 days
