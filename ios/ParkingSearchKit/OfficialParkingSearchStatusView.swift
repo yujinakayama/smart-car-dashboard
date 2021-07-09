@@ -107,4 +107,14 @@ public class OfficialParkingSearchStatusView: UIStackView {
             button.imageEdgeInsets = .zero
         }
     }
+
+    public override func didMoveToSuperview() {
+        if superview == nil { return }
+
+        // It seems the animation is removed when the activity indicator is removed from superview
+        if activityIndicatorView.isAnimating {
+            activityIndicatorView.stopAnimating()
+            activityIndicatorView.startAnimating()
+        }
+    }
 }
