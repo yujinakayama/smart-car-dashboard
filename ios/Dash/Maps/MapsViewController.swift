@@ -53,7 +53,7 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
 
     let locationManager = CLLocationManager()
 
-    var hasReceivedInitialUserLocation = false
+    var hasInitiallyEnabledUserTrackingMode = false
 
     lazy var gestureRecognizer: UIGestureRecognizer = {
         let gestureRecognizer = UILongPressGestureRecognizer()
@@ -193,6 +193,20 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
         mapView.delegate = nil
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if !hasInitiallyEnabledUserTrackingMode {
+            if currentMode == .standard {
+                DispatchQueue.main.async {
+                    self.mapView.setUserTrackingMode(.follow, animated: false)
+                }
+            }
+
+            hasInitiallyEnabledUserTrackingMode = true
+        }
+    }
+
     private func configureSubviews() {
         view.addSubview(mapView)
         view.addSubview(mapTypeSegmentedControl)
@@ -305,14 +319,6 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         if let userLocationView = mapView.view(for: userLocation) as? DirectionalUserLocationAnnotationView {
             userLocationView.updateDirection(animated: true)
-        }
-
-        if !hasReceivedInitialUserLocation {
-            if currentMode == .standard {
-                mapView.setUserTrackingMode(.follow, animated: false)
-            }
-
-            hasReceivedInitialUserLocation = true
         }
     }
 
