@@ -80,6 +80,10 @@ public class ParkingSearchOptionsView: UIView {
             trailingAnchor.constraint(greaterThanOrEqualTo: stackView.trailingAnchor),
             stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
+
+        for subview in stackView.arrangedSubviews {
+            subview.setContentHuggingPriority(.required, for: .horizontal)
+        }
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
