@@ -30,7 +30,7 @@
 		B91BD8092323FD820064D2B5 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
 		B91E0B62254D047D002928D3 /* PairingURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E0B61254D047D002928D3 /* PairingURLItem.swift */; };
 		B91F7EBE2652F0FB00B1233D /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C04B41257775B8001D6E0F /* WebViewController.swift */; };
-		B91F7EC02652F2B400B1233D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B91F7EBF2652F2B400B1233D /* SwiftPackageProductDependency */; };
+		B91F7EC02652F2B400B1233D /* DirectionalUserLocationAnnotationView in Frameworks */ = {isa = PBXBuildFile; productRef = B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */; };
 		B92451D423E30ACE007556D5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B92451D323E30ACE007556D5 /* Settings.bundle */; };
 		B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */; };
 		B929FAFA24CECAC800BC773A /* AppleMusic.h in Headers */ = {isa = PBXBuildFile; fileRef = B929FAF824CECAC800BC773A /* AppleMusic.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -155,13 +155,14 @@
 		B9BF2F0523F6946100967316 /* GradientPathRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BF2F0423F6946100967316 /* GradientPathRenderer.swift */; };
 		B9C04B42257775B8001D6E0F /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C04B41257775B8001D6E0F /* WebViewController.swift */; };
 		B9C0BF4526984D3D00C54BA9 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F9EFD5256D3D6B00C33781 /* Cache.swift */; };
+		B9C0BF472698689B00C54BA9 /* OfficialParkingInformationWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0BF462698689B00C54BA9 /* OfficialParkingInformationWebViewController.swift */; };
 		B9C0CED92508F63F006D246E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CED82508F63F006D246E /* AppDelegate.swift */; };
 		B9C0CEDB2508F63F006D246E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEDA2508F63F006D246E /* SceneDelegate.swift */; };
 		B9C0CEE22508F641006D246E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9C0CEE12508F641006D246E /* Assets.xcassets */; };
 		B9C0CEE52508F641006D246E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9C0CEE32508F641006D246E /* LaunchScreen.storyboard */; };
 		B9C0CEED250C3A27006D246E /* HeartAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEEC250C3A27006D246E /* HeartAnimation.swift */; };
 		B9C1DD1526922ABA0046E108 /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92650112691CE29005FD73D /* SheetView.swift */; };
-		B9C1DD1A2692EE350046E108 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B9C1DD192692EE350046E108 /* SwiftPackageProductDependency */; };
+		B9C1DD1A2692EE350046E108 /* TLDExtract in Frameworks */ = {isa = PBXBuildFile; productRef = B9C1DD192692EE350046E108 /* TLDExtract */; };
 		B9C1DD1C269457910046E108 /* OfficialParkingSearchStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */; };
 		B9C1DD2026948B7D0046E108 /* OfficialParkingSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */; };
 		B9C2455F23EDA2EA00E00523 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
@@ -551,6 +552,7 @@
 		B9BC920823250A0A006F22FC /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		B9BF2F0423F6946100967316 /* GradientPathRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientPathRenderer.swift; sourceTree = "<group>"; };
 		B9C04B41257775B8001D6E0F /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		B9C0BF462698689B00C54BA9 /* OfficialParkingInformationWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialParkingInformationWebViewController.swift; sourceTree = "<group>"; };
 		B9C0CED62508F63F006D246E /* Rearview.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rearview.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9C0CED82508F63F006D246E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9C0CEDA2508F63F006D246E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -701,8 +703,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B91F7EC02652F2B400B1233D /* BuildFile in Frameworks */,
-				B9C1DD1A2692EE350046E108 /* BuildFile in Frameworks */,
+				B91F7EC02652F2B400B1233D /* DirectionalUserLocationAnnotationView in Frameworks */,
+				B9C1DD1A2692EE350046E108 /* TLDExtract in Frameworks */,
 				647E724ED51B701ECEF7B7D5 /* Pods_ParkingSearchKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -729,6 +731,7 @@
 			isa = PBXGroup;
 			children = (
 				B904A2A5243968990087BD4A /* MapsViewController.swift */,
+				B9C0BF462698689B00C54BA9 /* OfficialParkingInformationWebViewController.swift */,
 			);
 			path = Maps;
 			sourceTree = "<group>";
@@ -1416,8 +1419,8 @@
 			);
 			name = ParkingSearchKit;
 			packageProductDependencies = (
-				B91F7EBF2652F2B400B1233D /* SwiftPackageProductDependency */,
-				B9C1DD192692EE350046E108 /* SwiftPackageProductDependency */,
+				B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */,
+				B9C1DD192692EE350046E108 /* TLDExtract */,
 			);
 			productName = ParkingSearchKit;
 			productReference = B9DD4CCA26517F920010B120 /* ParkingSearchKit.framework */;
@@ -1515,8 +1518,8 @@
 			);
 			mainGroup = B9DC5B18229D59BE00B645D5;
 			packageReferences = (
-				B968655D26529621007182BC /* RemoteSwiftPackageReference */,
-				B9C1DD182692EE350046E108 /* RemoteSwiftPackageReference */,
+				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */,
+				B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */,
 			);
 			productRefGroup = B9DC5B22229D59BE00B645D5 /* Products */;
 			projectDirPath = "";
@@ -2013,6 +2016,7 @@
 				B9D0260F24BF7704005C03B1 /* ClassicBluetoothManager.swift in Sources */,
 				B9B4A89A2569310400FE0C9F /* DashboardViewController.swift in Sources */,
 				B9C87A1726671CCE00ABCBB4 /* ParkingSearchURLItem.swift in Sources */,
+				B9C0BF472698689B00C54BA9 /* OfficialParkingInformationWebViewController.swift in Sources */,
 				B90666DE247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift in Sources */,
 				B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */,
 				B90C297225E3FB80004466C9 /* SIMDExtension.swift in Sources */,
@@ -3002,7 +3006,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B968655D26529621007182BC /* RemoteSwiftPackageReference */ = {
+		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yujinakayama/DirectionalUserLocationAnnotationView.git";
 			requirement = {
@@ -3010,7 +3014,7 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		B9C1DD182692EE350046E108 /* RemoteSwiftPackageReference */ = {
+		B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gumob/TLDExtractSwift";
 			requirement = {
@@ -3021,14 +3025,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B91F7EBF2652F2B400B1233D /* SwiftPackageProductDependency */ = {
+		B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B968655D26529621007182BC /* RemoteSwiftPackageReference */;
+			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */;
 			productName = DirectionalUserLocationAnnotationView;
 		};
-		B9C1DD192692EE350046E108 /* SwiftPackageProductDependency */ = {
+		B9C1DD192692EE350046E108 /* TLDExtract */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B9C1DD182692EE350046E108 /* RemoteSwiftPackageReference */;
+			package = B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */;
 			productName = TLDExtract;
 		};
 /* End XCSwiftPackageProductDependency section */
