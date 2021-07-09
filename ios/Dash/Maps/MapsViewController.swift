@@ -154,7 +154,7 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
         return stackView
     }()
 
-    private lazy var officialParkingInformationWebViewController = OfficialParkingInformationWebViewController()
+    private var officialParkingInformationWebViewController: OfficialParkingInformationWebViewController?
 
     private lazy var geocoder = CLGeocoder()
 
@@ -386,13 +386,16 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
 
         parkingSearchManager.setDestination(destination.placemark.coordinate)
 
-        if let officialParkingSearch = try? OfficialParkingSearch(destination: destination, webView: officialParkingInformationWebViewController.webView) {
+        let webViewController = OfficialParkingInformationWebViewController()
+
+        if let officialParkingSearch = try? OfficialParkingSearch(destination: destination, webView: webViewController.webView) {
             officialParkingSearch.delegate = self
             officialParkingSearch.start()
 
             officialParkingSearchStatusView.state = .searching
 
             self.officialParkingSearch = officialParkingSearch
+            self.officialParkingInformationWebViewController = webViewController
         }
 
         navigationItem.title = "“\(destinationName)” 周辺の駐車場"
@@ -444,7 +447,9 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
     }
 
     @objc private func officialParkingSearchStatusViewButtonDidPush() {
-        let navigationController = UINavigationController(rootViewController: officialParkingInformationWebViewController)
+        guard let webViewController = officialParkingInformationWebViewController else { return }
+
+        let navigationController = UINavigationController(rootViewController: webViewController)
         navigationController.isToolbarHidden = false
         present(navigationController, animated: true)
     }
