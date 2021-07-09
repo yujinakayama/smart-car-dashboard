@@ -48,8 +48,11 @@ class OfficialParkingInformationWebViewController: WebViewController {
                 H4: 97,
                 H5: 96,
                 H6: 95,
+                TH: 20,
                 DIV: 10,
-                A: -1,
+                A: -10,
+                SMALL: -20,
+                FOOTER: -100,
             };
 
             function importanceOf(element) {
