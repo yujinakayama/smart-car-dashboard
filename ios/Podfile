@@ -26,6 +26,10 @@ target 'Dash' do
   pod 'GTMSessionFetcher'
 end
 
+target 'ParkingSearchKit' do
+  pod 'PINCache', '>= 3.0.1-beta.8'
+end
+
 target 'DashRemote' do
   pod 'KeychainAccess'
   pod 'TransitionButton', inhibit_warnings: true

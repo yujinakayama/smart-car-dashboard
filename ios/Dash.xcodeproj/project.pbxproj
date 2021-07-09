@@ -10,6 +10,7 @@
 		01861A4B14032E6339D8E511 /* Pods_Dash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 125AA3B115ABAB0DD3288056 /* Pods_Dash.framework */; };
 		0B41F2C816E331BA2FB139A3 /* Pods_DashRemote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A188A66685EA4375D4818F /* Pods_DashRemote.framework */; };
 		412025EE69F3FE2D953808D6 /* Pods_DashRemote_ShareExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B941AEADBC8F07DBE594C95A /* Pods_DashRemote_ShareExtension.framework */; };
+		647E724ED51B701ECEF7B7D5 /* Pods_ParkingSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FA865634C4ECE4F8C5D18EA /* Pods_ParkingSearchKit.framework */; };
 		66DA20D749E1EF848B3B203E /* Pods_RearviewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0198292C4BC2FEDD3C5A08E3 /* Pods_RearviewKit.framework */; };
 		75D3A42AAA73CA0E953322EA /* Pods_Rearview.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C66DD7AC35DF7FDDB0FB1B /* Pods_Rearview.framework */; };
 		B9008EAF25FBB6D7005DAD13 /* NoMainETCCard.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9008EAE25FBB6D7005DAD13 /* NoMainETCCard.wav */; };
@@ -29,7 +30,7 @@
 		B91BD8092323FD820064D2B5 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
 		B91E0B62254D047D002928D3 /* PairingURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E0B61254D047D002928D3 /* PairingURLItem.swift */; };
 		B91F7EBE2652F0FB00B1233D /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C04B41257775B8001D6E0F /* WebViewController.swift */; };
-		B91F7EC02652F2B400B1233D /* DirectionalUserLocationAnnotationView in Frameworks */ = {isa = PBXBuildFile; productRef = B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */; };
+		B91F7EC02652F2B400B1233D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B91F7EBF2652F2B400B1233D /* SwiftPackageProductDependency */; };
 		B92451D423E30ACE007556D5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B92451D323E30ACE007556D5 /* Settings.bundle */; };
 		B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */; };
 		B929FAFA24CECAC800BC773A /* AppleMusic.h in Headers */ = {isa = PBXBuildFile; fileRef = B929FAF824CECAC800BC773A /* AppleMusic.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -153,13 +154,14 @@
 		B9BD54A5265BB0D9002C2A8F /* ParkingSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9DD4CCA26517F920010B120 /* ParkingSearchKit.framework */; };
 		B9BF2F0523F6946100967316 /* GradientPathRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BF2F0423F6946100967316 /* GradientPathRenderer.swift */; };
 		B9C04B42257775B8001D6E0F /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C04B41257775B8001D6E0F /* WebViewController.swift */; };
+		B9C0BF4526984D3D00C54BA9 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F9EFD5256D3D6B00C33781 /* Cache.swift */; };
 		B9C0CED92508F63F006D246E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CED82508F63F006D246E /* AppDelegate.swift */; };
 		B9C0CEDB2508F63F006D246E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEDA2508F63F006D246E /* SceneDelegate.swift */; };
 		B9C0CEE22508F641006D246E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9C0CEE12508F641006D246E /* Assets.xcassets */; };
 		B9C0CEE52508F641006D246E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9C0CEE32508F641006D246E /* LaunchScreen.storyboard */; };
 		B9C0CEED250C3A27006D246E /* HeartAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEEC250C3A27006D246E /* HeartAnimation.swift */; };
 		B9C1DD1526922ABA0046E108 /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92650112691CE29005FD73D /* SheetView.swift */; };
-		B9C1DD1A2692EE350046E108 /* TLDExtract in Frameworks */ = {isa = PBXBuildFile; productRef = B9C1DD192692EE350046E108 /* TLDExtract */; };
+		B9C1DD1A2692EE350046E108 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B9C1DD192692EE350046E108 /* SwiftPackageProductDependency */; };
 		B9C1DD1C269457910046E108 /* OfficialParkingSearchStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */; };
 		B9C1DD2026948B7D0046E108 /* OfficialParkingSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */; };
 		B9C2455F23EDA2EA00E00523 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
@@ -397,8 +399,11 @@
 		425C056D1C977242B289F14E /* Pods-Rearview.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rearview.debug.xcconfig"; path = "Target Support Files/Pods-Rearview/Pods-Rearview.debug.xcconfig"; sourceTree = "<group>"; };
 		54C66DD7AC35DF7FDDB0FB1B /* Pods_Rearview.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rearview.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B63F95FAEA20086745553D /* Pods-RearviewKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RearviewKit.debug.xcconfig"; path = "Target Support Files/Pods-RearviewKit/Pods-RearviewKit.debug.xcconfig"; sourceTree = "<group>"; };
+		76434740D553577843417214 /* Pods-ParkingSearchKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParkingSearchKit.debug.xcconfig"; path = "Target Support Files/Pods-ParkingSearchKit/Pods-ParkingSearchKit.debug.xcconfig"; sourceTree = "<group>"; };
 		79A188A66685EA4375D4818F /* Pods_DashRemote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DashRemote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		801C19D67084F1B5B305B7D4 /* Pods-ParkingSearchKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParkingSearchKit.release.xcconfig"; path = "Target Support Files/Pods-ParkingSearchKit/Pods-ParkingSearchKit.release.xcconfig"; sourceTree = "<group>"; };
 		869C973AA26AD90E148028FB /* Pods-Dash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dash.release.xcconfig"; path = "Target Support Files/Pods-Dash/Pods-Dash.release.xcconfig"; sourceTree = "<group>"; };
+		9FA865634C4ECE4F8C5D18EA /* Pods_ParkingSearchKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ParkingSearchKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A383EF13705DD2A97098F1F8 /* Pods-DashRemote-ShareExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote-ShareExtension.release.xcconfig"; path = "Target Support Files/Pods-DashRemote-ShareExtension/Pods-DashRemote-ShareExtension.release.xcconfig"; sourceTree = "<group>"; };
 		B9008EAE25FBB6D7005DAD13 /* NoMainETCCard.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = NoMainETCCard.wav; sourceTree = "<group>"; };
 		B900A13B26529C4E000ED1B9 /* NSLayoutConstraintExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraintExtension.swift; sourceTree = "<group>"; };
@@ -696,8 +701,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B91F7EC02652F2B400B1233D /* DirectionalUserLocationAnnotationView in Frameworks */,
-				B9C1DD1A2692EE350046E108 /* TLDExtract in Frameworks */,
+				B91F7EC02652F2B400B1233D /* BuildFile in Frameworks */,
+				B9C1DD1A2692EE350046E108 /* BuildFile in Frameworks */,
+				647E724ED51B701ECEF7B7D5 /* Pods_ParkingSearchKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -789,6 +795,7 @@
 				B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */,
 				B988A676254D0EB30012A4CB /* PairedVehicle.swift */,
 				B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */,
+				B9F9EFD5256D3D6B00C33781 /* Cache.swift */,
 				B94215F026423A58003F94A0 /* StringExtension.swift */,
 				B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */,
 			);
@@ -982,6 +989,7 @@
 				B941AEADBC8F07DBE594C95A /* Pods_DashRemote_ShareExtension.framework */,
 				0198292C4BC2FEDD3C5A08E3 /* Pods_RearviewKit.framework */,
 				54C66DD7AC35DF7FDDB0FB1B /* Pods_Rearview.framework */,
+				9FA865634C4ECE4F8C5D18EA /* Pods_ParkingSearchKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1112,7 +1120,6 @@
 				B942554F22BAA5D1008B053B /* LocalNotification.swift */,
 				B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */,
 				B9BC920823250A0A006F22FC /* Defaults.swift */,
-				B9F9EFD5256D3D6B00C33781 /* Cache.swift */,
 				B942553C22B8C3E2008B053B /* Logger.swift */,
 				B93321ED2323C9D500BFAB21 /* BorderedView.swift */,
 				B94BD2E82680486700B768A2 /* BorderedLabel.swift */,
@@ -1201,6 +1208,8 @@
 				E8E732016FBB1AB0B6B32FD4 /* Pods-RearviewKit.release.xcconfig */,
 				425C056D1C977242B289F14E /* Pods-Rearview.debug.xcconfig */,
 				D72D61E07B471561E0FDF3FC /* Pods-Rearview.release.xcconfig */,
+				76434740D553577843417214 /* Pods-ParkingSearchKit.debug.xcconfig */,
+				801C19D67084F1B5B305B7D4 /* Pods-ParkingSearchKit.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1387,8 +1396,6 @@
 				B9A3B68426537A9B00D1D64C /* PBXTargetDependency */,
 			);
 			name = Dash;
-			packageProductDependencies = (
-			);
 			productName = ETC;
 			productReference = B9DC5B21229D59BE00B645D5 /* Dash.app */;
 			productType = "com.apple.product-type.application";
@@ -1397,6 +1404,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B9DD4CD526517F920010B120 /* Build configuration list for PBXNativeTarget "ParkingSearchKit" */;
 			buildPhases = (
+				957BA8E49B42740F6005B9E4 /* [CP] Check Pods Manifest.lock */,
 				B9DD4CC526517F920010B120 /* Headers */,
 				B9DD4CC626517F920010B120 /* Sources */,
 				B9DD4CC726517F920010B120 /* Frameworks */,
@@ -1408,8 +1416,8 @@
 			);
 			name = ParkingSearchKit;
 			packageProductDependencies = (
-				B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */,
-				B9C1DD192692EE350046E108 /* TLDExtract */,
+				B91F7EBF2652F2B400B1233D /* SwiftPackageProductDependency */,
+				B9C1DD192692EE350046E108 /* SwiftPackageProductDependency */,
 			);
 			productName = ParkingSearchKit;
 			productReference = B9DD4CCA26517F920010B120 /* ParkingSearchKit.framework */;
@@ -1507,8 +1515,8 @@
 			);
 			mainGroup = B9DC5B18229D59BE00B645D5;
 			packageReferences = (
-				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */,
-				B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */,
+				B968655D26529621007182BC /* RemoteSwiftPackageReference */,
+				B9C1DD182692EE350046E108 /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = B9DC5B22229D59BE00B645D5 /* Products */;
 			projectDirPath = "";
@@ -1640,6 +1648,28 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Rearview-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		957BA8E49B42740F6005B9E4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ParkingSearchKit-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2033,6 +2063,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9C0BF4526984D3D00C54BA9 /* Cache.swift in Sources */,
 				B9C1DD1C269457910046E108 /* OfficialParkingSearchStatusView.swift in Sources */,
 				B9DD4CD926517FBF0010B120 /* ParkingAnnotationView.swift in Sources */,
 				B91F7EBE2652F0FB00B1233D /* WebViewController.swift in Sources */,
@@ -2704,6 +2735,7 @@
 		};
 		B9DD4CD326517F920010B120 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 76434740D553577843417214 /* Pods-ParkingSearchKit.debug.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -2735,6 +2767,7 @@
 		};
 		B9DD4CD426517F920010B120 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 801C19D67084F1B5B305B7D4 /* Pods-ParkingSearchKit.release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -2969,7 +3002,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */ = {
+		B968655D26529621007182BC /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yujinakayama/DirectionalUserLocationAnnotationView.git";
 			requirement = {
@@ -2977,7 +3010,7 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */ = {
+		B9C1DD182692EE350046E108 /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gumob/TLDExtractSwift";
 			requirement = {
@@ -2988,14 +3021,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */ = {
+		B91F7EBF2652F2B400B1233D /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */;
+			package = B968655D26529621007182BC /* RemoteSwiftPackageReference */;
 			productName = DirectionalUserLocationAnnotationView;
 		};
-		B9C1DD192692EE350046E108 /* TLDExtract */ = {
+		B9C1DD192692EE350046E108 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */;
+			package = B9C1DD182692EE350046E108 /* RemoteSwiftPackageReference */;
 			productName = TLDExtract;
 		};
 /* End XCSwiftPackageProductDependency section */

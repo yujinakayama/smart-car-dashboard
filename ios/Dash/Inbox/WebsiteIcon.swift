@@ -43,18 +43,7 @@ class WebsiteIcon {
         WebsiteIcon.cache.containsObject(forKey: cacheKey)
     }
 
-    private lazy var cacheKey: String = {
-        let websiteURLData = websiteURL.absoluteString.data(using: .utf8)!
-        var digest = [UInt8](repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
-
-        _ = websiteURLData.withUnsafeBytes { (dataPointer) in
-            CC_SHA1(dataPointer.baseAddress, CC_LONG(websiteURLData.count), &digest)
-        }
-
-        let hexDigest = digest.map { String(format: "%02x", $0) }.joined()
-
-        return hexDigest
-    }()
+    private lazy var cacheKey: String = Cache.digestString(of: websiteURL.absoluteString)
 
     init(websiteURL: URL) {
         self.websiteURL = websiteURL

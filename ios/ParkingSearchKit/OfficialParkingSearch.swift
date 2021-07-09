@@ -10,6 +10,7 @@ import Foundation
 import WebKit
 import MapKit
 import TLDExtract
+import CommonCrypto
 
 public protocol OfficialParkingSearchDelegate: NSObjectProtocol {
     func officialParkingSearch(_ officialParkingSearch: OfficialParkingSearch, didChange state: OfficialParkingSearch.State)
@@ -22,6 +23,8 @@ public class OfficialParkingSearch: NSObject {
         "mapfan.com",
         "navitime.co.jp",
     ]
+
+    static let cache = Cache(name: "OfficialParkingSearch", ageLimit: 60 * 60 * 24 * 30) // 30 days
 
     public let destination: MKMapItem
 
@@ -59,6 +62,22 @@ public class OfficialParkingSearch: NSObject {
 
     private var address: CLPlacemark?
 
+    private lazy var cacheKey: String = {
+        let coordinate = destination.placemark.coordinate
+        let key = String(format: "%@|%f,%f", destination.name!, coordinate.latitude, coordinate.longitude)
+        return Cache.digestString(of: key)
+    }()
+
+    private var cachedURL: URL? {
+        get {
+            return Self.cache.object(forKey: cacheKey) as? URL
+        }
+
+        set {
+            Self.cache.setObjectAsync(newValue as Any, forKey: cacheKey)
+        }
+    }
+
     public init(destination: MKMapItem, webView: WKWebView) throws {
         if destination.name == nil || destination.name?.isEmpty == true {
             throw OfficialParkingSearchError.destinationMustHaveName
@@ -79,6 +98,19 @@ public class OfficialParkingSearch: NSObject {
     public func start() {
         state = .searching
 
+        if let cachedURL = cachedURL {
+            webView.load(URLRequest(url: cachedURL))
+        } else {
+            performSearch()
+        }
+    }
+
+    public func stop() {
+        webView.stopLoading()
+        geocoder.cancelGeocode()
+    }
+
+    private func performSearch() {
         startLoadingGoogleSearchFormPage()
 
         fetchAddress { (result) in
@@ -93,11 +125,6 @@ public class OfficialParkingSearch: NSObject {
                 print(error)
             }
         }
-    }
-
-    public func stop() {
-        webView.stopLoading()
-        geocoder.cancelGeocode()
     }
 
     private func startLoadingGoogleSearchFormPage() {
@@ -229,6 +256,7 @@ extension OfficialParkingSearch: WKNavigationDelegate {
         case .googleBotSuspicion:
             state = .actionRequired
         case .other:
+            cachedURL = url
             state = .found
         case nil:
             break
