@@ -29,6 +29,33 @@ class OfficialParkingInformationWebViewController: WebViewController {
 
     private func scrollToElement(containing text: String, highlight: Bool = false) {
         let script = """
+            function getElements(xpath) {
+                const result = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+
+                const elements = [];
+
+                for (let i = 0; i < result.snapshotLength; i++) {
+                    elements.push(result.snapshotItem(i));
+                }
+
+                return elements;
+            }
+
+            const tagImportance = {
+                H1: 100,
+                H2: 99,
+                H3: 98,
+                H4: 97,
+                H5: 96,
+                H6: 95,
+                DIV: 10,
+                A: -1,
+            };
+
+            function importanceOf(element) {
+                return tagImportance[element.tagName] || 0;
+            }
+
             function scrollTo(y, duration) {
                 let initialTimestamp = null;
 
@@ -53,19 +80,21 @@ class OfficialParkingInformationWebViewController: WebViewController {
                 window.requestAnimationFrame(step);
             }
 
-            const xpath = `//body//*[not(self::a) and text()[contains(., "${searchText}")]]`; // TODO: Escape searchText properly
-            const element = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+            const xpath = `//body//*[text()[contains(., "${searchText}")]]`; // TODO: Escape searchText properly
+            const elements = getElements(xpath);
+            elements.sort((a, b) => { return importanceOf(b) - importanceOf(a) });
+            const bestElement = elements[0];
 
-            if (!element) {
+            if (!bestElement) {
                 return;
             }
 
-            const absoluteElementTop = element.getBoundingClientRect().top + window.pageYOffset;
+            const absoluteElementTop = bestElement.getBoundingClientRect().top + window.pageYOffset;
             scrollTo(absoluteElementTop - (window.innerHeight / 4), 500);
 
             if (highlight) {
-                element.style.backgroundColor = '#fffd54';
-                element.style.borderRadius = '0.2em';
+                bestElement.style.backgroundColor = '#fffd54';
+                bestElement.style.borderRadius = '0.2em';
             }
         """
 
