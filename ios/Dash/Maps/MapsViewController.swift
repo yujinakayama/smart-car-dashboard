@@ -607,25 +607,30 @@ fileprivate class OfficialParkingInformationWebViewController: WebViewController
     }
 
     func scrollToParkingInformation() {
-        scrollToElement(containing: "駐車場")
+        scrollToElement(containing: "駐車場", highlight: true)
     }
 
-    private func scrollToElement(containing text: String) {
+    private func scrollToElement(containing text: String, highlight: Bool = false) {
         let script = """
             const xpath = `//*[text()[contains(., "${searchText}")]]`; // TODO: Escape searchText properly
             const element = document.evaluate(xpath, document.body, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 
-            if (element) {
-                const absoluteElementTop = element.getBoundingClientRect().top + window.pageYOffset;
-                window.scrollTo(0, absoluteElementTop - (window.innerHeight / 2));
+            if (!element) {
+                return;
             }
 
-            return element != null;
+            const absoluteElementTop = element.getBoundingClientRect().top + window.pageYOffset;
+            window.scrollTo(0, absoluteElementTop - (window.innerHeight / 2));
+
+            if (highlight) {
+                element.style.backgroundColor = '#fffd54';
+                element.style.borderRadius = '0.2em';
+            }
         """
 
         webView.callAsyncJavaScript(
             script,
-            arguments: ["searchText": text],
+            arguments: ["searchText": text, "highlight": highlight],
             in: nil,
             in: .defaultClient)
         { (result) in
