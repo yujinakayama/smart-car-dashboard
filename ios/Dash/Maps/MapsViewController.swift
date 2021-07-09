@@ -11,7 +11,7 @@ import MapKit
 import DirectionalUserLocationAnnotationView
 import ParkingSearchKit
 
-class MapsViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate {
+class MapsViewController: UIViewController, MKMapViewDelegate {
     lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.delegate = self
@@ -440,6 +440,26 @@ extension MapsViewController: ParkingSearchMapViewManagerDelegate {
         navigationController.isToolbarHidden = false
 
         present(navigationController, animated: true)
+    }
+}
+
+extension MapsViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        let point = touch.location(in: mapView)
+        let touchedView = mapView.hitTest(point, with: nil)
+
+        var ancestorView = touchedView
+
+        while let view = ancestorView?.superview {
+            // Disable long press gesture in callout views
+            if String(describing: type(of: view)) == "MKStandardCalloutView" {
+                return false
+            }
+
+            ancestorView = view
+        }
+
+        return true
     }
 }
 
