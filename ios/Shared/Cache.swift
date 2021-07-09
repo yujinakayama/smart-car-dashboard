@@ -8,9 +8,24 @@
 
 import Foundation
 import PINCache
+import CommonCrypto
 
 // A cache class that abstracts PINCache and allows caching nil
 class Cache {
+    static func digestString(of string: String) -> String {
+        return digestString(of: string.data(using: .utf8)!)
+    }
+
+    static func digestString(of data: Data) -> String {
+        var digest = [UInt8](repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
+
+        _ = data.withUnsafeBytes { (dataPointer) in
+            CC_SHA1(dataPointer.baseAddress, CC_LONG(data.count), &digest)
+        }
+
+        return digest.map { String(format: "%02x", $0) }.joined()
+    }
+
     let pinCache: PINCache
 
     init(name: String, ageLimit: TimeInterval) {

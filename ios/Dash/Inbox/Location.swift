@@ -111,16 +111,8 @@ class Location: SharedItemProtocol {
         }
 
         private lazy var cacheKey: String = {
-            let data = String(format: "%@|%f,%f|%f", name, coordinate.latitude, coordinate.longitude, maxDistance).data(using: .utf8)!
-            var digest = [UInt8](repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
-
-            _ = data.withUnsafeBytes { (dataPointer) in
-                CC_SHA1(dataPointer.baseAddress, CC_LONG(data.count), &digest)
-            }
-
-            let hexDigest = digest.map { String(format: "%02x", $0) }.joined()
-
-            return hexDigest
+            let key = String(format: "%@|%f,%f|%f", name, coordinate.latitude, coordinate.longitude, maxDistance)
+            return Cache.digestString(of: key)
         }()
 
         init(name: String, coordinate: CLLocationCoordinate2D, maxDistance: CLLocationDistance) {

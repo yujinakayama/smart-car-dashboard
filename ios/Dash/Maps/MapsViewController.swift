@@ -111,11 +111,48 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
 
     private var officialParkingSearch: OfficialParkingSearch? {
         didSet {
-            officialParkingSearchStatusView.isHidden = officialParkingSearch == nil
+            changePlacementOfOfficialParkingSearchStatusViewIfNeeded()
         }
     }
 
-    private let officialParkingSearchStatusView = OfficialParkingSearchStatusView()
+    private lazy var officialParkingSearchStatusView: OfficialParkingSearchStatusView = {
+        let view = OfficialParkingSearchStatusView()
+        view.layer.cornerRadius = 8
+        view.button.addTarget(self, action: #selector(officialParkingSearchStatusViewButtonDidPush), for: .touchUpInside)
+        return view
+    }()
+
+    private lazy var statusBarUnderNavigationBar: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+
+        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .systemChromeMaterial))
+
+        let bottomBorderView = UIView()
+        bottomBorderView.backgroundColor = .secondaryLabel
+
+        stackView.addSubview(visualEffectView)
+        stackView.addSubview(bottomBorderView)
+
+        stackView.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+
+        NSLayoutConstraint.activate([
+            visualEffectView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: visualEffectView.trailingAnchor),
+            visualEffectView.topAnchor.constraint(equalTo: stackView.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: visualEffectView.bottomAnchor),
+        ])
+
+        NSLayoutConstraint.activate([
+            bottomBorderView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: bottomBorderView.trailingAnchor),
+            stackView.bottomAnchor.constraint(equalTo: bottomBorderView.bottomAnchor),
+            bottomBorderView.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale)
+        ])
+
+        return stackView
+    }()
 
     private lazy var officialParkingInformationWebViewController = OfficialParkingInformationWebViewController()
 
@@ -140,9 +177,6 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
 
         navigationItem.largeTitleDisplayMode = .never
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: officialParkingSearchStatusView)
-        officialParkingSearchStatusView.informationButton.addTarget(self, action: #selector(officialParkingInformationButtonDidPush), for: .touchUpInside)
-
         locationManager.requestWhenInUseAuthorization()
 
         configureSubviews()
@@ -162,6 +196,7 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
     private func configureSubviews() {
         view.addSubview(mapView)
         view.addSubview(mapTypeSegmentedControl)
+        view.addSubview(statusBarUnderNavigationBar)
 
         view.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
 
@@ -179,8 +214,16 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
             mapTypeSegmentedControl.widthAnchor.constraint(greaterThanOrEqualToConstant: 200),
         ])
 
-        changeParkingSearchOptionsSheetViewPlacementIfNeeded()
+        NSLayoutConstraint.activate([
+            statusBarUnderNavigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: statusBarUnderNavigationBar.trailingAnchor),
+            statusBarUnderNavigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+        ])
+
+        changePlacementOfParkingSearchOptionsSheetViewIfNeeded()
         view.addSubview(parkingSearchOptionsSheetView)
+
+        changePlacementOfOfficialParkingSearchStatusViewIfNeeded()
     }
 
     private func configureSharedItemDatabase() {
@@ -191,11 +234,29 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(updateSharedLocationAnnotations), name: .SharedItemDatabaseDidUpdateItems, object: nil)
     }
 
-    private func changeParkingSearchOptionsSheetViewPlacementIfNeeded() {
+    private func changePlacementOfParkingSearchOptionsSheetViewIfNeeded() {
         if traitCollection.horizontalSizeClass == .compact {
             parkingSearchOptionsSheetView.placement = .bottomAttached
         } else {
             parkingSearchOptionsSheetView.placement = .rightBottom
+        }
+    }
+
+    private func changePlacementOfOfficialParkingSearchStatusViewIfNeeded() {
+        statusBarUnderNavigationBar.removeArrangedSubview(officialParkingSearchStatusView)
+        statusBarUnderNavigationBar.isHidden = true
+        navigationItem.rightBarButtonItem = nil
+        officialParkingSearchStatusView.removeFromSuperview()
+
+        if officialParkingSearch == nil { return }
+
+        if traitCollection.horizontalSizeClass == .compact {
+            officialParkingSearchStatusView.backgroundColor = nil
+            statusBarUnderNavigationBar.addArrangedSubview(officialParkingSearchStatusView)
+            statusBarUnderNavigationBar.isHidden = false
+        } else {
+            officialParkingSearchStatusView.backgroundColor = .tertiarySystemFill
+            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: officialParkingSearchStatusView)
         }
     }
 
@@ -376,7 +437,7 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
         }
     }
 
-    @objc private func officialParkingInformationButtonDidPush() {
+    @objc private func officialParkingSearchStatusViewButtonDidPush() {
         let navigationController = UINavigationController(rootViewController: officialParkingInformationWebViewController)
         navigationController.isToolbarHidden = false
         present(navigationController, animated: true)
@@ -416,7 +477,11 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        changeParkingSearchOptionsSheetViewPlacementIfNeeded()
+
+        if traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
+            changePlacementOfParkingSearchOptionsSheetViewIfNeeded()
+            changePlacementOfOfficialParkingSearchStatusViewIfNeeded()
+        }
     }
 }
 
@@ -524,52 +589,4 @@ extension MapsViewController: TabReselectionRespondable {
 }
 
 fileprivate class SharedLocationAnnotation: MKPointAnnotation {
-}
-
-fileprivate class OfficialParkingInformationWebViewController: WebViewController {
-    override init() {
-        super.init()
-        preferredContentMode = .mobile
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        scrollToParkingInformation()
-    }
-
-    func scrollToParkingInformation() {
-        scrollToElement(containing: "駐車場")
-    }
-
-    private func scrollToElement(containing text: String) {
-        let script = """
-            const xpath = `//*[text()[contains(., "${searchText}")]]`; // TODO: Escape searchText properly
-            const element = document.evaluate(xpath, document.body, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-
-            if (element) {
-                const absoluteElementTop = element.getBoundingClientRect().top + window.pageYOffset;
-                window.scrollTo(0, absoluteElementTop - (window.innerHeight / 2));
-            }
-
-            return element != null;
-        """
-
-        webView.callAsyncJavaScript(
-            script,
-            arguments: ["searchText": text],
-            in: nil,
-            in: .defaultClient)
-        { (result) in
-            switch result {
-            case .success:
-                break
-            case .failure(let error):
-                logger.error(error)
-            }
-        }
-    }
 }
