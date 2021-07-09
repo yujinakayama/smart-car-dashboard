@@ -141,7 +141,7 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
         navigationItem.largeTitleDisplayMode = .never
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: officialParkingSearchStatusView)
-        officialParkingSearchStatusView.informationButton.addTarget(self, action: #selector(officialParkingInformationButtonDidPush), for: .touchUpInside)
+        officialParkingSearchStatusView.button.addTarget(self, action: #selector(officialParkingInformationButtonDidPush), for: .touchUpInside)
 
         locationManager.requestWhenInUseAuthorization()
 
