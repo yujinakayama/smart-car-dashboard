@@ -80,30 +80,6 @@ public class ParkingSearchOptionsView: UIView {
             trailingAnchor.constraint(greaterThanOrEqualTo: stackView.trailingAnchor),
             stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
-
-        entranceDatePicker.setContentHuggingPriority(.required, for: .horizontal)
-        entranceDatePicker.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-
-        conjunctionLabel.setContentHuggingPriority(.required, for: .horizontal)
-        conjunctionLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-
-        timeDurationPicker.setContentHuggingPriority(.required, for: .horizontal)
-        timeDurationPicker.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-
-        parkingLabel.setContentHuggingPriority(.required, for: .horizontal)
-        parkingLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-    }
-
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-
-        if !parkingLabel.isHidden {
-            stackView.layoutIfNeeded()
-
-            if parkingLabel.frame.width < parkingLabel.intrinsicContentSize.width {
-                parkingLabel.isHidden = true
-            }
-        }
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
