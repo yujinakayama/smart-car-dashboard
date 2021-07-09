@@ -53,8 +53,8 @@ class OfficialParkingInformationWebViewController: WebViewController {
                 window.requestAnimationFrame(step);
             }
 
-            const xpath = `//*[text()[contains(., "${searchText}")]]`; // TODO: Escape searchText properly
-            const element = document.evaluate(xpath, document.body, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+            const xpath = `//body//*[text()[contains(., "${searchText}")]]`; // TODO: Escape searchText properly
+            const element = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 
             if (!element) {
                 return;
