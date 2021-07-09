@@ -612,6 +612,30 @@ fileprivate class OfficialParkingInformationWebViewController: WebViewController
 
     private func scrollToElement(containing text: String, highlight: Bool = false) {
         let script = """
+            function scrollTo(y, duration) {
+                let initialTimestamp = null;
+
+                function step(currentTimestamp) {
+                    if (initialTimestamp) {
+                        const progressRate = (currentTimestamp - initialTimestamp) / duration;
+
+                        if (progressRate >= 1) {
+                          document.scrollingElement.scrollTop = y;
+                          return;
+                        }
+
+                        const yRate = (-Math.cos(progressRate * Math.PI) + 1) / 2
+                        document.scrollingElement.scrollTop = y * yRate;
+                    } else {
+                      initialTimestamp = currentTimestamp;
+                    }
+
+                    window.requestAnimationFrame(step);
+                }
+
+                window.requestAnimationFrame(step);
+            }
+
             const xpath = `//*[text()[contains(., "${searchText}")]]`; // TODO: Escape searchText properly
             const element = document.evaluate(xpath, document.body, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 
@@ -620,7 +644,7 @@ fileprivate class OfficialParkingInformationWebViewController: WebViewController
             }
 
             const absoluteElementTop = element.getBoundingClientRect().top + window.pageYOffset;
-            window.scrollTo(0, absoluteElementTop - (window.innerHeight / 2));
+            scrollTo(absoluteElementTop - (window.innerHeight / 4), 500);
 
             if (highlight) {
                 element.style.backgroundColor = '#fffd54';
