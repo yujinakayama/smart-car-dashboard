@@ -483,11 +483,8 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-
-        if traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
-            changePlacementOfParkingSearchOptionsSheetViewIfNeeded()
-            changePlacementOfOfficialParkingSearchStatusViewIfNeeded()
-        }
+        changePlacementOfParkingSearchOptionsSheetViewIfNeeded()
+        changePlacementOfOfficialParkingSearchStatusViewIfNeeded()
     }
 }
 
