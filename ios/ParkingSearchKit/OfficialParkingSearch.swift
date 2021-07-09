@@ -27,7 +27,7 @@ public class OfficialParkingSearch: NSObject {
         "navitime.com",
     ]
 
-    public static let cache = Cache(name: "OfficialParkingSearch", ageLimit: 60 * 60 * 24 * 30) // 30 days
+    public static let cache = Cache(name: "OfficialParkingSearch", ageLimit: 60 * 60 * 6) // 6 hours
 
     public let destination: MKMapItem
 
