@@ -130,7 +130,7 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
         let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .systemChromeMaterial))
 
         let bottomBorderView = UIView()
-        bottomBorderView.backgroundColor = .secondaryLabel
+        bottomBorderView.backgroundColor = UIColor(named: "SystemChromeShadowColor")
 
         stackView.addSubview(visualEffectView)
         stackView.addSubview(bottomBorderView)
