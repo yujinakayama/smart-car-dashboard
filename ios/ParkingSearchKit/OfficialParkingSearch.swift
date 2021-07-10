@@ -43,7 +43,7 @@ public class OfficialParkingSearch: NSObject {
 
     public weak var delegate: OfficialParkingSearchDelegate?
 
-    public var parkingDescription: String?
+    public var parkingInformation: ParkingInformation?
 
     private let geocoder = CLGeocoder()
 
@@ -238,7 +238,7 @@ public class OfficialParkingSearch: NSObject {
         return true
     }
 
-    private func tryExtractingParkingDescription(completion: @escaping (Result<String?, Error>) -> Void) {
+    private func tryExtractingParkingInformation(completion: @escaping (Result<ParkingInformation?, Error>) -> Void) {
         let function = """
             (element) => {
                 if (!element) {
@@ -256,7 +256,8 @@ public class OfficialParkingSearch: NSObject {
         evaluateJavaScriptWithElementDescribingParking(function) { (result) in
             switch result {
             case .success(let value as String):
-                completion(.success(value))
+                let parkingInformation = ParkingInformation(description: value)
+                completion(.success(parkingInformation))
             case .success:
                 completion(.success(nil))
             case .failure(let error):
@@ -358,13 +359,13 @@ extension OfficialParkingSearch: WKNavigationDelegate {
         case .other:
             cachedURL = url
 
-            tryExtractingParkingDescription { (result) in
+            tryExtractingParkingInformation { (result) in
                 switch result {
                 case .success(let parkingDescription):
-                    self.parkingDescription = parkingDescription
+                    self.parkingInformation = parkingDescription
                 case .failure(let error):
                     print(error)
-                    self.parkingDescription = nil
+                    self.parkingInformation = nil
                 }
 
                 self.state = .found
@@ -382,6 +383,56 @@ extension OfficialParkingSearch {
         case actionRequired
         case found
         case notFound
+    }
+}
+
+extension OfficialParkingSearch {
+    public class ParkingInformation {
+        static let sentenceRegularExpression = try! NSRegularExpression(pattern: "[^。\\n\\(\\)（）]+")
+        static let existenceRegularExpression = try! NSRegularExpression(pattern: "^(?:(有り?|あり)|(無し?|なし))$")
+        static let capacityRegularExpression = try! NSRegularExpression(pattern: "^(\\d+)台$")
+
+        public let description: String
+
+        lazy var existence: Bool? = {
+            let existences: [Bool] = sentences.map { (sentence) in
+                if let result = Self.existenceRegularExpression.firstMatch(in: sentence) {
+                    return result.range(at: 1).location != NSNotFound
+                } else {
+                    return nil
+                }
+            }.compactMap { $0 }
+
+            if existences.count == 1, let existence = existences.first {
+                return existence
+            } else {
+                return nil
+            }
+        }()
+
+        public lazy var capacity: Int? = {
+            let capacities: [Int] = Self.capacityRegularExpression.matches(in: normalizedDescription).map { (result) in
+                let numberText = normalizedDescription[result.range(at: 1)]
+                return Int(numberText)
+            }.compactMap { $0 }
+
+            if capacities.count == 1, let capacity = capacities.first {
+                return capacity
+            } else {
+                return nil
+            }
+        }()
+
+        init(description: String) {
+            self.description = description
+        }
+
+        private lazy var sentences: [String] = {
+            let results = Self.sentenceRegularExpression.matches(in: normalizedDescription)
+            return results.map { normalizedDescription[$0.range] }
+        }()
+
+        private lazy var normalizedDescription = description.covertFullwidthAlphanumericsToHalfwidth().convertFullwidthWhitespacesToHalfwidth()
     }
 }
 
