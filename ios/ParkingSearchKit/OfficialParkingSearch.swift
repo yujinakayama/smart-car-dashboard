@@ -43,6 +43,8 @@ public class OfficialParkingSearch: NSObject {
 
     public weak var delegate: OfficialParkingSearchDelegate?
 
+    public var parkingDescription: String?
+
     private let geocoder = CLGeocoder()
 
     private var location: CLLocation {
@@ -236,6 +238,33 @@ public class OfficialParkingSearch: NSObject {
         return true
     }
 
+    private func tryExtractingParkingDescription(completion: @escaping (Result<String?, Error>) -> Void) {
+        let function = """
+            (element) => {
+                if (!element) {
+                    return null;
+                }
+
+                if (element.tagName == 'TH') {
+                    return element.nextElementSibling?.textContent.trim();
+                } else {
+                    return null;
+                }
+            }
+        """
+
+        evaluateJavaScriptWithElementDescribingParking(function) { (result) in
+            switch result {
+            case .success(let value as String):
+                completion(.success(value))
+            case .success:
+                completion(.success(nil))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+
     public func evaluateJavaScriptWithElementDescribingParking(_ javaScriptFunction: String, completion: @escaping (Result<Any, Error>) -> Void) {
         findBestElement(describing: "駐車場", andEvaluate: javaScriptFunction, completion: completion)
     }
@@ -328,7 +357,18 @@ extension OfficialParkingSearch: WKNavigationDelegate {
             state = .actionRequired
         case .other:
             cachedURL = url
-            state = .found
+
+            tryExtractingParkingDescription { (result) in
+                switch result {
+                case .success(let parkingDescription):
+                    self.parkingDescription = parkingDescription
+                case .failure(let error):
+                    print(error)
+                    self.parkingDescription = nil
+                }
+
+                self.state = .found
+            }
         case nil:
             break
         }

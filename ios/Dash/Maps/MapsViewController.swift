@@ -558,6 +558,7 @@ extension MapsViewController: UIDropInteractionDelegate {
 
 extension MapsViewController: OfficialParkingSearchDelegate {
     func officialParkingSearch(_ officialParkingSearch: OfficialParkingSearch, didChange state: OfficialParkingSearch.State) {
+        officialParkingSearchStatusView.parkingDescription = officialParkingSearch.parkingDescription
         officialParkingSearchStatusView.state = state
     }
 }

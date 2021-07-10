@@ -18,6 +18,8 @@ public class OfficialParkingSearchStatusView: UIStackView {
         }
     }
 
+    public var parkingDescription: String?
+
     let fontMetrics = UIFontMetrics(forTextStyle: .callout)
 
     public let button: UIButton = {
@@ -88,7 +90,13 @@ public class OfficialParkingSearchStatusView: UIStackView {
             button.isEnabled = true
             button.titleLabel?.font = fontMetrics.scaledFont(for: UIFont.systemFont(ofSize: Self.baseFontSize, weight: .semibold))
             button.setTitleColor(.label, for: .normal)
-            button.setTitle("公式駐車場", for: .normal)
+
+            if let parkingDescription = parkingDescription {
+                button.setTitle("公式駐車場: \(parkingDescription)", for: .normal)
+            } else {
+                button.setTitle("公式駐車場", for: .normal)
+            }
+
             button.setImage(infoImage, for: .normal)
         case .notFound:
             button.isEnabled = true
