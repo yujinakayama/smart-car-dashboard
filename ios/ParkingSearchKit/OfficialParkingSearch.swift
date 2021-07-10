@@ -247,7 +247,7 @@ public class OfficialParkingSearch: NSObject {
                     return null;
                 }
 
-                if (element.tagName == 'TH') {
+                if (element.tagName == 'TH' || element.tagName == 'DT') {
                     return element.nextElementSibling?.textContent.trim();
                 } else {
                     return null;
@@ -294,6 +294,7 @@ public class OfficialParkingSearch: NSObject {
                 H5: 96,
                 H6: 95,
                 TH: 20,
+                DT: 19,
                 DIV: 10,
                 A: -10,
                 SMALL: -20,
