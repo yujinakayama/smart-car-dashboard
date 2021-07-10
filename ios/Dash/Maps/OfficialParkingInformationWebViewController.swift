@@ -59,6 +59,10 @@ class OfficialParkingInformationWebViewController: WebViewController {
                 return tagImportance[element.tagName] || 0;
             }
 
+            function textLengthOf(element) {
+                return element.textContent.trim().length;
+            }
+
             function scrollTo(y, duration) {
                 let initialTimestamp = null;
 
@@ -85,7 +89,18 @@ class OfficialParkingInformationWebViewController: WebViewController {
 
             const xpath = `//body//*[text()[contains(., "${searchText}")]]`; // TODO: Escape searchText properly
             const elements = getElements(xpath);
-            elements.sort((a, b) => { return importanceOf(b) - importanceOf(a) });
+
+            elements.sort((a, b) => {
+                const result = importanceOf(b) - importanceOf(a);
+
+                if (result !== 0) {
+                    return result;
+                }
+
+                return textLengthOf(a) - textLengthOf(b);
+            });
+
+
             const bestElement = elements[0];
 
             if (!bestElement) {
