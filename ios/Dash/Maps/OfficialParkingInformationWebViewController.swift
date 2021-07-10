@@ -32,6 +32,7 @@ class OfficialParkingInformationWebViewController: WebViewController {
         let function = """
             (element) => {
                 function highlight(element) {
+                    element.style.color = '#000000';
                     element.style.backgroundColor = '#fffd54';
                     element.style.borderRadius = '0.2em';
                 }
