@@ -7,8 +7,11 @@
 //
 
 import Foundation
+import ParkingSearchKit
 
 class OfficialParkingInformationWebViewController: WebViewController {
+    var officialParkingSearch: OfficialParkingSearch?
+
     override init() {
         super.init()
         preferredContentMode = .mobile
@@ -20,108 +23,55 @@ class OfficialParkingInformationWebViewController: WebViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        scrollToParkingInformation()
+        highlightAndScrollToElementDescribingParking()
     }
 
-    func scrollToParkingInformation() {
-        scrollToElement(containing: "駐車場", highlight: true)
-    }
+    private func highlightAndScrollToElementDescribingParking() {
+        guard let officialParkingSearch = officialParkingSearch else { return }
 
-    private func scrollToElement(containing text: String, highlight: Bool = false) {
-        let script = """
-            function getElements(xpath) {
-                const result = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-
-                const elements = [];
-
-                for (let i = 0; i < result.snapshotLength; i++) {
-                    elements.push(result.snapshotItem(i));
+        let function = """
+            (element) => {
+                function highlight(element) {
+                    element.style.backgroundColor = '#fffd54';
+                    element.style.borderRadius = '0.2em';
                 }
 
-                return elements;
-            }
+                function scrollTo(y, duration) {
+                    let initialTimestamp = null;
 
-            const tagImportance = {
-                H1: 100,
-                H2: 99,
-                H3: 98,
-                H4: 97,
-                H5: 96,
-                H6: 95,
-                TH: 20,
-                DIV: 10,
-                A: -10,
-                SMALL: -20,
-                FOOTER: -100,
-            };
+                    function step(currentTimestamp) {
+                        if (initialTimestamp) {
+                            const progressRate = (currentTimestamp - initialTimestamp) / duration;
 
-            function importanceOf(element) {
-                return tagImportance[element.tagName] || 0;
-            }
+                            if (progressRate >= 1) {
+                              document.scrollingElement.scrollTop = y;
+                              return;
+                            }
 
-            function textLengthOf(element) {
-                return element.textContent.trim().length;
-            }
-
-            function scrollTo(y, duration) {
-                let initialTimestamp = null;
-
-                function step(currentTimestamp) {
-                    if (initialTimestamp) {
-                        const progressRate = (currentTimestamp - initialTimestamp) / duration;
-
-                        if (progressRate >= 1) {
-                          document.scrollingElement.scrollTop = y;
-                          return;
+                            const yRate = (-Math.cos(progressRate * Math.PI) + 1) / 2
+                            document.scrollingElement.scrollTop = y * yRate;
+                        } else {
+                          initialTimestamp = currentTimestamp;
                         }
 
-                        const yRate = (-Math.cos(progressRate * Math.PI) + 1) / 2
-                        document.scrollingElement.scrollTop = y * yRate;
-                    } else {
-                      initialTimestamp = currentTimestamp;
+                        window.requestAnimationFrame(step);
                     }
 
                     window.requestAnimationFrame(step);
                 }
 
-                window.requestAnimationFrame(step);
-            }
-
-            const xpath = `//body//*[text()[contains(., "${searchText}")]]`; // TODO: Escape searchText properly
-            const elements = getElements(xpath);
-
-            elements.sort((a, b) => {
-                const result = importanceOf(b) - importanceOf(a);
-
-                if (result !== 0) {
-                    return result;
+                if (!element) {
+                    return;
                 }
 
-                return textLengthOf(a) - textLengthOf(b);
-            });
+                highlight(element);
 
-
-            const bestElement = elements[0];
-
-            if (!bestElement) {
-                return;
-            }
-
-            const absoluteElementTop = bestElement.getBoundingClientRect().top + window.pageYOffset;
-            scrollTo(absoluteElementTop - (window.innerHeight / 4), 500);
-
-            if (highlight) {
-                bestElement.style.backgroundColor = '#fffd54';
-                bestElement.style.borderRadius = '0.2em';
+                const absoluteElementTop = element.getBoundingClientRect().top + window.pageYOffset;
+                scrollTo(absoluteElementTop - (window.innerHeight / 4), 500);
             }
         """
 
-        webView.callAsyncJavaScript(
-            script,
-            arguments: ["searchText": text, "highlight": highlight],
-            in: nil,
-            in: .defaultClient)
-        { (result) in
+        officialParkingSearch.evaluateJavaScriptWithElementDescribingParking(function) { (result) in
             switch result {
             case .success:
                 break

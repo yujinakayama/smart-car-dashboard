@@ -235,6 +235,74 @@ public class OfficialParkingSearch: NSObject {
 
         return true
     }
+
+    public func evaluateJavaScriptWithElementDescribingParking(_ javaScriptFunction: String, completion: @escaping (Result<Any, Error>) -> Void) {
+        findBestElement(describing: "駐車場", andEvaluate: javaScriptFunction, completion: completion)
+    }
+
+    private func findBestElement(describing text: String, andEvaluate javaScriptFunction: String, completion: @escaping (Result<Any, Error>) -> Void) {
+        let script = """
+            function getElements(xpath) {
+                const result = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+
+                const elements = [];
+
+                for (let i = 0; i < result.snapshotLength; i++) {
+                    elements.push(result.snapshotItem(i));
+                }
+
+                return elements;
+            }
+
+            const tagImportance = {
+                H1: 100,
+                H2: 99,
+                H3: 98,
+                H4: 97,
+                H5: 96,
+                H6: 95,
+                TH: 20,
+                DIV: 10,
+                A: -10,
+                SMALL: -20,
+                FOOTER: -100,
+            };
+
+            function importanceOf(element) {
+                return tagImportance[element.tagName] || 0;
+            }
+
+            function textLengthOf(element) {
+                return element.textContent.trim().length;
+            }
+
+            const xpath = `//body//*[text()[contains(., "${searchText}")]]`; // TODO: Escape searchText properly
+            const elements = getElements(xpath);
+
+            elements.sort((a, b) => {
+                const result = importanceOf(b) - importanceOf(a);
+
+                if (result !== 0) {
+                    return result;
+                }
+
+                return textLengthOf(a) - textLengthOf(b);
+            });
+
+            const bestElement = elements[0];
+
+            const callback = new Function(`return ${callbackSnippet}`).call();
+            return callback(bestElement);
+        """
+
+        webView.callAsyncJavaScript(
+            script,
+            arguments: ["searchText": text, "callbackSnippet": javaScriptFunction as Any],
+            in: nil,
+            in: .defaultClient,
+            completionHandler: completion
+        )
+    }
 }
 
 extension OfficialParkingSearch: WKNavigationDelegate {
