@@ -27,6 +27,8 @@ public class OfficialParkingSearch: NSObject {
         "navitime.com",
     ]
 
+    static let excludedDomainsHashValue = excludedDomains.reduce(0, { (hashValue, domain) in hashValue ^ domain.hashValue })
+
     public static let cache = Cache(name: "OfficialParkingSearch", ageLimit: 60 * 60 * 6) // 6 hours
 
     public let destination: MKMapItem
@@ -69,7 +71,7 @@ public class OfficialParkingSearch: NSObject {
 
     private lazy var cacheKey: String = {
         let coordinate = destination.placemark.coordinate
-        let key = String(format: "%@|%f,%f", destination.name!, coordinate.latitude, coordinate.longitude)
+        let key = String(format: "%@|%f,%f|%d", destination.name!, coordinate.latitude, coordinate.longitude, Self.excludedDomainsHashValue)
         return Cache.digestString(of: key)
     }()
 
