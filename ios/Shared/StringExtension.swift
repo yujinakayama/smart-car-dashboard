@@ -14,9 +14,9 @@ extension String {
     func covertFullwidthAlphanumericsToHalfwidth() -> String {
         var string = self
 
-        fullwidthAlphanumericsRegularExpression.enumerateMatches(in: string, range: NSMakeRange(0, string.count)) { (result, flags, stop) in
+        fullwidthAlphanumericsRegularExpression.enumerateMatches(in: string) { (result, flags, stop) in
             guard let matchingRange = result?.range else { return }
-            let substring = (string as NSString).substring(with: matchingRange)
+            let substring = string[matchingRange]
             guard let convertedSubstring = substring.applyingTransform(.fullwidthToHalfwidth, reverse: false) else { return }
             string = (string as NSString).replacingCharacters(in: matchingRange, with: convertedSubstring)
         }
@@ -26,5 +26,9 @@ extension String {
 
     func convertFullwidthWhitespacesToHalfwidth() -> String {
         return replacingOccurrences(of: "　", with: " ")
+    }
+
+    subscript(range: NSRange) -> String {
+        return (self as NSString).substring(with: range)
     }
 }

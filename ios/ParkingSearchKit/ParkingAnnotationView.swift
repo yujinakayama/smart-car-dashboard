@@ -532,13 +532,7 @@ extension ParkingAnnotationView.Callout {
 
         var hasSimpleCapacityDescription: Bool {
             guard let capacityDescription = parking?.capacityDescription else { return false }
-
-            let numberOfMatches = simpleCapacityRegularExpression.numberOfMatches(
-                in: capacityDescription,
-                range: NSRange(0..<capacityDescription.count)
-            )
-
-            return numberOfMatches == 1
+            return simpleCapacityRegularExpression.numberOfMatches(in: capacityDescription) == 1
         }
 
         lazy var capacityTagView = TagView(textColor: .secondaryLabel, borderColor: .secondaryLabel)

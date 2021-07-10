@@ -60,6 +60,8 @@
 		B92A61112576472A0073AB7B /* Assistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92A61102576472A0073AB7B /* Assistant.swift */; };
 		B92A97DA25E0AE8900D70A14 /* GForceMeterWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92A97D925E0AE8900D70A14 /* GForceMeterWidgetViewController.swift */; };
 		B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */; };
+		B92ADE77269990370086E4D8 /* NSRegularExpressionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADE7526998DE10086E4D8 /* NSRegularExpressionExtension.swift */; };
+		B92ADE79269990E20086E4D8 /* NSRegularExpressionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADE7526998DE10086E4D8 /* NSRegularExpressionExtension.swift */; };
 		B92C6EC324AC2F0A001E9675 /* ArtworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92C6EC224AC2F0A001E9675 /* ArtworkView.swift */; };
 		B92C6EC524AC68B7001E9675 /* SongTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92C6EC424AC68B7001E9675 /* SongTitleView.swift */; };
 		B92C6EC724AC77B2001E9675 /* PlaybackProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92C6EC624AC77B2001E9675 /* PlaybackProgressView.swift */; };
@@ -450,6 +452,7 @@
 		B92A61102576472A0073AB7B /* Assistant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assistant.swift; sourceTree = "<group>"; };
 		B92A97D925E0AE8900D70A14 /* GForceMeterWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GForceMeterWidgetViewController.swift; sourceTree = "<group>"; };
 		B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewController.swift; sourceTree = "<group>"; };
+		B92ADE7526998DE10086E4D8 /* NSRegularExpressionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRegularExpressionExtension.swift; sourceTree = "<group>"; };
 		B92C6EC224AC2F0A001E9675 /* ArtworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkView.swift; sourceTree = "<group>"; };
 		B92C6EC424AC68B7001E9675 /* SongTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongTitleView.swift; sourceTree = "<group>"; };
 		B92C6EC624AC77B2001E9675 /* PlaybackProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackProgressView.swift; sourceTree = "<group>"; };
@@ -798,6 +801,7 @@
 				B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */,
 				B9F9EFD5256D3D6B00C33781 /* Cache.swift */,
 				B94215F026423A58003F94A0 /* StringExtension.swift */,
+				B92ADE7526998DE10086E4D8 /* NSRegularExpressionExtension.swift */,
 				B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */,
 			);
 			path = Shared;
@@ -2006,6 +2010,7 @@
 				B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */,
 				B9B154F82576075C0031761F /* TabBarBadgeManager.swift in Sources */,
 				B95F514C23E5B53F0063CB3D /* RemoteNotification.swift in Sources */,
+				B92ADE79269990E20086E4D8 /* NSRegularExpressionExtension.swift in Sources */,
 				B9DC5B27229D59BE00B645D5 /* ETCPaymentTableViewController.swift in Sources */,
 				B92A61112576472A0073AB7B /* Assistant.swift in Sources */,
 				B9A45A9B252C229200CA7921 /* SharedItemDatabase.swift in Sources */,
@@ -2069,6 +2074,7 @@
 				B9DD4CD926517FBF0010B120 /* ParkingAnnotationView.swift in Sources */,
 				B91F7EBE2652F0FB00B1233D /* WebViewController.swift in Sources */,
 				B9D0208F268F69490020BF9A /* ParkingSearchOptionsView.swift in Sources */,
+				B92ADE77269990370086E4D8 /* NSRegularExpressionExtension.swift in Sources */,
 				B9DD4CDA26517FBF0010B120 /* PPParkClient.swift in Sources */,
 				B900A13D2652BCF4000ED1B9 /* StringExtension.swift in Sources */,
 				B9DD4CD726517FBF0010B120 /* TimeDurationPicker.swift in Sources */,
