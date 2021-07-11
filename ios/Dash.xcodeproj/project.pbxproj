@@ -2730,7 +2730,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 76434740D553577843417214 /* Pods-ParkingSearchKit.debug.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -2762,7 +2762,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 801C19D67084F1B5B305B7D4 /* Pods-ParkingSearchKit.release.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
