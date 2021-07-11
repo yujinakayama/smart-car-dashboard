@@ -13,17 +13,47 @@ class WebViewController: UIViewController {
     // https://stackoverflow.com/a/65825682/784241
     static let defaultUserAgent: String = WKWebView().value(forKey: "userAgent") as! String
 
-    lazy var webView: WKWebView = {
+    static func makeWebView(contentMode: ContentMode) -> WKWebView {
         let configuration = WKWebViewConfiguration()
         configuration.dataDetectorTypes = [.address, .link, .phoneNumber]
         configuration.mediaTypesRequiringUserActionForPlayback = .all
 
         let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.allowsBackForwardNavigationGestures = true
-        return webView
-    }()
 
-    var preferredContentMode: ContentMode = .recommended {
+        applyContentMode(contentMode, to: webView)
+
+        return webView
+    }
+
+    private static func applyContentMode(_ contentMode: ContentMode, to webView: WKWebView) {
+        switch contentMode {
+        case .auto:
+            if webView.traitCollection.horizontalSizeClass == .compact {
+                applyMobileContentMode(to: webView)
+            } else {
+                applyDesktopContentMode(to: webView)
+            }
+        case .mobile:
+            applyMobileContentMode(to: webView)
+        case .desktop:
+            applyDesktopContentMode(to: webView)
+        }
+    }
+
+    private static func applyMobileContentMode(to webView: WKWebView) {
+        webView.configuration.defaultWebpagePreferences.preferredContentMode = .mobile
+        webView.customUserAgent = Self.defaultUserAgent.replacingOccurrences(of: "iPad", with: "iPhone")
+    }
+
+    private static func applyDesktopContentMode(to webView: WKWebView) {
+        webView.configuration.defaultWebpagePreferences.preferredContentMode = .desktop
+        webView.customUserAgent = nil
+    }
+
+    let webView: WKWebView
+
+    var contentMode: ContentMode {
         didSet {
             applyContentMode()
         }
@@ -38,7 +68,9 @@ class WebViewController: UIViewController {
 
     var keyValueObservations: [NSKeyValueObservation] = []
 
-    init() {
+    init(webView: WKWebView? = nil, contentMode: ContentMode = .auto) {
+        self.webView = webView ?? Self.makeWebView(contentMode: contentMode)
+        self.contentMode = contentMode
         super.init(nibName: nil, bundle: nil)
         configureToolBarButtonItems()
         applyContentMode()
@@ -91,28 +123,7 @@ class WebViewController: UIViewController {
     }
 
     private func applyContentMode() {
-        switch preferredContentMode {
-        case .recommended:
-            if traitCollection.horizontalSizeClass == .compact {
-                applyContentModeForMobile()
-            } else {
-                applyContentModeForDesktop()
-            }
-        case .mobile:
-            applyContentModeForMobile()
-        case .desktop:
-            applyContentModeForDesktop()
-        }
-    }
-
-    private func applyContentModeForMobile() {
-        webView.configuration.defaultWebpagePreferences.preferredContentMode = .mobile
-        webView.customUserAgent = Self.defaultUserAgent.replacingOccurrences(of: "iPad", with: "iPhone")
-    }
-
-    private func applyContentModeForDesktop() {
-        webView.configuration.defaultWebpagePreferences.preferredContentMode = .desktop
-        webView.customUserAgent = nil
+        Self.applyContentMode(contentMode, to: webView)
     }
 
     private func addWebView() {
@@ -186,7 +197,7 @@ class WebViewController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
-        if traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
+        if contentMode == .auto {
             applyContentMode()
         }
     }
@@ -194,7 +205,7 @@ class WebViewController: UIViewController {
 
 extension WebViewController {
     enum ContentMode {
-        case recommended
+        case auto
         case mobile
         case desktop
     }

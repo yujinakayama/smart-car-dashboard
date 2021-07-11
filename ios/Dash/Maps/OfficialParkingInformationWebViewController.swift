@@ -8,13 +8,14 @@
 
 import Foundation
 import ParkingSearchKit
+import WebKit
 
 class OfficialParkingInformationWebViewController: WebViewController {
-    var officialParkingSearch: OfficialParkingSearch?
+    let officialParkingSearch: OfficialParkingSearch
 
-    override init() {
-        super.init()
-        preferredContentMode = .mobile
+    init(officialParkingSearch: OfficialParkingSearch) {
+        self.officialParkingSearch = officialParkingSearch
+        super.init(webView: officialParkingSearch.webView, contentMode: .mobile)
     }
 
     required init?(coder: NSCoder) {
@@ -27,8 +28,6 @@ class OfficialParkingInformationWebViewController: WebViewController {
     }
 
     private func highlightAndScrollToElementDescribingParking() {
-        guard let officialParkingSearch = officialParkingSearch else { return }
-
         let function = """
             (element) => {
                 function highlight(element) {
