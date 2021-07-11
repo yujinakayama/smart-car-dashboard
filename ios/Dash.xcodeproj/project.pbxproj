@@ -153,7 +153,6 @@
 		B9BA819E2350931A00657DEB /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
 		B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */; };
 		B9BC920923250A0A006F22FC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BC920823250A0A006F22FC /* Defaults.swift */; };
-		B9BD54A5265BB0D9002C2A8F /* ParkingSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9DD4CCA26517F920010B120 /* ParkingSearchKit.framework */; };
 		B9BF2F0523F6946100967316 /* GradientPathRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BF2F0423F6946100967316 /* GradientPathRenderer.swift */; };
 		B9C04B42257775B8001D6E0F /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C04B41257775B8001D6E0F /* WebViewController.swift */; };
 		B9C0BF4526984D3D00C54BA9 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F9EFD5256D3D6B00C33781 /* Cache.swift */; };
@@ -278,13 +277,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = B98B783223ED4C3F00A5102F;
 			remoteInfo = DashCloudKit;
-		};
-		B9BD54A7265BB0D9002C2A8F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B9DD4CC926517F920010B120;
-			remoteInfo = ParkingSearchKit;
 		};
 		B9D4AF262671324B00849129 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -676,7 +668,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B9BD54A5265BB0D9002C2A8F /* ParkingSearchKit.framework in Frameworks */,
 				B9D4AF242671324B00849129 /* DashCloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1349,7 +1340,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				B9BD54A8265BB0D9002C2A8F /* PBXTargetDependency */,
 				B9D4AF272671324B00849129 /* PBXTargetDependency */,
 			);
 			name = ParkingSearchActionExtension;
@@ -2156,11 +2146,6 @@
 			isa = PBXTargetDependency;
 			target = B98B783223ED4C3F00A5102F /* DashCloudKit */;
 			targetProxy = B9B18DD523EDFFF40096D603 /* PBXContainerItemProxy */;
-		};
-		B9BD54A8265BB0D9002C2A8F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B9DD4CC926517F920010B120 /* ParkingSearchKit */;
-			targetProxy = B9BD54A7265BB0D9002C2A8F /* PBXContainerItemProxy */;
 		};
 		B9D4AF272671324B00849129 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
