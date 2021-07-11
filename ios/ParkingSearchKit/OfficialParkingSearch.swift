@@ -29,7 +29,7 @@ public class OfficialParkingSearch: NSObject {
 
     static let excludedDomainsHashValue = excludedDomains.reduce(0, { (hashValue, domain) in hashValue ^ domain.hashValue })
 
-    public static let cache = Cache(name: "OfficialParkingSearch", ageLimit: 60 * 60 * 6) // 6 hours
+    public static let cache = Cache(name: "OfficialParkingSearch", ageLimit: 60 * 60 * 24 * 7) // 1 week
 
     public let destination: MKMapItem
 
@@ -102,7 +102,19 @@ public class OfficialParkingSearch: NSObject {
         stop()
     }
 
-    public func start() {
+    public func start() throws {
+        // The web view needs to be added to view hierarchy
+        // so that it will actually render web pages and `innerText` will be available
+        if webView.window == nil {
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else {
+                throw OfficialParkingSearchError.webViewMustBeAddedToWindowButNoKeyWindowIsAvailable
+            }
+
+            webView.isHidden = true
+            webView.frame = window.bounds
+            window.addSubview(webView)
+        }
+
         state = .searching
 
         if let cachedURL = cachedURL {
@@ -129,7 +141,7 @@ public class OfficialParkingSearch: NSObject {
                     self.performImFeelingLucky(address: placemark)
                 }
             case .failure(let error):
-                print(error)
+                logger.error(error)
             }
         }
     }
@@ -205,7 +217,6 @@ public class OfficialParkingSearch: NSObject {
         var queryComponents = [
             destination.name,
             address.administrativeArea,
-            address.subAdministrativeArea,
             address.locality,
             "\"駐車場\"",
         ].compactMap { $0 }
@@ -213,6 +224,8 @@ public class OfficialParkingSearch: NSObject {
         queryComponents.append(contentsOf: Self.excludedDomains.map { "-site:\($0)" })
 
         let query = queryComponents.joined(separator: " ")
+
+        logger.debug(query)
 
         webView.callAsyncJavaScript(
             script,
@@ -224,7 +237,7 @@ public class OfficialParkingSearch: NSObject {
             case .success:
                 break
             case .failure(let error):
-                print(error)
+                logger.error(error)
             }
         }
     }
@@ -247,8 +260,9 @@ public class OfficialParkingSearch: NSObject {
                     return null;
                 }
 
-                if (element.tagName == 'TH') {
-                    return element.nextElementSibling?.textContent.trim();
+                if (element.tagName == 'TH' || element.tagName == 'DT') {
+                    const descriptionElement = element.nextElementSibling;
+                    return descriptionElement?.innerText.trim() || descriptionElement.textContent.trim();
                 } else {
                     return null;
                 }
@@ -294,6 +308,7 @@ public class OfficialParkingSearch: NSObject {
                 H5: 96,
                 H6: 95,
                 TH: 20,
+                DT: 19,
                 DIV: 10,
                 A: -10,
                 SMALL: -20,
@@ -305,7 +320,8 @@ public class OfficialParkingSearch: NSObject {
             }
 
             function textLengthOf(element) {
-                return element.textContent.trim().length;
+                const text = element.innerText.trim() || element.textContent.trim();
+                return text.length;
             }
 
             const xpath = `//body//*[text()[contains(., "${searchText}")]]`; // TODO: Escape searchText properly
@@ -337,13 +353,23 @@ public class OfficialParkingSearch: NSObject {
     }
 }
 
+// https://stackoverflow.com/a/44942814/784241
+extension WKNavigationActionPolicy {
+    static let allowWithoutTryingAppLink = Self.init(rawValue: Self.allow.rawValue + 2)!
+}
+
 extension OfficialParkingSearch: WKNavigationDelegate {
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        // Prevent opening universal link URLs in other apps (e.g. Tabelog)
+        decisionHandler(.allowWithoutTryingAppLink)
+    }
+
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         guard let url = webView.url else { return }
 
-        print(#function, url)
-
         currentPageType = pageType(of: url)
+
+        logger.info("\(url) (\(String(describing: currentPageType))")
 
         switch currentPageType {
         case .googleSearchForm:
@@ -363,16 +389,17 @@ extension OfficialParkingSearch: WKNavigationDelegate {
 
             tryExtractingParkingInformation { (result) in
                 switch result {
-                case .success(let parkingDescription):
-                    self.parkingInformation = parkingDescription
+                case .success(let parkingInformation):
+                    logger.debug("Extracted parking description: \(String(describing: parkingInformation?.description))")
+                    self.parkingInformation = parkingInformation
                 case .failure(let error):
-                    print(error)
+                    logger.error(error)
                     self.parkingInformation = nil
                 }
 
                 self.state = .found
             }
-        case nil:
+        default:
             break
         }
     }
@@ -392,7 +419,7 @@ extension OfficialParkingSearch {
     public class ParkingInformation {
         static let sentenceRegularExpression = try! NSRegularExpression(pattern: "[^。\\n\\(\\)（）]+")
         static let existenceRegularExpression = try! NSRegularExpression(pattern: "^(?:(有り?|あり)|(無し?|なし))$")
-        static let capacityRegularExpression = try! NSRegularExpression(pattern: "^(\\d+)台$")
+        static let capacityRegularExpression = try! NSRegularExpression(pattern: "(\\d+)台")
 
         public let description: String
 
@@ -440,4 +467,5 @@ extension OfficialParkingSearch {
 
 enum OfficialParkingSearchError: Error {
     case destinationMustHaveName
+    case webViewMustBeAddedToWindowButNoKeyWindowIsAvailable
 }

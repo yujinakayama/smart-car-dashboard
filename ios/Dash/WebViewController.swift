@@ -10,19 +10,50 @@ import UIKit
 import WebKit
 
 class WebViewController: UIViewController {
-    static var defaultUserAgent: String?
+    // https://stackoverflow.com/a/65825682/784241
+    static let defaultUserAgent: String = WKWebView().value(forKey: "userAgent") as! String
 
-    lazy var webView: WKWebView = {
+    static func makeWebView(contentMode: ContentMode) -> WKWebView {
         let configuration = WKWebViewConfiguration()
         configuration.dataDetectorTypes = [.address, .link, .phoneNumber]
         configuration.mediaTypesRequiringUserActionForPlayback = .all
 
         let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.allowsBackForwardNavigationGestures = true
-        return webView
-    }()
 
-    var preferredContentMode: ContentMode = .recommended {
+        applyContentMode(contentMode, to: webView)
+
+        return webView
+    }
+
+    private static func applyContentMode(_ contentMode: ContentMode, to webView: WKWebView) {
+        switch contentMode {
+        case .auto:
+            if webView.traitCollection.horizontalSizeClass == .compact {
+                applyMobileContentMode(to: webView)
+            } else {
+                applyDesktopContentMode(to: webView)
+            }
+        case .mobile:
+            applyMobileContentMode(to: webView)
+        case .desktop:
+            applyDesktopContentMode(to: webView)
+        }
+    }
+
+    private static func applyMobileContentMode(to webView: WKWebView) {
+        webView.configuration.defaultWebpagePreferences.preferredContentMode = .mobile
+        webView.customUserAgent = Self.defaultUserAgent.replacingOccurrences(of: "iPad", with: "iPhone")
+    }
+
+    private static func applyDesktopContentMode(to webView: WKWebView) {
+        webView.configuration.defaultWebpagePreferences.preferredContentMode = .desktop
+        webView.customUserAgent = nil
+    }
+
+    let webView: WKWebView
+
+    var contentMode: ContentMode {
         didSet {
             applyContentMode()
         }
@@ -37,11 +68,9 @@ class WebViewController: UIViewController {
 
     var keyValueObservations: [NSKeyValueObservation] = []
 
-    private var pendingURL: URL?
-
-    private var hasInitiallyAppliedContentMode = false
-
-    init() {
+    init(webView: WKWebView? = nil, contentMode: ContentMode = .auto) {
+        self.webView = webView ?? Self.makeWebView(contentMode: contentMode)
+        self.contentMode = contentMode
         super.init(nibName: nil, bundle: nil)
         configureToolBarButtonItems()
         applyContentMode()
@@ -52,11 +81,7 @@ class WebViewController: UIViewController {
     }
 
     func loadPage(url: URL) {
-        if hasInitiallyAppliedContentMode {
-            webView.load(URLRequest(url: url))
-        } else {
-            pendingURL = url
-        }
+        webView.load(URLRequest(url: url))
     }
 
     override func viewDidLoad() {
@@ -76,7 +101,7 @@ class WebViewController: UIViewController {
             openInSafariBarButtonItem
         ]
 
-        keyValueObservations.append(webView.observe(\.title, changeHandler: { [unowned self] (webView, change) in
+        keyValueObservations.append(webView.observe(\.title, options: .initial, changeHandler: { [unowned self] (webView, change) in
             navigationItem.title = webView.title
         }))
 
@@ -98,46 +123,7 @@ class WebViewController: UIViewController {
     }
 
     private func applyContentMode() {
-        let completion = {
-            if !self.hasInitiallyAppliedContentMode, let pendingURL = self.pendingURL {
-                self.webView.load(URLRequest(url: pendingURL))
-            }
-
-            self.hasInitiallyAppliedContentMode = true
-        }
-
-        switch preferredContentMode {
-        case .recommended:
-            if traitCollection.horizontalSizeClass == .compact {
-                applyContentModeForMobile(completion: completion)
-            } else {
-                applyContentModeForDesktop()
-                completion()
-            }
-        case .mobile:
-            applyContentModeForMobile(completion: completion)
-        case .desktop:
-            applyContentModeForDesktop()
-            completion()
-        }
-    }
-
-    private func applyContentModeForMobile(completion: @escaping () -> Void) {
-        webView.configuration.defaultWebpagePreferences.preferredContentMode = .mobile
-
-        getDefaultUserAgent { (defaultUserAgent) in
-            if let defaultUserAgent = defaultUserAgent {
-                // Some sites like Tabelog checks whether user agent includes "iPhone" or not to determine whether the device is mobile one
-                self.webView.customUserAgent = defaultUserAgent.replacingOccurrences(of: "iPad", with: "iPhone")
-            }
-
-            completion()
-        }
-    }
-
-    private func applyContentModeForDesktop() {
-        webView.configuration.defaultWebpagePreferences.preferredContentMode = .desktop
-        webView.customUserAgent = nil
+        Self.applyContentMode(contentMode, to: webView)
     }
 
     private func addWebView() {
@@ -151,18 +137,8 @@ class WebViewController: UIViewController {
             webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: webView.bottomAnchor),
         ])
-    }
 
-    private func getDefaultUserAgent(completion: @escaping (String?) -> Void) {
-        if let userAgent = WebViewController.defaultUserAgent {
-            completion(userAgent)
-            return
-        }
-
-        webView.evaluateJavaScript("navigator.userAgent", completionHandler: { (userAgent, error) in
-            WebViewController.defaultUserAgent = userAgent as? String
-            completion(WebViewController.defaultUserAgent)
-        })
+        webView.isHidden = false
     }
 
     private func updateReloadOrStopLoadingBarButtonItem() {
@@ -200,30 +176,14 @@ class WebViewController: UIViewController {
     }
 
     @objc func openInSafari() {
-        guard let url = webView.url, let application = sharedApplication else { return }
-        application.perform(sel_registerName("openURL:"), with: url)
-    }
-
-    // We cannot use UIApplication.shared.open(_:options:completionHandler:) in app extensions
-    // https://stackoverflow.com/a/44499289/784241
-    private var sharedApplication: UIApplication? {
-        var responder: UIResponder? = self
-
-        while responder != nil {
-           if let application = responder as? UIApplication {
-               return application
-           }
-
-            responder = responder?.next
-       }
-
-        return nil
+        guard let url = webView.url else { return }
+        UIApplication.shared.open(url)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
-        if traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
+        if contentMode == .auto {
             applyContentMode()
         }
     }
@@ -231,7 +191,7 @@ class WebViewController: UIViewController {
 
 extension WebViewController {
     enum ContentMode {
-        case recommended
+        case auto
         case mobile
         case desktop
     }

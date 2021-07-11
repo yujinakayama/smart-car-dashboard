@@ -154,8 +154,6 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
         return stackView
     }()
 
-    private var officialParkingInformationWebViewController: OfficialParkingInformationWebViewController?
-
     private lazy var geocoder = CLGeocoder()
 
     var showsRecentSharedLocations = true {
@@ -386,18 +384,13 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
 
         parkingSearchManager.setDestination(destination.placemark.coordinate)
 
-        let webViewController = OfficialParkingInformationWebViewController()
-
-        if let officialParkingSearch = try? OfficialParkingSearch(destination: destination, webView: webViewController.webView) {
-            webViewController.officialParkingSearch = officialParkingSearch
-
+        if let officialParkingSearch = try? OfficialParkingSearch(destination: destination, webView: WebViewController.makeWebView(contentMode: .mobile)) {
             officialParkingSearch.delegate = self
-            officialParkingSearch.start()
+            try! officialParkingSearch.start()
 
             officialParkingSearchStatusView.state = .searching
 
             self.officialParkingSearch = officialParkingSearch
-            self.officialParkingInformationWebViewController = webViewController
         }
 
         navigationItem.title = "“\(destinationName)” 周辺の駐車場"
@@ -449,8 +442,8 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
     }
 
     @objc private func officialParkingSearchStatusViewButtonDidPush() {
-        guard let webViewController = officialParkingInformationWebViewController else { return }
-
+        guard let officialParkingSearch = officialParkingSearch else { return }
+        let webViewController = OfficialParkingInformationWebViewController(officialParkingSearch: officialParkingSearch)
         let navigationController = UINavigationController(rootViewController: webViewController)
         navigationController.isToolbarHidden = false
         present(navigationController, animated: true)

@@ -28,7 +28,6 @@
 		B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
 		B91BD8092323FD820064D2B5 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
 		B91E0B62254D047D002928D3 /* PairingURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E0B61254D047D002928D3 /* PairingURLItem.swift */; };
-		B91F7EBE2652F0FB00B1233D /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C04B41257775B8001D6E0F /* WebViewController.swift */; };
 		B91F7EC02652F2B400B1233D /* DirectionalUserLocationAnnotationView in Frameworks */ = {isa = PBXBuildFile; productRef = B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */; };
 		B92451D423E30ACE007556D5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B92451D323E30ACE007556D5 /* Settings.bundle */; };
 		B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */; };
@@ -62,6 +61,7 @@
 		B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */; };
 		B92ADE77269990370086E4D8 /* NSRegularExpressionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADE7526998DE10086E4D8 /* NSRegularExpressionExtension.swift */; };
 		B92ADE79269990E20086E4D8 /* NSRegularExpressionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADE7526998DE10086E4D8 /* NSRegularExpressionExtension.swift */; };
+		B92ADE9B269ACA4C0086E4D8 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADE9A269ACA4C0086E4D8 /* Logger.swift */; };
 		B92C6EC324AC2F0A001E9675 /* ArtworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92C6EC224AC2F0A001E9675 /* ArtworkView.swift */; };
 		B92C6EC524AC68B7001E9675 /* SongTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92C6EC424AC68B7001E9675 /* SongTitleView.swift */; };
 		B92C6EC724AC77B2001E9675 /* PlaybackProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92C6EC624AC77B2001E9675 /* PlaybackProgressView.swift */; };
@@ -152,7 +152,6 @@
 		B9BA819E2350931A00657DEB /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
 		B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */; };
 		B9BC920923250A0A006F22FC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BC920823250A0A006F22FC /* Defaults.swift */; };
-		B9BD54A5265BB0D9002C2A8F /* ParkingSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9DD4CCA26517F920010B120 /* ParkingSearchKit.framework */; };
 		B9BF2F0523F6946100967316 /* GradientPathRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BF2F0423F6946100967316 /* GradientPathRenderer.swift */; };
 		B9C04B42257775B8001D6E0F /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C04B41257775B8001D6E0F /* WebViewController.swift */; };
 		B9C0BF4526984D3D00C54BA9 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F9EFD5256D3D6B00C33781 /* Cache.swift */; };
@@ -277,13 +276,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = B98B783223ED4C3F00A5102F;
 			remoteInfo = DashCloudKit;
-		};
-		B9BD54A7265BB0D9002C2A8F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B9DD4CC926517F920010B120;
-			remoteInfo = ParkingSearchKit;
 		};
 		B9D4AF262671324B00849129 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -453,6 +445,7 @@
 		B92A97D925E0AE8900D70A14 /* GForceMeterWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GForceMeterWidgetViewController.swift; sourceTree = "<group>"; };
 		B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewController.swift; sourceTree = "<group>"; };
 		B92ADE7526998DE10086E4D8 /* NSRegularExpressionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRegularExpressionExtension.swift; sourceTree = "<group>"; };
+		B92ADE9A269ACA4C0086E4D8 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B92C6EC224AC2F0A001E9675 /* ArtworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkView.swift; sourceTree = "<group>"; };
 		B92C6EC424AC68B7001E9675 /* SongTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongTitleView.swift; sourceTree = "<group>"; };
 		B92C6EC624AC77B2001E9675 /* PlaybackProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackProgressView.swift; sourceTree = "<group>"; };
@@ -674,7 +667,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B9BD54A5265BB0D9002C2A8F /* ParkingSearchKit.framework in Frameworks */,
 				B9D4AF242671324B00849129 /* DashCloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -795,7 +787,6 @@
 		B92B8418268C63870019D050 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				B9C04B41257775B8001D6E0F /* WebViewController.swift */,
 				B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */,
 				B988A676254D0EB30012A4CB /* PairedVehicle.swift */,
 				B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */,
@@ -1118,6 +1109,7 @@
 				B9741F7623DF201A00F061E7 /* Inbox */,
 				B904A2A4243968840087BD4A /* Maps */,
 				B97B0D8724C040A9006B675B /* BluetoothAudio */,
+				B9C04B41257775B8001D6E0F /* WebViewController.swift */,
 				B97BAE6124B61DB100AE7D13 /* Vehicle.swift */,
 				B92A61102576472A0073AB7B /* Assistant.swift */,
 				B9640ABC2575EBF200B779AD /* Firebase */,
@@ -1161,6 +1153,7 @@
 				B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */,
 				B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */,
 				B93C04662642D5FA002CD861 /* UIButtonExtension.swift */,
+				B92ADE9A269ACA4C0086E4D8 /* Logger.swift */,
 				B9DD4CCD26517F920010B120 /* Info.plist */,
 			);
 			path = ParkingSearchKit;
@@ -1346,7 +1339,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				B9BD54A8265BB0D9002C2A8F /* PBXTargetDependency */,
 				B9D4AF272671324B00849129 /* PBXTargetDependency */,
 			);
 			name = ParkingSearchActionExtension;
@@ -2072,13 +2064,13 @@
 				B9C0BF4526984D3D00C54BA9 /* Cache.swift in Sources */,
 				B9C1DD1C269457910046E108 /* OfficialParkingSearchStatusView.swift in Sources */,
 				B9DD4CD926517FBF0010B120 /* ParkingAnnotationView.swift in Sources */,
-				B91F7EBE2652F0FB00B1233D /* WebViewController.swift in Sources */,
 				B9D0208F268F69490020BF9A /* ParkingSearchOptionsView.swift in Sources */,
 				B92ADE77269990370086E4D8 /* NSRegularExpressionExtension.swift in Sources */,
 				B9DD4CDA26517FBF0010B120 /* PPParkClient.swift in Sources */,
 				B900A13D2652BCF4000ED1B9 /* StringExtension.swift in Sources */,
 				B9DD4CD726517FBF0010B120 /* TimeDurationPicker.swift in Sources */,
 				B9DD4CD626517FBF0010B120 /* ParkingAnnotation.swift in Sources */,
+				B92ADE9B269ACA4C0086E4D8 /* Logger.swift in Sources */,
 				B9D0208D268F643E0020BF9A /* ParkingSearchMapViewManager.swift in Sources */,
 				B9C1DD1526922ABA0046E108 /* SheetView.swift in Sources */,
 				B900A13A26529C38000ED1B9 /* UIButtonExtension.swift in Sources */,
@@ -2152,11 +2144,6 @@
 			isa = PBXTargetDependency;
 			target = B98B783223ED4C3F00A5102F /* DashCloudKit */;
 			targetProxy = B9B18DD523EDFFF40096D603 /* PBXContainerItemProxy */;
-		};
-		B9BD54A8265BB0D9002C2A8F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B9DD4CC926517F920010B120 /* ParkingSearchKit */;
-			targetProxy = B9BD54A7265BB0D9002C2A8F /* PBXContainerItemProxy */;
 		};
 		B9D4AF272671324B00849129 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2743,7 +2730,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 76434740D553577843417214 /* Pods-ParkingSearchKit.debug.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -2775,7 +2762,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 801C19D67084F1B5B305B7D4 /* Pods-ParkingSearchKit.release.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
