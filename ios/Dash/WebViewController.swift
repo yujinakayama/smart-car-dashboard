@@ -101,7 +101,7 @@ class WebViewController: UIViewController {
             openInSafariBarButtonItem
         ]
 
-        keyValueObservations.append(webView.observe(\.title, changeHandler: { [unowned self] (webView, change) in
+        keyValueObservations.append(webView.observe(\.title, options: .initial, changeHandler: { [unowned self] (webView, change) in
             navigationItem.title = webView.title
         }))
 
@@ -137,6 +137,8 @@ class WebViewController: UIViewController {
             webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: webView.bottomAnchor),
         ])
+
+        webView.isHidden = false
     }
 
     private func updateReloadOrStopLoadingBarButtonItem() {

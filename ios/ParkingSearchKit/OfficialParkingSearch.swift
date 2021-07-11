@@ -102,7 +102,19 @@ public class OfficialParkingSearch: NSObject {
         stop()
     }
 
-    public func start() {
+    public func start() throws {
+        // The web view needs to be added to view hierarchy
+        // so that it will actually render web pages and `innerText` will be available
+        if webView.window == nil {
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else {
+                throw OfficialParkingSearchError.webViewMustBeAddedToWindowButNoKeyWindowIsAvailable
+            }
+
+            webView.isHidden = true
+            webView.frame = window.bounds
+            window.addSubview(webView)
+        }
+
         state = .searching
 
         if let cachedURL = cachedURL {
@@ -250,7 +262,7 @@ public class OfficialParkingSearch: NSObject {
                 }
 
                 if (element.tagName == 'TH' || element.tagName == 'DT') {
-                    return element.nextElementSibling?.textContent.trim();
+                    return element.nextElementSibling?.innerText.trim();
                 } else {
                     return null;
                 }
@@ -308,7 +320,7 @@ public class OfficialParkingSearch: NSObject {
             }
 
             function textLengthOf(element) {
-                return element.textContent.trim().length;
+                return element.innerText.trim().length;
             }
 
             const xpath = `//body//*[text()[contains(., "${searchText}")]]`; // TODO: Escape searchText properly
@@ -444,4 +456,5 @@ extension OfficialParkingSearch {
 
 enum OfficialParkingSearchError: Error {
     case destinationMustHaveName
+    case webViewMustBeAddedToWindowButNoKeyWindowIsAvailable
 }

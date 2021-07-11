@@ -386,7 +386,7 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
 
         if let officialParkingSearch = try? OfficialParkingSearch(destination: destination, webView: WebViewController.makeWebView(contentMode: .mobile)) {
             officialParkingSearch.delegate = self
-            officialParkingSearch.start()
+            try! officialParkingSearch.start()
 
             officialParkingSearchStatusView.state = .searching
 
