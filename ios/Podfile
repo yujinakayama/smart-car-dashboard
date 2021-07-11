@@ -28,6 +28,7 @@ end
 
 target 'ParkingSearchKit' do
   pod 'PINCache', '>= 3.0.1-beta.8'
+  pod 'XCGLogger'
 end
 
 target 'DashRemote' do

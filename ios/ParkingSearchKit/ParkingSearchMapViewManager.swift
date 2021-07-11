@@ -112,7 +112,7 @@ public class ParkingSearchMapViewManager: NSObject {
 
         MKDirections(request: request).calculate { (response, error) in
             if let error = error {
-                print(error)
+                logger.error(error)
             }
 
             completion(response?.routes.first?.expectedTravelTime)
@@ -144,7 +144,7 @@ public class ParkingSearchMapViewManager: NSObject {
                     self.showParkings(parkings)
                 }
             case .failure(let error):
-                print(error)
+                logger.error(error)
             }
 
             if let destinationAnnotation = self.destinationAnnotation {

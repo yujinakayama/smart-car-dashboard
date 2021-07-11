@@ -129,7 +129,7 @@ public class OfficialParkingSearch: NSObject {
                     self.performImFeelingLucky(address: placemark)
                 }
             case .failure(let error):
-                print(error)
+                logger.error(error)
             }
         }
     }
@@ -214,6 +214,8 @@ public class OfficialParkingSearch: NSObject {
 
         let query = queryComponents.joined(separator: " ")
 
+        logger.debug(query)
+
         webView.callAsyncJavaScript(
             script,
             arguments: ["query": query],
@@ -224,7 +226,7 @@ public class OfficialParkingSearch: NSObject {
             case .success:
                 break
             case .failure(let error):
-                print(error)
+                logger.error(error)
             }
         }
     }
@@ -342,9 +344,9 @@ extension OfficialParkingSearch: WKNavigationDelegate {
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         guard let url = webView.url else { return }
 
-        print(#function, url)
-
         currentPageType = pageType(of: url)
+
+        logger.info("\(url) (\(String(describing: currentPageType))")
 
         switch currentPageType {
         case .googleSearchForm:
@@ -364,16 +366,17 @@ extension OfficialParkingSearch: WKNavigationDelegate {
 
             tryExtractingParkingInformation { (result) in
                 switch result {
-                case .success(let parkingDescription):
-                    self.parkingInformation = parkingDescription
+                case .success(let parkingInformation):
+                    logger.debug("Extracted parking description: \(String(describing: parkingInformation?.description))")
+                    self.parkingInformation = parkingInformation
                 case .failure(let error):
-                    print(error)
+                    logger.error(error)
                     self.parkingInformation = nil
                 }
 
                 self.state = .found
             }
-        case nil:
+        default:
             break
         }
     }

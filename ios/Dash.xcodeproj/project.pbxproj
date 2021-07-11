@@ -62,6 +62,7 @@
 		B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */; };
 		B92ADE77269990370086E4D8 /* NSRegularExpressionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADE7526998DE10086E4D8 /* NSRegularExpressionExtension.swift */; };
 		B92ADE79269990E20086E4D8 /* NSRegularExpressionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADE7526998DE10086E4D8 /* NSRegularExpressionExtension.swift */; };
+		B92ADE9B269ACA4C0086E4D8 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADE9A269ACA4C0086E4D8 /* Logger.swift */; };
 		B92C6EC324AC2F0A001E9675 /* ArtworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92C6EC224AC2F0A001E9675 /* ArtworkView.swift */; };
 		B92C6EC524AC68B7001E9675 /* SongTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92C6EC424AC68B7001E9675 /* SongTitleView.swift */; };
 		B92C6EC724AC77B2001E9675 /* PlaybackProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92C6EC624AC77B2001E9675 /* PlaybackProgressView.swift */; };
@@ -453,6 +454,7 @@
 		B92A97D925E0AE8900D70A14 /* GForceMeterWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GForceMeterWidgetViewController.swift; sourceTree = "<group>"; };
 		B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewController.swift; sourceTree = "<group>"; };
 		B92ADE7526998DE10086E4D8 /* NSRegularExpressionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRegularExpressionExtension.swift; sourceTree = "<group>"; };
+		B92ADE9A269ACA4C0086E4D8 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B92C6EC224AC2F0A001E9675 /* ArtworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkView.swift; sourceTree = "<group>"; };
 		B92C6EC424AC68B7001E9675 /* SongTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongTitleView.swift; sourceTree = "<group>"; };
 		B92C6EC624AC77B2001E9675 /* PlaybackProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackProgressView.swift; sourceTree = "<group>"; };
@@ -1161,6 +1163,7 @@
 				B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */,
 				B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */,
 				B93C04662642D5FA002CD861 /* UIButtonExtension.swift */,
+				B92ADE9A269ACA4C0086E4D8 /* Logger.swift */,
 				B9DD4CCD26517F920010B120 /* Info.plist */,
 			);
 			path = ParkingSearchKit;
@@ -2079,6 +2082,7 @@
 				B900A13D2652BCF4000ED1B9 /* StringExtension.swift in Sources */,
 				B9DD4CD726517FBF0010B120 /* TimeDurationPicker.swift in Sources */,
 				B9DD4CD626517FBF0010B120 /* ParkingAnnotation.swift in Sources */,
+				B92ADE9B269ACA4C0086E4D8 /* Logger.swift in Sources */,
 				B9D0208D268F643E0020BF9A /* ParkingSearchMapViewManager.swift in Sources */,
 				B9C1DD1526922ABA0046E108 /* SheetView.swift in Sources */,
 				B900A13A26529C38000ED1B9 /* UIButtonExtension.swift in Sources */,
