@@ -174,24 +174,8 @@ class WebViewController: UIViewController {
     }
 
     @objc func openInSafari() {
-        guard let url = webView.url, let application = sharedApplication else { return }
-        application.perform(sel_registerName("openURL:"), with: url)
-    }
-
-    // We cannot use UIApplication.shared.open(_:options:completionHandler:) in app extensions
-    // https://stackoverflow.com/a/44499289/784241
-    private var sharedApplication: UIApplication? {
-        var responder: UIResponder? = self
-
-        while responder != nil {
-           if let application = responder as? UIApplication {
-               return application
-           }
-
-            responder = responder?.next
-       }
-
-        return nil
+        guard let url = webView.url else { return }
+        UIApplication.shared.open(url)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

@@ -28,7 +28,6 @@
 		B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
 		B91BD8092323FD820064D2B5 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
 		B91E0B62254D047D002928D3 /* PairingURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E0B61254D047D002928D3 /* PairingURLItem.swift */; };
-		B91F7EBE2652F0FB00B1233D /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C04B41257775B8001D6E0F /* WebViewController.swift */; };
 		B91F7EC02652F2B400B1233D /* DirectionalUserLocationAnnotationView in Frameworks */ = {isa = PBXBuildFile; productRef = B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */; };
 		B92451D423E30ACE007556D5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B92451D323E30ACE007556D5 /* Settings.bundle */; };
 		B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */; };
@@ -788,7 +787,6 @@
 		B92B8418268C63870019D050 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				B9C04B41257775B8001D6E0F /* WebViewController.swift */,
 				B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */,
 				B988A676254D0EB30012A4CB /* PairedVehicle.swift */,
 				B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */,
@@ -1111,6 +1109,7 @@
 				B9741F7623DF201A00F061E7 /* Inbox */,
 				B904A2A4243968840087BD4A /* Maps */,
 				B97B0D8724C040A9006B675B /* BluetoothAudio */,
+				B9C04B41257775B8001D6E0F /* WebViewController.swift */,
 				B97BAE6124B61DB100AE7D13 /* Vehicle.swift */,
 				B92A61102576472A0073AB7B /* Assistant.swift */,
 				B9640ABC2575EBF200B779AD /* Firebase */,
@@ -2065,7 +2064,6 @@
 				B9C0BF4526984D3D00C54BA9 /* Cache.swift in Sources */,
 				B9C1DD1C269457910046E108 /* OfficialParkingSearchStatusView.swift in Sources */,
 				B9DD4CD926517FBF0010B120 /* ParkingAnnotationView.swift in Sources */,
-				B91F7EBE2652F0FB00B1233D /* WebViewController.swift in Sources */,
 				B9D0208F268F69490020BF9A /* ParkingSearchOptionsView.swift in Sources */,
 				B92ADE77269990370086E4D8 /* NSRegularExpressionExtension.swift in Sources */,
 				B9DD4CDA26517FBF0010B120 /* PPParkClient.swift in Sources */,
