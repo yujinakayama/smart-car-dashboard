@@ -217,7 +217,6 @@ public class OfficialParkingSearch: NSObject {
         var queryComponents = [
             destination.name,
             address.administrativeArea,
-            address.subAdministrativeArea,
             address.locality,
             "\"駐車場\"",
         ].compactMap { $0 }
