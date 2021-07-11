@@ -261,7 +261,8 @@ public class OfficialParkingSearch: NSObject {
                 }
 
                 if (element.tagName == 'TH' || element.tagName == 'DT') {
-                    return element.nextElementSibling?.innerText.trim();
+                    const descriptionElement = element.nextElementSibling;
+                    return descriptionElement?.innerText.trim() || descriptionElement.textContent.trim();
                 } else {
                     return null;
                 }
@@ -319,7 +320,8 @@ public class OfficialParkingSearch: NSObject {
             }
 
             function textLengthOf(element) {
-                return element.innerText.trim().length;
+                const text = element.innerText.trim() || element.textContent.trim();
+                return text.length;
             }
 
             const xpath = `//body//*[text()[contains(., "${searchText}")]]`; // TODO: Escape searchText properly
