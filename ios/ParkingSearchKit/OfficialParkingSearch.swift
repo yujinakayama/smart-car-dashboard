@@ -418,7 +418,7 @@ extension OfficialParkingSearch {
     public class ParkingInformation {
         static let sentenceRegularExpression = try! NSRegularExpression(pattern: "[^。\\n\\(\\)（）]+")
         static let existenceRegularExpression = try! NSRegularExpression(pattern: "^(?:(有り?|あり)|(無し?|なし))$")
-        static let capacityRegularExpression = try! NSRegularExpression(pattern: "^(\\d+)台$")
+        static let capacityRegularExpression = try! NSRegularExpression(pattern: "(\\d+)台")
 
         public let description: String
 
