@@ -88,7 +88,7 @@ class MapItemFetcher {
             if let coordinate = finalCoordinate {
                 let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate))
                 if let plainText = finalPlainText {
-                    mapItem.name = plainText
+                    mapItem.name = plainText.components(separatedBy: .newlines).first
                 }
                 completion(.success(mapItem))
             } else if let error = finalError {
