@@ -352,7 +352,17 @@ public class OfficialParkingSearch: NSObject {
     }
 }
 
+// https://stackoverflow.com/a/44942814/784241
+extension WKNavigationActionPolicy {
+    static let allowWithoutTryingAppLink = Self.init(rawValue: Self.allow.rawValue + 2)!
+}
+
 extension OfficialParkingSearch: WKNavigationDelegate {
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        // Prevent opening universal link URLs in other apps (e.g. Tabelog)
+        decisionHandler(.allowWithoutTryingAppLink)
+    }
+
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         guard let url = webView.url else { return }
 
