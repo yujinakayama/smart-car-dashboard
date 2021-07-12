@@ -18,7 +18,18 @@ public class DashCloudClient {
         return "asia-northeast1-\(googleServiceInfo.projectID).cloudfunctions.net"
     }()
 
-    public init() {
+    public let urlSessionConfiguration: URLSessionConfiguration?
+
+    lazy var urlSession: URLSession = {
+        if let configuration = urlSessionConfiguration {
+            return URLSession(configuration: configuration)
+        } else {
+            return URLSession.shared
+        }
+    }()
+
+    public init(urlSessionConfiguration: URLSessionConfiguration? = nil) {
+        self.urlSessionConfiguration = urlSessionConfiguration
     }
 
     public func share(_ item: Item, with vehicleID: String, completionHandler: @escaping (Error?) -> Void) {
@@ -100,7 +111,7 @@ public class DashCloudClient {
             completionHandler(.failure(error))
         }
 
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        let task = urlSession.dataTask(with: request) { (data, response, error) in
             DispatchQueue.main.async {
                 if let error = error {
                     completionHandler(.failure(error))
