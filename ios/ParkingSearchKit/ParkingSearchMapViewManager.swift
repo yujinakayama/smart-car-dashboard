@@ -149,6 +149,8 @@ public class ParkingSearchMapViewManager: NSObject {
         ) { [weak self] (result) in
             guard let self = self else { return }
 
+            var isCancelled = false
+
             switch result {
             case .success(let parkings):
                 DispatchQueue.main.async {
@@ -156,9 +158,13 @@ public class ParkingSearchMapViewManager: NSObject {
                 }
             case .failure(let error):
                 logger.error(error)
+
+                if let urlError = error as? URLError, urlError.code == .cancelled {
+                    isCancelled = true
+                }
             }
 
-            if let destinationAnnotation = self.destinationAnnotation {
+            if !isCancelled, let destinationAnnotation = self.destinationAnnotation {
                 DispatchQueue.main.async {
                     self.mapView.deselectAnnotation(destinationAnnotation, animated: true)
                     self.mapView.view(for: destinationAnnotation)?.canShowCallout = false
