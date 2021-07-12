@@ -11,22 +11,22 @@ import MapKit
 import CoreMotion
 import simd
 
-struct Defaults {
+class Defaults {
     static var shared = Defaults()
 
     private let userDefaults = UserDefaults.standard
 
-    private struct Key {
-        static let etcIntegrationEnabled = "etcIntegrationEnabled"
-        static let lastBackgroundEntranceTime = "lastBackgroundEntranceTime"
-        static let mapTypeForETCRoute = "mapTypeForETCRoute"
-        static let automaticallyOpensUnopenedLocationWhenAppIsOpened = "automaticallyOpensUnopenedLocationWhenAppIsOpened"
-        static let snapLocationToPointOfInterest = "snapLocationToPointOfInterest"
-        static let mainETCCardUUID = "mainETCCardUUID"
-        static let referenceAccelerationForGForceMeter = "referenceAccelerationForGForceMeter"
-        static let unitOfGForceMeterScale = "unitOfGForceMeterScale"
-        static let pointerScalingBaseForVerticalAccelerationForGForceMeter = "pointerScalingBaseForVerticalAccelerationForGForceMeter"
-        static let verboseLogging = "verboseLogging"
+    private enum Key: String {
+        case etcIntegrationEnabled
+        case lastBackgroundEntranceTime
+        case mapTypeForETCRoute
+        case automaticallyOpensUnopenedLocationWhenAppIsOpened
+        case snapLocationToPointOfInterest
+        case mainETCCardUUID
+        case referenceAccelerationForGForceMeter
+        case unitOfGForceMeterScale
+        case pointerScalingBaseForVerticalAccelerationForGForceMeter
+        case verboseLogging
     }
 
     init() {
@@ -48,49 +48,95 @@ struct Defaults {
         userDefaults.register(defaults: defaultValues)
     }
 
+    private func bool(for key: Key) -> Bool {
+        return userDefaults.bool(forKey: key.rawValue)
+    }
+
+    private func set(_ value: Bool, for key: Key) {
+        userDefaults.setValue(value, forKey: key.rawValue)
+    }
+
+    private func integer(for key: Key) -> Int {
+        return userDefaults.integer(forKey: key.rawValue)
+    }
+
+    private func set(_ value: Int, for key: Key) {
+        userDefaults.setValue(value, forKey: key.rawValue)
+    }
+
+    private func float(for key: Key) -> Float {
+        return userDefaults.float(forKey: key.rawValue)
+    }
+
+    private func set(_ value: Float, for key: Key) {
+        userDefaults.setValue(value, forKey: key.rawValue)
+    }
+
+    private func double(for key: Key) -> Double {
+        return userDefaults.double(forKey: key.rawValue)
+    }
+
+    private func set(_ value: Double, for key: Key) {
+        userDefaults.setValue(value, forKey: key.rawValue)
+    }
+
+    private func string(for key: Key) -> String? {
+        return userDefaults.string(forKey: key.rawValue)
+    }
+
+    private func data(for key: Key) -> Data? {
+        return userDefaults.data(forKey: key.rawValue)
+    }
+
+    private func set(_ value: Any?, for key: Key) {
+        userDefaults.setValue(value, forKey: key.rawValue)
+    }
+}
+
+extension Defaults {
     var isETCIntegrationEnabled: Bool {
         get {
-            return userDefaults.bool(forKey: Key.etcIntegrationEnabled)
+            return bool(for: .etcIntegrationEnabled)
         }
     }
 
     var lastBackgroundEntranceTime: Date {
         get {
-            let timeInterval = userDefaults.double(forKey: Key.lastBackgroundEntranceTime)
+            let timeInterval = double(for: .lastBackgroundEntranceTime)
             return Date(timeIntervalSinceReferenceDate: timeInterval)
         }
 
         set {
-            userDefaults.set(newValue.timeIntervalSinceReferenceDate, forKey: Key.lastBackgroundEntranceTime)
+            set(newValue.timeIntervalSinceReferenceDate, for: .lastBackgroundEntranceTime)
         }
     }
 
     var mapTypeForETCRoute: MKMapType {
         get {
-            let integer = userDefaults.integer(forKey: Key.mapTypeForETCRoute)
+            let integer = integer(for: .mapTypeForETCRoute)
             return MKMapType(rawValue: UInt(integer)) ?? .standard
         }
 
         set {
-            userDefaults.set(newValue.rawValue, forKey: Key.mapTypeForETCRoute)
+            set(newValue.rawValue, for: .mapTypeForETCRoute)
         }
     }
 
     var automaticallyOpensUnopenedLocationWhenAppIsOpened: Bool {
         get {
-            return userDefaults.bool(forKey: Key.automaticallyOpensUnopenedLocationWhenAppIsOpened)
+            return bool(for: .automaticallyOpensUnopenedLocationWhenAppIsOpened)
         }
     }
 
     var snapLocationToPointOfInterest: Bool {
         get {
-            return userDefaults.bool(forKey: Key.snapLocationToPointOfInterest)
+            return bool(for: .snapLocationToPointOfInterest)
         }
     }
 
     var mainETCCardUUID: UUID? {
         get {
-            if let string = userDefaults.string(forKey: Key.mainETCCardUUID) {
+            if let string = string(for: .mainETCCardUUID) {
                 return UUID(uuidString: string)
             } else {
                 return nil
@@ -98,13 +144,13 @@ struct Defaults {
         }
 
         set {
-            userDefaults.set(newValue?.uuidString, forKey: Key.mainETCCardUUID)
+            set(newValue?.uuidString, for: .mainETCCardUUID)
         }
     }
 
     var referenceAccelerationForGForceMeter: CMAcceleration? {
         get {
-            guard let data = userDefaults.data(forKey: Key.referenceAccelerationForGForceMeter) else { return nil }
+            guard let data = data(for: .referenceAccelerationForGForceMeter) else { return nil }
             guard let vector = try? JSONDecoder().decode(simd_double3.self, from: data) else { return nil }
             return CMAcceleration(vector)
         }
@@ -117,19 +163,19 @@ struct Defaults {
                 data = try? JSONEncoder().encode(vector)
             }
 
-            userDefaults.set(data, forKey: Key.referenceAccelerationForGForceMeter)
+            set(data, for: .referenceAccelerationForGForceMeter)
         }
     }
 
     var unitOfGForceMeterScale: CGFloat {
         get {
-            return CGFloat(userDefaults.float(forKey: Key.unitOfGForceMeterScale))
+            return CGFloat(float(for: .unitOfGForceMeterScale))
         }
     }
 
     var pointerScalingBaseForVerticalAccelerationForGForceMeter: CGFloat? {
         get {
-            let float = userDefaults.float(forKey: Key.pointerScalingBaseForVerticalAccelerationForGForceMeter)
+            let float = float(for: .pointerScalingBaseForVerticalAccelerationForGForceMeter)
 
             if float == 1 {
                 return nil
@@ -141,7 +187,7 @@ struct Defaults {
 
     var verboseLogging: Bool {
         get {
-            return userDefaults.bool(forKey: Key.verboseLogging)
+            return bool(for: .verboseLogging)
         }
     }
 }
