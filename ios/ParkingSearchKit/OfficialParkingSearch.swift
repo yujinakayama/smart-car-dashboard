@@ -360,8 +360,14 @@ extension WKNavigationActionPolicy {
 
 extension OfficialParkingSearch: WKNavigationDelegate {
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        // Prevent opening universal link URLs in other apps (e.g. Tabelog)
-        decisionHandler(.allowWithoutTryingAppLink)
+        // Requests initiated without user action
+        if navigationAction.navigationType == .other {
+            // Prevent opening universal link URLs in other apps (e.g. Tabelog)
+            decisionHandler(.allowWithoutTryingAppLink)
+        } else {
+            // If the user explicitly wants to open the link in other app, it's OK.
+            decisionHandler(.allow)
+        }
     }
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
