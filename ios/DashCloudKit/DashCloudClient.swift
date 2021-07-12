@@ -50,7 +50,7 @@ public class DashCloudClient {
         }
     }
 
-    public func geocodeGoogleMapsLocation(_ url: URL, completionHandler: @escaping (Result<CLLocationCoordinate2D, Error>) -> Void) {
+    public func geocodeGoogleMapsLocation(_ url: URL, completionHandler: @escaping (Result<Location, Error>) -> Void) {
         let item = Item(url: url)
 
         item.encode { (result) in
@@ -63,7 +63,7 @@ public class DashCloudClient {
         }
     }
 
-    private func geocodeGoogleMapsLocation(_ attachments: [String: Any], completionHandler: @escaping (Result<CLLocationCoordinate2D, Error>) -> Void) {
+    private func geocodeGoogleMapsLocation(_ attachments: [String: Any], completionHandler: @escaping (Result<Location, Error>) -> Void) {
         let url = URL(string: "geocode", relativeTo: baseURL)!
 
         let payload: [String: Any] = [
@@ -73,16 +73,16 @@ public class DashCloudClient {
         post(url: url, payload: payload) { (result) in
             switch result {
             case .success(let data):
-                var coordinate: CLLocationCoordinate2D!
+                var location: Location!
 
                 do {
-                    coordinate = try JSONDecoder().decode(CLLocationCoordinate2D.self, from: data)
+                    location = try JSONDecoder().decode(Location.self, from: data)
                 } catch {
                     completionHandler(.failure(error))
                     return
                 }
 
-                completionHandler(.success(coordinate))
+                completionHandler(.success(location))
             case .failure(let error):
                 completionHandler(.failure(error))
             }

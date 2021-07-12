@@ -17,6 +17,6 @@ export const geocode = functions.region('asia-northeast1').https.onRequest(async
         return;
     }
 
-    const location =  normalizeGoogleMapsLocation(inputData);
-    functionResponse.send((await location).coordinate);
+    const location =  await normalizeGoogleMapsLocation(inputData);
+    functionResponse.send(location);
 });

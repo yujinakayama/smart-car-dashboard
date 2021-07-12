@@ -62,6 +62,7 @@
 		B92ADE77269990370086E4D8 /* NSRegularExpressionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADE7526998DE10086E4D8 /* NSRegularExpressionExtension.swift */; };
 		B92ADE79269990E20086E4D8 /* NSRegularExpressionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADE7526998DE10086E4D8 /* NSRegularExpressionExtension.swift */; };
 		B92ADE9B269ACA4C0086E4D8 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADE9A269ACA4C0086E4D8 /* Logger.swift */; };
+		B92ADE9D269C396A0086E4D8 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADE9C269C396A0086E4D8 /* Location.swift */; };
 		B92C6EC324AC2F0A001E9675 /* ArtworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92C6EC224AC2F0A001E9675 /* ArtworkView.swift */; };
 		B92C6EC524AC68B7001E9675 /* SongTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92C6EC424AC68B7001E9675 /* SongTitleView.swift */; };
 		B92C6EC724AC77B2001E9675 /* PlaybackProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92C6EC624AC77B2001E9675 /* PlaybackProgressView.swift */; };
@@ -446,6 +447,7 @@
 		B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewController.swift; sourceTree = "<group>"; };
 		B92ADE7526998DE10086E4D8 /* NSRegularExpressionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRegularExpressionExtension.swift; sourceTree = "<group>"; };
 		B92ADE9A269ACA4C0086E4D8 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		B92ADE9C269C396A0086E4D8 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		B92C6EC224AC2F0A001E9675 /* ArtworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkView.swift; sourceTree = "<group>"; };
 		B92C6EC424AC68B7001E9675 /* SongTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongTitleView.swift; sourceTree = "<group>"; };
 		B92C6EC624AC77B2001E9675 /* PlaybackProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackProgressView.swift; sourceTree = "<group>"; };
@@ -923,6 +925,7 @@
 				B98B783523ED4C3F00A5102F /* DashCloudKit.h */,
 				B9D4AF21267124FC00849129 /* DashCloudClient.swift */,
 				B98B784023ED4C5000A5102F /* Item.swift */,
+				B92ADE9C269C396A0086E4D8 /* Location.swift */,
 				B9D4AF2D2673203400849129 /* UTTypeExtension.swift */,
 				B92451D523E3204D007556D5 /* GoogleServieInfo.swift */,
 				B9A3C09423E163F500EF1C4A /* GoogleService-Info.plist */,
@@ -1933,6 +1936,7 @@
 				B9B4F702268CB3D0009C5DC5 /* CLLocationCoordinate2DExtension.swift in Sources */,
 				B9D4AF22267124FC00849129 /* DashCloudClient.swift in Sources */,
 				B98B784223ED4C5A00A5102F /* GoogleServieInfo.swift in Sources */,
+				B92ADE9D269C396A0086E4D8 /* Location.swift in Sources */,
 				B98B784123ED4C5000A5102F /* Item.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
