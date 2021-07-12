@@ -10,6 +10,12 @@ import Foundation
 import CoreLocation
 
 public class DashCloudClient {
+    public static let defaultURLSessionConfiguration: URLSessionConfiguration = {
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 10
+        return configuration
+    }()
+
     lazy var baseURL = URL(string: "https://\(host)")!
 
     lazy var host: String = {
@@ -18,17 +24,11 @@ public class DashCloudClient {
         return "asia-northeast1-\(googleServiceInfo.projectID).cloudfunctions.net"
     }()
 
-    public let urlSessionConfiguration: URLSessionConfiguration?
+    public let urlSessionConfiguration: URLSessionConfiguration
 
-    lazy var urlSession: URLSession = {
-        if let configuration = urlSessionConfiguration {
-            return URLSession(configuration: configuration)
-        } else {
-            return URLSession.shared
-        }
-    }()
+    lazy var urlSession = URLSession(configuration: urlSessionConfiguration)
 
-    public init(urlSessionConfiguration: URLSessionConfiguration? = nil) {
+    public init(urlSessionConfiguration: URLSessionConfiguration = DashCloudClient.defaultURLSessionConfiguration) {
         self.urlSessionConfiguration = urlSessionConfiguration
     }
 
