@@ -23,6 +23,10 @@ public class ParkingSearchMapViewManager: NSObject {
 
     public let optionsView = ParkingSearchOptionsView()
 
+    // 5 minutes walk with speed 80m/min
+    // (though actual distance must be longer since this is based on linear distance)
+    public var preferredMaxDistanceFromDestinationToParking: CLLocationDistance = 400
+
     private var annotations: [MKAnnotation] {
         var annotations: [MKAnnotation] = parkingAnnotations
 
@@ -101,6 +105,13 @@ public class ParkingSearchMapViewManager: NSObject {
             self.mapView.selectAnnotation(annotation, animated: true)
         }
 
+        let region = MKCoordinateRegion(
+            center: annotation.coordinate,
+            latitudinalMeters: preferredMaxDistanceFromDestinationToParking * 2,
+            longitudinalMeters: preferredMaxDistanceFromDestinationToParking * 2
+        )
+        mapView.setRegion(region, animated: true)
+
         destinationAnnotation = annotation
     }
 
@@ -148,7 +159,10 @@ public class ParkingSearchMapViewManager: NSObject {
             }
 
             if let destinationAnnotation = self.destinationAnnotation {
-                self.mapView.view(for: destinationAnnotation)?.canShowCallout = false
+                DispatchQueue.main.async {
+                    self.mapView.deselectAnnotation(destinationAnnotation, animated: true)
+                    self.mapView.view(for: destinationAnnotation)?.canShowCallout = false
+                }
             }
         }
     }
@@ -156,8 +170,10 @@ public class ParkingSearchMapViewManager: NSObject {
     private func showParkings(_ parkings: [Parking]) {
         let openParkings = parkings.filter { !$0.isClosed }
         addParkings(openParkings)
-        mapView.showAnnotations(annotations, animated: true)
-        selectBestParking()
+
+        let preferredParkingAnnotations = preferredParkingAnnotations
+        setMapRegion(for: preferredParkingAnnotations)
+        selectBestParking(from: preferredParkingAnnotations)
     }
 
     private func addParkings(_ parkings: [Parking]) {
@@ -169,9 +185,46 @@ public class ParkingSearchMapViewManager: NSObject {
         mapView.removeAnnotations(parkingAnnotations)
     }
 
-    private func selectBestParking() {
-        let cheapstParkingAnnotations = parkingAnnotations.filter { $0.parking.rank == 1 }
-        let bestParkingAnnotation = cheapstParkingAnnotations.min { $0.parking.distance < $1.parking.distance }
+    private var preferredParkingAnnotations: [ParkingAnnotation] {
+        let preferredParkingAnnotations = parkingAnnotations.filter { (annotation) in
+            annotation.parking.distance <= preferredMaxDistanceFromDestinationToParking
+        }
+
+        if preferredParkingAnnotations.isEmpty {
+            if let nearestParkingAnnotation = parkingAnnotations.min(by: { $0.parking.distance < $1.parking.distance }) {
+                return [nearestParkingAnnotation]
+            } else {
+                return []
+            }
+        } else {
+            return preferredParkingAnnotations
+        }
+    }
+
+    private func setMapRegion(for parkingAnnotations: [ParkingAnnotation]) {
+        let parkingCoordinates = parkingAnnotations.map({ $0.coordinate })
+
+        guard let region = regionThatContains(parkingCoordinates, center: destination) else { return }
+
+        let extendedRegion = MKCoordinateRegion(
+            center: region.center,
+            span: MKCoordinateSpan(
+                latitudeDelta: region.span.latitudeDelta * 1.15,
+                longitudeDelta: region.span.longitudeDelta * 1.15
+            )
+        )
+
+        mapView.setRegion(extendedRegion, animated: true)
+    }
+
+    private func selectBestParking(from parkingAnnotations: [ParkingAnnotation]) {
+        let bestParkingAnnotation = parkingAnnotations.min { (a, b) in
+            if a.parking.rank == b.parking.rank {
+                return a.parking.distance < b.parking.distance
+            } else {
+                return (a.parking.rank ?? Int.max) < (b.parking.rank ?? Int.max)
+            }
+        }
 
         if let bestParkingAnnotation = bestParkingAnnotation {
             mapView.selectAnnotation(bestParkingAnnotation, animated: true)
@@ -240,4 +293,30 @@ extension ParkingSearchMapViewManager: UIContextMenuInteractionDelegate {
 }
 
 fileprivate class DestinationAnnotation: MKPointAnnotation {
+}
+
+fileprivate func regionThatContains(_ coordinates: [CLLocationCoordinate2D], center: CLLocationCoordinate2D) -> MKCoordinateRegion? {
+    if coordinates.isEmpty {
+        return nil
+    }
+
+    var maxLatitudeDifference: CLLocationDegrees = 0
+    var maxLongitudeDifference: CLLocationDegrees = 0
+
+    for coordinate in coordinates {
+        let latitudeDifference = abs(coordinate.latitude - center.latitude)
+
+        if latitudeDifference > maxLatitudeDifference {
+            maxLatitudeDifference = latitudeDifference
+        }
+
+        let longitudeDifference = abs(coordinate.longitude - center.longitude)
+
+        if longitudeDifference > maxLongitudeDifference {
+            maxLongitudeDifference = longitudeDifference
+        }
+    }
+
+    let span = MKCoordinateSpan(latitudeDelta: maxLatitudeDifference * 2, longitudeDelta: maxLongitudeDifference * 2)
+    return MKCoordinateRegion(center: center, span: span)
 }

@@ -54,9 +54,6 @@ class Location: SharedItemProtocol {
         mapsViewController.showsRecentSharedLocations = false
         mapsViewController.parkingSearchQuittingButton.isHidden = true
 
-        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
-        mapsViewController.mapView.setRegion(region, animated: false)
-
         if let navigationController = viewController.navigationController {
             navigationController.pushViewController(mapsViewController, animated: true)
         } else {
