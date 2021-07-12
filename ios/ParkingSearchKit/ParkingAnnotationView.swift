@@ -488,6 +488,12 @@ extension ParkingAnnotationView.Callout {
 
 extension ParkingAnnotationView.Callout {
     class TagListView: UIStackView {
+        static let distanceFormatter: MKDistanceFormatter = {
+            let formatter = MKDistanceFormatter()
+            formatter.locale = Locale(identifier: "ja_JP")
+            return formatter
+        }()
+
         let simpleCapacityRegularExpression = try! NSRegularExpression(pattern: "^\\d+台$")
 
         var parking: Parking? {
@@ -503,6 +509,7 @@ extension ParkingAnnotationView.Callout {
             spacing = 6
 
             addArrangedSubview(capacityTagView)
+            addArrangedSubview(distanceTagView)
             addArrangedSubview(reservationTagView)
             addArrangedSubview(fullTagView)
             addArrangedSubview(crowdedTagView)
@@ -524,6 +531,8 @@ extension ParkingAnnotationView.Callout {
                 capacityTagView.isHidden = true
             }
 
+            distanceTagView.text = Self.distanceFormatter.string(fromDistance: parking.distance).replacingOccurrences(of: " ", with: "")
+
             reservationTagView.isHidden = parking.reservationInfo == nil
             fullTagView.isHidden = parking.reservationInfo?.status != .full && parking.vacancyInfo?.status != .full
             crowdedTagView.isHidden = parking.vacancyInfo?.status != .crowded
@@ -536,6 +545,7 @@ extension ParkingAnnotationView.Callout {
         }
 
         lazy var capacityTagView = TagView(textColor: .secondaryLabel, borderColor: .secondaryLabel)
+        lazy var distanceTagView = TagView(textColor: .secondaryLabel, borderColor: .secondaryLabel)
         lazy var reservationTagView = TagView(text: "予約制", textColor: .white, backgroundColor: .systemGreen)
         lazy var fullTagView = TagView(text: "満車", textColor: .white, backgroundColor: .systemRed)
         lazy var crowdedTagView = TagView(text: "混雑", textColor: .white, backgroundColor: .systemOrange)
