@@ -22,6 +22,7 @@ class Defaults {
         case mapTypeForETCRoute
         case automaticallyOpensUnopenedLocationWhenAppIsOpened
         case snapLocationToPointOfInterest
+        case preferredMaxDistanceFromDestinationToParking
         case mainETCCardUUID
         case referenceAccelerationForGForceMeter
         case unitOfGForceMeterScale
@@ -131,6 +132,16 @@ extension Defaults {
     var snapLocationToPointOfInterest: Bool {
         get {
             return bool(for: .snapLocationToPointOfInterest)
+        }
+    }
+
+    var preferredMaxDistanceFromDestinationToParking: CLLocationDistance {
+        get {
+            return double(for: .preferredMaxDistanceFromDestinationToParking)
+        }
+
+        set {
+            set(newValue, for: .preferredMaxDistanceFromDestinationToParking)
         }
     }
 

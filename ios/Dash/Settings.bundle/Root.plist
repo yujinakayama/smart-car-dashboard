@@ -66,6 +66,32 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
+			<string>Parking Search</string>
+			<key>FooterText</key>
+			<string>Average walking speed is about 80m/minute.</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Preferred Max Distance from Destination to Parking in Meters</string>
+			<key>Key</key>
+			<string>preferredMaxDistanceFromDestinationToParking</string>
+			<key>DefaultValue</key>
+			<string>400</string>
+			<key>IsSecure</key>
+			<false/>
+			<key>KeyboardType</key>
+			<string>NumberPad</string>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
 			<string>G-Force Meter</string>
 		</dict>
 		<dict>
