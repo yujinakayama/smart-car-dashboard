@@ -182,7 +182,9 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
     func playbackControlView(_ playbackControlView: PlaybackControlView, didPerformOperation operation: PlaybackControlView.Operation) {
         switch operation {
         case .skipToBeginning:
-            playbackProgressView.scheduleUpdatesIfNeeded()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.playbackProgressView.scheduleUpdatesIfNeeded()
+            }
         default:
             break
         }
