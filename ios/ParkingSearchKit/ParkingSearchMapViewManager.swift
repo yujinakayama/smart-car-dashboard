@@ -27,6 +27,32 @@ public class ParkingSearchMapViewManager: NSObject {
     // (though actual distance must be longer since this is based on linear distance)
     public var preferredMaxDistanceFromDestinationToParking: CLLocationDistance = 400
 
+    public var destination: CLLocationCoordinate2D! {
+        didSet {
+            clearMapView()
+
+            guard let destination = destination else { return }
+
+            addDestinationAnnotation()
+
+            if let previousDestination = oldValue,
+               CLLocation(coordinate: destination).distance(from: CLLocation(coordinate: previousDestination)) <= 1000
+            {
+                searchParkings()
+            } else {
+                calculateExpectedTravelTime { (travelTime) in
+                    DispatchQueue.main.async {
+                        if let travelTime = travelTime {
+                            self.optionsView.entranceDatePicker.date = Date() + travelTime
+                        }
+
+                        self.searchParkings()
+                    }
+                }
+            }
+        }
+    }
+
     private var annotations: [MKAnnotation] {
         var annotations: [MKAnnotation] = parkingAnnotations
 
@@ -42,8 +68,6 @@ public class ParkingSearchMapViewManager: NSObject {
     private var parkingAnnotations: [ParkingAnnotation] {
         return mapView.annotations.filter { $0 is ParkingAnnotation } as! [ParkingAnnotation]
     }
-
-    private var destination: CLLocationCoordinate2D!
 
     private let ppparkClient = PPParkClient(clientKey: "IdkUdfal673kUdj00")
 
@@ -64,11 +88,6 @@ public class ParkingSearchMapViewManager: NSObject {
 
         optionsView.entranceDatePicker.addTarget(self, action: #selector(searchParkings), for: .valueChanged)
         optionsView.timeDurationPicker.addTarget(self, action: #selector(searchParkings), for: .valueChanged)
-    }
-
-    public func setDestination(_ destionation: CLLocationCoordinate2D) {
-        self.destination = destionation
-        applyDestination()
     }
 
     public func clearMapView() {
@@ -325,4 +344,10 @@ fileprivate func regionThatContains(_ coordinates: [CLLocationCoordinate2D], cen
 
     let span = MKCoordinateSpan(latitudeDelta: maxLatitudeDifference * 2, longitudeDelta: maxLongitudeDifference * 2)
     return MKCoordinateRegion(center: center, span: span)
+}
+
+fileprivate extension CLLocation {
+    convenience init(coordinate: CLLocationCoordinate2D) {
+        self.init(latitude: coordinate.latitude, longitude: coordinate.longitude)
+    }
 }

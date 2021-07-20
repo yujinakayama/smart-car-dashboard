@@ -383,7 +383,7 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
         currentMode = .parkingSearch
 
         parkingSearchManager.preferredMaxDistanceFromDestinationToParking = Defaults.shared.preferredMaxDistanceFromDestinationToParking
-        parkingSearchManager.setDestination(destination.placemark.coordinate)
+        parkingSearchManager.destination = destination.placemark.coordinate
 
         if let officialParkingSearch = try? OfficialParkingSearch(destination: destination, webView: WebViewController.makeWebView(contentMode: .mobile)) {
             officialParkingSearch.delegate = self
@@ -402,7 +402,7 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
         currentMode = .parkingSearch
 
         parkingSearchManager.preferredMaxDistanceFromDestinationToParking = Defaults.shared.preferredMaxDistanceFromDestinationToParking
-        parkingSearchManager.setDestination(destination)
+        parkingSearchManager.destination = destination
 
         officialParkingSearch = nil
 
