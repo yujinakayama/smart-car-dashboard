@@ -97,22 +97,6 @@ public class ParkingSearchMapViewManager: NSObject {
         destinationAnnotation = nil
     }
 
-    private func applyDestination() {
-        clearMapView()
-
-        addDestinationAnnotation()
-
-        calculateExpectedTravelTime { (travelTime) in
-            DispatchQueue.main.async {
-                if let travelTime = travelTime {
-                    self.optionsView.entranceDatePicker.date = Date() + travelTime
-                }
-
-                self.searchParkings()
-            }
-        }
-    }
-
     private func addDestinationAnnotation() {
         let annotation = DestinationAnnotation()
         annotation.coordinate = destination
