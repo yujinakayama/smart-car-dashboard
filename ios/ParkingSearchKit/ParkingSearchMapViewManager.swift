@@ -15,7 +15,8 @@ public protocol ParkingSearchMapViewManagerDelegate: NSObjectProtocol {
 }
 
 public class ParkingSearchMapViewManager: NSObject {
-    static let pinAnnotationViewIdentifier = "MKPinAnnotationView"
+    static let pinAnnotationViewIdentifier = String(describing: MKPinAnnotationView.self)
+    static let parkingAnnotationViewIdentifier = String(describing: ParkingAnnotationView.self)
 
     public weak var delegate: ParkingSearchMapViewManagerDelegate?
 
@@ -85,6 +86,7 @@ public class ParkingSearchMapViewManager: NSObject {
 
     private func configureViews() {
         mapView.register(MKPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: Self.pinAnnotationViewIdentifier)
+        mapView.register(ParkingAnnotationView.self, forAnnotationViewWithReuseIdentifier: Self.parkingAnnotationViewIdentifier)
 
         optionsView.entranceDatePicker.addTarget(self, action: #selector(searchParkings), for: .valueChanged)
         optionsView.timeDurationPicker.addTarget(self, action: #selector(searchParkings), for: .valueChanged)
@@ -252,11 +254,11 @@ public class ParkingSearchMapViewManager: NSObject {
     }
 
     private func viewForParkingAnnotation(_ annotation: ParkingAnnotation) -> MKAnnotationView {
-        if let view = mapView.dequeueReusableAnnotationView(withIdentifier: "MKMarkerAnnotationView") as? ParkingAnnotationView {
+        if let view = mapView.dequeueReusableAnnotationView(withIdentifier: Self.parkingAnnotationViewIdentifier) as? ParkingAnnotationView {
             view.annotation = annotation
             return view
         } else {
-            let view = ParkingAnnotationView(annotation: annotation, reuseIdentifier: "MKMarkerAnnotationView")
+            let view = ParkingAnnotationView(annotation: annotation, reuseIdentifier: Self.parkingAnnotationViewIdentifier)
             view.callout.nameLabelControl.addInteraction(UIContextMenuInteraction(delegate: self))
             view.callout.reservationButton.addTarget(self, action: #selector(notifyDelegateOfReservationPage), for: .touchUpInside)
             return view
@@ -264,7 +266,7 @@ public class ParkingSearchMapViewManager: NSObject {
     }
 
     private func viewForDestinationAnnotation(_ annotation: MKAnnotation) -> MKAnnotationView {
-        let view = mapView.dequeueReusableAnnotationView(withIdentifier: "MKPinAnnotationView", for: annotation) as! MKPinAnnotationView
+        let view = mapView.dequeueReusableAnnotationView(withIdentifier: Self.pinAnnotationViewIdentifier, for: annotation) as! MKPinAnnotationView
         view.animatesDrop = true
         view.canShowCallout = true
         view.displayPriority = .required

@@ -12,6 +12,9 @@ import DirectionalUserLocationAnnotationView
 import ParkingSearchKit
 
 class MapsViewController: UIViewController, MKMapViewDelegate {
+    static let directionalUserLocationAnnotationViewIdentifier = String(describing: DirectionalUserLocationAnnotationView.self)
+    static let markerAnnotationViewIdentifier = String(describing: MKMarkerAnnotationView.self)
+
     lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.delegate = self
@@ -27,8 +30,8 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
         mapView.isScrollEnabled = true
         mapView.isZoomEnabled = true
 
-        mapView.register(DirectionalUserLocationAnnotationView.self, forAnnotationViewWithReuseIdentifier: "DirectionalUserLocationAnnotationView")
-        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "MKMarkerAnnotationView")
+        mapView.register(DirectionalUserLocationAnnotationView.self, forAnnotationViewWithReuseIdentifier: Self.directionalUserLocationAnnotationViewIdentifier)
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: Self.markerAnnotationViewIdentifier)
 
         mapView.addGestureRecognizer(gestureRecognizer)
 
@@ -302,9 +305,9 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
-            return mapView.dequeueReusableAnnotationView(withIdentifier: "DirectionalUserLocationAnnotationView", for: annotation)
+            return mapView.dequeueReusableAnnotationView(withIdentifier: Self.directionalUserLocationAnnotationViewIdentifier, for: annotation)
         } else if annotation is SharedLocationAnnotation {
-            let view = mapView.dequeueReusableAnnotationView(withIdentifier: "MKMarkerAnnotationView", for: annotation)
+            let view = mapView.dequeueReusableAnnotationView(withIdentifier: Self.markerAnnotationViewIdentifier, for: annotation)
             view.displayPriority = .required
             return view
         } else if currentMode == .parkingSearch {
