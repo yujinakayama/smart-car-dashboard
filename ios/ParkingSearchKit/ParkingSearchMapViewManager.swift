@@ -86,7 +86,6 @@ public class ParkingSearchMapViewManager: NSObject {
 
     private func configureViews() {
         mapView.register(MKPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: Self.pinAnnotationViewIdentifier)
-        mapView.register(ParkingAnnotationView.self, forAnnotationViewWithReuseIdentifier: Self.parkingAnnotationViewIdentifier)
 
         optionsView.entranceDatePicker.addTarget(self, action: #selector(searchParkings), for: .valueChanged)
         optionsView.timeDurationPicker.addTarget(self, action: #selector(searchParkings), for: .valueChanged)
