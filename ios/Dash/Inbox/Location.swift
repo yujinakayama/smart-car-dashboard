@@ -78,7 +78,7 @@ class Location: SharedItemProtocol {
         pointOfInterestFinder.find(completionHandler: completionHandler)
     }
 
-    private var mapItem: MKMapItem {
+    var mapItem: MKMapItem {
         let placemark = MKPlacemark(coordinate: coordinate)
 
         let mapItem = MKMapItem(placemark: placemark)

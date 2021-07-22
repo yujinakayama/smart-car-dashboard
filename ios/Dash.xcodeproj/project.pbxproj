@@ -150,6 +150,9 @@
 		B9B4F703268CB3F5009C5DC5 /* ParkingSearchURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */; };
 		B9B4F707268CB55D009C5DC5 /* RoadName.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B4F706268CB55D009C5DC5 /* RoadName.swift */; };
 		B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B717DD23E6B26900A47207 /* UnknownItem.swift */; };
+		B9BA5B5926A897CF004D5927 /* SharedLocationAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BA5B5826A897CF004D5927 /* SharedLocationAnnotationView.swift */; };
+		B9BA5B5B26A8982C004D5927 /* SharedLocationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BA5B5A26A8982C004D5927 /* SharedLocationAnnotation.swift */; };
+		B9BA5B5C26A89C83004D5927 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04662642D5FA002CD861 /* UIButtonExtension.swift */; };
 		B9BA819E2350931A00657DEB /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
 		B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */; };
 		B9BC920923250A0A006F22FC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BC920823250A0A006F22FC /* Defaults.swift */; };
@@ -544,6 +547,8 @@
 		B9B4A8992569310400FE0C9F /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		B9B4F706268CB55D009C5DC5 /* RoadName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoadName.swift; sourceTree = "<group>"; };
 		B9B717DD23E6B26900A47207 /* UnknownItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownItem.swift; sourceTree = "<group>"; };
+		B9BA5B5826A897CF004D5927 /* SharedLocationAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedLocationAnnotationView.swift; sourceTree = "<group>"; };
+		B9BA5B5A26A8982C004D5927 /* SharedLocationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedLocationAnnotation.swift; sourceTree = "<group>"; };
 		B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewCell.swift; sourceTree = "<group>"; };
 		B9BC920823250A0A006F22FC /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		B9BF2F0423F6946100967316 /* GradientPathRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientPathRenderer.swift; sourceTree = "<group>"; };
@@ -727,6 +732,8 @@
 			children = (
 				B904A2A5243968990087BD4A /* MapsViewController.swift */,
 				B9C0BF462698689B00C54BA9 /* OfficialParkingInformationWebViewController.swift */,
+				B9BA5B5A26A8982C004D5927 /* SharedLocationAnnotation.swift */,
+				B9BA5B5826A897CF004D5927 /* SharedLocationAnnotationView.swift */,
 			);
 			path = Maps;
 			sourceTree = "<group>";
@@ -796,6 +803,7 @@
 				B94215F026423A58003F94A0 /* StringExtension.swift */,
 				B92ADE7526998DE10086E4D8 /* NSRegularExpressionExtension.swift */,
 				B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */,
+				B93C04662642D5FA002CD861 /* UIButtonExtension.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1155,7 +1163,6 @@
 				B984C019263DA08D00AF79AE /* TimeDurationPicker.swift */,
 				B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */,
 				B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */,
-				B93C04662642D5FA002CD861 /* UIButtonExtension.swift */,
 				B92ADE9A269ACA4C0086E4D8 /* Logger.swift */,
 				B9DD4CCD26517F920010B120 /* Info.plist */,
 			);
@@ -2006,10 +2013,12 @@
 				B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */,
 				B9B154F82576075C0031761F /* TabBarBadgeManager.swift in Sources */,
 				B95F514C23E5B53F0063CB3D /* RemoteNotification.swift in Sources */,
+				B9BA5B5C26A89C83004D5927 /* UIButtonExtension.swift in Sources */,
 				B92ADE79269990E20086E4D8 /* NSRegularExpressionExtension.swift in Sources */,
 				B9DC5B27229D59BE00B645D5 /* ETCPaymentTableViewController.swift in Sources */,
 				B92A61112576472A0073AB7B /* Assistant.swift in Sources */,
 				B9A45A9B252C229200CA7921 /* SharedItemDatabase.swift in Sources */,
+				B9BA5B5926A897CF004D5927 /* SharedLocationAnnotationView.swift in Sources */,
 				B9BF2F0523F6946100967316 /* GradientPathRenderer.swift in Sources */,
 				B9D0260F24BF7704005C03B1 /* ClassicBluetoothManager.swift in Sources */,
 				B9B4A89A2569310400FE0C9F /* DashboardViewController.swift in Sources */,
@@ -2019,6 +2028,7 @@
 				B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */,
 				B90C297225E3FB80004466C9 /* SIMDExtension.swift in Sources */,
 				B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */,
+				B9BA5B5B26A8982C004D5927 /* SharedLocationAnnotation.swift in Sources */,
 				B99D4F2824C0526200647A10 /* BluetoothAudioDevice.swift in Sources */,
 				B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */,
 				B9640AAB2575D9E800B779AD /* Firebase.swift in Sources */,

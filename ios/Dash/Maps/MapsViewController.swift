@@ -11,9 +11,9 @@ import MapKit
 import DirectionalUserLocationAnnotationView
 import ParkingSearchKit
 
-class MapsViewController: UIViewController, MKMapViewDelegate {
+class MapsViewController: UIViewController {
     static let directionalUserLocationAnnotationViewIdentifier = String(describing: DirectionalUserLocationAnnotationView.self)
-    static let markerAnnotationViewIdentifier = String(describing: MKMarkerAnnotationView.self)
+    static let sharedLocationAnnotationViewIdentifier = String(describing: SharedLocationAnnotationView.self)
 
     lazy var mapView: MKMapView = {
         let mapView = MKMapView()
@@ -31,7 +31,6 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
         mapView.isZoomEnabled = true
 
         mapView.register(DirectionalUserLocationAnnotationView.self, forAnnotationViewWithReuseIdentifier: Self.directionalUserLocationAnnotationViewIdentifier)
-        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: Self.markerAnnotationViewIdentifier)
 
         mapView.addGestureRecognizer(gestureRecognizer)
 
@@ -303,26 +302,6 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
         startSearchingParkings(destination: coordinate)
     }
 
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MKUserLocation {
-            return mapView.dequeueReusableAnnotationView(withIdentifier: Self.directionalUserLocationAnnotationViewIdentifier, for: annotation)
-        } else if annotation is SharedLocationAnnotation {
-            let view = mapView.dequeueReusableAnnotationView(withIdentifier: Self.markerAnnotationViewIdentifier, for: annotation)
-            view.displayPriority = .required
-            return view
-        } else if currentMode == .parkingSearch {
-            return parkingSearchManager.view(for: annotation)
-        } else {
-            return nil
-        }
-    }
-
-    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        if let userLocationView = mapView.view(for: userLocation) as? DirectionalUserLocationAnnotationView {
-            userLocationView.updateDirection(animated: true)
-        }
-    }
-
     @objc func mapTypeSegmentedControlDidChange() {
         let index = MapTypeSegmentedControlIndex(rawValue: mapTypeSegmentedControl.selectedSegmentIndex)!
         mapView.mapType = index.mapType
@@ -477,19 +456,58 @@ class MapsViewController: UIViewController, MKMapViewDelegate {
         } as! [Location]
 
         sharedLocationAnnotations = recentLocations.map { (location) in
-            let annotation = SharedLocationAnnotation()
-            annotation.title = location.title
-            annotation.coordinate = location.coordinate
-            return annotation
+            return SharedLocationAnnotation(location)
         }
 
         mapView.addAnnotations(sharedLocationAnnotations)
+    }
+
+    private func viewForSharedLocationAnnotation(_ annotation: SharedLocationAnnotation) -> MKAnnotationView {
+        if let view = mapView.dequeueReusableAnnotationView(withIdentifier: Self.sharedLocationAnnotationViewIdentifier) as? SharedLocationAnnotationView {
+            view.annotation = annotation
+            return view
+        } else {
+            let view = SharedLocationAnnotationView(annotation: annotation, reuseIdentifier: Self.sharedLocationAnnotationViewIdentifier)
+            view.callout.departureButton.addTarget(self, action: #selector(openDirectionsInMapsForSelectedSharedLocationAnnotation), for: .touchUpInside)
+            view.callout.parkingSearchButton.addTarget(self, action: #selector(startSearchingParkingsForSelectedSharedLocationAnnotation), for: .touchUpInside)
+            return view
+        }
+    }
+
+    @objc func openDirectionsInMapsForSelectedSharedLocationAnnotation() {
+        guard let location = (mapView.selectedAnnotations.first as? SharedLocationAnnotation)?.location else { return }
+        location.open(from: self)
+    }
+
+    @objc func startSearchingParkingsForSelectedSharedLocationAnnotation() {
+        guard let location = (mapView.selectedAnnotations.first as? SharedLocationAnnotation)?.location else { return }
+        startSearchingParkings(destination: location.mapItem)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         changePlacementOfParkingSearchOptionsSheetViewIfNeeded()
         changePlacementOfOfficialParkingSearchStatusViewIfNeeded()
+    }
+}
+
+extension MapsViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return mapView.dequeueReusableAnnotationView(withIdentifier: Self.directionalUserLocationAnnotationViewIdentifier, for: annotation)
+        } else if let annotation = annotation as? SharedLocationAnnotation {
+            return viewForSharedLocationAnnotation(annotation)
+        } else if currentMode == .parkingSearch {
+            return parkingSearchManager.view(for: annotation)
+        } else {
+            return nil
+        }
+    }
+
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        if let userLocationView = mapView.view(for: userLocation) as? DirectionalUserLocationAnnotationView {
+            userLocationView.updateDirection(animated: true)
+        }
     }
 }
 
@@ -595,7 +613,4 @@ extension MapsViewController: TabReselectionRespondable {
     func tabBarControllerDidReselectAlreadyVisibleTab(_ tabBarController: UITabBarController) {
         mapView.setUserTrackingMode(.follow, animated: true)
     }
-}
-
-fileprivate class SharedLocationAnnotation: MKPointAnnotation {
 }
