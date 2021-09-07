@@ -32,24 +32,19 @@ class RoadName: Equatable {
     }
 
     var popularName: String? {
-        return popularNames.first
+        return popularNames.first?.covertFullwidthAlphanumericsToHalfwidth()
     }
 
     var popularNames: [String] {
-        guard let road = road, let rawPopularName = road.popularName else { return [] }
-
-        // Some roads have popular name properly containing multiple names (e.g. "目黒通り;東京都道312号白金台町等々力線")
-        let rawPopularNames = rawPopularName.split(separator: ";").map { (name) in
-            return String(name).covertFullwidthAlphanumericsToHalfwidth()
-        }
+        guard let road = road else { return [] }
 
         if let routeNumber = road.routeNumber {
             // Some roads have popular name only with route number (e.g. Popular name "123" for 国道123号),
             // which is redundant and meaningless.
             let redundantName = String(routeNumber)
-            return rawPopularNames.filter { $0 != redundantName }
+            return road.popularNames.filter { $0 != redundantName }
         } else {
-            return rawPopularNames
+            return road.popularNames
         }
     }
 

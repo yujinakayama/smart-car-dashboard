@@ -131,7 +131,7 @@ extension OpenCage {
         let trafficSide: TrafficSide?
         let isOneWay: Bool?
         let isTollRoad: Bool?
-        let popularName: String?
+        let popularNames: [String]
         let numberOfLanes: Int?
         let routeNumber: Int? // e.g. 1 for Route 1
         let identifier: String? // e.g. "E1" for Tomei Expressway
@@ -147,10 +147,11 @@ extension OpenCage {
             isOneWay = try values.decodeIfPresent(String.self, forKey: .isOneWay).map { $0 == "yes" }
             isTollRoad = try values.decodeIfPresent(String.self, forKey: .isTollRoad).map { $0 == "yes" }
 
-            if let popularName = try values.decodeIfPresent(String.self, forKey: .popularName), popularName != "unnamed road" {
-                self.popularName = popularName
+            if let popularNameText = try values.decodeIfPresent(String.self, forKey: .popularName), popularNameText != "unnamed road" {
+                // Some roads have popular name property containing multiple names (e.g. "目黒通り;東京都道312号白金台町等々力線")
+                popularNames = popularNameText.split(separator: ";").map { String($0) }
             } else {
-                popularName = nil
+                popularNames = []
             }
 
             numberOfLanes = try values.decodeIfPresent(Int.self, forKey: .numberOfLanes)
