@@ -155,12 +155,13 @@ extension OpenCage {
 
             numberOfLanes = try values.decodeIfPresent(Int.self, forKey: .numberOfLanes)
 
-            do {
-                routeNumber = try values.decodeIfPresent(Int.self, forKey: .roadReference)
+            if let referenceText = try? values.decodeIfPresent(String.self, forKey: .roadReference) {
+                let references = referenceText.split(separator: ";").map({ String($0) })
+                routeNumber = references.first { Int($0) != nil }.map { Int($0)! }
+                identifier = references.first { Int($0) == nil }
+            } else {
                 identifier = nil
-            } catch {
                 routeNumber = nil
-                identifier = try? values.decodeIfPresent(String.self, forKey: .roadReference)
             }
 
             roadType = try? values.decodeIfPresent(RoadType.self, forKey: .roadType)
