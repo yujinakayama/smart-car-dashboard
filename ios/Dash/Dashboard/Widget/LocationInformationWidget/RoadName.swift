@@ -32,20 +32,20 @@ class RoadName: Equatable {
     }
 
     var popularName: String? {
-        return popularNames.first?.covertFullwidthAlphanumericsToHalfwidth()
+        return popularNames.first
     }
 
     var popularNames: [String] {
         guard let road = road else { return [] }
 
-        if let routeNumber = road.routeNumber {
-            // Some roads have popular name only with route number (e.g. Popular name "123" for 国道123号),
-            // which is redundant and meaningless.
-            let redundantName = String(routeNumber)
-            return road.popularNames.filter { $0 != redundantName }
-        } else {
-            return road.popularNames
-        }
+        let popularNames = road.popularNames.map { $0.covertFullwidthAlphanumericsToHalfwidth() }
+
+        guard let routeNumber = road.routeNumber else { return popularNames }
+
+        // Some roads have popular name only with route number (e.g. Popular name "123" for 国道123号),
+        // which is redundant and meaningless.
+        let redundantNames = [String(routeNumber), canonicalRoadName].compactMap { $0 }
+        return road.popularNames.filter { !redundantNames.contains($0) }
     }
 
     var canonicalRoadName: String? {
