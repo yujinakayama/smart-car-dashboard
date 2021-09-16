@@ -79,7 +79,7 @@ class MapsViewController: UIViewController {
 
         stackView.axis = .horizontal
         stackView.alignment = .fill
-        stackView.distribution = .equalSpacing
+        stackView.distribution = .fill
         stackView.spacing = 8
 
         let sheetView = SheetView()
