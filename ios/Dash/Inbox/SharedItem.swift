@@ -33,7 +33,7 @@ extension SharedItemProtocol {
         firebaseDocument?.updateData(["hasBeenOpened": true])
     }
 
-    func openInOtherApp() {
+    func openInDefaultApp() {
         UIApplication.shared.open(url, options: [:])
     }
 

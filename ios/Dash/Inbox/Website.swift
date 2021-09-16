@@ -22,7 +22,7 @@ class Website: SharedItemProtocol {
 
     func open(from viewController: UIViewController?) {
         markAsOpened()
-        openInOtherApp()
+        openInDefaultApp()
     }
 
     func openSecondarily(from viewController: UIViewController?) {

@@ -34,12 +34,12 @@ class MusicItem: SharedItemProtocol {
         if let playParameters = playParameters {
             play(playParameters: playParameters)
         } else {
-            openInOtherApp()
+            openInDefaultApp()
         }
     }
 
     func openSecondarily(from viewController: UIViewController?) {
-        openInOtherApp()
+        openInDefaultApp()
     }
 
     func artworkURL(size: CGSize) -> URL? {
