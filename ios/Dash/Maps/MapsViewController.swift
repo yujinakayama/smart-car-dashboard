@@ -175,6 +175,9 @@ class MapsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // https://developer.apple.com/forums/thread/682420
+        navigationItem.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
+
         navigationItem.largeTitleDisplayMode = .never
 
         locationManager.requestWhenInUseAuthorization()
