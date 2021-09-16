@@ -86,7 +86,16 @@ class WebViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // https://developer.apple.com/forums/thread/682420
+        navigationItem.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
+
+        if let toolbar = navigationController?.toolbar {
+            toolbar.scrollEdgeAppearance = toolbar.standardAppearance
+        }
+
         navigationItem.rightBarButtonItem = doneBarButtonItem
+
         addWebView()
     }
 

@@ -38,8 +38,8 @@ import UIKit
 
     private var heightConstraint: NSLayoutConstraint?
 
-    private let fontMetrics = UIFontMetrics(forTextStyle: .title2)
-    private lazy var font = fontMetrics.scaledFont(for: UIFont.monospacedDigitSystemFont(ofSize: 23, weight: .regular))
+    private lazy var fontMetrics = UIFontMetrics(forTextStyle: .body)
+    private lazy var font = UIFont.preferredFont(forTextStyle: .body)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -124,7 +124,7 @@ import UIKit
     }
 
     private var rowHeight: CGFloat {
-        return fontMetrics.scaledValue(for: 35)
+        return fontMetrics.scaledValue(for: 33)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
