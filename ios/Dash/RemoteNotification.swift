@@ -58,7 +58,7 @@ struct ShareNotification {
 
     private func open() throws {
         let item = try SharedItem.makeItem(dictionary: self.itemDictionary)
-        item.open(from: nil)
+        item.open()
 
         Firebase.shared.sharedItemDatabase?.findItem(identifier: item.identifier) { (item, error) in
             if let error = error {

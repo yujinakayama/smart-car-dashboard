@@ -35,7 +35,7 @@ class Location: SharedItemProtocol {
         return name
     }
 
-    func open(from viewController: UIViewController?) {
+    func open() {
         markAsOpened()
 
         getNormalizedMapItem { (mapItem) in
@@ -43,24 +43,6 @@ class Location: SharedItemProtocol {
                 MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
             ])
         }
-    }
-
-    func openSecondarily(from viewController: UIViewController?) {
-        guard let viewController = viewController ?? rootViewController else { return }
-
-        markAsOpened()
-
-        let mapsViewController = MapsViewController()
-        mapsViewController.showsRecentSharedLocations = false
-        mapsViewController.parkingSearchQuittingButton.isHidden = true
-
-        if let navigationController = viewController.navigationController {
-            navigationController.pushViewController(mapsViewController, animated: true)
-        } else {
-            viewController.present(mapsViewController, animated: true)
-        }
-
-        mapsViewController.startSearchingParkings(destination: mapItem)
     }
 
     private func getNormalizedMapItem(completion: @escaping (MKMapItem) -> Void) {

@@ -64,7 +64,7 @@ extension Assistant {
             guard let database = Firebase.shared.sharedItemDatabase else { return }
             let unopenedLocations = database.items.filter { $0 is Location && !$0.hasBeenOpened && ($0.creationDate ?? Date()) > newItemThresholdTime }
             guard unopenedLocations.count == 1, let location = unopenedLocations.first else { return }
-            location.open(from: nil)
+            location.open()
 
             finished = true
         }

@@ -28,7 +28,7 @@ class MusicItem: SharedItemProtocol {
         return name
     }
 
-    func open(from viewController: UIViewController?) {
+    func open() {
         markAsOpened()
 
         if let playParameters = playParameters {
@@ -36,10 +36,6 @@ class MusicItem: SharedItemProtocol {
         } else {
             openInDefaultApp()
         }
-    }
-
-    func openSecondarily(from viewController: UIViewController?) {
-        openInDefaultApp()
     }
 
     func artworkURL(size: CGSize) -> URL? {

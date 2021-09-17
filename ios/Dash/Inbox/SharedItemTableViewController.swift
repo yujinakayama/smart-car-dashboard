@@ -29,13 +29,6 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         return isViewLoaded && view.window != nil
     }
 
-    lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
-        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(tableViewDidRecognizeLongPress))
-        gestureRecognizer.minimumPressDuration = 0.75
-        gestureRecognizer.allowableMovement = 20 // Allow some movement for shaky vehicle environment
-        return gestureRecognizer
-    }()
-
     private var sharedItemDatabaseObservation: NSKeyValueObservation?
 
     private var pendingUpdate: SharedItemDatabase.Update?
@@ -44,7 +37,6 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         super.viewDidLoad()
 
         tableView.dataSource = dataSource
-        tableView.addGestureRecognizer(longPressGestureRecognizer)
 
         sharedItemDatabaseObservation = Firebase.shared.observe(\.sharedItemDatabase, options: .initial) { [weak self] (firbase, change) in
             self?.sharedItemDatabaseDidChange()
@@ -148,19 +140,31 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         guard !tableView.isEditing else { return }
 
         let item = dataSource.item(for: indexPath)
-        item.open(from: self)
+        item.open()
 
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
         }
     }
 
-    @objc func tableViewDidRecognizeLongPress(gestureRecognizer: UIGestureRecognizer) {
-        guard gestureRecognizer.state == .began else { return }
-        let point = gestureRecognizer.location(in: tableView)
-        guard let indexPath = tableView.indexPathForRow(at: point) else { return }
-        let item = self.item(for: indexPath)
-        item.openSecondarily(from: self)
+    override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+
+        let actionProvider: UIContextMenuActionProvider = { [weak self] (suggestedActions) in
+            guard let self = self else { return UIMenu() }
+
+            switch self.item(for: indexPath) {
+            case let location as Location:
+                return self.actionMenu(for: location)
+            case let musicItem as MusicItem:
+                return self.actionMenu(for: musicItem)
+            case let website as Website:
+                return self.actionMenu(for: website)
+            default:
+                return UIMenu()
+            }
+        }
+
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: actionProvider)
     }
 
     func item(for indexPath: IndexPath) -> SharedItemProtocol {
@@ -174,5 +178,52 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         let activityViewController = UIActivityViewController(activityItems: [pairingURLItem], applicationActivities: nil)
         activityViewController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(activityViewController, animated: true)
+    }
+}
+
+private extension SharedItemTableViewController {
+    func actionMenu(for location: Location) -> UIMenu {
+        return UIMenu(children: [
+            UIAction(title: "Search Nearby Parkings", image: UIImage(systemName: "parkingsign")) { [weak self] (action) in
+                guard let self = self else { return }
+
+                location.markAsOpened()
+
+                let mapsViewController = MapsViewController()
+                mapsViewController.showsRecentSharedLocations = false
+                mapsViewController.parkingSearchQuittingButton.isHidden = true
+
+                self.navigationController?.pushViewController(mapsViewController, animated: true)
+
+                mapsViewController.startSearchingParkings(destination: location.mapItem)
+            }
+        ])
+    }
+
+    func actionMenu(for musicItem: MusicItem) -> UIMenu {
+        return UIMenu(children: [
+            UIAction(title: "Show in Apple Music", image: UIImage(systemName: "music.note")) { (action) in
+                musicItem.markAsOpened()
+                UIApplication.shared.open(musicItem.url)
+            }
+        ])
+    }
+
+    func actionMenu(for website: Website) -> UIMenu {
+        return UIMenu(children: [
+            UIAction(title: "Open in In-App Browser", image: UIImage(systemName: "eye")) { [weak self] (action) in
+                guard let self = self else { return }
+
+                website.markAsOpened()
+
+                let webViewController = WebViewController()
+                webViewController.navigationItem.title = website.title
+                webViewController.loadPage(url: website.url)
+
+                let navigationController = UINavigationController(rootViewController: webViewController)
+                navigationController.isToolbarHidden = false
+                self.present(navigationController, animated: true)
+            }
+        ])
     }
 }
