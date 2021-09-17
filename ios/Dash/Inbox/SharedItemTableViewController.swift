@@ -16,8 +16,14 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
     lazy var dataSource = SharedItemTableViewDataSource(tableView: tableView) { [weak self] (tableView, indexPath, itemIdentifier) in
         guard let self = self else { return nil }
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "SharedItemTableViewCell",for: indexPath) as! SharedItemTableViewCell
         cell.item = self.item(for: indexPath)
+
+        if cell.parkingSearchButton.actions(forTarget: self, forControlEvent: .touchUpInside) == nil {
+            cell.parkingSearchButton.addTarget(self, action: #selector(self.parkingSearchButtonTapped), for: .touchUpInside)
+        }
+
         return cell
     }
 
@@ -147,6 +153,22 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         }
     }
 
+    @objc func parkingSearchButtonTapped(button: UIButton) {
+        var view: UIView = button
+
+        while let superview = view.superview {
+            if let cell = superview as? SharedItemTableViewCell {
+                if let location = cell.item as? Location {
+                    location.markAsOpened()
+                    pushMapsViewControllerForParkingSearch(location: location)
+                }
+                return
+            }
+
+            view = superview
+        }
+    }
+
     override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 
         let actionProvider: UIContextMenuActionProvider = { [weak self] (suggestedActions) in
@@ -171,6 +193,16 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         return dataSource.item(for: indexPath)
     }
 
+    func pushMapsViewControllerForParkingSearch(location: Location) {
+        let mapsViewController = MapsViewController()
+        mapsViewController.showsRecentSharedLocations = false
+        mapsViewController.parkingSearchQuittingButton.isHidden = true
+
+        self.navigationController?.pushViewController(mapsViewController, animated: true)
+
+        mapsViewController.startSearchingParkings(destination: location.mapItem)
+    }
+
     func sharePairingURL() {
         guard let vehicleID = authentication.vehicleID else { return }
 
@@ -186,16 +218,8 @@ private extension SharedItemTableViewController {
         return UIMenu(children: [
             UIAction(title: "Search Nearby Parkings", image: UIImage(systemName: "parkingsign")) { [weak self] (action) in
                 guard let self = self else { return }
-
                 location.markAsOpened()
-
-                let mapsViewController = MapsViewController()
-                mapsViewController.showsRecentSharedLocations = false
-                mapsViewController.parkingSearchQuittingButton.isHidden = true
-
-                self.navigationController?.pushViewController(mapsViewController, animated: true)
-
-                mapsViewController.startSearchingParkings(destination: location.mapItem)
+                self.pushMapsViewControllerForParkingSearch(location: location)
             },
             UIAction(title: "Get Directions in Google Maps", image: UIImage(systemName: "g.circle.fill")) { (action) in
                 location.markAsOpened()

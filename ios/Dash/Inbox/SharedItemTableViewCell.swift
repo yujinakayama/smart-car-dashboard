@@ -21,6 +21,7 @@ class SharedItemTableViewCell: UITableViewCell {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
+    @IBOutlet weak var actionStackView: UIStackView!
     @IBOutlet weak var openedStatusView: UIView!
 
     @IBOutlet weak var iconImageViewSmallWidthConstraint: NSLayoutConstraint!
@@ -28,10 +29,26 @@ class SharedItemTableViewCell: UITableViewCell {
 
     @IBOutlet var iconImageViewNoMarginConstraints: [NSLayoutConstraint]!
 
+    let parkingSearchButton: UIButton = {
+        let fontMetrics = UIFontMetrics(forTextStyle: .subheadline)
+        let font = fontMetrics.scaledFont(for: .boldSystemFont(ofSize: 15))
+
+        var configuration = UIButton.Configuration.gray()
+        configuration.buttonSize = .small
+        configuration.cornerStyle = .capsule
+        configuration.attributedTitle = AttributedString("駐車場検索", attributes: .init([.font: font]))
+
+        let button = UIButton(configuration: configuration)
+        button.setContentHuggingPriority(.required, for: .horizontal)
+        return button
+    }()
+
     var defaultIconCornerRadius: CGFloat!
 
     override func awakeFromNib() {
         defaultIconCornerRadius = iconBackgroundView.cornerRadius
+
+        actionStackView.addArrangedSubview(parkingSearchButton)
 
         // Not sure why but constraints are reset to Storyboard's state when app goes background and back to foreground
         // https://stackoverflow.com/questions/58376388/constraints-resets-when-app-is-going-in-background-ios-13
@@ -66,6 +83,7 @@ class SharedItemTableViewCell: UITableViewCell {
                 configureView(for: item)
             }
 
+            actionStackView.isHidden = actionStackView.arrangedSubviews.allSatisfy { $0.isHidden }
             openedStatusView.isHidden = item?.hasBeenOpened ?? true
         }
     }
@@ -77,6 +95,8 @@ class SharedItemTableViewCell: UITableViewCell {
 
         nameLabel.text = location.name
         detailLabel.text = location.formattedAddress ?? location.address.country
+
+        parkingSearchButton.isHidden = false
     }
 
     private func configureView(for musicItem: MusicItem) {
@@ -94,6 +114,8 @@ class SharedItemTableViewCell: UITableViewCell {
 
         nameLabel.text = musicItem.name
         detailLabel.text = musicItem.creator
+
+        parkingSearchButton.isHidden = true
     }
 
     private func configureView(for website: Website) {
@@ -111,6 +133,8 @@ class SharedItemTableViewCell: UITableViewCell {
 
         nameLabel.text = website.title ?? website.url.absoluteString
         detailLabel.text = website.url.host
+
+        parkingSearchButton.isHidden = true
     }
 
     private func configureView(for unknownItem: SharedItemProtocol?) {
@@ -120,6 +144,8 @@ class SharedItemTableViewCell: UITableViewCell {
 
         nameLabel.text = "不明なアイテム"
         detailLabel.text = unknownItem?.url.absoluteString
+
+        parkingSearchButton.isHidden = true
     }
 
     private func setRemoteImage(url: URL, completionHandler: ((Error?) -> Void)? = nil) {
