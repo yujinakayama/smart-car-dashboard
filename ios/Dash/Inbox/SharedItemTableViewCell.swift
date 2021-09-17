@@ -86,8 +86,11 @@ class SharedItemTableViewCell: UITableViewCell {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
+
         // The unintentional constraints reset also happens when changing to dark mode
         setNeedsUpdateConstraints()
+
+        updateActionButtonVisibility()
     }
 
     var item: SharedItemProtocol? {
@@ -105,7 +108,8 @@ class SharedItemTableViewCell: UITableViewCell {
                 configureView(for: item)
             }
 
-            actionStackView.isHidden = actionStackView.arrangedSubviews.allSatisfy { $0.isHidden }
+            updateActionButtonVisibility()
+
             openStatusView.isHidden = item?.hasBeenOpened ?? true
         }
     }
@@ -117,8 +121,6 @@ class SharedItemTableViewCell: UITableViewCell {
 
         nameLabel.text = location.name
         detailLabel.text = location.formattedAddress ?? location.address.country
-
-        parkingSearchButton.isHidden = false
     }
 
     private func configureView(for musicItem: MusicItem) {
@@ -136,8 +138,6 @@ class SharedItemTableViewCell: UITableViewCell {
 
         nameLabel.text = musicItem.name
         detailLabel.text = musicItem.creator
-
-        parkingSearchButton.isHidden = true
     }
 
     private func configureView(for website: Website) {
@@ -155,8 +155,6 @@ class SharedItemTableViewCell: UITableViewCell {
 
         nameLabel.text = website.title ?? website.url.absoluteString
         detailLabel.text = website.url.host
-
-        parkingSearchButton.isHidden = true
     }
 
     private func configureView(for unknownItem: SharedItemProtocol?) {
@@ -166,8 +164,6 @@ class SharedItemTableViewCell: UITableViewCell {
 
         nameLabel.text = "不明なアイテム"
         detailLabel.text = unknownItem?.url.absoluteString
-
-        parkingSearchButton.isHidden = true
     }
 
     private func setRemoteImage(url: URL, completionHandler: ((Error?) -> Void)? = nil) {
@@ -189,6 +185,13 @@ class SharedItemTableViewCell: UITableViewCell {
                 completionHandler?(result.error)
             }
         }
+    }
+
+    private func updateActionButtonVisibility() {
+        let visible = item is Location && traitCollection.horizontalSizeClass != .compact
+        parkingSearchButton.isHidden = !visible
+
+        actionStackView.isHidden = actionStackView.arrangedSubviews.allSatisfy { $0.isHidden }
     }
 
     private var iconType: IconType = .template {
