@@ -76,6 +76,19 @@ class Location: SharedItemProtocol {
         return components.url!
     }
 
+    var yahooCarNaviURL: URL {
+        // https://note.com/yahoo_carnavi/n/n1d6b819a816c
+        var components = URLComponents(string: "yjcarnavi://navi/select")!
+
+        components.queryItems = [
+            URLQueryItem(name: "lat", value: "\(coordinate.latitude)"),
+            URLQueryItem(name: "lon", value: "\(coordinate.longitude)"),
+            URLQueryItem(name: "name", value: name)
+        ]
+
+        return components.url!
+    }
+
     class PointOfInterestFinder {
         static let cache = Cache(name: "PointOfInterestFinder", ageLimit: 60 * 60 * 24 * 7) // 7 days
 

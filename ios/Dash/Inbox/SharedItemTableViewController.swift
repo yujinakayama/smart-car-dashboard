@@ -200,6 +200,10 @@ private extension SharedItemTableViewController {
             UIAction(title: "Get Directions in Google Maps", image: UIImage(systemName: "g.circle.fill")) { (action) in
                 location.markAsOpened()
                 UIApplication.shared.open(location.googleMapsDirectionsURL)
+            },
+            UIAction(title: "Get Directions in Yahoo!カーナビ", image: UIImage(systemName: "y.circle.fill")) { (action) in
+                location.markAsOpened()
+                UIApplication.shared.open(location.yahooCarNaviURL)
             }
         ])
     }
