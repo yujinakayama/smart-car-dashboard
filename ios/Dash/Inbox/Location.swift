@@ -68,6 +68,14 @@ class Location: SharedItemProtocol {
         return mapItem
     }
 
+    var googleMapsDirectionsURL: URL {
+        // https://developers.google.com/maps/documentation/urls/get-started#directions-action
+        var components = URLComponents(string: "https://www.google.com/maps/dir/?api=1")!
+        components.queryItems?.append(URLQueryItem(name: "destination", value: "\(coordinate.latitude),\(coordinate.longitude)"))
+        components.queryItems?.append(URLQueryItem(name: "travelmode", value: "driving"))
+        return components.url!
+    }
+
     class PointOfInterestFinder {
         static let cache = Cache(name: "PointOfInterestFinder", ageLimit: 60 * 60 * 24 * 7) // 7 days
 

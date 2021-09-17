@@ -196,6 +196,10 @@ private extension SharedItemTableViewController {
                 self.navigationController?.pushViewController(mapsViewController, animated: true)
 
                 mapsViewController.startSearchingParkings(destination: location.mapItem)
+            },
+            UIAction(title: "Get Directions in Google Maps", image: UIImage(systemName: "g.circle.fill")) { (action) in
+                location.markAsOpened()
+                UIApplication.shared.open(location.googleMapsDirectionsURL)
             }
         ])
     }
