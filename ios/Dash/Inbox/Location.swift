@@ -35,7 +35,7 @@ class Location: SharedItemProtocol {
         return name
     }
 
-    func open(from viewController: UIViewController?) {
+    func open() {
         markAsOpened()
 
         getNormalizedMapItem { (mapItem) in
@@ -43,24 +43,6 @@ class Location: SharedItemProtocol {
                 MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
             ])
         }
-    }
-
-    func openSecondarily(from viewController: UIViewController?) {
-        guard let viewController = viewController ?? rootViewController else { return }
-
-        markAsOpened()
-
-        let mapsViewController = MapsViewController()
-        mapsViewController.showsRecentSharedLocations = false
-        mapsViewController.parkingSearchQuittingButton.isHidden = true
-
-        if let navigationController = viewController.navigationController {
-            navigationController.pushViewController(mapsViewController, animated: true)
-        } else {
-            viewController.present(mapsViewController, animated: true)
-        }
-
-        mapsViewController.startSearchingParkings(destination: mapItem)
     }
 
     private func getNormalizedMapItem(completion: @escaping (MKMapItem) -> Void) {
@@ -84,6 +66,27 @@ class Location: SharedItemProtocol {
         let mapItem = MKMapItem(placemark: placemark)
         mapItem.name = name
         return mapItem
+    }
+
+    var googleMapsDirectionsURL: URL {
+        // https://developers.google.com/maps/documentation/urls/get-started#directions-action
+        var components = URLComponents(string: "https://www.google.com/maps/dir/?api=1")!
+        components.queryItems?.append(URLQueryItem(name: "destination", value: "\(coordinate.latitude),\(coordinate.longitude)"))
+        components.queryItems?.append(URLQueryItem(name: "travelmode", value: "driving"))
+        return components.url!
+    }
+
+    var yahooCarNaviURL: URL {
+        // https://note.com/yahoo_carnavi/n/n1d6b819a816c
+        var components = URLComponents(string: "yjcarnavi://navi/select")!
+
+        components.queryItems = [
+            URLQueryItem(name: "lat", value: "\(coordinate.latitude)"),
+            URLQueryItem(name: "lon", value: "\(coordinate.longitude)"),
+            URLQueryItem(name: "name", value: name)
+        ]
+
+        return components.url!
     }
 
     class PointOfInterestFinder {

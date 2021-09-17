@@ -21,12 +21,8 @@ class UnknownItem: SharedItemProtocol {
         return nil
     }
 
-    func open(from viewController: UIViewController?) {
+    func open() {
         markAsOpened()
-        openInOtherApp()
-    }
-
-    func openSecondarily(from viewController: UIViewController?) {
-        openInInAppBrowser(from: viewController)
+        openInDefaultApp()
     }
 }

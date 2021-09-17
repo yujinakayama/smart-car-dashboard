@@ -20,33 +20,16 @@ protocol SharedItemProtocol: Decodable {
     var url: URL { get }
     var creationDate: Date? { get }
     var hasBeenOpened: Bool { get }
-    func open(from viewController: UIViewController?)
-    func openSecondarily(from viewController: UIViewController?)
+    func open()
 }
 
 extension SharedItemProtocol {
-    var rootViewController: UIViewController? {
-        return UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController
-    }
-
     func markAsOpened() {
         firebaseDocument?.updateData(["hasBeenOpened": true])
     }
 
-    func openInOtherApp() {
+    func openInDefaultApp() {
         UIApplication.shared.open(url, options: [:])
-    }
-
-    func openInInAppBrowser(from viewController: UIViewController?) {
-        guard let viewController = viewController ?? rootViewController else { return }
-
-        let webViewController = WebViewController()
-        webViewController.navigationItem.title = title
-        webViewController.loadPage(url: url)
-
-        let navigationController = UINavigationController(rootViewController: webViewController)
-        navigationController.isToolbarHidden = false
-        viewController.present(navigationController, animated: true)
     }
 
     func delete() {
