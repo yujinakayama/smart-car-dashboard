@@ -24,7 +24,6 @@ class SharedItemTableViewDataSource: UITableViewDiffableDataSource<Date, String>
 
     override init(tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<Date, String>.CellProvider) {
         super.init(tableView: tableView, cellProvider: cellProvider)
-        defaultRowAnimation = .left
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection sectionIndex: Int) -> String? {
