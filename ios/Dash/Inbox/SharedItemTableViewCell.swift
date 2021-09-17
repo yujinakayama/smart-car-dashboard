@@ -22,7 +22,12 @@ class SharedItemTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var actionStackView: UIStackView!
-    @IBOutlet weak var openedStatusView: UIView!
+
+    let openStatusView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBlue
+        return view
+    }()
 
     @IBOutlet weak var iconImageViewSmallWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var iconImageViewSmallHeightConstraint: NSLayoutConstraint!
@@ -48,6 +53,8 @@ class SharedItemTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         defaultIconCornerRadius = iconBackgroundView.cornerRadius
 
+        addOpenStatusView()
+
         actionStackView.addArrangedSubview(parkingSearchButton)
 
         // Not sure why but constraints are reset to Storyboard's state when app goes background and back to foreground
@@ -55,6 +62,21 @@ class SharedItemTableViewCell: UITableViewCell {
         NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { [weak self] (notification) in
             self?.setNeedsUpdateConstraints()
         }
+    }
+
+    private func addOpenStatusView() {
+        // We add openStatusView to UITableViewCell itself rather than its contentView
+        // so that openStatusView won't be indented in editing mode.
+        addSubview(openStatusView)
+
+        openStatusView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            openStatusView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            openStatusView.widthAnchor.constraint(equalToConstant: 4),
+            openStatusView.topAnchor.constraint(equalTo: topAnchor),
+            bottomAnchor.constraint(equalTo: openStatusView.bottomAnchor)
+        ])
     }
 
     override func prepareForReuse() {
@@ -84,7 +106,7 @@ class SharedItemTableViewCell: UITableViewCell {
             }
 
             actionStackView.isHidden = actionStackView.arrangedSubviews.allSatisfy { $0.isHidden }
-            openedStatusView.isHidden = item?.hasBeenOpened ?? true
+            openStatusView.isHidden = item?.hasBeenOpened ?? true
         }
     }
 

@@ -1041,27 +1041,12 @@
                                                 </stackView>
                                             </subviews>
                                         </stackView>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Ja-Em-cWy" customClass="BorderedView" customModule="Dash" customModuleProvider="target">
-                                            <rect key="frame" x="321" y="31.5" width="10" height="10"/>
-                                            <color key="backgroundColor" systemColor="systemBlueColor"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="10" id="U0h-Oh-vB3"/>
-                                                <constraint firstAttribute="height" constant="10" id="Upp-5K-dTi"/>
-                                            </constraints>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <real key="value" value="5"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                        </view>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="TEY-tT-jg3" firstAttribute="leading" secondItem="Veg-iI-dCl" secondAttribute="leadingMargin" id="A7T-Q3-MU8"/>
                                         <constraint firstItem="TEY-tT-jg3" firstAttribute="top" secondItem="Veg-iI-dCl" secondAttribute="topMargin" id="Afj-c0-mAe"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="TEY-tT-jg3" secondAttribute="trailing" id="DIe-0b-Ejq"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="TEY-tT-jg3" secondAttribute="bottom" id="TZE-rC-WQt"/>
-                                        <constraint firstItem="0Ja-Em-cWy" firstAttribute="centerY" secondItem="Veg-iI-dCl" secondAttribute="centerY" id="YdK-p6-mvz"/>
-                                        <constraint firstAttribute="trailing" secondItem="0Ja-Em-cWy" secondAttribute="trailing" constant="12" id="kc9-bv-Xa9"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <inset key="separatorInset" minX="74" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -1073,7 +1058,6 @@
                                     <outlet property="iconImageViewSmallHeightConstraint" destination="ITp-Cy-5is" id="1Qb-1L-WHw"/>
                                     <outlet property="iconImageViewSmallWidthConstraint" destination="Ohc-pu-hHY" id="HNV-ab-ww7"/>
                                     <outlet property="nameLabel" destination="bnC-nn-FyW" id="SI8-bq-Ajy"/>
-                                    <outlet property="openedStatusView" destination="0Ja-Em-cWy" id="bwe-m9-J6X"/>
                                     <outletCollection property="iconImageViewNoMarginConstraints" destination="aBC-dv-Yj7" collectionClass="NSMutableArray" id="qh4-8l-pdC"/>
                                     <outletCollection property="iconImageViewNoMarginConstraints" destination="0k6-ZG-WsE" collectionClass="NSMutableArray" id="vBy-8r-6l6"/>
                                     <outletCollection property="iconImageViewNoMarginConstraints" destination="Ebn-DM-RCS" collectionClass="NSMutableArray" id="7nS-tt-68f"/>
