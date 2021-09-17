@@ -38,17 +38,21 @@ class Location: SharedItemProtocol {
     func open() {
         markAsOpened()
 
-        getNormalizedMapItem { (mapItem) in
-            mapItem.openInMaps(launchOptions: [
-                MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
-            ])
+        if Defaults.shared.snapLocationToPointOfInterest {
+            findCorrespondingPointOfInterest { [weak self] (pointOfInterestMapItem) in
+                guard let self = self else { return }
+                let mapItem = pointOfInterestMapItem ?? self.mapItem
+                self.openDirectionsInMaps(mapItem)
+            }
+        } else {
+            openDirectionsInMaps(mapItem)
         }
     }
 
-    private func getNormalizedMapItem(completion: @escaping (MKMapItem) -> Void) {
-        findCorrespondingPointOfInterest() { (pointOfInterest) in
-            completion(pointOfInterest ?? self.mapItem)
-        }
+    private func openDirectionsInMaps(_ mapItem: MKMapItem) {
+        mapItem.openInMaps(launchOptions: [
+            MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
+        ])
     }
 
     private func findCorrespondingPointOfInterest(completionHandler: @escaping (MKMapItem?) -> Void) {
