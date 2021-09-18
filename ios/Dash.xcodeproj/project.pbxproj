@@ -531,6 +531,8 @@
 		B99356E722A9553A00BA08AB /* MockSerialPort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSerialPort.swift; sourceTree = "<group>"; };
 		B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCPaymentTableViewCell.swift; sourceTree = "<group>"; };
 		B9989E3D23E8752100FAFD06 /* Share.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Share.wav; sourceTree = "<group>"; };
+		B99C696426F59CCD0064162D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		B99C696526F59CCD0064162D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		B99D4F2724C0526200647A10 /* BluetoothAudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothAudioDevice.swift; sourceTree = "<group>"; };
 		B9A3B67926537A9B00D1D64C /* ParkingSearchActionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ParkingSearchActionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9A3B67B26537A9B00D1D64C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -2191,6 +2193,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				B964BCC923E066FF00288E0D /* Base */,
+				B99C696526F59CCD0064162D /* ja */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -2223,6 +2226,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				B9DC5B2B229D59BE00B645D5 /* Base */,
+				B99C696426F59CCD0064162D /* ja */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
