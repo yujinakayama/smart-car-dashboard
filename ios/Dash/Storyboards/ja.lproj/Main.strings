@@ -1,102 +1,55 @@
-
-/* Class = "UINavigationItem"; title = "Inbox"; ObjectID = "08c-tQ-1d0"; */
-"08c-tQ-1d0.title" = "Inbox";
-
-/* Class = "UITabBarItem"; title = "Maps"; ObjectID = "0TL-LK-2HM"; */
-"0TL-LK-2HM.title" = "Maps";
-
-/* Class = "UILabel"; text = "2019/05/31 12:34"; ObjectID = "1Lp-b1-rnx"; */
-"1Lp-b1-rnx.text" = "2019/05/31 12:34";
-
-/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "2xv-3E-dT2"; */
-"2xv-3E-dT2.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.";
-
-/* Class = "UIButton"; normalTitle = "Sign in with Google"; ObjectID = "3d5-rM-KEm"; */
-"3d5-rM-KEm.normalTitle" = "Sign in with Google";
-
-/* Class = "UILabel"; text = "Low Location Accuracy"; ObjectID = "3sJ-3G-c3A"; */
-"3sJ-3G-c3A.text" = "Low Location Accuracy";
-
-/* Class = "UILabel"; text = "m"; ObjectID = "4Mr-8K-2qc"; */
-"4Mr-8K-2qc.text" = "m";
-
-/* Class = "UITabBarItem"; title = "Inbox"; ObjectID = "5GI-ot-E7D"; */
-"5GI-ot-E7D.title" = "Inbox";
-
-/* Class = "UILabel"; text = "¥"; ObjectID = "6wB-E0-moo"; */
-"6wB-E0-moo.text" = "¥";
+// Tabs
 
 /* Class = "UITabBarItem"; title = "Dashboard"; ObjectID = "8iC-BB-hC9"; */
 "8iC-BB-hC9.title" = "Dashboard";
 
-/* Class = "UILabel"; text = "東名高速道路"; ObjectID = "9at-Od-YIK"; */
-"9at-Od-YIK.text" = "東名高速道路";
+/* Class = "UITabBarItem"; title = "ETC"; ObjectID = "lhA-Mw-Pck"; */
+"lhA-Mw-Pck.title" = "ETC";
 
-/* Class = "UILabel"; text = "東京都 世田谷区 岡本1丁目"; ObjectID = "9la-1g-ZNa"; */
-"9la-1g-ZNa.text" = "東京都 世田谷区 岡本1丁目";
+/* Class = "UITabBarItem"; title = "Inbox"; ObjectID = "5GI-ot-E7D"; */
+"5GI-ot-E7D.title" = "Inbox";
 
-/* Class = "UILabel"; text = "首都高速"; ObjectID = "CtC-aV-rx7"; */
-"CtC-aV-rx7.text" = "首都高速";
+/* Class = "UITabBarItem"; title = "Maps"; ObjectID = "0TL-LK-2HM"; */
+"0TL-LK-2HM.title" = "Maps";
 
-/* Class = "UILabel"; text = "台場"; ObjectID = "ElS-Fh-95g"; */
-"ElS-Fh-95g.text" = "台場";
-
-/* Class = "UILabel"; text = "横浜青葉"; ObjectID = "Flp-ga-yBP"; */
-"Flp-ga-yBP.text" = "横浜青葉";
+// Dashboard tab
 
 /* Class = "UILabel"; text = "Altitude"; ObjectID = "HD0-yO-GKL"; */
-"HD0-yO-GKL.text" = "Altitude";
+"HD0-yO-GKL.text" = "高度";
 
-/* Class = "UIViewController"; title = "Detail"; ObjectID = "JEX-9P-axG"; */
-"JEX-9P-axG.title" = "Detail";
+/* Class = "UILabel"; text = "m"; ObjectID = "4Mr-8K-2qc"; */
+"4Mr-8K-2qc.text" = "m";
 
-/* Class = "UISegmentedControl"; PSg-N3-wKj.segmentTitles[0] = "マップ"; ObjectID = "PSg-N3-wKj"; */
-"PSg-N3-wKj.segmentTitles[0]" = "マップ";
+/* Class = "UILabel"; text = "Low Location Accuracy"; ObjectID = "3sJ-3G-c3A"; */
+"3sJ-3G-c3A.text" = "位置精度低下";
 
-/* Class = "UISegmentedControl"; PSg-N3-wKj.segmentTitles[1] = "航空写真"; ObjectID = "PSg-N3-wKj"; */
-"PSg-N3-wKj.segmentTitles[1]" = "航空写真";
-
-/* Class = "UILabel"; text = "Main Card"; ObjectID = "W2z-es-bHY"; */
-"W2z-es-bHY.text" = "Main Card";
-
-/* Class = "UILabel"; text = "My Card"; ObjectID = "Z8y-WU-Yma"; */
-"Z8y-WU-Yma.text" = "My Card";
-
-/* Class = "UITableViewSection"; footerTitle = "You will be notified if the main card is not inserted when the engine is started."; ObjectID = "bbC-MZ-3fk"; */
-"bbC-MZ-3fk.footerTitle" = "You will be notified if the main card is not inserted when the engine is started.";
-
-/* Class = "UILabel"; text = "東京国際空港ターミナル羽田空港国際線駐車場"; ObjectID = "bnC-nn-FyW"; */
-"bnC-nn-FyW.text" = "東京国際空港ターミナル羽田空港国際線駐車場";
-
-/* Class = "UITextField"; text = "My Card"; ObjectID = "crM-fa-JLa"; */
-"crM-fa-JLa.text" = "My Card";
+// ETC tab
 
 /* Class = "UINavigationItem"; title = "ETC"; ObjectID = "dgH-Z0-R0U"; */
 "dgH-Z0-R0U.title" = "ETC";
 
-/* Class = "UILabel"; text = "67"; ObjectID = "eij-rK-Z1p"; */
-"eij-rK-Z1p.text" = "67";
-
-/* Class = "UILabel"; text = "E1"; ObjectID = "fDi-RM-ZJK"; */
-"fDi-RM-ZJK.text" = "E1";
-
-/* Class = "UILabel"; text = "maps.apple.com"; ObjectID = "jCM-La-U6U"; */
-"jCM-La-U6U.text" = "maps.apple.com";
-
-/* Class = "UITabBarItem"; title = "ETC"; ObjectID = "lhA-Mw-Pck"; */
-"lhA-Mw-Pck.title" = "ETC";
-
-/* Class = "UINavigationItem"; title = "Detail"; ObjectID = "mOI-FS-AaM"; */
-"mOI-FS-AaM.title" = "Detail";
-
-/* Class = "UILabel"; text = "東名高速"; ObjectID = "mrm-PV-omm"; */
-"mrm-PV-omm.text" = "東名高速";
-
-/* Class = "UITabBarItem"; title = "Music"; ObjectID = "s4e-oe-zlJ"; */
-"s4e-oe-zlJ.title" = "Music";
-
-/* Class = "UILabel"; text = "1280"; ObjectID = "ukE-X2-gHW"; */
-"ukE-X2-gHW.text" = "1280";
-
 /* Class = "UILabel"; text = "All Payments"; ObjectID = "wLH-Uf-nlx"; */
-"wLH-Uf-nlx.text" = "All Payments";
+"wLH-Uf-nlx.text" = "全カードの履歴";
+
+/* Class = "UILabel"; text = "¥"; ObjectID = "6wB-E0-moo"; */
+"6wB-E0-moo.text" = "¥";
+
+/* Class = "UILabel"; text = "Main Card"; ObjectID = "W2z-es-bHY"; */
+"W2z-es-bHY.text" = "メインカード";
+
+/* Class = "UISegmentedControl"; PSg-N3-wKj.segmentTitles[0] = "Map"; ObjectID = "PSg-N3-wKj"; */
+"PSg-N3-wKj.segmentTitles[0]" = "マップ";
+
+/* Class = "UISegmentedControl"; PSg-N3-wKj.segmentTitles[1] = "Satellite"; ObjectID = "PSg-N3-wKj"; */
+"PSg-N3-wKj.segmentTitles[1]" = "航空写真";
+
+/* Class = "UITableViewSection"; footerTitle = "You will be notified if the main card is not inserted when the engine is started."; ObjectID = "bbC-MZ-3fk"; */
+"bbC-MZ-3fk.footerTitle" = "エンジン始動時にメインカードがETC車載機に挿入されていない場合通知をします。";
+
+// Inbox tab
+
+/* Class = "UINavigationItem"; title = "Inbox"; ObjectID = "08c-tQ-1d0"; */
+"08c-tQ-1d0.title" = "Inbox";
+
+/* Class = "UIButton"; normalTitle = "Sign in with Google"; ObjectID = "3d5-rM-KEm"; */
+"3d5-rM-KEm.normalTitle" = "Googleでサインイン";

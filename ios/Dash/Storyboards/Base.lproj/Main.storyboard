@@ -492,7 +492,6 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Music" image="music.note.beamed" id="s4e-oe-zlJ"/>
                     <connections>
                         <outlet property="artworkView" destination="3wq-8X-NTj" id="2Aa-Vh-QOj"/>
                         <outlet property="artworkViewAndSongTitleViewTopAlignmentConstraint" destination="OOW-7M-hZB" id="SgG-lW-wzm"/>
@@ -656,8 +655,8 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="qyI-Dq-mjx"/>
                                 </constraints>
                                 <segments>
-                                    <segment title="マップ"/>
-                                    <segment title="航空写真"/>
+                                    <segment title="Map"/>
+                                    <segment title="Satellite"/>
                                 </segments>
                                 <connections>
                                     <action selector="mapTypeSegmentedControlDidChange" destination="JEX-9P-axG" eventType="valueChanged" id="4ba-Zs-ucH"/>
@@ -1599,7 +1598,7 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="6S0-TO-JiA"/>
+        <segue reference="Tll-UG-LXB"/>
         <segue reference="ZuQ-m0-CKt"/>
     </inferredMetricsTieBreakers>
     <resources>
@@ -1609,7 +1608,6 @@
         <image name="checkmark" catalog="system" width="128" height="114"/>
         <image name="map.fill" catalog="system" width="128" height="110"/>
         <image name="mappin" catalog="system" width="105" height="128"/>
-        <image name="music.note.beamed" width="15" height="19"/>
         <image name="signature" catalog="system" width="128" height="90"/>
         <image name="speedometer" catalog="system" width="128" height="121"/>
         <image name="tray.and.arrow.down.fill" catalog="system" width="128" height="114"/>
