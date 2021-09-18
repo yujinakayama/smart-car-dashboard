@@ -34,12 +34,6 @@
 /* Class = "UILabel"; text = "Main Card"; ObjectID = "W2z-es-bHY"; */
 "W2z-es-bHY.text" = "メインカード";
 
-/* Class = "UISegmentedControl"; PSg-N3-wKj.segmentTitles[0] = "Map"; ObjectID = "PSg-N3-wKj"; */
-"PSg-N3-wKj.segmentTitles[0]" = "マップ";
-
-/* Class = "UISegmentedControl"; PSg-N3-wKj.segmentTitles[1] = "Satellite"; ObjectID = "PSg-N3-wKj"; */
-"PSg-N3-wKj.segmentTitles[1]" = "航空写真";
-
 /* Class = "UITableViewSection"; footerTitle = "You will be notified if the main card is not inserted when the engine is started."; ObjectID = "bbC-MZ-3fk"; */
 "bbC-MZ-3fk.footerTitle" = "エンジン始動時にメインカードがETC車載機に挿入されていない場合通知をします。";
 

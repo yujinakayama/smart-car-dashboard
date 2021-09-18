@@ -39,10 +39,9 @@ class MapsViewController: UIViewController {
         return mapView
     }()
 
-    lazy var mapTypeSegmentedControl: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(items: ["マップ", "航空写真"])
-        segmentedControl.backgroundColor = UIColor(named: "Map Type Segmented Control Background Color")
-        segmentedControl.selectedSegmentIndex = MapTypeSegmentedControlIndex(mapView.mapType)!.rawValue
+    lazy var mapTypeSegmentedControl: MapTypeSegmentedControl = {
+        let segmentedControl = MapTypeSegmentedControl()
+        segmentedControl.mapType = mapView.mapType
         segmentedControl.addTarget(self, action: #selector(mapTypeSegmentedControlDidChange), for: .valueChanged)
         return segmentedControl
     }()
@@ -306,8 +305,7 @@ class MapsViewController: UIViewController {
     }
 
     @objc func mapTypeSegmentedControlDidChange() {
-        let index = MapTypeSegmentedControlIndex(rawValue: mapTypeSegmentedControl.selectedSegmentIndex)!
-        mapView.mapType = index.mapType
+        mapView.mapType = mapTypeSegmentedControl.mapType
         updatePointOfInterestFilter()
     }
 
@@ -601,10 +599,9 @@ extension MapsViewController {
 
     override func decodeRestorableState(with coder: NSCoder) {
         if coder.containsValue(forKey: RestorationCodingKeys.mapType.rawValue),
-           let mapType = MKMapType(rawValue: UInt(coder.decodeInteger(forKey: RestorationCodingKeys.mapType.rawValue))),
-           let index = MapTypeSegmentedControlIndex(mapType)
+           let mapType = MKMapType(rawValue: UInt(coder.decodeInteger(forKey: RestorationCodingKeys.mapType.rawValue)))
         {
-            mapTypeSegmentedControl.selectedSegmentIndex = index.rawValue
+            mapTypeSegmentedControl.mapType = mapType
             mapTypeSegmentedControlDidChange()
         }
 

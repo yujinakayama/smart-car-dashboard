@@ -18,7 +18,6 @@
 		B900A13D2652BCF4000ED1B9 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94215F026423A58003F94A0 /* StringExtension.swift */; };
 		B90265AB23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90265AA23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift */; };
 		B904A2A6243968990087BD4A /* MapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B904A2A5243968990087BD4A /* MapsViewController.swift */; };
-		B90666DE247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90666DD247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift */; };
 		B90C297225E3FB80004466C9 /* SIMDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90C297125E3FB80004466C9 /* SIMDExtension.swift */; };
 		B90E21F924CBB1BF008330AD /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90E21F824CBB1BF008330AD /* TabBarController.swift */; };
 		B90F5FD525EFF13D00C2578C /* CIImageDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F5FD425EFF13D00C2578C /* CIImageDisplayView.swift */; };
@@ -132,6 +131,7 @@
 		B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */; };
 		B9989E3E23E8752100FAFD06 /* Share.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9989E3D23E8752100FAFD06 /* Share.wav */; };
 		B99C698126F5F1E30064162D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B99C698326F5F1E30064162D /* Localizable.strings */; };
+		B99C69AC26F5F6880064162D /* MapTypeSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99C69AB26F5F6880064162D /* MapTypeSegmentedControl.swift */; };
 		B99D4F2824C0526200647A10 /* BluetoothAudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99D4F2724C0526200647A10 /* BluetoothAudioDevice.swift */; };
 		B9A3B67C26537A9B00D1D64C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9A3B67B26537A9B00D1D64C /* Media.xcassets */; };
 		B9A3B67E26537A9B00D1D64C /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A3B67D26537A9B00D1D64C /* ActionViewController.swift */; };
@@ -408,7 +408,6 @@
 		B9025F62254D2180001E25DF /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
 		B90265AA23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemTableViewDataSource.swift; sourceTree = "<group>"; };
 		B904A2A5243968990087BD4A /* MapsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsViewController.swift; sourceTree = "<group>"; };
-		B90666DD247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTypeSegmentedControlIndex.swift; sourceTree = "<group>"; };
 		B90700A3250E31B1004E7D7A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B90C297125E3FB80004466C9 /* SIMDExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIMDExtension.swift; sourceTree = "<group>"; };
 		B90E21F824CBB1BF008330AD /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -535,6 +534,7 @@
 		B99C696426F59CCD0064162D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		B99C696526F59CCD0064162D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		B99C698226F5F1E30064162D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B99C69AB26F5F6880064162D /* MapTypeSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTypeSegmentedControl.swift; sourceTree = "<group>"; };
 		B99D4F2724C0526200647A10 /* BluetoothAudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothAudioDevice.swift; sourceTree = "<group>"; };
 		B9A3B67926537A9B00D1D64C /* ParkingSearchActionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ParkingSearchActionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9A3B67B26537A9B00D1D64C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -1137,7 +1137,7 @@
 				B93321ED2323C9D500BFAB21 /* BorderedView.swift */,
 				B94BD2E82680486700B768A2 /* BorderedLabel.swift */,
 				B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */,
-				B90666DD247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift */,
+				B99C69AB26F5F6880064162D /* MapTypeSegmentedControl.swift */,
 				B9CEA76922D8F1F50055C9A3 /* Extensions */,
 				B9BF2F0323F6946100967316 /* Vendor */,
 				B9CEA76A22D8F2380055C9A3 /* Storyboards */,
@@ -1989,6 +1989,7 @@
 				B9DC5B46229EB8B200B645D5 /* SerialPortManager.swift in Sources */,
 				B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift in Sources */,
 				B92C6EC324AC2F0A001E9675 /* ArtworkView.swift in Sources */,
+				B99C69AC26F5F6880064162D /* MapTypeSegmentedControl.swift in Sources */,
 				B94E69D123F7A313004CCC7C /* WebsiteIcon.swift in Sources */,
 				B915BEF5267F8754007068D7 /* StringExtension.swift in Sources */,
 				B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */,
@@ -2030,7 +2031,6 @@
 				B9B4A89A2569310400FE0C9F /* DashboardViewController.swift in Sources */,
 				B9C87A1726671CCE00ABCBB4 /* ParkingSearchURLItem.swift in Sources */,
 				B9C0BF472698689B00C54BA9 /* OfficialParkingInformationWebViewController.swift in Sources */,
-				B90666DE247704BD00B7F4EE /* MapTypeSegmentedControlIndex.swift in Sources */,
 				B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */,
 				B90C297225E3FB80004466C9 /* SIMDExtension.swift in Sources */,
 				B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */,

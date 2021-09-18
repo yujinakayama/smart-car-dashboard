@@ -22,4 +22,9 @@
 "Parkings Nearby “%@”" = "“%@” 周辺の駐車場";
 "Parkings" = "駐車場";
 
-"Get Directions" = "ここへの経路"
+"Get Directions" = "ここへの経路";
+
+// Maps tab
+
+"Map" = "マップ";
+"Satellite" = "航空写真";

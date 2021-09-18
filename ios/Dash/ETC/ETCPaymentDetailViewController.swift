@@ -11,7 +11,7 @@ import MapKit
 
 class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var mapTypeSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var mapTypeSegmentedControl: MapTypeSegmentedControl!
 
     let locationManager = CLLocationManager()
 
@@ -73,8 +73,7 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
     }
 
     func restoreMapType() {
-        let index = MapTypeSegmentedControlIndex(Defaults.shared.mapTypeForETCRoute)!
-        mapTypeSegmentedControl.selectedSegmentIndex = index.rawValue
+        mapTypeSegmentedControl.mapType = Defaults.shared.mapTypeForETCRoute
         mapTypeSegmentedControlDidChange()
     }
 
@@ -239,9 +238,8 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
     }
 
     @IBAction func mapTypeSegmentedControlDidChange() {
-        let index = MapTypeSegmentedControlIndex(rawValue: mapTypeSegmentedControl.selectedSegmentIndex)!
-        mapView.mapType = index.mapType
-        Defaults.shared.mapTypeForETCRoute = index.mapType
+        mapView.mapType = mapTypeSegmentedControl.mapType
+        Defaults.shared.mapTypeForETCRoute = mapTypeSegmentedControl.mapType
     }
 
     @IBAction func infoButtonDidTouchUpInside(button: UIButton) {
