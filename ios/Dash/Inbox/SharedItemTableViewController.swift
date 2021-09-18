@@ -216,16 +216,16 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 private extension SharedItemTableViewController {
     func actionMenu(for location: Location) -> UIMenu {
         return UIMenu(children: [
-            UIAction(title: "Search Nearby Parkings", image: UIImage(systemName: "parkingsign")) { [weak self] (action) in
+            UIAction(title: String(localized: "Search Parkings"), image: UIImage(systemName: "parkingsign")) { [weak self] (action) in
                 guard let self = self else { return }
                 location.markAsOpened()
                 self.pushMapsViewControllerForParkingSearch(location: location)
             },
-            UIAction(title: "Get Directions in Google Maps", image: UIImage(systemName: "g.circle.fill")) { (action) in
+            UIAction(title: String(localized: "Google Maps"), image: UIImage(systemName: "g.circle.fill")) { (action) in
                 location.markAsOpened()
                 UIApplication.shared.open(location.googleMapsDirectionsURL)
             },
-            UIAction(title: "Get Directions in Yahoo!カーナビ", image: UIImage(systemName: "y.circle.fill")) { (action) in
+            UIAction(title: String(localized: "Yahoo! CarNavi"), image: UIImage(systemName: "y.circle.fill")) { (action) in
                 location.markAsOpened()
                 UIApplication.shared.open(location.yahooCarNaviURL)
             }
@@ -234,7 +234,7 @@ private extension SharedItemTableViewController {
 
     func actionMenu(for musicItem: MusicItem) -> UIMenu {
         return UIMenu(children: [
-            UIAction(title: "Show in Apple Music", image: UIImage(systemName: "music.note")) { (action) in
+            UIAction(title: String(localized: "Show in Apple Music"), image: UIImage(systemName: "music.note")) { (action) in
                 musicItem.markAsOpened()
                 UIApplication.shared.open(musicItem.url)
             }
@@ -243,7 +243,7 @@ private extension SharedItemTableViewController {
 
     func actionMenu(for website: Website) -> UIMenu {
         return UIMenu(children: [
-            UIAction(title: "Open in In-App Browser", image: UIImage(systemName: "eye")) { [weak self] (action) in
+            UIAction(title: String(localized: "Preview"), image: UIImage(systemName: "eye")) { [weak self] (action) in
                 guard let self = self else { return }
 
                 website.markAsOpened()

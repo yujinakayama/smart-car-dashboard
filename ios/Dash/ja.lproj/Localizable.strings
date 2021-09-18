@@ -24,6 +24,11 @@
 
 "Get Directions" = "ここへの経路";
 
+"Google Maps" = "Google Maps";
+"Yahoo! CarNavi" = "Yahoo!カーナビ";
+"Show in Apple Music" = "Apple Musicで開く";
+"Preview" = "プレビュー";
+
 // Maps tab
 
 "Map" = "マップ";
