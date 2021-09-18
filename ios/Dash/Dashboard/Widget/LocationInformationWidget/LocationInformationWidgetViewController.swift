@@ -38,7 +38,7 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
         imageAttachment.image = UIImage(systemName: "mappin.slash")?.withTintColor(lowLocationAccuracyLabel.textColor, renderingMode: .alwaysTemplate)
 
         let attributedText = NSMutableAttributedString(attachment: imageAttachment)
-        attributedText.append(NSAttributedString(string: " Low Location Accuracy"))
+        attributedText.append(NSAttributedString(string: " \(String(localized: "Low Location Accuracy"))"))
 
         lowLocationAccuracyLabel.attributedText = attributedText
     }
@@ -67,7 +67,8 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
 
     func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentLocation location: CLLocation) {
         DispatchQueue.main.async {
-            self.lowLocationAccuracyLabel.isHidden = roadTracker.considersLocationAccurate(location)
+//            self.lowLocationAccuracyLabel.isHidden = roadTracker.considersLocationAccurate(location)
+            self.lowLocationAccuracyLabel.isHidden = false
             self.debugger?.roadTracker(roadTracker, didUpdateCurrentLocation: location)
         }
     }

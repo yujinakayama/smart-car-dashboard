@@ -1,0 +1,46 @@
+// Tabs
+
+/* Class = "UITabBarItem"; title = "Dashboard"; ObjectID = "8iC-BB-hC9"; */
+"8iC-BB-hC9.title" = "Dashboard";
+
+/* Class = "UITabBarItem"; title = "ETC"; ObjectID = "lhA-Mw-Pck"; */
+"lhA-Mw-Pck.title" = "ETC";
+
+/* Class = "UITabBarItem"; title = "Inbox"; ObjectID = "5GI-ot-E7D"; */
+"5GI-ot-E7D.title" = "Inbox";
+
+/* Class = "UITabBarItem"; title = "Maps"; ObjectID = "0TL-LK-2HM"; */
+"0TL-LK-2HM.title" = "Maps";
+
+// Dashboard tab
+
+/* Class = "UILabel"; text = "Altitude"; ObjectID = "HD0-yO-GKL"; */
+"HD0-yO-GKL.text" = "高度";
+
+/* Class = "UILabel"; text = "m"; ObjectID = "4Mr-8K-2qc"; */
+"4Mr-8K-2qc.text" = "m";
+
+// ETC tab
+
+/* Class = "UINavigationItem"; title = "ETC"; ObjectID = "dgH-Z0-R0U"; */
+"dgH-Z0-R0U.title" = "ETC";
+
+/* Class = "UILabel"; text = "All Payments"; ObjectID = "wLH-Uf-nlx"; */
+"wLH-Uf-nlx.text" = "全カードの履歴";
+
+/* Class = "UILabel"; text = "¥"; ObjectID = "6wB-E0-moo"; */
+"6wB-E0-moo.text" = "¥";
+
+/* Class = "UILabel"; text = "Main Card"; ObjectID = "W2z-es-bHY"; */
+"W2z-es-bHY.text" = "メインカード";
+
+/* Class = "UITableViewSection"; footerTitle = "You will be notified if the main card is not inserted when the engine is started."; ObjectID = "bbC-MZ-3fk"; */
+"bbC-MZ-3fk.footerTitle" = "エンジン始動時にメインカードがETC車載機に挿入されていない場合通知をします。";
+
+// Inbox tab
+
+/* Class = "UINavigationItem"; title = "Inbox"; ObjectID = "08c-tQ-1d0"; */
+"08c-tQ-1d0.title" = "Inbox";
+
+/* Class = "UIButton"; normalTitle = "Sign in with Google"; ObjectID = "3d5-rM-KEm"; */
+"3d5-rM-KEm.normalTitle" = "Googleでサインイン";

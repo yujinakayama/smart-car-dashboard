@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3pD-mC-pSF">
     <device id="ipad12_9rounded" orientation="landscape" layout="splitview1_3" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -106,7 +105,7 @@
             </objects>
             <point key="canvasLocation" x="17" y="-2819"/>
         </scene>
-        <!--Music-->
+        <!--Music View Controller-->
         <scene sceneID="8uU-kC-YE5">
             <objects>
                 <viewController restorationIdentifier="MusicViewController" id="zuP-Ci-kYP" customClass="MusicViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
@@ -115,37 +114,37 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3wq-8X-NTj" customClass="ArtworkView" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="32" y="32" width="311" height="311"/>
+                                <rect key="frame" x="32" y="56" width="311" height="311"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="3wq-8X-NTj" secondAttribute="height" multiplier="1:1" id="nRi-l7-2hN"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Beu-Kz-v6k" customClass="SongTitleView" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="32" y="375" width="311" height="52"/>
+                                <rect key="frame" x="32" y="395" width="311" height="52"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="jCn-aM-e0h"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3T8-fO-LGk" userLabel="Spacer 3">
-                                <rect key="frame" x="187.5" y="427" width="0.0" height="31.5"/>
+                                <rect key="frame" x="187.5" y="447" width="0.0" height="27.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" id="YhT-D8-mew"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4EW-dl-7rX" customClass="PlaybackProgressView" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="32" y="458.5" width="311" height="30"/>
+                                <rect key="frame" x="32" y="474.5" width="311" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="IT5-o9-AQP"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cv6-cL-Lvl" userLabel="Spacer 4">
-                                <rect key="frame" x="187.5" y="488.5" width="0.0" height="32"/>
+                                <rect key="frame" x="187.5" y="504.5" width="0.0" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="width" id="LSW-Mh-ZiH"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0IA-qe-Utr" userLabel="Spacer 1">
-                                <rect key="frame" x="187.5" y="0.0" width="0.0" height="32"/>
+                                <rect key="frame" x="187.5" y="24" width="0.0" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="bY1-6k-Ull">
                                         <variation key="widthClass=compact" constant="32"/>
@@ -164,7 +163,7 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Z51-Ki-eML" customClass="PlaybackControlView" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="72.5" y="520.5" width="230" height="60"/>
+                                <rect key="frame" x="72.5" y="532.5" width="230" height="60"/>
                                 <color key="tintColor" systemColor="labelColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="2Lr-e8-jfW"/>
@@ -183,31 +182,31 @@
                                 </variation>
                             </view>
                             <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4eW-n8-2Zi" userLabel="Spacer 5">
-                                <rect key="frame" x="187.5" y="580.5" width="0.0" height="32"/>
+                                <rect key="frame" x="187.5" y="592.5" width="0.0" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="width" id="yur-TP-pep"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Nb-ey-hxe" userLabel="Spacer 2">
-                                <rect key="frame" x="187.5" y="343" width="0.0" height="32"/>
+                                <rect key="frame" x="187.5" y="367" width="0.0" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="width" id="GLD-4P-ZQx"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xiy-BS-1Rf" customClass="VolumeView" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="32" y="612.5" width="311" height="30"/>
+                                <rect key="frame" x="32" y="620.5" width="311" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="zIa-hH-lg5"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z1u-Dm-Bid" userLabel="Spacer 6">
-                                <rect key="frame" x="187.5" y="642.5" width="0.0" height="31.5"/>
+                                <rect key="frame" x="187.5" y="650.5" width="0.0" height="27.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" id="e5L-SX-Vg5"/>
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="5dH-Ra-rgc" userLabel="Playback Mode Buttons">
-                                <rect key="frame" x="32" y="674" width="311" height="42"/>
+                                <rect key="frame" x="32" y="678" width="311" height="42"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfV-vr-luy" customClass="ShuffleModeButton" customModule="Dash" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="143.5" height="42"/>
@@ -232,7 +231,7 @@
                                 </variation>
                             </stackView>
                             <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hXL-il-xFS" userLabel="Spacer 7">
-                                <rect key="frame" x="187.5" y="716" width="0.0" height="32"/>
+                                <rect key="frame" x="187.5" y="720" width="0.0" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="width" id="tim-WU-J9Q"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="vhm-p4-Vv5"/>
@@ -492,7 +491,6 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Music" image="music.note.beamed" id="s4e-oe-zlJ"/>
                     <connections>
                         <outlet property="artworkView" destination="3wq-8X-NTj" id="2Aa-Vh-QOj"/>
                         <outlet property="artworkViewAndSongTitleViewTopAlignmentConstraint" destination="OOW-7M-hZB" id="SgG-lW-wzm"/>
@@ -517,7 +515,7 @@
             <objects>
                 <navigationController restorationIdentifier="ETCNavigationController" id="RMx-3f-FxP" userLabel="Master Navigation Controller" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" largeTitles="YES" id="Pmd-2v-anx">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="102"/>
+                        <rect key="frame" x="0.0" y="24" width="375" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -541,7 +539,7 @@
                                 <rect key="frame" x="0.0" y="49.5" width="375" height="82"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2sj-lq-fub" id="UN9-2d-DFc">
-                                    <rect key="frame" x="0.0" y="0.0" width="357.5" height="82"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="349.5" height="82"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="HKU-bN-sRN">
@@ -594,13 +592,13 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="My Card" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z8y-WU-Yma">
-                                                    <rect key="frame" x="59.5" y="4" width="218.5" height="23"/>
+                                                    <rect key="frame" x="59.5" y="4" width="218" height="23"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="checkmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="mTz-mb-dFn">
-                                                    <rect key="frame" x="290" y="7" width="19.5" height="17"/>
+                                                    <rect key="frame" x="289.5" y="6.5" width="20" height="18"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="semibold"/>
                                                 </imageView>
                                             </subviews>
@@ -646,18 +644,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" pitchEnabled="NO" showsUserLocation="YES" showsScale="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gCy-yW-GVk">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
+                                <rect key="frame" x="0.0" y="74" width="375" height="950"/>
                                 <color key="tintColor" systemColor="linkColor"/>
                             </mapView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="PSg-N3-wKj">
-                                <rect key="frame" x="175" y="20" width="200" height="32"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="PSg-N3-wKj" customClass="MapTypeSegmentedControl" customModule="Dash" customModuleProvider="target">
+                                <rect key="frame" x="159" y="94" width="200" height="32"/>
                                 <color key="backgroundColor" name="Map Type Segmented Control Background Color"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="qyI-Dq-mjx"/>
                                 </constraints>
                                 <segments>
-                                    <segment title="マップ"/>
-                                    <segment title="航空写真"/>
+                                    <segment title="Map"/>
+                                    <segment title="Satellite"/>
                                 </segments>
                                 <connections>
                                     <action selector="mapTypeSegmentedControlDidChange" destination="JEX-9P-axG" eventType="valueChanged" id="4ba-Zs-ucH"/>
@@ -696,7 +694,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2xv-3E-dT2">
-                                <rect key="frame" x="20" y="20" width="335" height="1004"/>
+                                <rect key="frame" x="20" y="44" width="335" height="980"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor"/>
@@ -768,7 +766,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ETCPaymentTableViewCell" rowHeight="102" id="WCw-Qf-5nD" customClass="ETCPaymentTableViewCell" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="16" y="49.5" width="343" height="102"/>
+                                <rect key="frame" x="16" y="32" width="343" height="102"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WCw-Qf-5nD" id="37f-cq-3Eg">
                                     <rect key="frame" x="0.0" y="0.0" width="343" height="102"/>
@@ -950,7 +948,7 @@
             <objects>
                 <navigationController id="vC3-pB-5Vb" userLabel="Detail Navigation Controller" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="DjV-YW-jjY">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                        <rect key="frame" x="0.0" y="24" width="375" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -1132,7 +1130,7 @@
                     <tabBarItem key="tabBarItem" tag="2" title="Inbox" image="tray.and.arrow.down.fill" catalog="system" id="5GI-ot-E7D"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="3Im-5G-ZFk">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="102"/>
+                        <rect key="frame" x="0.0" y="24" width="375" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1151,8 +1149,8 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="FCs-lq-ZD1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1004"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BxA-Xb-WFh">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="211.5"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BxA-Xb-WFh">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="210"/>
                             <subviews>
                                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QcC-fJ-8O1">
                                     <rect key="frame" x="0.0" y="40" width="375" height="120"/>
@@ -1246,7 +1244,7 @@
                                     <viewLayoutGuide key="frameLayoutGuide" id="5h7-YP-2DW"/>
                                 </scrollView>
                                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Vl4-jF-Jhk">
-                                    <rect key="frame" x="127" y="164" width="121.5" height="27.5"/>
+                                    <rect key="frame" x="110" y="164" width="155.5" height="26"/>
                                     <color key="pageIndicatorTintColor" systemColor="tertiaryLabelColor"/>
                                     <color key="currentPageIndicatorTintColor" systemColor="labelColor"/>
                                     <connections>
@@ -1267,14 +1265,14 @@
                             <tableViewSection id="ePN-Jb-R4a">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="DZD-vu-Ock">
-                                        <rect key="frame" x="16" y="229.5" width="343" height="44"/>
+                                        <rect key="frame" x="16" y="228" width="343" height="45.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DZD-vu-Ock" id="FRY-1p-AMd">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="45.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="My Card" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="crM-fa-JLa">
-                                                    <rect key="frame" x="8" y="11" width="327" height="22"/>
+                                                    <rect key="frame" x="8" y="11" width="327" height="23.5"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <userDefinedRuntimeAttributes>
@@ -1297,14 +1295,14 @@
                             <tableViewSection footerTitle="You will be notified if the main card is not inserted when the engine is started." id="bbC-MZ-3fk">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MainCardSwitchCell" textLabel="W2z-es-bHY" style="IBUITableViewCellStyleDefault" id="W7B-Vi-AL7">
-                                        <rect key="frame" x="16" y="309.5" width="343" height="44"/>
+                                        <rect key="frame" x="16" y="309.5" width="343" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="W7B-Vi-AL7" id="1DV-p8-9uV">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Main Card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="W2z-es-bHY">
-                                                    <rect key="frame" x="16" y="0.0" width="311" height="44"/>
+                                                    <rect key="frame" x="16" y="0.0" width="311" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1425,7 +1423,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l5N-hO-tAC" customClass="GForceMeterView" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="82" y="0.0" width="211" height="211"/>
+                                <rect key="frame" x="94" y="24" width="187" height="187"/>
                                 <viewLayoutGuide key="safeArea" id="kJq-XR-hiN"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="l5N-hO-tAC" secondAttribute="height" multiplier="1:1" id="19l-Si-Mvt"/>
@@ -1463,7 +1461,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Low Location Accuracy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3sJ-3G-c3A">
-                                <rect key="frame" x="116" y="8" width="143" height="16"/>
+                                <rect key="frame" x="116" y="32" width="143" height="16"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
@@ -1472,7 +1470,7 @@
                                 <rect key="frame" x="30" y="76" width="315" height="71.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="43e-NT-N9W">
-                                        <rect key="frame" x="52.5" y="0.0" width="210.5" height="33.5"/>
+                                        <rect key="frame" x="59" y="0.0" width="197.5" height="33.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東名高速道路" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9at-Od-YIK">
                                                 <rect key="frame" x="0.0" y="0.0" width="170.5" height="33.5"/>
@@ -1480,7 +1478,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="E1" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="fDi-RM-ZJK" customClass="BorderedLabel" customModule="Dash" customModuleProvider="target">
-                                                <rect key="frame" x="176.5" y="1.5" width="34" height="30"/>
+                                                <rect key="frame" x="176.5" y="4.5" width="21" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1588,18 +1586,21 @@
         <designable name="3d5-rM-KEm">
             <size key="intrinsicContentSize" width="166" height="34"/>
         </designable>
+        <designable name="PSg-N3-wKj">
+            <size key="intrinsicContentSize" width="139" height="31"/>
+        </designable>
         <designable name="TAK-Hz-Kv5">
-            <size key="intrinsicContentSize" width="23.5" height="22"/>
+            <size key="intrinsicContentSize" width="30" height="34"/>
         </designable>
         <designable name="fDi-RM-ZJK">
-            <size key="intrinsicContentSize" width="34" height="30"/>
+            <size key="intrinsicContentSize" width="21" height="24"/>
         </designable>
         <designable name="mfV-vr-luy">
-            <size key="intrinsicContentSize" width="25" height="22"/>
+            <size key="intrinsicContentSize" width="30" height="34"/>
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="6S0-TO-JiA"/>
+        <segue reference="Tll-UG-LXB"/>
         <segue reference="ZuQ-m0-CKt"/>
     </inferredMetricsTieBreakers>
     <resources>
@@ -1609,7 +1610,6 @@
         <image name="checkmark" catalog="system" width="128" height="114"/>
         <image name="map.fill" catalog="system" width="128" height="110"/>
         <image name="mappin" catalog="system" width="105" height="128"/>
-        <image name="music.note.beamed" width="15" height="19"/>
         <image name="signature" catalog="system" width="128" height="90"/>
         <image name="speedometer" catalog="system" width="128" height="121"/>
         <image name="tray.and.arrow.down.fill" catalog="system" width="128" height="114"/>

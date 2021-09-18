@@ -39,10 +39,9 @@ class MapsViewController: UIViewController {
         return mapView
     }()
 
-    lazy var mapTypeSegmentedControl: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(items: ["マップ", "航空写真"])
-        segmentedControl.backgroundColor = UIColor(named: "Map Type Segmented Control Background Color")
-        segmentedControl.selectedSegmentIndex = MapTypeSegmentedControlIndex(mapView.mapType)!.rawValue
+    lazy var mapTypeSegmentedControl: MapTypeSegmentedControl = {
+        let segmentedControl = MapTypeSegmentedControl()
+        segmentedControl.mapType = mapView.mapType
         segmentedControl.addTarget(self, action: #selector(mapTypeSegmentedControlDidChange), for: .valueChanged)
         return segmentedControl
     }()
@@ -306,8 +305,7 @@ class MapsViewController: UIViewController {
     }
 
     @objc func mapTypeSegmentedControlDidChange() {
-        let index = MapTypeSegmentedControlIndex(rawValue: mapTypeSegmentedControl.selectedSegmentIndex)!
-        mapView.mapType = index.mapType
+        mapView.mapType = mapTypeSegmentedControl.mapType
         updatePointOfInterestFilter()
     }
 
@@ -379,7 +377,7 @@ class MapsViewController: UIViewController {
             self.officialParkingSearch = officialParkingSearch
         }
 
-        navigationItem.title = "“\(destinationName)” 周辺の駐車場"
+        navigationItem.title = String(localized: "Parkings Nearby “\(destinationName)”")
         navigationController?.setNavigationBarHidden(false, animated: isViewLoaded)
     }
 
@@ -397,13 +395,13 @@ class MapsViewController: UIViewController {
             switch result {
             case .success(let placemark):
                 if let locationName = placemark.name {
-                    self.navigationItem.title = "“\(locationName)” 周辺の駐車場"
+                    self.navigationItem.title = String(localized: "Parkings Nearby “\(locationName)”")
                 } else {
-                    self.navigationItem.title = "駐車場検索"
+                    self.navigationItem.title = String(localized: "Parkings")
                 }
             case .failure(let error):
                 logger.error(error)
-                self.navigationItem.title = "駐車場検索"
+                self.navigationItem.title = String(localized: "Parkings")
             }
 
             self.navigationController?.setNavigationBarHidden(false, animated: self.isViewLoaded)
@@ -601,10 +599,9 @@ extension MapsViewController {
 
     override func decodeRestorableState(with coder: NSCoder) {
         if coder.containsValue(forKey: RestorationCodingKeys.mapType.rawValue),
-           let mapType = MKMapType(rawValue: UInt(coder.decodeInteger(forKey: RestorationCodingKeys.mapType.rawValue))),
-           let index = MapTypeSegmentedControlIndex(mapType)
+           let mapType = MKMapType(rawValue: UInt(coder.decodeInteger(forKey: RestorationCodingKeys.mapType.rawValue)))
         {
-            mapTypeSegmentedControl.selectedSegmentIndex = index.rawValue
+            mapTypeSegmentedControl.mapType = mapType
             mapTypeSegmentedControlDidChange()
         }
 

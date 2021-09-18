@@ -72,8 +72,8 @@ extension SharedLocationAnnotationView {
             return stackView
         }()
 
-        lazy var departureButton: UIButton = makeButton(title: "出発", backgroundColor: Self.departureColor)
-        lazy var parkingSearchButton: UIButton = makeButton(title: "駐車場を検索", backgroundColor: .systemBlue)
+        lazy var departureButton: UIButton = makeButton(title: String(localized: "Get Directions"), backgroundColor: Self.departureColor)
+        lazy var parkingSearchButton: UIButton = makeButton(title: String(localized: "Search Parkings"), backgroundColor: .systemBlue)
 
         func makeButton(title: String, backgroundColor: UIColor) -> UIButton {
             let fontMetrics = UIFontMetrics(forTextStyle: .headline)
