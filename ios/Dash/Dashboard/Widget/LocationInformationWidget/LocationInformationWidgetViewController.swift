@@ -67,8 +67,7 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
 
     func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentLocation location: CLLocation) {
         DispatchQueue.main.async {
-//            self.lowLocationAccuracyLabel.isHidden = roadTracker.considersLocationAccurate(location)
-            self.lowLocationAccuracyLabel.isHidden = false
+            self.lowLocationAccuracyLabel.isHidden = roadTracker.considersLocationAccurate(location)
             self.debugger?.roadTracker(roadTracker, didUpdateCurrentLocation: location)
         }
     }
