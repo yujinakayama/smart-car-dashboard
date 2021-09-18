@@ -20,9 +20,6 @@
 /* Class = "UILabel"; text = "m"; ObjectID = "4Mr-8K-2qc"; */
 "4Mr-8K-2qc.text" = "m";
 
-/* Class = "UILabel"; text = "Low Location Accuracy"; ObjectID = "3sJ-3G-c3A"; */
-"3sJ-3G-c3A.text" = "位置精度低下";
-
 // ETC tab
 
 /* Class = "UINavigationItem"; title = "ETC"; ObjectID = "dgH-Z0-R0U"; */

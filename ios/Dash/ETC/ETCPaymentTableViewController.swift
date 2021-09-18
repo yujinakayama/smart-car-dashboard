@@ -20,7 +20,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
 
     var card: ETCCardManagedObject? {
         didSet {
-            navigationItem.title = card?.displayedName ?? "All Payments"
+            navigationItem.title = card?.displayedName ?? String(localized: "All ETC Payments")
         }
     }
 

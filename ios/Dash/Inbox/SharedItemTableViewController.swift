@@ -94,11 +94,11 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         if isEditing {
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(trashBarButtonItemDidTap))
         } else {
-            let pairingMenuItem = UIAction(title: "Pair with Dash Remote") { [unowned self] (action) in
+            let pairingMenuItem = UIAction(title: String(localized: "Pair with Dash Remote")) { [unowned self] (action) in
                 self.sharePairingURL()
             }
 
-            let signOutMenuItem = UIAction(title: "Sign Out") { [unowned self] (action) in
+            let signOutMenuItem = UIAction(title: String(localized: "Sign Out")) { [unowned self] (action) in
                 self.authentication.signOut()
             }
 

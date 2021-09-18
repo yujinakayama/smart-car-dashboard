@@ -379,7 +379,7 @@ class MapsViewController: UIViewController {
             self.officialParkingSearch = officialParkingSearch
         }
 
-        navigationItem.title = "“\(destinationName)” 周辺の駐車場"
+        navigationItem.title = String(localized: "Parkings Nearby “\(destinationName)”")
         navigationController?.setNavigationBarHidden(false, animated: isViewLoaded)
     }
 
@@ -397,13 +397,13 @@ class MapsViewController: UIViewController {
             switch result {
             case .success(let placemark):
                 if let locationName = placemark.name {
-                    self.navigationItem.title = "“\(locationName)” 周辺の駐車場"
+                    self.navigationItem.title = String(localized: "Parkings Nearby “\(locationName)”")
                 } else {
-                    self.navigationItem.title = "駐車場検索"
+                    self.navigationItem.title = String(localized: "Parkings")
                 }
             case .failure(let error):
                 logger.error(error)
-                self.navigationItem.title = "駐車場検索"
+                self.navigationItem.title = String(localized: "Parkings")
             }
 
             self.navigationController?.setNavigationBarHidden(false, animated: self.isViewLoaded)

@@ -131,6 +131,7 @@
 		B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E722A9553A00BA08AB /* MockSerialPort.swift */; };
 		B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356ED22A96E1000BA08AB /* ETCPaymentTableViewCell.swift */; };
 		B9989E3E23E8752100FAFD06 /* Share.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9989E3D23E8752100FAFD06 /* Share.wav */; };
+		B99C698126F5F1E30064162D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B99C698326F5F1E30064162D /* Localizable.strings */; };
 		B99D4F2824C0526200647A10 /* BluetoothAudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99D4F2724C0526200647A10 /* BluetoothAudioDevice.swift */; };
 		B9A3B67C26537A9B00D1D64C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9A3B67B26537A9B00D1D64C /* Media.xcassets */; };
 		B9A3B67E26537A9B00D1D64C /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A3B67D26537A9B00D1D64C /* ActionViewController.swift */; };
@@ -533,6 +534,7 @@
 		B9989E3D23E8752100FAFD06 /* Share.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Share.wav; sourceTree = "<group>"; };
 		B99C696426F59CCD0064162D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		B99C696526F59CCD0064162D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		B99C698226F5F1E30064162D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B99D4F2724C0526200647A10 /* BluetoothAudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothAudioDevice.swift; sourceTree = "<group>"; };
 		B9A3B67926537A9B00D1D64C /* ParkingSearchActionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ParkingSearchActionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9A3B67B26537A9B00D1D64C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -1114,6 +1116,7 @@
 		B9DC5B23229D59BE00B645D5 /* Dash */ = {
 			isa = PBXGroup;
 			children = (
+				B99C698326F5F1E30064162D /* Localizable.strings */,
 				B9DC5B24229D59BE00B645D5 /* AppDelegate.swift */,
 				B90E21F824CBB1BF008330AD /* TabBarController.swift */,
 				B9B154F72576075C0031761F /* TabBarBadgeManager.swift */,
@@ -1610,6 +1613,7 @@
 				B9DC5B2E229D59BF00B645D5 /* Assets.xcassets in Resources */,
 				B9E6CC9C234F65A000E18603 /* TollgatePassingThrough.wav in Resources */,
 				B9DC5B2C229D59BE00B645D5 /* Main.storyboard in Resources */,
+				B99C698126F5F1E30064162D /* Localizable.strings in Resources */,
 				B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */,
 				B9989E3E23E8752100FAFD06 /* Share.wav in Resources */,
 				B9008EAF25FBB6D7005DAD13 /* NoMainETCCard.wav in Resources */,
@@ -2212,6 +2216,14 @@
 				B964BCDD23E067EB00288E0D /* Base */,
 			);
 			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+		B99C698326F5F1E30064162D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B99C698226F5F1E30064162D /* ja */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		B9C0CEE32508F641006D246E /* LaunchScreen.storyboard */ = {

@@ -41,7 +41,7 @@ class SharedItemTableViewCell: UITableViewCell {
         var configuration = UIButton.Configuration.gray()
         configuration.buttonSize = .small
         configuration.cornerStyle = .capsule
-        configuration.attributedTitle = AttributedString("駐車場検索", attributes: .init([.font: font]))
+        configuration.attributedTitle = AttributedString(String(localized: "駐車場検索"), attributes: .init([.font: font]))
 
         let button = UIButton(configuration: configuration)
         button.setContentHuggingPriority(.required, for: .horizontal)
@@ -162,7 +162,7 @@ class SharedItemTableViewCell: UITableViewCell {
         iconImageView.image = UIImage(systemName: "questionmark")
         iconBackgroundView.backgroundColor = .gray
 
-        nameLabel.text = "不明なアイテム"
+        nameLabel.text = String(localized: "Unknown Item")
         detailLabel.text = unknownItem?.url.absoluteString
     }
 

@@ -35,7 +35,7 @@ class PairingURLItem: NSObject, UIActivityItemSource {
     func activityViewControllerLinkMetadata(_ activityViewController: UIActivityViewController) -> LPLinkMetadata? {
         let linkMetadata = LPLinkMetadata()
         linkMetadata.originalURL = url
-        linkMetadata.title = "Pair with Dash app"
+        linkMetadata.title = String(localized: "Pair with Dash app")
         return linkMetadata
     }
 }

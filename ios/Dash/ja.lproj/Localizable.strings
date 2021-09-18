@@ -1,0 +1,25 @@
+// Dashboard tab
+
+"Low Location Accuracy" = "位置精度低下";
+
+// ETC tab
+
+"All ETC Payments" = "ETC履歴";
+
+"Departure" = "出発";
+"Arrival" = "到着";
+
+// Inbox tab
+
+"Pair with Dash Remote" = "Dash Remoteと連携";
+"Pair with Dash app" = "Dashと連携";
+"Sign Out" = "サインアウト";
+
+"Unknown Item" = "不明なアイテム";
+
+"Search Parkings" = "駐車場検索";
+
+"Parkings Nearby “%@”" = "“%@” 周辺の駐車場";
+"Parkings" = "駐車場";
+
+"Get Directions" = "ここへの経路"

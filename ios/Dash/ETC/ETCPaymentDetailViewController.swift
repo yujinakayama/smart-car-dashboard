@@ -165,7 +165,7 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
         [entrance, exit].forEach { (mapItem) in
             let annotation = MKPointAnnotation()
             annotation.title = mapItem.name
-            annotation.subtitle = mapItem == entrance ? "出発" : "到着"
+            annotation.subtitle = mapItem == entrance ? String(localized: "Departure") : String(localized: "Arrival")
             annotation.coordinate = mapItem.placemark.coordinate
             mapView.addAnnotation(annotation)
         }
