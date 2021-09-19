@@ -203,6 +203,16 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         mapsViewController.startSearchingParkings(destination: location.mapItem)
     }
 
+    func presentWebViewController(url: URL, title: String? = nil) {
+        let webViewController = WebViewController()
+        webViewController.navigationItem.title = title
+        webViewController.loadPage(url: url)
+
+        let navigationController = UINavigationController(rootViewController: webViewController)
+        navigationController.isToolbarHidden = false
+        self.present(navigationController, animated: true)
+    }
+
     func sharePairingURL() {
         guard let vehicleID = authentication.vehicleID else { return }
 
@@ -228,6 +238,23 @@ private extension SharedItemTableViewController {
             UIAction(title: String(localized: "Yahoo! CarNavi"), image: UIImage(systemName: "y.circle.fill")) { (action) in
                 location.markAsOpened()
                 UIApplication.shared.open(location.yahooCarNaviURL)
+            },
+            UIAction(title: String(localized: "Search Web"), image: UIImage(systemName: "magnifyingglass")) { [weak self] (action) in
+                guard let self = self else { return }
+
+                let query = [
+                    location.name,
+                    location.address.prefecture,
+                    location.address.distinct,
+                    location.address.locality,
+                ].compactMap { $0 }.joined(separator: " ")
+
+                var urlComponents = URLComponents(string: "https://google.com/search")!
+                urlComponents.queryItems = [URLQueryItem(name: "q", value: query)]
+                guard let url = urlComponents.url else { return }
+
+                location.markAsOpened()
+                self.presentWebViewController(url: url)
             }
         ])
     }
@@ -245,16 +272,8 @@ private extension SharedItemTableViewController {
         return UIMenu(children: [
             UIAction(title: String(localized: "Preview"), image: UIImage(systemName: "eye")) { [weak self] (action) in
                 guard let self = self else { return }
-
                 website.markAsOpened()
-
-                let webViewController = WebViewController()
-                webViewController.navigationItem.title = website.title
-                webViewController.loadPage(url: website.url)
-
-                let navigationController = UINavigationController(rootViewController: webViewController)
-                navigationController.isToolbarHidden = false
-                self.present(navigationController, animated: true)
+                self.presentWebViewController(url: website.url, title: website.title)
             }
         ])
     }
