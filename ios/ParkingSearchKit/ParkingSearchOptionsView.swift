@@ -45,6 +45,7 @@ public class ParkingSearchOptionsView: UIView {
             180,
             360,
             720,
+            1080,
             1440
         ].map { TimeInterval($0 * 60) }
 
