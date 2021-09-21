@@ -37,7 +37,6 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
 
     let sectionHeaderDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ja_JP")
         formatter.dateStyle = .full
         return formatter
     }()

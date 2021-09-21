@@ -488,11 +488,7 @@ extension ParkingAnnotationView.Callout {
 
 extension ParkingAnnotationView.Callout {
     class TagListView: UIStackView {
-        static let distanceFormatter: MKDistanceFormatter = {
-            let formatter = MKDistanceFormatter()
-            formatter.locale = Locale(identifier: "ja_JP")
-            return formatter
-        }()
+        static let distanceFormatter = MKDistanceFormatter()
 
         let simpleCapacityRegularExpression = try! NSRegularExpression(pattern: "^\\d+台$")
 

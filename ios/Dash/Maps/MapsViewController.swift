@@ -412,9 +412,8 @@ class MapsViewController: UIViewController {
         geocoder.cancelGeocode()
 
         let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        let locale = Locale(identifier: "ja_JP")
 
-        geocoder.reverseGeocodeLocation(location, preferredLocale: locale) { (placemarks, error) in
+        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
             if let error = error {
                 completion(.failure(error))
                 return
