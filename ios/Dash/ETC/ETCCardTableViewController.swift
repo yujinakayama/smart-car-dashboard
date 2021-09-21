@@ -148,7 +148,7 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
         case .allPayments:
             return nil
         case .cards:
-            return "Cards"
+            return String(localized: "Cards")
         }
     }
 
