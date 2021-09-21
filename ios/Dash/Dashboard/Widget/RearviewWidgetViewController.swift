@@ -26,6 +26,7 @@ class RearviewWidgetViewController: UIViewController {
         super.viewDidLoad()
 
         overrideUserInterfaceStyle = .dark
+        view.backgroundColor = .black
 
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
 
