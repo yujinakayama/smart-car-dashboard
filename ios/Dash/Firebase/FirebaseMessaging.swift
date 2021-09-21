@@ -44,7 +44,7 @@ class FirebaseMessaging: NSObject {
 }
 
 extension FirebaseMessaging: MessagingDelegate {
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         logger.debug(fcmToken)
     }
 }
