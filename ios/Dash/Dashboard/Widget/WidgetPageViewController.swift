@@ -22,8 +22,6 @@ class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelega
     lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.numberOfPages = widgetViewControllers.count
-        pageControl.currentPageIndicatorTintColor = .secondaryLabel
-        pageControl.pageIndicatorTintColor = .quaternaryLabel
         pageControl.hidesForSinglePage = true
 
         view.addSubview(pageControl)
@@ -63,6 +61,7 @@ class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelega
         // because setViewControllers() invokes the view controller's viewWillAppear() unintentionally.
         if viewControllers == nil || viewControllers!.isEmpty {
             setViewControllers([widgetViewControllers.first!], direction: .forward, animated: false)
+            adaptPageControlColorToCurrentViewController()
         }
     }
 
@@ -88,7 +87,30 @@ class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelega
 
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         guard let currentViewController = viewControllers?.first else { return }
-        guard let index = widgetViewControllers.firstIndex(of: currentViewController) else { return }
-        pageControl.currentPage = index
+
+        if let index = widgetViewControllers.firstIndex(of: currentViewController) {
+            pageControl.currentPage = index
+        }
+
+        UIView.animate(withDuration: 0.5) {
+            // We don't set `pageControl.overrideUserInterfaceStyle` here
+            // since it's not animatable.
+            self.adaptPageControlColorToCurrentViewController()
+        }
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            adaptPageControlColorToCurrentViewController()
+        }
+    }
+
+    private func adaptPageControlColorToCurrentViewController() {
+        guard let currentViewController = viewControllers?.first else { return }
+        let traitCollection = currentViewController.traitCollection
+        pageControl.currentPageIndicatorTintColor = .secondaryLabel.resolvedColor(with: traitCollection)
+        pageControl.pageIndicatorTintColor = .quaternaryLabel.resolvedColor(with: traitCollection)
     }
 }
