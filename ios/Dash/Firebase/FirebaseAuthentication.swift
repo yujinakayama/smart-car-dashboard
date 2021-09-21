@@ -33,27 +33,58 @@ class FirebaseAuthentication: NSObject {
 
     private var authStateListener: AuthStateDidChangeListenerHandle?
 
-    private var signInCompletionHandler: ((Error?) -> Void)?
+    private lazy var googleSignInConfiguration = GIDConfiguration(clientID: FirebaseApp.app()!.options.clientID!)
 
     override init() {
         super.init()
-        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
-        GIDSignIn.sharedInstance().delegate = self
         beginGeneratingNotifications()
     }
 
     func presentSignInViewController(in presentingViewController: UIViewController, completion: @escaping (Error?) -> Void) {
-        GIDSignIn.sharedInstance().presentingViewController = presentingViewController
-        signInCompletionHandler = completion
-        GIDSignIn.sharedInstance().signIn()
+        GIDSignIn.sharedInstance.signIn(with: googleSignInConfiguration, presenting: presentingViewController) { [weak self] (user, error) in
+            guard let self = self else { return }
+
+            if let error = error {
+                logger.error(error)
+                completion(error)
+                return
+            }
+
+            guard let googleAuthentication = user?.authentication,
+                  let idToken = googleAuthentication.idToken
+            else { return }
+
+            let firebaseCredential = GoogleAuthProvider.credential(
+                withIDToken: idToken,
+                accessToken: googleAuthentication.accessToken
+            )
+
+            self.signInToFirebase(with: firebaseCredential, completion: completion)
+        }
+    }
+
+    private func signInToFirebase(with credential: AuthCredential, completion: @escaping (Error?) -> Void) {
+        Auth.auth().signIn(with: credential) { (authResult, error) in
+            if let error = error {
+                logger.error(error)
+            } else {
+                logger.info(authResult)
+            }
+
+            completion(error)
+        }
     }
 
     func signOut() {
-        try? Auth.auth().signOut()
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            logger.error(error)
+        }
     }
 
     func handle(_ url: URL) -> Bool {
-        return GIDSignIn.sharedInstance().handle(url)
+        return GIDSignIn.sharedInstance.handle(url)
     }
 
     private func beginGeneratingNotifications() {
@@ -77,43 +108,5 @@ class FirebaseAuthentication: NSObject {
         }
 
         previousVehicleID = vehicleID
-    }
-}
-
-extension FirebaseAuthentication: GIDSignInDelegate {
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
-        if let error = error {
-            logger.error(error)
-            return
-        }
-
-        guard let googleAuthentication = user.authentication else { return }
-
-        let firebaseCredential = GoogleAuthProvider.credential(
-            withIDToken: googleAuthentication.idToken,
-            accessToken: googleAuthentication.accessToken
-        )
-
-        signInToFirebase(with: firebaseCredential)
-    }
-
-    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
-        if let error = error {
-            logger.error(error)
-        }
-
-        logger.info(user)
-    }
-
-    private func signInToFirebase(with credential: AuthCredential) {
-        Auth.auth().signIn(with: credential) { [weak self] (authResult, error) in
-            if let error = error {
-                logger.error(error)
-            } else {
-                logger.info(authResult)
-            }
-
-            self?.signInCompletionHandler?(error)
-        }
     }
 }
