@@ -40,8 +40,8 @@ class MapsViewController: UIViewController {
     }()
 
     lazy var mapTypeSegmentedControl: MapTypeSegmentedControl = {
-        let segmentedControl = MapTypeSegmentedControl()
-        segmentedControl.mapType = mapView.mapType
+        let segmentedControl = MapTypeSegmentedControl(mapTypes: [.standard, .hybrid])
+        segmentedControl.selectedMapType = mapView.mapType
         segmentedControl.addTarget(self, action: #selector(mapTypeSegmentedControlDidChange), for: .valueChanged)
         return segmentedControl
     }()
@@ -305,7 +305,7 @@ class MapsViewController: UIViewController {
     }
 
     @objc func mapTypeSegmentedControlDidChange() {
-        mapView.mapType = mapTypeSegmentedControl.mapType
+        mapView.mapType = mapTypeSegmentedControl.selectedMapType ?? .standard
         updatePointOfInterestFilter()
     }
 
@@ -600,7 +600,7 @@ extension MapsViewController {
         if coder.containsValue(forKey: RestorationCodingKeys.mapType.rawValue),
            let mapType = MKMapType(rawValue: UInt(coder.decodeInteger(forKey: RestorationCodingKeys.mapType.rawValue)))
         {
-            mapTypeSegmentedControl.mapType = mapType
+            mapTypeSegmentedControl.selectedMapType = mapType
             mapTypeSegmentedControlDidChange()
         }
 
