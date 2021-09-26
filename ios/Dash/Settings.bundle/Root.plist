@@ -38,7 +38,7 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>Maps Integration</string>
+			<string>Apple Maps Integration</string>
 			<key>FooterText</key>
 			<string>When opening locations in Apple Maps, automatically search and show corresponding point of interest with detailed infomation. This requires additional network request for searching.</string>
 		</dict>
