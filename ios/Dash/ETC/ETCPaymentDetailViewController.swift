@@ -37,11 +37,12 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
         mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: annotationViewIdentifier)
 
+        mapTypeSegmentedControl.mapTypes = [.standard, .hybrid]
+        mapTypeSegmentedControl.selectedMapType = mapView.mapType
+
         let infoButton = UIButton(type: .infoLight)
         infoButton.addTarget(self, action: #selector(infoButtonDidTouchUpInside), for: .touchUpInside)
         infoBarButtonItem = UIBarButtonItem(customView: infoButton)
-
-        restoreMapType()
 
         configureView()
     }
@@ -70,12 +71,6 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
             mapView.showsUserLocation = false
         }
         super.viewDidDisappear(animated)
-    }
-
-    func restoreMapType() {
-        mapTypeSegmentedControl.mapTypes = [.standard, .hybrid]
-        mapTypeSegmentedControl.selectedMapType = Defaults.shared.mapTypeForETCRoute
-        mapTypeSegmentedControlDidChange()
     }
 
     func configureView() {
@@ -240,7 +235,6 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
 
     @IBAction func mapTypeSegmentedControlDidChange() {
         mapView.mapType = mapTypeSegmentedControl.selectedMapType ?? .standard
-        Defaults.shared.mapTypeForETCRoute = mapView.mapType
     }
 
     @IBAction func infoButtonDidTouchUpInside(button: UIButton) {
@@ -255,3 +249,24 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
     }
 }
 
+extension ETCPaymentDetailViewController {
+    enum RestorationCodingKeys: String {
+        case mapType
+    }
+
+    override func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+        coder.encode(Int(mapView.mapType.rawValue), forKey: RestorationCodingKeys.mapType.rawValue)
+    }
+
+    override func decodeRestorableState(with coder: NSCoder) {
+        if coder.containsValue(forKey: RestorationCodingKeys.mapType.rawValue),
+           let mapType = MKMapType(rawValue: UInt(coder.decodeInteger(forKey: RestorationCodingKeys.mapType.rawValue)))
+        {
+            mapTypeSegmentedControl.selectedMapType = mapType
+            mapTypeSegmentedControlDidChange()
+        }
+
+        super.decodeRestorableState(with: coder)
+    }
+}

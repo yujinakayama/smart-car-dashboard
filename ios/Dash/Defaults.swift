@@ -32,6 +32,7 @@ class Defaults {
 
     init() {
         loadDefaultValues()
+        userDefaults.removeObject(forKey: Key.mapTypeForETCRoute.rawValue)
     }
 
     private func loadDefaultValues() {
@@ -109,17 +110,6 @@ extension Defaults {
 
         set {
             set(newValue.timeIntervalSinceReferenceDate, for: .lastBackgroundEntranceTime)
-        }
-    }
-
-    var mapTypeForETCRoute: MKMapType {
-        get {
-            let integer = integer(for: .mapTypeForETCRoute)
-            return MKMapType(rawValue: UInt(integer)) ?? .standard
-        }
-
-        set {
-            set(newValue.rawValue, for: .mapTypeForETCRoute)
         }
     }
 

@@ -513,7 +513,7 @@
         <!--Master Navigation Controller-->
         <scene sceneID="pY4-Hu-kfo">
             <objects>
-                <navigationController restorationIdentifier="ETCNavigationController" id="RMx-3f-FxP" userLabel="Master Navigation Controller" sceneMemberID="viewController">
+                <navigationController restorationIdentifier="ETCMasterNavigationController" id="RMx-3f-FxP" userLabel="Master Navigation Controller" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" largeTitles="YES" id="Pmd-2v-anx">
                         <rect key="frame" x="0.0" y="24" width="375" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -638,7 +638,7 @@
         <!--Payment Detail View Controller-->
         <scene sceneID="yUG-lL-AsK">
             <objects>
-                <viewController title="Detail" id="JEX-9P-axG" userLabel="Payment Detail View Controller" customClass="ETCPaymentDetailViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="ETCPaymentDetailViewController" title="Detail" id="JEX-9P-axG" userLabel="Payment Detail View Controller" customClass="ETCPaymentDetailViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="svH-Pt-448">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -946,7 +946,7 @@
         <!--Detail Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">
             <objects>
-                <navigationController id="vC3-pB-5Vb" userLabel="Detail Navigation Controller" sceneMemberID="viewController">
+                <navigationController restorationIdentifier="ETCDetailNavigationController" id="vC3-pB-5Vb" userLabel="Detail Navigation Controller" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="DjV-YW-jjY">
                         <rect key="frame" x="0.0" y="24" width="375" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1600,7 +1600,7 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="Tll-UG-LXB"/>
+        <segue reference="6S0-TO-JiA"/>
         <segue reference="ZuQ-m0-CKt"/>
     </inferredMetricsTieBreakers>
     <resources>
