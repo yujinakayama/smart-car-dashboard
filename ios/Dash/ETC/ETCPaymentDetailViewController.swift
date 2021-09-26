@@ -256,7 +256,10 @@ extension ETCPaymentDetailViewController {
 
     override func encodeRestorableState(with coder: NSCoder) {
         super.encodeRestorableState(with: coder)
-        coder.encode(Int(mapView.mapType.rawValue), forKey: RestorationCodingKeys.mapType.rawValue)
+
+        if let mapView = mapView {
+            coder.encode(Int(mapView.mapType.rawValue), forKey: RestorationCodingKeys.mapType.rawValue)
+        }
     }
 
     override func decodeRestorableState(with coder: NSCoder) {
