@@ -107,6 +107,7 @@ class MapsViewController: UIViewController {
         button.tintColor = .tertiaryLabel
         button.addTarget(self, action: #selector(parkingSearchQuittingButtonDidPush), for: .touchUpInside)
         button.setContentHuggingPriority(.required, for: .horizontal)
+        button.setContentCompressionResistancePriority(.required, for: .horizontal)
         return button
     }()
 

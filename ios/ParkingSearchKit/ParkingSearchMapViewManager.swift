@@ -44,7 +44,8 @@ public class ParkingSearchMapViewManager: NSObject {
                 calculateExpectedTravelTime { (travelTime) in
                     DispatchQueue.main.async {
                         if let travelTime = travelTime {
-                            self.optionsView.entranceDatePicker.date = Date() + travelTime
+                            let arrivalDate = Date() + travelTime
+                            self.optionsView.setEntranceDate(arrivalDate, animated: true)
                         }
 
                         self.searchParkings()
@@ -88,6 +89,7 @@ public class ParkingSearchMapViewManager: NSObject {
         mapView.register(MKPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: Self.pinAnnotationViewIdentifier)
 
         optionsView.entranceDatePicker.addTarget(self, action: #selector(searchParkings), for: .valueChanged)
+        optionsView.entranceTimePicker.addTarget(self, action: #selector(searchParkings), for: .valueChanged)
         optionsView.timeDurationPicker.addTarget(self, action: #selector(searchParkings), for: .valueChanged)
     }
 
@@ -139,7 +141,9 @@ public class ParkingSearchMapViewManager: NSObject {
 
         removeParkings()
 
-        guard let timeDuration = optionsView.timeDurationPicker.selectedDuration else { return }
+        guard let entranceDate = optionsView.entranceDate,
+              let timeDuration = optionsView.timeDurationPicker.selectedDuration
+        else { return }
 
         if let destinationAnnotation = destinationAnnotation {
             self.mapView.view(for: destinationAnnotation)?.canShowCallout = true
@@ -148,8 +152,8 @@ public class ParkingSearchMapViewManager: NSObject {
 
         currentSearchTask = ppparkClient.searchParkings(
             around: destination,
-            entranceDate: optionsView.entranceDatePicker.date,
-            exitDate: optionsView.entranceDatePicker.date + timeDuration
+            entranceDate: entranceDate,
+            exitDate: entranceDate + timeDuration
         ) { [weak self] (result) in
             guard let self = self else { return }
 

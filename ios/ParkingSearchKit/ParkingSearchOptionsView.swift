@@ -12,6 +12,7 @@ public class ParkingSearchOptionsView: UIView {
     lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
             entranceDatePicker,
+            entranceTimePicker,
             conjunctionLabel,
             timeDurationPicker,
             parkingLabel,
@@ -24,7 +25,13 @@ public class ParkingSearchOptionsView: UIView {
         return stackView
     }()
 
-    lazy var entranceDatePicker: UIDatePicker = {
+    lazy var entranceDatePicker: RelativeDatePicker = {
+        let datePicker = RelativeDatePicker()
+        datePicker.dayRangeRelativeToToday = 0...7
+        return datePicker
+    }()
+
+    lazy var entranceTimePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .time
         datePicker.minuteInterval = 10
@@ -55,6 +62,17 @@ public class ParkingSearchOptionsView: UIView {
     }()
 
     lazy var parkingLabel = makeLabel(text: "駐車")
+
+    var entranceDate: Date? {
+        guard let baseDate = entranceDatePicker.date else { return nil }
+        let timeComponents = entranceTimePicker.calendar.dateComponents([.hour, .minute, .second], from: entranceTimePicker.date)
+        return entranceTimePicker.calendar.date(byAdding: timeComponents, to: baseDate)!
+    }
+
+    func setEntranceDate(_ date: Date, animated: Bool) {
+        entranceDatePicker.setDate(date, animated: animated)
+        entranceTimePicker.setDate(date, animated: animated)
+    }
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
