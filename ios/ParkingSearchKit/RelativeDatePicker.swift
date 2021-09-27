@@ -91,9 +91,13 @@ import UIKit
         updateDates()
 
         setDate(today, animated: false)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(updateDates), name: UIApplication.significantTimeChangeNotification, object: nil)
     }
 
-    private func updateDates() {
+    @objc private func updateDates() {
+        let previouslySelectedDate = date
+
         let calendar = Calendar.autoupdatingCurrent
 
         today = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!
@@ -103,6 +107,10 @@ import UIKit
         }
 
         pickerView.reloadAllComponents()
+
+        if let previouslySelectedDate = previouslySelectedDate {
+            setDate(previouslySelectedDate, animated: false)
+        }
     }
 
     private func format(_ date: Date) -> String {
