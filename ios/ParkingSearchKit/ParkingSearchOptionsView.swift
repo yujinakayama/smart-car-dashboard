@@ -9,6 +9,8 @@
 import UIKit
 
 public class ParkingSearchOptionsView: UIView {
+    private let datePickerBuiltInHorizontalPadding: CGFloat = 8 // Left and right each
+
     lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
             entranceDatePicker,
@@ -20,7 +22,11 @@ public class ParkingSearchOptionsView: UIView {
 
         stackView.axis = .horizontal
         stackView.alignment = .center
-        stackView.distribution = .equalSpacing
+        stackView.distribution = .fill
+
+        stackView.spacing = 10
+        stackView.setCustomSpacing(stackView.spacing - datePickerBuiltInHorizontalPadding, after: entranceDatePicker)
+        stackView.setCustomSpacing(stackView.spacing - datePickerBuiltInHorizontalPadding, after: entranceTimePicker)
 
         return stackView
     }()

@@ -38,6 +38,8 @@ import UIKit
 
     private var heightConstraint: NSLayoutConstraint?
 
+    private let pickerViewBuiltInHorizontalPadding: CGFloat = 9 // Left and right each
+
     private lazy var fontMetrics = UIFontMetrics(forTextStyle: .body)
     private lazy var font = UIFont.preferredFont(forTextStyle: .body)
 
@@ -70,8 +72,8 @@ import UIKit
         NSLayoutConstraint.activate([
             heightConstraint!,
             pickerView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            pickerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            pickerView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            pickerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -pickerViewBuiltInHorizontalPadding),
+            trailingAnchor.constraint(equalTo: pickerView.trailingAnchor, constant: -pickerViewBuiltInHorizontalPadding),
         ])
     }
 
@@ -82,7 +84,7 @@ import UIKit
     }
 
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: maxLabelWidth + 40, height: heightConstraint?.constant ?? 0)
+        return CGSize(width: maxLabelWidth + 20, height: heightConstraint?.constant ?? 0)
     }
 
     private var maxLabelWidth: CGFloat {
