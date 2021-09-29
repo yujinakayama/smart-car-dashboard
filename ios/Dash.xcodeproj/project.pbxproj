@@ -140,6 +140,7 @@
 		B9A481FE23EF01DB00AA7590 /* SuccessCheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */; };
 		B9A4820023EF025200AA7590 /* SuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FF23EF025200AA7590 /* SuccessViewController.swift */; };
 		B9A4820123EFCEC200AA7590 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
+		B9ADFEAD2704B19100F230E0 /* TimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9ADFEAC2704B19000F230E0 /* TimePicker.swift */; };
 		B9B154EE2575FCED0031761F /* FirebaseMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B154ED2575FCED0031761F /* FirebaseMessaging.swift */; };
 		B9B154F82576075C0031761F /* TabBarBadgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B154F72576075C0031761F /* TabBarBadgeManager.swift */; };
 		B9B18DD323EDFFF40096D603 /* DashCloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashCloudKit.framework */; };
@@ -545,6 +546,7 @@
 		B9A45A9A252C229200CA7921 /* SharedItemDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemDatabase.swift; sourceTree = "<group>"; };
 		B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessCheckmarkView.swift; sourceTree = "<group>"; };
 		B9A481FF23EF025200AA7590 /* SuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessViewController.swift; sourceTree = "<group>"; };
+		B9ADFEAC2704B19000F230E0 /* TimePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimePicker.swift; sourceTree = "<group>"; };
 		B9B154ED2575FCED0031761F /* FirebaseMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMessaging.swift; sourceTree = "<group>"; };
 		B9B154F72576075C0031761F /* TabBarBadgeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarBadgeManager.swift; sourceTree = "<group>"; };
 		B9B399CB25965BDC00C7977F /* CameraOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOptions.swift; sourceTree = "<group>"; };
@@ -1168,6 +1170,7 @@
 				B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */,
 				B9F8DBE725EA288B00F6FA55 /* PPParkClient.swift */,
 				B9DF6F5827006A7400DC19D0 /* RelativeDatePicker.swift */,
+				B9ADFEAC2704B19000F230E0 /* TimePicker.swift */,
 				B984C019263DA08D00AF79AE /* TimeDurationPicker.swift */,
 				B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */,
 				B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */,
@@ -2074,6 +2077,7 @@
 				B92ADE77269990370086E4D8 /* NSRegularExpressionExtension.swift in Sources */,
 				B9DD4CDA26517FBF0010B120 /* PPParkClient.swift in Sources */,
 				B900A13D2652BCF4000ED1B9 /* StringExtension.swift in Sources */,
+				B9ADFEAD2704B19100F230E0 /* TimePicker.swift in Sources */,
 				B9DD4CD726517FBF0010B120 /* TimeDurationPicker.swift in Sources */,
 				B9DD4CD626517FBF0010B120 /* ParkingAnnotation.swift in Sources */,
 				B92ADE9B269ACA4C0086E4D8 /* Logger.swift in Sources */,
