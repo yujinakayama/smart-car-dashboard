@@ -70,6 +70,8 @@ import UIKit
         ])
 
         updateTimes()
+
+        setTime(from: Date(), animated: false)
     }
 
     private func updateTimes() {
