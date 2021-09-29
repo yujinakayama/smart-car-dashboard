@@ -11,8 +11,8 @@ import UIKit
 @IBDesignable class TimePicker: UIControl, UIPickerViewDataSource, UIPickerViewDelegate {
     var time: Time? {
         let selectedRow = pickerView.selectedRow(inComponent: 0)
-        guard selectedRow <= times.count - 1 else { return nil }
-        return times[selectedRow]
+        guard selectedRow >= 0 else { return nil }
+        return time(for: selectedRow)
     }
 
     var minuteInterval: Int = 10 {
@@ -111,8 +111,13 @@ import UIKit
     }
 
     func setTime(_ time: Time, animated: Bool) {
-        let row = times.lastIndex(where: { $0 <= time }) ?? 0
-        pickerView.selectRow(row, inComponent: 0, animated: animated)
+        let index = times.lastIndex(where: { $0 <= time }) ?? 0
+        pickerView.selectRow(times.count + index, inComponent: 0, animated: animated)
+    }
+
+    func time(for row: Int) -> Time {
+        let index = row % times.count
+        return times[index]
     }
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -120,12 +125,12 @@ import UIKit
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return times.count
+        return times.count * 3
     }
 
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         let label = (view as? UILabel) ?? makeLabel()
-        label.text = format(times[row])
+        label.text = format(time(for: row))
         return label
     }
 
@@ -135,6 +140,12 @@ import UIKit
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         sendActions(for: .valueChanged)
+        reselectMiddleRowForCurrentTime()
+    }
+
+    private func reselectMiddleRowForCurrentTime() {
+        let index = pickerView.selectedRow(inComponent: 0) % times.count
+        pickerView.selectRow(times.count + index, inComponent: 0, animated: false)
     }
 
     private var rowHeight: CGFloat {
