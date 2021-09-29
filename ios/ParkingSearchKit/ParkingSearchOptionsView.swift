@@ -9,8 +9,6 @@
 import UIKit
 
 public class ParkingSearchOptionsView: UIView {
-    private let datePickerBuiltInHorizontalPadding: CGFloat = 8 // Left and right each
-
     lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
             entranceDatePicker,
@@ -23,10 +21,7 @@ public class ParkingSearchOptionsView: UIView {
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.distribution = .fill
-
         stackView.spacing = 10
-        stackView.setCustomSpacing(stackView.spacing - datePickerBuiltInHorizontalPadding, after: entranceDatePicker)
-        stackView.setCustomSpacing(stackView.spacing - datePickerBuiltInHorizontalPadding, after: entranceTimePicker)
 
         return stackView
     }()
@@ -37,14 +32,7 @@ public class ParkingSearchOptionsView: UIView {
         return datePicker
     }()
 
-    lazy var entranceTimePicker: UIDatePicker = {
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .time
-        datePicker.minuteInterval = 10
-        datePicker.preferredDatePickerStyle = .inline
-        datePicker.locale = Locale(identifier: "en_GB")
-        return datePicker
-    }()
+    lazy var entranceTimePicker = TimePicker()
 
     lazy var conjunctionLabel = makeLabel(text: "から")
 
@@ -70,14 +58,16 @@ public class ParkingSearchOptionsView: UIView {
     lazy var parkingLabel = makeLabel(text: "駐車")
 
     var entranceDate: Date? {
-        guard let baseDate = entranceDatePicker.date else { return nil }
-        let timeComponents = entranceTimePicker.calendar.dateComponents([.hour, .minute, .second], from: entranceTimePicker.date)
-        return entranceTimePicker.calendar.date(byAdding: timeComponents, to: baseDate)!
+        guard let baseDate = entranceDatePicker.date,
+              let time = entranceTimePicker.time
+        else { return nil }
+
+        return baseDate.addingTimeInterval(time.timeIntervalSinceMidnight)
     }
 
     func setEntranceDate(_ date: Date, animated: Bool) {
         entranceDatePicker.setDate(date, animated: animated)
-        entranceTimePicker.setDate(date, animated: animated)
+        entranceTimePicker.setTime(from: date, animated: animated)
     }
 
     public override init(frame: CGRect) {
