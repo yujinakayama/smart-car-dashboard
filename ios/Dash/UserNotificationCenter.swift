@@ -75,9 +75,12 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
         completionHandler(notification.request.content.foregroundPresentationOptions)
     }
 
+    private var processingNotification: RemoteNotification?
+
     func process(_ notification: UNNotification) {
         let remoteNotification = RemoteNotification(userInfo: notification.request.content.userInfo)
         remoteNotification.process()
+        processingNotification = remoteNotification
     }
 }
 
