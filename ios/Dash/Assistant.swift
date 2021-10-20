@@ -35,6 +35,7 @@ extension Assistant {
         let newItemThresholdTime: Date
         let maxDatabaseUpdateWaitTimeInterval: TimeInterval = 5
         var finished = false
+        private var location: Location?
 
         init(newItemThresholdTime: Date) {
             self.newItemThresholdTime = newItemThresholdTime
@@ -62,9 +63,10 @@ extension Assistant {
             guard !finished else { return }
 
             guard let database = Firebase.shared.sharedItemDatabase else { return }
-            let unopenedLocations = database.items.filter { $0 is Location && !$0.hasBeenOpened && ($0.creationDate ?? Date()) > newItemThresholdTime }
+            let unopenedLocations = database.items.filter { $0 is Location && !$0.hasBeenOpened && ($0.creationDate ?? Date()) > newItemThresholdTime } as! [Location]
             guard unopenedLocations.count == 1, let location = unopenedLocations.first else { return }
             location.open()
+            self.location = location
 
             finished = true
         }
