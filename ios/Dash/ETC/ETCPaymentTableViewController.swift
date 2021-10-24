@@ -10,10 +10,6 @@ import UIKit
 import CoreData
 
 class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
-    enum RestorationCodingKeys: String {
-        case cardUUIDString
-    }
-
     var device: ETCDevice {
         return Vehicle.default.etcDevice
     }
@@ -23,8 +19,6 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
             navigationItem.title = card?.displayedName ?? String(localized: "All ETC Payments")
         }
     }
-
-    var restoredCardUUID: UUID?
 
     lazy var deviceStatusBarItemManager = ETCDeviceStatusBarItemManager(device: device)
 
@@ -49,21 +43,6 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         startFetchingPayments()
     }
 
-    override func encodeRestorableState(with coder: NSCoder) {
-        super.encodeRestorableState(with: coder)
-        coder.encode(card?.uuid.uuidString, forKey: RestorationCodingKeys.cardUUIDString.rawValue)
-    }
-
-    override func decodeRestorableState(with coder: NSCoder) {
-        if let cardUUIDString = coder.decodeObject(forKey: RestorationCodingKeys.cardUUIDString.rawValue) as? String {
-            restoredCardUUID = UUID(uuidString: cardUUIDString)
-        } else {
-            card = nil
-        }
-
-        super.decodeRestorableState(with: coder)
-    }
-
     func startFetchingPayments() {
         if let managedObjectContext = device.dataStore.viewContext {
             fetchPayments(managedObjectContext: managedObjectContext)
@@ -76,10 +55,6 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     }
 
     func fetchPayments(managedObjectContext: NSManagedObjectContext) {
-        if let restoredCardUUID = restoredCardUUID {
-            card = try! device.dataStore.findCard(uuid: restoredCardUUID, in: managedObjectContext)
-        }
-
         fetchedResultsController = makeFetchedResultsController(managedObjectContext: managedObjectContext)
         try! fetchedResultsController!.performFetch()
         tableView.reloadData()

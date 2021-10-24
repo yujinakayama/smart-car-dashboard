@@ -65,19 +65,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-    func application(_ application: UIApplication, shouldSaveSecureApplicationState coder: NSCoder) -> Bool {
-        return true
-    }
-
-    func application(_ application: UIApplication, shouldRestoreSecureApplicationState coder: NSCoder) -> Bool {
-        if let savedStateBundleVersion = coder.decodeObject(forKey: UIApplication.stateRestorationBundleVersionKey) as? String {
-            let currentBundleVersion = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as! String
-            return savedStateBundleVersion == currentBundleVersion
-        } else {
-            return false
-        }
-    }
-
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
         if Firebase.shared.authentication.handle(url) {
             return true

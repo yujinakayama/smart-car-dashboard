@@ -587,28 +587,6 @@ extension MapsViewController {
     }
 }
 
-extension MapsViewController {
-    enum RestorationCodingKeys: String {
-        case mapType
-    }
-
-    override func encodeRestorableState(with coder: NSCoder) {
-        super.encodeRestorableState(with: coder)
-        coder.encode(Int(mapView.mapType.rawValue), forKey: RestorationCodingKeys.mapType.rawValue)
-    }
-
-    override func decodeRestorableState(with coder: NSCoder) {
-        if coder.containsValue(forKey: RestorationCodingKeys.mapType.rawValue),
-           let mapType = MKMapType(rawValue: UInt(coder.decodeInteger(forKey: RestorationCodingKeys.mapType.rawValue)))
-        {
-            mapTypeSegmentedControl.selectedMapType = mapType
-            mapTypeSegmentedControlDidChange()
-        }
-
-        super.decodeRestorableState(with: coder)
-    }
-}
-
 extension MapsViewController: TabReselectionRespondable {
     func tabBarControllerDidReselectAlreadyVisibleTab(_ tabBarController: UITabBarController) {
         mapView.setUserTrackingMode(.follow, animated: true)
