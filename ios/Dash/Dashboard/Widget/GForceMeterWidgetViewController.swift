@@ -26,7 +26,7 @@ class GForceMeterWidgetViewController: UIViewController {
 
         loadDefaults()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(loadDefaults), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadDefaults), name: UIScene.willEnterForegroundNotification, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {

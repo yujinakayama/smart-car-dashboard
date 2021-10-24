@@ -28,9 +28,9 @@ class RearviewWidgetViewController: UIViewController {
         overrideUserInterfaceStyle = .dark
         view.backgroundColor = .black
 
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(sceneWillEnterForeground), name: UIScene.willEnterForegroundNotification, object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(sceneDidEnterBackground), name: UIScene.didEnterBackgroundNotification, object: nil)
 
         setUpRearviewViewControllerIfPossible()
     }
@@ -115,7 +115,7 @@ class RearviewWidgetViewController: UIViewController {
         rearviewViewController?.stop()
     }
 
-    @objc func applicationWillEnterForeground() {
+    @objc func sceneWillEnterForeground() {
         setUpRearviewViewControllerIfPossible()
 
         if isVisible {
@@ -123,7 +123,7 @@ class RearviewWidgetViewController: UIViewController {
         }
     }
 
-    @objc func applicationDidEnterBackground() {
+    @objc func sceneDidEnterBackground() {
         tearDownRearviewViewControllerIfNeeded()
 
         warningLabel?.removeFromSuperview()

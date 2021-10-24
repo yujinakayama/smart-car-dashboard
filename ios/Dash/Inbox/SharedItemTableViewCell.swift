@@ -59,7 +59,7 @@ class SharedItemTableViewCell: UITableViewCell {
 
         // Not sure why but constraints are reset to Storyboard's state when app goes background and back to foreground
         // https://stackoverflow.com/questions/58376388/constraints-resets-when-app-is-going-in-background-ios-13
-        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { [weak self] (notification) in
+        NotificationCenter.default.addObserver(forName: UIScene.willEnterForegroundNotification, object: nil, queue: .main) { [weak self] (notification) in
             self?.setNeedsUpdateConstraints()
         }
     }

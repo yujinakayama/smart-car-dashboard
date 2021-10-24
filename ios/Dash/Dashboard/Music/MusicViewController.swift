@@ -130,8 +130,8 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
 
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(applicationWillEnterForeground),
-            name: UIApplication.willEnterForegroundNotification,
+            selector: #selector(sceneWillEnterForeground),
+            name: UIScene.willEnterForegroundNotification,
             object: nil
         )
 
@@ -194,7 +194,7 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
         updatePlaybackModeButtons()
     }
 
-    @objc func applicationWillEnterForeground() {
+    @objc func sceneWillEnterForeground() {
         updatePlaybackModeButtons()
     }
 

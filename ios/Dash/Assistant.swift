@@ -12,15 +12,15 @@ class Assistant {
     var locationOpener: LocationOpener?
 
     init() {
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(sceneDidEnterBackground), name: UIScene.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(sceneWillEnterForeground), name: UIScene.willEnterForegroundNotification, object: nil)
     }
 
-    @objc func applicationDidEnterBackground() {
+    @objc func sceneDidEnterBackground() {
         Defaults.shared.lastBackgroundEntranceTime = Date()
     }
 
-    @objc func applicationWillEnterForeground() {
+    @objc func sceneWillEnterForeground() {
         if Defaults.shared.automaticallyOpensUnopenedLocationWhenAppIsOpened {
             locationOpener = LocationOpener(newItemThresholdTime: Defaults.shared.lastBackgroundEntranceTime)
             locationOpener?.start()

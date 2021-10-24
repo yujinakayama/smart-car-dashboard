@@ -123,8 +123,8 @@ import MediaPlayer
 
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(applicationWillEnterForeground),
-            name: UIApplication.willEnterForegroundNotification,
+            selector: #selector(sceneWillEnterForeground),
+            name: UIScene.willEnterForegroundNotification,
             object: nil
         )
     }
@@ -218,8 +218,8 @@ import MediaPlayer
         scheduleUpdatesIfNeeded()
     }
 
-    @objc func applicationWillEnterForeground() {
-        // When an app entered background, UIKit removes all animations
+    @objc func sceneWillEnterForeground() {
+        // When the scene entered background, UIKit removes all animations
         // even if it's an infinite animation.
         // So we restart the animation here if it should be when the app came back to foreground.
         scheduleUpdatesIfNeeded()

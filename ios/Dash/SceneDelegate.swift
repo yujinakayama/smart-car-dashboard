@@ -6,17 +6,30 @@
 //
 
 import UIKit
+import MapKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
     var window: UIWindow?
 
+    var tabBarController: TabBarController {
+        return window?.rootViewController as! TabBarController
+    }
+
+    lazy var tabBarBadgeManager = TabBarBadgeManager(tabBarController: tabBarController)
+
+    let assistant = Assistant()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+
+        if !Defaults.shared.isETCIntegrationEnabled {
+            tabBarController.removeTab(.etc)
+        }
+
+        _ = tabBarBadgeManager
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -47,6 +60,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else { return }
 
+        if Firebase.shared.authentication.handle(url) {
+            return
+        }
+
+        if let urlItem = ParkingSearchURLItem(url: url) {
+            searchParkingsInMaps(mapItem: urlItem.mapItem)
+        }
+    }
+
+    private func searchParkingsInMaps(mapItem: MKMapItem) {
+        let navigationController = tabBarController.viewController(for: .maps) as! UINavigationController
+        let mapsViewController = navigationController.topViewController as! MapsViewController
+        mapsViewController.startSearchingParkings(destination: mapItem)
+        tabBarController.selectedViewController = navigationController
+    }
 }
 
