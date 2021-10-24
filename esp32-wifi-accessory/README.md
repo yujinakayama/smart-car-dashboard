@@ -6,8 +6,7 @@
 
 ### Software
 
-* [ESP-IDF](https://github.com/espressif/esp-idf) master (`v4.3-dev-1197-g8bc19ba89-dirty`)
-    * Check the version with `(cd "$IDF_PATH" && git describe --tags --dirty)`
+* [ESP-IDF](https://github.com/espressif/esp-idf) 4.3
 
 ## Project Configuration
 
