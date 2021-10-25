@@ -248,28 +248,3 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
         present(debugInformationViewController, animated: true)
     }
 }
-
-extension ETCPaymentDetailViewController {
-    enum RestorationCodingKeys: String {
-        case mapType
-    }
-
-    override func encodeRestorableState(with coder: NSCoder) {
-        super.encodeRestorableState(with: coder)
-
-        if let mapView = mapView {
-            coder.encode(Int(mapView.mapType.rawValue), forKey: RestorationCodingKeys.mapType.rawValue)
-        }
-    }
-
-    override func decodeRestorableState(with coder: NSCoder) {
-        if coder.containsValue(forKey: RestorationCodingKeys.mapType.rawValue),
-           let mapType = MKMapType(rawValue: UInt(coder.decodeInteger(forKey: RestorationCodingKeys.mapType.rawValue)))
-        {
-            mapTypeSegmentedControl.selectedMapType = mapType
-            mapTypeSegmentedControlDidChange()
-        }
-
-        super.decodeRestorableState(with: coder)
-    }
-}

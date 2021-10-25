@@ -10,7 +10,7 @@ import UIKit
 
 // Container view controller
 class DashboardViewController: UIViewController {
-    enum LayoutMode {
+    enum LayoutMode: Int {
         case fullMusicView
         case split
     }
@@ -19,14 +19,14 @@ class DashboardViewController: UIViewController {
     @IBOutlet weak var musicContainerView: UIView!
     @IBOutlet weak var musicEdgeGlossView: UIView!
 
-    lazy var widgetViewController: UIViewController = children.first { $0 is WidgetPageViewController }!
-    lazy var musicViewController: MusicViewController = children.first { $0 is MusicViewController } as! MusicViewController
+    lazy var widgetViewController = children.first { $0 is WidgetPageViewController } as! WidgetPageViewController
+    lazy var musicViewController = children.first { $0 is MusicViewController } as! MusicViewController
 
     lazy var musicContainerViewTopConstraintForFullMusicLayout = musicContainerView.topAnchor.constraint(equalTo: view.topAnchor)
     lazy var musicContainerViewTopConstraintForSplitLayout = musicContainerView.topAnchor.constraint(equalTo: widgetView.bottomAnchor)
     lazy var musicContainerViewTopConstraintForDraggingState = musicContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0)
 
-    var currentLayoutMode: LayoutMode = .fullMusicView
+    private(set) var currentLayoutMode: LayoutMode = .fullMusicView
 
     var layoutSwitchGesture: LayoutSwitchGesture {
         return LayoutSwitchGesture(
@@ -37,7 +37,7 @@ class DashboardViewController: UIViewController {
         )
     }
 
-    var hasBegunMusicViewAppearanceTransition = false
+    var hasBegunWidgetViewAppearanceTransition = false
 
     override var shouldAutomaticallyForwardAppearanceMethods: Bool {
         return false
@@ -63,7 +63,7 @@ class DashboardViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        if currentLayoutMode == .split {
+        if isWidgetViewVisible {
             widgetViewController.beginAppearanceTransition(true, animated: animated)
         }
 
@@ -73,7 +73,7 @@ class DashboardViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        if currentLayoutMode == .split {
+        if isWidgetViewVisible {
             widgetViewController.endAppearanceTransition()
         }
 
@@ -83,7 +83,7 @@ class DashboardViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        if currentLayoutMode == .split {
+        if isWidgetViewVisible {
             widgetViewController.beginAppearanceTransition(false, animated: animated)
         }
 
@@ -93,11 +93,15 @@ class DashboardViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 
-        if currentLayoutMode == .split {
+        if isWidgetViewVisible {
             widgetViewController.endAppearanceTransition()
         }
 
         musicViewController.endAppearanceTransition()
+    }
+
+    var isWidgetViewVisible: Bool {
+        return currentLayoutMode == .split
     }
 
     @objc func gestureRecognizerDidRecognizePanGesture(gestureRecognizer: UIPanGestureRecognizer) {
@@ -106,11 +110,11 @@ class DashboardViewController: UIViewController {
             // We don't invoke widgetViewController.beginAppearanceTransition() here
             // to avoid inefficient invocation of viewWillAppear() in MusicViewController
             // with pan gestures that actually don't switch layout
-            hasBegunMusicViewAppearanceTransition = false
+            hasBegunWidgetViewAppearanceTransition = false
         case .changed:
-            if !hasBegunMusicViewAppearanceTransition, layoutSwitchGesture.isConsideredToBeTryingToSwitchLayout {
+            if !hasBegunWidgetViewAppearanceTransition, layoutSwitchGesture.isConsideredToBeTryingToSwitchLayout {
                 widgetViewController.beginAppearanceTransition(currentLayoutMode == .fullMusicView, animated: true)
-                hasBegunMusicViewAppearanceTransition = true
+                hasBegunWidgetViewAppearanceTransition = true
             }
             updateLayoutConstraintForDraggingState(gestureRecognizer: gestureRecognizer)
         case .ended:
@@ -138,11 +142,11 @@ class DashboardViewController: UIViewController {
 
         updateLayoutConstraints(for: finalLayoutMode)
 
-        if (!hasBegunMusicViewAppearanceTransition && finalLayoutMode != currentLayoutMode) // Transitioning but hasn't notified
-        || (hasBegunMusicViewAppearanceTransition && finalLayoutMode == currentLayoutMode)  // Canceling transition so we need to notify of opposite one
+        if (!hasBegunWidgetViewAppearanceTransition && finalLayoutMode != currentLayoutMode) // Transitioning but hasn't notified
+        || (hasBegunWidgetViewAppearanceTransition && finalLayoutMode == currentLayoutMode)  // Canceling transition so we need to notify of opposite one
         {
             widgetViewController.beginAppearanceTransition(finalLayoutMode == .split, animated: true)
-            hasBegunMusicViewAppearanceTransition = true
+            hasBegunWidgetViewAppearanceTransition = true
         }
 
         UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1) {
@@ -150,7 +154,7 @@ class DashboardViewController: UIViewController {
         } completion: { (finished) in
             self.currentLayoutMode = finalLayoutMode
 
-            if self.hasBegunMusicViewAppearanceTransition {
+            if self.hasBegunWidgetViewAppearanceTransition {
                 self.widgetViewController.endAppearanceTransition()
             }
         }
@@ -161,12 +165,19 @@ class DashboardViewController: UIViewController {
         // and it reports wrong horizontalSizeClass, so we ignore it
         if UIApplication.shared.applicationState == .background { return }
 
-        if traitCollection.horizontalSizeClass != .compact, currentLayoutMode != .split {
-            widgetViewController.beginAppearanceTransition(true, animated: false)
-            currentLayoutMode = .split
-            updateLayoutConstraints(for: currentLayoutMode)
-            widgetViewController.endAppearanceTransition()
+        if traitCollection.horizontalSizeClass != .compact {
+            switchLayout(to: .split)
         }
+    }
+
+    func switchLayout(to layoutMode: LayoutMode) {
+        if layoutMode == currentLayoutMode { return }
+
+        widgetViewController.beginAppearanceTransition(layoutMode == .split, animated: false)
+        updateLayoutConstraints(for: layoutMode)
+        widgetViewController.endAppearanceTransition()
+
+        currentLayoutMode = layoutMode
     }
 
     private func updateLayoutConstraints(for layoutMode: LayoutMode) {
