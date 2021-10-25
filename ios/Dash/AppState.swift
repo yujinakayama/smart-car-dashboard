@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class AppState {
     static let activityType = "com.yujinakayama.Dash.AppState"
@@ -52,6 +53,11 @@ extension AppState {
 
         var etcSplitViewController: ETCSplitViewController? {
             return tabBarController.viewController(for: .etc) as? ETCSplitViewController
+        }
+
+        var mapsViewController: MapsViewController? {
+            let navigationController = tabBarController.viewController(for: .maps) as? UINavigationController
+            return navigationController?.viewControllers.first as? MapsViewController
         }
     }
 }
@@ -194,10 +200,25 @@ extension AppState {
         }
     }
 
+    class MapsMapType: Property {
+        override func serialize() -> Any? {
+            return app.mapsViewController?.mapView.mapType.rawValue
+        }
+
+        override func restore(_ value: Any) {
+            guard let value = value as? UInt, let mapType = MKMapType(rawValue: value) else { return }
+            guard let mapsViewController = app.mapsViewController else { return }
+
+            mapsViewController.mapTypeSegmentedControl.selectedMapType = mapType
+            mapsViewController.mapTypeSegmentedControlDidChange()
+        }
+    }
+
     static let propertyTypes: [Property.Type] = [
         SelectedTab.self,
         DashboardLayoutMode.self,
         SelectedWidgetPage.self,
-        DisplayedETCPaymentHistory.self
+        DisplayedETCPaymentHistory.self,
+        MapsMapType.self
     ]
 }
