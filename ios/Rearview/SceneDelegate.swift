@@ -12,9 +12,7 @@ import RearviewKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
-    var rearviewViewController: RearviewViewController?
-
-    var isHandedOffFromOtherApp = false
+    lazy var rearviewManager = RearviewManager()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -49,15 +47,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
-        startIfPossible()
+
+        if let window = window {
+            rearviewManager.startIfPossible(window: window)
+        }
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
-        stopIfNeeded()
-        showBlankScreen()
+
+        rearviewManager.stopIfNeeded()
+
+        if let window = window {
+            rearviewManager.showBlankScreen(window: window)
+        }
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -70,70 +75,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         switch url.host {
         case "handoff":
-            isHandedOffFromOtherApp = true
+            rearviewManager.isHandedOffFromOtherApp = true
         default:
             break
         }
-    }
-
-    func startIfPossible() {
-        guard let window = window else { return }
-
-        if let configuration = RearviewDefaults.shared.configuration {
-            start(window: window, configuration: configuration)
-        } else {
-            showAlertAboutInvalidRaspberryPiAddress(window: window)
-        }
-    }
-
-    func start(window: UIWindow, configuration: RearviewConfiguration) {
-        let rearviewViewController = RearviewViewController(configuration: configuration, cameraSensitivityMode: RearviewDefaults.shared.cameraSensitivityMode)
-        rearviewViewController.delegate = self
-        window.rootViewController = rearviewViewController
-        window.makeKeyAndVisible()
-
-        if isHandedOffFromOtherApp {
-            isHandedOffFromOtherApp = false
-
-            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { (timer) in
-                rearviewViewController.start()
-            }
-        } else {
-            rearviewViewController.start()
-        }
-
-        self.rearviewViewController = rearviewViewController
-    }
-
-    func showAlertAboutInvalidRaspberryPiAddress(window: UIWindow) {
-        let alertController = UIAlertController(
-            title: nil,
-            message: "You need to specity your Raspberry Pi address in the Settings app.",
-            preferredStyle: .alert
-        )
-        alertController.addAction(UIAlertAction(title: "OK", style: .default))
-
-        window.rootViewController = UIViewController()
-        window.makeKeyAndVisible()
-        window.rootViewController?.present(alertController, animated: true)
-    }
-
-    func stopIfNeeded() {
-        rearviewViewController?.stop()
-        rearviewViewController = nil
-    }
-
-    // https://developer.apple.com/library/archive/qa/qa1838/_index.html
-    func showBlankScreen() {
-        guard let window = window else { return }
-        let blankViewController = UIViewController()
-        blankViewController.view.backgroundColor = .black
-        window.rootViewController = blankViewController
-    }
-}
-
-extension SceneDelegate: RearviewViewControllerDelegate {
-    func rearviewViewController(didChangeCameraSensitivityMode cameraSensitivityMode: CameraSensitivityMode) {
-        RearviewDefaults.shared.cameraSensitivityMode = cameraSensitivityMode
     }
 }

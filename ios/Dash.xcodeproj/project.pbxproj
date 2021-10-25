@@ -20,6 +20,7 @@
 		B904A2A6243968990087BD4A /* MapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B904A2A5243968990087BD4A /* MapsViewController.swift */; };
 		B907C78E272555690085ED7E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B907C78D272555690085ED7E /* SceneDelegate.swift */; };
 		B907C790272589530085ED7E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B907C78F272589490085ED7E /* AppState.swift */; };
+		B907C7922726CFB50085ED7E /* RearviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B907C7912726CFB50085ED7E /* RearviewManager.swift */; };
 		B90C297225E3FB80004466C9 /* SIMDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90C297125E3FB80004466C9 /* SIMDExtension.swift */; };
 		B90E21F924CBB1BF008330AD /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90E21F824CBB1BF008330AD /* TabBarController.swift */; };
 		B90F5FD525EFF13D00C2578C /* CIImageDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F5FD425EFF13D00C2578C /* CIImageDisplayView.swift */; };
@@ -415,6 +416,7 @@
 		B90700A3250E31B1004E7D7A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B907C78D272555690085ED7E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B907C78F272589490085ED7E /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		B907C7912726CFB50085ED7E /* RearviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewManager.swift; sourceTree = "<group>"; };
 		B90C297125E3FB80004466C9 /* SIMDExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIMDExtension.swift; sourceTree = "<group>"; };
 		B90E21F824CBB1BF008330AD /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		B90F5FD425EFF13D00C2578C /* CIImageDisplayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CIImageDisplayView.swift; sourceTree = "<group>"; };
@@ -991,6 +993,7 @@
 				B967D07925D510A7000D9007 /* Rearview.entitlements */,
 				B9C0CED82508F63F006D246E /* AppDelegate.swift */,
 				B9C0CEDA2508F63F006D246E /* SceneDelegate.swift */,
+				B907C7912726CFB50085ED7E /* RearviewManager.swift */,
 				B940A45F250E5B57006BDFBB /* Settings.bundle */,
 				B9C0CEE12508F641006D246E /* Assets.xcassets */,
 				B9C0CEE32508F641006D246E /* LaunchScreen.storyboard */,
@@ -1962,6 +1965,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B907C7922726CFB50085ED7E /* RearviewManager.swift in Sources */,
 				B940A462250E5CDD006BDFBB /* RearviewDefaults.swift in Sources */,
 				B9C0CED92508F63F006D246E /* AppDelegate.swift in Sources */,
 				B9C0CEDB2508F63F006D246E /* SceneDelegate.swift in Sources */,
