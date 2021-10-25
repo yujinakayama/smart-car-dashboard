@@ -37,6 +37,19 @@ class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelega
         return pageControl
     }()
 
+    var currentPage: Int {
+        get {
+            guard let currentViewController = viewControllers?.first else { return 0 }
+            return widgetViewControllers.firstIndex(of: currentViewController) ?? 0
+        }
+
+        set {
+            let selectedViewController = widgetViewControllers[newValue]
+            setViewControllers([selectedViewController], direction: .forward, animated: false)
+            updatePageControl(animated: false)
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -60,8 +73,7 @@ class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelega
         // We should not do this in viewDidLoad()
         // because setViewControllers() invokes the view controller's viewWillAppear() unintentionally.
         if viewControllers == nil || viewControllers!.isEmpty {
-            setViewControllers([widgetViewControllers.first!], direction: .forward, animated: false)
-            adaptPageControlColorToCurrentViewController()
+            currentPage = 0
         }
     }
 
@@ -86,16 +98,20 @@ class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelega
     }
 
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        guard let currentViewController = viewControllers?.first else { return }
+        updatePageControl(animated: true)
+    }
 
-        if let index = widgetViewControllers.firstIndex(of: currentViewController) {
-            pageControl.currentPage = index
-        }
+    func updatePageControl(animated: Bool) {
+        pageControl.currentPage = currentPage
 
-        UIView.animate(withDuration: 0.5) {
-            // We don't set `pageControl.overrideUserInterfaceStyle` here
-            // since it's not animatable.
-            self.adaptPageControlColorToCurrentViewController()
+        if animated {
+            UIView.animate(withDuration: 0.5) {
+                // We don't set `pageControl.overrideUserInterfaceStyle` here
+                // since it's not animatable.
+                self.adaptPageControlColorToCurrentViewController()
+            }
+        } else {
+            adaptPageControlColorToCurrentViewController()
         }
     }
 

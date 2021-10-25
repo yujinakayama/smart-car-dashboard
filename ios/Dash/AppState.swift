@@ -147,8 +147,20 @@ extension AppState {
         }
     }
 
+    class SelectedWidgetPage: Property {
+        override func serialize() -> Any? {
+            return app.dashboardViewController?.widgetViewController.currentPage
+        }
+
+        override func restore(_ value: Any) {
+            guard let value = value as? Int else { return }
+            app.dashboardViewController?.widgetViewController.currentPage = value
+        }
+    }
+
     static let propertyTypes: [Property.Type] = [
         SelectedTab.self,
-        DashboardLayoutMode.self
+        DashboardLayoutMode.self,
+        SelectedWidgetPage.self
     ]
 }

@@ -19,8 +19,8 @@ class DashboardViewController: UIViewController {
     @IBOutlet weak var musicContainerView: UIView!
     @IBOutlet weak var musicEdgeGlossView: UIView!
 
-    lazy var widgetViewController: UIViewController = children.first { $0 is WidgetPageViewController }!
-    lazy var musicViewController: MusicViewController = children.first { $0 is MusicViewController } as! MusicViewController
+    lazy var widgetViewController = children.first { $0 is WidgetPageViewController } as! WidgetPageViewController
+    lazy var musicViewController = children.first { $0 is MusicViewController } as! MusicViewController
 
     lazy var musicContainerViewTopConstraintForFullMusicLayout = musicContainerView.topAnchor.constraint(equalTo: view.topAnchor)
     lazy var musicContainerViewTopConstraintForSplitLayout = musicContainerView.topAnchor.constraint(equalTo: widgetView.bottomAnchor)
