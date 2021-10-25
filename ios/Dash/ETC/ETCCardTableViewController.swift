@@ -100,6 +100,18 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
         return controller
     }
 
+    func selectRowForAllPayments(animated: Bool) {
+        let indexPath = IndexPath(row: 0, section: Section.allPayments.rawValue)
+        tableView.selectRow(at: indexPath, animated: animated, scrollPosition: .none)
+    }
+
+    func selectRow(forCard cardUUIDString: String, animated: Bool) {
+        guard let cards = fetchedResultsController?.sections?.first?.objects as? [ETCCardManagedObject] else { return }
+        guard let row = cards.firstIndex(where: { $0.uuid.uuidString == cardUUIDString }) else { return }
+        let indexPath = IndexPath(row: row, section: Section.cards.rawValue)
+        tableView.selectRow(at: indexPath, animated: animated, scrollPosition: .none)
+    }
+
     func indicateCurrentCard() {
         tableView.reloadSections(IndexSet(integer: Section.cards.rawValue), with: .none)
     }

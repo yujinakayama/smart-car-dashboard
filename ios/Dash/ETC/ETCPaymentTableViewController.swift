@@ -20,6 +20,8 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         }
     }
 
+    private var cardUUIDToRestore: UUID?
+
     lazy var deviceStatusBarItemManager = ETCDeviceStatusBarItemManager(device: device)
 
     var managedObjectContextObservation: NSKeyValueObservation?
@@ -43,18 +45,22 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         startFetchingPayments()
     }
 
+    func restoreCard(for uuid: UUID) {
+        cardUUIDToRestore = uuid
+    }
+
     func startFetchingPayments() {
-        if let managedObjectContext = device.dataStore.viewContext {
-            fetchPayments(managedObjectContext: managedObjectContext)
-        } else {
-            managedObjectContextObservation = device.dataStore.observe(\.viewContext) { [weak self] (dataStore, change) in
-                guard let managedObjectContext = dataStore.viewContext else { return }
-                self?.fetchPayments(managedObjectContext: managedObjectContext)
-            }
+        managedObjectContextObservation = device.dataStore.observe(\.viewContext, options: .initial) { [weak self] (dataStore, change) in
+            guard let managedObjectContext = dataStore.viewContext else { return }
+            self?.fetchPayments(managedObjectContext: managedObjectContext)
         }
     }
 
     func fetchPayments(managedObjectContext: NSManagedObjectContext) {
+        if let cardUUIDToRestore = cardUUIDToRestore {
+            card = try! device.dataStore.findCard(uuid: cardUUIDToRestore, in: managedObjectContext)
+        }
+
         fetchedResultsController = makeFetchedResultsController(managedObjectContext: managedObjectContext)
         try! fetchedResultsController!.performFetch()
         tableView.reloadData()

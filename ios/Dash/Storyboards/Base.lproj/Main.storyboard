@@ -760,7 +760,7 @@
         <!--Payment Table View Controller-->
         <scene sceneID="smW-Zh-WAh">
             <objects>
-                <tableViewController id="7bK-jq-Zjz" userLabel="Payment Table View Controller" customClass="ETCPaymentTableViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ETCPaymentTableViewController" id="7bK-jq-Zjz" userLabel="Payment Table View Controller" customClass="ETCPaymentTableViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="r7i-6Z-zg0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -40,12 +40,18 @@ extension AppState {
             self.window = window
         }
 
+        lazy var storyboard = UIStoryboard(name: "Main", bundle: nil)
+
         var tabBarController: TabBarController {
             return window.rootViewController as! TabBarController
         }
 
         var dashboardViewController: DashboardViewController? {
             return tabBarController.viewController(for: .dashboard) as? DashboardViewController
+        }
+
+        var etcSplitViewController: ETCSplitViewController? {
+            return tabBarController.viewController(for: .etc) as? ETCSplitViewController
         }
     }
 }
@@ -94,11 +100,13 @@ extension AppState {
         func perform() {
             guard let userInfo = userActivity.userInfo else { return }
 
-            for type in AppState.propertyTypes {
-                let property = type.init(app: app)
+            UIView.performWithoutAnimation {
+                for type in AppState.propertyTypes {
+                    let property = type.init(app: app)
 
-                if let value = userInfo[property.key] {
-                    property.restore(value)
+                    if let value = userInfo[property.key] {
+                        property.restore(value)
+                    }
                 }
             }
         }
@@ -158,9 +166,38 @@ extension AppState {
         }
     }
 
+    class DisplayedETCPaymentHistory: Property {
+        override func serialize() -> Any? {
+            guard let paymentTableViewController = app.etcSplitViewController?.masterNavigationController.topViewController as? ETCPaymentTableViewController else {
+                return nil
+            }
+
+            if let card = paymentTableViewController.card {
+                return card.uuid.uuidString
+            } else {
+                return NSNull()
+            }
+        }
+
+        override func restore(_ value: Any) {
+            let paymentTableViewController = app.storyboard.instantiateViewController(identifier: "ETCPaymentTableViewController") as! ETCPaymentTableViewController
+
+            if let value = value as? String, let cardUUID = UUID(uuidString: value) {
+                paymentTableViewController.restoreCard(for: cardUUID)
+            } else if value is NSNull {
+                paymentTableViewController.card = nil
+            } else {
+                return
+            }
+
+            app.etcSplitViewController?.masterNavigationController.pushViewController(paymentTableViewController, animated: false)
+        }
+    }
+
     static let propertyTypes: [Property.Type] = [
         SelectedTab.self,
         DashboardLayoutMode.self,
-        SelectedWidgetPage.self
+        SelectedWidgetPage.self,
+        DisplayedETCPaymentHistory.self
     ]
 }
