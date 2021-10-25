@@ -32,6 +32,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         _ = tabBarBadgeManager
     }
 
+    // https://developer.apple.com/videos/play/wwdc2021/10057/
+    func scene(_ scene: UIScene, restoreInteractionStateWith stateRestorationActivity: NSUserActivity) {
+        appState?.restore(from: stateRestorationActivity)
+    }
+
+    func stateRestorationActivity(for scene: UIScene) -> NSUserActivity? {
+        return appState?.userActivityForPreservation
+    }
+
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.
@@ -77,6 +86,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let mapsViewController = navigationController.topViewController as! MapsViewController
         mapsViewController.startSearchingParkings(destination: mapItem)
         tabBarController.selectedViewController = navigationController
+    }
+
+    private var appState: AppState? {
+        guard let window = window else { return nil }
+        return AppState(window: window)
     }
 }
 
