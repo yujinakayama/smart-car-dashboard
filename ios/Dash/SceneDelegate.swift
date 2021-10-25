@@ -76,9 +76,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
 
-        if let urlItem = ParkingSearchURLItem(url: url) {
+        if url.host == "rearview", url.path == "/handoff" {
+            handleRearviewHandOffFromOtherApp()
+        } else if let urlItem = ParkingSearchURLItem(url: url) {
             searchParkingsInMaps(mapItem: urlItem.mapItem)
         }
+    }
+
+    private func handleRearviewHandOffFromOtherApp() {
+        guard let dashboardViewController = tabBarController.viewController(for: .dashboard) as? DashboardViewController,
+              let rearviewWidgetViewController = dashboardViewController.widgetViewController.viewControllers?.first(where: { $0 is RearviewWidgetViewController }) as? RearviewWidgetViewController
+        else { return }
+
+        rearviewWidgetViewController.justHandedOffFromOtherApp = true
     }
 
     private func searchParkingsInMaps(mapItem: MKMapItem) {

@@ -14,6 +14,12 @@ class RearviewManager: NSObject {
 
     var isHandedOffFromOtherApp = false
 
+    lazy var doubleTapGestureRecognizer: UITapGestureRecognizer = {
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(gestureRecognizerDidRecognizeDoubleTap))
+        gestureRecognizer.numberOfTapsRequired = 2
+        return gestureRecognizer
+    }()
+
     func startIfPossible(window: UIWindow) {
         if let configuration = RearviewDefaults.shared.configuration {
             start(window: window, configuration: configuration)
@@ -25,6 +31,9 @@ class RearviewManager: NSObject {
     func start(window: UIWindow, configuration: RearviewConfiguration) {
         let rearviewViewController = RearviewViewController(configuration: configuration, cameraSensitivityMode: RearviewDefaults.shared.cameraSensitivityMode)
         rearviewViewController.delegate = self
+        rearviewViewController.view.addGestureRecognizer(doubleTapGestureRecognizer)
+        rearviewViewController.tapGestureRecognizer.require(toFail: doubleTapGestureRecognizer)
+
         window.rootViewController = rearviewViewController
         window.makeKeyAndVisible()
 
@@ -57,6 +66,21 @@ class RearviewManager: NSObject {
     func stopIfNeeded() {
         rearviewViewController?.stop()
         rearviewViewController = nil
+    }
+
+    @objc func gestureRecognizerDidRecognizeDoubleTap() {
+        handOffToDashApp()
+    }
+
+    func handOffToDashApp() {
+        stopIfNeeded()
+
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "dash"
+        urlComponents.host = "rearview"
+        urlComponents.path = "/handoff"
+
+        UIApplication.shared.open(urlComponents.url!, options: [:])
     }
 
     // https://developer.apple.com/library/archive/qa/qa1838/_index.html

@@ -14,6 +14,26 @@ class RearviewWidgetViewController: UIViewController {
 
     var isVisible = false
 
+    var justHandedOffFromOtherApp: Bool {
+        get {
+            if let lastHandOffTimeFromOtherApp = lastHandOffTimeFromOtherApp {
+                return Date().timeIntervalSince(lastHandOffTimeFromOtherApp) < 1
+            } else {
+                return false
+            }
+        }
+
+        set {
+            if newValue {
+                lastHandOffTimeFromOtherApp = Date()
+            } else {
+                lastHandOffTimeFromOtherApp = nil
+            }
+        }
+    }
+
+    private var lastHandOffTimeFromOtherApp: Date?
+
     lazy var doubleTapGestureRecognizer: UITapGestureRecognizer = {
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(gestureRecognizerDidRecognizeDoubleTap))
         gestureRecognizer.numberOfTapsRequired = 2
@@ -82,13 +102,29 @@ class RearviewWidgetViewController: UIViewController {
     func tearDownRearviewViewControllerIfNeeded() {
         guard let rearviewViewController = rearviewViewController else { return }
 
-        rearviewViewController.stop()
+        stop()
 
         rearviewViewController.willMove(toParent: nil)
         rearviewViewController.view.removeFromSuperview()
         rearviewViewController.removeFromParent()
 
         self.rearviewViewController = nil
+    }
+
+    func start() {
+        if justHandedOffFromOtherApp {
+            justHandedOffFromOtherApp = false
+
+            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] (timer) in
+                self?.rearviewViewController?.start()
+            }
+        } else {
+            rearviewViewController?.start()
+        }
+    }
+
+    func stop() {
+        rearviewViewController?.stop()
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -106,20 +142,20 @@ class RearviewWidgetViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isVisible = true
-        rearviewViewController?.start()
+        start()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         isVisible = false
-        rearviewViewController?.stop()
+        stop()
     }
 
     @objc func sceneWillEnterForeground() {
         setUpRearviewViewControllerIfPossible()
 
         if isVisible {
-            rearviewViewController?.start()
+            start()
         }
     }
 
@@ -135,13 +171,13 @@ class RearviewWidgetViewController: UIViewController {
     }
 
     func handOffToRearviewApp() {
-        rearviewViewController?.stop()
+        stop()
 
         var urlComponents = URLComponents()
         urlComponents.scheme = "rearview"
         urlComponents.host = "handoff"
-        let url = urlComponents.url!
-        UIApplication.shared.open(url, options: [:])
+
+        UIApplication.shared.open(urlComponents.url!, options: [:])
     }
 }
 
