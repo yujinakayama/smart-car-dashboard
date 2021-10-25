@@ -43,6 +43,10 @@ extension AppState {
         var tabBarController: TabBarController {
             return window.rootViewController as! TabBarController
         }
+
+        var dashboardViewController: DashboardViewController? {
+            return tabBarController.viewController(for: .dashboard) as? DashboardViewController
+        }
     }
 }
 
@@ -61,13 +65,17 @@ extension AppState {
         }
 
         private var userInfo: [AnyHashable: Any] {
-            AppState.propertyTypes.reduce(into: [String: Any]()) { (partialResult, type) in
+            let userInfo = AppState.propertyTypes.reduce(into: [String: Any]()) { (partialResult, type) in
                 let property = type.init(app: app)
 
                 if let value = property.serialize() {
                     partialResult[property.key] = value
                 }
             }
+
+            logger.debug(userInfo)
+
+            return userInfo
         }
     }
 }
@@ -128,7 +136,19 @@ extension AppState {
         }
     }
 
+    class DashboardLayoutMode: Property {
+        override func serialize() -> Any? {
+            return app.dashboardViewController?.currentLayoutMode.rawValue
+        }
+
+        override func restore(_ value: Any) {
+            guard let value = value as? Int, let mode = DashboardViewController.LayoutMode(rawValue: value) else { return }
+            app.dashboardViewController?.switchLayout(to: mode)
+        }
+    }
+
     static let propertyTypes: [Property.Type] = [
-        SelectedTab.self
+        SelectedTab.self,
+        DashboardLayoutMode.self
     ]
 }
