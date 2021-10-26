@@ -10,6 +10,17 @@ import UIKit
 import MediaPlayer
 
 @IBDesignable class ArtworkView: UIView {
+    var image: UIImage? {
+        get {
+            return imageView.image
+        }
+
+        set {
+            imageView.image = newValue
+            blurredImageView.image = newValue
+        }
+    }
+
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .secondarySystemBackground
@@ -44,6 +55,8 @@ import MediaPlayer
     }
 
     var previousItemID: MPMediaEntityPersistentID?
+
+    private var imageFetchTask: Task<Void, Never>?
 
     var cornerRadius: CGFloat = 8 {
         didSet {
@@ -169,9 +182,42 @@ import MediaPlayer
     }
 
     func updateArtworkImage() {
-        let image = musicPlayer.nowPlayingItem?.artwork?.image(at: preferredImageSize)
-        imageView.image = image
-        blurredImageView.image = image
+        imageFetchTask?.cancel()
+
+        guard let nowPlayingItem = musicPlayer.nowPlayingItem, let artwork = nowPlayingItem.artwork else {
+            image = nil
+            return
+        }
+
+        // For some reason MPMediaItemArtwork sometimes does not return images for Apple Music songs
+        // that are not downloaded :(
+        // https://stackoverflow.com/q/62163708/784241
+        // So we fetch the image manually as fallback handling.
+        if let image = artwork.image(at: preferredImageSize) {
+            self.image = image
+        } else if let songID = nowPlayingItem.validPlaybackStoreID {
+            // Clear previous image first
+            self.image = nil
+
+            imageFetchTask = Task {
+                if let image = try? await fetchArtworkImageFromAppleMusic(id: songID) {
+                    UIView.transition(with: self, duration: 0.5, options: .transitionCrossDissolve, animations: { [weak self] in
+                        self?.image = image
+                    })
+                }
+            }
+        } else {
+            self.image = nil
+        }
+    }
+
+    func fetchArtworkImageFromAppleMusic(id: String) async throws -> UIImage? {
+        guard let song = try await SongDataRequest(id: id).perform(),
+              let imageURL = song.artwork?.url(width: 1000, height: 1000)
+        else { return nil }
+
+        let (data, _) = try await URLSession.shared.data(from: imageURL)
+        return UIImage(data: data)
     }
 
     var preferredImageSize: CGSize {
