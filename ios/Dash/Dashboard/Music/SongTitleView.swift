@@ -103,9 +103,7 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
             return
         }
 
-        let songID = nowPlayingItem.playbackStoreID
-
-        if songID.isEmpty {
+        guard let songID = nowPlayingItem.validPlaybackStoreID else {
             updateLabels(title: nowPlayingItem.title, artist: nowPlayingItem.artist)
             return
         }

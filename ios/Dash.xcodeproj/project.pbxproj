@@ -33,6 +33,7 @@
 		B91F7EC02652F2B400B1233D /* DirectionalUserLocationAnnotationView in Frameworks */ = {isa = PBXBuildFile; productRef = B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */; };
 		B92451D423E30ACE007556D5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B92451D323E30ACE007556D5 /* Settings.bundle */; };
 		B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */; };
+		B9248B8B2728A27500952745 /* MPMediaItemExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9248B8A2728A27500952745 /* MPMediaItemExtension.swift */; };
 		B92A61112576472A0073AB7B /* Assistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92A61102576472A0073AB7B /* Assistant.swift */; };
 		B92A97DA25E0AE8900D70A14 /* GForceMeterWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92A97D925E0AE8900D70A14 /* GForceMeterWidgetViewController.swift */; };
 		B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */; };
@@ -392,6 +393,7 @@
 		B92451D323E30ACE007556D5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B92451D523E3204D007556D5 /* GoogleServieInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleServieInfo.swift; sourceTree = "<group>"; };
 		B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexPathExtension.swift; sourceTree = "<group>"; };
+		B9248B8A2728A27500952745 /* MPMediaItemExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPMediaItemExtension.swift; sourceTree = "<group>"; };
 		B9253D7923E015A80037E156 /* Dash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dash.entitlements; sourceTree = "<group>"; };
 		B92650112691CE29005FD73D /* SheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetView.swift; sourceTree = "<group>"; };
 		B92A61102576472A0073AB7B /* Assistant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assistant.swift; sourceTree = "<group>"; };
@@ -942,6 +944,7 @@
 				B9D8E43923D345D70078A057 /* UUIDExtension.swift */,
 				B92E2AFB23E4958200BB4C0E /* UNNotificationContentExtension.swift */,
 				B90C297125E3FB80004466C9 /* SIMDExtension.swift */,
+				B9248B8A2728A27500952745 /* MPMediaItemExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1843,6 +1846,7 @@
 				B9C0CEED250C3A27006D246E /* HeartAnimation.swift in Sources */,
 				B9DC5B3D229D9E0C00B645D5 /* BLERemotePeripheral.swift in Sources */,
 				B9D8E43A23D345D70078A057 /* UUIDExtension.swift in Sources */,
+				B9248B8B2728A27500952745 /* MPMediaItemExtension.swift in Sources */,
 				B90265AB23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift in Sources */,
 				B90E21F924CBB1BF008330AD /* TabBarController.swift in Sources */,
 				B9CEA76E22D911140055C9A3 /* ETCSplitViewController.swift in Sources */,
