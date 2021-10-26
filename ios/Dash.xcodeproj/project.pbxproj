@@ -82,7 +82,6 @@
 		B964BCDB23E067EB00288E0D /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B964BCDA23E067EB00288E0D /* ShareViewController.swift */; };
 		B964BCDE23E067EB00288E0D /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B964BCDC23E067EB00288E0D /* MainInterface.storyboard */; };
 		B964BCE223E067EB00288E0D /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B964BCD823E067EB00288E0D /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		B96793E924AF6ACC0019BFE5 /* apple_music_developer_token.txt in Resources */ = {isa = PBXBuildFile; fileRef = B96793E824AF6ACC0019BFE5 /* apple_music_developer_token.txt */; };
 		B967D08225D51508000D9007 /* RearviewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */; };
 		B96810752614C5C300D647FA /* ImageFilterChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96810742614C5C300D647FA /* ImageFilterChain.swift */; };
 		B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */; };
@@ -453,7 +452,6 @@
 		B964BCDA23E067EB00288E0D /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		B964BCDD23E067EB00288E0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		B964BCDF23E067EB00288E0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B96793E824AF6ACC0019BFE5 /* apple_music_developer_token.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = apple_music_developer_token.txt; sourceTree = "<group>"; };
 		B967D07925D510A7000D9007 /* Rearview.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Rearview.entitlements; sourceTree = "<group>"; };
 		B96810742614C5C300D647FA /* ImageFilterChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilterChain.swift; sourceTree = "<group>"; };
 		B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -1039,7 +1037,6 @@
 				B9DC5B32229D59BF00B645D5 /* Info.plist */,
 				B9253D7923E015A80037E156 /* Dash.entitlements */,
 				B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */,
-				B96793E824AF6ACC0019BFE5 /* apple_music_developer_token.txt */,
 				B93DB87F267A0BA900298980 /* opencage_api_key.txt */,
 			);
 			path = Dash;
@@ -1254,7 +1251,6 @@
 			buildPhases = (
 				D1976B69B2C9268348B831AA /* [CP] Check Pods Manifest.lock */,
 				B9A3C09823E1A4E400EF1C4A /* Modify Info.plist */,
-				B96793EA24AF6B180019BFE5 /* Generate Apple Music Developer Token */,
 				B9DC5B1D229D59BE00B645D5 /* Sources */,
 				B9DC5B1E229D59BE00B645D5 /* Frameworks */,
 				B9DC5B1F229D59BE00B645D5 /* Resources */,
@@ -1461,7 +1457,6 @@
 				B9DC5B31229D59BF00B645D5 /* LaunchScreen.storyboard in Resources */,
 				B9E6CCA1234F69B800E18603 /* Payment.wav in Resources */,
 				B99356D922A9483F00BA08AB /* japan_etc_tollbooths.csv in Resources */,
-				B96793E924AF6ACC0019BFE5 /* apple_music_developer_token.txt in Resources */,
 				B93DB880267A0BA900298980 /* opencage_api_key.txt in Resources */,
 				B9DC5B2E229D59BF00B645D5 /* Assets.xcassets in Resources */,
 				B9E6CC9C234F65A000E18603 /* TollgatePassingThrough.wav in Resources */,
@@ -1601,24 +1596,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DashRemote/Pods-DashRemote-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		B96793EA24AF6B180019BFE5 /* Generate Apple Music Developer Token */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Generate Apple Music Developer Token";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [[ -d \"$HOME/.rbenv\" ]]; then\n  export PATH=\"$HOME/.rbenv/bin:$PATH\"\n  eval \"$(rbenv init -)\"\nfi\n\nbundle exec rake apple_music:generate_developer_token\n";
 		};
 		B9A3C09823E1A4E400EF1C4A /* Modify Info.plist */ = {
 			isa = PBXShellScriptBuildPhase;
