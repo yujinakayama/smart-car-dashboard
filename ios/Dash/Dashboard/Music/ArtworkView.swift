@@ -58,6 +58,8 @@ import MediaPlayer
 
     private var imageFetchTask: Task<Void, Never>?
 
+    static let appleMusicImageCache = Cache(name: "ArtworkView", ageLimit: 60 * 60 * 24 * 30) // 1 month
+
     var cornerRadius: CGFloat = 8 {
         didSet {
             updateCornerRadius()
@@ -196,18 +198,29 @@ import MediaPlayer
         if let image = artwork.image(at: preferredImageSize) {
             self.image = image
         } else if let songID = nowPlayingItem.validPlaybackStoreID {
-            // Clear previous image first
-            self.image = nil
-
-            imageFetchTask = Task {
-                if let image = try? await fetchArtworkImageFromAppleMusic(id: songID) {
-                    UIView.transition(with: self, duration: 0.5, options: .transitionCrossDissolve, animations: { [weak self] in
-                        self?.image = image
-                    })
-                }
-            }
+            showArtworkImageFetchedFromAppleMusic(id: songID)
         } else {
             self.image = nil
+        }
+    }
+
+    func showArtworkImageFetchedFromAppleMusic(id: String) {
+        if Self.appleMusicImageCache.containsObject(forKey: id) {
+            self.image = Self.appleMusicImageCache.object(forKey: id) as? UIImage
+            return
+        }
+
+        // Clear previous image first
+        self.image = nil
+
+        imageFetchTask = Task {
+            guard let image = try? await fetchArtworkImageFromAppleMusic(id: id) else { return }
+
+            UIView.transition(with: self, duration: 0.5, options: .transitionCrossDissolve, animations: { [weak self] in
+                self?.image = image
+            })
+
+            Self.appleMusicImageCache.setObjectAsync(image, forKey: id)
         }
     }
 
