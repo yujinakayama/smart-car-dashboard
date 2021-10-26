@@ -745,7 +745,7 @@
         <!--ETC Split View Controller-->
         <scene sceneID="Nki-YV-4Qg">
             <objects>
-                <splitViewController id="H1p-Uh-vWS" userLabel="ETC Split View Controller" customClass="ETCSplitViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                <splitViewController allowDoubleColumnStyle="YES" id="H1p-Uh-vWS" userLabel="ETC Split View Controller" customClass="ETCSplitViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" tag="1" title="ETC" image="yensign.square.fill" catalog="system" id="lhA-Mw-Pck"/>
                     <toolbarItems/>
                     <connections>
