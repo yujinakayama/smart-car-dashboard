@@ -49,6 +49,8 @@ class SongDataRequest {
     }
 
     private func fetchSong(in language: LanguageTag) async throws -> Song? {
+        try Task.checkCancellation()
+
         let storefront = try await MusicDataRequest.currentCountryCode
         var urlComponents = URLComponents(string: "https://api.music.apple.com/v1/catalog/\(storefront)/songs/\(id)")!
         urlComponents.queryItems = [URLQueryItem(name: "l", value: language.rawValue)]
