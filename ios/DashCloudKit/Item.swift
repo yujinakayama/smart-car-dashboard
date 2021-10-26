@@ -166,7 +166,7 @@ extension Item {
                     completionHandler()
                 }
             default:
-                break
+                completionHandler()
             }
         }
     }
