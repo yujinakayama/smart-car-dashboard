@@ -106,7 +106,7 @@ class Location: SharedItemProtocol {
             }
 
             set {
-                PointOfInterestFinder.cache.setObjectAsync(newValue as Any, forKey: cacheKey)
+                PointOfInterestFinder.cache.setObjectAsync(newValue, forKey: cacheKey)
             }
         }
 

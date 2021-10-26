@@ -72,12 +72,12 @@ public class Cache {
         }
     }
 
-    public func setObject(_ object: Any?, forKey key: String) {
+    public func setObject(_ object: NSCoding?, forKey key: String) {
         let objectToCache = object == nil ? NSNull() : object
         pinCache.setObject(objectToCache, forKey: key)
     }
 
-    public func setObjectAsync(_ object: Any?, forKey key: String, completion: (() -> Void)? = nil) {
+    public func setObjectAsync(_ object: NSCoding?, forKey key: String, completion: (() -> Void)? = nil) {
         let objectToCache = object == nil ? NSNull() : object
 
         pinCache.setObjectAsync(objectToCache as Any, forKey: key) { (cache, key, object) in

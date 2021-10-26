@@ -35,7 +35,7 @@ class WebsiteIcon {
         }
 
         set {
-            WebsiteIcon.cache.setObjectAsync(newValue as Any, forKey: cacheKey)
+            WebsiteIcon.cache.setObjectAsync(newValue as NSURL?, forKey: cacheKey)
         }
     }
 
