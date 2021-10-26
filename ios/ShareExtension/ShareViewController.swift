@@ -12,6 +12,7 @@ import JGProgressHUD
 
 enum ShareError: Error {
     case pairingRequired
+    case invalidItem
     case serverError
     case unknown
 }
@@ -57,6 +58,11 @@ class ShareViewController: UIViewController {
             return
         }
 
+        guard let item = item else {
+            self.cancelRequest(withError: ShareError.invalidItem, message: "Invalid Item")
+            return
+        }
+
         hud.textLabel.text = "Sending"
 
         cloudClient.share(item, with: vehicleID) { (error) in
@@ -70,9 +76,9 @@ class ShareViewController: UIViewController {
 
     lazy var cloudClient = DashCloudClient()
 
-    lazy var item: Item = {
+    lazy var item: Item? = {
         let extensionItems = self.extensionContext!.inputItems as! [NSExtensionItem]
-        return Item(extensionItem: extensionItems.first!)
+        return extensionItems.map { Item(extensionItem: $0) }.first { $0.isValid }
     }()
 
     func completeRequest() {

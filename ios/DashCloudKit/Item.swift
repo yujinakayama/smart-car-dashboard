@@ -35,22 +35,23 @@ public class Item {
         self.encoder = encoder
     }
 
+    public var isValid: Bool {
+        return encoder.hasEncodableContent
+    }
+
     func encode(completionHandler: @escaping (Result<[String: Any], Error>) -> Void) {
         encoder.encode(completionHandler: completionHandler)
     }
 }
 
 protocol SharingItemEncoderProtocol {
+    var hasEncodableContent: Bool { get }
     func encode(completionHandler: @escaping (Result<[String: Any], Error>) -> Void)
 }
 
 extension Item {
     class Encoder: SharingItemEncoderProtocol {
-        var encodedDictionary: [String: Any] = [:]
-
-        func encode(completionHandler: @escaping (Result<[String: Any], Error>) -> Void) {
-            completionHandler(.success(encodedDictionary))
-        }
+        private var encodedDictionary: [String: Any] = [:]
 
         func add(_ url: URL) {
             add(url.absoluteString, for: .url)
@@ -86,6 +87,14 @@ extension Item {
             add(dictionary, for: .mapItem)
         }
 
+        var hasEncodableContent: Bool {
+            return !encodedDictionary.isEmpty
+        }
+
+        func encode(completionHandler: @escaping (Result<[String: Any], Error>) -> Void) {
+            completionHandler(.success(encodedDictionary))
+        }
+
         private let serialQueue = DispatchQueue(label: "com.yujinakayama.DashCloudKit.Item.Encoder")
 
         private func add(_ value: Any, for type: UTType) {
@@ -102,12 +111,29 @@ extension Item {
     }
 
     class ExtensionItemEncoder: SharingItemEncoderProtocol {
+        static let supportedTypes: Set<UTType> = [
+            .url,
+            .plainText,
+            .mapItem
+        ]
+
         let extensionItem: NSExtensionItem
 
         private let encoder = Encoder()
 
         init(extensionItem: NSExtensionItem) {
             self.extensionItem = extensionItem
+        }
+
+        var hasEncodableContent: Bool {
+            guard let attachments = extensionItem.attachments else { return false }
+
+            let types = attachments.map { (attachment) -> UTType? in
+                guard let typeIdentifier = attachment.registeredTypeIdentifiers.first else { return nil }
+                return UTType(typeIdentifier)
+            }.compactMap { $0 }
+
+            return !Self.supportedTypes.intersection(types).isEmpty
         }
 
         func encode(completionHandler: @escaping (Result<[String: Any], Error>) -> Void) {
@@ -127,7 +153,7 @@ extension Item {
             }
 
             dispatchGroup.notify(queue: .main) {
-                completionHandler(.success(self.encoder.encodedDictionary))
+                self.encoder.encode(completionHandler: completionHandler)
             }
         }
 
