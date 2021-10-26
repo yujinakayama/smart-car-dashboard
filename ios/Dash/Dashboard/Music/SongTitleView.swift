@@ -109,7 +109,7 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
 
         if SongDataRequest.hasCachedSong(id: songID) {
             if let song = SongDataRequest.cachedSong(id: songID) {
-                updateLabels(title: song.title, artist: song.artist)
+                updateLabels(title: song.title, artist: song.artistName)
             } else {
                 updateLabels(title: nowPlayingItem.title, artist: nowPlayingItem.artist)
             }
@@ -121,7 +121,7 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
         songDataRequestTask = Task {
             do {
                 if let song = try await SongDataRequest(id: songID).perform() {
-                    updateLabels(title: song.title, artist: song.artist, animated: true)
+                    updateLabels(title: song.title, artist: song.artistName, animated: true)
                 }
             } catch {
                 logger.error(error)
