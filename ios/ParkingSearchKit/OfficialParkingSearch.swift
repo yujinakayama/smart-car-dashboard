@@ -81,7 +81,7 @@ public class OfficialParkingSearch: NSObject {
         }
 
         set {
-            Self.cache.setObjectAsync(newValue as Any, forKey: cacheKey)
+            Self.cache.setObjectAsync(newValue as NSURL?, forKey: cacheKey)
         }
     }
 

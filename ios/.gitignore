@@ -86,7 +86,5 @@ iOSInjectionProject/
 /Dash/Sounds
 
 # Secrets
-/Secrets
-apple_music_developer_token.txt
 GoogleService-Info.plist
 opencage_api_key.txt

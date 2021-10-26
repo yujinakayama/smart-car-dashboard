@@ -9,7 +9,6 @@
 import UIKit
 import MediaPlayer
 import MarqueeLabel
-import AppleMusic
 
 fileprivate func makeMarqueeLabel() -> MarqueeLabel {
     let label = MarqueeLabel()
@@ -57,11 +56,7 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
         }
     }
 
-    lazy var originalLanguageSongTitleFetcher: OriginalLanguageSongTitleFetcher = {
-        let path = Bundle.main.path(forResource: "apple_music_developer_token", ofType: "txt")!
-        let developerToken = try! String(contentsOfFile: path)
-        return OriginalLanguageSongTitleFetcher(storefront: .japan, developerToken: developerToken)
-    }()
+    var songDataRequestTask: Task<Void, Never>?
 
     required init(coder: NSCoder) {
         super.init(coder: coder)
@@ -98,6 +93,8 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
     }
 
     func tryUpdatingLabelsWithOriginalLanguageTitle() {
+        songDataRequestTask?.cancel()
+
         guard let nowPlayingItem = musicPlayer.nowPlayingItem else {
             updateLabels(title: nil, artist: nil)
             return
@@ -110,9 +107,9 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
             return
         }
 
-        if originalLanguageSongTitleFetcher.hasCachedOriginalLanguageSong(id: songID) {
-            if let originalLanguageSong = originalLanguageSongTitleFetcher.cachedOriginalLanguageSong(id: songID) {
-                updateLabels(title: originalLanguageSong.title, artist: originalLanguageSong.artist)
+        if SongDataRequest.hasCachedSong(id: songID) {
+            if let song = SongDataRequest.cachedSong(id: songID) {
+                updateLabels(title: song.title, artist: song.artistName)
             } else {
                 updateLabels(title: nowPlayingItem.title, artist: nowPlayingItem.artist)
             }
@@ -121,15 +118,12 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
 
         updateLabels(title: nowPlayingItem.title, artist: nowPlayingItem.artist)
 
-        originalLanguageSongTitleFetcher.fetchOriginalLanguageSong(id: songID) { [weak self] (result) in
-            guard let self = self else { return }
-
-            switch result {
-            case .success(let originalLanguageSong):
-                DispatchQueue.main.async { [weak self] in
-                    self?.updateLabels(title: originalLanguageSong.title, artist: originalLanguageSong.artist, animated: true)
+        songDataRequestTask = Task {
+            do {
+                if let song = try await SongDataRequest(id: songID).perform() {
+                    updateLabels(title: song.title, artist: song.artistName, animated: true)
                 }
-            case .failure(let error):
+            } catch {
                 logger.error(error)
             }
         }
