@@ -51,10 +51,13 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
 
     var musicPlayer: MPMusicPlayerController! {
         didSet {
+            previousItemID = musicPlayer.nowPlayingItem?.persistentID
             addNotificationObserver()
             tryUpdatingLabelsWithOriginalLanguageTitle()
         }
     }
+
+    var previousItemID: MPMediaEntityPersistentID?
 
     var songDataRequestTask: Task<Void, Never>?
 
@@ -179,6 +182,11 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
     }
 
     @objc func musicPlayerControllerNowPlayingItemDidChange() {
-        tryUpdatingLabelsWithOriginalLanguageTitle()
+        // For some reason this function may be called twice for a single change...
+        if musicPlayer.nowPlayingItem?.persistentID != previousItemID {
+            tryUpdatingLabelsWithOriginalLanguageTitle()
+        }
+
+        previousItemID = musicPlayer.nowPlayingItem?.persistentID
     }
 }

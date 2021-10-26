@@ -37,10 +37,13 @@ import MediaPlayer
 
     var musicPlayer: MPMusicPlayerController! {
         didSet {
+            previousItemID = musicPlayer.nowPlayingItem?.persistentID
             addNotificationObserver()
             updateArtworkImage()
         }
     }
+
+    var previousItemID: MPMediaEntityPersistentID?
 
     var cornerRadius: CGFloat = 8 {
         didSet {
@@ -176,7 +179,12 @@ import MediaPlayer
     }
 
     @objc func musicPlayerControllerNowPlayingItemDidChange() {
-        updateArtworkImage()
+        // For some reason this function may be called twice for a single change...
+        if musicPlayer.nowPlayingItem?.persistentID != previousItemID {
+            updateArtworkImage()
+        }
+
+        previousItemID = musicPlayer.nowPlayingItem?.persistentID
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
