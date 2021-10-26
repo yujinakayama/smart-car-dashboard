@@ -181,7 +181,8 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
 
     @objc func musicPlayerControllerNowPlayingItemDidChange() {
         // For some reason this function may be called twice for a single change...
-        if musicPlayer.nowPlayingItem?.persistentID != previousItemID {
+        // Also, it sometimes reports wrong ID 0...
+        if musicPlayer.nowPlayingItem?.persistentID != previousItemID || musicPlayer.nowPlayingItem?.persistentID == 0 {
             tryUpdatingLabelsWithOriginalLanguageTitle()
         }
 
