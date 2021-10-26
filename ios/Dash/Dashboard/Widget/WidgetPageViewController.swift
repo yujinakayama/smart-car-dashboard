@@ -39,14 +39,30 @@ class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelega
 
     var currentPage: Int {
         get {
+            if let pendingPage = pendingPage { return pendingPage }
             guard let currentViewController = viewControllers?.first else { return 0 }
             return widgetViewControllers.firstIndex(of: currentViewController) ?? 0
         }
 
         set {
-            let selectedViewController = widgetViewControllers[newValue]
-            setViewControllers([selectedViewController], direction: .forward, animated: false)
-            updatePageControl(animated: false)
+            if isVisible {
+                let selectedViewController = widgetViewControllers[newValue]
+                setViewControllers([selectedViewController], direction: .forward, animated: false)
+                updatePageControl(animated: false)
+            } else {
+                pendingPage = newValue
+            }
+        }
+    }
+
+    private var pendingPage: Int? = 0
+
+    private var isVisible = false {
+        didSet {
+            if !oldValue, isVisible, let pendingPage = pendingPage {
+                currentPage = pendingPage
+                self.pendingPage = nil
+            }
         }
     }
 
@@ -70,11 +86,14 @@ class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelega
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        // We should not do this in viewDidLoad()
+        // We should not set currentPage in viewDidLoad()
         // because setViewControllers() invokes the view controller's viewWillAppear() unintentionally.
-        if viewControllers == nil || viewControllers!.isEmpty {
-            currentPage = 0
-        }
+        isVisible = true
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        isVisible = false
     }
 
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
