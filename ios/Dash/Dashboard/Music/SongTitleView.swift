@@ -9,7 +9,6 @@
 import UIKit
 import MediaPlayer
 import MarqueeLabel
-import AppleMusic
 
 fileprivate func makeMarqueeLabel() -> MarqueeLabel {
     let label = MarqueeLabel()
@@ -57,11 +56,9 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
         }
     }
 
-    lazy var originalLanguageSongTitleFetcher: OriginalLanguageSongTitleFetcher = {
-        let path = Bundle.main.path(forResource: "apple_music_developer_token", ofType: "txt")!
-        let developerToken = try! String(contentsOfFile: path)
-        return OriginalLanguageSongTitleFetcher(storefront: .japan, developerToken: developerToken)
-    }()
+    lazy var originalLanguageSongTitleFetcher = OriginalLanguageSongTitleFetcher()
+
+    var songTitleFetcherTask: Task<Void, Error>?
 
     required init(coder: NSCoder) {
         super.init(coder: coder)
@@ -98,6 +95,8 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
     }
 
     func tryUpdatingLabelsWithOriginalLanguageTitle() {
+        songTitleFetcherTask?.cancel()
+
         guard let nowPlayingItem = musicPlayer.nowPlayingItem else {
             updateLabels(title: nil, artist: nil)
             return
@@ -121,15 +120,12 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
 
         updateLabels(title: nowPlayingItem.title, artist: nowPlayingItem.artist)
 
-        originalLanguageSongTitleFetcher.fetchOriginalLanguageSong(id: songID) { [weak self] (result) in
-            guard let self = self else { return }
-
-            switch result {
-            case .success(let originalLanguageSong):
-                DispatchQueue.main.async { [weak self] in
-                    self?.updateLabels(title: originalLanguageSong.title, artist: originalLanguageSong.artist, animated: true)
+        songTitleFetcherTask = Task {
+            do {
+                if let song = try await originalLanguageSongTitleFetcher.fetchOriginalLanguageSong(id: songID) {
+                    updateLabels(title: song.title, artist: song.artist, animated: true)
                 }
-            case .failure(let error):
+            } catch {
                 logger.error(error)
             }
         }

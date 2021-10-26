@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import AppleMusic
+import MusicKit
 
 class OriginalLanguageSongTitleFetcher {
     enum LanguageTag: String {
@@ -17,12 +17,6 @@ class OriginalLanguageSongTitleFetcher {
 
     static let cache = Cache(name: "OriginalLanguageSongTitleFetcher", ageLimit: 60 * 60 * 24 * 30 * 12) // 12 months
 
-    let appleMusicClient: AppleMusic
-
-    init(storefront: Storefront, developerToken: String) {
-        appleMusicClient = AppleMusic(storefront: storefront, developerToken: developerToken)
-    }
-
     func hasCachedOriginalLanguageSong(id: String) -> Bool {
         return OriginalLanguageSongTitleFetcher.cache.containsObject(forKey: id)
     }
@@ -31,55 +25,42 @@ class OriginalLanguageSongTitleFetcher {
         return OriginalLanguageSongTitleFetcher.cache.object(forKey: id) as? OriginalLanguageSong
     }
 
-    func fetchOriginalLanguageSong(id: String, completionHandler: @escaping (Result<OriginalLanguageSong, Error>) -> Void) {
-        fetchOriginalLanguageSong(id: id, requestLanguage: .enUS, completionHandler: completionHandler)
+    func fetchOriginalLanguageSong(id: String) async throws -> OriginalLanguageSong? {
+        return try await fetchOriginalLanguageSong(id: id, requestLanguage: .enUS)
     }
 
-    private func fetchOriginalLanguageSong(id: String, requestLanguage: LanguageTag, completionHandler: @escaping (Result<OriginalLanguageSong, Error>) -> Void) {
-        fetchSong(id: id, in: requestLanguage) { [weak self] (result) in
-            guard let self = self else { return }
+    private func fetchOriginalLanguageSong(id: String, requestLanguage: LanguageTag) async throws -> OriginalLanguageSong? {
+        guard let song = try await fetchSong(id: id, in: requestLanguage) else { return nil }
 
-            logger.debug(result)
-
-            switch result {
-            case .success(let songAttributes):
-                let originalLanguage = self.originalLanguage(of: songAttributes)
-
-                if originalLanguage == requestLanguage {
-                    let song = OriginalLanguageSong(title: songAttributes.name, artist: songAttributes.artistName, isrc: songAttributes.isrc)
-                    self.cache(song: song, for: id)
-                    completionHandler(.success(song))
-                } else {
-                    self.fetchOriginalLanguageSong(id: id, requestLanguage: originalLanguage, completionHandler: completionHandler)
-                }
-            case .failure(let error):
-                if let error = error as? AppleMusicAPIError, error.status == "404" {
-                    self.cache(song: nil, for: id)
-                }
-                completionHandler(.failure(error))
-            }
+        if let originalLanguage = originalLanguage(of: song), originalLanguage != requestLanguage {
+            return try await fetchOriginalLanguageSong(id: id, requestLanguage: originalLanguage)
+        } else {
+            let song = OriginalLanguageSong(title: song.title, artist: song.artistName, isrc: song.isrc)
+            cache(song: song, for: id)
+            return song
         }
     }
 
-    private func fetchSong(id: String, in language: LanguageTag, completionHandler: @escaping (Result<SongAttributes, Error>) -> Void) {
-        appleMusicClient.song(id: id, language: language.rawValue) { (song, error) in
-            if let error = error {
-                completionHandler(.failure(error))
-                return
-            }
+    private func fetchSong(id: String, in language: LanguageTag) async throws -> Song? {
+        let storefront = try await MusicDataRequest.currentCountryCode
+        var urlComponents = URLComponents(string: "https://api.music.apple.com/v1/catalog/\(storefront)/songs/\(id)")!
+        urlComponents.queryItems = [URLQueryItem(name: "l", value: language.rawValue)]
 
-            if let songAttributes = song?.attributes {
-                completionHandler(.success(songAttributes))
-            }
-        }
+        let request = MusicDataRequest(urlRequest: URLRequest(url: urlComponents.url!))
+        let response = try await request.response()
+
+        let songResponse = try JSONDecoder().decode(SongResponse.self, from: response.data)
+        return songResponse.data.first
     }
 
     private func cache(song: OriginalLanguageSong?, for id: String) {
         OriginalLanguageSongTitleFetcher.cache.setObjectAsync(song, forKey: id)
     }
 
-    private func originalLanguage(of song: SongAttributes) -> LanguageTag {
-        let countryCode = song.isrc.prefix(2)
+    private func originalLanguage(of song: Song) -> LanguageTag? {
+        guard let isrc = song.isrc else { return nil }
+
+        let countryCode = isrc.prefix(2)
 
         switch countryCode {
         case "JP":
@@ -87,6 +68,12 @@ class OriginalLanguageSongTitleFetcher {
         default:
             return .enUS
         }
+    }
+}
+
+extension OriginalLanguageSongTitleFetcher {
+    struct SongResponse: Decodable {
+        let data: [Song]
     }
 }
 
@@ -99,9 +86,9 @@ class OriginalLanguageSong: NSObject, NSCoding {
 
     let title: String
     let artist: String
-    let isrc: String
+    let isrc: String?
 
-    init(title: String, artist: String, isrc: String) {
+    init(title: String, artist: String, isrc: String?) {
         self.title = title
         self.artist = artist
         self.isrc = isrc
