@@ -56,9 +56,7 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
         }
     }
 
-    lazy var originalLanguageSongTitleFetcher = OriginalLanguageSongTitleFetcher()
-
-    var songTitleFetcherTask: Task<Void, Error>?
+    var songDataRequestTask: Task<Void, Never>?
 
     required init(coder: NSCoder) {
         super.init(coder: coder)
@@ -95,7 +93,7 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
     }
 
     func tryUpdatingLabelsWithOriginalLanguageTitle() {
-        songTitleFetcherTask?.cancel()
+        songDataRequestTask?.cancel()
 
         guard let nowPlayingItem = musicPlayer.nowPlayingItem else {
             updateLabels(title: nil, artist: nil)
@@ -109,9 +107,9 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
             return
         }
 
-        if originalLanguageSongTitleFetcher.hasCachedOriginalLanguageSong(id: songID) {
-            if let originalLanguageSong = originalLanguageSongTitleFetcher.cachedOriginalLanguageSong(id: songID) {
-                updateLabels(title: originalLanguageSong.title, artist: originalLanguageSong.artist)
+        if SongDataRequest.hasCachedSong(id: songID) {
+            if let song = SongDataRequest.cachedSong(id: songID) {
+                updateLabels(title: song.title, artist: song.artist)
             } else {
                 updateLabels(title: nowPlayingItem.title, artist: nowPlayingItem.artist)
             }
@@ -120,9 +118,9 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
 
         updateLabels(title: nowPlayingItem.title, artist: nowPlayingItem.artist)
 
-        songTitleFetcherTask = Task {
+        songDataRequestTask = Task {
             do {
-                if let song = try await originalLanguageSongTitleFetcher.fetchOriginalLanguageSong(id: songID) {
+                if let song = try await SongDataRequest(id: songID).perform() {
                     updateLabels(title: song.title, artist: song.artist, animated: true)
                 }
             } catch {
