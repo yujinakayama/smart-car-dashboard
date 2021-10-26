@@ -11,7 +11,7 @@ import MediaPlayer
 import MarqueeLabel
 
 fileprivate func makeMarqueeLabel() -> MarqueeLabel {
-    let label = MarqueeLabel()
+    let label = TouchableMarqueeLabel()
     label.fadeLength = 24
     label.holdScrolling = true
     label.speed = .rate(30)
@@ -40,8 +40,11 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
         let artistLabel = makeMarqueeLabel()
         artistLabel.textColor = artistLabel.tintColor
         artistLabel.font = UIFont.systemFont(ofSize: 22, weight: .regular)
+        artistLabel.isUserInteractionEnabled = true
         return artistLabel
     }()
+
+    lazy var artistLabelTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(artistLabelDidRecognizeTap))
 
     var labels: [MarqueeLabel] {
         return [songLabel, artistLabel]
@@ -84,6 +87,8 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
 
         addArrangedSubview(songLabel)
         addArrangedSubview(artistLabel)
+
+        artistLabel.addGestureRecognizer(artistLabelTapGestureRecognizer)
     }
 
     func addNotificationObserver() {
@@ -179,6 +184,15 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
         }
     }
 
+    @objc func artistLabelDidRecognizeTap() {
+        guard let songID = musicPlayer.nowPlayingItem?.validPlaybackStoreID,
+              let song = SongDataRequest.cachedSong(id: songID),
+              let artistURL = song.artistURL
+        else { return }
+
+        UIApplication.shared.open(artistURL)
+    }
+
     @objc func musicPlayerControllerNowPlayingItemDidChange() {
         // For some reason this function may be called twice for a single change...
         // Also, it sometimes reports wrong ID 0...
@@ -187,5 +201,35 @@ fileprivate func makeMarqueeLabel() -> MarqueeLabel {
         }
 
         previousItemID = musicPlayer.nowPlayingItem?.persistentID
+    }
+}
+
+class TouchableMarqueeLabel: MarqueeLabel {
+    override var textColor: UIColor! {
+        didSet {
+            normalTextColor = textColor
+        }
+    }
+
+    private var normalTextColor: UIColor?
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+
+        if normalTextColor == nil {
+            normalTextColor = textColor
+        }
+
+        super.textColor = normalTextColor?.withAlphaComponent(0.5)
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        super.textColor = normalTextColor
+    }
+
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesCancelled(touches, with: event)
+        super.textColor = normalTextColor
     }
 }

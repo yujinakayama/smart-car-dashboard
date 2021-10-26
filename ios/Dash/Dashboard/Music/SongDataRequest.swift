@@ -64,7 +64,10 @@ class SongDataRequest {
 
         let storefront = try await MusicDataRequest.currentCountryCode
         var urlComponents = URLComponents(string: "https://api.music.apple.com/v1/catalog/\(storefront)/songs/\(id)")!
-        urlComponents.queryItems = [URLQueryItem(name: "l", value: language.rawValue)]
+        urlComponents.queryItems = [
+            URLQueryItem(name: "l", value: language.rawValue),
+            URLQueryItem(name: "extend", value: "artistUrl")
+        ]
 
         let request = MusicDataRequest(urlRequest: URLRequest(url: urlComponents.url!))
         let response = try await request.response()
