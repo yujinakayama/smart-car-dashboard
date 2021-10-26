@@ -34,7 +34,17 @@ class SongDataRequest {
 
     func perform() async throws -> Song? {
         let initialRequestLanguage = LanguageTag.enUS
-        guard let song = try await fetchSong(in: initialRequestLanguage) else { return nil }
+
+        var song: Song?
+
+        do {
+            song = try await fetchSong(in: initialRequestLanguage)
+        } catch let error as MusicDataRequest.Error where error.status == 404 {
+            try cache(song: nil, for: id)
+            return nil
+        }
+
+        guard let song = song else { return nil }
 
         var songInOriginalLanguage: Song!
 
