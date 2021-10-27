@@ -161,10 +161,6 @@ class DashboardViewController: UIViewController {
     }
 
     private func switchLayoutIfNeeded() {
-        // traitCollectionDidChange() is invoked when the app just entered background
-        // and it reports wrong horizontalSizeClass, so we ignore it
-        if UIApplication.shared.applicationState == .background { return }
-
         if traitCollection.horizontalSizeClass != .compact {
             switchLayout(to: .split)
         }
