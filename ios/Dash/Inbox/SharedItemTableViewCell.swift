@@ -50,6 +50,8 @@ class SharedItemTableViewCell: UITableViewCell {
 
     var defaultIconCornerRadius: CGFloat!
 
+    var iconImageTask: Task<Void, Never>?
+
     override func awakeFromNib() {
         defaultIconCornerRadius = iconBackgroundView.cornerRadius
 
@@ -81,6 +83,10 @@ class SharedItemTableViewCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+
+        iconImageTask?.cancel()
+        iconImageTask = nil
+
         iconImageView.pin_cancelImageDownload()
     }
 
@@ -145,8 +151,8 @@ class SharedItemTableViewCell: UITableViewCell {
         iconImageView.image = UIImage(systemName: "safari.fill")
         iconBackgroundView.backgroundColor = .systemBlue
 
-        website.icon.getURL { (iconURL) in
-            if let iconURL = iconURL {
+        iconImageTask = Task {
+            if let iconURL = await website.icon.getURL() {
                 DispatchQueue.main.async {
                     self.setRemoteImage(url: iconURL)
                 }

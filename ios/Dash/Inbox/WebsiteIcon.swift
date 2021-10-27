@@ -13,7 +13,6 @@ import CommonCrypto
 enum WebsiteIconError: Error {
     case invalidWebsiteURL
     case htmlEncodingError
-    case iconNotFound
     case unknown
 }
 
@@ -49,41 +48,34 @@ class WebsiteIcon {
         self.websiteURL = websiteURL
     }
 
-    func getURL(completionHandler: @escaping (URL?) -> Void) {
+    func getURL() async -> URL? {
         if isCached {
-            completionHandler(cachedURL)
-            return
+            return cachedURL
         }
 
-        fetchIconURL { (result) in
-            switch result {
-            case .success(let url):
-                self.cachedURL = url
-                completionHandler(url)
-            case .failure(let error) where error is WebsiteIconError:
-                self.cachedURL = nil // Cache the fact there's no icon
-                completionHandler(nil)
-            default:
-                completionHandler(nil)
-            }
+        do {
+            let url = try await fetchIconURL()
+            cachedURL = url
+            return url
+        } catch is WebsiteIconError {
+            cachedURL = nil // Cache the fact there's no valid icon
+            return nil
+        } catch {
+            return nil
         }
     }
 
-    private func fetchIconURL(completionHandler: @escaping (Result<URL, Error>) -> Void) {
-        checkFixedIconURL { (result) in
-            switch result {
-            case .success:
-                completionHandler(result)
-            case .failure:
-                self.fetchAndExtractIconURLFromHTMLDocument(completionHandler: completionHandler)
-            }
+    private func fetchIconURL() async throws -> URL? {
+        if let url = try await checkFixedAppleTouchIconURL() {
+            return url
+        } else {
+            return try await extractIconURLFromHTMLDocument()
         }
     }
 
-    private func checkFixedIconURL(completionHandler: @escaping (Result<URL, Error>) -> Void) {
+    private func checkFixedAppleTouchIconURL() async throws -> URL? {
         guard var urlComponents = URLComponents(url: websiteURL, resolvingAgainstBaseURL: false) else {
-            completionHandler(.failure(WebsiteIconError.invalidWebsiteURL))
-            return
+            throw WebsiteIconError.invalidWebsiteURL
         }
 
         urlComponents.path = "/apple-touch-icon.png"
@@ -93,54 +85,41 @@ class WebsiteIcon {
         var request = URLRequest(url: url)
         request.httpMethod = "HEAD"
 
-        let task = URLSession.shared.dataTask(with: urlComponents.url!) { (data, response, error) in
-            if let error = error {
-                completionHandler(.failure(error))
-                return
-            }
+        let (_, response) = try await URLSession.shared.data(for: request)
 
-            guard let response = response as? HTTPURLResponse else {
-                completionHandler(.failure(WebsiteIconError.unknown))
-                return
-            }
-
-            if response.isSuccessful {
-                completionHandler(.success(url))
-            } else {
-                completionHandler(.failure(WebsiteIconError.iconNotFound))
-            }
+        guard let response = response as? HTTPURLResponse else {
+            throw WebsiteIconError.unknown
         }
 
-        task.resume()
+        if response.isSuccessful {
+            return url
+        } else {
+            return nil
+        }
     }
 
-    private func fetchAndExtractIconURLFromHTMLDocument(completionHandler: @escaping (Result<URL, Error>) -> Void) {
+    private func extractIconURLFromHTMLDocument() async throws -> URL?  {
         var request = URLRequest(url: websiteURL)
         // Some websites such as YouTube provide less icon variants when accessed with mobile user agent.
         request.setValue("Mozilla/5.0 (Macintosh) AppleWebKit (KHTML, like Gecko) Safari", forHTTPHeaderField: "User-Agent")
 
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                completionHandler(.failure(error))
-                return
-            }
+        let (data, _) = try await URLSession.shared.data(for: request)
 
-            do {
-                if let url = try self.extractIconURL(from: data!) {
-                    completionHandler(.success(url))
-                } else {
-                    completionHandler(.failure(WebsiteIconError.iconNotFound))
-                }
-            } catch {
-                completionHandler(.failure(error))
-            }
-        }
+        let document = try parseHTML(data: data)
 
-        task.resume()
+        return try extractBestIconURL(from: document)
     }
 
-    private func extractIconURL(from data: Data) throws -> URL? {
-        let icons = try extractIcons(from: data)
+    private func parseHTML(data: Data) throws -> Document {
+        guard let html = String(data: data, encoding: .utf8) else {
+            throw WebsiteIconError.htmlEncodingError
+        }
+
+        return try SwiftSoup.parse(html, websiteURL.absoluteString)
+    }
+
+    private func extractBestIconURL(from document: Document) throws -> URL? {
+        let icons = try extractIcons(from: document)
 
         guard !icons.isEmpty else { return nil }
 
@@ -157,37 +136,26 @@ class WebsiteIcon {
                 return current
             }
 
-            guard let currentSize = current.size else {
-                return best
-            }
-
-            guard let bestSize = best.size else {
-                return current
-            }
-
-            return bestSize >= currentSize ? best : current
+            return (best.size ?? 0) >= (current.size ?? 0) ? best : current
         }
 
         return bestIcon!.url
     }
 
-    private func extractIcons(from data: Data) throws -> [Icon] {
-        guard let html = String(data: data, encoding: .utf8) else {
-            throw WebsiteIconError.htmlEncodingError
-        }
-
-        let document = try SwiftSoup.parse(html, websiteURL.absoluteString)
+    private func extractIcons(from document: Document) throws -> [Icon] {
         let links = try document.select("link[rel='apple-touch-icon'], link[rel='apple-touch-icon-precomposed'], link[rel='icon']")
 
         return links.compactMap { (link) -> Icon? in
-            guard let href = try? link.attr("href"), let iconURL = URL(string: href, relativeTo: websiteURL) else { return nil }
+            guard let href = try? link.attr("href"),
+                  let iconURL = URL(string: href, relativeTo: websiteURL),
+                  let rel = try? link.attr("rel")
+            else { return nil }
 
-            let rel = try! link.attr("rel")
             let type: IconType = rel.contains("apple") ? .apple : .generic
 
             var size: Int?
-            if let sizesString = try? link.attr("sizes") {
-                size = Int(sizesString.components(separatedBy: "x").first!)
+            if let sizeString = try? link.attr("sizes").components(separatedBy: "x").first {
+                size = Int(sizeString)
             }
 
             return (type, iconURL, size)
