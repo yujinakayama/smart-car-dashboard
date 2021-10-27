@@ -216,6 +216,8 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
     }
 
     func retry(terminationReason: Connection.TerminationReason) {
+        guard isStarted else { return }
+
         if terminationReason == .closedByServer {
             retryTimer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(connect), userInfo: nil, repeats: false)
         } else {
