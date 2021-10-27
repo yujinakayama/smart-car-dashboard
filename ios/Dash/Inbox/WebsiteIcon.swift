@@ -115,7 +115,11 @@ class WebsiteIcon {
     }
 
     private func fetchAndExtractIconURLFromHTMLDocument(completionHandler: @escaping (Result<URL, Error>) -> Void) {
-        let task = URLSession.shared.dataTask(with: websiteURL) { (data, response, error) in
+        var request = URLRequest(url: websiteURL)
+        // Some websites such as YouTube provide less icon variants when accessed with mobile user agent.
+        request.setValue("Mozilla/5.0 (Macintosh) AppleWebKit (KHTML, like Gecko) Safari", forHTTPHeaderField: "User-Agent")
+
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
                 completionHandler(.failure(error))
                 return
