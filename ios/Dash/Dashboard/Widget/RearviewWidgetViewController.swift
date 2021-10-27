@@ -64,6 +64,8 @@ class RearviewWidgetViewController: UIViewController {
     }
 
     func setUpRearviewViewController(configuration: RearviewConfiguration) {
+        guard rearviewViewController == nil else { return }
+
         let rearviewViewController = RearviewViewController(configuration: configuration, cameraSensitivityMode: RearviewDefaults.shared.cameraSensitivityMode)
         rearviewViewController.delegate = self
         rearviewViewController.contentMode = .top
