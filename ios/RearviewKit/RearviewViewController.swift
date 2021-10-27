@@ -74,6 +74,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
         let segmentedControl = HUDSegmentedControl(titles: segmentTitles)
         segmentedControl.isHidden = true
+        segmentedControl.alpha = 0
         segmentedControl.selectedSegmentIndex = cameraSensitivityMode.rawValue
         segmentedControl.addTarget(self, action: #selector(sensitivityModeSegmentedControlDidChangeValue), for: .valueChanged)
         return segmentedControl
@@ -88,6 +89,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
     var sensitivityModeSegmentedControlCenterYConstraint: NSLayoutConstraint?
 
     var sensitivityModeSegmentedControlHidingTimer: Timer?
+    var sensitivityModeSegmentedControlHidingAnimator: UIViewPropertyAnimator?
 
     public lazy var tapGestureRecognizer: UIGestureRecognizer = {
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(gestureRecognizerDidRecognizeTap))
@@ -357,16 +359,15 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
     }
 
     @IBAction func gestureRecognizerDidRecognizeTap() {
-        if sensitivityModeSegmentedControl.isHidden {
-            self.sensitivityModeSegmentedControl.alpha = 0
+        resetSensitivityModeSegmentedControlVisibilityLifetime()
+
+        if sensitivityModeSegmentedControl.alpha != 1 {
             sensitivityModeSegmentedControl.isHidden = false
 
-            UIView.animate(withDuration: 0.25) {
-                self.sensitivityModeSegmentedControl.alpha = 1
+            UIView.animate(withDuration: 0.25) { [weak self] in
+                self?.sensitivityModeSegmentedControl.alpha = 1
             }
         }
-
-        resetSensitivityModeSegmentedControlVisibilityLifetime()
     }
 
     @IBAction func sensitivityModeSegmentedControlDidChangeValue() {
@@ -378,14 +379,21 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
 
     private func resetSensitivityModeSegmentedControlVisibilityLifetime() {
         sensitivityModeSegmentedControlHidingTimer?.invalidate()
+        sensitivityModeSegmentedControlHidingAnimator?.stopAnimation(true)
+
+        let animator = UIViewPropertyAnimator(duration: 1, curve: .easeInOut) { [weak self] in
+            self?.sensitivityModeSegmentedControl.alpha = 0
+        }
+
+        animator.addCompletion { [weak self] (finalPosition) in
+            self?.sensitivityModeSegmentedControl.isHidden = true
+        }
 
         sensitivityModeSegmentedControlHidingTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (timer) in
-            UIView.animate(withDuration: 1) {
-                self.sensitivityModeSegmentedControl.alpha = 0
-            } completion: { (finished) in
-                self.sensitivityModeSegmentedControl.isHidden = true
-            }
+            animator.startAnimation()
         }
+
+        sensitivityModeSegmentedControlHidingAnimator = animator
     }
 
     func applyContentMode() {
