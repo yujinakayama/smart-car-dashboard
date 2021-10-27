@@ -44,6 +44,8 @@ class WebsiteIcon {
 
     private lazy var cacheKey: String = Cache.digestString(of: websiteURL.absoluteString)
 
+    private lazy var redirectionDisabler = RedirectionDisabler()
+
     init(websiteURL: URL) {
         self.websiteURL = websiteURL
     }
@@ -86,7 +88,8 @@ class WebsiteIcon {
         var request = URLRequest(url: url)
         request.httpMethod = "HEAD"
 
-        let (_, response) = try await URLSession.shared.data(for: request)
+        // Some websites such as Netflix redirects to "Not found" page with 200 status :(
+        let (_, response) = try await URLSession.shared.data(for: request, delegate: redirectionDisabler)
 
         guard let response = response as? HTTPURLResponse else {
             throw WebsiteIconError.unknown
@@ -161,6 +164,12 @@ class WebsiteIcon {
 
             return (type, iconURL, size)
         }
+    }
+}
+
+fileprivate class RedirectionDisabler: NSObject, URLSessionTaskDelegate {
+    func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse, newRequest request: URLRequest) async -> URLRequest? {
+        return nil
     }
 }
 
