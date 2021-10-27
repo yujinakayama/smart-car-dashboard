@@ -161,19 +161,28 @@ class DashboardViewController: UIViewController {
     }
 
     private func switchLayoutIfNeeded() {
-        if traitCollection.horizontalSizeClass != .compact {
-            switchLayout(to: .split)
+        if !allowedLayoutModes.contains(currentLayoutMode), let desiredLayoutMode = allowedLayoutModes.first {
+            switchLayout(to: desiredLayoutMode)
         }
     }
 
     func switchLayout(to layoutMode: LayoutMode) {
         if layoutMode == currentLayoutMode { return }
+        guard allowedLayoutModes.contains(layoutMode) else { return }
 
         widgetViewController.beginAppearanceTransition(layoutMode == .split, animated: false)
         updateLayoutConstraints(for: layoutMode)
         widgetViewController.endAppearanceTransition()
 
         currentLayoutMode = layoutMode
+    }
+
+    private var allowedLayoutModes: [LayoutMode] {
+        if traitCollection.horizontalSizeClass == .compact {
+            return [.fullMusicView, .split]
+        } else {
+            return [.split]
+        }
     }
 
     private func updateLayoutConstraints(for layoutMode: LayoutMode) {
@@ -272,7 +281,7 @@ extension DashboardViewController {
 
 extension DashboardViewController: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        guard traitCollection.horizontalSizeClass == .compact else { return false }
+        guard allowedLayoutModes.count > 1 else { return false }
 
         let location = gestureRecognizer.location(in: musicViewController.view)
         return location.y <= musicViewController.songTitleView.frame.maxY
