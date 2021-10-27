@@ -18,12 +18,6 @@ target 'Dash' do
   pod 'PINRemoteImage', '~> 3.0'
   pod 'SwiftSoup'
   pod 'XCGLogger'
-
-  # Work around for a warning:
-  # Multiple targets match implicit dependency for linker flags '-framework GTMSessionFetcher'. Consider adding an explicit dependency on the intended target to resolve this ambiguity. (in target 'Dash' from project 'Dash')
-  #   Target 'GTMSessionFetcher-Core' (in project 'Pods')
-  #   Target 'GTMSessionFetcher.default-Core' (in project 'Pods')
-  pod 'GTMSessionFetcher'
 end
 
 target 'ParkingSearchKit' do

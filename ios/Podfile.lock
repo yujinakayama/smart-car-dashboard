@@ -502,11 +502,7 @@ PODS:
   - GTMAppAuth (1.2.2):
     - AppAuth/Core (~> 1.4)
     - GTMSessionFetcher/Core (~> 1.5)
-  - GTMSessionFetcher (1.7.0):
-    - GTMSessionFetcher/Full (= 1.7.0)
   - GTMSessionFetcher/Core (1.7.0)
-  - GTMSessionFetcher/Full (1.7.0):
-    - GTMSessionFetcher/Core (= 1.7.0)
   - JGProgressHUD (2.2)
   - KeychainAccess (4.2.2)
   - leveldb-library (1.22.1)
@@ -552,7 +548,6 @@ DEPENDENCIES:
   - Firebase/Messaging
   - FirebaseFirestoreSwift (>= 8.7.0-beta)
   - GoogleSignIn
-  - GTMSessionFetcher
   - JGProgressHUD
   - KeychainAccess
   - MarqueeLabel (from `https://github.com/yujinakayama/MarqueeLabel`, branch `fix-triggerScrollStart`)
@@ -649,6 +644,6 @@ SPEC CHECKSUMS:
   TransitionButton: 36283346e17c64775a1b3bc3a7a72940a367de1f
   XCGLogger: 1943831ef907df55108b0b18657953f868de973b
 
-PODFILE CHECKSUM: 22e863d858e316dd07dc2f05f0dd3d14aefde6e8
+PODFILE CHECKSUM: 98be484fc6543fd68c5af74b5babb932bacbb7e7
 
 COCOAPODS: 1.11.2
