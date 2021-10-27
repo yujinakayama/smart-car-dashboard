@@ -79,6 +79,7 @@ class WebsiteIcon {
         }
 
         urlComponents.path = "/apple-touch-icon.png"
+        urlComponents.query = nil
 
         let url = urlComponents.url!
 
