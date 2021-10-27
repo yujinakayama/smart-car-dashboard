@@ -214,11 +214,13 @@ extension AppState {
         }
     }
 
+    // We should order these in inner to outer order
+    // to avoid "Unbalanced calls to begin/end appearance transitions" (view[Will/Did][Appear/Disappear]).
     static let propertyTypes: [Property.Type] = [
-        SelectedTab.self,
-        DashboardLayoutMode.self,
         SelectedWidgetPage.self,
+        DashboardLayoutMode.self,
         DisplayedETCPaymentHistory.self,
-        MapsMapType.self
+        MapsMapType.self,
+        SelectedTab.self,
     ]
 }
