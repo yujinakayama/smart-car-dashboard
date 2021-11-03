@@ -76,23 +76,12 @@ extension SharedLocationAnnotationView {
         lazy var parkingSearchButton: UIButton = makeButton(title: String(localized: "Search Parkings"), backgroundColor: .systemBlue)
 
         func makeButton(title: String, backgroundColor: UIColor) -> UIButton {
-            let fontMetrics = UIFontMetrics(forTextStyle: .headline)
+            var configuration = UIButton.Configuration.filled()
+            configuration.title = title
+            configuration.baseBackgroundColor = backgroundColor
+            configuration.buttonSize = .medium
 
-            let button = UIButton()
-            button.setBackgroundColor(backgroundColor, for: .normal)
-            button.setTitleColor(.white, for: .normal)
-
-            button.titleLabel?.adjustsFontForContentSizeCategory = true
-            button.titleLabel?.font = fontMetrics.scaledFont(for: UIFont.systemFont(ofSize: 16, weight: .medium))
-
-            button.contentEdgeInsets = .init(top: 8, left: 24, bottom: 8, right: 24)
-
-            button.clipsToBounds = true
-            button.layer.cornerRadius = 8
-
-            button.setTitle(title, for: .normal)
-
-            return button
+            return UIButton(configuration: configuration)
         }
 
         var privateTitleLabel: UILabel? {
