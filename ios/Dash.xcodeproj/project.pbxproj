@@ -196,7 +196,6 @@
 		B9E8A077265B855E00709838 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B9E8A079265B855E00709838 /* InfoPlist.strings */; };
 		B9E96CBB22A3CE7500C2E009 /* DashTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CBA22A3CE7500C2E009 /* DashTests.swift */; };
 		B9E96CC822A4EF1300C2E009 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
-		B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */; };
 		B9EF566123DF3D61000D0CB2 /* GoogleSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */; };
 		B9F272C4259C91990098CB3B /* AltitudeWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F272C3259C91990098CB3B /* AltitudeWidgetViewController.swift */; };
 		B9F4377F25D41C19004B9140 /* RearviewKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B9F4377D25D41C19004B9140 /* RearviewKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -573,7 +572,6 @@
 		B9E96CBA22A3CE7500C2E009 /* DashTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashTests.swift; sourceTree = "<group>"; };
 		B9E96CBC22A3CE7500C2E009 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPayment.swift; sourceTree = "<group>"; };
-		B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInViewController.swift; sourceTree = "<group>"; };
 		B9F272C3259C91990098CB3B /* AltitudeWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltitudeWidgetViewController.swift; sourceTree = "<group>"; };
 		B9F4375E25D414D8004B9140 /* RearviewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewConfiguration.swift; sourceTree = "<group>"; };
@@ -1027,7 +1025,6 @@
 				B942553C22B8C3E2008B053B /* Logger.swift */,
 				B93321ED2323C9D500BFAB21 /* BorderedView.swift */,
 				B94BD2E82680486700B768A2 /* BorderedLabel.swift */,
-				B9EF565E23DF3289000D0CB2 /* BorderedButton.swift */,
 				B99C69AB26F5F6880064162D /* MapTypeSegmentedControl.swift */,
 				B9CEA76922D8F1F50055C9A3 /* Extensions */,
 				B9BF2F0323F6946100967316 /* Vendor */,
@@ -1821,7 +1818,6 @@
 				B9C0BF472698689B00C54BA9 /* OfficialParkingInformationWebViewController.swift in Sources */,
 				B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */,
 				B90C297225E3FB80004466C9 /* SIMDExtension.swift in Sources */,
-				B9EF565F23DF3289000D0CB2 /* BorderedButton.swift in Sources */,
 				B9BA5B5B26A8982C004D5927 /* SharedLocationAnnotation.swift in Sources */,
 				B99D4F2824C0526200647A10 /* BluetoothAudioDevice.swift in Sources */,
 				B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */,
