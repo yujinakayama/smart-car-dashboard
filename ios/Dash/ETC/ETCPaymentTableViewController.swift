@@ -34,6 +34,7 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     let sectionHeaderDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .full
+        formatter.doesRelativeDateFormatting = true
         return formatter
     }()
 
@@ -41,6 +42,9 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
         super.viewDidLoad()
 
         deviceStatusBarItemManager.addBarItem(to: navigationItem)
+
+        // To update relative dates in section headers when the current date changed
+        NotificationCenter.default.addObserver(tableView!, selector: #selector(tableView.reloadData), name: UIApplication.significantTimeChangeNotification, object: nil)
 
         startFetchingPayments()
     }
