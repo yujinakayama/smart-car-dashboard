@@ -50,7 +50,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
         updateDataSource()
 
-        updateLeftBarButtonItem()
+        updateLeftBarButtonItems()
         navigationItem.rightBarButtonItem = editButtonItem
     }
 
@@ -68,7 +68,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
     @objc func sharedItemDatabaseDidChange() {
         updateDataSource()
-        updateLeftBarButtonItem()
+        updateLeftBarButtonItems()
     }
 
     @objc func updateDataSource() {
@@ -87,12 +87,26 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
-        updateLeftBarButtonItem()
+        updateLeftBarButtonItems()
     }
 
-    func updateLeftBarButtonItem() {
+    func updateLeftBarButtonItems() {
         if isEditing {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(trashBarButtonItemDidTap))
+            let markAsOpenedMenuItem = UIAction(title: String(localized: "Mark as Opened")) { [unowned self] (action) in
+                self.markSelectedItemsAsOpened(true)
+            }
+
+            let markAsUnopenedMenuItem = UIAction(title: String(localized: "Mark as Unopened")) { [unowned self] (action) in
+                self.markSelectedItemsAsOpened(false)
+            }
+
+            let markMenu = UIMenu(title: "", children: [markAsOpenedMenuItem, markAsUnopenedMenuItem])
+
+            navigationItem.leftBarButtonItems = [
+                .init(title: "Delete", style: .plain, target: self, action: #selector(trashBarButtonItemDidTap)),
+                .fixedSpace(30),
+                .init(title: "Mark", menu: markMenu)
+            ]
         } else {
             let pairingMenuItem = UIAction(title: String(localized: "Pair with Dash Remote")) { [unowned self] (action) in
                 self.sharePairingURL()
@@ -104,8 +118,21 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
             let menu = UIMenu(title: authentication.email ?? "", children: [pairingMenuItem, signOutMenuItem])
             let barButtonItem = UIBarButtonItem(title: nil, image: UIImage(systemName: "person.circle"), primaryAction: nil, menu: menu)
-            navigationItem.leftBarButtonItem = barButtonItem
+
+            navigationItem.leftBarButtonItems = [barButtonItem]
         }
+    }
+
+    func markSelectedItemsAsOpened(_ value: Bool) {
+        assert(isEditing)
+
+        guard let indexPaths = tableView.indexPathsForSelectedRows else { return }
+
+        for indexPath in indexPaths {
+            dataSource.item(for: indexPath).markAsOpened(value)
+        }
+
+        setEditing(false, animated: true)
     }
 
     @objc func trashBarButtonItemDidTap() {
