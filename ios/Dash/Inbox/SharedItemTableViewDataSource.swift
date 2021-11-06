@@ -18,11 +18,15 @@ class SharedItemTableViewDataSource: UITableViewDiffableDataSource<Date, String>
     lazy var sectionHeaderDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .full
+        formatter.doesRelativeDateFormatting = true
         return formatter
     }()
 
     override init(tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<Date, String>.CellProvider) {
         super.init(tableView: tableView, cellProvider: cellProvider)
+
+        // To update relative dates in section headers when the current date changed
+        NotificationCenter.default.addObserver(tableView, selector: #selector(tableView.reloadData), name: UIApplication.significantTimeChangeNotification, object: nil)
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection sectionIndex: Int) -> String? {
