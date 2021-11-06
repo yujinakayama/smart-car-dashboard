@@ -50,8 +50,8 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
         updateDataSource()
 
-        navigationItem.leftBarButtonItem = editButtonItem
-        updateRightBarButtonItem()
+        updateLeftBarButtonItem()
+        navigationItem.rightBarButtonItem = editButtonItem
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -68,7 +68,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
     @objc func sharedItemDatabaseDidChange() {
         updateDataSource()
-        updateRightBarButtonItem()
+        updateLeftBarButtonItem()
     }
 
     @objc func updateDataSource() {
@@ -87,12 +87,12 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
-        updateRightBarButtonItem()
+        updateLeftBarButtonItem()
     }
 
-    func updateRightBarButtonItem() {
+    func updateLeftBarButtonItem() {
         if isEditing {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(trashBarButtonItemDidTap))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(trashBarButtonItemDidTap))
         } else {
             let pairingMenuItem = UIAction(title: String(localized: "Pair with Dash Remote")) { [unowned self] (action) in
                 self.sharePairingURL()
@@ -104,7 +104,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
             let menu = UIMenu(title: authentication.email ?? "", children: [pairingMenuItem, signOutMenuItem])
             let barButtonItem = UIBarButtonItem(title: nil, image: UIImage(systemName: "person.circle"), primaryAction: nil, menu: menu)
-            navigationItem.rightBarButtonItem = barButtonItem
+            navigationItem.leftBarButtonItem = barButtonItem
         }
     }
 
