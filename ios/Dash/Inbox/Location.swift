@@ -36,7 +36,7 @@ class Location: SharedItemProtocol {
     }
 
     func open() {
-        markAsOpened()
+        markAsOpened(true)
 
         if Defaults.shared.snapLocationToPointOfInterest {
             findCorrespondingPointOfInterest { [weak self] (pointOfInterestMapItem) in

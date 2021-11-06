@@ -58,7 +58,7 @@ class RemoteNotification {
                 logger.error(error)
             }
 
-            item?.markAsOpened()
+            item?.markAsOpened(true)
         }
 
         strongReferences.append(item!)

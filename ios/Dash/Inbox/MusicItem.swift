@@ -29,7 +29,7 @@ class MusicItem: SharedItemProtocol {
     }
 
     func open() {
-        markAsOpened()
+        markAsOpened(true)
 
         if let playParameters = playParameters {
             play(playParameters: playParameters)

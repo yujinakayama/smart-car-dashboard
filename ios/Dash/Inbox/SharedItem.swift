@@ -24,8 +24,8 @@ protocol SharedItemProtocol: Decodable {
 }
 
 extension SharedItemProtocol {
-    func markAsOpened() {
-        firebaseDocument?.updateData(["hasBeenOpened": true])
+    func markAsOpened(_ value: Bool) {
+        firebaseDocument?.updateData(["hasBeenOpened": value])
     }
 
     func openInDefaultApp() {

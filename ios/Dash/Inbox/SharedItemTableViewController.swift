@@ -159,7 +159,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         while let superview = view.superview {
             if let cell = superview as? SharedItemTableViewCell {
                 if let location = cell.item as? Location {
-                    location.markAsOpened()
+                    location.markAsOpened(true)
                     pushMapsViewControllerForParkingSearch(location: location)
                 }
                 return
@@ -228,15 +228,15 @@ private extension SharedItemTableViewController {
         return UIMenu(children: [
             UIAction(title: String(localized: "Search Parkings"), image: UIImage(systemName: "parkingsign")) { [weak self] (action) in
                 guard let self = self else { return }
-                location.markAsOpened()
+                location.markAsOpened(true)
                 self.pushMapsViewControllerForParkingSearch(location: location)
             },
             UIAction(title: String(localized: "Google Maps"), image: UIImage(systemName: "g.circle.fill")) { (action) in
-                location.markAsOpened()
+                location.markAsOpened(true)
                 UIApplication.shared.open(location.googleMapsDirectionsURL)
             },
             UIAction(title: String(localized: "Yahoo! CarNavi"), image: UIImage(systemName: "y.circle.fill")) { (action) in
-                location.markAsOpened()
+                location.markAsOpened(true)
                 UIApplication.shared.open(location.yahooCarNaviURL)
             },
             UIAction(title: String(localized: "Search Web"), image: UIImage(systemName: "magnifyingglass")) { [weak self] (action) in
@@ -253,7 +253,7 @@ private extension SharedItemTableViewController {
                 urlComponents.queryItems = [URLQueryItem(name: "q", value: query)]
                 guard let url = urlComponents.url else { return }
 
-                location.markAsOpened()
+                location.markAsOpened(true)
                 self.presentWebViewController(url: url)
             }
         ])
@@ -262,7 +262,7 @@ private extension SharedItemTableViewController {
     func actionMenu(for musicItem: MusicItem) -> UIMenu {
         return UIMenu(children: [
             UIAction(title: String(localized: "Show in Apple Music"), image: UIImage(systemName: "music.note")) { (action) in
-                musicItem.markAsOpened()
+                musicItem.markAsOpened(true)
                 UIApplication.shared.open(musicItem.url)
             }
         ])
@@ -272,7 +272,7 @@ private extension SharedItemTableViewController {
         return UIMenu(children: [
             UIAction(title: String(localized: "Preview"), image: UIImage(systemName: "eye")) { [weak self] (action) in
                 guard let self = self else { return }
-                website.markAsOpened()
+                website.markAsOpened(true)
                 self.presentWebViewController(url: website.url, title: website.title)
             }
         ])

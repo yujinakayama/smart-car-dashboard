@@ -22,7 +22,7 @@ class UnknownItem: SharedItemProtocol {
     }
 
     func open() {
-        markAsOpened()
+        markAsOpened(true)
         openInDefaultApp()
     }
 }
