@@ -102,7 +102,11 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         }
     }
 
-    private lazy var deleteBarButtonItem = UIBarButtonItem(title: String(localized: "Delete"), style: .plain, target: self, action: #selector(trashBarButtonItemDidTap))
+    private lazy var deleteBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(title: String(localized: "Delete"), style: .plain, target: self, action: #selector(trashBarButtonItemDidTap))
+        barButtonItem.tintColor = .systemRed
+        return barButtonItem
+    }()
 
     private lazy var markBarButtonItem: UIBarButtonItem = {
         let markAsOpenedMenuItem = UIAction(title: String(localized: "Mark as Opened")) { [unowned self] (action) in
