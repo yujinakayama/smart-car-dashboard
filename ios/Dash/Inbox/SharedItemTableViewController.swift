@@ -10,6 +10,8 @@ import UIKit
 import SafariServices
 
 class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDelegate {
+    static let bottomInsetForAutoNextPageLoading: CGFloat = 200
+
     var database: SharedItemDatabase? {
         return Firebase.shared.sharedItemDatabase
     }
@@ -190,6 +192,17 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
+        }
+    }
+
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let database = database, !database.isLoading else { return }
+
+        let currentBottom = tableView.contentOffset.y + tableView.bounds.height
+        let maxScrollableBottom = tableView.contentSize.height + tableView.adjustedContentInset.bottom
+
+        if currentBottom >= maxScrollableBottom - Self.bottomInsetForAutoNextPageLoading {
+            database.loadNextPageIfAvailable()
         }
     }
 
