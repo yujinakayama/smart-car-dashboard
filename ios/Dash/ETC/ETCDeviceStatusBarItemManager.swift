@@ -56,7 +56,7 @@ class ETCDeviceStatusBarItemManager {
             if let card = device.currentCard {
                 navigationItem.rightBarButtonItem = makeCardBarButtonItem(for: card.displayedName, color: .secondaryLabel)
             } else {
-                navigationItem.rightBarButtonItem = makeCardBarButtonItem(for: "No Card", color: .systemRed)
+                navigationItem.rightBarButtonItem = makeCardBarButtonItem(for: String(localized: "No Card"), color: .systemRed)
             }
         } else {
             navigationItem.rightBarButtonItem = disconnectedStatusBarButtonItem
