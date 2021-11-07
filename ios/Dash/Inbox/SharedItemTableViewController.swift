@@ -92,36 +92,45 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
     func updateLeftBarButtonItems() {
         if isEditing {
-            let markAsOpenedMenuItem = UIAction(title: String(localized: "Mark as Opened")) { [unowned self] (action) in
-                self.markSelectedItemsAsOpened(true)
-            }
-
-            let markAsUnopenedMenuItem = UIAction(title: String(localized: "Mark as Unopened")) { [unowned self] (action) in
-                self.markSelectedItemsAsOpened(false)
-            }
-
-            let markMenu = UIMenu(title: "", children: [markAsOpenedMenuItem, markAsUnopenedMenuItem])
-
             navigationItem.leftBarButtonItems = [
-                .init(title: String(localized: "Delete"), style: .plain, target: self, action: #selector(trashBarButtonItemDidTap)),
+                deleteBarButtonItem,
                 .fixedSpace(30),
-                .init(title: String(localized: "Mark"), menu: markMenu)
+                markBarButtonItem
             ]
         } else {
-            let pairingMenuItem = UIAction(title: String(localized: "Pair with Dash Remote")) { [unowned self] (action) in
-                self.sharePairingURL()
-            }
-
-            let signOutMenuItem = UIAction(title: String(localized: "Sign Out")) { [unowned self] (action) in
-                self.authentication.signOut()
-            }
-
-            let menu = UIMenu(title: authentication.email ?? "", children: [pairingMenuItem, signOutMenuItem])
-            let barButtonItem = UIBarButtonItem(title: nil, image: UIImage(systemName: "person.circle"), primaryAction: nil, menu: menu)
-
-            navigationItem.leftBarButtonItems = [barButtonItem]
+            navigationItem.leftBarButtonItems = [userBarButtonItem]
         }
     }
+
+    private lazy var deleteBarButtonItem = UIBarButtonItem(title: String(localized: "Delete"), style: .plain, target: self, action: #selector(trashBarButtonItemDidTap))
+
+    private lazy var markBarButtonItem: UIBarButtonItem = {
+        let markAsOpenedMenuItem = UIAction(title: String(localized: "Mark as Opened")) { [unowned self] (action) in
+            self.markSelectedItemsAsOpened(true)
+        }
+
+        let markAsUnopenedMenuItem = UIAction(title: String(localized: "Mark as Unopened")) { [unowned self] (action) in
+            self.markSelectedItemsAsOpened(false)
+        }
+
+        let markMenu = UIMenu(title: "", children: [markAsOpenedMenuItem, markAsUnopenedMenuItem])
+
+        return UIBarButtonItem(title: String(localized: "Mark"), menu: markMenu)
+    }()
+
+    private lazy var userBarButtonItem: UIBarButtonItem = {
+        let pairingMenuItem = UIAction(title: String(localized: "Pair with Dash Remote")) { [unowned self] (action) in
+            self.sharePairingURL()
+        }
+
+        let signOutMenuItem = UIAction(title: String(localized: "Sign Out")) { [unowned self] (action) in
+            self.authentication.signOut()
+        }
+
+        let menu = UIMenu(title: authentication.email ?? "", children: [pairingMenuItem, signOutMenuItem])
+
+        return UIBarButtonItem(title: nil, image: UIImage(systemName: "person.circle"), primaryAction: nil, menu: menu)
+    }()
 
     func markSelectedItemsAsOpened(_ value: Bool) {
         assert(isEditing)
