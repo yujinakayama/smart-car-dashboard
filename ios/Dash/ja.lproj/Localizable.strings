@@ -17,6 +17,11 @@
 "Pair with Dash app" = "Dashと連携";
 "Sign Out" = "サインアウト";
 
+"Delete" = "削除";
+"Mark" = "変更";
+"Mark as Opened" = "開封済みにする";
+"Mark as Unopened" = "未開封にする";
+
 "Unknown Item" = "不明なアイテム";
 
 "Search Parkings" = "駐車場を検索";

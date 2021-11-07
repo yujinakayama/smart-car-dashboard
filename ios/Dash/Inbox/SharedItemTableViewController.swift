@@ -103,9 +103,9 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
             let markMenu = UIMenu(title: "", children: [markAsOpenedMenuItem, markAsUnopenedMenuItem])
 
             navigationItem.leftBarButtonItems = [
-                .init(title: "Delete", style: .plain, target: self, action: #selector(trashBarButtonItemDidTap)),
+                .init(title: String(localized: "Delete"), style: .plain, target: self, action: #selector(trashBarButtonItemDidTap)),
                 .fixedSpace(30),
-                .init(title: "Mark", menu: markMenu)
+                .init(title: String(localized: "Mark"), menu: markMenu)
             ]
         } else {
             let pairingMenuItem = UIAction(title: String(localized: "Pair with Dash Remote")) { [unowned self] (action) in
