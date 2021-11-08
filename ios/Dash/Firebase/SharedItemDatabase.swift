@@ -86,8 +86,6 @@ class SharedItemDatabase: NSObject {
     }
 
     private func startObservingItems(upToPage page: Int) {
-        print(#function, page)
-
         querySnapshotListener?.remove()
 
         let query = baseQuery.limit(to: itemCountPerPage * page)
