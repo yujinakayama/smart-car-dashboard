@@ -163,10 +163,12 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
     }
 
     func database(_ database: SharedItemDatabase, didUpdateItems update: SharedItemDatabase.Update) {
-        if tableView.window == nil {
-            pendingUpdate = update
-        } else {
-            applyUpdate(update)
+        DispatchQueue.main.async { [self] in
+            if tableView.window == nil {
+                pendingUpdate = update
+            } else {
+                applyUpdate(update)
+            }
         }
     }
 
@@ -196,13 +198,16 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
     }
 
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard let database = database, !database.isLoading else { return }
+        guard let database = database else { return }
 
         let currentBottom = tableView.contentOffset.y + tableView.bounds.height
         let maxScrollableBottom = tableView.contentSize.height + tableView.adjustedContentInset.bottom
 
         if currentBottom >= maxScrollableBottom - Self.bottomInsetForAutoNextPageLoading {
-            database.loadNextPageIfAvailable()
+            Task {
+                guard await !database.isLoadingPage else { return }
+                database.startLoadingNextPageIfAvailable()
+            }
         }
     }
 

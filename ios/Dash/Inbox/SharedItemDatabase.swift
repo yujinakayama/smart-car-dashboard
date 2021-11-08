@@ -37,21 +37,15 @@ class SharedItemDatabase: NSObject {
         }
     }
 
-    var isLoading = false
-
     private var _items: [SharedItemProtocol] = []
 
     private lazy var collection = Firestore.firestore().collection("vehicles").document(vehicleID).collection("items")
 
-    private lazy var baseQuery = collection.order(by: "creationDate", descending: true)
+    private lazy var query = collection.order(by: "creationDate", descending: true)
 
-    private var querySnapshotListener: ListenerRegistration?
-
-    private var lastQuerySnapshot: QuerySnapshot?
-
-    private var currentPage = 0
-
-    private let itemCountPerPage = 20
+    private lazy var queryPagination = FirestoreQueryPagination(query: query, documentCountPerPage: 20) { [weak self] (result) in
+        self?.handleUpdate(result)
+    }
 
     let dispatchQueue = DispatchQueue(label: "SharedItemDatabase")
 
@@ -59,54 +53,15 @@ class SharedItemDatabase: NSObject {
         self.vehicleID = vehicleID
     }
 
-    deinit {
-        endUpdating()
+    func startLoadingNextPageIfAvailable() {
+        Task {
+            await queryPagination.startLoadingNextPageIfAvailable()
+        }
     }
 
-    func startUpdating() {
-        currentPage = 0
-        loadNextPageIfAvailable()
-    }
-
-    func endUpdating() {
-        querySnapshotListener?.remove()
-        querySnapshotListener = nil
-        lastQuerySnapshot = nil
-    }
-
-    func loadNextPageIfAvailable() {
-        guard isNextPageAvailable else { return }
-        currentPage += 1
-        startObservingItems(upToPage: currentPage)
-    }
-
-    private var isNextPageAvailable: Bool {
-        guard let lastQuerySnapshot = lastQuerySnapshot else { return true }
-        return lastQuerySnapshot.count >= itemCountPerPage * currentPage
-    }
-
-    private func startObservingItems(upToPage page: Int) {
-        querySnapshotListener?.remove()
-
-        let query = baseQuery.limit(to: itemCountPerPage * page)
-
-        isLoading = true
-
-        querySnapshotListener = query.addSnapshotListener { [weak self] (snapshot, error) in
-            guard let self = self else { return }
-
-            self.isLoading = false
-
-            if let error = error {
-                logger.error(error)
-                return
-            }
-
-            guard let snapshot = snapshot else { return }
-
-            self.lastQuerySnapshot = snapshot
-
-            self.updateItems(from: snapshot)
+    var isLoadingPage: Bool {
+        get async {
+            return await queryPagination.isLoadingPage
         }
     }
 
@@ -130,6 +85,15 @@ class SharedItemDatabase: NSObject {
             } catch {
                 completion(nil, error)
             }
+        }
+    }
+
+    private func handleUpdate(_ result: Result<QuerySnapshot, Error>) {
+        do {
+            let querySnapshot = try result.get()
+            updateItems(from: querySnapshot)
+        } catch {
+            logger.error(error)
         }
     }
 

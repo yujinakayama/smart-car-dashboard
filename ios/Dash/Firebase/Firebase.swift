@@ -32,7 +32,7 @@ class Firebase: NSObject {
     @objc func firebaseAuthenticationDidUpdateVehicleID() {
         if let vehicleID = authentication.vehicleID {
             sharedItemDatabase = SharedItemDatabase(vehicleID: vehicleID)
-            sharedItemDatabase?.startUpdating()
+            sharedItemDatabase?.startLoadingNextPageIfAvailable()
         } else {
             sharedItemDatabase = nil
         }
