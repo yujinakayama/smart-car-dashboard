@@ -746,7 +746,6 @@
 				B9640AAA2575D9E800B779AD /* Firebase.swift */,
 				B9640AC12575EC0400B779AD /* FirebaseAuthentication.swift */,
 				B9B154ED2575FCED0031761F /* FirebaseMessaging.swift */,
-				B9A45A9A252C229200CA7921 /* SharedItemDatabase.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -791,6 +790,7 @@
 				B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */,
 				B90265AA23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift */,
 				B92FB3BF23E95BE900EA702C /* SharedItemTableViewCell.swift */,
+				B9A45A9A252C229200CA7921 /* SharedItemDatabase.swift */,
 				B95F514D23E5BBF70063CB3D /* SharedItem.swift */,
 				B95F514523E5A8540063CB3D /* Location.swift */,
 				B932E5EB23F86C5F00726615 /* MusicItem.swift */,
