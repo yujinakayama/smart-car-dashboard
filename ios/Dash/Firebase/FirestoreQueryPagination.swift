@@ -10,7 +10,8 @@ import Foundation
 import FirebaseFirestore
 
 actor FirestoreQueryPagination {
-    typealias UpdateHandler = (Result<QuerySnapshot, Error>) -> Void
+    typealias Update = (querySnapshot: QuerySnapshot, isCausedByPagination: Bool)
+    typealias UpdateHandler = (Result<Update, Error>) -> Void
 
     let query: Query
     let documentCountPerPage: Int
@@ -60,13 +61,15 @@ actor FirestoreQueryPagination {
     }
 
     private func handleUpdate(querySnapshot: QuerySnapshot?, error: Error?) {
+        let isCausedByPagination = isLoadingPage
         isLoadingPage = false
 
         if let error = error {
             updateHandler(.failure(error))
         } else if let querySnapshot = querySnapshot {
             lastQuerySnapshot = querySnapshot
-            updateHandler(.success(querySnapshot))
+            let update = (querySnapshot: querySnapshot, isCausedByPagination: isCausedByPagination)
+            updateHandler(.success(update))
         }
     }
 }

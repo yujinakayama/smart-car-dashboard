@@ -88,17 +88,17 @@ class SharedItemDatabase: NSObject {
         }
     }
 
-    private func handleUpdate(_ result: Result<QuerySnapshot, Error>) {
+    private func handleUpdate(_ result: Result<FirestoreQueryPagination.Update, Error>) {
         do {
-            let querySnapshot = try result.get()
-            updateItems(from: querySnapshot)
+            let update = try result.get()
+            updateItems(with: update)
         } catch {
             logger.error(error)
         }
     }
 
-    private func updateItems(from firestoreSnapshot: QuerySnapshot) {
-        items = firestoreSnapshot.documents.compactMap({ (document) in
+    private func updateItems(with update: FirestoreQueryPagination.Update) {
+        items = update.querySnapshot.documents.compactMap({ (document) in
             do {
                 var item = try SharedItem.makeItem(document: document)
                 item.firebaseDocument = document.reference
@@ -109,7 +109,7 @@ class SharedItemDatabase: NSObject {
             }
         })
 
-        let changes = firestoreSnapshot.documentChanges.map { (documentChange) -> Change in
+        let changes = update.querySnapshot.documentChanges.map { (documentChange) -> Change in
             var changeType: Change.ChangeType!
 
             switch documentChange.type {
@@ -124,11 +124,11 @@ class SharedItemDatabase: NSObject {
             return Change(type: changeType, oldIndex: Int(documentChange.oldIndex), newIndex: Int(documentChange.newIndex))
         }
 
-        let update = Update(items: items, changes: changes)
+        let databaseUpdate = Update(items: items, changes: changes, isCausedByPagination: update.isCausedByPagination)
 
-        delegate?.database(self, didUpdateItems: update)
+        delegate?.database(self, didUpdateItems: databaseUpdate)
 
-        NotificationCenter.default.post(name: .SharedItemDatabaseDidUpdateItems, object: self, userInfo: [SharedItemDatabase.updateUserInfoKey: update])
+        NotificationCenter.default.post(name: .SharedItemDatabaseDidUpdateItems, object: self, userInfo: [SharedItemDatabase.updateUserInfoKey: databaseUpdate])
     }
 }
 
@@ -136,6 +136,7 @@ extension SharedItemDatabase {
     struct Update {
         let items: [SharedItemProtocol]
         let changes: [Change]
+        let isCausedByPagination: Bool
     }
 
     struct Change {

@@ -173,7 +173,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
     }
 
     func applyUpdate(_ update: SharedItemDatabase.Update) {
-        dataSource.setItems(update.items, changes: update.changes, animated: !dataSource.isEmpty)
+        dataSource.setItems(update.items, changes: update.changes, animated: !update.isCausedByPagination)
         pendingUpdate = nil
     }
 
