@@ -12,6 +12,14 @@ service cloud.firestore {
       match /items/{itemID} {
         allow read, update, delete: if isOwnerOfVehicle();
       }
+
+      match /etcCards/{cardID} {
+        allow read, write: if isOwnerOfVehicle();
+      }
+
+      match /etcPayments/{paymentID} {
+        allow read, write: if isOwnerOfVehicle();
+      }
     }
   }
 }
