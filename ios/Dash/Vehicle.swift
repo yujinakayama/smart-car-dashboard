@@ -12,24 +12,10 @@ class Vehicle {
     static let `default` = Vehicle()
 
     let etcDevice = ETCDevice()
-    let bluetoothAudioDevice = BluetoothAudioDevice()
-
-    init() {
-        addNotificationObserver()
-    }
-
-    private func addNotificationObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(etcDeviceDidConnect), name: .ETCDeviceDidConnect, object: nil)
-    }
 
     func connect() {
         if Defaults.shared.isETCIntegrationEnabled {
             etcDevice.startPreparation()
         }
-    }
-
-    @objc func etcDeviceDidConnect() {
-        logger.info()
-        bluetoothAudioDevice.connectIfPossible()
     }
 }
