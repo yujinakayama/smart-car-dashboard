@@ -73,6 +73,9 @@
 		B95F514A23E5B2C10063CB3D /* Website.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514923E5B2C10063CB3D /* Website.swift */; };
 		B95F514C23E5B53F0063CB3D /* RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */; };
 		B95F514E23E5BBF70063CB3D /* SharedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514D23E5BBF70063CB3D /* SharedItem.swift */; };
+		B963C5352749351B0095F8D3 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B963C5342749351A0095F8D3 /* Intents.framework */; };
+		B963C5382749351B0095F8D3 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B963C5372749351B0095F8D3 /* IntentHandler.swift */; };
+		B963C53C2749351B0095F8D3 /* IntentsExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B963C5332749351A0095F8D3 /* IntentsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B9640AAB2575D9E800B779AD /* Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9640AAA2575D9E800B779AD /* Firebase.swift */; };
 		B9640AC22575EC0400B779AD /* FirebaseAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9640AC12575EC0400B779AD /* FirebaseAuthentication.swift */; };
 		B964BCC323E066FF00288E0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B964BCC223E066FF00288E0D /* AppDelegate.swift */; };
@@ -154,6 +157,9 @@
 		B9C87A1726671CCE00ABCBB4 /* ParkingSearchURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */; };
 		B9CB753624AA1A17008264F5 /* VolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB753524AA1A17008264F5 /* VolumeView.swift */; };
 		B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */; };
+		B9CD5E5A2749379700B0BBF0 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B9CD5E592749379700B0BBF0 /* Intents.intentdefinition */; };
+		B9CD5E5C27493E4A00B0BBF0 /* GetCurrentAudioOutputTypeIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD5E5B27493E4A00B0BBF0 /* GetCurrentAudioOutputTypeIntentHandler.swift */; };
+		B9CD5E5D27494BC600B0BBF0 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B9CD5E592749379700B0BBF0 /* Intents.intentdefinition */; };
 		B9CEA76622D89A400055C9A3 /* ETCDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */; };
 		B9CEA76E22D911140055C9A3 /* ETCSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76D22D911140055C9A3 /* ETCSplitViewController.swift */; };
 		B9D02089268CD1850020BF9A /* RoadTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D02088268CD1850020BF9A /* RoadTracker.swift */; };
@@ -215,6 +221,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B963C53A2749351B0095F8D3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B963C5322749351A0095F8D3;
+			remoteInfo = IntentsExtension;
+		};
 		B964BCE023E067EB00288E0D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
@@ -328,6 +341,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				B963C53C2749351B0095F8D3 /* IntentsExtension.appex in Embed App Extensions */,
 				B9A3B68526537A9B00D1D64C /* ParkingSearchActionExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
@@ -436,6 +450,10 @@
 		B95F514923E5B2C10063CB3D /* Website.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Website.swift; sourceTree = "<group>"; };
 		B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteNotification.swift; sourceTree = "<group>"; };
 		B95F514D23E5BBF70063CB3D /* SharedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItem.swift; sourceTree = "<group>"; };
+		B963C5332749351A0095F8D3 /* IntentsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = IntentsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B963C5342749351A0095F8D3 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		B963C5372749351B0095F8D3 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		B963C5392749351B0095F8D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9640AAA2575D9E800B779AD /* Firebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firebase.swift; sourceTree = "<group>"; };
 		B9640AC12575EC0400B779AD /* FirebaseAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthentication.swift; sourceTree = "<group>"; };
 		B964BCC023E066FF00288E0D /* Dash Remote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dash Remote.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -520,6 +538,8 @@
 		B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingSearchURLItem.swift; sourceTree = "<group>"; };
 		B9CB753524AA1A17008264F5 /* VolumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeView.swift; sourceTree = "<group>"; };
 		B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationCenter.swift; sourceTree = "<group>"; };
+		B9CD5E592749379700B0BBF0 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
+		B9CD5E5B27493E4A00B0BBF0 /* GetCurrentAudioOutputTypeIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCurrentAudioOutputTypeIntentHandler.swift; sourceTree = "<group>"; };
 		B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDataStore.swift; sourceTree = "<group>"; };
 		B9CEA76D22D911140055C9A3 /* ETCSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCSplitViewController.swift; sourceTree = "<group>"; };
 		B9D02088268CD1850020BF9A /* RoadTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoadTracker.swift; sourceTree = "<group>"; };
@@ -579,6 +599,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B963C5302749351A0095F8D3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B963C5352749351B0095F8D3 /* Intents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B964BCBD23E066FF00288E0D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -729,6 +757,17 @@
 			path = Widget;
 			sourceTree = "<group>";
 		};
+		B963C5362749351B0095F8D3 /* IntentsExtension */ = {
+			isa = PBXGroup;
+			children = (
+				B963C5372749351B0095F8D3 /* IntentHandler.swift */,
+				B9CD5E5B27493E4A00B0BBF0 /* GetCurrentAudioOutputTypeIntentHandler.swift */,
+				B963C5392749351B0095F8D3 /* Info.plist */,
+				B9CD5E592749379700B0BBF0 /* Intents.intentdefinition */,
+			);
+			path = IntentsExtension;
+			sourceTree = "<group>";
+		};
 		B9640ABC2575EBF200B779AD /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
@@ -864,6 +903,7 @@
 				0198292C4BC2FEDD3C5A08E3 /* Pods_RearviewKit.framework */,
 				54C66DD7AC35DF7FDDB0FB1B /* Pods_Rearview.framework */,
 				9FA865634C4ECE4F8C5D18EA /* Pods_ParkingSearchKit.framework */,
+				B963C5342749351A0095F8D3 /* Intents.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -946,6 +986,7 @@
 				B9DC5B23229D59BE00B645D5 /* Dash */,
 				B9E96CB922A3CE7500C2E009 /* DashTests */,
 				B9A3B67A26537A9B00D1D64C /* ParkingSearchActionExtension */,
+				B963C5362749351B0095F8D3 /* IntentsExtension */,
 				B9DD4CCB26517F920010B120 /* ParkingSearchKit */,
 				B964BCC123E066FF00288E0D /* DashRemote */,
 				B964BCD923E067EB00288E0D /* ShareExtension */,
@@ -971,6 +1012,7 @@
 				B9F4377B25D41C19004B9140 /* RearviewKit.framework */,
 				B9DD4CCA26517F920010B120 /* ParkingSearchKit.framework */,
 				B9A3B67926537A9B00D1D64C /* ParkingSearchActionExtension.appex */,
+				B963C5332749351A0095F8D3 /* IntentsExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1119,6 +1161,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		B963C5322749351A0095F8D3 /* IntentsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B963C53F2749351B0095F8D3 /* Build configuration list for PBXNativeTarget "IntentsExtension" */;
+			buildPhases = (
+				B963C52F2749351A0095F8D3 /* Sources */,
+				B963C5302749351A0095F8D3 /* Frameworks */,
+				B963C5312749351A0095F8D3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IntentsExtension;
+			productName = IntentsExtension;
+			productReference = B963C5332749351A0095F8D3 /* IntentsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		B964BCBF23E066FF00288E0D /* DashRemote */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B964BCD323E0670100288E0D /* Build configuration list for PBXNativeTarget "DashRemote" */;
@@ -1239,6 +1298,7 @@
 				B9FACF4F25D4299900F05CAE /* PBXTargetDependency */,
 				B9DD4CD026517F920010B120 /* PBXTargetDependency */,
 				B9A3B68426537A9B00D1D64C /* PBXTargetDependency */,
+				B963C53B2749351B0095F8D3 /* PBXTargetDependency */,
 			);
 			name = Dash;
 			productName = ETC;
@@ -1311,10 +1371,13 @@
 		B9DC5B19229D59BE00B645D5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1250;
+				LastSwiftUpdateCheck = 1310;
 				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = "Yuji Nakayama";
 				TargetAttributes = {
+					B963C5322749351A0095F8D3 = {
+						CreatedOnToolsVersion = 13.1;
+					};
 					B964BCBF23E066FF00288E0D = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
@@ -1367,6 +1430,7 @@
 				B9DC5B20229D59BE00B645D5 /* Dash */,
 				B9E96CB722A3CE7500C2E009 /* DashTests */,
 				B9A3B67826537A9B00D1D64C /* ParkingSearchActionExtension */,
+				B963C5322749351A0095F8D3 /* IntentsExtension */,
 				B9DD4CC926517F920010B120 /* ParkingSearchKit */,
 				B964BCBF23E066FF00288E0D /* DashRemote */,
 				B964BCD723E067EB00288E0D /* ShareExtension */,
@@ -1378,6 +1442,13 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B963C5312749351A0095F8D3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B964BCBE23E066FF00288E0D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1671,6 +1742,16 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B963C52F2749351A0095F8D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9CD5E5A2749379700B0BBF0 /* Intents.intentdefinition in Sources */,
+				B9CD5E5C27493E4A00B0BBF0 /* GetCurrentAudioOutputTypeIntentHandler.swift in Sources */,
+				B963C5382749351B0095F8D3 /* IntentHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B964BCBC23E066FF00288E0D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1740,6 +1821,7 @@
 				B9DB8E5922D7A481003E4BD8 /* ETCPaymentManagedObject.swift in Sources */,
 				B95F514A23E5B2C10063CB3D /* Website.swift in Sources */,
 				B99356E622A9525C00BA08AB /* ETCMessage.swift in Sources */,
+				B9CD5E5D27494BC600B0BBF0 /* Intents.intentdefinition in Sources */,
 				B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */,
 				B9B154EE2575FCED0031761F /* FirebaseMessaging.swift in Sources */,
 				B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */,
@@ -1893,6 +1975,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B963C53B2749351B0095F8D3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B963C5322749351A0095F8D3 /* IntentsExtension */;
+			targetProxy = B963C53A2749351B0095F8D3 /* PBXContainerItemProxy */;
+		};
 		B964BCE123E067EB00288E0D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B964BCD723E067EB00288E0D /* ShareExtension */;
@@ -2017,6 +2104,62 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B963C53D2749351B0095F8D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8LSN3WQC77;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IntentsExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = IntentsExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2021 Yuji Nakayama. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 6.20.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash.IntentsExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B963C53E2749351B0095F8D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8LSN3WQC77;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IntentsExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = IntentsExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2021 Yuji Nakayama. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 6.20.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash.IntentsExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		B964BCD123E0670100288E0D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BBF96480A5CBA83FEB75EF07 /* Pods-DashRemote.debug.xcconfig */;
@@ -2617,6 +2760,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B963C53F2749351B0095F8D3 /* Build configuration list for PBXNativeTarget "IntentsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B963C53D2749351B0095F8D3 /* Debug */,
+				B963C53E2749351B0095F8D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B964BCD323E0670100288E0D /* Build configuration list for PBXNativeTarget "DashRemote" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
