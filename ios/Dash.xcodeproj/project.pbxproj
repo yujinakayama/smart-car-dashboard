@@ -121,6 +121,8 @@
 		B9A481FE23EF01DB00AA7590 /* SuccessCheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */; };
 		B9A4820023EF025200AA7590 /* SuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FF23EF025200AA7590 /* SuccessViewController.swift */; };
 		B9A4820123EFCEC200AA7590 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
+		B9AAF52027496AA80079BC3A /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B9AAF52327496AA80079BC3A /* Intents.intentdefinition */; };
+		B9AAF52127496AA80079BC3A /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B9AAF52327496AA80079BC3A /* Intents.intentdefinition */; };
 		B9ADFEAD2704B19100F230E0 /* TimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9ADFEAC2704B19000F230E0 /* TimePicker.swift */; };
 		B9B154EE2575FCED0031761F /* FirebaseMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B154ED2575FCED0031761F /* FirebaseMessaging.swift */; };
 		B9B154F82576075C0031761F /* TabBarBadgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B154F72576075C0031761F /* TabBarBadgeManager.swift */; };
@@ -157,9 +159,7 @@
 		B9C87A1726671CCE00ABCBB4 /* ParkingSearchURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */; };
 		B9CB753624AA1A17008264F5 /* VolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB753524AA1A17008264F5 /* VolumeView.swift */; };
 		B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */; };
-		B9CD5E5A2749379700B0BBF0 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B9CD5E592749379700B0BBF0 /* Intents.intentdefinition */; };
 		B9CD5E5C27493E4A00B0BBF0 /* GetCurrentAudioOutputTypeIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD5E5B27493E4A00B0BBF0 /* GetCurrentAudioOutputTypeIntentHandler.swift */; };
-		B9CD5E5D27494BC600B0BBF0 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B9CD5E592749379700B0BBF0 /* Intents.intentdefinition */; };
 		B9CEA76622D89A400055C9A3 /* ETCDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */; };
 		B9CEA76E22D911140055C9A3 /* ETCSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76D22D911140055C9A3 /* ETCSplitViewController.swift */; };
 		B9D02089268CD1850020BF9A /* RoadTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D02088268CD1850020BF9A /* RoadTracker.swift */; };
@@ -507,6 +507,8 @@
 		B9A45A9A252C229200CA7921 /* SharedItemDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemDatabase.swift; sourceTree = "<group>"; };
 		B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessCheckmarkView.swift; sourceTree = "<group>"; };
 		B9A481FF23EF025200AA7590 /* SuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessViewController.swift; sourceTree = "<group>"; };
+		B9AAF52227496AA80079BC3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Base; path = Base.lproj/Intents.intentdefinition; sourceTree = "<group>"; };
+		B9AAF52727496E6A0079BC3A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Intents.strings; sourceTree = "<group>"; };
 		B9ADFEAC2704B19000F230E0 /* TimePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimePicker.swift; sourceTree = "<group>"; };
 		B9B154ED2575FCED0031761F /* FirebaseMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMessaging.swift; sourceTree = "<group>"; };
 		B9B154F72576075C0031761F /* TabBarBadgeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarBadgeManager.swift; sourceTree = "<group>"; };
@@ -538,7 +540,6 @@
 		B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingSearchURLItem.swift; sourceTree = "<group>"; };
 		B9CB753524AA1A17008264F5 /* VolumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeView.swift; sourceTree = "<group>"; };
 		B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationCenter.swift; sourceTree = "<group>"; };
-		B9CD5E592749379700B0BBF0 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		B9CD5E5B27493E4A00B0BBF0 /* GetCurrentAudioOutputTypeIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCurrentAudioOutputTypeIntentHandler.swift; sourceTree = "<group>"; };
 		B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDataStore.swift; sourceTree = "<group>"; };
 		B9CEA76D22D911140055C9A3 /* ETCSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCSplitViewController.swift; sourceTree = "<group>"; };
@@ -763,7 +764,7 @@
 				B963C5372749351B0095F8D3 /* IntentHandler.swift */,
 				B9CD5E5B27493E4A00B0BBF0 /* GetCurrentAudioOutputTypeIntentHandler.swift */,
 				B963C5392749351B0095F8D3 /* Info.plist */,
-				B9CD5E592749379700B0BBF0 /* Intents.intentdefinition */,
+				B9AAF52327496AA80079BC3A /* Intents.intentdefinition */,
 			);
 			path = IntentsExtension;
 			sourceTree = "<group>";
@@ -1746,7 +1747,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B9CD5E5A2749379700B0BBF0 /* Intents.intentdefinition in Sources */,
+				B9AAF52127496AA80079BC3A /* Intents.intentdefinition in Sources */,
 				B9CD5E5C27493E4A00B0BBF0 /* GetCurrentAudioOutputTypeIntentHandler.swift in Sources */,
 				B963C5382749351B0095F8D3 /* IntentHandler.swift in Sources */,
 			);
@@ -1821,7 +1822,7 @@
 				B9DB8E5922D7A481003E4BD8 /* ETCPaymentManagedObject.swift in Sources */,
 				B95F514A23E5B2C10063CB3D /* Website.swift in Sources */,
 				B99356E622A9525C00BA08AB /* ETCMessage.swift in Sources */,
-				B9CD5E5D27494BC600B0BBF0 /* Intents.intentdefinition in Sources */,
+				B9AAF52027496AA80079BC3A /* Intents.intentdefinition in Sources */,
 				B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */,
 				B9B154EE2575FCED0031761F /* FirebaseMessaging.swift in Sources */,
 				B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */,
@@ -2065,6 +2066,15 @@
 				B99C698226F5F1E30064162D /* ja */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		B9AAF52327496AA80079BC3A /* Intents.intentdefinition */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B9AAF52227496AA80079BC3A /* Base */,
+				B9AAF52727496E6A0079BC3A /* ja */,
+			);
+			name = Intents.intentdefinition;
 			sourceTree = "<group>";
 		};
 		B9C0CEE32508F641006D246E /* LaunchScreen.storyboard */ = {
