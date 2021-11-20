@@ -157,6 +157,9 @@
 		B9C87A1726671CCE00ABCBB4 /* ParkingSearchURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */; };
 		B9CB753624AA1A17008264F5 /* VolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB753524AA1A17008264F5 /* VolumeView.swift */; };
 		B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */; };
+		B9CD5E5A2749379700B0BBF0 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B9CD5E592749379700B0BBF0 /* Intents.intentdefinition */; };
+		B9CD5E5C27493E4A00B0BBF0 /* GetCurrentAudioOutputTypeIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD5E5B27493E4A00B0BBF0 /* GetCurrentAudioOutputTypeIntentHandler.swift */; };
+		B9CD5E5D27494BC600B0BBF0 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B9CD5E592749379700B0BBF0 /* Intents.intentdefinition */; };
 		B9CEA76622D89A400055C9A3 /* ETCDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */; };
 		B9CEA76E22D911140055C9A3 /* ETCSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76D22D911140055C9A3 /* ETCSplitViewController.swift */; };
 		B9D02089268CD1850020BF9A /* RoadTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D02088268CD1850020BF9A /* RoadTracker.swift */; };
@@ -535,6 +538,8 @@
 		B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingSearchURLItem.swift; sourceTree = "<group>"; };
 		B9CB753524AA1A17008264F5 /* VolumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeView.swift; sourceTree = "<group>"; };
 		B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationCenter.swift; sourceTree = "<group>"; };
+		B9CD5E592749379700B0BBF0 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
+		B9CD5E5B27493E4A00B0BBF0 /* GetCurrentAudioOutputTypeIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCurrentAudioOutputTypeIntentHandler.swift; sourceTree = "<group>"; };
 		B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDataStore.swift; sourceTree = "<group>"; };
 		B9CEA76D22D911140055C9A3 /* ETCSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCSplitViewController.swift; sourceTree = "<group>"; };
 		B9D02088268CD1850020BF9A /* RoadTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoadTracker.swift; sourceTree = "<group>"; };
@@ -756,7 +761,9 @@
 			isa = PBXGroup;
 			children = (
 				B963C5372749351B0095F8D3 /* IntentHandler.swift */,
+				B9CD5E5B27493E4A00B0BBF0 /* GetCurrentAudioOutputTypeIntentHandler.swift */,
 				B963C5392749351B0095F8D3 /* Info.plist */,
+				B9CD5E592749379700B0BBF0 /* Intents.intentdefinition */,
 			);
 			path = IntentsExtension;
 			sourceTree = "<group>";
@@ -1739,6 +1746,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9CD5E5A2749379700B0BBF0 /* Intents.intentdefinition in Sources */,
+				B9CD5E5C27493E4A00B0BBF0 /* GetCurrentAudioOutputTypeIntentHandler.swift in Sources */,
 				B963C5382749351B0095F8D3 /* IntentHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1812,6 +1821,7 @@
 				B9DB8E5922D7A481003E4BD8 /* ETCPaymentManagedObject.swift in Sources */,
 				B95F514A23E5B2C10063CB3D /* Website.swift in Sources */,
 				B99356E622A9525C00BA08AB /* ETCMessage.swift in Sources */,
+				B9CD5E5D27494BC600B0BBF0 /* Intents.intentdefinition in Sources */,
 				B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */,
 				B9B154EE2575FCED0031761F /* FirebaseMessaging.swift in Sources */,
 				B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */,
@@ -2112,7 +2122,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 6.20.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash.IntentsExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2140,7 +2150,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 6.20.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash.IntentsExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
