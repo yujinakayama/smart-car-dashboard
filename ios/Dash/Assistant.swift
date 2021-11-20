@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import AVFAudio
+import MediaPlayer
 
 class Assistant {
+    let audioOutputManager = AudioOutputManager()
+
     var locationOpener: LocationOpener?
 
     init() {
@@ -69,6 +73,54 @@ extension Assistant {
             self.location = location
 
             finished = true
+        }
+    }
+}
+
+extension Assistant {
+    class AudioOutputManager {
+        var isConnectedToCarBluetoothAudio: Bool {
+            return isConnectedToBluetoothAudio && Vehicle.default.isConnected
+        }
+
+        var isConnectedToBluetoothAudio: Bool {
+            let route = AVAudioSession.sharedInstance().currentRoute
+            return route.outputs.first?.portType == .bluetoothA2DP
+        }
+
+        init() {
+            NotificationCenter.default.addObserver(self, selector: #selector(audioSessionDidChangeRoute), name: AVAudioSession.routeChangeNotification, object: nil)
+        }
+
+        @objc func audioSessionDidChangeRoute() {
+            if isConnectedToCarBluetoothAudio {
+                startPlayingMusicIfNeeded()
+            }
+        }
+
+        @objc func startPlayingMusicIfNeeded() {
+            if musicPlayer.playbackState == .playing {
+                return
+            }
+
+            if !isPlayingLiveItem && !isProbablyPlayingRadio {
+                musicPlayer.skipToBeginning()
+            }
+
+            musicPlayer.play()
+        }
+
+        var musicPlayer: MPMusicPlayerController {
+            return MPMusicPlayerController.systemMusicPlayer
+        }
+
+        var isPlayingLiveItem: Bool {
+            return musicPlayer.currentPlaybackTime.isNaN
+        }
+
+        var isProbablyPlayingRadio: Bool {
+            guard let nowPlayingItem = musicPlayer.nowPlayingItem else { return false }
+            return nowPlayingItem.mediaType.rawValue == 0 || nowPlayingItem.playbackDuration == 0
         }
     }
 }

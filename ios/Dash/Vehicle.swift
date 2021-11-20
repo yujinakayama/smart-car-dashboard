@@ -13,6 +13,10 @@ class Vehicle {
 
     let etcDevice = ETCDevice()
 
+    var isConnected: Bool {
+        return etcDevice.isConnected
+    }
+
     func connect() {
         if Defaults.shared.isETCIntegrationEnabled {
             etcDevice.startPreparation()
