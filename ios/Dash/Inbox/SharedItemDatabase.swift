@@ -126,9 +126,10 @@ class SharedItemDatabase: NSObject {
 
         let databaseUpdate = Update(items: items, changes: changes, isCausedByPagination: update.isCausedByPagination)
 
-        delegate?.database(self, didUpdateItems: databaseUpdate)
-
-        NotificationCenter.default.post(name: .SharedItemDatabaseDidUpdateItems, object: self, userInfo: [SharedItemDatabase.updateUserInfoKey: databaseUpdate])
+        DispatchQueue.main.async {
+            self.delegate?.database(self, didUpdateItems: databaseUpdate)
+            NotificationCenter.default.post(name: .SharedItemDatabaseDidUpdateItems, object: self, userInfo: [SharedItemDatabase.updateUserInfoKey: databaseUpdate])
+        }
     }
 }
 
