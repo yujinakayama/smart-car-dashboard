@@ -46,7 +46,7 @@ class SongDataRequest {
 
         guard let song = song else { return nil }
 
-        var songInOriginalLanguage: Song!
+        let songInOriginalLanguage: Song?
 
         if let originalLanguage = originalLanguage(of: song), originalLanguage != initialRequestLanguage {
             songInOriginalLanguage = try await fetchSong(in: originalLanguage)

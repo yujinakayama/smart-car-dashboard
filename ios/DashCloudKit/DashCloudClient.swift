@@ -84,16 +84,12 @@ public class DashCloudClient {
         post(url: url, payload: payload) { (result) in
             switch result {
             case .success(let data):
-                var location: Location!
-
                 do {
-                    location = try JSONDecoder().decode(Location.self, from: data)
+                    let location = try JSONDecoder().decode(Location.self, from: data)
+                    completionHandler(.success(location))
                 } catch {
                     completionHandler(.failure(error))
-                    return
                 }
-
-                completionHandler(.success(location))
             case .failure(let error):
                 completionHandler(.failure(error))
             }

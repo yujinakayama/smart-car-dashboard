@@ -82,7 +82,7 @@ struct SharedItem {
         let type = try ItemType(dictionary: dictionary)
         let decoder = Firestore.Decoder() // Supports decoding Firestore's Timestamp
 
-        var item: SharedItemProtocol!
+        var item: SharedItemProtocol
 
         switch type {
         case .location:

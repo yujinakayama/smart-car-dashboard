@@ -30,7 +30,7 @@ class PPParkClient {
 
             guard let data = data else { return }
 
-            var response: PPParkResponse!
+            let response: PPParkResponse
 
             do {
                 response = try JSONDecoder().decode(PPParkResponse.self, from: data)

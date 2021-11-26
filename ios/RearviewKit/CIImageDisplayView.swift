@@ -92,7 +92,7 @@ class CIImageDisplayView: UIView {
         let scaleX = size.width / image.extent.width
         let scaleY = size.height / image.extent.height
 
-        var scale: CGFloat!
+        let scale: CGFloat
 
         switch scalingMode {
         case .aspectFit:

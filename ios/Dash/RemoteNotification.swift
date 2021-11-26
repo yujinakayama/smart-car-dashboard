@@ -44,7 +44,7 @@ class RemoteNotification {
 
         guard let rootViewController =  rootViewController else { return }
 
-        let item: SharedItemProtocol!
+        let item: SharedItemProtocol
 
         do {
             item = try SharedItem.makeItem(dictionary: itemDictionary)
@@ -63,7 +63,7 @@ class RemoteNotification {
             item?.markAsOpened(true)
         }
 
-        strongReferences.append(item!)
+        strongReferences.append(item)
     }
 
     var rootViewController: UIViewController? {
