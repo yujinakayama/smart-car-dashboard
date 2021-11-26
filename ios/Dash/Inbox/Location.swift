@@ -35,21 +35,24 @@ class Location: SharedItemProtocol {
         return name
     }
 
-    func open() {
+    func open(from viewController: UIViewController) {
         markAsOpened(true)
+        openDirectionsInMaps()
+    }
 
+    func openDirectionsInMaps() {
         if Defaults.shared.snapLocationToPointOfInterest {
             findCorrespondingPointOfInterest { [weak self] (pointOfInterestMapItem) in
                 guard let self = self else { return }
                 let mapItem = pointOfInterestMapItem ?? self.mapItem
-                self.openDirectionsInMaps(mapItem)
+                self.openDirectionsInMaps(to: mapItem)
             }
         } else {
-            openDirectionsInMaps(mapItem)
+            openDirectionsInMaps(to: mapItem)
         }
     }
 
-    private func openDirectionsInMaps(_ mapItem: MKMapItem) {
+    private func openDirectionsInMaps(to mapItem: MKMapItem) {
         mapItem.openInMaps(launchOptions: [
             MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
         ])

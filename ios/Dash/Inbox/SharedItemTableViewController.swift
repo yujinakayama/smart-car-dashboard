@@ -190,7 +190,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         guard !tableView.isEditing else { return }
 
         let item = dataSource.item(for: indexPath)
-        item.open()
+        item.open(from: self)
 
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
@@ -328,10 +328,9 @@ private extension SharedItemTableViewController {
 
     func actionMenu(for website: Website) -> UIMenu {
         return UIMenu(children: [
-            UIAction(title: String(localized: "Preview"), image: UIImage(systemName: "eye")) { [weak self] (action) in
-                guard let self = self else { return }
+            UIAction(title: String(localized: "Open in Safari"), image: UIImage(systemName: "safari")) { (action) in
                 website.markAsOpened(true)
-                self.presentWebViewController(url: website.url, title: website.title)
+                UIApplication.shared.open(website.url)
             }
         ])
     }

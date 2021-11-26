@@ -20,8 +20,8 @@ class Website: SharedItemProtocol {
 
     lazy var icon = WebsiteIcon(websiteURL: url)
 
-    func open() {
+    func open(from viewController: UIViewController) {
         markAsOpened(true)
-        openInDefaultApp()
+        openInInAppBrowser(from: viewController)
     }
 }

@@ -42,6 +42,8 @@ class RemoteNotification {
             return
         }
 
+        guard let rootViewController =  rootViewController else { return }
+
         let item: SharedItemProtocol!
 
         do {
@@ -51,7 +53,7 @@ class RemoteNotification {
             return
         }
 
-        item.open()
+        item.open(from: rootViewController)
 
         Firebase.shared.sharedItemDatabase?.findItem(identifier: item.identifier) { (item, error) in
             if let error = error {
@@ -62,5 +64,10 @@ class RemoteNotification {
         }
 
         strongReferences.append(item!)
+    }
+
+    var rootViewController: UIViewController? {
+        guard let windowScene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene else { return nil }
+        return windowScene.keyWindow?.rootViewController
     }
 }
