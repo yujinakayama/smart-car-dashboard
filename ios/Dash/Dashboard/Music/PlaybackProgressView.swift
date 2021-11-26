@@ -359,7 +359,7 @@ extension PlaybackProgressView {
 
         var isProbablyPlayingRadio: Bool {
             guard let nowPlayingItem = musicPlayer.nowPlayingItem else { return false }
-            return nowPlayingItem.mediaType.rawValue == 0 || nowPlayingItem.playbackDuration == 0
+            return nowPlayingItem.playbackDuration == 0
         }
 
         func waitForPlaybackToActuallyStart(precision: TimeInterval = 0.01, expirationDuration: TimeInterval = 1, handler: @escaping () -> Void) {
