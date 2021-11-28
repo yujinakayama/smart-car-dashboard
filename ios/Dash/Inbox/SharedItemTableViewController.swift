@@ -190,6 +190,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         guard !tableView.isEditing else { return }
 
         let item = dataSource.item(for: indexPath)
+        item.markAsOpened(true)
         item.open(from: self)
 
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {

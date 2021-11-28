@@ -36,7 +36,6 @@ class Location: SharedItemProtocol {
     }
 
     func open(from viewController: UIViewController) {
-        markAsOpened(true)
         openDirectionsInMaps()
     }
 

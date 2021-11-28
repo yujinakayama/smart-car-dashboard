@@ -477,6 +477,7 @@ class MapsViewController: UIViewController {
 
     @objc func openDirectionsInMapsForSelectedSharedLocationAnnotation() {
         guard let location = (mapView.selectedAnnotations.first as? SharedLocationAnnotation)?.location else { return }
+        location.markAsOpened(true)
         location.openDirectionsInMaps()
     }
 

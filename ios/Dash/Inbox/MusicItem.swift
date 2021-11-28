@@ -29,8 +29,6 @@ class MusicItem: SharedItemProtocol {
     }
 
     func open(from viewController: UIViewController) {
-        markAsOpened(true)
-
         if let playParameters = playParameters {
             play(playParameters: playParameters)
         } else {
