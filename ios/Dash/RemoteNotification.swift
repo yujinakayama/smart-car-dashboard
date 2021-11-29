@@ -16,7 +16,7 @@ class RemoteNotification {
 
     let userInfo: [AnyHashable: Any]
 
-    private var strongReferences: [Any] = []
+    private var strongReference: Any?
 
     init(userInfo: [AnyHashable: Any]) {
         self.userInfo = userInfo
@@ -37,23 +37,13 @@ class RemoteNotification {
     }
 
     private func processShareNotification() {
-        guard let itemDictionary = userInfo["item"] as? [String: Any] else {
-            logger.error(userInfo)
-            return
-        }
-
-        guard let rootViewController =  rootViewController else { return }
-
-        let item: SharedItemProtocol
-
-        do {
-            item = try SharedItem.makeItem(dictionary: itemDictionary)
-        } catch {
-            logger.error(error)
-            return
-        }
+        guard let item = sharedItem, let rootViewController =  rootViewController else { return }
 
         item.open(from: rootViewController)
+
+        if let location = item as? Location, Defaults.shared.automaticallySearchParkingsWhenLocationIsAutomaticallyOpened {
+            SharedItemTableViewController.pushMapsViewControllerForParkingSearchInCurrentScene(location: location)
+        }
 
         Firebase.shared.sharedItemDatabase?.findItem(identifier: item.identifier) { (item, error) in
             if let error = error {
@@ -63,7 +53,21 @@ class RemoteNotification {
             item?.markAsOpened(true)
         }
 
-        strongReferences.append(item)
+        strongReference = item
+    }
+
+    private var sharedItem: SharedItemProtocol? {
+        guard let itemDictionary = userInfo["item"] as? [String: Any] else {
+            logger.error(userInfo)
+            return nil
+        }
+
+        do {
+            return try SharedItem.makeItem(dictionary: itemDictionary)
+        } catch {
+            logger.error(error)
+            return nil
+        }
     }
 
     var rootViewController: UIViewController? {

@@ -72,6 +72,16 @@
 		</dict>
 		<dict>
 			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Automatically Search Parkings When Location Is Automatically Opened</string>
+			<key>Key</key>
+			<string>automaticallySearchParkingsWhenLocationIsAutomaticallyOpened</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
 			<string>Preferred Max Distance from Destination to Parking in Meters</string>

@@ -12,6 +12,18 @@ import SafariServices
 class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDelegate {
     static let bottomInsetForAutoNextPageLoading: CGFloat = 200
 
+    static func pushMapsViewControllerForParkingSearchInCurrentScene(location: Location) {
+        guard let windowScene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive || $0.activationState == .foregroundInactive }) as? UIWindowScene,
+              let sceneDelegate = windowScene.delegate as? SceneDelegate,
+              let inboxNavigationController = sceneDelegate.tabBarController.viewController(for: .inbox) as? UINavigationController,
+              let sharedItemTableViewController = inboxNavigationController.viewControllers.first as? SharedItemTableViewController
+        else { return }
+
+        inboxNavigationController.popToRootViewController(animated: false)
+        sharedItemTableViewController.pushMapsViewControllerForParkingSearch(location: location)
+        sceneDelegate.tabBarController.selectedViewController = inboxNavigationController
+    }
+
     var database: SharedItemDatabase? {
         return Firebase.shared.sharedItemDatabase
     }
