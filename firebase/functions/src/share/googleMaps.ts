@@ -1,4 +1,4 @@
-import { Client, Language, PlaceData, PlaceDetailsRequest, PlaceInputType } from "@googlemaps/google-maps-services-js";
+import { AddressType, Client, Language, PlaceData, PlaceDetailsRequest, PlaceInputType, PlaceType1, PlaceType2 } from "@googlemaps/google-maps-services-js";
 import axios from 'axios';
 import * as functions from 'firebase-functions';
 
@@ -278,11 +278,33 @@ function normalizeAddressComponents(rawAddressComponents: object[]): Address {
 }
 
 function categoryOf(place: Partial<PlaceData>): string | null {
-    if (place.types) {
-        return convertToCamelCase(place.types[0].toString())
-    } else {
+    const types = place.types;
+
+    if (!types) {
         return null;
     }
+
+    if (types.includes(PlaceType2.place_of_worship) && !isGooglePredefinedWorshipPlace(types)) {
+        // https://ja.wikipedia.org/wiki/日本の寺院一覧
+        if (place.name?.match(/(寺|院)$/)) {
+            return 'buddhistTemple';
+        }
+
+        // https://ja.wikipedia.org/wiki/神社一覧
+        if (place.name?.match(/(神社|宮)$/)) {
+            return 'shintoShrine';
+        }
+    }
+
+    return convertToCamelCase(types[0].toString());
+}
+
+function isGooglePredefinedWorshipPlace(types: AddressType[]): boolean {
+    return types.includes(PlaceType1.cemetery) ||
+           types.includes(PlaceType1.church) ||
+           types.includes(PlaceType1.hindu_temple) ||
+           types.includes(PlaceType1.mosque) ||
+           types.includes(PlaceType1.synagogue);
 }
 
 function convertToCamelCase(string: string): string {

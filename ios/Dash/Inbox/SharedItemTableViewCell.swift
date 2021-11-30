@@ -128,6 +128,9 @@ class SharedItemTableViewCell: UITableViewCell {
         case .airport:
             iconImage = UIImage(systemName: "airplane")
             iconColor = UIColor(rgb: 0x6599F8)
+        case .buddhistTemple:
+            iconImage = UIImage(named: "manji")
+            iconColor = UIColor(rgb: 0xA8825B)
         case .cafe:
             iconImage = UIImage(systemName: "cup.and.saucer")
             iconColor = UIColor(rgb: 0xEA9A52)
@@ -161,6 +164,9 @@ class SharedItemTableViewCell: UITableViewCell {
         case .restaurant:
             iconImage = UIImage(systemName: "fork.knife")
             iconColor = UIColor(rgb: 0xEA9A52)
+        case .shintoShrine:
+            iconImage = UIImage(named: "torii")
+            iconColor = UIColor(rgb: 0xA8825B)
         case .spa:
             iconImage = UIImage(named: "hotspring")
             iconColor = UIColor(rgb: 0xEC6860)

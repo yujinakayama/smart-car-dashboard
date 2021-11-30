@@ -354,6 +354,10 @@ extension Location {
         case winery
 //        case zoo
 
+        // Custom categories
+        case buddhistTemple
+        case shintoShrine
+
         case unknown
 
         init(from decoder: Decoder) throws {
