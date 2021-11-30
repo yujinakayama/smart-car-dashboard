@@ -132,7 +132,7 @@ class SharedItemTableViewCell: UITableViewCell {
             iconImage = UIImage(named: "manji")
             iconColor = UIColor(rgb: 0xA8825B)
         case .cafe:
-            iconImage = UIImage(systemName: "cup.and.saucer")
+            iconImage = UIImage(systemName: "cup.and.saucer.fill")
             iconColor = UIColor(rgb: 0xEA9A52)
         case .doctor:
             iconImage = UIImage(systemName: "stethoscope")
@@ -159,7 +159,7 @@ class SharedItemTableViewCell: UITableViewCell {
             iconImage = UIImage(systemName: "pills")
             iconColor = UIColor(rgb: 0xEC6860)
         case .publicTransport, .trainStation, .subwayStation, .lightRailStation, .transitStation:
-            iconImage = UIImage(systemName: "tram")
+            iconImage = UIImage(systemName: "tram.fill")
             iconColor = UIColor(rgb: 0x4C9EF8)
         case .restaurant:
             iconImage = UIImage(systemName: "fork.knife")
