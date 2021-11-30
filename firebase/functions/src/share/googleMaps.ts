@@ -286,12 +286,12 @@ function categoryOf(place: Partial<PlaceData>): string | null {
 
     if (types.includes(PlaceType2.place_of_worship) && !isGooglePredefinedWorshipPlace(types)) {
         // https://ja.wikipedia.org/wiki/日本の寺院一覧
-        if (place.name?.match(/(寺|院)$/)) {
+        if (place.name?.match(/(寺|院|大師|薬師|観音|帝釈天)$/)) {
             return 'buddhistTemple';
         }
 
         // https://ja.wikipedia.org/wiki/神社一覧
-        if (place.name?.match(/(神社|宮)$/)) {
+        if (place.name?.match(/(神社|大社|宮|分祠)$/)) {
             return 'shintoShrine';
         }
     }
