@@ -73,7 +73,9 @@ extension Assistant {
             location.markAsOpened(true)
             location.openDirectionsInMaps()
 
-            if Defaults.shared.automaticallySearchParkingsWhenLocationIsAutomaticallyOpened {
+            if location.category != .parking,
+               Defaults.shared.automaticallySearchParkingsWhenLocationIsAutomaticallyOpened
+            {
                 SharedItemTableViewController.pushMapsViewControllerForParkingSearchInCurrentScene(location: location)
             }
 
