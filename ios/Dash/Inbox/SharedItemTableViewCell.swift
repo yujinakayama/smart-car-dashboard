@@ -161,6 +161,9 @@ class SharedItemTableViewCell: UITableViewCell {
         case .restaurant:
             iconImage = UIImage(systemName: "fork.knife")
             iconColor = UIColor(rgb: 0xEA9A52)
+        case .spa:
+            iconImage = UIImage(named: "hotspring")
+            iconColor = UIColor(rgb: 0xEC6860)
         case .store, .bookStore, .clothingStore, .departmentStore, .electronicsStore, .furnitureStore, .hardwareStore, .homeGoodsStore, .jewelryStore, .shoppingMall:
             iconImage = UIImage(systemName: "bag.fill")
             iconColor = UIColor(rgb: 0xF3B63F)
