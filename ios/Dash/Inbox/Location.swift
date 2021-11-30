@@ -17,6 +17,7 @@ class Location: SharedItemProtocol {
     var identifier: String!
 
     let address: Address
+    let category: Category?
     let coordinate: CLLocationCoordinate2D
     let name: String?
     let url: URL
@@ -173,38 +174,184 @@ class Location: SharedItemProtocol {
     }
 }
 
-struct Address: Decodable {
-    let country: String?
-    let prefecture: String?
-    let distinct: String?
-    let locality: String?
-    let subLocality: String?
-    let houseNumber: String?
+extension Location {
+    struct Address: Decodable {
+        let country: String?
+        let prefecture: String?
+        let distinct: String?
+        let locality: String?
+        let subLocality: String?
+        let houseNumber: String?
 
-    func format() -> String? {
-        let components = [
-            prefecture,
-            distinct,
-            locality,
-            subLocality,
-            houseNumber
-        ].compactMap { $0 }
+        func format() -> String? {
+            let components = [
+                prefecture,
+                distinct,
+                locality,
+                subLocality,
+                houseNumber
+            ].compactMap { $0 }
 
-        guard !components.isEmpty else { return nil }
+            guard !components.isEmpty else { return nil }
 
-        return components.reduce(into: [] as [String]) { (components, currentComponent) in
-            guard let previousComponent = components.last else {
+            return components.reduce(into: [] as [String]) { (components, currentComponent) in
+                guard let previousComponent = components.last else {
+                    components.append(currentComponent)
+                    return
+                }
+
+                if previousComponent.last?.isNumber ?? false && currentComponent.first?.isNumber ?? false {
+                    components.append("-")
+                } else {
+                    components.append(" ")
+                }
+
                 components.append(currentComponent)
-                return
-            }
+            }.joined()
+        }
+    }
+}
 
-            if previousComponent.last?.isNumber ?? false && currentComponent.first?.isNumber ?? false {
-                components.append("-")
-            } else {
-                components.append(" ")
-            }
+extension Location {
+    enum Category: String, Decodable {
+        // https://developers.google.com/maps/documentation/places/web-service/supported_types
+        case accounting
+        case airport
+        case amusementPark
+        case aquarium
+        case artGallery
+        case atm
+        case bakery
+        case bank
+        case bar
+        case beautySalon
+        case bicycleStore
+        case bookStore
+        case bowlingAlley
+        case busStation
+        case cafe
+        case campground
+        case carDealer
+        case carRental
+        case carRepair
+        case carWash
+        case casino
+        case cemetery
+        case church
+        case cityHall
+        case clothingStore
+        case convenienceStore
+        case courthouse
+        case dentist
+        case departmentStore
+        case doctor
+        case drugstore
+        case electrician
+        case electronicsStore
+        case embassy
+        case fireStation
+        case florist
+        case funeralHome
+        case furnitureStore
+        case gasStation
+        case gym
+        case hairCare
+        case hardwareStore
+        case hinduTemple
+        case homeGoodsStore
+        case hospital
+        case insuranceAgency
+        case jewelryStore
+        case laundry
+        case lawyer
+        case library
+        case lightRailStation
+        case liquorStore
+        case localGovernmentOffice
+        case locksmith
+        case lodging
+        case mealDelivery
+        case mealTakeaway
+        case mosque
+        case movieRental
+        case movieTheater
+        case movingCompany
+        case museum
+        case nightClub
+        case painter
+        case park
+        case parking
+        case petStore
+        case pharmacy
+        case physiotherapist
+        case plumber
+        case police
+        case postOffice
+        case primarySchool
+        case realEstateAgency
+        case restaurant
+        case roofingContractor
+        case rvPark
+        case school
+        case secondarySchool
+        case shoeStore
+        case shoppingMall
+        case spa
+        case stadium
+        case storage
+        case store
+        case subwayStation
+        case supermarket
+        case synagogue
+        case taxiStand
+        case touristAttraction
+        case trainStation
+        case transitStation
+        case travelAgency
+        case university
+        case veterinaryCare
+        case zoo
 
-            components.append(currentComponent)
-        }.joined()
+        // https://developer.apple.com/documentation/mapkit/mkpointofinterestcategory
+//        case airport
+//        case amusementPark
+//        case aquarium
+//        case atm
+//        case bakery
+//        case bank
+        case beach
+        case brewery
+//        case cafe
+//        case campground
+//        case carRental
+        case evCharger
+//        case fireStation
+        case fitnessCenter
+        case foodMarket
+//        case gasStation
+//        case hospital
+        case hotel
+//        case laundry
+//        case library
+        case marina
+//        case movieTheater
+//        case museum
+        case nationalPark
+        case nightlife
+//        case park
+//        case parking
+//        case pharmacy
+//        case police
+//        case postOffice
+        case publicTransport
+//        case restaurant
+        case restroom
+//        case school
+//        case stadium
+//        case store
+        case theater
+//        case university
+        case winery
+//        case zoo
     }
 }

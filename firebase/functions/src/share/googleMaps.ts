@@ -1,4 +1,4 @@
-import { Client, Language, PlaceDetailsRequest, PlaceInputType } from "@googlemaps/google-maps-services-js";
+import { Client, Language, PlaceData, PlaceDetailsRequest, PlaceInputType } from "@googlemaps/google-maps-services-js";
 import axios from 'axios';
 import * as functions from 'firebase-functions';
 
@@ -174,6 +174,7 @@ async function normalizeLocationWithCoordinate(expandedURL: URL, inputData: Inpu
     return {
         type: 'location',
         address: normalizeAddressComponents(place.address_components),
+        category: categoryOf(place),
         coordinate: {
             latitude: place.geometry.location.lat,
             longitude: place.geometry.location.lng
@@ -218,7 +219,7 @@ async function normalizeLocationWithIdentifier(id: { placeid?: string, ftid?: st
     const requestParameters: PlaceDetailsRequest = {
         params: {
             place_id: id.placeid || '',
-            fields: ['address_component', 'geometry', 'name', 'website'],
+            fields: ['address_component', 'geometry', 'name', 'type', 'website'],
             language: Language.ja,
             key: googleMapsAPIKey
         }
@@ -240,6 +241,7 @@ async function normalizeLocationWithIdentifier(id: { placeid?: string, ftid?: st
     return {
         type: 'location',
         address: normalizeAddressComponents(place.address_components),
+        category: categoryOf(place),
         coordinate: {
             latitude: place.geometry.location.lat,
             longitude: place.geometry.location.lng
@@ -273,4 +275,18 @@ function normalizeAddressComponents(rawAddressComponents: object[]): Address {
         ].filter((e) => e).join('') || null,
         houseNumber: components.premise || null
     };
+}
+
+function categoryOf(place: Partial<PlaceData>): string | null {
+    if (place.types) {
+        return convertToCamelCase(place.types[0].toString())
+    } else {
+        return null;
+    }
+}
+
+function convertToCamelCase(string: string): string {
+    return string.replace(/(_[a-z])/ig, (match) => {
+        return match.toUpperCase().replace('_', '');
+    });
 }

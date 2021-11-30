@@ -7,6 +7,7 @@ export interface BaseNormalizedData {
 export interface Location extends BaseNormalizedData {
     type: 'location';
     address: Address;
+    category: string | null;
     coordinate: {
         latitude: number;
         longitude: number;

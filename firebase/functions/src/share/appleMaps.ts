@@ -18,9 +18,20 @@ export async function normalizeAppleMapsLocation(inputData: InputData): Promise<
             subLocality: mapItem.placemark.thoroughfare,
             houseNumber: mapItem.placemark.subThoroughfare
         },
+        category: normalizeCategory(mapItem.pointOfInterestCategory),
         coordinate: mapItem.placemark.coordinate,
         name: mapItem.name,
         websiteURL: mapItem.url,
         url: inputData.url.toString()
     };
+}
+
+function normalizeCategory(category: string | null): string | null {
+    if (!category) {
+        return null;
+    }
+
+    return category
+        .replace(/^MKPOICategory/, '')
+        .replace(/^([A-Z]+)([A-Z])?/, (_, $1, $2) => { return $1.toLowerCase() + ($2 || '') });
 }

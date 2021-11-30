@@ -121,9 +121,63 @@ class SharedItemTableViewCell: UITableViewCell {
     }
 
     private func configureView(for location: Location) {
+        let iconImage: UIImage?
+        let iconColor: UIColor
+
+        switch location.category {
+        case .airport:
+            iconImage = UIImage(systemName: "airplane")
+            iconColor = UIColor(rgb: 0x6599F8)
+        case .cafe:
+            iconImage = UIImage(systemName: "cup.and.saucer")
+            iconColor = UIColor(rgb: 0xEA9A52)
+        case .doctor:
+            iconImage = UIImage(systemName: "stethoscope")
+            iconColor = UIColor(rgb: 0xE9675F)
+        case .gasStation:
+            iconImage = UIImage(systemName: "fuelpump.fill")
+            iconColor = UIColor(rgb: 0x4B9EF8)
+        case .hospital:
+            iconImage = UIImage(systemName: "cross.fill")
+            iconColor = UIColor(rgb: 0xE9675F)
+        case .hotel, .lodging:
+            iconImage = UIImage(systemName: "bed.double.fill")
+            iconColor = UIColor(rgb: 0x9688F7)
+        case .mealTakeaway, .mealDelivery:
+            iconImage = UIImage(systemName: "takeoutbag.and.cup.and.straw.fill")
+            iconColor = UIColor(rgb: 0xEA9A52)
+        case .park, .nationalPark:
+            iconImage = UIImage(systemName: "leaf.fill")
+            iconColor = UIColor(rgb: 0x54B741)
+        case .parking:
+            iconImage = UIImage(systemName: "parkingsign")
+            iconColor = UIColor(rgb: 0x4C9EF8)
+        case .pharmacy, .drugstore:
+            iconImage = UIImage(systemName: "pills")
+            iconColor = UIColor(rgb: 0xEC6860)
+        case .publicTransport, .trainStation, .subwayStation, .lightRailStation, .transitStation:
+            iconImage = UIImage(systemName: "tram")
+            iconColor = UIColor(rgb: 0x4C9EF8)
+        case .restaurant:
+            iconImage = UIImage(systemName: "fork.knife")
+            iconColor = UIColor(rgb: 0xEA9A52)
+        case .store, .bookStore, .clothingStore, .departmentStore, .electronicsStore, .furnitureStore, .hardwareStore, .homeGoodsStore, .jewelryStore, .shoppingMall:
+            iconImage = UIImage(systemName: "bag.fill")
+            iconColor = UIColor(rgb: 0xF3B63F)
+        case .supermarket, .foodMarket:
+            iconImage = UIImage(systemName: "cart")
+            iconColor = UIColor(rgb: 0xF3B63F)
+        case .theater, .movieTheater:
+            iconImage = UIImage(systemName: "theatermasks.fill")
+            iconColor = UIColor(rgb: 0xD673D1)
+        default:
+            iconImage = UIImage(systemName: "mappin")
+            iconColor = UIColor(rgb: 0xEB5956)
+        }
+
         iconType = .template
-        iconImageView.image = UIImage(systemName: "mappin")
-        iconBackgroundView.backgroundColor = UIColor(named: "Location Icon Color")
+        iconImageView.image = iconImage
+        iconBackgroundView.backgroundColor = iconColor
 
         nameLabel.text = location.name
         detailLabel.text = location.formattedAddress ?? location.address.country
@@ -238,4 +292,22 @@ class SharedItemTableViewCell: UITableViewCell {
             height: pointSize.height * SharedItemTableViewCell.screenScale
         )
     }
+}
+
+fileprivate extension UIColor {
+    convenience init(red: Int, green: Int, blue: Int) {
+       assert(red >= 0 && red <= 255, "Invalid red component")
+       assert(green >= 0 && green <= 255, "Invalid green component")
+       assert(blue >= 0 && blue <= 255, "Invalid blue component")
+
+       self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
+   }
+
+   convenience init(rgb: Int) {
+       self.init(
+           red: (rgb >> 16) & 0xFF,
+           green: (rgb >> 8) & 0xFF,
+           blue: rgb & 0xFF
+       )
+   }
 }
