@@ -353,5 +353,12 @@ extension Location {
 //        case university
         case winery
 //        case zoo
+
+        case unknown
+
+        init(from decoder: Decoder) throws {
+            let rawValue = try decoder.singleValueContainer().decode(String.self)
+            self = Self(rawValue: rawValue) ?? .unknown
+        }
     }
 }
