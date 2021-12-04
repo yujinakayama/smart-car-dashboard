@@ -102,6 +102,8 @@ extension Assistant {
         }
 
         @objc func audioSessionDidChangeRoute() {
+            logger.info("isConnectedToCarBluetoothAudio: \(isConnectedToCarBluetoothAudio)")
+
             if isConnectedToCarBluetoothAudio {
                 startPlayingMusicIfNeeded()
             }
