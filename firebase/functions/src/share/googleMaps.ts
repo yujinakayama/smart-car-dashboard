@@ -39,7 +39,7 @@ interface GoogleMapsAddressComponents {
 }
 
 const googleMapsAddressComponentKeys = [
-    'street_addres',
+    'street_address',
     'route',
     'intersection',
     'political',
