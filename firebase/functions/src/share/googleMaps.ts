@@ -308,7 +308,7 @@ function isGooglePredefinedWorshipPlace(types: AddressType[]): boolean {
 }
 
 function convertToCamelCase(string: string): string {
-    return string.replace(/(_[a-z])/ig, (match) => {
-        return match.toUpperCase().replace('_', '');
-    });
+    return string.replace(/(_[a-z])/g, (match) => {
+        return match.toUpperCase();
+    }).replace(/_/g, '');
 }
