@@ -174,7 +174,7 @@ async function normalizeLocationWithCoordinate(expandedURL: URL, inputData: Inpu
     return {
         type: 'location',
         address: normalizeAddressComponents(place.address_components),
-        category: categoryOf(place),
+        categories: normalizeCategories(place),
         coordinate: {
             latitude: place.geometry.location.lat,
             longitude: place.geometry.location.lng
@@ -241,7 +241,7 @@ async function normalizeLocationWithIdentifier(id: { placeid?: string, ftid?: st
     return {
         type: 'location',
         address: normalizeAddressComponents(place.address_components),
-        category: categoryOf(place),
+        categories: normalizeCategories(place),
         coordinate: {
             latitude: place.geometry.location.lat,
             longitude: place.geometry.location.lng
@@ -277,26 +277,26 @@ function normalizeAddressComponents(rawAddressComponents: object[]): Address {
     };
 }
 
-function categoryOf(place: Partial<PlaceData>): string | null {
+function normalizeCategories(place: Partial<PlaceData>): string[] {
     const types = place.types;
 
     if (!types) {
-        return null;
+        return [];
     }
+
+    const categories = types.map((type) => convertToCamelCase(type.toString()));
 
     if (types.includes(PlaceType2.place_of_worship) && !isGooglePredefinedWorshipPlace(types)) {
-        // https://ja.wikipedia.org/wiki/日本の寺院一覧
         if (place.name?.match(/(寺|院|大師|薬師|観音|帝釈天)$/)) {
-            return 'buddhistTemple';
-        }
-
-        // https://ja.wikipedia.org/wiki/神社一覧
-        if (place.name?.match(/(神社|大社|宮|分祠)$/)) {
-            return 'shintoShrine';
+            // https://ja.wikipedia.org/wiki/日本の寺院一覧
+            categories.push('buddhistTemple');
+        } else if (place.name?.match(/(神社|大社|宮|分祠)$/)) {
+            // https://ja.wikipedia.org/wiki/神社一覧
+            categories.push('shintoShrine');
         }
     }
 
-    return convertToCamelCase(types[0].toString());
+    return categories;
 }
 
 function isGooglePredefinedWorshipPlace(types: AddressType[]): boolean {
