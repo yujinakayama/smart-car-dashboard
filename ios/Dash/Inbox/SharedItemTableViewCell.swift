@@ -15,6 +15,8 @@ class SharedItemTableViewCell: UITableViewCell {
         case image
     }
 
+    typealias Icon = (image: UIImage, color: UIColor)
+
     static let screenScale = UIScreen.main.scale
 
     @IBOutlet weak var iconBackgroundView: BorderedView!
@@ -121,75 +123,111 @@ class SharedItemTableViewCell: UITableViewCell {
     }
 
     private func configureView(for location: Location) {
-        let iconImage: UIImage?
-        let iconColor: UIColor
-
-        switch location.category {
-        case .airport:
-            iconImage = UIImage(systemName: "airplane")
-            iconColor = UIColor(rgb: 0x6599F8)
-        case .buddhistTemple:
-            iconImage = UIImage(named: "manji")
-            iconColor = UIColor(rgb: 0xA8825B)
-        case .cafe:
-            iconImage = UIImage(systemName: "cup.and.saucer.fill")
-            iconColor = UIColor(rgb: 0xEA9A52)
-        case .doctor:
-            iconImage = UIImage(systemName: "stethoscope")
-            iconColor = UIColor(rgb: 0xE9675F)
-        case .gasStation:
-            iconImage = UIImage(systemName: "fuelpump.fill")
-            iconColor = UIColor(rgb: 0x4B9EF8)
-        case .hospital:
-            iconImage = UIImage(systemName: "cross.fill")
-            iconColor = UIColor(rgb: 0xE9675F)
-        case .hotel, .lodging:
-            iconImage = UIImage(systemName: "bed.double.fill")
-            iconColor = UIColor(rgb: 0x9688F7)
-        case .mealTakeaway, .mealDelivery:
-            iconImage = UIImage(systemName: "takeoutbag.and.cup.and.straw.fill")
-            iconColor = UIColor(rgb: 0xEA9A52)
-        case .park, .nationalPark:
-            iconImage = UIImage(systemName: "leaf.fill")
-            iconColor = UIColor(rgb: 0x54B741)
-        case .parking:
-            iconImage = UIImage(systemName: "parkingsign")
-            iconColor = UIColor(rgb: 0x4C9EF8)
-        case .pharmacy, .drugstore:
-            iconImage = UIImage(systemName: "pills")
-            iconColor = UIColor(rgb: 0xEC6860)
-        case .publicTransport, .trainStation, .subwayStation, .lightRailStation, .transitStation:
-            iconImage = UIImage(systemName: "tram.fill")
-            iconColor = UIColor(rgb: 0x4C9EF8)
-        case .restaurant:
-            iconImage = UIImage(systemName: "fork.knife")
-            iconColor = UIColor(rgb: 0xEA9A52)
-        case .shintoShrine:
-            iconImage = UIImage(named: "torii")
-            iconColor = UIColor(rgb: 0xA8825B)
-        case .spa:
-            iconImage = UIImage(named: "hotspring")
-            iconColor = UIColor(rgb: 0xEC6860)
-        case .store, .bookStore, .clothingStore, .departmentStore, .electronicsStore, .furnitureStore, .hardwareStore, .homeGoodsStore, .jewelryStore, .shoppingMall:
-            iconImage = UIImage(systemName: "bag.fill")
-            iconColor = UIColor(rgb: 0xF3B63F)
-        case .supermarket, .foodMarket:
-            iconImage = UIImage(systemName: "cart")
-            iconColor = UIColor(rgb: 0xF3B63F)
-        case .theater, .movieTheater:
-            iconImage = UIImage(systemName: "theatermasks.fill")
-            iconColor = UIColor(rgb: 0xD673D1)
-        default:
-            iconImage = UIImage(systemName: "mappin")
-            iconColor = UIColor(rgb: 0xEB5956)
-        }
+        let icon = icon(for: location)
 
         iconType = .template
-        iconImageView.image = iconImage
-        iconBackgroundView.backgroundColor = iconColor
+        iconImageView.image = icon.image
+        iconBackgroundView.backgroundColor = icon.color
 
         nameLabel.text = location.name
         detailLabel.text = location.formattedAddress ?? location.address.country
+    }
+
+    private func icon(for location: Location) -> Icon {
+        for category in location.categories {
+            if let icon = icon(for: category) {
+                return icon
+            }
+        }
+
+        if location.categories.contains(.touristAttraction) {
+            return (
+                image: UIImage(systemName: "star.fill")!,
+                color: UIColor(rgb: 0x969696)
+            )
+        }
+
+        return (
+            image: UIImage(systemName: "mappin")!,
+            color: UIColor(rgb: 0xEB5956)
+        )
+    }
+
+    private func icon(for category: Location.Category) -> Icon? {
+        let image: UIImage?
+        let color: UIColor?
+
+        switch category {
+        case .airport:
+            image = UIImage(systemName: "airplane")
+            color = UIColor(rgb: 0x6599F8)
+        case .buddhistTemple:
+            image = UIImage(named: "manji")
+            color = UIColor(rgb: 0xA8825B)
+        case .cafe:
+            image = UIImage(systemName: "cup.and.saucer.fill")
+            color = UIColor(rgb: 0xEA9A52)
+        case .carRepair:
+            image = UIImage(systemName: "wrench.fill")
+            color = UIColor(rgb: 0x7381AF)
+        case .cityHall, .localGovernmentOffice:
+            image = UIImage(systemName: "building.columns.fill")
+            color = UIColor(rgb: 0x7381AF)
+        case .doctor:
+            image = UIImage(systemName: "stethoscope")
+            color = UIColor(rgb: 0xE9675F)
+        case .gasStation:
+            image = UIImage(systemName: "fuelpump.fill")
+            color = UIColor(rgb: 0x4B9EF8)
+        case .hospital:
+            image = UIImage(systemName: "cross.fill")
+            color = UIColor(rgb: 0xE9675F)
+        case .hotel, .lodging:
+            image = UIImage(systemName: "bed.double.fill")
+            color = UIColor(rgb: 0x9688F7)
+        case .mealTakeaway, .mealDelivery, .food:
+            image = UIImage(systemName: "takeoutbag.and.cup.and.straw.fill")
+            color = UIColor(rgb: 0xEA9A52)
+        case .park, .nationalPark:
+            image = UIImage(systemName: "leaf.fill")
+            color = UIColor(rgb: 0x54B741)
+        case .parking:
+            image = UIImage(systemName: "parkingsign")
+            color = UIColor(rgb: 0x4C9EF8)
+        case .pharmacy, .drugstore:
+            image = UIImage(systemName: "pills")
+            color = UIColor(rgb: 0xEC6860)
+        case .publicTransport, .trainStation, .subwayStation, .lightRailStation, .transitStation:
+            image = UIImage(systemName: "tram.fill")
+            color = UIColor(rgb: 0x4C9EF8)
+        case .restaurant:
+            image = UIImage(systemName: "fork.knife")
+            color = UIColor(rgb: 0xEA9A52)
+        case .shintoShrine:
+            image = UIImage(named: "torii")
+            color = UIColor(rgb: 0xA8825B)
+        case .spa:
+            image = UIImage(named: "hotspring")
+            color = UIColor(rgb: 0xEC6860)
+        case .store, .bookStore, .clothingStore, .departmentStore, .electronicsStore, .furnitureStore, .hardwareStore, .homeGoodsStore, .jewelryStore, .shoppingMall:
+            image = UIImage(systemName: "bag.fill")
+            color = UIColor(rgb: 0xF3B63F)
+        case .supermarket, .foodMarket, .groceryOrSupermarket:
+            image = UIImage(systemName: "cart")
+            color = UIColor(rgb: 0xF3B63F)
+        case .theater, .movieTheater:
+            image = UIImage(systemName: "theatermasks.fill")
+            color = UIColor(rgb: 0xD673D1)
+        default:
+            image = nil
+            color = nil
+        }
+
+        if let image = image, let color = color {
+            return (image: image, color: color)
+        } else {
+            return nil
+        }
     }
 
     private func configureView(for musicItem: MusicItem) {

@@ -17,7 +17,7 @@ class Location: SharedItemProtocol {
     var identifier: String!
 
     let address: Address
-    let category: Category?
+    let categories: [Category]
     let coordinate: CLLocationCoordinate2D
     let name: String?
     let url: URL
@@ -311,6 +311,54 @@ extension Location {
         case university
         case veterinaryCare
         case zoo
+
+        case administrativeAreaLevel1
+        case administrativeAreaLevel2
+        case administrativeAreaLevel3
+        case administrativeAreaLevel4
+        case administrativeAreaLevel5
+        case archipelago
+        case colloquialArea
+        case continent
+        case country
+        case establishment
+        case finance
+        case floor
+        case food
+        case generalContractor
+        case geocode
+        case health
+        case intersection
+        case landmark
+        case locality
+        case naturalFeature
+        case neighborhood
+        case placeOfWorship
+        case plusCode
+        case pointOfInterest
+        case political
+        case postBox
+        case postalCode
+        case postalCodePrefix
+        case postalCodeSuffix
+        case postalTown
+        case premise
+        case room
+        case route
+        case streetAddress
+        case streetNumber
+        case sublocality
+        case sublocalityLevel1
+        case sublocalityLevel2
+        case sublocalityLevel3
+        case sublocalityLevel4
+        case sublocalityLevel5
+        case subpremise
+        case townSquare
+
+        // Deprecated Google Maps place types
+        // https://stackoverflow.com/questions/43790991/new-type-for-the-deprecated-grocery-or-supermarket-type-in-google-places-api
+        case groceryOrSupermarket
 
         // https://developer.apple.com/documentation/mapkit/mkpointofinterestcategory
 //        case airport

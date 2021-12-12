@@ -8,3 +8,5 @@ typings/
 node_modules/
 
 /playground/
+
+firebase-service-account.json

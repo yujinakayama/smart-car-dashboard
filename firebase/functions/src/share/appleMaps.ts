@@ -18,7 +18,7 @@ export async function normalizeAppleMapsLocation(inputData: InputData): Promise<
             subLocality: mapItem.placemark.thoroughfare,
             houseNumber: mapItem.placemark.subThoroughfare
         },
-        category: normalizeCategory(mapItem.pointOfInterestCategory),
+        categories: normalizeCategories(mapItem.pointOfInterestCategory),
         coordinate: mapItem.placemark.coordinate,
         name: mapItem.name,
         websiteURL: mapItem.url,
@@ -26,12 +26,14 @@ export async function normalizeAppleMapsLocation(inputData: InputData): Promise<
     };
 }
 
-function normalizeCategory(category: string | null): string | null {
+function normalizeCategories(category: string | null): string[] {
     if (!category) {
-        return null;
+        return [];
     }
 
-    return category
+    const normalizedCategory = category
         .replace(/^MKPOICategory/, '')
         .replace(/^([A-Z]+)([A-Z])?/, (_, $1, $2) => { return $1.toLowerCase() + ($2 || '') });
+
+    return [normalizedCategory];
 }
