@@ -67,7 +67,7 @@ const googleMapsAddressComponentKeys = [
 ];
 
 const googleMapsClient = new Client();
-const googleMapsAPIKey = functions.config().googlemaps.api_key;
+const googleMapsAPIKey = process.env.GOOGLE_MAPS_API_KEY || functions.config().googlemaps.api_key;
 
 export function isGoogleMapsLocation(inputData: InputData): boolean {
     const url = inputData.url;
