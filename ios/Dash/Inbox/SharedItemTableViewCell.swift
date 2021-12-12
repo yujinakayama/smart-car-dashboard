@@ -170,7 +170,7 @@ class SharedItemTableViewCell: UITableViewCell {
         case .carRepair:
             image = UIImage(systemName: "wrench.fill")
             color = UIColor(rgb: 0x7381AF)
-        case .cityHall, .localGovernmentOffice:
+        case .cityHall, .localGovernmentOffice, .museum:
             image = UIImage(systemName: "building.columns.fill")
             color = UIColor(rgb: 0x7381AF)
         case .doctor:
