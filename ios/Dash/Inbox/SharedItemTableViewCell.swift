@@ -218,6 +218,9 @@ class SharedItemTableViewCell: UITableViewCell {
         case .theater, .movieTheater:
             image = UIImage(systemName: "theatermasks.fill")
             color = UIColor(rgb: 0xD673D1)
+        case .university:
+            image = UIImage(systemName: "graduationcap.fill")
+            color = UIColor(rgb: 0x9F7650)
         default:
             image = nil
             color = nil
