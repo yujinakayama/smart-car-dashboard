@@ -289,10 +289,10 @@ function normalizeCategories(place: Partial<PlaceData>): string[] {
     if (types.includes(PlaceType2.place_of_worship) && !isGooglePredefinedWorshipPlace(types)) {
         if (place.name?.match(/(寺|院|大師|薬師|観音|帝釈天)$/)) {
             // https://ja.wikipedia.org/wiki/日本の寺院一覧
-            categories.push('buddhistTemple');
+            categories.unshift('buddhistTemple');
         } else if (place.name?.match(/(神社|大社|宮|分祠)$/)) {
             // https://ja.wikipedia.org/wiki/神社一覧
-            categories.push('shintoShrine');
+            categories.unshift('shintoShrine');
         }
     }
 
