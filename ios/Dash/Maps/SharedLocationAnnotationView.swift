@@ -13,13 +13,21 @@ class SharedLocationAnnotationView: MKMarkerAnnotationView {
         return (annotation as? SharedLocationAnnotation)?.location
     }
 
+    override var annotation: MKAnnotation? {
+        didSet {
+            updateGlyph()
+        }
+    }
+
     lazy var callout = Callout(annotationView: self)
 
-    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+    init(annotation: SharedLocationAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
 
         collisionMode = .none
         displayPriority = .required
+
+        updateGlyph()
 
         _ = callout
     }
@@ -31,6 +39,13 @@ class SharedLocationAnnotationView: MKMarkerAnnotationView {
     override func layoutSubviews() {
         super.layoutSubviews()
         callout.annotationViewDidLayoutSubviews()
+    }
+
+    func updateGlyph() {
+        guard let location = location else { return }
+        let icon = PointOfInterestIcon(location: location)
+        glyphImage = icon.image
+        markerTintColor = icon.color
     }
 }
 
