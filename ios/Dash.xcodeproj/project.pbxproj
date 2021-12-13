@@ -91,6 +91,7 @@
 		B96810752614C5C300D647FA /* ImageFilterChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96810742614C5C300D647FA /* ImageFilterChain.swift */; };
 		B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */; };
 		B9741F7523DF200600F061E7 /* SharedItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */; };
+		B97ABD3F27670D6E00C7EB1D /* PointOfInterestIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97ABD3E27670D6E00C7EB1D /* PointOfInterestIcon.swift */; };
 		B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97BAE6124B61DB100AE7D13 /* Vehicle.swift */; };
 		B980071E2678B81C00FC703E /* OpenCage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B980071D2678B81C00FC703E /* OpenCage.swift */; };
 		B98007202678D6AF00FC703E /* LocationInformationWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B980071F2678D6AF00FC703E /* LocationInformationWidgetViewController.swift */; };
@@ -474,6 +475,7 @@
 		B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemTableViewController.swift; sourceTree = "<group>"; };
 		B97A82232553F8A900CD2870 /* Sun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sun.swift; sourceTree = "<group>"; };
 		B97A8229255449C800CD2870 /* CameraOptionsAdjuster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOptionsAdjuster.swift; sourceTree = "<group>"; };
+		B97ABD3E27670D6E00C7EB1D /* PointOfInterestIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterestIcon.swift; sourceTree = "<group>"; };
 		B97BAE6124B61DB100AE7D13 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		B980071D2678B81C00FC703E /* OpenCage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenCage.swift; sourceTree = "<group>"; };
 		B980071F2678D6AF00FC703E /* LocationInformationWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInformationWidgetViewController.swift; sourceTree = "<group>"; };
@@ -1043,6 +1045,7 @@
 				B93321ED2323C9D500BFAB21 /* BorderedView.swift */,
 				B94BD2E82680486700B768A2 /* BorderedLabel.swift */,
 				B99C69AB26F5F6880064162D /* MapTypeSegmentedControl.swift */,
+				B97ABD3E27670D6E00C7EB1D /* PointOfInterestIcon.swift */,
 				B9CEA76922D8F1F50055C9A3 /* Extensions */,
 				B9BF2F0323F6946100967316 /* Vendor */,
 				B9CEA76A22D8F2380055C9A3 /* Storyboards */,
@@ -1829,6 +1832,7 @@
 				B9F272C4259C91990098CB3B /* AltitudeWidgetViewController.swift in Sources */,
 				B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */,
 				B9DC5B46229EB8B200B645D5 /* SerialPortManager.swift in Sources */,
+				B97ABD3F27670D6E00C7EB1D /* PointOfInterestIcon.swift in Sources */,
 				B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift in Sources */,
 				B92C6EC324AC2F0A001E9675 /* ArtworkView.swift in Sources */,
 				B99C69AC26F5F6880064162D /* MapTypeSegmentedControl.swift in Sources */,
