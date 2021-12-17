@@ -21,7 +21,7 @@ export async function normalizeAppleMapsLocation(inputData: InputData): Promise<
         categories: normalizeCategories(mapItem.pointOfInterestCategory),
         coordinate: mapItem.placemark.coordinate,
         name: mapItem.name,
-        websiteURL: mapItem.url,
+        websiteURL: mapItem.url ? new URL(mapItem.url).toString() : null, // To handle internationalized domain names
         url: inputData.url.toString()
     };
 }

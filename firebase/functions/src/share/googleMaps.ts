@@ -248,7 +248,7 @@ async function normalizeLocationWithIdentifier(id: { placeid?: string, ftid?: st
         },
         name: convertAlphanumericsToAscii(place.name),
         url: expandedURL.toString(),
-        websiteURL: place.website || null
+        websiteURL: place.website ? (new URL(place.website)).toString() : null // // To handle internationalized domain names
     };
 }
 
