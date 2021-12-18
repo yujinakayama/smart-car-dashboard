@@ -302,7 +302,7 @@ function normalizeCategories(place: Partial<PlaceData>): string[] {
         if (names.some((name) => name.match(/(寺|院|大師|薬師|観音|帝釈天)$/))) {
             // https://ja.wikipedia.org/wiki/日本の寺院一覧
             categories.unshift('buddhistTemple');
-        } else if (names.some((name) => name.match(/(神社|大社|宮|分祠)$/))) {
+        } else if (names.some((name) => name.match(/(神社|大社|宮|祠)$/))) {
             // https://ja.wikipedia.org/wiki/神社一覧
             categories.unshift('shintoShrine');
         }
