@@ -296,7 +296,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
 private extension SharedItemTableViewController {
     func actionMenu(for location: Location) -> UIMenu {
-        return UIMenu(children: [
+        var actions = [
             UIAction(title: String(localized: "Search Parkings"), image: UIImage(systemName: "parkingsign")) { [weak self] (action) in
                 guard let self = self else { return }
                 location.markAsOpened(true)
@@ -309,25 +309,36 @@ private extension SharedItemTableViewController {
             UIAction(title: String(localized: "Yahoo! CarNavi"), image: UIImage(systemName: "y.circle.fill")) { (action) in
                 location.markAsOpened(true)
                 UIApplication.shared.open(location.yahooCarNaviURL)
-            },
-            UIAction(title: String(localized: "Search Web"), image: UIImage(systemName: "magnifyingglass")) { [weak self] (action) in
-                guard let self = self else { return }
-
-                let query = [
-                    location.name,
-                    location.address.prefecture,
-                    location.address.distinct,
-                    location.address.locality,
-                ].compactMap { $0 }.joined(separator: " ")
-
-                var urlComponents = URLComponents(string: "https://google.com/search")!
-                urlComponents.queryItems = [URLQueryItem(name: "q", value: query)]
-                guard let url = urlComponents.url else { return }
-
-                location.markAsOpened(true)
-                self.presentWebViewController(url: url)
             }
-        ])
+        ]
+
+        if let websiteURL = location.websiteURL {
+            actions.append(UIAction(title: String(localized: "Open Website"), image: UIImage(systemName: "safari")) { [weak self] (action) in
+                guard let self = self else { return }
+                location.markAsOpened(true)
+                self.presentWebViewController(url: websiteURL)
+            })
+        }
+
+        actions.append(UIAction(title: String(localized: "Search Web"), image: UIImage(systemName: "magnifyingglass")) { [weak self] (action) in
+            guard let self = self else { return }
+
+            let query = [
+                location.name,
+                location.address.prefecture,
+                location.address.distinct,
+                location.address.locality,
+            ].compactMap { $0 }.joined(separator: " ")
+
+            var urlComponents = URLComponents(string: "https://google.com/search")!
+            urlComponents.queryItems = [URLQueryItem(name: "q", value: query)]
+            guard let url = urlComponents.url else { return }
+
+            location.markAsOpened(true)
+            self.presentWebViewController(url: url)
+        })
+
+        return UIMenu(children: actions)
     }
 
     func actionMenu(for musicItem: MusicItem) -> UIMenu {
