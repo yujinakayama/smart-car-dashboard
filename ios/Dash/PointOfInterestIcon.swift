@@ -118,6 +118,13 @@ fileprivate func genericIcon(for location: Location) -> PointOfInterestIcon {
         )
     }
 
+    if location.categories.contains(.naturalFeature) {
+        return PointOfInterestIcon(
+            image: UIImage(systemName: "leaf.fill")!,
+            color: UIColor(rgb: 0x54B741)
+        )
+    }
+
     if location.categories.contains(.touristAttraction) {
         return PointOfInterestIcon(
             image: UIImage(systemName: "star.fill")!,
