@@ -238,7 +238,13 @@ async function normalizeLocationWithIdentifier(id: { placeid?: string, ftid?: st
         return null;
     }
 
-    const name = isPointOfInterest(place) ? place.name : inputData.attachments['public.plain-text'];
+    let name: string | undefined;
+    
+    if (isPointOfInterest(place)) {
+        name = place.name || inputData.attachments['public.plain-text'];
+    } else {
+        name = inputData.attachments['public.plain-text'] || place.name;
+    }
 
     return {
         type: 'location',
