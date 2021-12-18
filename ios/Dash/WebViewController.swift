@@ -141,10 +141,10 @@ class WebViewController: UIViewController {
         webView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            webView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            view.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
-            webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: webView.bottomAnchor),
+            webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
+            webView.topAnchor.constraint(equalTo: view.topAnchor),
+            view.bottomAnchor.constraint(equalTo: webView.bottomAnchor),
         ])
 
         webView.isHidden = false
