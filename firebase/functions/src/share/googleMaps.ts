@@ -85,7 +85,7 @@ export async function normalizeGoogleMapsLocation(inputData: InputData): Promise
 
     let locationData: Location | null;
 
-    locationData = await normalizeLocationWithFtid(expandedURL);
+    locationData = await normalizeLocationWithFtid(expandedURL, inputData);
     if (locationData) {
         return locationData;
     }
@@ -95,7 +95,7 @@ export async function normalizeGoogleMapsLocation(inputData: InputData): Promise
         return locationData;
     }
 
-    locationData = await normalizeLocationWithQuery(expandedURL);
+    locationData = await normalizeLocationWithQuery(expandedURL, inputData);
     if (locationData) {
         return locationData;
     }
@@ -124,7 +124,7 @@ async function expandShortenURL(url: URL): Promise<URL> {
 
 // Point of Interests
 // https://stackoverflow.com/a/47042514/784241
-async function normalizeLocationWithFtid(expandedURL: URL): Promise<Location | null> {
+async function normalizeLocationWithFtid(expandedURL: URL, inputData: InputData): Promise<Location | null> {
     let ftid = expandedURL.searchParams.get('ftid');
 
     if (!ftid) {
@@ -143,7 +143,7 @@ async function normalizeLocationWithFtid(expandedURL: URL): Promise<Location | n
         return null;
     }
 
-    return normalizeLocationWithIdentifier({ ftid: ftid }, expandedURL);
+    return normalizeLocationWithIdentifier({ ftid: ftid }, expandedURL, inputData);
 }
 
 async function normalizeLocationWithCoordinate(expandedURL: URL, inputData: InputData): Promise<Location | null> {
@@ -186,7 +186,7 @@ async function normalizeLocationWithCoordinate(expandedURL: URL, inputData: Inpu
 }
 
 // Last resort
-async function normalizeLocationWithQuery(expandedURL: URL): Promise<Location | null> {
+async function normalizeLocationWithQuery(expandedURL: URL, inputData: InputData): Promise<Location | null> {
     const query = expandedURL.searchParams.get('q');
 
     if (!query) {
@@ -208,10 +208,10 @@ async function normalizeLocationWithQuery(expandedURL: URL): Promise<Location | 
         return null;
     }
 
-    return normalizeLocationWithIdentifier({ placeid: place.place_id }, expandedURL);
+    return normalizeLocationWithIdentifier({ placeid: place.place_id }, expandedURL, inputData);
 }
 
-async function normalizeLocationWithIdentifier(id: { placeid?: string, ftid?: string }, expandedURL: URL): Promise<Location | null> {
+async function normalizeLocationWithIdentifier(id: { placeid?: string, ftid?: string }, expandedURL: URL, inputData: InputData): Promise<Location | null> {
     if (!id.placeid && !id.ftid) {
         throw new Error('Either placeid or ftid must be given');
     }
@@ -238,6 +238,8 @@ async function normalizeLocationWithIdentifier(id: { placeid?: string, ftid?: st
         return null;
     }
 
+    const name = isPointOfInterest(place) ? place.name : inputData.attachments['public.plain-text'];
+
     return {
         type: 'location',
         address: normalizeAddressComponents(place.address_components),
@@ -246,7 +248,7 @@ async function normalizeLocationWithIdentifier(id: { placeid?: string, ftid?: st
             latitude: place.geometry.location.lat,
             longitude: place.geometry.location.lng
         },
-        name: convertAlphanumericsToAscii(place.name),
+        name: convertAlphanumericsToAscii(name),
         url: expandedURL.toString(),
         websiteURL: place.website ? (new URL(place.website)).toString() : null // // To handle internationalized domain names
     };
@@ -275,6 +277,14 @@ function normalizeAddressComponents(rawAddressComponents: object[]): Address {
         ].filter((e) => e).join('') || null,
         houseNumber: components.premise || null
     };
+}
+
+function isPointOfInterest(place: Partial<PlaceData>): boolean {
+    if (!place.types) {
+        return false;
+    }
+
+    return place.types[0] !== PlaceType2.premise;
 }
 
 function normalizeCategories(place: Partial<PlaceData>): string[] {
