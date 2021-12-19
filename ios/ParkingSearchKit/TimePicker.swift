@@ -15,7 +15,7 @@ import UIKit
         return time(for: selectedRow)
     }
 
-    var minuteInterval: Int = 10 {
+    var minuteInterval: Int = 15 {
         didSet {
             updateTimes()
         }
