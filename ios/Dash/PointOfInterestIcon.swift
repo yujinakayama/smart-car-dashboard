@@ -65,6 +65,9 @@ fileprivate func specificIcon(for category: Location.Category) -> PointOfInteres
     case .mealTakeaway, .mealDelivery:
         image = UIImage(systemName: "takeoutbag.and.cup.and.straw.fill")!
         color = UIColor(rgb: 0xEA9A52)
+    case .nightClub, .nightlife:
+        image = UIImage(systemName: "music.quarternote.3")!
+        color = UIColor(rgb: 0xD673D1)
     case .park, .nationalPark:
         image = UIImage(systemName: "leaf.fill")!
         color = UIColor(rgb: 0x54B741)
