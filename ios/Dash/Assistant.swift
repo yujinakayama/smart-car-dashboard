@@ -37,7 +37,7 @@ class Assistant {
 extension Assistant {
     class LocationOpener {
         let newItemThresholdTime: Date
-        let maxDatabaseUpdateWaitTimeInterval: TimeInterval = 5
+        let maxDatabaseUpdateWaitTimeInterval: TimeInterval = 2
         var finished = false
         private var location: Location?
 
