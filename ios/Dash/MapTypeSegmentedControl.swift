@@ -16,9 +16,16 @@ import MapKit
         self.mapTypes = mapTypes
         updateSegments()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        commonInit()
+    }
+
+    // For some reason IBDesignablesAgent crashes without this:
+    // Dash/MapTypeSegmentedControl.swift:12: Fatal error: Use of unimplemented initializer 'init(items:)' for class 'Dash.MapTypeSegmentedControl'
+    override init(items: [Any]?) {
+        super.init(items: items)
         commonInit()
     }
 
