@@ -74,7 +74,10 @@ class RemoteNotification {
     }
 
     var rootViewController: UIViewController? {
-        guard let windowScene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene else { return nil }
+        guard let windowScene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive || $0.activationState == .foregroundInactive }) as? UIWindowScene else {
+            return nil
+        }
+
         return windowScene.keyWindow?.rootViewController
     }
 }
