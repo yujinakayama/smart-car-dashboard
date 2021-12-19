@@ -1140,7 +1140,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                             <subviews>
                                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QcC-fJ-8O1">
-                                    <rect key="frame" x="0.0" y="40" width="375" height="120"/>
+                                    <rect key="frame" x="0.0" y="30" width="375" height="120"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="vZ2-gQ-msq">
                                             <rect key="frame" x="0.0" y="0.0" width="1125" height="120"/>
@@ -1231,7 +1231,7 @@
                                     <viewLayoutGuide key="frameLayoutGuide" id="5h7-YP-2DW"/>
                                 </scrollView>
                                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Vl4-jF-Jhk">
-                                    <rect key="frame" x="110" y="164" width="155.5" height="26"/>
+                                    <rect key="frame" x="110" y="154" width="155.5" height="26"/>
                                     <color key="pageIndicatorTintColor" systemColor="tertiaryLabelColor"/>
                                     <color key="currentPageIndicatorTintColor" systemColor="labelColor"/>
                                     <connections>
@@ -1240,10 +1240,9 @@
                                 </pageControl>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="QcC-fJ-8O1" firstAttribute="top" secondItem="BxA-Xb-WFh" secondAttribute="top" constant="40" id="6Rc-YZ-CwQ"/>
+                                <constraint firstItem="QcC-fJ-8O1" firstAttribute="top" secondItem="BxA-Xb-WFh" secondAttribute="top" constant="30" id="6Rc-YZ-CwQ"/>
                                 <constraint firstAttribute="trailing" secondItem="QcC-fJ-8O1" secondAttribute="trailing" id="O9K-nf-kaM"/>
                                 <constraint firstItem="Vl4-jF-Jhk" firstAttribute="top" secondItem="QcC-fJ-8O1" secondAttribute="bottom" constant="4" id="T0U-aw-wsH"/>
-                                <constraint firstAttribute="bottom" secondItem="Vl4-jF-Jhk" secondAttribute="bottom" constant="20" id="d3L-x2-g7e"/>
                                 <constraint firstItem="QcC-fJ-8O1" firstAttribute="leading" secondItem="BxA-Xb-WFh" secondAttribute="leading" id="fA4-An-qOv"/>
                                 <constraint firstItem="Vl4-jF-Jhk" firstAttribute="centerX" secondItem="BxA-Xb-WFh" secondAttribute="centerX" id="iGn-IE-6A1"/>
                             </constraints>
