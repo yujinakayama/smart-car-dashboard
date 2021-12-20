@@ -43,7 +43,7 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
 
     static let minimumMovementDistanceForIntervalUpdate: CLLocationDistance = 10
 
-    private var currentRequestTask: URLSessionTask?
+    private var currentRequestTask: Task<Void, Never>?
 
     var currentPlace: OpenCage.Place? {
         didSet {
@@ -66,7 +66,9 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
 
         switch locationManager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
-            locationManager.startUpdatingLocation()
+            DispatchQueue.main.async {
+                self.locationManager.startUpdatingLocation()
+            }
             isTracking = true
         default:
             locationManager.requestWhenInUseAuthorization()
@@ -158,19 +160,23 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
     }
 
     private func performRequest(for location: CLLocation, reason: UpdateReason) {
-        currentRequestTask = openCage.reverseGeocode(coordinate: location.coordinate) { (result) in
-            logger.debug(result)
+        currentRequestTask = Task {
+            let place: OpenCage.Place
 
-            switch result {
-            case .success(let place):
-                self.currentPlace = place
-                self.lastRequestLocation = location
-                self.delegate?.roadTracker(self, didUpdateCurrentPlace: place, for: location, with: reason)
-            case .failure(let error):
+            do {
+                place = try await openCage.reverseGeocode(coordinate: location.coordinate)
+            } catch {
                 logger.error(error)
+                return
             }
 
-            self.currentRequestTask = nil
+            logger.debug(place)
+
+            currentPlace = place
+            lastRequestLocation = location
+            delegate?.roadTracker(self, didUpdateCurrentPlace: place, for: location, with: reason)
+
+            currentRequestTask = nil
         }
     }
 }

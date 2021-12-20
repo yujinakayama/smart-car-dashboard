@@ -17,7 +17,7 @@ class OpenCage {
         self.apiKey = apiKey
     }
 
-    func reverseGeocode(coordinate: CLLocationCoordinate2D, completionHandler: @escaping (Result<Place, Error>) -> Void) -> URLSessionTask {
+    func reverseGeocode(coordinate: CLLocationCoordinate2D) async throws -> Place {
         var urlComponents = URLComponents(string: "https://api.opencagedata.com/geocode/v1/json")!
 
         urlComponents.queryItems = [
@@ -28,29 +28,16 @@ class OpenCage {
             URLQueryItem(name: "key", value: apiKey)
         ]
 
-        let task = urlSession.dataTask(with: urlComponents.url!) { (data, response, error) in
-            if let error = error {
-                completionHandler(.failure(error))
-                return
-            }
+        let (data, _) = try await urlSession.data(from: urlComponents.url!)
 
-            let result = Result<Place, Error>(catching: {
-                let response = try JSONDecoder().decode(ReverseGeocodingResponse.self, from: data!)
-                let result = response.results.first!
+        let response = try JSONDecoder().decode(ReverseGeocodingResponse.self, from: data)
+        let result = response.results.first!
 
-                let address = result.components
-                let region = result.bounds
-                let road = result.annotations.roadinfo
+        let address = result.components
+        let region = result.bounds
+        let road = result.annotations.roadinfo
 
-                return (address: address, region: region, road: road)
-            })
-
-            completionHandler(result)
-        }
-
-        task.resume()
-
-        return task
+        return (address: address, region: region, road: road)
     }
 
     private lazy var urlSession = URLSession(configuration: urlSessionConfiguration)
