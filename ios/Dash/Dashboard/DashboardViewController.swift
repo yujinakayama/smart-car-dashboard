@@ -199,7 +199,11 @@ class DashboardViewController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
-        switchLayoutIfNeeded()
+        // traitCollectionDidChange() is invoked when the scene just entered background
+        // and it reports wrong horizontalSizeClass, so we ignore it
+        if let scene = view.window?.windowScene, (scene.activationState == .foregroundActive || scene.activationState == .foregroundInactive) {
+            switchLayoutIfNeeded()
+        }
 
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             updateMusicContainerViewShadow()
