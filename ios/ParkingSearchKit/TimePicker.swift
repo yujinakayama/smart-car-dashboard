@@ -74,8 +74,14 @@ import UIKit
         setTime(from: Date(), animated: false)
     }
 
-    private func updateTimes() {
+    private func updateTimes(additionalTime: Time? = nil) {
         times = Array(stride(from: Time.min, to: Time.max, by: TimeInterval(minuteInterval * 60)))
+
+        if let additionalTime = additionalTime, !times.contains(additionalTime) {
+            times.append(additionalTime)
+            times.sort()
+        }
+
         pickerView.reloadAllComponents()
     }
 
@@ -106,13 +112,14 @@ import UIKit
     }
 
     func setTime(from date: Date, animated: Bool) {
-        let components = Calendar.autoupdatingCurrent.dateComponents([.hour, .minute, .second], from: date)
-        let timeInterval = TimeInterval(components.hour! * 3600 + components.minute! * 60 + components.second!)
+        let components = Calendar.autoupdatingCurrent.dateComponents([.hour, .minute], from: date)
+        let timeInterval = TimeInterval(components.hour! * 3600 + components.minute! * 60)
         let time = Time(timeIntervalSinceMidnight: timeInterval)
         setTime(time, animated: animated)
     }
 
     func setTime(_ time: Time, animated: Bool) {
+        updateTimes(additionalTime: time)
         let index = times.lastIndex(where: { $0 <= time }) ?? 0
         pickerView.selectRow(times.count + index, inComponent: 0, animated: animated)
     }
