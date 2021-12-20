@@ -83,8 +83,18 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
         }
 
         DispatchQueue.main.async {
-            self.activityIndicatorView.stopAnimating()
+            if self.activityIndicatorView.isAnimating {
+                UIView.animate(withDuration: 0.2) {
+                    self.activityIndicatorView.alpha = 0
+                } completion: { (finished) in
+                    self.activityIndicatorView.stopAnimating()
+                    self.activityIndicatorView.alpha = 1
+                }
+            }
+
             self.updateLabels(for: place, animated: shouldAnimate)
+
+
             self.debugger?.roadTracker(roadTracker, didUpdateCurrentPlace: place, for: location, with: reason)
         }
 
