@@ -62,6 +62,7 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
 
     override func viewDidDisappear(_ animated: Bool) {
         roadTracker.stopTracking()
+        currentPlace = nil
         super.viewDidDisappear(animated)
     }
 
