@@ -83,6 +83,9 @@ fileprivate func specificIcon(for category: Location.Category) -> PointOfInteres
     case .restaurant:
         image = UIImage(systemName: "fork.knife")!
         color = UIColor(rgb: 0xEA9A52)
+    case .school, .primarySchool, .secondarySchool:
+        image = UIImage(named: "bun")!
+        color = UIColor(rgb: 0x9F7650)
     case .shintoShrine:
         image = UIImage(named: "torii")!
         color = UIColor(rgb: 0xA8825B)
