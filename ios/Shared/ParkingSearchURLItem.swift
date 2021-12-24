@@ -18,6 +18,7 @@ struct ParkingSearchURLItem {
         case name
         case latitude
         case longitude
+        case appleMapsURL
     }
 
     var url: URL {
@@ -44,17 +45,40 @@ struct ParkingSearchURLItem {
         guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) else { return nil }
         guard urlComponents.scheme == Self.scheme, urlComponents.host == Self.host else { return nil }
 
-        let query = Query(items: urlComponents.queryItems ?? [])
+        let query = Query(urlComponents: urlComponents)
 
-        guard let latitude = query.double(for: QueryParameterName.latitude.rawValue),
-              let longitude = query.double(for: QueryParameterName.longitude.rawValue)
-        else { return nil }
+        if let latitude = query.double(for: QueryParameterName.latitude.rawValue),
+           let longitude = query.double(for: QueryParameterName.longitude.rawValue)
+        {
+            let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            let placemark = MKPlacemark(coordinate: coordinate)
 
-        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        let placemark = MKPlacemark(coordinate: coordinate)
+            mapItem = MKMapItem(placemark: placemark)
+            mapItem.name = query.string(for: QueryParameterName.name.rawValue)
 
-        mapItem = MKMapItem(placemark: placemark)
-        mapItem.name = query.string(for: QueryParameterName.name.rawValue)
+            return
+        }
+
+        if let appleMapsURLString = query.string(for: QueryParameterName.appleMapsURL.rawValue),
+           let appleMapsQuery = Query(urlString: appleMapsURLString),
+           let llParameter = appleMapsQuery.string(for: "ll")
+        {
+            let latitudeLongitude = llParameter.components(separatedBy: ",").map { Double($0) }
+
+            guard let latitude = latitudeLongitude.first?.flatMap({ $0 }),
+                  let longitude = latitudeLongitude.last?.flatMap({ $0 })
+            else { return nil }
+
+            let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            let placemark = MKPlacemark(coordinate: coordinate)
+
+            mapItem = MKMapItem(placemark: placemark)
+            mapItem.name = appleMapsQuery.string(for: "q")
+
+            return
+        }
+
+        return nil
     }
 
     class Query {
@@ -70,8 +94,18 @@ struct ParkingSearchURLItem {
             return dictionary
         }()
 
-        init(items: [URLQueryItem]) {
-            self.items = items
+        convenience init?(url: URL) {
+            guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return nil }
+            self.init(urlComponents: urlComponents)
+        }
+
+        convenience init?(urlString: String) {
+            guard let urlComponents = URLComponents(string: urlString) else { return nil }
+            self.init(urlComponents: urlComponents)
+        }
+
+        init(urlComponents: URLComponents) {
+            self.items = urlComponents.queryItems ?? []
         }
 
         func double(for key: String) -> Double? {
