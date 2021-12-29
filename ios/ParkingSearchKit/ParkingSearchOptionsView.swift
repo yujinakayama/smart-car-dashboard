@@ -81,10 +81,6 @@ public class ParkingSearchOptionsView: UIView {
     }
 
     private func commonInit() {
-        NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: 40)
-        ])
-
         addSubview(stackView)
 
         subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
@@ -93,7 +89,8 @@ public class ParkingSearchOptionsView: UIView {
             stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             stackView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor),
             trailingAnchor.constraint(greaterThanOrEqualTo: stackView.trailingAnchor),
-            stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            stackView.topAnchor.constraint(equalTo: topAnchor),
+            bottomAnchor.constraint(equalTo: stackView.bottomAnchor),
         ])
 
         for subview in stackView.arrangedSubviews {
