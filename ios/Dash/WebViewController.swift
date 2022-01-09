@@ -33,6 +33,7 @@ class WebViewController: UIViewController {
 
         let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.allowsBackForwardNavigationGestures = true
+        webView.backgroundColor = .secondarySystemBackground
         return webView
     }
 
