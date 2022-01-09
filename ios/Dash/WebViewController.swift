@@ -16,6 +16,7 @@ class WebViewController: UIViewController {
     static func makeWebView(contentMode: ContentMode) -> WKWebView {
         let configuration = WKWebViewConfiguration()
         configuration.dataDetectorTypes = [.address, .link, .phoneNumber]
+        configuration.ignoresViewportScaleLimits = true
         configuration.mediaTypesRequiringUserActionForPlayback = .all
 
         let webView = WKWebView(frame: .zero, configuration: configuration)
