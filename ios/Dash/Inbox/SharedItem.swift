@@ -35,6 +35,8 @@ extension SharedItemProtocol {
 
         let navigationController = UINavigationController(rootViewController: webViewController)
         navigationController.isToolbarHidden = false
+        navigationController.modalPresentationStyle = .formSheet
+        navigationController.preferredContentSize = UIScreen.main.bounds.size
         viewController.present(navigationController, animated: true)
     }
 

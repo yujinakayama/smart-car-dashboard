@@ -440,9 +440,13 @@ class MapsViewController: UIViewController {
 
     @objc private func officialParkingSearchStatusViewButtonDidPush() {
         guard let officialParkingSearch = officialParkingSearch else { return }
+
         let webViewController = OfficialParkingInformationWebViewController(officialParkingSearch: officialParkingSearch)
+
         let navigationController = UINavigationController(rootViewController: webViewController)
         navigationController.isToolbarHidden = false
+        navigationController.modalPresentationStyle = .formSheet
+        navigationController.preferredContentSize = UIScreen.main.bounds.size
         present(navigationController, animated: true)
     }
 
@@ -543,6 +547,8 @@ extension MapsViewController: ParkingSearchMapViewManagerDelegate {
 
         let navigationController = UINavigationController(rootViewController: webViewController)
         navigationController.isToolbarHidden = false
+        navigationController.modalPresentationStyle = .formSheet
+        navigationController.preferredContentSize = UIScreen.main.bounds.size
 
         present(navigationController, animated: true)
     }

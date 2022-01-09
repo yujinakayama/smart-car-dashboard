@@ -281,6 +281,8 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
         let navigationController = UINavigationController(rootViewController: webViewController)
         navigationController.isToolbarHidden = false
+        navigationController.modalPresentationStyle = .formSheet
+        navigationController.preferredContentSize = UIScreen.main.bounds.size
         self.present(navigationController, animated: true)
     }
 
