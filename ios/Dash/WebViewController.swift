@@ -13,52 +13,47 @@ class WebViewController: UIViewController {
     // https://stackoverflow.com/a/65825682/784241
     static let defaultUserAgent: String = WKWebView().value(forKey: "userAgent") as! String
 
-    static func makeWebView(contentMode: ContentMode) -> WKWebView {
+    static let mobileUserAgent = defaultUserAgent
+        .replacingOccurrences(of: "iPad|Macintosh", with: "iPhone", options: .regularExpression)
+
+    static let desktopUserAgent = defaultUserAgent
+        .replacingOccurrences(of: "iPhone|iPad", with: "Macintosh", options: .regularExpression)
+        .replacingOccurrences(of: " Mobile/\\S+", with: "", options: .regularExpression)
+
+    static func makeWebView() -> WKWebView {
         let configuration = WKWebViewConfiguration()
         configuration.dataDetectorTypes = [.address, .link, .phoneNumber]
         configuration.ignoresViewportScaleLimits = true
         configuration.mediaTypesRequiringUserActionForPlayback = .all
 
+        // Fix the content mode to the mobile one since this cannot be dynamically changed
+        // after creating WKWebView instance.
+        // Instead, we dynamically modify user agent by ourselves.
+        configuration.defaultWebpagePreferences.preferredContentMode = .mobile
+
         let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.allowsBackForwardNavigationGestures = true
-
-        applyContentMode(contentMode, to: webView)
-
         return webView
     }
 
-    private static func applyContentMode(_ contentMode: ContentMode, to webView: WKWebView) {
+    static func userAgent(for contentMode: ContentMode) -> String {
         switch contentMode {
-        case .auto:
-            if webView.traitCollection.horizontalSizeClass == .compact {
-                applyMobileContentMode(to: webView)
-            } else {
-                applyDesktopContentMode(to: webView)
-            }
         case .mobile:
-            applyMobileContentMode(to: webView)
+            return Self.mobileUserAgent
         case .desktop:
-            applyDesktopContentMode(to: webView)
+            return Self.desktopUserAgent
         }
-    }
-
-    private static func applyMobileContentMode(to webView: WKWebView) {
-        webView.configuration.defaultWebpagePreferences.preferredContentMode = .mobile
-        webView.customUserAgent = Self.defaultUserAgent.replacingOccurrences(of: "iPad", with: "iPhone")
-    }
-
-    private static func applyDesktopContentMode(to webView: WKWebView) {
-        webView.configuration.defaultWebpagePreferences.preferredContentMode = .desktop
-        webView.customUserAgent = nil
     }
 
     let webView: WKWebView
 
-    var contentMode: ContentMode {
+    var preferredContentMode: PreferredContentMode {
         didSet {
             applyContentMode()
         }
     }
+
+    private var pendingURL: URL?
 
     lazy var doneBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
 
@@ -69,12 +64,11 @@ class WebViewController: UIViewController {
 
     var keyValueObservations: [NSKeyValueObservation] = []
 
-    init(webView: WKWebView? = nil, contentMode: ContentMode = .auto) {
-        self.webView = webView ?? Self.makeWebView(contentMode: contentMode)
-        self.contentMode = contentMode
+    init(webView: WKWebView? = nil, contentMode: PreferredContentMode = .auto) {
+        self.webView = webView ?? Self.makeWebView()
+        self.preferredContentMode = contentMode
         super.init(nibName: nil, bundle: nil)
         configureToolBarButtonItems()
-        applyContentMode()
     }
 
     required init?(coder: NSCoder) {
@@ -82,7 +76,11 @@ class WebViewController: UIViewController {
     }
 
     func loadPage(url: URL) {
-        webView.load(URLRequest(url: url))
+        if isViewLoaded {
+            webView.load(URLRequest(url: url))
+        } else {
+            pendingURL = url
+        }
     }
 
     override func viewDidLoad() {
@@ -98,6 +96,13 @@ class WebViewController: UIViewController {
         navigationItem.rightBarButtonItem = doneBarButtonItem
 
         addWebView()
+
+        applyContentMode()
+
+        if let pendingURL = pendingURL {
+            webView.load(URLRequest(url: pendingURL))
+            self.pendingURL = nil
+        }
     }
 
     private func configureToolBarButtonItems() {
@@ -132,10 +137,6 @@ class WebViewController: UIViewController {
         }))
     }
 
-    private func applyContentMode() {
-        Self.applyContentMode(contentMode, to: webView)
-    }
-
     private func addWebView() {
         view.addSubview(webView)
 
@@ -149,6 +150,29 @@ class WebViewController: UIViewController {
         ])
 
         webView.isHidden = false
+    }
+
+    private func applyContentMode() {
+        switch preferredContentMode {
+        case .auto:
+            if view.bounds.width < 700 {
+                webView.customUserAgent = Self.userAgent(for: .mobile)
+            } else {
+                webView.customUserAgent = Self.userAgent(for: .desktop)
+            }
+        case .mobile:
+            webView.customUserAgent = Self.userAgent(for: .mobile)
+        case .desktop:
+            webView.customUserAgent = Self.userAgent(for: .desktop)
+        }
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        if preferredContentMode == .auto {
+            applyContentMode()
+        }
     }
 
     private func updateReloadOrStopLoadingBarButtonItem() {
@@ -189,19 +213,16 @@ class WebViewController: UIViewController {
         guard let url = webView.url else { return }
         UIApplication.shared.open(url)
     }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if contentMode == .auto {
-            applyContentMode()
-        }
-    }
 }
 
 extension WebViewController {
-    enum ContentMode {
+    enum PreferredContentMode {
         case auto
+        case mobile
+        case desktop
+    }
+
+    enum ContentMode {
         case mobile
         case desktop
     }
