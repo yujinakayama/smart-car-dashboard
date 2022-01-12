@@ -28,6 +28,8 @@ class Defaults {
         case referenceAccelerationForGForceMeter
         case unitOfGForceMeterScale
         case pointerScalingBaseForVerticalAccelerationForGForceMeter
+        case speedSensitiveVolumeControlEnabled
+        case additionalVolumeAt120KilometersPerHour
         case verboseLogging
     }
 
@@ -190,6 +192,19 @@ extension Defaults {
             } else {
                 return CGFloat(float)
             }
+        }
+    }
+
+    var isSpeedSensitiveVolumeControlEnabled: Bool {
+        get {
+            return bool(for: .speedSensitiveVolumeControlEnabled)
+        }
+    }
+
+    var additonalVolumePerOneMeterPerSecond: Float {
+        get {
+            let additionalVolumeAt120KilometersPerHour = float(for: .additionalVolumeAt120KilometersPerHour)
+            return additionalVolumeAt120KilometersPerHour * 1000 / (60 * 60)
         }
     }
 

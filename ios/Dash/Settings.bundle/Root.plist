@@ -146,6 +146,48 @@
 				<string>10</string>
 			</array>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Automatic Sound Volume Control</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Speed Sensitive Volume Control</string>
+			<key>Key</key>
+			<string>speedSensitiveVolumeControlEnabled</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Additional Volume at 120km/h</string>
+			<key>Key</key>
+			<string>additionalVolumeAt120KilometersPerHour</string>
+			<key>DefaultValue</key>
+			<real>0.2</real>
+			<key>Values</key>
+			<array>
+				<real>0.1</real>
+				<real>0.2</real>
+				<real>0.3</real>
+				<real>0.4</real>
+				<real>0.5</real>
+			</array>
+			<key>Titles</key>
+			<array>
+				<string>10%</string>
+				<string>20%</string>
+				<string>30%</string>
+				<string>40%</string>
+				<string>50%</string>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>

@@ -13,6 +13,18 @@ class Vehicle {
 
     let etcDevice = ETCDevice()
 
+    init() {
+        let notificationCenter = NotificationCenter.default
+
+        notificationCenter.addObserver(forName: .ETCDeviceDidConnect, object: nil, queue: .main) { (notification) in
+            notificationCenter.post(name: .VehicleDidConnect, object: self)
+        }
+
+        notificationCenter.addObserver(forName: .ETCDeviceDidDisconnect, object: nil, queue: .main) { (notification) in
+            notificationCenter.post(name: .VehicleDidDisconnect, object: self)
+        }
+    }
+
     var isConnected: Bool {
         return etcDevice.isConnected
     }
@@ -22,4 +34,9 @@ class Vehicle {
             etcDevice.startPreparation()
         }
     }
+}
+
+extension Notification.Name {
+    static let VehicleDidConnect = Notification.Name("VehicleDidConnect")
+    static let VehicleDidDisconnect = Notification.Name("VehicleDidDisconnect")
 }

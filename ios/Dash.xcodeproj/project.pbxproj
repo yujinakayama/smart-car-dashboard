@@ -95,6 +95,7 @@
 		B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97BAE6124B61DB100AE7D13 /* Vehicle.swift */; };
 		B980071E2678B81C00FC703E /* OpenCage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B980071D2678B81C00FC703E /* OpenCage.swift */; };
 		B98007202678D6AF00FC703E /* LocationInformationWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B980071F2678D6AF00FC703E /* LocationInformationWidgetViewController.swift */; };
+		B9854F80278DA88000E07C0C /* SpeedSensitiveVolumeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9854F7F278DA88000E07C0C /* SpeedSensitiveVolumeController.swift */; };
 		B988A66C254D0E570012A4CB /* PairingRequirementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A66B254D0E570012A4CB /* PairingRequirementViewController.swift */; };
 		B98B783723ED4C3F00A5102F /* DashCloudKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B98B783523ED4C3F00A5102F /* DashCloudKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B98B783A23ED4C3F00A5102F /* DashCloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashCloudKit.framework */; };
@@ -480,6 +481,7 @@
 		B980071D2678B81C00FC703E /* OpenCage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenCage.swift; sourceTree = "<group>"; };
 		B980071F2678D6AF00FC703E /* LocationInformationWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInformationWidgetViewController.swift; sourceTree = "<group>"; };
 		B984C019263DA08D00AF79AE /* TimeDurationPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDurationPicker.swift; sourceTree = "<group>"; };
+		B9854F7F278DA88000E07C0C /* SpeedSensitiveVolumeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedSensitiveVolumeController.swift; sourceTree = "<group>"; };
 		B988A66B254D0E570012A4CB /* PairingRequirementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingRequirementViewController.swift; sourceTree = "<group>"; };
 		B988A676254D0EB30012A4CB /* PairedVehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairedVehicle.swift; sourceTree = "<group>"; };
 		B98B783323ED4C3F00A5102F /* DashCloudKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DashCloudKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1037,6 +1039,7 @@
 				B97BAE6124B61DB100AE7D13 /* Vehicle.swift */,
 				B92A61102576472A0073AB7B /* Assistant.swift */,
 				B9640ABC2575EBF200B779AD /* Firebase */,
+				B9854F7F278DA88000E07C0C /* SpeedSensitiveVolumeController.swift */,
 				B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */,
 				B942554F22BAA5D1008B053B /* LocalNotification.swift */,
 				B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */,
@@ -1851,6 +1854,7 @@
 				B954CA2325693CCC00BAD0F0 /* WidgetPageViewController.swift in Sources */,
 				B9C04B42257775B8001D6E0F /* WebViewController.swift in Sources */,
 				B904A2A6243968990087BD4A /* MapsViewController.swift in Sources */,
+				B9854F80278DA88000E07C0C /* SpeedSensitiveVolumeController.swift in Sources */,
 				B9DC5B29229D59BE00B645D5 /* ETCPaymentDetailViewController.swift in Sources */,
 				B98E936A234C94C7004AE50F /* ETCPaymentProtocol.swift in Sources */,
 				B9588B5D23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift in Sources */,
