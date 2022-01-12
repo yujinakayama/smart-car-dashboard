@@ -8,7 +8,6 @@
 
 import Foundation
 import CoreLocation
-import MediaPlayer
 
 class SpeedSensitiveVolumeController: NSObject {
     private let volume = SystemAudioVolume()
@@ -29,60 +28,48 @@ class SpeedSensitiveVolumeController: NSObject {
 
         set {
             volume.setValue(newValue, withIndicator: false)
-            lastSetValue = newValue
         }
     }
 
     var baseValue: Float?
 
-    private var lastSetValue: Float?
+    var lastSpeed: CLLocationSpeed?
 
     init(additonalValuePerOneMeterPerSecond: Float) {
         self.additonalValuePerOneMeterPerSecond = additonalValuePerOneMeterPerSecond
         super.init()
+        volume.delegate = self
     }
 
     func start() {
         logger.info()
+        volume.startObservingChangeByOthers()
         locationManager.startUpdatingLocation()
     }
 
     func stop() {
         logger.info()
-
         locationManager.stopUpdatingLocation()
-
-        if let baseValue = baseValue {
-            currentValue = baseValue
-        }
     }
 
     func updateVolumeIfNeeded(speed: CLLocationSpeed) {
-        let baseValue = resetBaseValueIfNeeded(speed: speed)
-        let additionalValue = additionalValue(at: speed)
-        currentValue = baseValue + additionalValue
-    }
-
-    private func resetBaseValueIfNeeded(speed: CLLocationSpeed) -> Float {
-        if let baseValue = baseValue, !hasCurrentValueChangedByUser {
-            return baseValue
+        if baseValue == nil {
+            baseValue = calculateBaseValue(speed: speed)
         }
 
-        let baseValue = currentValue - additionalValue(at: speed)
-        self.baseValue = baseValue
-        return baseValue
+        guard let baseValue = baseValue else { return }
+        let additionalValue = additionalValue(at: speed)
+        currentValue = baseValue + additionalValue
+
+        lastSpeed = speed
+    }
+
+    private func calculateBaseValue(speed: CLLocationSpeed) -> Float {
+        return currentValue - additionalValue(at: speed)
     }
 
     private func additionalValue(at speed: CLLocationSpeed) -> Float {
         return additonalValuePerOneMeterPerSecond * Float(speed)
-    }
-
-    var hasCurrentValueChangedByUser: Bool {
-        guard let lastSetValue = lastSetValue else {
-            return false
-        }
-
-        return currentValue != lastSetValue
     }
 }
 
@@ -99,65 +86,14 @@ extension SpeedSensitiveVolumeController: CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        logger.info()
         guard let location = locations.last, location.speedAccuracy >= 0 else { return }
         updateVolumeIfNeeded(speed: location.speed)
     }
 }
 
-fileprivate class SystemAudioVolume {
-    private let volumeView = MPVolumeView()
-
-    init() {
-        volumeView.frame = .init(x: -100, y: -100, width: 0, height: 0)
-        volumeView.isHidden = true
-        volumeView.isUserInteractionEnabled = false
-        volumeView.setVolumeThumbImage(UIImage(), for: .normal)
-        volumeView.setMinimumVolumeSliderImage(UIImage(), for: .normal)
-        volumeView.setMaximumVolumeSliderImage(UIImage(), for: .normal)
-    }
-
-    deinit {
-        volumeView.removeFromSuperview()
-    }
-
-    private(set) var value: Float {
-        get {
-            return privateVolumeSlider.value
-        }
-
-        set {
-            privateVolumeSlider.value = newValue
-        }
-    }
-
-    private lazy var privateVolumeSlider = volumeView.subviews.first { $0 is UISlider} as! UISlider
-
-    func setValue(_ value: Float, withIndicator showIndicator: Bool = false) {
-        setVolumeViewVisibility(!showIndicator)
-
-        self.value = value
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.setVolumeViewVisibility(false)
-        }
-    }
-
-    private func setVolumeViewVisibility(_ visible: Bool) {
-        if visible, volumeView.superview == nil {
-            window?.addSubview(volumeView)
-        }
-
-        volumeView.isHidden = !visible
-    }
-
-    private var window: UIWindow? {
-        let scenes = UIApplication.shared.connectedScenes
-
-        let foregroudScene = scenes.first { (scene) in
-            scene.activationState == .foregroundActive || scene.activationState == .foregroundInactive
-        } as? UIWindowScene
-
-        return foregroudScene?.keyWindow
+extension SpeedSensitiveVolumeController: SystemAudioVolumeDelegate {
+    func systemAudioVolumeDidDetectChangeByOthers(_ systemAudioVolume: SystemAudioVolume) {
+        guard let speed = lastSpeed else { return }
+        baseValue = calculateBaseValue(speed: speed)
     }
 }

@@ -19,6 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     let assistant = Assistant()
 
+    let speedSensitiveVolumeController = SpeedSensitiveVolumeController(additonalValuePerOneMeterPerSecond: Defaults.shared.additonalVolumePerOneMeterPerSecond)
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
@@ -30,6 +32,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         _ = tabBarBadgeManager
+
+        NotificationCenter.default.addObserver(self, selector: #selector(vehicleDidConnect), name: .VehicleDidConnect, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(vehicleDidDisconnect), name: .VehicleDidDisconnect, object: nil)
     }
 
     // https://developer.apple.com/videos/play/wwdc2021/10057/
@@ -61,12 +66,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
+        startSpeedSensitiveVolumeControllerIfNeeded()
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+        stopSpeedSensitiveVolumeController()
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -101,6 +108,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private var appState: AppState? {
         guard let window = window else { return nil }
         return AppState(window: window)
+    }
+
+    @objc func vehicleDidConnect() {
+        startSpeedSensitiveVolumeControllerIfNeeded()
+    }
+
+    @objc func vehicleDidDisconnect() {
+        stopSpeedSensitiveVolumeController()
+    }
+
+    func startSpeedSensitiveVolumeControllerIfNeeded() {
+        if Defaults.shared.isSpeedSensitiveVolumeControlEnabled, Vehicle.default.isConnected {
+            speedSensitiveVolumeController.additonalValuePerOneMeterPerSecond = Defaults.shared.additonalVolumePerOneMeterPerSecond
+            speedSensitiveVolumeController.start()
+        }
+    }
+
+    func stopSpeedSensitiveVolumeController() {
+        speedSensitiveVolumeController.stop()
     }
 }
 

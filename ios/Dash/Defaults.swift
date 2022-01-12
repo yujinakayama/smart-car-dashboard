@@ -204,7 +204,7 @@ extension Defaults {
     var additonalVolumePerOneMeterPerSecond: Float {
         get {
             let additionalVolumeAt120KilometersPerHour = float(for: .additionalVolumeAt120KilometersPerHour)
-            return additionalVolumeAt120KilometersPerHour * 1000 / (60 * 60)
+            return additionalVolumeAt120KilometersPerHour / 120 / 1000 * 60 * 60
         }
     }
 
