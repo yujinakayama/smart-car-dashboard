@@ -174,18 +174,18 @@
 			<key>Values</key>
 			<array>
 				<real>0.1</real>
+				<real>0.15</real>
 				<real>0.2</real>
+				<real>0.25</real>
 				<real>0.3</real>
-				<real>0.4</real>
-				<real>0.5</real>
 			</array>
 			<key>Titles</key>
 			<array>
 				<string>10%</string>
+				<string>15%</string>
 				<string>20%</string>
+				<string>25%</string>
 				<string>30%</string>
-				<string>40%</string>
-				<string>50%</string>
 			</array>
 		</dict>
 	</array>
