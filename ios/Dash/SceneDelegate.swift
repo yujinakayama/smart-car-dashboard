@@ -73,7 +73,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
-        stopSpeedSensitiveVolumeController()
+        speedSensitiveVolumeController.stop(resetToBaseValue: false)
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -115,7 +115,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     @objc func vehicleDidDisconnect() {
-        stopSpeedSensitiveVolumeController()
+        speedSensitiveVolumeController.stop(resetToBaseValue: true)
     }
 
     func startSpeedSensitiveVolumeControllerIfNeeded() {
@@ -123,10 +123,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             speedSensitiveVolumeController.additonalValuePerOneMeterPerSecond = Defaults.shared.additonalVolumePerOneMeterPerSecond
             speedSensitiveVolumeController.start()
         }
-    }
-
-    func stopSpeedSensitiveVolumeController() {
-        speedSensitiveVolumeController.stop()
     }
 }
 

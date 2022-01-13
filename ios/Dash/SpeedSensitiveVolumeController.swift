@@ -47,7 +47,7 @@ class SpeedSensitiveVolumeController: NSObject {
         locationManager.startUpdatingLocation()
     }
 
-    func stop() {
+    func stop(resetToBaseValue: Bool) {
         logger.info()
         volume.stopObserving()
         locationManager.stopUpdatingLocation()
