@@ -32,15 +32,10 @@ class SystemAudioVolume {
 
     deinit {
         volumeView.removeFromSuperview()
-
-        do {
-            try audioSession.setActive(false, options: .notifyOthersOnDeactivation)
-        } catch {
-            logger.error(error)
-        }
+        stopObserving()
     }
 
-    func startObservingChangeByOthers() {
+    func startObserving() {
         do {
             try audioSession.setCategory(.ambient)
             // We need to re-activate after switching back from background
@@ -57,6 +52,17 @@ class SystemAudioVolume {
                 self?.notifyIfChangedByOthers()
             })
         }
+    }
+
+    func stopObserving() {
+        do {
+            try audioSession.setActive(false, options: .notifyOthersOnDeactivation)
+        } catch {
+            logger.error(error)
+        }
+
+        observation?.invalidate()
+        observation = nil
     }
 
     private(set) var value: Float {

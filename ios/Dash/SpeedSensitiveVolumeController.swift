@@ -43,13 +43,15 @@ class SpeedSensitiveVolumeController: NSObject {
 
     func start() {
         logger.info()
-        volume.startObservingChangeByOthers()
+        volume.startObserving()
         locationManager.startUpdatingLocation()
     }
 
     func stop() {
         logger.info()
+        volume.stopObserving()
         locationManager.stopUpdatingLocation()
+        lastSpeed = nil
     }
 
     func updateVolumeIfNeeded(speed: CLLocationSpeed) {
