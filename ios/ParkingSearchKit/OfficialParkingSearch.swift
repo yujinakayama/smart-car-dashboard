@@ -107,7 +107,7 @@ public class OfficialParkingSearch: NSObject {
         // The web view needs to be added to view hierarchy
         // so that it will actually render web pages and `innerText` will be available
         if webView.window == nil {
-            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else {
+            guard let window = UIApplication.shared.foregroundWindowScene?.keyWindow else {
                 throw OfficialParkingSearchError.webViewMustBeAddedToWindowButNoKeyWindowIsAvailable
             }
 

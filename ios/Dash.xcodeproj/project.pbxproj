@@ -63,6 +63,8 @@
 		B94A59A026826E960074368A /* LocationInformationDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94A599F26826E960074368A /* LocationInformationDebugViewController.swift */; };
 		B94BD2E92680486700B768A2 /* BorderedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94BD2E82680486700B768A2 /* BorderedLabel.swift */; };
 		B94E69D123F7A313004CCC7C /* WebsiteIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */; };
+		B94EC75327914C620008C447 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94EC75227914C620008C447 /* UIApplicationExtension.swift */; };
+		B94EC75427914DFF0008C447 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94EC75227914C620008C447 /* UIApplicationExtension.swift */; };
 		B954CA2325693CCC00BAD0F0 /* WidgetPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */; };
 		B954CA3225693EDA00BAD0F0 /* RearviewWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */; };
 		B9588B5D23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */; };
@@ -443,6 +445,7 @@
 		B94A599F26826E960074368A /* LocationInformationDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInformationDebugViewController.swift; sourceTree = "<group>"; };
 		B94BD2E82680486700B768A2 /* BorderedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedLabel.swift; sourceTree = "<group>"; };
 		B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteIcon.swift; sourceTree = "<group>"; };
+		B94EC75227914C620008C447 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetPageViewController.swift; sourceTree = "<group>"; };
 		B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewWidgetViewController.swift; sourceTree = "<group>"; };
 		B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentDebugInformationViewController.swift; sourceTree = "<group>"; };
@@ -715,6 +718,7 @@
 				B988A676254D0EB30012A4CB /* PairedVehicle.swift */,
 				B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */,
 				B9F9EFD5256D3D6B00C33781 /* Cache.swift */,
+				B94EC75227914C620008C447 /* UIApplicationExtension.swift */,
 				B94215F026423A58003F94A0 /* StringExtension.swift */,
 				B92ADE7526998DE10086E4D8 /* NSRegularExpressionExtension.swift */,
 				B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */,
@@ -1834,6 +1838,7 @@
 				B9AAF52027496AA80079BC3A /* Intents.intentdefinition in Sources */,
 				B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */,
 				B9B154EE2575FCED0031761F /* FirebaseMessaging.swift in Sources */,
+				B94EC75327914C620008C447 /* UIApplicationExtension.swift in Sources */,
 				B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */,
 				B9F272C4259C91990098CB3B /* AltitudeWidgetViewController.swift in Sources */,
 				B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */,
@@ -1945,6 +1950,7 @@
 				B9DD4CD726517FBF0010B120 /* TimeDurationPicker.swift in Sources */,
 				B9DD4CD626517FBF0010B120 /* ParkingAnnotation.swift in Sources */,
 				B92ADE9B269ACA4C0086E4D8 /* Logger.swift in Sources */,
+				B94EC75427914DFF0008C447 /* UIApplicationExtension.swift in Sources */,
 				B9D0208D268F643E0020BF9A /* ParkingSearchMapViewManager.swift in Sources */,
 				B9C1DD1526922ABA0046E108 /* SheetView.swift in Sources */,
 				B900A13A26529C38000ED1B9 /* UIButtonExtension.swift in Sources */,

@@ -106,13 +106,7 @@ class SystemAudioVolume {
     }
 
     private var window: UIWindow? {
-        let scenes = UIApplication.shared.connectedScenes
-
-        let foregroudScene = scenes.first { (scene) in
-            scene.activationState == .foregroundActive || scene.activationState == .foregroundInactive
-        } as? UIWindowScene
-
-        return foregroudScene?.keyWindow
+        return UIApplication.shared.foregroundWindowScene?.keyWindow
     }
 }
 
