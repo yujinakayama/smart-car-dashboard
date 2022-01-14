@@ -14,7 +14,7 @@ public class OfficialParkingSearchStatusView: UIStackView {
 
     public var state: OfficialParkingSearch.State = .idle {
         didSet {
-            applyState()
+            button.setNeedsUpdateConfiguration()
         }
     }
 
@@ -22,15 +22,27 @@ public class OfficialParkingSearchStatusView: UIStackView {
 
     let fontMetrics = UIFontMetrics(forTextStyle: .callout)
 
-    public let button: UIButton = {
-        let button = UIButton(type: .system)
-        button.titleLabel?.adjustsFontForContentSizeCategory = true
-        button.imageView?.contentMode = .scaleAspectFit
-        button.semanticContentAttribute = .forceRightToLeft
+    public lazy var button: UIButton = {
+        var configuration = UIButton.Configuration.plain()
+        configuration.imagePadding = 4
+        configuration.imagePlacement = .trailing
+        configuration.imageColorTransformer = UIConfigurationColorTransformer({ [unowned self] (originalColor) in
+            return self.tintColor ?? originalColor
+        })
+
+        let button = UIButton(configuration: configuration)
+        button.configurationUpdateHandler = { [unowned self] (button) in self.updateButton() }
         return button
     }()
 
-    public let activityIndicatorView = UIActivityIndicatorView()
+
+    lazy var regularFontAttributes = AttributeContainer([
+        .font: fontMetrics.scaledFont(for: UIFont.systemFont(ofSize: Self.baseFontSize))
+    ])
+
+    lazy var semiboldFontAttributes = AttributeContainer([
+        .font: fontMetrics.scaledFont(for: UIFont.systemFont(ofSize: Self.baseFontSize, weight: .semibold))
+    ])
 
     lazy var infoImage = UIImage(systemName: "info.circle", withConfiguration: symbolConfiguration)!
     lazy var exclamationImage = UIImage(systemName: "exclamationmark.circle", withConfiguration: symbolConfiguration)!
@@ -51,45 +63,33 @@ public class OfficialParkingSearchStatusView: UIStackView {
         axis = .horizontal
         alignment = .center
         distribution = .equalSpacing
-        spacing = Self.spacingBetweenTitleAndImage
-
-        layoutMargins = .init(top: 4, left: 11, bottom: 4, right: 8)
-        isLayoutMarginsRelativeArrangement = true
 
         addArrangedSubview(button)
-        addArrangedSubview(activityIndicatorView)
-
-        button.heightAnchor.constraint(equalToConstant: infoImage.size.height + layoutMargins.top + layoutMargins.bottom).isActive = true
     }
 
-    func applyState() {
-        activityIndicatorView.stopAnimating()
-
-        // We should first set button text nil and font, and then set actual text
-        // to avoid flickering button text
-        button.setTitle(nil, for: .normal)
+    func updateButton() {
+        guard var configuration = button.configuration else { return }
 
         switch state {
         case .idle:
             button.isEnabled = false
+            configuration.title = nil
+            configuration.image = nil
+            configuration.showsActivityIndicator = false
         case .searching:
             button.isEnabled = false
-            button.titleLabel?.font = fontMetrics.scaledFont(for: UIFont.systemFont(ofSize: Self.baseFontSize))
-            button.setTitleColor(.secondaryLabel, for: .normal)
-            button.setTitle("公式駐車場を検索中", for: .normal)
-            button.setImage(nil, for: .normal)
-
-            activityIndicatorView.startAnimating()
+            configuration.attributedTitle = AttributedString("公式駐車場を検索中", attributes: regularFontAttributes)
+            configuration.baseForegroundColor = .secondaryLabel
+            configuration.image = nil
+            configuration.showsActivityIndicator = true
         case .actionRequired:
             button.isEnabled = true
-            button.titleLabel?.font = fontMetrics.scaledFont(for: UIFont.systemFont(ofSize: Self.baseFontSize, weight: .semibold))
-            button.setTitleColor(.label, for: .normal)
-            button.setTitle("公式駐車場検索エラー・要操作", for: .normal)
-            button.setImage(exclamationImage, for: .normal)
+            configuration.attributedTitle = AttributedString("公式駐車場検索エラー・要操作", attributes: semiboldFontAttributes)
+            configuration.baseForegroundColor = .label
+            configuration.image = exclamationImage
+            configuration.showsActivityIndicator = false
         case .found:
             button.isEnabled = true
-            button.titleLabel?.font = fontMetrics.scaledFont(for: UIFont.systemFont(ofSize: Self.baseFontSize, weight: .semibold))
-            button.setTitleColor(.label, for: .normal)
 
             var description: String?
 
@@ -102,37 +102,22 @@ public class OfficialParkingSearchStatusView: UIStackView {
             }
 
             if let description = description {
-                button.setTitle("公式駐車場: \(description)", for: .normal)
+                configuration.attributedTitle = AttributedString("公式駐車場: \(description)", attributes: semiboldFontAttributes)
             } else {
-                button.setTitle("公式駐車場", for: .normal)
+                configuration.attributedTitle = AttributedString("公式駐車場", attributes: semiboldFontAttributes)
             }
 
-            button.setImage(infoImage, for: .normal)
+            configuration.baseForegroundColor = .label
+            configuration.image = infoImage
+            configuration.showsActivityIndicator = false
         case .notFound:
             button.isEnabled = true
-            button.titleLabel?.font = fontMetrics.scaledFont(for: UIFont.systemFont(ofSize: Self.baseFontSize))
-            button.setTitleColor(.secondaryLabel, for: .normal)
-            button.setTitle("公式駐車場不明", for: .normal)
-            button.setImage(infoImage, for: .normal)
+            configuration.attributedTitle = AttributedString("公式駐車場不明", attributes: regularFontAttributes)
+            configuration.baseForegroundColor = .secondaryLabel
+            configuration.image = infoImage
+            configuration.showsActivityIndicator = false
         }
 
-        if button.image(for: .normal) != nil {
-            // https://noahgilmore.com/blog/uibutton-padding/
-            button.contentEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: Self.spacingBetweenTitleAndImage)
-            button.imageEdgeInsets = .init(top: 0, left: Self.spacingBetweenTitleAndImage, bottom: 0, right: -Self.spacingBetweenTitleAndImage)
-        } else {
-            button.contentEdgeInsets = .zero
-            button.imageEdgeInsets = .zero
-        }
-    }
-
-    public override func didMoveToSuperview() {
-        if superview == nil { return }
-
-        // It seems the animation is removed when the activity indicator is removed from superview
-        if activityIndicatorView.isAnimating {
-            activityIndicatorView.stopAnimating()
-            activityIndicatorView.startAnimating()
-        }
+        button.configuration = configuration
     }
 }
