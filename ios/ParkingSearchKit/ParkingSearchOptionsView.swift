@@ -42,12 +42,14 @@ public class ParkingSearchOptionsView: UIView {
         timeDurationPicker.durations = [
             30,
             60,
-            120,
-            180,
-            360,
-            720,
-            1080,
-            1440
+            60 * 2,
+            60 * 3,
+            60 * 6,
+            60 * 12,
+            60 * 18,
+            60 * 24,
+            60 * 36,
+            60 * 48
         ].map { TimeInterval($0 * 60) }
 
         timeDurationPicker.selectRow(1, animated: false)
