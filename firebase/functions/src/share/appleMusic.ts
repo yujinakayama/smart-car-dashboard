@@ -16,13 +16,19 @@ interface AppleMusicData {
     } | null;
 }
 
+interface ItemParameters {
+    storefront: string
+    type: string
+    id: string
+    songID: string | null
+}
+
 const client = new Client({
     developerToken: functions.config().apple_music.developer_token
 })
 
 export function isAppleMusicItem(inputData: InputData): boolean {
-    const url = inputData.url;
-    return url.host === 'music.apple.com' && url.pathname.split('/').length >= 5
+    return extractItemParameters(inputData.url) !== null;
 }
 
 export async function normalizeAppleMusicItem(inputData: InputData): Promise<MusicItem> {
@@ -44,10 +50,14 @@ export async function normalizeAppleMusicItem(inputData: InputData): Promise<Mus
     return {...data, ...appleMusicData};
 }
 
-async function fetchDataFromAppleMusic(webURL: URL): Promise<AppleMusicData | null> {
-    const [, storefront, type, , id] = webURL.pathname.split('/');
+async function fetchDataFromAppleMusic(url: URL): Promise<AppleMusicData | null> {
+    const itemParameters = extractItemParameters(url)
 
-    const songID = webURL.searchParams.get('i')
+    if (!itemParameters) {
+        return null;
+    }
+
+    const { storefront, type, id, songID } = itemParameters;
 
     if (songID) {
         const song = (await client.songs.get(songID, { storefront })).data[0];
@@ -103,5 +113,29 @@ async function fetchDataFromAppleMusic(webURL: URL): Promise<AppleMusicData | nu
             };
         default:
             return null;
+    }
+}
+
+function extractItemParameters(url: URL): ItemParameters | null {
+    if (url.host !== 'music.apple.com') {
+        return null;
+    }
+
+    // https://music.apple.com/jp/artist/adele/262836961?l=en
+    // https://music.apple.com/jp/album/1581087024?l=en
+    // https://music.apple.com/jp/album/bad-habits/1581087024?i=1581087532&l=en
+    // https://music.apple.com/jp/playlist/japan-hits-2021/pl.f1634b3ba5414e19b71303f670640f6a?l=en
+    const [, storefront, type, ...idCandidates] = url.pathname.split('/');
+    const id = idCandidates.pop();
+
+    if (!storefront || !type || !id) {
+        return null;
+    }
+
+    return {
+        storefront,
+        type,
+        id,
+        songID: url.searchParams.get('i')
     }
 }
