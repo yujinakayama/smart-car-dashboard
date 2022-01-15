@@ -65,6 +65,11 @@ public class OfficialParkingSearchStatusView: UIStackView {
         distribution = .equalSpacing
 
         addArrangedSubview(button)
+
+        if let insets = button.configuration?.contentInsets {
+            let maxButtonHeight = infoImage.size.height + insets.top + insets.bottom
+            button.heightAnchor.constraint(equalToConstant: maxButtonHeight).isActive = true
+        }
     }
 
     func updateButton() {
