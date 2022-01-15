@@ -45,7 +45,7 @@ class RoadName: Equatable {
         // Some roads have popular name only with route number (e.g. Popular name "123" for 国道123号),
         // which is redundant and meaningless.
         let redundantNames = [String(routeNumber), canonicalRoadName].compactMap { $0 }
-        return road.popularNames.filter { !redundantNames.contains($0) }
+        return popularNames.filter { !redundantNames.contains($0) }
     }
 
     var canonicalRoadName: String? {
