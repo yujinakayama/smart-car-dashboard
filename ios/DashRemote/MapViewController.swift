@@ -86,22 +86,28 @@ class MapViewController: UIViewController, MKMapViewDelegate, AccountDelegate {
     @IBAction func pickUpButtonDidTap() {
         pickUpButton.startAnimation()
 
-        let location = Location(coordinate: mapView.userLocation.coordinate, name: Account.default.givenName)
+        let rendezvousPoint = RendezvousPoint(
+            coordinate: mapView.userLocation.coordinate,
+            name: Account.default.givenName
+        )
 
-        location.mapItem { (result) in
+        rendezvousPoint.mapItem { (result) in
             switch result {
             case .success(let mapItem):
-                self.share(mapItem: mapItem, url: location.appleMapsURL)
+                self.share(mapItem: mapItem, url: rendezvousPoint.appleMapsURL)
             case .failure:
                 self.pickUpButton.stopAnimation(animationStyle: .shake, revertAfterDelay: 1)
             }
         }
     }
 
-    func share(mapItem: MKMapItem, url: URL) {
+    func share(mapItem: MapItem, url: URL) {
         guard let vehicleID = PairedVehicle.defaultVehicleID else { return }
 
-        let item = Item(url: url, mapItem: mapItem)
+        let encoder = Item.Encoder()
+        encoder.add(mapItem)
+        encoder.add(url)
+        let item = Item(encoder: encoder)
 
         cloudClient.share(item, with: vehicleID) { (error) in
             if error != nil {

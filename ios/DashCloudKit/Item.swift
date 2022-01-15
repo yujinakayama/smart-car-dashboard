@@ -17,21 +17,7 @@ public class Item {
         encoder = ExtensionItemEncoder(extensionItem: extensionItem)
     }
 
-    public init(url: URL? = nil, plainText: String? = nil, mapItem: MKMapItem? = nil) {
-        let encoder = Encoder()
-
-        if let url = url {
-            encoder.add(url)
-        }
-
-        if let plainText = plainText {
-            encoder.add(plainText)
-        }
-
-        if let mapItem = mapItem {
-            encoder.add(mapItem)
-        }
-
+    public init(encoder: SharingItemEncoderProtocol) {
         self.encoder = encoder
     }
 
@@ -44,25 +30,54 @@ public class Item {
     }
 }
 
-protocol SharingItemEncoderProtocol {
+public protocol SharingItemEncoderProtocol {
     var hasEncodableContent: Bool { get }
     func encode(completionHandler: @escaping (Result<[String: Any], Error>) -> Void)
 }
 
 extension Item {
-    class Encoder: SharingItemEncoderProtocol {
+    public class Encoder: SharingItemEncoderProtocol {
         private var encodedDictionary: [String: Any] = [:]
 
-        func add(_ url: URL) {
+        public init() {
+        }
+
+        public func add(_ url: URL) {
             add(url.absoluteString, for: .url)
         }
 
-        func add(_ string: String) {
+        public func add(_ string: String) {
             add(string, for: .plainText)
         }
 
-        func add(_ mapItem: MKMapItem) {
-            let dictionary = [
+        public func add(_ mapItem: MKMapItem) {
+            add(dictionary(for: mapItem), for: .mapItem)
+        }
+
+        public func add(_ mapItem: MapItem) {
+            var dictionary = dictionary(for: mapItem.mapItem)
+            dictionary["pointOfInterestCategory"] = mapItem.customCategory
+            add(dictionary, for: .mapItem)
+        }
+
+        public var hasEncodableContent: Bool {
+            return !encodedDictionary.isEmpty
+        }
+
+        public func encode(completionHandler: @escaping (Result<[String: Any], Error>) -> Void) {
+            completionHandler(.success(encodedDictionary))
+        }
+
+        private let serialQueue = DispatchQueue(label: "com.yujinakayama.DashCloudKit.Item.Encoder")
+
+        private func add(_ value: Any, for type: UTType) {
+            serialQueue.sync {
+                encodedDictionary[type.identifier] = value
+            }
+        }
+
+        private func dictionary(for mapItem: MKMapItem) -> [String: Any] {
+            return [
                 "placemark": [
                     "coordinate": [
                         "latitude": mapItem.placemark.coordinate.latitude,
@@ -83,24 +98,6 @@ extension Item {
                 "pointOfInterestCategory": mapItem.pointOfInterestCategory?.rawValue as Any,
                 "url": mapItem.url?.absoluteString as Any,
             ]
-
-            add(dictionary, for: .mapItem)
-        }
-
-        var hasEncodableContent: Bool {
-            return !encodedDictionary.isEmpty
-        }
-
-        func encode(completionHandler: @escaping (Result<[String: Any], Error>) -> Void) {
-            completionHandler(.success(encodedDictionary))
-        }
-
-        private let serialQueue = DispatchQueue(label: "com.yujinakayama.DashCloudKit.Item.Encoder")
-
-        private func add(_ value: Any, for type: UTType) {
-            serialQueue.sync {
-                encodedDictionary[type.identifier] = value
-            }
         }
     }
 }

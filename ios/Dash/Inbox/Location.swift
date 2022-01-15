@@ -41,7 +41,7 @@ class Location: SharedItemProtocol {
     }
 
     func openDirectionsInMaps() {
-        if Defaults.shared.snapLocationToPointOfInterest {
+        if Defaults.shared.snapLocationToPointOfInterest, !categories.contains(.rendezvous) {
             findCorrespondingPointOfInterest { [weak self] (pointOfInterestMapItem) in
                 guard let self = self else { return }
                 let mapItem = pointOfInterestMapItem ?? self.mapItem
@@ -405,6 +405,7 @@ extension Location {
         // Custom categories
         case buddhistTemple
         case shintoShrine
+        case rendezvous
 
         case unknown
 

@@ -7,8 +7,9 @@
 //
 
 import MapKit
+import DashCloudKit
 
-class Location {
+class RendezvousPoint {
     let coordinate: CLLocationCoordinate2D
     let name: String?
 
@@ -17,7 +18,7 @@ class Location {
         self.name = name
     }
 
-    func mapItem(completionHandler: @escaping (Result<MKMapItem, Error>) -> Void) {
+    func mapItem(completionHandler: @escaping (Result<MapItem, Error>) -> Void) {
         let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         let locale = Locale(identifier: "ja_JP")
 
@@ -31,8 +32,10 @@ class Location {
                 abort()
             }
 
-            let mapItem = MKMapItem(placemark: MKPlacemark(placemark: placemark))
-            mapItem.name = self.name
+            let mkMapItem = MKMapItem(placemark: MKPlacemark(placemark: placemark))
+            mkMapItem.name = self.name
+
+            let mapItem = MapItem(mapItem: mkMapItem, customCategory: "rendezvous")
             completionHandler(.success(mapItem))
         }
     }

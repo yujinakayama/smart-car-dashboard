@@ -80,6 +80,9 @@ fileprivate func specificIcon(for category: Location.Category) -> PointOfInteres
     case .publicTransport, .trainStation, .subwayStation, .lightRailStation, .transitStation:
         image = UIImage(systemName: "tram.fill")!
         color = UIColor(rgb: 0x4C9EF8)
+    case .rendezvous:
+        image = UIImage(systemName: "hand.raised.fill")!
+        color = UIColor(rgb: 0xEB5674)
     case .restaurant:
         image = UIImage(systemName: "fork.knife")!
         color = UIColor(rgb: 0xEA9A52)

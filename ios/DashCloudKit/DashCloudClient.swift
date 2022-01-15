@@ -62,7 +62,9 @@ public class DashCloudClient {
     }
 
     public func geocodeGoogleMapsLocation(_ url: URL, completionHandler: @escaping (Result<Location, Error>) -> Void) {
-        let item = Item(url: url)
+        let encoder = Item.Encoder()
+        encoder.add(url)
+        let item = Item(encoder: encoder)
 
         item.encode { (result) in
             switch result {
