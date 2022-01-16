@@ -48,9 +48,15 @@ class RearviewWidgetViewController: UIViewController {
         overrideUserInterfaceStyle = .dark
         view.backgroundColor = .black
 
-        NotificationCenter.default.addObserver(self, selector: #selector(sceneWillEnterForeground), name: UIScene.willEnterForegroundNotification, object: nil)
+        let notificationCenter = NotificationCenter.default
 
-        NotificationCenter.default.addObserver(self, selector: #selector(sceneDidEnterBackground), name: UIScene.didEnterBackgroundNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(sceneWillEnterForeground), name: UIScene.willEnterForegroundNotification, object: nil)
+
+        notificationCenter.addObserver(self, selector: #selector(sceneDidEnterBackground), name: UIScene.didEnterBackgroundNotification, object: nil)
+
+        notificationCenter.addObserver(self, selector: #selector(vehicleDidConnect), name: .VehicleDidConnect, object: nil)
+
+        notificationCenter.addObserver(self, selector: #selector(vehicleDidDisconnect), name: .VehicleDidDisconnect, object: nil)
 
         setUpRearviewViewControllerIfPossible()
     }
@@ -113,7 +119,9 @@ class RearviewWidgetViewController: UIViewController {
         self.rearviewViewController = nil
     }
 
-    func start() {
+    func startIfNeeded() {
+        guard isVisible, Vehicle.default.isConnected else { return }
+
         if justHandedOffFromOtherApp {
             justHandedOffFromOtherApp = false
 
@@ -144,7 +152,7 @@ class RearviewWidgetViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isVisible = true
-        start()
+        startIfNeeded()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -155,10 +163,7 @@ class RearviewWidgetViewController: UIViewController {
 
     @objc func sceneWillEnterForeground() {
         setUpRearviewViewControllerIfPossible()
-
-        if isVisible {
-            start()
-        }
+        startIfNeeded()
     }
 
     @objc func sceneDidEnterBackground() {
@@ -166,6 +171,14 @@ class RearviewWidgetViewController: UIViewController {
 
         warningLabel?.removeFromSuperview()
         warningLabel = nil
+    }
+
+    @objc func vehicleDidConnect() {
+        startIfNeeded()
+    }
+
+    @objc func vehicleDidDisconnect() {
+        stop()
     }
 
     @objc func gestureRecognizerDidRecognizeDoubleTap() {
