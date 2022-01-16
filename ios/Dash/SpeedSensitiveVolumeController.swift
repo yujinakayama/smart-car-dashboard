@@ -54,7 +54,7 @@ class SpeedSensitiveVolumeController: NSObject {
         lastSpeed = nil
     }
 
-    func updateVolumeIfNeeded(speed: CLLocationSpeed) {
+    func updateVolume(speed: CLLocationSpeed) {
         if baseValue == nil {
             baseValue = calculateBaseValue(speed: speed)
         }
@@ -89,7 +89,7 @@ extension SpeedSensitiveVolumeController: CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last, location.speedAccuracy >= 0 else { return }
-        updateVolumeIfNeeded(speed: location.speed)
+        updateVolume(speed: location.speed)
     }
 }
 
