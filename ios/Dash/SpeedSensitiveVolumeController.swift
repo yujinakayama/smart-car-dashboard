@@ -33,7 +33,6 @@ class SpeedSensitiveVolumeController: NSObject {
     }
 
     var baseValue: Float?
-
     var lastSpeed: CLLocationSpeed?
 
     init(additonalValuePerOneMeterPerSecond: Float, minimumSpeedForAdditionalVolume: CLLocationSpeed) {
@@ -51,8 +50,11 @@ class SpeedSensitiveVolumeController: NSObject {
 
     func stop(resetToBaseValue: Bool) {
         logger.info()
+
         volume.stopObserving()
         locationManager.stopUpdatingLocation()
+
+        baseValue = nil
         lastSpeed = nil
     }
 
