@@ -30,6 +30,7 @@ class Defaults {
         case pointerScalingBaseForVerticalAccelerationForGForceMeter
         case speedSensitiveVolumeControlEnabled
         case additionalVolumeAt120KilometersPerHour
+        case minimumSpeedInKilometersPerHourForAdditionalVolume
         case verboseLogging
     }
 
@@ -203,8 +204,16 @@ extension Defaults {
 
     var additonalVolumePerOneMeterPerSecond: Float {
         get {
-            let additionalVolumeAt120KilometersPerHour = float(for: .additionalVolumeAt120KilometersPerHour)
-            return additionalVolumeAt120KilometersPerHour / 120 / 1000 * 60 * 60
+            let additionalVolumeAt120KilometersPerHour = double(for: .additionalVolumeAt120KilometersPerHour)
+            let speedDeltaInKilometersPerHour = 120 - double(for: .minimumSpeedInKilometersPerHourForAdditionalVolume)
+            return Float(additionalVolumeAt120KilometersPerHour / speedDeltaInKilometersPerHour / 1000 * 60 * 60)
+        }
+    }
+
+    var minimumSpeedForAdditionalVolume: CLLocationSpeed {
+        get {
+            let minimumSpeedInKilometersPerHourForAdditionalVolume = double(for: .minimumSpeedInKilometersPerHourForAdditionalVolume)
+            return minimumSpeedInKilometersPerHourForAdditionalVolume * 1000 / (60 * 60)
         }
     }
 

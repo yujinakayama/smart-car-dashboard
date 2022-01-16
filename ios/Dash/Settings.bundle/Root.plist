@@ -188,6 +188,30 @@
 				<string>30%</string>
 			</array>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Minimum Speed for Additional Volume</string>
+			<key>Key</key>
+			<string>minimumSpeedInKilometersPerHourForAdditionalVolume</string>
+			<key>DefaultValue</key>
+			<integer>0</integer>
+			<key>Values</key>
+			<array>
+				<integer>0</integer>
+				<integer>5</integer>
+				<integer>10</integer>
+				<integer>20</integer>
+			</array>
+			<key>Titles</key>
+			<array>
+				<string>0 km/h</string>
+				<string>5 km/h</string>
+				<string>10 km/h</string>
+				<string>20 km/h</string>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>

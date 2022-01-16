@@ -20,6 +20,7 @@ class SpeedSensitiveVolumeController: NSObject {
     }()
 
     var additonalValuePerOneMeterPerSecond: Float
+    var minimumSpeedForAdditionalVolume: CLLocationSpeed
 
     var currentValue: Float {
         get {
@@ -35,8 +36,9 @@ class SpeedSensitiveVolumeController: NSObject {
 
     var lastSpeed: CLLocationSpeed?
 
-    init(additonalValuePerOneMeterPerSecond: Float) {
+    init(additonalValuePerOneMeterPerSecond: Float, minimumSpeedForAdditionalVolume: CLLocationSpeed) {
         self.additonalValuePerOneMeterPerSecond = additonalValuePerOneMeterPerSecond
+        self.minimumSpeedForAdditionalVolume = minimumSpeedForAdditionalVolume
         super.init()
         volume.delegate = self
     }
@@ -71,7 +73,13 @@ class SpeedSensitiveVolumeController: NSObject {
     }
 
     private func additionalValue(at speed: CLLocationSpeed) -> Float {
-        return additonalValuePerOneMeterPerSecond * Float(speed)
+        var effectiveSpeed = (speed - minimumSpeedForAdditionalVolume)
+
+        if effectiveSpeed < 0 {
+            effectiveSpeed = 0
+        }
+
+        return additonalValuePerOneMeterPerSecond * Float(effectiveSpeed)
     }
 }
 

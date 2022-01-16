@@ -19,7 +19,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     let assistant = Assistant()
 
-    let speedSensitiveVolumeController = SpeedSensitiveVolumeController(additonalValuePerOneMeterPerSecond: Defaults.shared.additonalVolumePerOneMeterPerSecond)
+    let speedSensitiveVolumeController = SpeedSensitiveVolumeController(
+        additonalValuePerOneMeterPerSecond: Defaults.shared.additonalVolumePerOneMeterPerSecond,
+        minimumSpeedForAdditionalVolume: Defaults.shared.minimumSpeedForAdditionalVolume
+    )
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -124,6 +127,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func startSpeedSensitiveVolumeControllerIfNeeded() {
         if Defaults.shared.isSpeedSensitiveVolumeControlEnabled, Vehicle.default.isConnected {
             speedSensitiveVolumeController.additonalValuePerOneMeterPerSecond = Defaults.shared.additonalVolumePerOneMeterPerSecond
+            speedSensitiveVolumeController.minimumSpeedForAdditionalVolume = Defaults.shared.minimumSpeedForAdditionalVolume
             speedSensitiveVolumeController.start()
         }
     }
