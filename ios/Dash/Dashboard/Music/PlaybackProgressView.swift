@@ -295,6 +295,12 @@ extension PlaybackProgressView {
             let thumbRect = super.thumbRect(forBounds: bounds, trackRect: rect, value: value)
             return thumbRect.inset(by: UIEdgeInsets(top: -15, left: -15, bottom: -15, right: -15))
         }
+
+        // With this, users can just tap (or drag) any point to change the current playback position,
+        // without starting touching the current thumb position.
+        override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+            return true
+        }
     }
 }
 
