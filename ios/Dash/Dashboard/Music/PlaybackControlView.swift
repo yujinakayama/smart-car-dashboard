@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 
-@IBDesignable class PlaybackControlView: UIView {
+@IBDesignable class PlaybackControlView: UIStackView {
     enum Operation {
         case play
         case pause
@@ -73,7 +73,7 @@ import MediaPlayer
         return button
     }()
 
-    required init?(coder: NSCoder) {
+    required init(coder: NSCoder) {
         super.init(coder: coder)
         setUp()
     }
@@ -88,36 +88,13 @@ import MediaPlayer
     }
 
     func setUp() {
-        addSubview(backwardButton)
-        addSubview(playPauseButton)
-        addSubview(forwardButton)
+        axis = .horizontal
+        distribution = .equalSpacing
+        alignment = .fill
 
-        installLayoutConstraints()
-    }
-
-    func installLayoutConstraints() {
-        for subview in subviews {
-            subview.translatesAutoresizingMaskIntoConstraints = false
-        }
-
-        var constraints: [NSLayoutConstraint] = []
-
-        constraints.append(contentsOf: [
-            playPauseButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            playPauseButton.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
-
-        constraints.append(contentsOf: [
-            backwardButton.leftAnchor.constraint(equalTo: leftAnchor),
-            backwardButton.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
-
-        constraints.append(contentsOf: [
-            forwardButton.rightAnchor.constraint(equalTo: rightAnchor),
-            forwardButton.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
-
-        NSLayoutConstraint.activate(constraints)
+        addArrangedSubview(backwardButton)
+        addArrangedSubview(playPauseButton)
+        addArrangedSubview(forwardButton)
     }
 
     func addNotificationObserver() {
