@@ -16,39 +16,21 @@ class PPParkClient {
         self.clientKey = clientKey
     }
 
-    func searchParkings(around coordinate: CLLocationCoordinate2D, entranceDate: Date, exitDate: Date, completion: @escaping (Result<[Parking], Error>) -> Void) -> URLSessionTask {
+    func searchParkings(around coordinate: CLLocationCoordinate2D, entranceDate: Date, exitDate: Date) async throws -> [Parking] {
         var request = URLRequest(url: URL(string: "https://api.pppark.com/search_v1.1")!)
         request.httpMethod = "POST"
         request.httpBody = requestBody(coordinate: coordinate, entranceDate: entranceDate, exitDate: exitDate)
         request.addValue("https://pppark.com/", forHTTPHeaderField: "Referer")
 
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
+        let (data, _) = try await URLSession.shared.data(for: request)
 
-            guard let data = data else { return }
+        let response = try JSONDecoder().decode(PPParkResponse.self, from: data)
 
-            let response: PPParkResponse
-
-            do {
-                response = try JSONDecoder().decode(PPParkResponse.self, from: data)
-            } catch {
-                completion(.failure(error))
-                return
-            }
-
-            if let parkings = response.parkings {
-                completion(.success(parkings))
-            } else if let error = response.error {
-                completion(.failure(error))
-            }
+        if let error = response.error {
+            throw error
         }
 
-        task.resume()
-
-        return task
+        return response.parkings ?? []
     }
 
     private func requestBody(coordinate: CLLocationCoordinate2D, entranceDate: Date, exitDate: Date) -> Data {

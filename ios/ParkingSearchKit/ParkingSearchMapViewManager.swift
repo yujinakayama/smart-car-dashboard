@@ -73,7 +73,7 @@ public class ParkingSearchMapViewManager: NSObject {
 
     private let ppparkClient = PPParkClient(clientKey: "IdkUdfal673kUdj00")
 
-    private var currentSearchTask: URLSessionTask?
+    private var currentSearchTask: Task<Void, Never>?
 
     public init(mapView: MKMapView) {
         self.mapView = mapView
@@ -150,29 +150,22 @@ public class ParkingSearchMapViewManager: NSObject {
             mapView.selectAnnotation(destinationAnnotation, animated: true)
         }
 
-        currentSearchTask = ppparkClient.searchParkings(
-            around: destination,
-            entranceDate: entranceDate,
-            exitDate: entranceDate + timeDuration
-        ) { [weak self] (result) in
-            guard let self = self else { return }
+        currentSearchTask = Task {
+            do {
+                let parkings = try await ppparkClient.searchParkings(
+                    around: destination,
+                    entranceDate: entranceDate,
+                    exitDate: entranceDate + timeDuration
+                )
 
-            var isCancelled = false
-
-            switch result {
-            case .success(let parkings):
                 DispatchQueue.main.async {
                     self.showParkings(parkings)
                 }
-            case .failure(let error):
+            } catch {
                 logger.error(error)
-
-                if let urlError = error as? URLError, urlError.code == .cancelled {
-                    isCancelled = true
-                }
             }
 
-            if !isCancelled, let destinationAnnotation = self.destinationAnnotation {
+            if !Task.isCancelled, let destinationAnnotation = self.destinationAnnotation {
                 DispatchQueue.main.async {
                     self.mapView.deselectAnnotation(destinationAnnotation, animated: true)
                     self.mapView.view(for: destinationAnnotation)?.canShowCallout = false
