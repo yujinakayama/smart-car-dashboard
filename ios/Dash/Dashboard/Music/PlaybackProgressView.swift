@@ -299,6 +299,15 @@ extension PlaybackProgressView {
         // With this, users can just tap (or drag) any point to change the current playback position,
         // without starting touching the current thumb position.
         override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+            // We need to invoke continueTracking(_:with:)
+            // to update value with a single tap without dragging.
+            // Invoking continueTracking(_:with:) asynchronously
+            // to run it _after_ returning true from beginTracking(_:with:)
+            // so that isTracking property will became true.
+            DispatchQueue.main.async {
+                super.continueTracking(touch, with: event)
+            }
+
             return true
         }
     }
