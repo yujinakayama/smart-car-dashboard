@@ -31,7 +31,7 @@ public class OfficialParkingSearchStatusView: UIStackView {
         })
 
         let button = UIButton(configuration: configuration)
-        button.configurationUpdateHandler = { [unowned self] (button) in self.updateButton() }
+        button.configurationUpdateHandler = { [weak self] (button) in self?.updateButton() }
         return button
     }()
 
