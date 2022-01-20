@@ -10,8 +10,8 @@ import Foundation
 import MapKit
 
 public protocol ParkingSearchMapViewManagerDelegate: NSObjectProtocol {
-    func parkingSearchMapViewManager(_ manager: ParkingSearchMapViewManager, didSelectParking parking: Parking, forReservationWebPage url: URL)
-    func parkingSearchMapViewManager(_ manager: ParkingSearchMapViewManager, didSelectParkingForSearchingOnWeb parking: Parking)
+    func parkingSearchMapViewManager(_ manager: ParkingSearchMapViewManager, didSelectParking parking: PPPark.Parking, forReservationWebPage url: URL)
+    func parkingSearchMapViewManager(_ manager: ParkingSearchMapViewManager, didSelectParkingForSearchingOnWeb parking: PPPark.Parking)
 }
 
 public class ParkingSearchMapViewManager: NSObject {
@@ -71,7 +71,7 @@ public class ParkingSearchMapViewManager: NSObject {
         return mapView.annotations.filter { $0 is ParkingAnnotation } as! [ParkingAnnotation]
     }
 
-    private let ppparkClient = PPParkClient(clientKey: "IdkUdfal673kUdj00")
+    private let pppark = PPPark(clientKey: "IdkUdfal673kUdj00")
 
     private var currentSearchTask: Task<Void, Never>?
 
@@ -152,7 +152,7 @@ public class ParkingSearchMapViewManager: NSObject {
 
         currentSearchTask = Task {
             do {
-                let parkings = try await ppparkClient.searchParkings(
+                let parkings = try await pppark.searchParkings(
                     around: destination,
                     entranceDate: entranceDate,
                     exitDate: entranceDate + timeDuration
@@ -174,7 +174,7 @@ public class ParkingSearchMapViewManager: NSObject {
         }
     }
 
-    private func showParkings(_ parkings: [Parking]) {
+    private func showParkings(_ parkings: [PPPark.Parking]) {
         let openParkings = parkings.filter { !$0.isClosed }
         addParkings(openParkings)
 
@@ -183,7 +183,7 @@ public class ParkingSearchMapViewManager: NSObject {
         selectBestParking(from: preferredParkingAnnotations)
     }
 
-    private func addParkings(_ parkings: [Parking]) {
+    private func addParkings(_ parkings: [PPPark.Parking]) {
         let annotations = parkings.map { ParkingAnnotation($0) }
         mapView.addAnnotations(annotations)
     }

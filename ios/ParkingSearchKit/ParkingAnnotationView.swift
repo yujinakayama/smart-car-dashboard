@@ -15,7 +15,7 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
         }
     }
 
-    var parking: Parking? {
+    var parking: PPPark.Parking? {
         return (annotation as? ParkingAnnotation)?.parking
     }
 
@@ -79,7 +79,7 @@ extension ParkingAnnotationView {
 
         weak var annotationView: ParkingAnnotationView?
 
-        var parking: Parking? {
+        var parking: PPPark.Parking? {
             return annotationView?.parking
         }
 
@@ -492,7 +492,7 @@ extension ParkingAnnotationView.Callout {
 
         let simpleCapacityRegularExpression = try! NSRegularExpression(pattern: "^\\d+台$")
 
-        var parking: Parking? {
+        var parking: PPPark.Parking? {
             didSet {
                 update()
             }
