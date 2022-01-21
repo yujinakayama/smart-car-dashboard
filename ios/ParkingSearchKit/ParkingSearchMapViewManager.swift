@@ -14,6 +14,7 @@ public protocol ParkingSearchMapViewManagerDelegate: NSObjectProtocol {
     func parkingSearchMapViewManager(_ manager: ParkingSearchMapViewManager, didSelectParkingForSearchingOnWeb parking: PPPark.Parking)
 }
 
+@MainActor
 public class ParkingSearchMapViewManager: NSObject {
     static let pinAnnotationViewIdentifier = String(describing: MKPinAnnotationView.self)
     static let parkingAnnotationViewIdentifier = String(describing: ParkingAnnotationView.self)
@@ -34,24 +35,15 @@ public class ParkingSearchMapViewManager: NSObject {
 
             guard let destination = destination else { return }
 
-            addDestinationAnnotation()
+            let newAndOldDestinationsAreInSameArea: Bool
 
-            if let previousDestination = oldValue,
-               CLLocation(coordinate: destination).distance(from: CLLocation(coordinate: previousDestination)) <= 1000
-            {
-                searchParkings()
+            if let previousDestination = oldValue, destination.distance(from: previousDestination) <= 1000 {
+                newAndOldDestinationsAreInSameArea = true
             } else {
-                calculateExpectedTravelTime { (travelTime) in
-                    DispatchQueue.main.async {
-                        if let travelTime = travelTime {
-                            let arrivalDate = Date() + travelTime
-                            self.optionsView.setEntranceDate(arrivalDate, animated: true)
-                        }
-
-                        self.searchParkings()
-                    }
-                }
+                newAndOldDestinationsAreInSameArea = false
             }
+
+            startSearchingParkings(resetEntranceDateToExpectedArrivalDate: !newAndOldDestinationsAreInSameArea)
         }
     }
 
@@ -88,9 +80,9 @@ public class ParkingSearchMapViewManager: NSObject {
     private func configureViews() {
         mapView.register(MKPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: Self.pinAnnotationViewIdentifier)
 
-        optionsView.entranceDatePicker.addTarget(self, action: #selector(searchParkings), for: .valueChanged)
-        optionsView.entranceTimePicker.addTarget(self, action: #selector(searchParkings), for: .valueChanged)
-        optionsView.timeDurationPicker.addTarget(self, action: #selector(searchParkings), for: .valueChanged)
+        optionsView.entranceDatePicker.addTarget(self, action: #selector(parkingTimeConfigurationDidChange), for: .valueChanged)
+        optionsView.entranceTimePicker.addTarget(self, action: #selector(parkingTimeConfigurationDidChange), for: .valueChanged)
+        optionsView.timeDurationPicker.addTarget(self, action: #selector(parkingTimeConfigurationDidChange), for: .valueChanged)
     }
 
     public func clearMapView() {
@@ -100,16 +92,69 @@ public class ParkingSearchMapViewManager: NSObject {
         destinationAnnotation = nil
     }
 
-    private func addDestinationAnnotation() {
+    @objc private func parkingTimeConfigurationDidChange() {
+        startSearchingParkings(resetEntranceDateToExpectedArrivalDate: false)
+    }
+
+    private func startSearchingParkings(resetEntranceDateToExpectedArrivalDate: Bool) {
+        currentSearchTask?.cancel()
+
+        removeParkings()
+        addDestinationAnnotationIfNeeded()
+
+        currentSearchTask = Task {
+            isSearching = true
+
+            do {
+                if (resetEntranceDateToExpectedArrivalDate) {
+                    let arrivalDate = try await calculateExpectedArrivalDate()
+                    optionsView.setEntranceDate(arrivalDate, animated: true)
+                }
+
+                guard let entranceDate = optionsView.entranceDate,
+                      let timeDuration = optionsView.timeDurationPicker.selectedDuration
+                else { return }
+
+                let parkings = try await pppark.searchParkings(
+                    around: destination,
+                    entranceDate: entranceDate,
+                    exitDate: entranceDate + timeDuration
+                )
+
+                showParkings(parkings)
+            } catch {
+                logger.error(error)
+            }
+
+            if !Task.isCancelled {
+                isSearching = false
+            }
+        }
+    }
+
+    private var isSearching = false {
+        didSet {
+            guard let destinationAnnotation = destinationAnnotation else { return }
+
+            if isSearching {
+                mapView.view(for: destinationAnnotation)?.canShowCallout = true
+                mapView.selectAnnotation(destinationAnnotation, animated: true)
+            } else {
+                mapView.deselectAnnotation(destinationAnnotation, animated: true)
+                mapView.view(for: destinationAnnotation)?.canShowCallout = false
+            }
+        }
+    }
+
+    private func addDestinationAnnotationIfNeeded() {
+        guard destinationAnnotation == nil else { return }
+
         let annotation = DestinationAnnotation()
         annotation.coordinate = destination
         annotation.title = "周辺の駐車場を検索中"
 
         mapView.addAnnotation(annotation)
-
-        DispatchQueue.main.async {
-            self.mapView.selectAnnotation(annotation, animated: true)
-        }
+        mapView.selectAnnotation(annotation, animated: true)
 
         let region = MKCoordinateRegion(
             center: annotation.coordinate,
@@ -121,57 +166,14 @@ public class ParkingSearchMapViewManager: NSObject {
         destinationAnnotation = annotation
     }
 
-    private func calculateExpectedTravelTime(completion: @escaping (TimeInterval?) -> Void) {
+    private func calculateExpectedArrivalDate() async throws -> Date {
         let request = MKDirections.Request()
         request.source = MKMapItem.forCurrentLocation()
         request.destination = MKMapItem(placemark: MKPlacemark(coordinate: destination))
         request.transportType = .automobile
 
-        MKDirections(request: request).calculate { (response, error) in
-            if let error = error {
-                logger.error(error)
-            }
-
-            completion(response?.routes.first?.expectedTravelTime)
-        }
-    }
-
-    @objc private func searchParkings() {
-        currentSearchTask?.cancel()
-
-        removeParkings()
-
-        guard let entranceDate = optionsView.entranceDate,
-              let timeDuration = optionsView.timeDurationPicker.selectedDuration
-        else { return }
-
-        if let destinationAnnotation = destinationAnnotation {
-            self.mapView.view(for: destinationAnnotation)?.canShowCallout = true
-            mapView.selectAnnotation(destinationAnnotation, animated: true)
-        }
-
-        currentSearchTask = Task {
-            do {
-                let parkings = try await pppark.searchParkings(
-                    around: destination,
-                    entranceDate: entranceDate,
-                    exitDate: entranceDate + timeDuration
-                )
-
-                DispatchQueue.main.async {
-                    self.showParkings(parkings)
-                }
-            } catch {
-                logger.error(error)
-            }
-
-            if !Task.isCancelled, let destinationAnnotation = self.destinationAnnotation {
-                DispatchQueue.main.async {
-                    self.mapView.deselectAnnotation(destinationAnnotation, animated: true)
-                    self.mapView.view(for: destinationAnnotation)?.canShowCallout = false
-                }
-            }
-        }
+        let response = try await MKDirections(request: request).calculateETA()
+        return response.expectedArrivalDate
     }
 
     private func showParkings(_ parkings: [PPPark.Parking]) {
@@ -328,8 +330,10 @@ fileprivate func regionThatContains(_ coordinates: [CLLocationCoordinate2D], cen
     return MKCoordinateRegion(center: center, span: span)
 }
 
-fileprivate extension CLLocation {
-    convenience init(coordinate: CLLocationCoordinate2D) {
-        self.init(latitude: coordinate.latitude, longitude: coordinate.longitude)
+fileprivate extension CLLocationCoordinate2D {
+    func distance(from other: CLLocationCoordinate2D) -> CLLocationDistance {
+        let location = CLLocation(latitude: latitude, longitude: longitude)
+        let otherLocation = CLLocation(latitude: other.latitude, longitude: other.longitude)
+        return location.distance(from: otherLocation)
     }
 }
