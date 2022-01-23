@@ -120,6 +120,9 @@
 		B99C698126F5F1E30064162D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B99C698326F5F1E30064162D /* Localizable.strings */; };
 		B99C69AC26F5F6880064162D /* MapTypeSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99C69AB26F5F6880064162D /* MapTypeSegmentedControl.swift */; };
 		B9A16A14279EEE7C0042E16A /* ParkingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A16A13279EEE7C0042E16A /* ParkingProtocol.swift */; };
+		B9A16A16279EF9BB0042E16A /* CLLocationCoordinate2DExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A16A15279EF9BB0042E16A /* CLLocationCoordinate2DExtension.swift */; };
+		B9A16A1D279F3F1B0042E16A /* String+Similarity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A16A1C279F3F1B0042E16A /* String+Similarity.swift */; };
+		B9A16A4927A015420042E16A /* MapKitParking.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A16A4827A015420042E16A /* MapKitParking.swift */; };
 		B9A3B67C26537A9B00D1D64C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9A3B67B26537A9B00D1D64C /* Media.xcassets */; };
 		B9A3B67E26537A9B00D1D64C /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A3B67D26537A9B00D1D64C /* ActionViewController.swift */; };
 		B9A3B68526537A9B00D1D64C /* ParkingSearchActionExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B9A3B67926537A9B00D1D64C /* ParkingSearchActionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -200,6 +203,7 @@
 		B9DD4CD926517FBF0010B120 /* ParkingAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */; };
 		B9DD4CDA26517FBF0010B120 /* PPPark.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F8DBE725EA288B00F6FA55 /* PPPark.swift */; };
 		B9DF6F5927006A7400DC19D0 /* RelativeDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DF6F5827006A7400DC19D0 /* RelativeDatePicker.swift */; };
+		B9E292A2279DDA0A00547269 /* ParkingSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E292A1279DDA0A00547269 /* ParkingSearch.swift */; };
 		B9E6CC9C234F65A000E18603 /* TollgatePassingThrough.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9E6CC9B234F65A000E18603 /* TollgatePassingThrough.wav */; };
 		B9E6CCA1234F69B800E18603 /* Payment.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9E6CCA0234F69B800E18603 /* Payment.wav */; };
 		B9E8A077265B855E00709838 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B9E8A079265B855E00709838 /* InfoPlist.strings */; };
@@ -511,6 +515,9 @@
 		B99C698226F5F1E30064162D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B99C69AB26F5F6880064162D /* MapTypeSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTypeSegmentedControl.swift; sourceTree = "<group>"; };
 		B9A16A13279EEE7C0042E16A /* ParkingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkingProtocol.swift; sourceTree = "<group>"; };
+		B9A16A15279EF9BB0042E16A /* CLLocationCoordinate2DExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocationCoordinate2DExtension.swift; sourceTree = "<group>"; };
+		B9A16A1C279F3F1B0042E16A /* String+Similarity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Similarity.swift"; sourceTree = "<group>"; };
+		B9A16A4827A015420042E16A /* MapKitParking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKitParking.swift; sourceTree = "<group>"; };
 		B9A3B67926537A9B00D1D64C /* ParkingSearchActionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ParkingSearchActionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9A3B67B26537A9B00D1D64C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		B9A3B67D26537A9B00D1D64C /* ActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionViewController.swift; sourceTree = "<group>"; };
@@ -587,6 +594,7 @@
 		B9DD4CCC26517F920010B120 /* ParkingSearchKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParkingSearchKit.h; sourceTree = "<group>"; };
 		B9DD4CCD26517F920010B120 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9DF6F5827006A7400DC19D0 /* RelativeDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeDatePicker.swift; sourceTree = "<group>"; };
+		B9E292A1279DDA0A00547269 /* ParkingSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkingSearch.swift; sourceTree = "<group>"; };
 		B9E6CC9B234F65A000E18603 /* TollgatePassingThrough.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = TollgatePassingThrough.wav; sourceTree = "<group>"; };
 		B9E6CCA0234F69B800E18603 /* Payment.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Payment.wav; sourceTree = "<group>"; };
 		B9E8A078265B855E00709838 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1086,14 +1094,18 @@
 				B92650112691CE29005FD73D /* SheetView.swift */,
 				B93C04622642CD32002CD861 /* ParkingAnnotation.swift */,
 				B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */,
+				B9E292A1279DDA0A00547269 /* ParkingSearch.swift */,
 				B9A16A13279EEE7C0042E16A /* ParkingProtocol.swift */,
 				B9F8DBE725EA288B00F6FA55 /* PPPark.swift */,
+				B9A16A4827A015420042E16A /* MapKitParking.swift */,
 				B9DF6F5827006A7400DC19D0 /* RelativeDatePicker.swift */,
 				B9ADFEAC2704B19000F230E0 /* TimePicker.swift */,
 				B984C019263DA08D00AF79AE /* TimeDurationPicker.swift */,
 				B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */,
 				B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */,
 				B92ADE9A269ACA4C0086E4D8 /* Logger.swift */,
+				B9A16A15279EF9BB0042E16A /* CLLocationCoordinate2DExtension.swift */,
+				B9A16A1C279F3F1B0042E16A /* String+Similarity.swift */,
 				B9DD4CCD26517F920010B120 /* Info.plist */,
 			);
 			path = ParkingSearchKit;
@@ -1391,7 +1403,7 @@
 		B9DC5B19229D59BE00B645D5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1310;
+				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = "Yuji Nakayama";
 				TargetAttributes = {
@@ -1953,9 +1965,13 @@
 				B9D0208F268F69490020BF9A /* ParkingSearchOptionsView.swift in Sources */,
 				B92ADE77269990370086E4D8 /* NSRegularExpressionExtension.swift in Sources */,
 				B9DD4CDA26517FBF0010B120 /* PPPark.swift in Sources */,
+				B9A16A1D279F3F1B0042E16A /* String+Similarity.swift in Sources */,
 				B900A13D2652BCF4000ED1B9 /* StringExtension.swift in Sources */,
+				B9A16A4927A015420042E16A /* MapKitParking.swift in Sources */,
 				B9ADFEAD2704B19100F230E0 /* TimePicker.swift in Sources */,
 				B9DD4CD726517FBF0010B120 /* TimeDurationPicker.swift in Sources */,
+				B9A16A16279EF9BB0042E16A /* CLLocationCoordinate2DExtension.swift in Sources */,
+				B9E292A2279DDA0A00547269 /* ParkingSearch.swift in Sources */,
 				B9DD4CD626517FBF0010B120 /* ParkingAnnotation.swift in Sources */,
 				B92ADE9B269ACA4C0086E4D8 /* Logger.swift in Sources */,
 				B94EC75427914DFF0008C447 /* UIApplicationExtension.swift in Sources */,

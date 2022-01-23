@@ -15,8 +15,12 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
         }
     }
 
+    var parkingAnnotation: ParkingAnnotation? {
+        return annotation as? ParkingAnnotation
+    }
+
     var parking: ParkingProtocol? {
-        return (annotation as? ParkingAnnotation)?.parking
+        return parkingAnnotation?.parking
     }
 
     lazy var callout = Callout(annotationView: self)
@@ -43,7 +47,7 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
     func update() {
         guard let parking = parking else { return }
 
-        if let rank = parking.rank {
+        if let rank = parking.rank, parking.price != nil {
             glyphText = "\(rank)位"
 
             markerTintColor = UIColor.link.blend(
@@ -56,8 +60,10 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
         } else {
             if parking.isClosedNow == true {
                 glyphText = "×"
+            } else if parking.reservation != nil {
+                glyphText = "予約"
             } else {
-                glyphText = "?"
+                glyphText = "P"
             }
 
             markerTintColor = .systemGray
@@ -68,6 +74,7 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
+        parkingAnnotation?.isSelected = selected
         super.setSelected(selected, animated: animated)
         callout.annotationViewDidSetSelected(selected, animated: animated)
     }
@@ -292,7 +299,7 @@ extension ParkingAnnotationView {
 
             tagListView.parking = parking
 
-            nameLabelControl.label.text = normalizeText(parking.name)
+            nameLabelControl.label.text = parking.normalizedName
 
             if tagListView.capacityTagView.isHidden, let description = normalizeText(parking.capacityDescription) {
                 capacityLabel.text = description
@@ -325,6 +332,12 @@ extension ParkingAnnotationView {
                 reservationButton.setTitle(nil, for: .normal)
                 reservationView.isHidden = true
             }
+
+            ellipsisButton.isHidden = !isAnyDetailAvailable
+        }
+
+        var isAnyDetailAvailable: Bool {
+            detailView.subviews.filter { !$0.isHidden && $0 != rulerView }.count > 0
         }
 
         func normalizeText(_ text: String?) -> String? {
@@ -380,12 +393,7 @@ extension ParkingAnnotationView {
 
         @objc func openDirectionsInMaps() {
             guard let parking = parking else { return }
-
-            let placemark = MKPlacemark(coordinate: parking.coordinate)
-            let mapItem = MKMapItem(placemark: placemark)
-            mapItem.name = normalizeText(parking.name)
-
-            mapItem.openInMaps(launchOptions: [
+            parking.mapItem.openInMaps(launchOptions: [
                 MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
             ])
         }

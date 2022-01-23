@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import MapKit
 
 public class PPPark {
     let clientKey: String
@@ -153,6 +154,13 @@ extension PPPark {
             priceGap = try values.decodeIfPresent(Int.self, forKey: .priceGap)
             rank = try values.decodeIfPresent(Int.self, forKey: .rank)
             reservation = try values.decodeIfPresent(Reservation.self, forKey: .reservation)
+        }
+
+        public var mapItem: MKMapItem {
+            let placemark = MKPlacemark(coordinate: coordinate)
+            let mapItem = MKMapItem(placemark: placemark)
+            mapItem.name = normalizedName
+            return mapItem
         }
     }
 }

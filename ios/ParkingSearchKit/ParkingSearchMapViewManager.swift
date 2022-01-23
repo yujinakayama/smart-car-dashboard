@@ -53,16 +53,6 @@ public class ParkingSearchMapViewManager: NSObject {
         }
     }
 
-    private var annotations: [MKAnnotation] {
-        var annotations: [MKAnnotation] = parkingAnnotations
-
-        if let destinationAnnotation = destinationAnnotation {
-            annotations.append(destinationAnnotation)
-        }
-
-        return annotations
-    }
-
     private var destinationAnnotation: MKPointAnnotation?
 
     private var parkingAnnotations: [ParkingAnnotation] {
@@ -101,7 +91,12 @@ public class ParkingSearchMapViewManager: NSObject {
     public func clearMapView() {
         currentSearchTask?.cancel()
 
-        mapView.removeAnnotations(annotations)
+        removeParkings()
+
+        if let destinationAnnotation = destinationAnnotation {
+            mapView.removeAnnotation(destinationAnnotation)
+        }
+
         destinationAnnotation = nil
     }
 
@@ -128,11 +123,11 @@ public class ParkingSearchMapViewManager: NSObject {
                       let timeDuration = optionsView.timeDurationPicker.selectedDuration
                 else { return }
 
-                let parkings = try await pppark.searchParkings(
-                    around: destination,
+                let parkings = try await ParkingSearch(
+                    destination: destination,
                     entranceDate: entranceDate,
                     exitDate: entranceDate + timeDuration
-                )
+                ).start()
 
                 showParkings(parkings)
             } catch {
