@@ -100,7 +100,7 @@ struct PPParkError: Error, Decodable {
 }
 
 extension PPPark {
-    public struct Parking: Decodable {
+    public struct Parking: ParkingProtocol, Decodable {
         public var address: String
         public var availability: Availability?
         public var capacityDescription: String?

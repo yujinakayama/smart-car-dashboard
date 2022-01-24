@@ -9,9 +9,9 @@
 import MapKit
 
 class ParkingAnnotation: NSObject, MKAnnotation {
-    let parking: PPPark.Parking
+    let parking: ParkingProtocol
 
-    init(_ parking: PPPark.Parking) {
+    init(_ parking: ParkingProtocol) {
         self.parking = parking
         super.init()
     }
