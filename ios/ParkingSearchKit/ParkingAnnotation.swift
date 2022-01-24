@@ -23,7 +23,7 @@ class ParkingAnnotation: NSObject, MKAnnotation {
     var title: String? {
         if let price = parking.price {
             return "¥\(price)"
-        } else if parking.isClosed {
+        } else if parking.isClosedNow == true {
             return "営業時間外"
         } else {
             return "料金不明"

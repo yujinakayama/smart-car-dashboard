@@ -54,7 +54,7 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
             let zPriorityValue = MKAnnotationViewZPriority.defaultUnselected.rawValue - Float(rank - 1)
             zPriority = MKAnnotationViewZPriority(rawValue: zPriorityValue)
         } else {
-            if parking.isClosed {
+            if parking.isClosedNow == true {
                 glyphText = "×"
             } else {
                 glyphText = "?"
@@ -318,7 +318,7 @@ extension ParkingAnnotationView {
                 priceDescriptionItemView.isHidden = true
             }
 
-            if let provider = parking.reservationInfo?.provider, parking.reservationInfo?.url != nil {
+            if let provider = parking.reservation?.provider, parking.reservation?.url != nil {
                 reservationButton.setTitle("\(provider)で予約する", for: .normal)
                 reservationView.isHidden = false
             } else {
@@ -529,10 +529,10 @@ extension ParkingAnnotationView.Callout {
 
             distanceTagView.text = Self.distanceFormatter.string(fromDistance: parking.distance).replacingOccurrences(of: " ", with: "")
 
-            reservationTagView.isHidden = parking.reservationInfo == nil
-            fullTagView.isHidden = parking.reservationInfo?.status != .full && parking.vacancyInfo?.status != .full
-            crowdedTagView.isHidden = parking.vacancyInfo?.status != .crowded
-            vacantTagView.isHidden = parking.reservationInfo?.status != .vacant && parking.vacancyInfo?.status != .vacant
+            reservationTagView.isHidden = parking.reservation == nil
+            fullTagView.isHidden = parking.reservation?.status != .full && parking.availability?.status != .full
+            crowdedTagView.isHidden = parking.availability?.status != .crowded
+            vacantTagView.isHidden = parking.reservation?.status != .vacant && parking.availability?.status != .vacant
         }
 
         var hasSimpleCapacityDescription: Bool {

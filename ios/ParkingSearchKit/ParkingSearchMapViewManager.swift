@@ -188,7 +188,7 @@ public class ParkingSearchMapViewManager: NSObject {
     }
 
     private func showParkings(_ parkings: [PPPark.Parking]) {
-        let openParkings = parkings.filter { !$0.isClosed }
+        let openParkings = parkings.filter { !($0.isClosedNow == true) }
         addParkings(openParkings)
 
         let preferredParkingAnnotations = preferredParkingAnnotations
@@ -292,7 +292,7 @@ public class ParkingSearchMapViewManager: NSObject {
 
     @objc private func notifyDelegateOfReservationPage() {
         guard let parking = (mapView.selectedAnnotations.first as? ParkingAnnotation)?.parking else { return }
-        guard let reservationURL = parking.reservationInfo?.url else { return }
+        guard let reservationURL = parking.reservation?.url else { return }
         delegate?.parkingSearchMapViewManager(self, didSelectParking: parking, forReservationWebPage: reservationURL)
     }
 }
