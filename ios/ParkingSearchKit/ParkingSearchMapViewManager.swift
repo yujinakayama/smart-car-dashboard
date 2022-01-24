@@ -47,6 +47,12 @@ public class ParkingSearchMapViewManager: NSObject {
         }
     }
 
+    public private(set) var isSearching = false {
+        didSet {
+            updateActivityIndicator()
+        }
+    }
+
     private var annotations: [MKAnnotation] {
         var annotations: [MKAnnotation] = parkingAnnotations
 
@@ -83,6 +89,13 @@ public class ParkingSearchMapViewManager: NSObject {
         optionsView.entranceDatePicker.addTarget(self, action: #selector(parkingTimeConfigurationDidChange), for: .valueChanged)
         optionsView.entranceTimePicker.addTarget(self, action: #selector(parkingTimeConfigurationDidChange), for: .valueChanged)
         optionsView.timeDurationPicker.addTarget(self, action: #selector(parkingTimeConfigurationDidChange), for: .valueChanged)
+    }
+
+    public func viewWillAppear() {
+        updateActivityIndicator()
+    }
+
+    public func viewDidDissapear() {
     }
 
     public func clearMapView() {
@@ -132,17 +145,15 @@ public class ParkingSearchMapViewManager: NSObject {
         }
     }
 
-    private var isSearching = false {
-        didSet {
-            guard let destinationAnnotation = destinationAnnotation else { return }
+    private func updateActivityIndicator() {
+        guard let destinationAnnotation = destinationAnnotation else { return }
 
-            if isSearching {
-                mapView.view(for: destinationAnnotation)?.canShowCallout = true
-                mapView.selectAnnotation(destinationAnnotation, animated: true)
-            } else {
-                mapView.deselectAnnotation(destinationAnnotation, animated: true)
-                mapView.view(for: destinationAnnotation)?.canShowCallout = false
-            }
+        if isSearching {
+            mapView.view(for: destinationAnnotation)?.canShowCallout = true
+            mapView.selectAnnotation(destinationAnnotation, animated: true)
+        } else {
+            mapView.deselectAnnotation(destinationAnnotation, animated: true)
+            mapView.view(for: destinationAnnotation)?.canShowCallout = false
         }
     }
 

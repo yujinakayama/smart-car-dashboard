@@ -214,6 +214,13 @@ class MapsViewController: UIViewController {
 
             hasInitiallyEnabledUserTrackingMode = true
         }
+
+        parkingSearchManager.viewWillAppear()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        parkingSearchManager.viewDidDissapear()
     }
 
     private func configureSubviews() {
