@@ -28,13 +28,15 @@ class ParkingAnnotation: NSObject, MKAnnotation {
         }
     }
 
-    private var titleForMap: String {
+    private var titleForMap: String? {
         if let price = parking.price {
             return "¥\(price)"
         } else if parking.isClosedNow == true {
             return "営業時間外"
         } else if let reservation = parking.reservation {
             return reservation.provider
+        } else if parking.isNameUnknown || parking.isOnStreet {
+            return nil
         } else {
             return parking.normalizedName
         }

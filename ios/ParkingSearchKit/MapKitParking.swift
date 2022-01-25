@@ -36,7 +36,7 @@ struct MapKitParking {
             level += 1
         }
 
-        if name.isEmpty || name == "駐車場" {
+        if isNameUnknown {
             level -= 100
         }
 
