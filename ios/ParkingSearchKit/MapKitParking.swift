@@ -9,7 +9,7 @@
 import MapKit
 
 struct MapKitParking {
-    static let nonCarParkingNamePattern = try! NSRegularExpression(pattern: "駐輪|二輪|オートバイ|バイク|事務(所|室)$")
+    static let nonCarParkingNamePattern = try! NSRegularExpression(pattern: "駐輪|二輪|オートバイ|バイク|\\bバス(駐車場|プール)$|事務[所室]$")
 
     var mapItem: MKMapItem
     var distance: CLLocationDistance
@@ -20,7 +20,9 @@ struct MapKitParking {
     }
 
     var isForCars: Bool {
-        Self.nonCarParkingNamePattern.rangeOfFirstMatch(in: name).location == NSNotFound
+        let isForCars = Self.nonCarParkingNamePattern.rangeOfFirstMatch(in: name).location == NSNotFound
+        logger.debug("\(isForCars) \(name)")
+        return isForCars
     }
 
     var detailLevel: Double {
