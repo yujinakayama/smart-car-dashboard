@@ -76,10 +76,8 @@ fileprivate extension MKMapType {
         switch self {
         case .standard, .mutedStandard:
             return String(localized: "Map")
-        case .satellite, .hybrid:
+        case .satellite, .hybrid, .satelliteFlyover, .hybridFlyover:
             return String(localized: "Satellite")
-        case .satelliteFlyover, .hybridFlyover:
-            return String(localized: "3D")
         default:
             return nil
         }

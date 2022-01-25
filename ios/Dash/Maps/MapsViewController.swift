@@ -46,7 +46,7 @@ class MapsViewController: UIViewController {
     }()
 
     lazy var mapTypeSegmentedControl: MapTypeSegmentedControl = {
-        let segmentedControl = MapTypeSegmentedControl(mapTypes: [.standard, .hybrid])
+        let segmentedControl = MapTypeSegmentedControl(mapTypes: [.standard, .hybridFlyover])
         segmentedControl.selectedMapType = mapView.mapType
         segmentedControl.addTarget(self, action: #selector(mapTypeSegmentedControlDidChange), for: .valueChanged)
         return segmentedControl
