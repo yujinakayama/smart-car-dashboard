@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import MapKit
 
 public class PPPark {
     let clientKey: String
@@ -100,26 +101,27 @@ struct PPParkError: Error, Decodable {
 }
 
 extension PPPark {
-    public struct Parking: Decodable {
+    public struct Parking: ParkingProtocol, Decodable {
         public var address: String
+        public var availability: Availability?
         public var capacityDescription: String?
         public var coordinate: CLLocationCoordinate2D
         public var distance: CLLocationDistance
-        public var vacancyInfo: VacancyInfo?
-        public var isClosed: Bool
+        public var isClosedNow: Bool?
         public var name: String
         public var openingHoursDescription: String?
         public var price: Int?
         public var priceDescription: String?
         public var priceGap: Int?
         public var rank: Int?
-        public var reservationInfo: ReservationInfo?
+        public var reservation: Reservation?
 
         enum CodingKeys: String, CodingKey {
             case address
+            case availability = "fv"
             case capacityDescription = "capacity"
             case distance
-            case isClosed = "closed"
+            case isClosedNow = "closed"
             case lat
             case lng
             case name
@@ -128,17 +130,17 @@ extension PPPark {
             case priceDescription = "pricestr"
             case priceGap = "pricegap"
             case rank
-            case reservationInfo = "rsv"
-            case vacancyInfo = "fv"
+            case reservation = "rsv"
         }
 
         public init(from decoder: Decoder) throws {
             let values = try decoder.container(keyedBy: CodingKeys.self)
 
             address = try values.decode(String.self, forKey: .address)
+            availability = try values.decodeIfPresent(Availability.self, forKey: .availability)
             capacityDescription = try values.decodeIfPresent(String.self, forKey: .capacityDescription)
             distance = try values.decode(Double.self, forKey: .distance)
-            isClosed = try values.decode(Int.self, forKey: .isClosed) != 0
+            isClosedNow = try values.decode(Int.self, forKey: .isClosedNow) != 0
 
             coordinate = CLLocationCoordinate2D(
                 latitude: try values.decode(Double.self, forKey: .lat),
@@ -151,14 +153,20 @@ extension PPPark {
             priceDescription = try values.decodeIfPresent(String.self, forKey: .priceDescription)
             priceGap = try values.decodeIfPresent(Int.self, forKey: .priceGap)
             rank = try values.decodeIfPresent(Int.self, forKey: .rank)
-            reservationInfo = try values.decodeIfPresent(ReservationInfo.self, forKey: .reservationInfo)
-            vacancyInfo = try values.decodeIfPresent(VacancyInfo.self, forKey: .vacancyInfo)
+            reservation = try values.decodeIfPresent(Reservation.self, forKey: .reservation)
+        }
+
+        public var mapItem: MKMapItem {
+            let placemark = MKPlacemark(coordinate: coordinate)
+            let mapItem = MKMapItem(placemark: placemark)
+            mapItem.name = normalizedName
+            return mapItem
         }
     }
 }
 
 extension PPPark {
-    public struct VacancyInfo: Decodable {
+    public struct Availability: Decodable {
         static let dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -167,7 +175,7 @@ extension PPPark {
         }()
 
         public var lastUpdateDate: Date?
-        public var status: VacancyStatus?
+        public var status: AvailabilityStatus?
 
         enum CodingKeys: String, CodingKey {
             case status
@@ -182,12 +190,12 @@ extension PPPark {
             }
 
             if let statusRawValue = try values.decodeIfPresent(Int.self, forKey: .status) {
-                status = VacancyStatus(rawValue: statusRawValue) ?? .unsupported
+                status = AvailabilityStatus(rawValue: statusRawValue) ?? .unsupported
             }
         }
     }
 
-    public enum VacancyStatus: Int, Decodable {
+    public enum AvailabilityStatus: Int, Decodable {
         case unsupported = -1
         case vacant = 0
         case crowded = 1
@@ -197,7 +205,7 @@ extension PPPark {
 }
 
 extension PPPark {
-    public struct ReservationInfo: Decodable {
+    public struct Reservation: Decodable {
         public var provider: String
         public var status: ReservationStatus?
         public var url: URL?

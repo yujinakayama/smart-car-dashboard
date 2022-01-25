@@ -9,9 +9,9 @@
 import MapKit
 
 class ParkingAnnotation: NSObject, MKAnnotation {
-    let parking: PPPark.Parking
+    let parking: ParkingProtocol
 
-    init(_ parking: PPPark.Parking) {
+    init(_ parking: ParkingProtocol) {
         self.parking = parking
         super.init()
     }
@@ -21,9 +21,29 @@ class ParkingAnnotation: NSObject, MKAnnotation {
     }
 
     var title: String? {
+        if isSelected {
+            return titleForCallout
+        } else {
+            return titleForMap
+        }
+    }
+
+    private var titleForMap: String {
         if let price = parking.price {
             return "¥\(price)"
-        } else if parking.isClosed {
+        } else if parking.isClosedNow == true {
+            return "営業時間外"
+        } else if let reservation = parking.reservation {
+            return reservation.provider
+        } else {
+            return parking.normalizedName
+        }
+    }
+
+    private var titleForCallout: String {
+        if let price = parking.price {
+            return "¥\(price)"
+        } else if parking.isClosedNow == true {
             return "営業時間外"
         } else {
             return "料金不明"
@@ -31,6 +51,8 @@ class ParkingAnnotation: NSObject, MKAnnotation {
     }
 
     var subtitle: String? {
-        return parking.name
+        return nil
     }
+
+    var isSelected = false
 }

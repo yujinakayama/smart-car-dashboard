@@ -10,8 +10,8 @@ import Foundation
 import MapKit
 
 public protocol ParkingSearchMapViewManagerDelegate: NSObjectProtocol {
-    func parkingSearchMapViewManager(_ manager: ParkingSearchMapViewManager, didSelectParking parking: PPPark.Parking, forReservationWebPage url: URL)
-    func parkingSearchMapViewManager(_ manager: ParkingSearchMapViewManager, didSelectParkingForSearchingOnWeb parking: PPPark.Parking)
+    func parkingSearchMapViewManager(_ manager: ParkingSearchMapViewManager, didSelectParking parking: ParkingProtocol, forReservationWebPage url: URL)
+    func parkingSearchMapViewManager(_ manager: ParkingSearchMapViewManager, didSelectParkingForSearchingOnWeb parking: ParkingProtocol)
 }
 
 @MainActor
@@ -53,16 +53,6 @@ public class ParkingSearchMapViewManager: NSObject {
         }
     }
 
-    private var annotations: [MKAnnotation] {
-        var annotations: [MKAnnotation] = parkingAnnotations
-
-        if let destinationAnnotation = destinationAnnotation {
-            annotations.append(destinationAnnotation)
-        }
-
-        return annotations
-    }
-
     private var destinationAnnotation: MKPointAnnotation?
 
     private var parkingAnnotations: [ParkingAnnotation] {
@@ -101,7 +91,12 @@ public class ParkingSearchMapViewManager: NSObject {
     public func clearMapView() {
         currentSearchTask?.cancel()
 
-        mapView.removeAnnotations(annotations)
+        removeParkings()
+
+        if let destinationAnnotation = destinationAnnotation {
+            mapView.removeAnnotation(destinationAnnotation)
+        }
+
         destinationAnnotation = nil
     }
 
@@ -128,11 +123,11 @@ public class ParkingSearchMapViewManager: NSObject {
                       let timeDuration = optionsView.timeDurationPicker.selectedDuration
                 else { return }
 
-                let parkings = try await pppark.searchParkings(
-                    around: destination,
+                let parkings = try await ParkingSearch(
+                    destination: destination,
                     entranceDate: entranceDate,
                     exitDate: entranceDate + timeDuration
-                )
+                ).start()
 
                 showParkings(parkings)
             } catch {
@@ -187,8 +182,8 @@ public class ParkingSearchMapViewManager: NSObject {
         return response.expectedArrivalDate
     }
 
-    private func showParkings(_ parkings: [PPPark.Parking]) {
-        let openParkings = parkings.filter { !$0.isClosed }
+    private func showParkings(_ parkings: [ParkingProtocol]) {
+        let openParkings = parkings.filter { !($0.isClosedNow == true) }
         addParkings(openParkings)
 
         let preferredParkingAnnotations = preferredParkingAnnotations
@@ -196,7 +191,7 @@ public class ParkingSearchMapViewManager: NSObject {
         selectBestParking(from: preferredParkingAnnotations)
     }
 
-    private func addParkings(_ parkings: [PPPark.Parking]) {
+    private func addParkings(_ parkings: [ParkingProtocol]) {
         let annotations = parkings.map { ParkingAnnotation($0) }
         mapView.addAnnotations(annotations)
     }
@@ -292,7 +287,7 @@ public class ParkingSearchMapViewManager: NSObject {
 
     @objc private func notifyDelegateOfReservationPage() {
         guard let parking = (mapView.selectedAnnotations.first as? ParkingAnnotation)?.parking else { return }
-        guard let reservationURL = parking.reservationInfo?.url else { return }
+        guard let reservationURL = parking.reservation?.url else { return }
         delegate?.parkingSearchMapViewManager(self, didSelectParking: parking, forReservationWebPage: reservationURL)
     }
 }
@@ -339,12 +334,4 @@ fileprivate func regionThatContains(_ coordinates: [CLLocationCoordinate2D], cen
 
     let span = MKCoordinateSpan(latitudeDelta: maxLatitudeDifference * 2, longitudeDelta: maxLongitudeDifference * 2)
     return MKCoordinateRegion(center: center, span: span)
-}
-
-fileprivate extension CLLocationCoordinate2D {
-    func distance(from other: CLLocationCoordinate2D) -> CLLocationDistance {
-        let location = CLLocation(latitude: latitude, longitude: longitude)
-        let otherLocation = CLLocation(latitude: other.latitude, longitude: other.longitude)
-        return location.distance(from: otherLocation)
-    }
 }

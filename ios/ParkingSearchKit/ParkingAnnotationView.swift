@@ -15,8 +15,12 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
         }
     }
 
-    var parking: PPPark.Parking? {
-        return (annotation as? ParkingAnnotation)?.parking
+    var parkingAnnotation: ParkingAnnotation? {
+        return annotation as? ParkingAnnotation
+    }
+
+    var parking: ParkingProtocol? {
+        return parkingAnnotation?.parking
     }
 
     lazy var callout = Callout(annotationView: self)
@@ -43,7 +47,7 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
     func update() {
         guard let parking = parking else { return }
 
-        if let rank = parking.rank {
+        if let rank = parking.rank, parking.price != nil {
             glyphText = "\(rank)位"
 
             markerTintColor = UIColor.link.blend(
@@ -54,10 +58,12 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
             let zPriorityValue = MKAnnotationViewZPriority.defaultUnselected.rawValue - Float(rank - 1)
             zPriority = MKAnnotationViewZPriority(rawValue: zPriorityValue)
         } else {
-            if parking.isClosed {
+            if parking.isClosedNow == true {
                 glyphText = "×"
+            } else if parking.reservation != nil {
+                glyphText = "予約"
             } else {
-                glyphText = "?"
+                glyphText = "P"
             }
 
             markerTintColor = .systemGray
@@ -68,6 +74,7 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
+        parkingAnnotation?.isSelected = selected
         super.setSelected(selected, animated: animated)
         callout.annotationViewDidSetSelected(selected, animated: animated)
     }
@@ -79,7 +86,7 @@ extension ParkingAnnotationView {
 
         weak var annotationView: ParkingAnnotationView?
 
-        var parking: PPPark.Parking? {
+        var parking: ParkingProtocol? {
             return annotationView?.parking
         }
 
@@ -292,7 +299,7 @@ extension ParkingAnnotationView {
 
             tagListView.parking = parking
 
-            nameLabelControl.label.text = normalizeText(parking.name)
+            nameLabelControl.label.text = parking.normalizedName
 
             if tagListView.capacityTagView.isHidden, let description = normalizeText(parking.capacityDescription) {
                 capacityLabel.text = description
@@ -318,13 +325,19 @@ extension ParkingAnnotationView {
                 priceDescriptionItemView.isHidden = true
             }
 
-            if let provider = parking.reservationInfo?.provider, parking.reservationInfo?.url != nil {
+            if let provider = parking.reservation?.provider, parking.reservation?.url != nil {
                 reservationButton.setTitle("\(provider)で予約する", for: .normal)
                 reservationView.isHidden = false
             } else {
                 reservationButton.setTitle(nil, for: .normal)
                 reservationView.isHidden = true
             }
+
+            ellipsisButton.isHidden = !isAnyDetailAvailable
+        }
+
+        var isAnyDetailAvailable: Bool {
+            detailView.subviews.filter { !$0.isHidden && $0 != rulerView }.count > 0
         }
 
         func normalizeText(_ text: String?) -> String? {
@@ -380,12 +393,7 @@ extension ParkingAnnotationView {
 
         @objc func openDirectionsInMaps() {
             guard let parking = parking else { return }
-
-            let placemark = MKPlacemark(coordinate: parking.coordinate)
-            let mapItem = MKMapItem(placemark: placemark)
-            mapItem.name = normalizeText(parking.name)
-
-            mapItem.openInMaps(launchOptions: [
+            parking.mapItem.openInMaps(launchOptions: [
                 MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
             ])
         }
@@ -492,7 +500,7 @@ extension ParkingAnnotationView.Callout {
 
         let simpleCapacityRegularExpression = try! NSRegularExpression(pattern: "^\\d+台$")
 
-        var parking: PPPark.Parking? {
+        var parking: ParkingProtocol? {
             didSet {
                 update()
             }
@@ -529,10 +537,10 @@ extension ParkingAnnotationView.Callout {
 
             distanceTagView.text = Self.distanceFormatter.string(fromDistance: parking.distance).replacingOccurrences(of: " ", with: "")
 
-            reservationTagView.isHidden = parking.reservationInfo == nil
-            fullTagView.isHidden = parking.reservationInfo?.status != .full && parking.vacancyInfo?.status != .full
-            crowdedTagView.isHidden = parking.vacancyInfo?.status != .crowded
-            vacantTagView.isHidden = parking.reservationInfo?.status != .vacant && parking.vacancyInfo?.status != .vacant
+            reservationTagView.isHidden = parking.reservation == nil
+            fullTagView.isHidden = parking.reservation?.status != .full && parking.availability?.status != .full
+            crowdedTagView.isHidden = parking.availability?.status != .crowded
+            vacantTagView.isHidden = parking.reservation?.status != .vacant && parking.availability?.status != .vacant
         }
 
         var hasSimpleCapacityDescription: Bool {
