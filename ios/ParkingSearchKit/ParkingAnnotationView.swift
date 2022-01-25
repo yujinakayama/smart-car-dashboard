@@ -134,7 +134,11 @@ extension ParkingAnnotationView {
             return stackView
         }()
 
-        lazy var nameLabelControl = LabelControl(label: makeContentLabel(textColor: .secondaryLabel, multiline: false))
+        lazy var nameLabelControl: LabelControl = {
+            let label = makeContentLabel(textColor: .secondaryLabel, multiline: false)
+            label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+            return LabelControl(label: label)
+        }()
 
         lazy var ellipsisButton: UIButton = {
             let image = UIImage(systemName: "ellipsis.rectangle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20))
