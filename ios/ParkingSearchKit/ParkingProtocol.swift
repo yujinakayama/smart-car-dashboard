@@ -47,6 +47,10 @@ public extension ParkingProtocol {
         nameFeature
             .components(separatedBy: .decimalDigits.inverted).compactMap { Int($0) }
     }
+
+    var isOnStreet: Bool {
+        name.contains("パーキングメーター") || name.contains("パーキングチケット")
+    }
 }
 
 extension ParkingProtocol {

@@ -62,6 +62,8 @@ class ParkingAnnotationView: MKMarkerAnnotationView {
                 glyphText = "×"
             } else if parking.reservation != nil {
                 glyphText = "予約"
+            } else if parking.isOnStreet {
+                glyphText = "路上"
             } else {
                 glyphText = "P"
             }
