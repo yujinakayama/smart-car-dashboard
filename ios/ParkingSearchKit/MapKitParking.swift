@@ -64,7 +64,20 @@ extension MapKitParking: ParkingProtocol {
 }
 
 extension MapKitParking: Hashable {
+    func hash(into hasher: inout Hasher) {
+        mapItem.placemark.coordinate.latitude.hash(into: &hasher)
+        mapItem.placemark.coordinate.longitude.hash(into: &hasher)
+        mapItem.name.hash(into: &hasher)
+    }
+
     static func == (lhs: MapKitParking, rhs: MapKitParking) -> Bool {
-        return lhs.mapItem == rhs.mapItem
+        return lhs.mapItem.placemark.coordinate == rhs.mapItem.placemark.coordinate &&
+            lhs.mapItem.name == rhs.mapItem.name
+    }
+}
+
+extension CLLocationCoordinate2D: Equatable {
+    public static func == (lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
+        return lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
     }
 }

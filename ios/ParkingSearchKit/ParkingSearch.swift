@@ -40,19 +40,41 @@ class ParkingSearch {
     }
 
     private func searchParkingsWithMapKit() async throws -> [MapKitParking] {
-        let request = MKLocalPointsOfInterestRequest(center: destination, radius: 1000)
-        request.pointOfInterestFilter = MKPointOfInterestFilter(including: [.parking])
+        async let parkingWithNatualLanguageQuery = searchParkingsWithMapKitNaturalLanguageQuery()
+        async let parkingWithPointOfInterestFilterRequest = searchParkingsWithMapKitPointOfInterestRequest()
 
-        let response: MKLocalSearch.Response
+        let mergedParkings = Set(try await parkingWithNatualLanguageQuery).union(try await parkingWithPointOfInterestFilterRequest)
+        return mergedParkings.filter { $0.isForCars }
+    }
+
+    // Returns parkings including ones not returned with MKLocalPointsOfInterestRequest.
+    // Returned items tend to scattered in larger region.
+    private func searchParkingsWithMapKitNaturalLanguageQuery() async throws -> [MapKitParking] {
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = "駐車場"
+        request.region = .init(center: destination, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        request.resultTypes = .pointOfInterest
 
         do {
-            response = try await MKLocalSearch(request: request).start()
+            let response = try await MKLocalSearch(request: request).start()
+            return response.mapItems.map { MapKitParking(mapItem: $0, destination: destination) }
         } catch MKError.placemarkNotFound {
             return []
         }
+    }
 
-        let parkings = response.mapItems.map { MapKitParking(mapItem: $0, destination: destination) }
-        return parkings.filter { $0.isForCars }
+    // Returns parkings including ones not returned with MKLocalSearch.Request (e.g. parking meters, parking entrance, and non-car parkings).
+    // Returned items tend to be closed to the center point.
+    private func searchParkingsWithMapKitPointOfInterestRequest() async throws -> [MapKitParking] {
+        let request = MKLocalPointsOfInterestRequest(center: destination, radius: 1000)
+        request.pointOfInterestFilter = MKPointOfInterestFilter(including: [.parking])
+
+        do {
+            let response = try await MKLocalSearch(request: request).start()
+            return response.mapItems.map { MapKitParking(mapItem: $0, destination: destination) }
+        } catch MKError.placemarkNotFound {
+            return []
+        }
     }
 
     private func aggregate(ppparkParkings: [PPPark.Parking], mapKitParkings: [MapKitParking]) -> [ParkingProtocol] {
