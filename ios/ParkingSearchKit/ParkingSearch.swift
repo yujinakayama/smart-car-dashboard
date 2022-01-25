@@ -44,8 +44,12 @@ class ParkingSearch {
         let request = MKLocalPointsOfInterestRequest(center: destination, radius: 1000)
         request.pointOfInterestFilter = MKPointOfInterestFilter(including: [.parking])
 
-        let response = try await MKLocalSearch(request: request).start()
-        return response.mapItems.map { MapKitParking(mapItem: $0, destination: destination) }
+        do {
+            let response = try await MKLocalSearch(request: request).start()
+            return response.mapItems.map { MapKitParking(mapItem: $0, destination: destination) }
+        } catch MKError.placemarkNotFound {
+            return []
+        }
     }
 
     private func aggregate(ppparkParkings: [PPPark.Parking], mapKitParkings: [MapKitParking]) -> [ParkingProtocol] {
