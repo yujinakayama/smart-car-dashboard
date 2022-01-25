@@ -12,7 +12,6 @@ import MapKit
 
 class ParkingSearch {
     static let aggregationDistance: CLLocationDistance = 5
-    static let nonCarParkingNamePattern = try! NSRegularExpression(pattern: "駐輪|二輪|オートバイ|バイク|事務(所|室)$")
 
     let destination: CLLocationCoordinate2D
     let entranceDate: Date
@@ -44,28 +43,21 @@ class ParkingSearch {
         let request = MKLocalPointsOfInterestRequest(center: destination, radius: 1000)
         request.pointOfInterestFilter = MKPointOfInterestFilter(including: [.parking])
 
+        let response: MKLocalSearch.Response
+
         do {
-            let response = try await MKLocalSearch(request: request).start()
-            return response.mapItems.map { MapKitParking(mapItem: $0, destination: destination) }
+            response = try await MKLocalSearch(request: request).start()
         } catch MKError.placemarkNotFound {
             return []
         }
+
+        let parkings = response.mapItems.map { MapKitParking(mapItem: $0, destination: destination) }
+        return parkings.filter { $0.isForCars }
     }
 
     private func aggregate(ppparkParkings: [PPPark.Parking], mapKitParkings: [MapKitParking]) -> [ParkingProtocol] {
-        logger.debug("Removing MapKit parkings not for cars")
-        let mapKitParkingsForCars = mapKitParkings.filter { (parking) in
-            let isForCars = Self.nonCarParkingNamePattern.rangeOfFirstMatch(in: parking.name).location == NSNotFound
-
-            if !isForCars {
-                logger.debug("  Not for cars: \(parking.name)")
-            }
-
-            return isForCars
-        }
-
         logger.debug("Removing MapKit parkings that are duplications of PPPark parkings")
-        let parkingsListedOnlyOnMapKit = mapKitParkingsForCars.filter { (mapKitParking) in
+        let parkingsListedOnlyOnMapKit = mapKitParkings.filter { (mapKitParking) in
             !ppparkParkings.contains { (ppparkParking) in
                 assumesParkingsAreSameOne(ppparkParking, mapKitParking)
             }
