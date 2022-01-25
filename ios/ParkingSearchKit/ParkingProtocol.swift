@@ -27,7 +27,10 @@ public protocol ParkingProtocol {
 
 public extension ParkingProtocol {
     var normalizedName: String {
-        name.covertFullwidthAlphanumericsToHalfwidth().convertFullwidthWhitespacesToHalfwidth()
+        return name
+            .covertFullwidthAlphanumericsToHalfwidth()
+            .convertFullwidthWhitespacesToHalfwidth()
+            .trimmingCharacters(in: .whitespaces)
     }
 
     var nameFeature: String {
