@@ -394,7 +394,7 @@ extension ParkingAnnotationView {
 
         func hideDetails() {
             detailView.isHidden = true
-            ellipsisButton.isHidden = false
+            ellipsisButton.isHidden = !isAnyDetailAvailable
         }
 
         @objc func openDirectionsInMaps() {
