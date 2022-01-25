@@ -31,16 +31,19 @@ public extension ParkingProtocol {
             .covertFullwidthAlphanumericsToHalfwidth()
             .convertFullwidthWhitespacesToHalfwidth()
             .replacingOccurrences(of: "三井のリパーク", with: "リパーク")
+            // In most cases the prefix 東急ライフィア doesn't appear in real world
             .replacingOccurrences(of: "東急(ライフィア|ライファ)", with: "", options: [.regularExpression])
             .trimmingCharacters(in: .whitespaces)
     }
 
     var nameFeature: String {
         return normalizedName
-            .lowercased()
+            // https://www.mec-p.co.jp/news/detail.php?id=111
+            .replacingOccurrences(of: "三菱地所パークス|^PEN(?![A-Za-z])", with: "PARKS PARK", options: [.regularExpression])
             .replacingOccurrences(of: "[\\(（【《].+?[\\)）】》]", with: "", options: [.regularExpression])
-            .replacingOccurrences(of: "(駐車場|パーキング|parking)", with: "", options: [.regularExpression])
+            .replacingOccurrences(of: "(駐車場|パーキング|parking)", with: "", options: [.regularExpression, .caseInsensitive])
             .replacingOccurrences(of: "[ ・]", with: "", options: [.regularExpression])
+            .lowercased()
     }
 
     var numbersInName: [Int] {
