@@ -544,7 +544,7 @@ extension MapsViewController: ParkingSearchMapViewManagerDelegate {
 
     func parkingSearchMapViewManager(_ manager: ParkingSearchMapViewManager, didSelectParkingForSearchingOnWeb parking: ParkingProtocol) {
         var urlComponents = URLComponents(string: "https://google.com/search")!
-        urlComponents.queryItems = [URLQueryItem(name: "q", value: parking.normalizedName)]
+        urlComponents.queryItems = [URLQueryItem(name: "q", value: "\(parking.normalizedName) 駐車場")]
         guard let url = urlComponents.url else { return }
         presentWebViewController(url: url)
     }
