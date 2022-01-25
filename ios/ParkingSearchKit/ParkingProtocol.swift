@@ -30,16 +30,15 @@ public extension ParkingProtocol {
         return name
             .covertFullwidthAlphanumericsToHalfwidth()
             .convertFullwidthWhitespacesToHalfwidth()
+            .replacingOccurrences(of: "三井のリパーク", with: "リパーク")
+            .replacingOccurrences(of: "東急(ライフィア|ライファ)", with: "", options: [.regularExpression])
             .trimmingCharacters(in: .whitespaces)
     }
 
     var nameFeature: String {
-        return name
-            .covertFullwidthAlphanumericsToHalfwidth()
-            .convertFullwidthWhitespacesToHalfwidth()
+        return normalizedName
             .lowercased()
             .replacingOccurrences(of: "[\\(（【《].+?[\\)）】》]", with: "", options: [.regularExpression])
-            .replacingOccurrences(of: "三井のリパーク", with: "リパーク")
             .replacingOccurrences(of: "(駐車場|パーキング|parking)", with: "", options: [.regularExpression])
             .replacingOccurrences(of: "[ ・]", with: "", options: [.regularExpression])
     }
