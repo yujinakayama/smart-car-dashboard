@@ -53,11 +53,19 @@ extension MapKitParking: ParkingProtocol {
         return mapItem.name ?? ""
     }
 
+    var price: Int? {
+        // https://www.police.pref.kanagawa.jp/mes/mesf4002.htm
+        if isParkingMeter {
+            return 300
+        } else {
+            return nil
+        }
+    }
+
     var availability: Availability? { return nil }
     var capacityDescription: String? { return nil }
     var isClosedNow: Bool? { return nil }
     var openingHoursDescription: String? { return nil }
-    var price: Int? { return nil }
     var priceDescription: String? { return nil }
     var rank: Int? { return nil }
     var reservation: Reservation? { return nil }

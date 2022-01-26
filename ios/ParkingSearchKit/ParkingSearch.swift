@@ -44,7 +44,23 @@ class ParkingSearch {
         async let parkingWithPointOfInterestFilterRequest = searchParkingsWithMapKitPointOfInterestRequest()
 
         let mergedParkings = Set(try await parkingWithNatualLanguageQuery).union(try await parkingWithPointOfInterestFilterRequest)
-        return mergedParkings.filter { $0.isForCars }
+        let parkingsForCars: [MapKitParking] = mergedParkings.filter { $0.isForCars }
+
+        if considersParkingMetersAvailable {
+            return parkingsForCars
+        } else {
+            return parkingsForCars.filter { !$0.isParkingMeter }
+        }
+    }
+
+    private var considersParkingMetersAvailable: Bool {
+        // Maximum parking duration for parking meters is 60 min:
+        // https://www.police.pref.kanagawa.jp/mes/mesf4002.htm
+        guard entranceDate.distance(to: exitDate) <= 60 * 60 else { return false }
+
+        // Most parking meters are available in 9:00-19:00 or 8:00-20:00
+        let availableTimeRange = Time(hour: 9, minute: 0)...Time(hour: 19, minute: 0)
+        return availableTimeRange.contains(entranceDate.time) && availableTimeRange.contains(exitDate.time)
     }
 
     // Returns parkings including ones not returned with MKLocalPointsOfInterestRequest.

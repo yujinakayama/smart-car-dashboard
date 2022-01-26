@@ -55,8 +55,12 @@ public extension ParkingProtocol {
         name.isEmpty || name == "駐車場"
     }
 
-    var isOnStreet: Bool {
+    var isParkingMeter: Bool {
         name.contains("パーキングメーター") || name.contains("パーキングチケット")
+    }
+
+    var isOnStreet: Bool {
+        isParkingMeter
     }
 }
 

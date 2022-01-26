@@ -114,10 +114,7 @@ import UIKit
     }
 
     func setTime(from date: Date, animated: Bool) {
-        let components = Calendar.autoupdatingCurrent.dateComponents([.hour, .minute], from: date)
-        let timeInterval = TimeInterval(components.hour! * 3600 + components.minute! * 60)
-        let time = Time(timeIntervalSinceMidnight: timeInterval)
-        setTime(time, animated: animated)
+        setTime(date.time, animated: animated)
     }
 
     func setTime(_ time: Time, animated: Bool) {
@@ -182,36 +179,5 @@ import UIKit
         label.font = font
         label.textAlignment = .center
         return label
-    }
-}
-
-extension TimePicker {
-    struct Time: Strideable {
-        typealias Stride = TimeInterval
-
-        static let min = Time(timeIntervalSinceMidnight: 0)
-        static let max = Time(timeIntervalSinceMidnight: 60 * 60 * 24)
-
-        var timeIntervalSinceMidnight: TimeInterval
-
-        var hour: Int {
-            return Int(timeIntervalSinceMidnight / 3600)
-        }
-
-        var minute: Int {
-            return Int(timeIntervalSinceMidnight) % 3600 / 60
-        }
-
-        var second: Int {
-            return Int(timeIntervalSinceMidnight) % 3600 % 60
-        }
-
-        func advanced(by n: Stride) -> Self {
-            return Self(timeIntervalSinceMidnight: timeIntervalSinceMidnight + n)
-        }
-
-        func distance(to other: Self) -> Stride {
-            return other.timeIntervalSinceMidnight - timeIntervalSinceMidnight
-        }
     }
 }
