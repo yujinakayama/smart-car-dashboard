@@ -33,9 +33,7 @@ class ParkingAnnotation: NSObject, MKAnnotation {
             return "¥\(price)"
         } else if parking.isClosedNow == true {
             return "営業時間外"
-        } else if let reservation = parking.reservation {
-            return reservation.provider
-        } else if parking.isNameUnknown || parking.isOnStreet {
+        } else if parking.isNameUnknown || parking.isOnStreet || parking.reservation != nil {
             return nil
         } else {
             return parking.normalizedName
