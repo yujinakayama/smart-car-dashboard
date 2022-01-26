@@ -120,7 +120,7 @@ public class ParkingSearchMapViewManager: NSObject {
                 }
 
                 guard let entranceDate = optionsView.entranceDate,
-                      let timeDuration = optionsView.timeDurationPicker.selectedDuration
+                      let timeDuration = optionsView.timeDurationPicker.duration
                 else { return }
 
                 let parkings = try await ParkingSearch(

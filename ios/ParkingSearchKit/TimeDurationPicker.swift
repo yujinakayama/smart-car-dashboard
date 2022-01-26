@@ -16,7 +16,7 @@ import UIKit
         }
     }
 
-    var selectedDuration: TimeInterval? {
+    var duration: TimeInterval? {
         let selectedRow = pickerView.selectedRow(inComponent: 0)
         guard selectedRow <= durations.count - 1 else { return nil }
         return durations[selectedRow]
@@ -28,6 +28,8 @@ import UIKit
         pickerView.delegate = self
         return pickerView
     }()
+
+    var previouslySelectedRow: Int = 0
 
     private lazy var formatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
@@ -101,6 +103,7 @@ import UIKit
 
     func selectRow(_ row: Int, animated: Bool) {
         pickerView.selectRow(row, inComponent: 0, animated: animated)
+        previouslySelectedRow = row
     }
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -122,7 +125,11 @@ import UIKit
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        sendActions(for: .valueChanged)
+        if row != previouslySelectedRow {
+            sendActions(for: .valueChanged)
+        }
+
+        previouslySelectedRow = row
     }
 
     private var rowHeight: CGFloat {

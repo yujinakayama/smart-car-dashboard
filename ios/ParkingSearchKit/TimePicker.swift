@@ -15,6 +15,8 @@ import UIKit
         return time(for: selectedRow)
     }
 
+    private var previousTime: Time?
+
     var minuteInterval: Int = 30 {
         didSet {
             updateTimes()
@@ -122,6 +124,7 @@ import UIKit
         updateTimes(additionalTime: time)
         let index = times.lastIndex(where: { $0 <= time }) ?? 0
         pickerView.selectRow(times.count + index, inComponent: 0, animated: animated)
+        previousTime = time
     }
 
     func time(for row: Int) -> Time {
@@ -148,7 +151,12 @@ import UIKit
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        sendActions(for: .valueChanged)
+        if time != previousTime {
+            sendActions(for: .valueChanged)
+        }
+
+        previousTime = time
+
         reselectMiddleRowForCurrentTime()
     }
 

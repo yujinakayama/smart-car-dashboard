@@ -32,6 +32,8 @@ import UIKit
         return pickerView
     }()
 
+    private var previouslySelectedRow: Int = 0
+
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.formattingContext = .listItem
@@ -151,6 +153,7 @@ import UIKit
 
     func selectRow(_ row: Int, animated: Bool) {
         pickerView.selectRow(row, inComponent: 0, animated: animated)
+        previouslySelectedRow = row
     }
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -172,7 +175,11 @@ import UIKit
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        sendActions(for: .valueChanged)
+        if row != previouslySelectedRow {
+            sendActions(for: .valueChanged)
+        }
+
+        previouslySelectedRow = row
     }
 
     private var rowHeight: CGFloat {
