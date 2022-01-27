@@ -31,6 +31,8 @@ public extension ParkingProtocol {
             .covertFullwidthAlphanumericsToHalfwidth()
             .convertFullwidthWhitespacesToHalfwidth()
             .replacingOccurrences(of: "三井のリパーク", with: "リパーク")
+            // In most cases "TOYO CARMAX" is displayed on signboards in real world
+            .replacingOccurrences(of: "東洋(カーマックス|CARMAX)", with: "TOYO CARMAX", options: [.regularExpression, .caseInsensitive])
             // In most cases the prefix 東急ライフィア doesn't appear in real world
             .replacingOccurrences(of: "東急(ライフィア|ライファ)", with: "", options: [.regularExpression])
             .trimmingCharacters(in: .whitespaces)
