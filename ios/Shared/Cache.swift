@@ -27,9 +27,8 @@ public class Cache {
     }
 
     let pinCache: PINCache
-    let ageLimit: TimeInterval
 
-    public init(name: String, ageLimit: TimeInterval) {
+    public init(name: String, ageLimit: TimeInterval? = nil) {
         pinCache = PINCache(
             name: name,
             rootPath: NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!,
@@ -37,10 +36,13 @@ public class Cache {
             deserializer: nil,
             keyEncoder: nil,
             keyDecoder: nil,
-            ttlCache: true
+            ttlCache: ageLimit != nil
         )
 
-        self.ageLimit = ageLimit
+        if let ageLimit = ageLimit {
+            pinCache.memoryCache.ageLimit = ageLimit
+            pinCache.diskCache.ageLimit = ageLimit
+        }
     }
 
     public func clear() {
@@ -77,13 +79,13 @@ public class Cache {
 
     public func setObject(_ object: NSCoding?, forKey key: String) {
         let objectToCache = object == nil ? NSNull() : object
-        pinCache.setObject(objectToCache, forKey: key, withAgeLimit: ageLimit)
+        pinCache.setObject(objectToCache, forKey: key)
     }
 
     public func setObjectAsync(_ object: NSCoding?, forKey key: String, completion: (() -> Void)? = nil) {
         let objectToCache = object == nil ? NSNull() : object
 
-        pinCache.setObjectAsync(objectToCache as Any, forKey: key, withAgeLimit: ageLimit) { (cache, key, object) in
+        pinCache.setObjectAsync(objectToCache as Any, forKey: key) { (cache, key, object) in
             completion?()
         }
     }
