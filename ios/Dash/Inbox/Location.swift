@@ -97,7 +97,8 @@ class Location: SharedItemProtocol {
     }
 
     class PointOfInterestFinder {
-        static let cache = Cache(name: "PointOfInterestFinder", ageLimit: 60 * 60 * 24 * 7) // 7 days
+        // 10MB, 7 days
+        static let cache = Cache(name: "PointOfInterestFinder", byteLimit: 10 * 1024 * 1024, ageLimit: 60 * 60 * 24 * 7) // 7 days
 
         let name: String
         let coordinate: CLLocationCoordinate2D

@@ -24,7 +24,8 @@ class WebsiteIcon {
         case generic
     }
 
-    static let cache = Cache(name: "WebsiteIcon", ageLimit: 60 * 60 * 24 * 30) // 30 days
+    // 10MB, 30 days
+    static let cache = Cache(name: "WebsiteIcon", byteLimit: 10 * 1024 * 1024, ageLimit: 60 * 60 * 24 * 30)
 
     let websiteURL: URL
 

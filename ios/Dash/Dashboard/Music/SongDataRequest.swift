@@ -15,7 +15,8 @@ class SongDataRequest {
         case enUS = "en-US"
     }
 
-    private static let cache = Cache(name: "SongDataRequest", ageLimit: 60 * 60 * 24 * 30 * 12) // 12 months
+    // 50MB, no expiration
+    private static let cache = Cache(name: "SongDataRequest", byteLimit: 50 * 1024 * 1024)
 
     static func hasCachedSong(id: String) -> Bool {
         return SongDataRequest.cache.containsObject(forKey: id)

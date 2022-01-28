@@ -58,7 +58,8 @@ import MediaPlayer
 
     private var imageFetchTask: Task<Void, Never>?
 
-    static let appleMusicImageCache = Cache(name: "ArtworkView", ageLimit: 60 * 60 * 24 * 30) // 1 month
+    // 500MB, no expiration
+    static let appleMusicImageCache = Cache(name: "ArtworkView", byteLimit: 500 * 1024 * 1024)
 
     var cornerRadius: CGFloat = 8 {
         didSet {

@@ -30,7 +30,8 @@ public class OfficialParkingSearch: NSObject {
 
     static let excludedDomainsHashValue = excludedDomains.reduce(0, { (hashValue, domain) in hashValue ^ domain.hashValue })
 
-    public static let cache = Cache(name: "OfficialParkingSearch", ageLimit: 60 * 60 * 24 * 7) // 1 week
+    // 10MB, 7 days
+    public static let cache = Cache(name: "OfficialParkingSearch", byteLimit: 10 * 1024 * 1024, ageLimit: 60 * 60 * 24 * 7)
 
     public let destination: MKMapItem
 
