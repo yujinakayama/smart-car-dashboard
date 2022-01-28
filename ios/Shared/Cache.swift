@@ -27,6 +27,7 @@ public class Cache {
     }
 
     let pinCache: PINCache
+    let ageLimit: TimeInterval
 
     public init(name: String, ageLimit: TimeInterval) {
         pinCache = PINCache(
@@ -38,6 +39,8 @@ public class Cache {
             keyDecoder: nil,
             ttlCache: true
         )
+
+        self.ageLimit = ageLimit
     }
 
     public func clear() {
@@ -74,13 +77,13 @@ public class Cache {
 
     public func setObject(_ object: NSCoding?, forKey key: String) {
         let objectToCache = object == nil ? NSNull() : object
-        pinCache.setObject(objectToCache, forKey: key)
+        pinCache.setObject(objectToCache, forKey: key, withAgeLimit: ageLimit)
     }
 
     public func setObjectAsync(_ object: NSCoding?, forKey key: String, completion: (() -> Void)? = nil) {
         let objectToCache = object == nil ? NSNull() : object
 
-        pinCache.setObjectAsync(objectToCache as Any, forKey: key) { (cache, key, object) in
+        pinCache.setObjectAsync(objectToCache as Any, forKey: key, withAgeLimit: ageLimit) { (cache, key, object) in
             completion?()
         }
     }
