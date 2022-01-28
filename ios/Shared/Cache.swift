@@ -28,7 +28,7 @@ public class Cache {
 
     let pinCache: PINCache
 
-    public init(name: String, ageLimit: TimeInterval? = nil) {
+    public init(name: String, byteLimit: UInt, ageLimit: TimeInterval? = nil) {
         pinCache = PINCache(
             name: name,
             rootPath: NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!,
@@ -38,6 +38,8 @@ public class Cache {
             keyDecoder: nil,
             ttlCache: ageLimit != nil
         )
+
+        pinCache.diskCache.byteLimit = byteLimit
 
         if let ageLimit = ageLimit {
             pinCache.memoryCache.ageLimit = ageLimit
