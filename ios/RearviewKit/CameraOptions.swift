@@ -31,6 +31,7 @@ struct CameraOptions: Encodable {
         var options = day
         options.brightness = 55
         options.exposure = .nightpreview
+        options.awbgains = AWBGains(blue: 1.45, red: 1.7)
         return options
     }()
 
