@@ -74,7 +74,7 @@ class AltitudeWidgetViewController: UIViewController, CLLocationManagerDelegate 
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         logger.info()
-        guard let location = locations.last else { return }
+        guard isMetering, let location = locations.last else { return }
         update(location: location)
     }
 

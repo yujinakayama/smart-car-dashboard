@@ -80,7 +80,7 @@ class Sun: NSObject, CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         logger.info()
-        guard let location = locations.last else { return }
+        guard isTrackingAppearance, let location = locations.last else { return }
         self.location = location
         update()
     }

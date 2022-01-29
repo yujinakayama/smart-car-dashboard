@@ -105,7 +105,7 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         logger.debug()
 
-        guard let location = locations.last else { return }
+        guard isTracking, let location = locations.last else { return }
 
         delegate?.roadTracker(self, didUpdateCurrentLocation: location)
 

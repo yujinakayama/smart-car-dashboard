@@ -114,7 +114,7 @@ extension SpeedSensitiveVolumeController: CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last, location.speedAccuracy >= 0 else { return }
+        guard isStarted, let location = locations.last, location.speedAccuracy >= 0 else { return }
         updateVolume(speed: location.speed)
     }
 }
