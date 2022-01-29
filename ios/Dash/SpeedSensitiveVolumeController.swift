@@ -19,6 +19,8 @@ class SpeedSensitiveVolumeController: NSObject {
         return locationManager
     }()
 
+    var isStarted = false
+
     var additonalValuePerOneMeterPerSecond: Float
     var minimumSpeedForAdditionalVolume: CLLocationSpeed
 
@@ -44,8 +46,20 @@ class SpeedSensitiveVolumeController: NSObject {
 
     func start() {
         logger.info()
-        volume.startObserving()
+
+        isStarted = true
+
+        switch locationManager.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
+            actuallyStart()
+        default:
+            locationManager.requestWhenInUseAuthorization()
+        }
+    }
+
+    private func actuallyStart() {
         locationManager.startUpdatingLocation()
+        volume.startObserving()
     }
 
     func stop(resetToBaseValue: Bool) {
@@ -89,9 +103,11 @@ extension SpeedSensitiveVolumeController: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         logger.info(manager.authorizationStatus.rawValue)
 
+        guard isStarted else { return  }
+
         switch manager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
-            locationManager.startUpdatingLocation()
+            actuallyStart()
         default:
             break
         }

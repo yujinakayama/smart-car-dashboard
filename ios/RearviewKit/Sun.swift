@@ -68,11 +68,11 @@ class Sun: NSObject, CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         logger.info(manager.authorizationStatus.rawValue)
 
+        guard isTrackingAppearance else { return }
+
         switch manager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
-            if isTrackingAppearance {
-                locationManager.startUpdatingLocation()
-            }
+            locationManager.startUpdatingLocation()
         default:
             break
         }

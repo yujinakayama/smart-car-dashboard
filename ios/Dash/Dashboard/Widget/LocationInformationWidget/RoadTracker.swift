@@ -64,12 +64,13 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
     func startTracking() {
         logger.info()
 
+        isTracking = true
+
         switch locationManager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
             DispatchQueue.main.async {
                 self.locationManager.startUpdatingLocation()
             }
-            isTracking = true
         default:
             locationManager.requestWhenInUseAuthorization()
         }
@@ -91,10 +92,11 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         logger.info(manager.authorizationStatus.rawValue)
 
+        guard isTracking else { return }
+
         switch manager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
-            isTracking = true
         default:
             break
         }

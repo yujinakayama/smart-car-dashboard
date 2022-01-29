@@ -43,10 +43,11 @@ class AltitudeWidgetViewController: UIViewController, CLLocationManagerDelegate 
     func startMetering() {
         logger.info()
 
+        isMetering = true
+
         switch locationManager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
-            isMetering = true
         default:
             locationManager.requestWhenInUseAuthorization()
         }
@@ -61,10 +62,11 @@ class AltitudeWidgetViewController: UIViewController, CLLocationManagerDelegate 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         logger.info(manager.authorizationStatus.rawValue)
 
+        guard isMetering else { return }
+
         switch manager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
-            isMetering = true
         default:
             break
         }
