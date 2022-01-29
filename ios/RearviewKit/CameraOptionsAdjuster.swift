@@ -30,13 +30,15 @@ class CameraOptionsAdjuster: NSObject, SunDelegate {
 
         remainingRetryCount = maxRetryCount
 
-        var cameraOptions: CameraOptions?
+        let cameraOptions: CameraOptions?
 
         switch sensitivityMode {
         case .auto:
-            updateCameraOptionsForCurrentSunAppearanceIfPossible()
-            sun.startTrackingAppearance()
-            return
+            if let currentSunAppearance = sun.appearance {
+                cameraOptions = suitableCameraOptions(for: currentSunAppearance)
+            } else {
+                cameraOptions = nil
+            }
         case .day:
             cameraOptions = CameraOptions.day
         case .night:
@@ -48,22 +50,18 @@ class CameraOptionsAdjuster: NSObject, SunDelegate {
         }
 
         if let cameraOptions = cameraOptions {
-            sun.stopTrackingAppearance()
             updateCameraOptions(cameraOptions)
+        }
+
+        if sensitivityMode == .auto {
+            sun.startTrackingAppearance()
+        } else {
+            sun.stopTrackingAppearance()
         }
     }
 
     func sun(_ sun: Sun, didChangeAppearance appearance: Sun.Appearance) {
-        updateCameraOptions(for: appearance)
-    }
-
-    @objc private func updateCameraOptionsForCurrentSunAppearanceIfPossible() {
-        guard let sunAppearance = sun.appearance else { return }
-        updateCameraOptions(for: sunAppearance)
-    }
-
-    private func updateCameraOptions(for sunAppearance: Sun.Appearance) {
-        let cameraOptions = suitableCameraOptions(for: sunAppearance)
+        let cameraOptions = suitableCameraOptions(for: appearance)
         updateCameraOptions(cameraOptions)
     }
 
