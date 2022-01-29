@@ -193,6 +193,9 @@ class MapsViewController: UIViewController {
         configureSharedItemDatabase()
 
         applyCurrentMode()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(locationTrackerDidStartTracking), name: .LocationTrackerDidStartTracking, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(locationTrackerDidUpdateTrack), name: .LocationTrackerDidUpdateCurrentTrack, object: nil)
     }
 
     deinit {
@@ -515,6 +518,29 @@ class MapsViewController: UIViewController {
         changePlacementOfParkingSearchOptionsSheetViewIfNeeded()
         changePlacementOfOfficialParkingSearchStatusViewIfNeeded()
     }
+
+    @objc func locationTrackerDidStartTracking() {
+        // We remove previous track overlay when new tracking just started rather than when stopped
+        // because users may want to view the track just after the previous arrival.
+        if let trackOverlay = trackOverlay {
+            mapView.removeOverlay(trackOverlay)
+        }
+    }
+
+    @objc func locationTrackerDidUpdateTrack() {
+        guard let track = LocationTracker.shared.currentTrack else { return }
+
+        if let trackOverlay = trackOverlay {
+            mapView.removeOverlay(trackOverlay)
+        }
+
+        let overlay = MKPolyline(coordinates: track.coordinates, count: track.coordinates.count)
+        mapView.addOverlay(overlay)
+
+        trackOverlay = overlay
+    }
+
+    private var trackOverlay: MKOverlay?
 }
 
 extension MapsViewController: MKMapViewDelegate {
@@ -527,6 +553,22 @@ extension MapsViewController: MKMapViewDelegate {
             return parkingSearchManager.view(for: annotation)
         } else {
             return nil
+        }
+    }
+
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        switch overlay {
+        case let polyline as MKPolyline:
+            let renderer = GradientPathRenderer(
+                polyline: polyline,
+                colors: [UIColor(named: "Route Line Color")!],
+                showsBorder: true,
+                borderColor: UIColor(named: "Route Border Color")!
+            )
+            renderer.lineWidth = 8
+            return renderer
+        default:
+            return MKOverlayRenderer(overlay: overlay)
         }
     }
 

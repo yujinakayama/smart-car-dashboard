@@ -23,6 +23,7 @@ class Defaults {
         case automaticallyOpensUnopenedLocationWhenAppIsOpened
         case snapLocationToPointOfInterest
         case automaticallySearchParkingsWhenLocationIsAutomaticallyOpened
+        case showTrackOnMaps
         case preferredMaxDistanceFromDestinationToParking
         case mainETCCardUUID
         case referenceAccelerationForGForceMeter
@@ -126,6 +127,12 @@ extension Defaults {
     var snapLocationToPointOfInterest: Bool {
         get {
             return bool(for: .snapLocationToPointOfInterest)
+        }
+    }
+
+    var showTrackOnMaps: Bool {
+        get {
+            return bool(for: .showTrackOnMaps)
         }
     }
 

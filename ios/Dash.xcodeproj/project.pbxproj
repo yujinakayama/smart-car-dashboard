@@ -21,6 +21,7 @@
 		B907C78E272555690085ED7E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B907C78D272555690085ED7E /* SceneDelegate.swift */; };
 		B907C790272589530085ED7E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B907C78F272589490085ED7E /* AppState.swift */; };
 		B907C7922726CFB50085ED7E /* RearviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B907C7912726CFB50085ED7E /* RearviewManager.swift */; };
+		B90A5500274A4B8E0078585A /* LocationTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90A54FF274A4B8E0078585A /* LocationTracker.swift */; };
 		B90C297225E3FB80004466C9 /* SIMDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90C297125E3FB80004466C9 /* SIMDExtension.swift */; };
 		B90E21F924CBB1BF008330AD /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90E21F824CBB1BF008330AD /* TabBarController.swift */; };
 		B90F5FD525EFF13D00C2578C /* CIImageDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F5FD425EFF13D00C2578C /* CIImageDisplayView.swift */; };
@@ -405,6 +406,7 @@
 		B907C78D272555690085ED7E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B907C78F272589490085ED7E /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		B907C7912726CFB50085ED7E /* RearviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewManager.swift; sourceTree = "<group>"; };
+		B90A54FF274A4B8E0078585A /* LocationTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTracker.swift; sourceTree = "<group>"; };
 		B90C297125E3FB80004466C9 /* SIMDExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIMDExtension.swift; sourceTree = "<group>"; };
 		B90E21F824CBB1BF008330AD /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		B90F5FD425EFF13D00C2578C /* CIImageDisplayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CIImageDisplayView.swift; sourceTree = "<group>"; };
@@ -1060,6 +1062,7 @@
 				B97BAE6124B61DB100AE7D13 /* Vehicle.swift */,
 				B92A61102576472A0073AB7B /* Assistant.swift */,
 				B9640ABC2575EBF200B779AD /* Firebase */,
+				B90A54FF274A4B8E0078585A /* LocationTracker.swift */,
 				B9854F7F278DA88000E07C0C /* SpeedSensitiveVolumeController.swift */,
 				B9854FA3278F426C00E07C0C /* SystemAudioVolume.swift */,
 				B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */,
@@ -1910,6 +1913,7 @@
 				B9C0BF472698689B00C54BA9 /* OfficialParkingInformationWebViewController.swift in Sources */,
 				B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */,
 				B90C297225E3FB80004466C9 /* SIMDExtension.swift in Sources */,
+				B90A5500274A4B8E0078585A /* LocationTracker.swift in Sources */,
 				B9BA5B5B26A8982C004D5927 /* SharedLocationAnnotation.swift in Sources */,
 				B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */,
 				B9640AAB2575D9E800B779AD /* Firebase.swift in Sources */,

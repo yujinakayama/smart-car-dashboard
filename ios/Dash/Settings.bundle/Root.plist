@@ -66,6 +66,22 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
+			<string>Maps</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Show Track on Maps</string>
+			<key>Key</key>
+			<string>showTrackOnMaps</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
 			<string>Parking Search</string>
 			<key>FooterText</key>
 			<string>Average walking speed is about 80m/minute.</string>

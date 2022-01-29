@@ -74,6 +74,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
+        startOrStopLocationTracker()
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -117,19 +118,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     @objc func vehicleDidConnect() {
+        startOrStopLocationTracker()
         startSpeedSensitiveVolumeControllerIfNeeded()
     }
 
     @objc func vehicleDidDisconnect() {
+        startOrStopLocationTracker()
         speedSensitiveVolumeController.stop(resetToBaseValue: true)
     }
 
-    func startSpeedSensitiveVolumeControllerIfNeeded() {
-        if Defaults.shared.isSpeedSensitiveVolumeControlEnabled, Vehicle.default.isConnected {
-            speedSensitiveVolumeController.additonalValuePerOneMeterPerSecond = Defaults.shared.additonalVolumePerOneMeterPerSecond
-            speedSensitiveVolumeController.minimumSpeedForAdditionalVolume = Defaults.shared.minimumSpeedForAdditionalVolume
-            speedSensitiveVolumeController.start()
+    func startOrStopLocationTracker() {
+        if Defaults.shared.showTrackOnMaps, Vehicle.default.isConnected {
+            LocationTracker.shared.startTracking()
+        } else {
+            LocationTracker.shared.stopTracking()
         }
+    }
+
+    func startSpeedSensitiveVolumeControllerIfNeeded() {
+        guard Defaults.shared.isSpeedSensitiveVolumeControlEnabled,
+              Vehicle.default.isConnected
+        else { return }
+
+        speedSensitiveVolumeController.additonalValuePerOneMeterPerSecond = Defaults.shared.additonalVolumePerOneMeterPerSecond
+        speedSensitiveVolumeController.minimumSpeedForAdditionalVolume = Defaults.shared.minimumSpeedForAdditionalVolume
+        speedSensitiveVolumeController.start()
     }
 }
 
