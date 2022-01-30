@@ -18,23 +18,19 @@ enum BLESerialPortError: Error {
     case rxCharacteristicNotFound
 }
 
-class BLESerialPort: NSObject, SerialPort, BLERemotePeripheralDelegate, CBPeripheralDelegate {
+class BLESerialPort: NSObject, SerialPort {
     static let serviceUUID          = CBUUID(string: "6E400001-B5A3-F393-E0A9-E50E24DCCA9E")
     static let txCharacteristicUUID = CBUUID(string: "6E400002-B5A3-F393-E0A9-E50E24DCCA9E")
     static let rxCharacteristicUUID = CBUUID(string: "6E400003-B5A3-F393-E0A9-E50E24DCCA9E")
 
-    let peripheral: BLERemotePeripheral
+    let peripheral: CBPeripheral
 
     weak var delegate: SerialPortDelegate?
-
-    var isAvailable: Bool {
-        return peripheral.isConnected
-    }
 
     var txCharacteristic: CBCharacteristic
     var rxCharacteristic: CBCharacteristic
 
-    init(peripheral: BLERemotePeripheral, characteristics: [CBCharacteristic]) throws {
+    init(peripheral: CBPeripheral, characteristics: [CBCharacteristic]) throws {
         self.peripheral = peripheral
 
         guard let txCharacteristic = characteristics.first(where: { $0.uuid == BLESerialPort.txCharacteristicUUID }) else {
@@ -42,7 +38,7 @@ class BLESerialPort: NSObject, SerialPort, BLERemotePeripheralDelegate, CBPeriph
         }
 
         self.txCharacteristic = txCharacteristic
-        peripheral.peripheral.setNotifyValue(true, for: txCharacteristic)
+        peripheral.setNotifyValue(true, for: txCharacteristic)
 
         guard let rxCharacteristic = characteristics.first(where: { $0.uuid == BLESerialPort.rxCharacteristicUUID }) else {
             throw BLESerialPortError.rxCharacteristicNotFound
@@ -57,10 +53,14 @@ class BLESerialPort: NSObject, SerialPort, BLERemotePeripheralDelegate, CBPeriph
 
     func transmit(_ data: Data) {
         logger.verbose(hexString(data))
-        peripheral.peripheral.writeValue(data, for: rxCharacteristic, type: .withoutResponse)
+        peripheral.writeValue(data, for: rxCharacteristic, type: .withoutResponse)
     }
+}
 
-    func peripheral(_ peripheral: BLERemotePeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+extension BLESerialPort: CBPeripheralDelegate {
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        logger.verbose(error)
+
         guard let value = characteristic.value else { return }
 
         logger.verbose(hexString(value))

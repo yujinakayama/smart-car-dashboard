@@ -42,8 +42,6 @@ let paymentRecordResponsePayloads = [
 class MockSerialPort: NSObject, SerialPort {
     weak var delegate: SerialPortDelegate?
 
-    var isAvailable = true
-
     private var paymentRecordPayloadIterator: IndexingIterator<[String]>?
 
     override init() {

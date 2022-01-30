@@ -21,7 +21,7 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
     static let cardUUIDNamespace = UUID(uuidString: "AE12B12B-2DD8-4FAB-9AD3-67FB3A15E12C")!
 
     let dataStore = ETCDataStore(name: "Dash")
-    var serialPortManager: SerialPortManager?
+    var serialPortManager: BLESerialPortManager?
     var connection: ETCDeviceConnection?
 
     var isConnected: Bool {
@@ -112,21 +112,21 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
     }
 
     func setupSerialPortManager() {
-        let serialPortManager = SerialPortManager(delegate: self)
-        serialPortManager.startDiscovering()
+        let serialPortManager = BLESerialPortManager(delegate: self)
+        serialPortManager.startDiscovery()
         self.serialPortManager = serialPortManager
     }
 
     // MARK: - ETCSerialPortManagerDelegate
 
-    func serialPortManager(_ serialPortManager: SerialPortManager, didFindSerialPort serialPort: SerialPort) {
+    func serialPortManager(_ serialPortManager: BLESerialPortManager, didFindSerialPort serialPort: SerialPort) {
         let connection = ETCDeviceConnection(serialPort: serialPort)
         connection.delegate = self
         connection.start()
         self.connection = connection
     }
 
-    func serialPortManager(_ serialPortManager: SerialPortManager, didLoseSerialPort serialPort: SerialPort) {
+    func serialPortManager(_ serialPortManager: BLESerialPortManager, didLoseSerialPort serialPort: SerialPort) {
         connection = nil
         shouldNotifyOfCardInsertionOrEjection = false
         currentCard = nil
