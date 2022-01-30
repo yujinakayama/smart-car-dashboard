@@ -48,11 +48,11 @@ class BLESerialPort: NSObject, SerialPort, BLERemotePeripheralDelegate, CBPeriph
     func transmit(_ data: Data) throws {
         logger.verbose(hexString(data))
 
-        guard rxCharacteristic != nil else {
+        guard let rxCharacteristic = rxCharacteristic else {
             throw BLESerialPortError.rxCharacteristicNotFound
         }
 
-        peripheral.peripheral.writeValue(data, for: rxCharacteristic!, type: .withoutResponse)
+        peripheral.peripheral.writeValue(data, for: rxCharacteristic, type: .withoutResponse)
     }
 
     // MARK: BLERemotePeripheralDelegate
@@ -60,20 +60,18 @@ class BLESerialPort: NSObject, SerialPort, BLERemotePeripheralDelegate, CBPeriph
     func peripheral(_ peripheral: BLERemotePeripheral, didDiscoverCharacteristics characteristics: [CBCharacteristic], error: Error?) {
         logger.verbose(characteristics)
 
-        let txCharacteristic = characteristics.first { $0.uuid == BLESerialPort.txCharacteristicUUID }
-        guard txCharacteristic != nil else {
+        guard let txCharacteristic = characteristics.first(where: { $0.uuid == BLESerialPort.txCharacteristicUUID }) else {
             delegate?.serialPortDidFinishPreparation(self, error: BLESerialPortError.txCharacteristicNotFound)
             return
         }
-        self.txCharacteristic = txCharacteristic!
-        peripheral.peripheral.setNotifyValue(true, for: txCharacteristic!)
+        self.txCharacteristic = txCharacteristic
+        peripheral.peripheral.setNotifyValue(true, for: txCharacteristic)
 
-        let rxCharacteristic = characteristics.first { $0.uuid == BLESerialPort.rxCharacteristicUUID }
-        guard rxCharacteristic != nil else {
+        guard let rxCharacteristic = characteristics.first(where: { $0.uuid == BLESerialPort.rxCharacteristicUUID }) else {
             delegate?.serialPortDidFinishPreparation(self, error: BLESerialPortError.rxCharacteristicNotFound)
             return
         }
-        self.rxCharacteristic = rxCharacteristic!
+        self.rxCharacteristic = rxCharacteristic
 
         delegate?.serialPortDidFinishPreparation(self, error: nil)
     }
@@ -81,10 +79,12 @@ class BLESerialPort: NSObject, SerialPort, BLERemotePeripheralDelegate, CBPeriph
     // MARK: CBPeripheralDelegate
 
     func peripheral(_ peripheral: BLERemotePeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        logger.verbose(hexString(characteristic.value!))
+        guard let value = characteristic.value else { return }
+
+        logger.verbose(hexString(value))
 
         if characteristic == txCharacteristic && error == nil {
-            delegate?.serialPort(self, didReceiveData: characteristic.value!)
+            delegate?.serialPort(self, didReceiveData: value)
         }
     }
 }

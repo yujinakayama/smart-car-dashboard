@@ -61,16 +61,20 @@ class ETCPaymentTableViewController: UITableViewController, NSFetchedResultsCont
     }
 
     func fetchPayments(managedObjectContext: NSManagedObjectContext) {
+        let card: ETCCardManagedObject?
+
         if let cardUUIDToRestore = cardUUIDToRestore {
-            card = try! device.dataStore.findCard(uuid: cardUUIDToRestore, in: managedObjectContext)
+            card = try? device.dataStore.findCard(uuid: cardUUIDToRestore, in: managedObjectContext)
+        } else {
+            card = self.card
         }
 
-        fetchedResultsController = makeFetchedResultsController(managedObjectContext: managedObjectContext)
+        fetchedResultsController = makeFetchedResultsController(managedObjectContext: managedObjectContext, card: card)
         try! fetchedResultsController!.performFetch()
         tableView.reloadData()
     }
 
-    func makeFetchedResultsController(managedObjectContext: NSManagedObjectContext) -> NSFetchedResultsController<ETCPaymentManagedObject> {
+    func makeFetchedResultsController(managedObjectContext: NSManagedObjectContext, card: ETCCardManagedObject?) -> NSFetchedResultsController<ETCPaymentManagedObject> {
         let request: NSFetchRequest<ETCPaymentManagedObject> = ETCPaymentManagedObject.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
 

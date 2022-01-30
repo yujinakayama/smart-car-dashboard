@@ -112,16 +112,18 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
     }
 
     func setupSerialPortManager() {
-        serialPortManager = SerialPortManager(delegate: self)
-        serialPortManager!.startDiscovering()
+        let serialPortManager = SerialPortManager(delegate: self)
+        serialPortManager.startDiscovering()
+        self.serialPortManager = serialPortManager
     }
 
     // MARK: - ETCSerialPortManagerDelegate
 
     func serialPortManager(_ serialPortManager: SerialPortManager, didFindSerialPort serialPort: SerialPort) {
-        connection = ETCDeviceConnection(serialPort: serialPort)
-        connection!.delegate = self
-        connection!.startPreparation()
+        let connection = ETCDeviceConnection(serialPort: serialPort)
+        connection.delegate = self
+        connection.startPreparation()
+        self.connection = connection
     }
 
     func serialPortManager(_ serialPortManager: SerialPortManager, didLoseSerialPort serialPort: SerialPort) {
@@ -136,29 +138,44 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
     func deviceConnectionDidFinishPreparation(_ connection: ETCDeviceConnection, error: Error?) {
         justConnected = true
         notificationCenter.post(name: .ETCDeviceDidConnect, object: self)
-        try! connection.send(ETCMessageToDevice.cardExistenceRequest)
+
+        do {
+            try connection.send(ETCMessageToDevice.cardExistenceRequest)
+        } catch {
+            logger.error(error)
+        }
     }
 
     func deviceConnection(_ connection: ETCDeviceConnection, didReceiveMessage message: ETCMessageFromDeviceProtocol) {
+        do {
+            try handleMessage(message, from: connection)
+        } catch {
+            logger.error(error)
+        }
+    }
+
+    // MARK: - Internal
+
+    func handleMessage(_ message: ETCMessageFromDeviceProtocol, from connection: ETCDeviceConnection) throws {
         switch message {
         case is ETCMessageFromDevice.CardExistenceResponse:
-            try! connection.send(ETCMessageToDevice.uniqueCardDataRequest)
+            try connection.send(ETCMessageToDevice.uniqueCardDataRequest)
         case let response as ETCMessageFromDevice.UniqueCardDataResponse:
             handleUniqueCardDataResponse(response)
         case is ETCMessageFromDevice.CardNonExistenceResponse:
             currentCard = nil
         case is ETCMessageFromDevice.InitialPaymentRecordExistenceResponse:
-            try! connection.send(ETCMessageToDevice.initialPaymentRecordRequest)
+            try connection.send(ETCMessageToDevice.initialPaymentRecordRequest)
         case let response as ETCMessageFromDevice.PaymentRecordResponse:
             handlePaymentRecordResponse(response)
         case is ETCMessageFromDevice.GateEntranceNotification, is ETCMessageFromDevice.GateExitNotification:
             UserNotificationCenter.shared.requestDelivery(TollgatePassingThroughNotification())
         case is ETCMessageFromDevice.PaymentNotification:
             justReceivedPaymentNotification = true
-            try! connection.send(ETCMessageToDevice.initialPaymentRecordRequest)
+            try connection.send(ETCMessageToDevice.initialPaymentRecordRequest)
         case is ETCMessageFromDevice.CardInsertionNotification:
             shouldNotifyOfCardInsertionOrEjection = true
-            try! connection.send(ETCMessageToDevice.cardExistenceRequest)
+            try connection.send(ETCMessageToDevice.cardExistenceRequest)
         case is ETCMessageFromDevice.CardEjectionNotification:
             shouldNotifyOfCardInsertionOrEjection = true
             currentCard = nil
@@ -167,17 +184,21 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
         }
     }
 
-    // MARK: - Internal
-
     func handleUniqueCardDataResponse(_ response: ETCMessageFromDevice.UniqueCardDataResponse) {
         let cardData = Data(response.payloadBytes)
         let cardUUID = UUID(version: .v5, namespace: ETCDevice.cardUUIDNamespace, name: cardData)
 
+        guard let connection = connection else { return }
+
         dataStore.performBackgroundTask { [unowned self] (context) in
-            let card = try! self.dataStore.findOrInsertCard(uuid: cardUUID, in: context)
-            try! context.save()
-            self.currentCard = card
-            try! self.connection!.send(ETCMessageToDevice.initialPaymentRecordRequest)
+            do {
+                let card = try self.dataStore.findOrInsertCard(uuid: cardUUID, in: context)
+                try context.save()
+                self.currentCard = card
+                try connection.send(ETCMessageToDevice.initialPaymentRecordRequest)
+            } catch {
+                logger.error(error)
+            }
         }
     }
 
@@ -189,11 +210,19 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
             UserNotificationCenter.shared.requestDelivery(PaymentNotification(payment: payment))
         }
 
+        guard let connection = connection else { return }
+
         dataStore.performBackgroundTask { [unowned self] (context) in
-            let managedObject = try! self.dataStore.insert(payment: payment, unlessExistsIn: context)
-            if managedObject != nil {
-                try! context.save()
-                try! self.connection!.send(ETCMessageToDevice.nextPaymentRecordRequest)
+            do {
+                if try self.dataStore.checkExistence(of: payment, in: context) {
+                    return
+                }
+
+                try self.dataStore.insert(payment: payment, into: context)
+                try context.save()
+                try connection.send(ETCMessageToDevice.nextPaymentRecordRequest)
+            } catch {
+                logger.error(error)
             }
         }
     }

@@ -93,21 +93,21 @@ class BLERemotePeripheralManager: NSObject, CBCentralManagerDelegate {
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         logger.verbose(peripheral)
-        let remotePeripheral = connectingPeripherals[peripheral]!
+        guard let remotePeripheral = connectingPeripherals[peripheral] else { return }
         remotePeripheral.isConnected = true
         delegate?.peripheralManager(self, didConnectToPeripheral: remotePeripheral)
     }
 
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         logger.verbose((peripheral, error))
-        let remotePeripheral = connectingPeripherals[peripheral]!
+        guard let remotePeripheral = connectingPeripherals[peripheral] else { return }
         remotePeripheral.isConnected = false
         delegate?.peripheralManager(self, didFailToConnectToPeripheral: connectingPeripherals[peripheral]!, error: error)
     }
 
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         logger.verbose((peripheral, error))
-        let remotePeripheral = connectingPeripherals[peripheral]!
+        guard let remotePeripheral = connectingPeripherals[peripheral] else { return }
         remotePeripheral.isConnected = false
         delegate?.peripheralManager(self, didDisconnectToPeripheral: connectingPeripherals[peripheral]!, error: error)
     }

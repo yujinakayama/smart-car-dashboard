@@ -61,7 +61,7 @@ class ETCCardEditViewController: UITableViewController {
     @IBAction func doneButtonDidTap(_ sender: Any) {
         card.brand = currentBrand
         card.name = nameTextField.text
-        try! card.managedObjectContext?.save()
+        try? card.managedObjectContext?.save()
 
         if mainCardSwitch.isOn {
             Defaults.shared.mainETCCardUUID = card.uuid

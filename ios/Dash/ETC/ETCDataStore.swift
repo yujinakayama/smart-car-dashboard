@@ -33,8 +33,10 @@ class ETCDataStore: NSObject {
     func loadPersistantStores(completionHandler: @escaping (NSPersistentStoreDescription, Error?) -> Void) {
         persistentContainer.loadPersistentStores { [weak self] (persistentStoreDescription, error) in
             guard let self = self else { return }
+
+            self.persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
             self.viewContext = self.persistentContainer.viewContext
-            self.viewContext!.automaticallyMergesChangesFromParent = true
+
             completionHandler(persistentStoreDescription, error)
         }
     }
@@ -45,14 +47,7 @@ class ETCDataStore: NSObject {
         }
     }
 
-    func insert(payment: ETCPayment, unlessExistsIn context: NSManagedObjectContext) throws -> ETCPaymentManagedObject? {
-        if try checkExistence(of: payment, in: context) {
-            return nil
-        }
-
-        return try insert(payment: payment, into: context)
-    }
-
+    @discardableResult
     func insert(payment: ETCPayment, into context: NSManagedObjectContext) throws -> ETCPaymentManagedObject {
         guard let card = currentCard else {
             throw ETCDataStoreError.currentCardMustBeSet

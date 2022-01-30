@@ -50,6 +50,13 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
     private func startHandshake() {
         logger.info()
 
+        do {
+            try send(ETCMessageToDevice.handshakeRequest)
+        } catch {
+            logger.error(error)
+            return
+        }
+
         handshakeStatus = .trying
 
         handshakeTimeoutTimer = Timer.scheduledTimer(withTimeInterval: handshakeTimeoutTimeInterval, repeats: false) { [weak self] (timer) in
@@ -62,8 +69,6 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
 
             self.handshakeTimeoutTimer = nil
         }
-
-        try! send(ETCMessageToDevice.handshakeRequest)
     }
 
     private func completeHandshake() {
@@ -93,10 +98,15 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
     }
 
     private func sendPendingMessages() {
-        for message in pendingMessagesToSend {
-            logger.debug("Sending pending message")
-            try! send(message)
+        do {
+            for message in pendingMessagesToSend {
+                logger.debug("Sending pending message")
+                try send(message)
+            }
+        } catch {
+            logger.error(error)
         }
+
         pendingMessagesToSend.removeAll()
     }
 
@@ -131,10 +141,14 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
         }
 
         if message.requiresAcknowledgement {
-            try! send(ETCMessageToDevice.acknowledgement)
+            do {
+                try send(ETCMessageToDevice.acknowledgement)
 
-            if handshakeStatus != .complete && message is ETCMessageFromDevice.HandshakeRequest {
-                completeHandshake()
+                if handshakeStatus != .complete && message is ETCMessageFromDevice.HandshakeRequest {
+                    completeHandshake()
+                }
+            } catch {
+                logger.error(error)
             }
         }
 
