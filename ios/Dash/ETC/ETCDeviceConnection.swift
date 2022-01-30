@@ -52,18 +52,28 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
 
         handshakeStatus = .trying
 
-        handshakeTimeoutTimer = Timer.scheduledTimer(withTimeInterval: handshakeTimeoutTimeInterval, repeats: false) { [weak self] (timer) in
+        onHandshakeTimeout { [weak self] in
             guard let self = self else { return }
 
             if self.handshakeStatus == .trying {
                 logger.info("Handshake timed out")
                 self.handshakeStatus = .incomplete
             }
-
-            self.handshakeTimeoutTimer = nil
         }
 
         send(ETCMessageToDevice.handshakeRequest)
+    }
+
+    private func onHandshakeTimeout(timeoutHandler: @escaping () -> Void) {
+        let timer = Timer(timeInterval: handshakeTimeoutTimeInterval, repeats: false) { [weak self] (timer) in
+            guard let self = self else { return }
+            self.handshakeTimeoutTimer = nil
+            timeoutHandler()
+        }
+
+        RunLoop.main.add(timer, forMode: .common)
+
+        handshakeTimeoutTimer = timer
     }
 
     private func completeHandshake() {
