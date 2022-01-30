@@ -19,7 +19,10 @@ class BLESerialPortManager: NSObject {
 
     private lazy var centralManager = CBCentralManager(delegate: self, queue: nil)
 
-    private var connectedSerialPorts = [CBPeripheral: SerialPort]()
+    // https://qiita.com/shu223/items/f67f1b0fb1840cf0bd63#トラブル2-接続に失敗する
+    private var discoveredPeripherals: [CBPeripheral] = []
+
+    private var serialPorts: [CBPeripheral: SerialPort] = [:]
 
     init(delegate: SerialPortManagerDelegate) {
         self.delegate = delegate
@@ -42,22 +45,29 @@ class BLESerialPortManager: NSObject {
         logger.info()
 
         if let peripheral = currentlyConnectedPeripheral {
-            Task {
-                await discoverCharacteristicsAndNotify(peripheral: peripheral)
-            }
+            didDiscoverPeripheral(peripheral)
         } else {
             startScanning()
         }
     }
 
     private var currentlyConnectedPeripheral: CBPeripheral? {
+        // The list of connected peripherals can include those that other apps have connected.
+        // You need to connect these peripherals locally using the connect(_:options:) method before using them.
         let peripherals = centralManager.retrieveConnectedPeripherals(withServices: [BLESerialPort.serviceUUID])
         return peripherals.first
     }
 
-    private func startScanning() {
-        logger.info()
-        centralManager.scanForPeripherals(withServices: [BLESerialPort.serviceUUID], options: nil)
+    private func didDiscoverPeripheral(_ peripheral: CBPeripheral) {
+        discoveredPeripherals.append(peripheral)
+
+        if peripheral.state == .connected {
+            Task {
+                await discoverCharacteristicsAndNotify(peripheral: peripheral)
+            }
+        } else {
+            centralManager.connect(peripheral, options: nil)
+        }
     }
 
     private func discoverCharacteristicsAndNotify(peripheral: CBPeripheral) async {
@@ -65,11 +75,16 @@ class BLESerialPortManager: NSObject {
             let discovery = BLECharacteristicsDiscovery(peripheral: peripheral)
             let characteristics = try await discovery.discoverCharacteristics(in: BLESerialPort.serviceUUID)
             let serialPort = try BLESerialPort(peripheral: peripheral, characteristics: characteristics)
-            connectedSerialPorts[peripheral] = serialPort
+            serialPorts[peripheral] = serialPort
             delegate?.serialPortManager(self, didFindSerialPort: serialPort)
         } catch {
             logger.error(error)
         }
+    }
+
+    private func startScanning() {
+        logger.info()
+        centralManager.scanForPeripherals(withServices: [BLESerialPort.serviceUUID], options: nil)
     }
 }
 
@@ -84,9 +99,8 @@ extension BLESerialPortManager: CBCentralManagerDelegate {
 
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         logger.info((peripheral, advertisementData, RSSI))
-
         centralManager.stopScan()
-        centralManager.connect(peripheral, options: nil)
+        didDiscoverPeripheral(peripheral)
     }
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
@@ -105,9 +119,9 @@ extension BLESerialPortManager: CBCentralManagerDelegate {
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         logger.info((peripheral, error))
 
-        if let serialPort = connectedSerialPorts[peripheral] {
+        if let serialPort = serialPorts[peripheral] {
             delegate?.serialPortManager(self, didLoseSerialPort: serialPort)
-            connectedSerialPorts.removeValue(forKey: peripheral)
+            serialPorts.removeValue(forKey: peripheral)
         }
 
         centralManager.connect(peripheral, options: nil)
