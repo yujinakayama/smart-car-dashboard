@@ -122,7 +122,7 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
     func serialPortManager(_ serialPortManager: SerialPortManager, didFindSerialPort serialPort: SerialPort) {
         let connection = ETCDeviceConnection(serialPort: serialPort)
         connection.delegate = self
-        connection.startPreparation()
+        connection.start()
         self.connection = connection
     }
 
@@ -139,43 +139,29 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
         justConnected = true
         notificationCenter.post(name: .ETCDeviceDidConnect, object: self)
 
-        do {
-            try connection.send(ETCMessageToDevice.cardExistenceRequest)
-        } catch {
-            logger.error(error)
-        }
+        connection.send(ETCMessageToDevice.cardExistenceRequest)
     }
 
     func deviceConnection(_ connection: ETCDeviceConnection, didReceiveMessage message: ETCMessageFromDeviceProtocol) {
-        do {
-            try handleMessage(message, from: connection)
-        } catch {
-            logger.error(error)
-        }
-    }
-
-    // MARK: - Internal
-
-    func handleMessage(_ message: ETCMessageFromDeviceProtocol, from connection: ETCDeviceConnection) throws {
         switch message {
         case is ETCMessageFromDevice.CardExistenceResponse:
-            try connection.send(ETCMessageToDevice.uniqueCardDataRequest)
+            connection.send(ETCMessageToDevice.uniqueCardDataRequest)
         case let response as ETCMessageFromDevice.UniqueCardDataResponse:
             handleUniqueCardDataResponse(response)
         case is ETCMessageFromDevice.CardNonExistenceResponse:
             currentCard = nil
         case is ETCMessageFromDevice.InitialPaymentRecordExistenceResponse:
-            try connection.send(ETCMessageToDevice.initialPaymentRecordRequest)
+            connection.send(ETCMessageToDevice.initialPaymentRecordRequest)
         case let response as ETCMessageFromDevice.PaymentRecordResponse:
             handlePaymentRecordResponse(response)
         case is ETCMessageFromDevice.GateEntranceNotification, is ETCMessageFromDevice.GateExitNotification:
             UserNotificationCenter.shared.requestDelivery(TollgatePassingThroughNotification())
         case is ETCMessageFromDevice.PaymentNotification:
             justReceivedPaymentNotification = true
-            try connection.send(ETCMessageToDevice.initialPaymentRecordRequest)
+            connection.send(ETCMessageToDevice.initialPaymentRecordRequest)
         case is ETCMessageFromDevice.CardInsertionNotification:
             shouldNotifyOfCardInsertionOrEjection = true
-            try connection.send(ETCMessageToDevice.cardExistenceRequest)
+            connection.send(ETCMessageToDevice.cardExistenceRequest)
         case is ETCMessageFromDevice.CardEjectionNotification:
             shouldNotifyOfCardInsertionOrEjection = true
             currentCard = nil
@@ -183,6 +169,8 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
             break
         }
     }
+
+    // MARK: - Internal
 
     func handleUniqueCardDataResponse(_ response: ETCMessageFromDevice.UniqueCardDataResponse) {
         let cardData = Data(response.payloadBytes)
@@ -195,7 +183,7 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
                 let card = try self.dataStore.findOrInsertCard(uuid: cardUUID, in: context)
                 try context.save()
                 self.currentCard = card
-                try connection.send(ETCMessageToDevice.initialPaymentRecordRequest)
+                connection.send(ETCMessageToDevice.initialPaymentRecordRequest)
             } catch {
                 logger.error(error)
             }
@@ -220,7 +208,7 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
 
                 try self.dataStore.insert(payment: payment, into: context)
                 try context.save()
-                try connection.send(ETCMessageToDevice.nextPaymentRecordRequest)
+                connection.send(ETCMessageToDevice.nextPaymentRecordRequest)
             } catch {
                 logger.error(error)
             }

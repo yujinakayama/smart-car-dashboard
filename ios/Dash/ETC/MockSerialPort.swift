@@ -42,17 +42,16 @@ let paymentRecordResponsePayloads = [
 class MockSerialPort: NSObject, SerialPort {
     weak var delegate: SerialPortDelegate?
 
-    var isAvailable = false
+    var isAvailable = true
 
     private var paymentRecordPayloadIterator: IndexingIterator<[String]>?
 
-    func startPreparation() {
-        delegate?.serialPortDidFinishPreparation(self, error: nil)
-        isAvailable = true
+    override init() {
+        super.init()
         startHeartbeats()
     }
 
-    func transmit(_ data: Data) throws {
+    func transmit(_ data: Data) {
         switch data {
         case ETCMessageToDevice.handshakeRequest.data:
             simulateReceive(ETCMessageFromDevice.HandshakeAcknowledgement.makeMockMessage())

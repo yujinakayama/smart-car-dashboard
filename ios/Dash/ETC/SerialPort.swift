@@ -9,13 +9,11 @@
 import Foundation
 
 protocol SerialPortDelegate: NSObjectProtocol {
-    func serialPortDidFinishPreparation(_ serialPort: SerialPort, error: Error?)
     func serialPort(_ serialPort: SerialPort, didReceiveData data: Data)
 }
 
 protocol SerialPort: NSObjectProtocol {
     var delegate: SerialPortDelegate? { get set }
     var isAvailable: Bool { get }
-    func startPreparation()
-    func transmit(_ data: Data) throws
+    func transmit(_ data: Data)
 }

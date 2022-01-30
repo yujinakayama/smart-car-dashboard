@@ -43,19 +43,12 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
         serialPort.delegate = self
     }
 
-    func startPreparation() {
-        serialPort.startPreparation()
+    func start() {
+        startHandshake()
     }
 
     private func startHandshake() {
         logger.info()
-
-        do {
-            try send(ETCMessageToDevice.handshakeRequest)
-        } catch {
-            logger.error(error)
-            return
-        }
 
         handshakeStatus = .trying
 
@@ -69,6 +62,8 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
 
             self.handshakeTimeoutTimer = nil
         }
+
+        send(ETCMessageToDevice.handshakeRequest)
     }
 
     private func completeHandshake() {
@@ -86,11 +81,11 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
         sendPendingMessages()
     }
 
-    func send(_ message: ETCMessageToDeviceProtocol) throws {
+    func send(_ message: ETCMessageToDeviceProtocol) {
         logger.debug(message)
 
         if !message.requiresPreliminaryHandshake || handshakeStatus == .complete {
-            try serialPort.transmit(message.data)
+            serialPort.transmit(message.data)
         } else {
             logger.debug("Enqueueing the message to pending message list since handshake is not yet completed")
             pendingMessagesToSend.append(message)
@@ -98,13 +93,9 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
     }
 
     private func sendPendingMessages() {
-        do {
-            for message in pendingMessagesToSend {
-                logger.debug("Sending pending message")
-                try send(message)
-            }
-        } catch {
-            logger.error(error)
+        for message in pendingMessagesToSend {
+            logger.debug("Sending pending message")
+            send(message)
         }
 
         pendingMessagesToSend.removeAll()
@@ -141,14 +132,10 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
         }
 
         if message.requiresAcknowledgement {
-            do {
-                try send(ETCMessageToDevice.acknowledgement)
+            send(ETCMessageToDevice.acknowledgement)
 
-                if handshakeStatus != .complete && message is ETCMessageFromDevice.HandshakeRequest {
-                    completeHandshake()
-                }
-            } catch {
-                logger.error(error)
+            if handshakeStatus != .complete && message is ETCMessageFromDevice.HandshakeRequest {
+                completeHandshake()
             }
         }
 
@@ -158,16 +145,6 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
     }
 
     // MARK: SerialPortDelegate
-
-    func serialPortDidFinishPreparation(_ device: SerialPort, error: Error?) {
-        logger.debug(error)
-
-        if error == nil {
-            startHandshake()
-        } else {
-            delegate?.deviceConnectionDidFinishPreparation(self, error: error)
-        }
-    }
 
     func serialPort(_ device: SerialPort, didReceiveData data: Data) {
         handleReceivedData(data)

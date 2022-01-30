@@ -10,7 +10,6 @@ import Foundation
 import CoreBluetooth
 
 protocol BLERemotePeripheralDelegate: NSObjectProtocol {
-    func peripheral(_ peripheral: BLERemotePeripheral, didDiscoverCharacteristics characteristics: [CBCharacteristic], error: Error?)
     func peripheral(_ peripheral: BLERemotePeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?)
 }
 
@@ -23,9 +22,7 @@ class BLERemotePeripheral: NSObject, CBPeripheralDelegate {
 
     var isConnected = false
 
-    var services: [CBService]? {
-        return peripheral.services
-    }
+    private var characteristicsDiscoveryContinuation: CheckedContinuation<[CBCharacteristic], Error>?
 
     init(_ peripheral: CBPeripheral, serviceUUID: CBUUID) {
         self.peripheral = peripheral
@@ -34,33 +31,48 @@ class BLERemotePeripheral: NSObject, CBPeripheralDelegate {
         self.peripheral.delegate = self
     }
 
-    func startDiscoveringCharacteristics() {
+    func discoverCharacteristics() async throws -> [CBCharacteristic] {
         logger.verbose()
-        peripheral.discoverServices([serviceUUID])
+
+        return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[CBCharacteristic], Error>) in
+            self.characteristicsDiscoveryContinuation = continuation
+            peripheral.discoverServices([serviceUUID])
+        }
     }
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         logger.verbose(error)
 
-        let targetService = peripheral.services?.first(where: { (service) -> Bool in
-            service.uuid == serviceUUID
-        })
-
-        if let targetService = targetService {
+        if let targetService = peripheral.services?.first(where: { $0.uuid == serviceUUID }) {
             peripheral.discoverCharacteristics(nil, for: targetService)
+        } else {
+            characteristicsDiscoveryContinuation?.resume(throwing: BLERemotePeripheralError.serviceNotFound)
+            characteristicsDiscoveryContinuation = nil
         }
     }
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         logger.verbose(error)
 
-        if service.uuid == serviceUUID {
-            delegate?.peripheral(self, didDiscoverCharacteristics: service.characteristics!, error: error)
+        guard service.uuid == serviceUUID else { return }
+
+        guard let continuation = characteristicsDiscoveryContinuation else { return }
+        characteristicsDiscoveryContinuation = nil
+
+        if let error = error {
+            continuation.resume(throwing: error)
+            return
         }
+
+        continuation.resume(returning: service.characteristics ?? [])
     }
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         logger.verbose(error)
         delegate?.peripheral(self, didUpdateValueFor: characteristic, error: error)
     }
+}
+
+enum BLERemotePeripheralError: Error {
+    case serviceNotFound
 }

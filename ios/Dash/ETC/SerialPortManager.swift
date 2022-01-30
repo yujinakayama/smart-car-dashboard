@@ -59,9 +59,17 @@ class SerialPortManager: NSObject, BLERemotePeripheralManagerDelegate {
 
     func peripheralManager(_ peripheralManager: BLERemotePeripheralManager, didConnectToPeripheral peripheral: BLERemotePeripheral) {
         logger.info(peripheral)
-        let serialPort = BLESerialPort(peripheral: peripheral)
-        connectedSerialPorts[peripheral] = serialPort
-        delegate?.serialPortManager(self, didFindSerialPort: serialPort)
+
+        Task {
+            do {
+                let characteristics = try await peripheral.discoverCharacteristics()
+                let serialPort = try BLESerialPort(peripheral: peripheral, characteristics: characteristics)
+                connectedSerialPorts[peripheral] = serialPort
+                delegate?.serialPortManager(self, didFindSerialPort: serialPort)
+            } catch {
+                logger.error(error)
+            }
+        }
     }
 
     func peripheralManager(_ peripheralManager: BLERemotePeripheralManager, didFailToConnectToPeripheral peripheral: BLERemotePeripheral, error: Error?) {
