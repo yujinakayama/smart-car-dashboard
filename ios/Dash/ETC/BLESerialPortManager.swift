@@ -56,7 +56,7 @@ class BLESerialPortManager: NSObject {
     }
 
     private func startScanning() {
-        logger.verbose()
+        logger.info()
         centralManager.scanForPeripherals(withServices: [BLESerialPort.serviceUUID], options: nil)
     }
 

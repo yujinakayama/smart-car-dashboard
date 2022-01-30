@@ -21,7 +21,7 @@ class BLECharacteristicsDiscovery: NSObject {
     }
 
     func discoverCharacteristics(in serviceUUID: CBUUID) async throws -> [CBCharacteristic] {
-        logger.verbose()
+        logger.debug()
 
         return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[CBCharacteristic], Error>) in
             self.continuation = continuation
@@ -32,13 +32,13 @@ class BLECharacteristicsDiscovery: NSObject {
 
 extension BLECharacteristicsDiscovery: CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        logger.verbose(error)
+        logger.debug(error)
         guard let targetService = peripheral.services?.first else { return }
         peripheral.discoverCharacteristics(nil, for: targetService)
     }
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        logger.verbose(error)
+        logger.debug(error)
 
         guard let continuation = continuation else { return }
         self.continuation = nil
