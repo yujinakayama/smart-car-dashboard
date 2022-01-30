@@ -9,8 +9,8 @@
 import Foundation
 
 protocol ETCDeviceConnectionDelegate: NSObjectProtocol {
-    func deviceConnectionDidFinishPreparation(_ deviceConnection: ETCDeviceConnection, error: Error?)
-    func deviceConnection(_ deviceConnection: ETCDeviceConnection, didReceiveMessage message: ETCMessageFromDeviceProtocol)
+    func connectionDidEstablish(_ connection: ETCDeviceConnection)
+    func connection(_ connection: ETCDeviceConnection, didReceiveMessage message: ETCMessageFromDeviceProtocol)
 }
 
 enum ETCDeviceConnectionHandshakeStatus {
@@ -34,7 +34,7 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
     private let handshakeTimeoutTimeInterval: TimeInterval = 1
     private var handshakeTimeoutTimer: Timer?
 
-    private var hasFinishedPreparationOnce = false
+    private var hasCompletedHandshakeOnce = false
     private var pendingMessagesToSend: [ETCMessageToDeviceProtocol] = []
 
     init(serialPort: SerialPort) {
@@ -73,9 +73,9 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
         handshakeTimeoutTimer?.invalidate()
         handshakeTimeoutTimer = nil
 
-        if (!hasFinishedPreparationOnce) {
-            delegate?.deviceConnectionDidFinishPreparation(self, error: nil)
-            hasFinishedPreparationOnce = true
+        if (!hasCompletedHandshakeOnce) {
+            delegate?.connectionDidEstablish(self)
+            hasCompletedHandshakeOnce = true
         }
 
         sendPendingMessages()
@@ -140,7 +140,7 @@ class ETCDeviceConnection: NSObject, SerialPortDelegate {
         }
 
         if !(message is ETCMessageFromDevice.Unknown) {
-            delegate?.deviceConnection(self, didReceiveMessage: message)
+            delegate?.connection(self, didReceiveMessage: message)
         }
     }
 

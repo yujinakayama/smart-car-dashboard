@@ -135,14 +135,14 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
 
     // MARK: - ETCDeviceConnectionDelegate
 
-    func deviceConnectionDidFinishPreparation(_ connection: ETCDeviceConnection, error: Error?) {
+    func connectionDidEstablish(_ connection: ETCDeviceConnection) {
         justConnected = true
         notificationCenter.post(name: .ETCDeviceDidConnect, object: self)
 
         connection.send(ETCMessageToDevice.cardExistenceRequest)
     }
 
-    func deviceConnection(_ connection: ETCDeviceConnection, didReceiveMessage message: ETCMessageFromDeviceProtocol) {
+    func connection(_ connection: ETCDeviceConnection, didReceiveMessage message: ETCMessageFromDeviceProtocol) {
         switch message {
         case is ETCMessageFromDevice.CardExistenceResponse:
             connection.send(ETCMessageToDevice.uniqueCardDataRequest)
