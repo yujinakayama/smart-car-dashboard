@@ -195,6 +195,7 @@ class MapsViewController: UIViewController {
         applyCurrentMode()
 
         NotificationCenter.default.addObserver(self, selector: #selector(locationTrackerDidStartTracking), name: .LocationTrackerDidStartTracking, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(locationTrackerDidStartTracking), name: .LocationTrackerDidStopTracking, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(locationTrackerDidUpdateTrack), name: .LocationTrackerDidUpdateCurrentTrack, object: nil)
     }
 
@@ -523,6 +524,13 @@ class MapsViewController: UIViewController {
         // We remove previous track overlay when new tracking just started rather than when stopped
         // because users may want to view the track just after the previous arrival.
         if let trackOverlay = trackOverlay {
+            mapView.removeOverlay(trackOverlay)
+        }
+    }
+
+    @objc func locationTrackerDidStopTracking() {
+        // If user don't want to show track on maps, remove it immediately.
+        if !Defaults.shared.showTrackOnMaps, let trackOverlay = trackOverlay {
             mapView.removeOverlay(trackOverlay)
         }
     }
