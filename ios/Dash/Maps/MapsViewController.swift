@@ -21,7 +21,7 @@ class MapsViewController: UIViewController {
 
         mapView.showsBuildings = true
         mapView.showsCompass = true
-        mapView.showsScale = false // Use a discrete MKScaleView to always display
+        mapView.showsScale = true
         mapView.showsTraffic = true
         mapView.showsUserLocation = true
 
@@ -37,12 +37,6 @@ class MapsViewController: UIViewController {
         mapView.addInteraction(UIDropInteraction(delegate: self))
 
         return mapView
-    }()
-
-    lazy var scaleView: MKScaleView = {
-        let scaleView = MKScaleView(mapView: mapView)
-        scaleView.scaleVisibility = .visible
-        return scaleView
     }()
 
     lazy var mapTypeSegmentedControl: MapTypeSegmentedControl = {
@@ -230,7 +224,6 @@ class MapsViewController: UIViewController {
     private func configureSubviews() {
         view.addSubview(mapView)
         view.addSubview(mapTypeSegmentedControl)
-        view.addSubview(scaleView)
         view.addSubview(statusBarUnderNavigationBar)
 
         view.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
@@ -247,11 +240,6 @@ class MapsViewController: UIViewController {
             view.layoutMarginsGuide.rightAnchor.constraint(equalTo: mapTypeSegmentedControl.rightAnchor),
             mapTypeSegmentedControl.topAnchor.constraint(equalTo: statusBarUnderNavigationBar.bottomAnchor, constant: 20),
             mapTypeSegmentedControl.widthAnchor.constraint(greaterThanOrEqualToConstant: 200),
-        ])
-
-        NSLayoutConstraint.activate([
-            scaleView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 18),
-            scaleView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
         ])
 
         NSLayoutConstraint.activate([
