@@ -538,14 +538,14 @@ class MapsViewController: UIViewController {
     @objc func locationTrackerDidUpdateTrack() {
         guard let track = LocationTracker.shared.currentTrack else { return }
 
-        if let trackOverlay = trackOverlay {
-            mapView.removeOverlay(trackOverlay)
+        let newOverlay = MKPolyline(coordinates: track.coordinates, count: track.coordinates.count)
+        mapView.addOverlay(newOverlay)
+
+        if let oldOverlay = trackOverlay {
+            mapView.removeOverlay(oldOverlay)
         }
 
-        let overlay = MKPolyline(coordinates: track.coordinates, count: track.coordinates.count)
-        mapView.addOverlay(overlay)
-
-        trackOverlay = overlay
+        trackOverlay = newOverlay
     }
 
     private var trackOverlay: MKOverlay?
