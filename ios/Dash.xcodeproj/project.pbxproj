@@ -571,8 +571,6 @@
 		B9D0208A268CD2F60020BF9A /* VehicleMovement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleMovement.swift; sourceTree = "<group>"; };
 		B9D0208C268F643E0020BF9A /* ParkingSearchMapViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingSearchMapViewManager.swift; sourceTree = "<group>"; };
 		B9D0208E268F69490020BF9A /* ParkingSearchOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingSearchOptionsView.swift; sourceTree = "<group>"; };
-		B9D0260724BF7704005C03B1 /* BluetoothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothManager.h; sourceTree = "<group>"; };
-		B9D0260C24BF7704005C03B1 /* BluetoothDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothDevice.h; sourceTree = "<group>"; };
 		B9D4AF21267124FC00849129 /* DashCloudClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashCloudClient.swift; sourceTree = "<group>"; };
 		B9D4AF2926727D8000849129 /* MapItemFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItemFetcher.swift; sourceTree = "<group>"; };
 		B9D4AF2D2673203400849129 /* UTTypeExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UTTypeExtension.swift; sourceTree = "<group>"; };
@@ -901,7 +899,6 @@
 			isa = PBXGroup;
 			children = (
 				B9BF2F0423F6946100967316 /* GradientPathRenderer.swift */,
-				B9D0260424BF7704005C03B1 /* BluetoothManager */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -997,15 +994,6 @@
 				B9DC5B2F229D59BF00B645D5 /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
-			sourceTree = "<group>";
-		};
-		B9D0260424BF7704005C03B1 /* BluetoothManager */ = {
-			isa = PBXGroup;
-			children = (
-				B9D0260724BF7704005C03B1 /* BluetoothManager.h */,
-				B9D0260C24BF7704005C03B1 /* BluetoothDevice.h */,
-			);
-			path = BluetoothManager;
 			sourceTree = "<group>";
 		};
 		B9DC5B18229D59BE00B645D5 = {
