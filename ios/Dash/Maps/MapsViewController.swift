@@ -203,21 +203,22 @@ class MapsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        if !hasInitiallyEnabledUserTrackingMode {
-            if currentMode == .standard {
-                DispatchQueue.main.async {
-                    self.mapView.setUserTrackingMode(.follow, animated: false)
-                }
-            }
+        enableInitialUserTrackingModeIfNeeded()
 
-            hasInitiallyEnabledUserTrackingMode = true
-        }
+        // This is to prevent ugly animation of user location annotation view
+        // when switched back to Maps tab.
+        mapView.showsUserLocation = true
 
         parkingSearchManager.viewWillAppear()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+
+        // This is to prevent ugly animation of user location annotation view
+        // when switched back to Maps tab.
+        mapView.showsUserLocation = false
+
         parkingSearchManager.viewDidDissapear()
     }
 
@@ -290,6 +291,16 @@ class MapsViewController: UIViewController {
 
     @objc func parkingSearchQuittingButtonDidPush() {
         currentMode = .standard
+    }
+
+    func enableInitialUserTrackingModeIfNeeded() {
+        guard !hasInitiallyEnabledUserTrackingMode else { return }
+        hasInitiallyEnabledUserTrackingMode = true
+        guard currentMode == .standard else { return }
+
+        DispatchQueue.main.async {
+            self.mapView.setUserTrackingMode(.follow, animated: false)
+        }
     }
 
     func applyCurrentMode() {
