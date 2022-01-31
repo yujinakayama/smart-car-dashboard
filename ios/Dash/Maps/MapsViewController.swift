@@ -172,6 +172,8 @@ class MapsViewController: UIViewController {
 
     private var sharedLocationAnnotations: [MKAnnotation] = []
 
+    var isVisible = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -189,8 +191,8 @@ class MapsViewController: UIViewController {
         applyCurrentMode()
 
         NotificationCenter.default.addObserver(self, selector: #selector(locationTrackerDidStartTracking), name: .LocationTrackerDidStartTracking, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(locationTrackerDidStartTracking), name: .LocationTrackerDidStopTracking, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(locationTrackerDidUpdateTrack), name: .LocationTrackerDidUpdateCurrentTrack, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(locationTrackerDidStopTracking), name: .LocationTrackerDidStopTracking, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTrackOverlay), name: .LocationTrackerDidUpdateCurrentTrack, object: nil)
     }
 
     deinit {
@@ -203,17 +205,23 @@ class MapsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        isVisible = true
+
         enableInitialUserTrackingModeIfNeeded()
 
         // This is to prevent ugly animation of user location annotation view
         // when switched back to Maps tab.
         mapView.showsUserLocation = true
 
+        updateTrackOverlay()
+
         parkingSearchManager.viewWillAppear()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+
+        isVisible = false
 
         // This is to prevent ugly animation of user location annotation view
         // when switched back to Maps tab.
@@ -534,8 +542,8 @@ class MapsViewController: UIViewController {
         }
     }
 
-    @objc func locationTrackerDidUpdateTrack() {
-        guard let track = LocationTracker.shared.currentTrack else { return }
+    @objc func updateTrackOverlay() {
+        guard isVisible, let track = LocationTracker.shared.currentTrack else { return }
 
         let newOverlay = MKPolyline(coordinates: track.coordinates, count: track.coordinates.count)
         mapView.addOverlay(newOverlay)
