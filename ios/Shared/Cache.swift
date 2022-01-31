@@ -8,9 +8,10 @@
 
 import Foundation
 import PINCache
+import PINOperation
 import CommonCrypto
 
-// A cache class that abstracts PINCache and allows caching nil
+// A cache class that abstracts PINDiskCache and allows caching nil
 public class Cache {
     public static func digestString(of string: String) -> String {
         return digestString(of: string.data(using: .utf8)!)
@@ -26,24 +27,25 @@ public class Cache {
         return digest.map { String(format: "%02x", $0) }.joined()
     }
 
-    let pinCache: PINCache
+    let pinCache: PINDiskCache
 
     public init(name: String, byteLimit: UInt, ageLimit: TimeInterval? = nil) {
-        pinCache = PINCache(
+        pinCache = PINDiskCache(
             name: name,
+            prefix: PINDiskCachePrefix,
             rootPath: NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!,
             serializer: nil,
             deserializer: nil,
             keyEncoder: nil,
             keyDecoder: nil,
+            operationQueue: PINOperationQueue(maxConcurrentOperations: 10),
             ttlCache: ageLimit != nil
         )
 
-        pinCache.diskCache.byteLimit = byteLimit
+        pinCache.byteLimit = byteLimit
 
         if let ageLimit = ageLimit {
-            pinCache.memoryCache.ageLimit = ageLimit
-            pinCache.diskCache.ageLimit = ageLimit
+            pinCache.ageLimit = ageLimit
         }
     }
 
@@ -85,9 +87,15 @@ public class Cache {
     }
 
     public func setObjectAsync(_ object: NSCoding?, forKey key: String, completion: (() -> Void)? = nil) {
-        let objectToCache = object == nil ? NSNull() : object
+        let objectToCache: NSCoding
 
-        pinCache.setObjectAsync(objectToCache as Any, forKey: key) { (cache, key, object) in
+        if let object = object {
+            objectToCache = object
+        } else {
+            objectToCache = NSNull()
+        }
+
+        pinCache.setObjectAsync(objectToCache, forKey: key) { (cache, key, object) in
             completion?()
         }
     }
