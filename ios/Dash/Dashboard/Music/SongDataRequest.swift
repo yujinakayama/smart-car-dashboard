@@ -77,7 +77,7 @@ class SongDataRequest {
 
     private func cache(song: Song?, for id: String) throws {
         let data = try JSONEncoder().encode(song)
-        SongDataRequest.cache.setObjectAsync(data as NSData, forKey: id)
+        Self.cache.setObject(data as NSData, forKey: id)
     }
 
     private func originalLanguage(of song: Song) -> LanguageTag? {

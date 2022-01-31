@@ -221,7 +221,7 @@ import MediaPlayer
                 self?.image = image
             })
 
-            Self.appleMusicImageCache.setObjectAsync(image, forKey: id)
+            await Self.appleMusicImageCache.setObject(image, forKey: id)
         }
     }
 

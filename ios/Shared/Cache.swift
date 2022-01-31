@@ -57,8 +57,8 @@ public class Cache {
         return pinCache.containsObject(forKey: key)
     }
 
-    public func containsObject(forKeyAsync key: String, completion: @escaping (Bool) -> Void) {
-        pinCache.containsObject(forKeyAsync: key, completion: completion)
+    public func containsObject(forKey key: String) async -> Bool {
+        return await pinCache.containsObject(forKeyAsync: key)
     }
 
     public func object(forKey key: String) -> Any? {
@@ -66,18 +66,18 @@ public class Cache {
 
         if object is NSNull {
             return nil
+        } else {
+            return object
         }
-
-        return object
     }
 
-    public func object(forKeyAsync key: String, completion: @escaping (Any?) -> Void) {
-        pinCache.object(forKeyAsync: key) { (cache, key, object) in
-            if object is NSNull {
-                completion(nil)
-            } else {
-                completion(object)
-            }
+    public func object(forKey key: String) async -> Any? {
+        let (_, _, object) = await pinCache.object(forKeyAsync: key)
+
+        if object is NSNull {
+            return nil
+        } else {
+            return object
         }
     }
 
@@ -86,7 +86,7 @@ public class Cache {
         pinCache.setObject(objectToCache, forKey: key)
     }
 
-    public func setObjectAsync(_ object: NSCoding?, forKey key: String, completion: (() -> Void)? = nil) {
+    public func setObject(_ object: NSCoding?, forKey key: String) async {
         let objectToCache: NSCoding
 
         if let object = object {
@@ -95,8 +95,6 @@ public class Cache {
             objectToCache = NSNull()
         }
 
-        pinCache.setObjectAsync(objectToCache, forKey: key) { (cache, key, object) in
-            completion?()
-        }
+        await pinCache.setObjectAsync(objectToCache, forKey: key)
     }
 }

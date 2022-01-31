@@ -106,11 +106,11 @@ class Location: SharedItemProtocol {
 
         private (set) var cachedMapItem: MKMapItem? {
             get {
-                return PointOfInterestFinder.cache.object(forKey: cacheKey) as? MKMapItem
+                return Self.cache.object(forKey: cacheKey) as? MKMapItem
             }
 
             set {
-                PointOfInterestFinder.cache.setObjectAsync(newValue, forKey: cacheKey)
+                Self.cache.setObject(newValue, forKey: cacheKey)
             }
         }
 
