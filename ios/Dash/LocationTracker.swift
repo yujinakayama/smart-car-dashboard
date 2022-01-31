@@ -14,7 +14,7 @@ class LocationTracker: NSObject {
     static let shared = LocationTracker()
 
     // horizontalAccuracy returns fixed value 65.0 in reinforced concrete buildings, which is unstable
-    static let unreliableLocationAccuracy: CLLocationAccuracy = 65
+    static let unreliableHorizontalAccuracy: CLLocationAccuracy = 65
 
     var currentTrack: Track?
 
@@ -62,7 +62,8 @@ class LocationTracker: NSObject {
     }
 
     private func considersLocationAccurate(_ location: CLLocation) -> Bool {
-        return location.horizontalAccuracy < Self.unreliableLocationAccuracy
+        return location.horizontalAccuracy < Self.unreliableHorizontalAccuracy
+            && location.speedAccuracy >= 0
     }
 }
 
