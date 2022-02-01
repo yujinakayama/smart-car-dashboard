@@ -302,15 +302,21 @@ function normalizeCategories(place: Partial<PlaceData>): string[] {
 
     const categories = types.map((type) => convertToCamelCase(type.toString()));
 
-    if (place.name && types.includes(PlaceType2.place_of_worship) && !isGooglePredefinedWorshipPlace(types)) {
-        const names = place.name.split(/[\s　\(\)（）]+/).filter((string) => string);
+    if (place.name) {
+        const names = extractNameSegments(convertAlphanumericsToAscii(place.name) ?? '');
 
-        if (names.some((name) => name.match(/(寺|院|大師|薬師|観音|帝釈天)$/))) {
-            // https://ja.wikipedia.org/wiki/日本の寺院一覧
-            categories.unshift('buddhistTemple');
-        } else if (names.some((name) => name.match(/(神社|大社|宮|祠)$/))) {
-            // https://ja.wikipedia.org/wiki/神社一覧
-            categories.unshift('shintoShrine');
+        if (types.includes(PlaceType2.place_of_worship) && !isGooglePredefinedWorshipPlace(types)) {
+            if (names.some((name) => name.match(/(寺|院|大師|薬師|観音|帝釈天)$/))) {
+                // https://ja.wikipedia.org/wiki/日本の寺院一覧
+                categories.unshift('buddhistTemple');
+            } else if (names.some((name) => name.match(/(神社|大社|宮|祠)$/))) {
+                // https://ja.wikipedia.org/wiki/神社一覧
+                categories.unshift('shintoShrine');
+            }
+        }
+
+        if (names.some((name) => name.match(/(\W(PA|SA)|(パーキング|サービス)エリア)$|ハイウェイオアシス|EXPASA/))) {
+            categories.unshift('restArea');
         }
     }
 
@@ -329,4 +335,8 @@ function convertToCamelCase(string: string): string {
     return string.replace(/(_[a-z])/g, (match) => {
         return match.toUpperCase();
     }).replace(/_/g, '');
+}
+
+function extractNameSegments(name: string): string[] {
+    return name.split(/[\s　\(\)（）]+/).filter((string) => string);
 }

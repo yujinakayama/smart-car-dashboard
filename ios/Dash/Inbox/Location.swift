@@ -407,6 +407,7 @@ extension Location {
         case buddhistTemple
         case shintoShrine
         case rendezvous
+        case restArea
 
         case unknown
 
