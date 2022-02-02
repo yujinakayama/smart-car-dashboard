@@ -33,7 +33,7 @@ export function normalizeCategory(category: string | null): string[] {
 
     const normalizedCategory = category
         .replace(/^MKPOICategory/, '')
-        .replace(/^([A-Z]+)([A-Z])?/, (_, $1, $2) => { return $1.toLowerCase() + ($2 || '') });
+        .replace(/^[A-Z]+(?![a-z])|^[A-Z][a-z]+/, (firstWord) => firstWord.toLowerCase());
 
     return [normalizedCategory];
 }
