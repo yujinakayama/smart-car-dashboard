@@ -13,7 +13,7 @@ import ParkingSearchKit
 
 class MapsViewController: UIViewController {
     static let directionalUserLocationAnnotationViewIdentifier = String(describing: DirectionalUserLocationAnnotationView.self)
-    static let sharedLocationAnnotationViewIdentifier = String(describing: SharedLocationAnnotationView.self)
+    static let pointOfInterestAnnotationViewIdentifier = String(describing: PointOfInterestAnnotationView.self)
 
     lazy var mapView: MKMapView = {
         let mapView = MKMapView()
@@ -499,11 +499,11 @@ class MapsViewController: UIViewController {
     }
 
     private func viewForSharedLocationAnnotation(_ annotation: SharedLocationAnnotation) -> MKAnnotationView {
-        if let view = mapView.dequeueReusableAnnotationView(withIdentifier: Self.sharedLocationAnnotationViewIdentifier) as? SharedLocationAnnotationView {
+        if let view = mapView.dequeueReusableAnnotationView(withIdentifier: Self.pointOfInterestAnnotationViewIdentifier) as? PointOfInterestAnnotationView {
             view.annotation = annotation
             return view
         } else {
-            let view = SharedLocationAnnotationView(annotation: annotation, reuseIdentifier: Self.sharedLocationAnnotationViewIdentifier)
+            let view = PointOfInterestAnnotationView(annotation: annotation, reuseIdentifier: Self.pointOfInterestAnnotationViewIdentifier)
             view.callout.departureButton.addTarget(self, action: #selector(openDirectionsInMapsForSelectedSharedLocationAnnotation), for: .touchUpInside)
             view.callout.parkingSearchButton.addTarget(self, action: #selector(startSearchingParkingsForSelectedSharedLocationAnnotation), for: .touchUpInside)
             return view

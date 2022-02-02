@@ -18,19 +18,19 @@ struct PointOfInterestIcon {
         self.color = color
     }
 
-    init(location: Location) {
-        for category in location.categories {
+    init(categories: [PointOfInterestCategory]) {
+        for category in categories {
             if let icon = specificIcon(for: category) {
                 self = icon
                 return
             }
         }
 
-        self = genericIcon(for: location)
+        self = genericIcon(for: categories)
     }
 }
 
-fileprivate func specificIcon(for category: Location.Category) -> PointOfInterestIcon? {
+fileprivate func specificIcon(for category: PointOfInterestCategory) -> PointOfInterestIcon? {
     let image: UIImage?
     let color: UIColor?
 
@@ -122,22 +122,22 @@ fileprivate func specificIcon(for category: Location.Category) -> PointOfInteres
     }
 }
 
-fileprivate func genericIcon(for location: Location) -> PointOfInterestIcon {
-    if location.categories.contains(.food) {
+fileprivate func genericIcon(for categories: [PointOfInterestCategory]) -> PointOfInterestIcon {
+    if categories.contains(.food) {
         return PointOfInterestIcon(
             image: UIImage(systemName: "takeoutbag.and.cup.and.straw.fill")!,
             color: UIColor(rgb: 0xEA9A52)
         )
     }
 
-    if location.categories.contains(.naturalFeature) {
+    if categories.contains(.naturalFeature) {
         return PointOfInterestIcon(
             image: UIImage(systemName: "leaf.fill")!,
             color: UIColor(rgb: 0x54B741)
         )
     }
 
-    if location.categories.contains(.touristAttraction) {
+    if categories.contains(.touristAttraction) {
         return PointOfInterestIcon(
             image: UIImage(systemName: "star.fill")!,
             color: UIColor(rgb: 0x969696)

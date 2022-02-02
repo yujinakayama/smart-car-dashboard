@@ -8,7 +8,7 @@
 
 import MapKit
 
-class SharedLocationAnnotation: NSObject, MKAnnotation {
+class SharedLocationAnnotation: NSObject, PointOfInterestAnnotation {
     let location: Location
 
     init(_ location: Location) {
@@ -26,5 +26,9 @@ class SharedLocationAnnotation: NSObject, MKAnnotation {
 
     var subtitle: String? {
         return nil
+    }
+
+    var categories: [PointOfInterestCategory] {
+        return location.categories
     }
 }
