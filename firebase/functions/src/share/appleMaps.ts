@@ -18,7 +18,7 @@ export async function normalizeAppleMapsLocation(inputData: InputData): Promise<
             subLocality: mapItem.placemark.thoroughfare,
             houseNumber: mapItem.placemark.subThoroughfare
         },
-        categories: normalizeCategories(mapItem.pointOfInterestCategory),
+        categories: normalizeCategory(mapItem.pointOfInterestCategory),
         coordinate: mapItem.placemark.coordinate,
         name: mapItem.name,
         websiteURL: mapItem.url ? new URL(mapItem.url).toString() : null, // To handle internationalized domain names
@@ -26,7 +26,7 @@ export async function normalizeAppleMapsLocation(inputData: InputData): Promise<
     };
 }
 
-function normalizeCategories(category: string | null): string[] {
+export function normalizeCategory(category: string | null): string[] {
     if (!category) {
         return [];
     }
