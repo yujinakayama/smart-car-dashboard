@@ -166,7 +166,6 @@
 		B9C1DD1C269457910046E108 /* OfficialParkingSearchStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */; };
 		B9C1DD2026948B7D0046E108 /* OfficialParkingSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */; };
 		B9C1F40927AAC47700C6D4DD /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92650112691CE29005FD73D /* SheetView.swift */; };
-		B9C1F40B27AAE8F100C6D4DD /* LocationSearchMapViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1F40A27AAE8F100C6D4DD /* LocationSearchMapViewManager.swift */; };
 		B9C1F40D27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1F40C27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift */; };
 		B9C1F40F27AAEB8D00C6D4DD /* PointOfInterestCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1F40E27AAEB8D00C6D4DD /* PointOfInterestCategory.swift */; };
 		B9C2455F23EDA2EA00E00523 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
@@ -2175,7 +2174,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.57.0;
+				MARKETING_VERSION = 6.58.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash.IntentsExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2203,7 +2202,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.57.0;
+				MARKETING_VERSION = 6.58.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash.IntentsExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2394,7 +2393,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.57.0;
+				MARKETING_VERSION = 6.58.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash.ParkingSearchActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2419,7 +2418,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.57.0;
+				MARKETING_VERSION = 6.58.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash.ParkingSearchActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2612,7 +2611,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.57.0;
+				MARKETING_VERSION = 6.58.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2639,7 +2638,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.57.0;
+				MARKETING_VERSION = 6.58.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
