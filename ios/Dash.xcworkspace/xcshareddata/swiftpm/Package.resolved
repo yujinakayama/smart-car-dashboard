@@ -20,6 +20,15 @@
         }
       },
       {
+        "package": "SwiftCBOR",
+        "repositoryURL": "https://github.com/unrelentingtech/SwiftCBOR",
+        "state": {
+          "branch": "master",
+          "revision": "980cf7b0883947678a27620ea0d90cca1a15488e",
+          "version": null
+        }
+      },
+      {
         "package": "TLDExtract",
         "repositoryURL": "https://github.com/gumob/TLDExtractSwift",
         "state": {

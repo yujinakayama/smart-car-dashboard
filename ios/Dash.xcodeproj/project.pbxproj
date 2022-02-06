@@ -94,6 +94,7 @@
 		B96810752614C5C300D647FA /* ImageFilterChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96810742614C5C300D647FA /* ImageFilterChain.swift */; };
 		B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */; };
 		B9741F7523DF200600F061E7 /* SharedItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9741F7423DF200600F061E7 /* SharedItemTableViewController.swift */; };
+		B979457127A81AFE007040E7 /* SwiftCBOR in Frameworks */ = {isa = PBXBuildFile; productRef = B979457027A81AFE007040E7 /* SwiftCBOR */; };
 		B97ABD3F27670D6E00C7EB1D /* PointOfInterestIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97ABD3E27670D6E00C7EB1D /* PointOfInterestIcon.swift */; };
 		B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97BAE6124B61DB100AE7D13 /* Vehicle.swift */; };
 		B980071E2678B81C00FC703E /* OpenCage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B980071D2678B81C00FC703E /* OpenCage.swift */; };
@@ -683,6 +684,7 @@
 			files = (
 				B98B783A23ED4C3F00A5102F /* DashCloudKit.framework in Frameworks */,
 				B9DD4CD126517F920010B120 /* ParkingSearchKit.framework in Frameworks */,
+				B979457127A81AFE007040E7 /* SwiftCBOR in Frameworks */,
 				B9FACF4C25D4299900F05CAE /* RearviewKit.framework in Frameworks */,
 				01861A4B14032E6339D8E511 /* Pods_Dash.framework in Frameworks */,
 			);
@@ -1330,6 +1332,9 @@
 				B963C53B2749351B0095F8D3 /* PBXTargetDependency */,
 			);
 			name = Dash;
+			packageProductDependencies = (
+				B979457027A81AFE007040E7 /* SwiftCBOR */,
+			);
 			productName = ETC;
 			productReference = B9DC5B21229D59BE00B645D5 /* Dash.app */;
 			productType = "com.apple.product-type.application";
@@ -1451,6 +1456,7 @@
 			packageReferences = (
 				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */,
 				B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */,
+				B979456F27A81AFE007040E7 /* XCRemoteSwiftPackageReference "SwiftCBOR" */,
 			);
 			productRefGroup = B9DC5B22229D59BE00B645D5 /* Products */;
 			projectDirPath = "";
@@ -2924,6 +2930,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		B979456F27A81AFE007040E7 /* XCRemoteSwiftPackageReference "SwiftCBOR" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/unrelentingtech/SwiftCBOR";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gumob/TLDExtractSwift";
@@ -2939,6 +2953,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */;
 			productName = DirectionalUserLocationAnnotationView;
+		};
+		B979457027A81AFE007040E7 /* SwiftCBOR */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B979456F27A81AFE007040E7 /* XCRemoteSwiftPackageReference "SwiftCBOR" */;
+			productName = SwiftCBOR;
 		};
 		B9C1DD192692EE350046E108 /* TLDExtract */ = {
 			isa = XCSwiftPackageProductDependency;

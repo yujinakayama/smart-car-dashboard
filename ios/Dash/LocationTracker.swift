@@ -9,12 +9,16 @@
 import Foundation
 import CoreLocation
 import MusicKit
+import UIKit
+import SwiftCBOR
 
 class LocationTracker: NSObject {
     static let shared = LocationTracker()
 
     // horizontalAccuracy returns fixed value 65.0 in reinforced concrete buildings, which is unstable
-    static let unreliableHorizontalAccuracy: CLLocationAccuracy = 65
+    private static let unreliableHorizontalAccuracy: CLLocationAccuracy = 65
+
+    private static let currentTrackCacheKey = "currentTrack"
 
     var currentTrack: Track?
 
@@ -30,12 +34,20 @@ class LocationTracker: NSObject {
         return locationManager
     }()
 
+    private let cache = Cache(name: "LocationTracker", byteLimit: 50 * 1024 * 1024, ageLimit: 24 * 60 * 60)
+
+    override init() {
+        super.init()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillTerminate), name: UIApplication.willTerminateNotification, object: nil)
+    }
+
     func startTracking() {
         if isTracking { return }
 
         logger.info()
 
-        currentTrack = Track()
+        currentTrack = restoreCurrentTrackFromCache() ?? Track()
 
         switch locationManager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
@@ -65,6 +77,23 @@ class LocationTracker: NSObject {
         return location.horizontalAccuracy < Self.unreliableHorizontalAccuracy
             && location.speedAccuracy >= 0
     }
+
+    @objc private func applicationWillTerminate() {
+        saveCurrentTrackToCache()
+    }
+
+    private func saveCurrentTrackToCache() {
+        guard let currentTrack = currentTrack,
+              let data = try? CodableCBOREncoder().encode(currentTrack) as NSData
+        else { return }
+
+        cache.setObject(data, forKey: Self.currentTrackCacheKey)
+    }
+
+    private func restoreCurrentTrackFromCache() -> Track? {
+        guard let data = cache.object(forKey: Self.currentTrackCacheKey) as? Data else { return nil }
+        return try? CodableCBORDecoder().decode(Track.self, from: data)
+    }
 }
 
 extension LocationTracker: CLLocationManagerDelegate {
@@ -92,7 +121,7 @@ extension LocationTracker: CLLocationManagerDelegate {
 }
 
 extension LocationTracker {
-    class Track {
+    class Track: Codable {
         var coordinates: [CLLocationCoordinate2D] = {
             var array: [CLLocationCoordinate2D] = []
             array.reserveCapacity(1000)
