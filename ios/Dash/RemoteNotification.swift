@@ -42,7 +42,7 @@ class RemoteNotification {
         item.open(from: rootViewController)
 
         if let location = item as? Location,
-           !location.categories.contains(.parking),
+           !location.categories.contains(where: { $0.isKindOfParking }),
            Defaults.shared.automaticallySearchParkingsWhenLocationIsAutomaticallyOpened
         {
             SharedItemTableViewController.pushMapsViewControllerForParkingSearchInCurrentScene(location: location)

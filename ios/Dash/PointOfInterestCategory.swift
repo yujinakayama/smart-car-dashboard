@@ -212,3 +212,14 @@ extension PointOfInterestCategory: Decodable {
         self = Self(rawValue: rawValue) ?? .unknown
     }
 }
+
+extension PointOfInterestCategory {
+    var isKindOfParking: Bool {
+        switch self {
+        case .parking, .restArea:
+            return true
+        default:
+            return false
+        }
+    }
+}
