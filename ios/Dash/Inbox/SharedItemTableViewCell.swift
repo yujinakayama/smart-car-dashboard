@@ -123,7 +123,7 @@ class SharedItemTableViewCell: UITableViewCell {
     }
 
     private func configureView(for location: Location) {
-        let icon = PointOfInterestIcon(location: location)
+        let icon = PointOfInterestIcon(categories: location.categories)
 
         iconType = .template
         iconImageView.image = icon.image

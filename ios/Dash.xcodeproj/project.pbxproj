@@ -146,7 +146,7 @@
 		B9B4F703268CB3F5009C5DC5 /* ParkingSearchURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */; };
 		B9B4F707268CB55D009C5DC5 /* RoadName.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B4F706268CB55D009C5DC5 /* RoadName.swift */; };
 		B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B717DD23E6B26900A47207 /* UnknownItem.swift */; };
-		B9BA5B5926A897CF004D5927 /* SharedLocationAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BA5B5826A897CF004D5927 /* SharedLocationAnnotationView.swift */; };
+		B9BA5B5926A897CF004D5927 /* PointOfInterestAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BA5B5826A897CF004D5927 /* PointOfInterestAnnotationView.swift */; };
 		B9BA5B5B26A8982C004D5927 /* SharedLocationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BA5B5A26A8982C004D5927 /* SharedLocationAnnotation.swift */; };
 		B9BA5B5C26A89C83004D5927 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04662642D5FA002CD861 /* UIButtonExtension.swift */; };
 		B9BA819E2350931A00657DEB /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
@@ -162,10 +162,13 @@
 		B9C0CEE22508F641006D246E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9C0CEE12508F641006D246E /* Assets.xcassets */; };
 		B9C0CEE52508F641006D246E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9C0CEE32508F641006D246E /* LaunchScreen.storyboard */; };
 		B9C0CEED250C3A27006D246E /* HeartAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEEC250C3A27006D246E /* HeartAnimation.swift */; };
-		B9C1DD1526922ABA0046E108 /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92650112691CE29005FD73D /* SheetView.swift */; };
 		B9C1DD1A2692EE350046E108 /* TLDExtract in Frameworks */ = {isa = PBXBuildFile; productRef = B9C1DD192692EE350046E108 /* TLDExtract */; };
 		B9C1DD1C269457910046E108 /* OfficialParkingSearchStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */; };
 		B9C1DD2026948B7D0046E108 /* OfficialParkingSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */; };
+		B9C1F40927AAC47700C6D4DD /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92650112691CE29005FD73D /* SheetView.swift */; };
+		B9C1F40B27AAE8F100C6D4DD /* LocationSearchMapViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1F40A27AAE8F100C6D4DD /* LocationSearchMapViewManager.swift */; };
+		B9C1F40D27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1F40C27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift */; };
+		B9C1F40F27AAEB8D00C6D4DD /* PointOfInterestCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1F40E27AAEB8D00C6D4DD /* PointOfInterestCategory.swift */; };
 		B9C2455F23EDA2EA00E00523 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
 		B9C2456523EDBB4800E00523 /* FloatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C2456423EDBB4800E00523 /* FloatButton.swift */; };
 		B9C87A1726671CCE00ABCBB4 /* ParkingSearchURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */; };
@@ -539,7 +542,7 @@
 		B9B4A8992569310400FE0C9F /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		B9B4F706268CB55D009C5DC5 /* RoadName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoadName.swift; sourceTree = "<group>"; };
 		B9B717DD23E6B26900A47207 /* UnknownItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownItem.swift; sourceTree = "<group>"; };
-		B9BA5B5826A897CF004D5927 /* SharedLocationAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedLocationAnnotationView.swift; sourceTree = "<group>"; };
+		B9BA5B5826A897CF004D5927 /* PointOfInterestAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterestAnnotationView.swift; sourceTree = "<group>"; };
 		B9BA5B5A26A8982C004D5927 /* SharedLocationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedLocationAnnotation.swift; sourceTree = "<group>"; };
 		B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewCell.swift; sourceTree = "<group>"; };
 		B9BC920823250A0A006F22FC /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
@@ -558,6 +561,8 @@
 		B9C0CEEC250C3A27006D246E /* HeartAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartAnimation.swift; sourceTree = "<group>"; };
 		B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialParkingSearchStatusView.swift; sourceTree = "<group>"; };
 		B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficialParkingSearch.swift; sourceTree = "<group>"; };
+		B9C1F40C27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterestAnnotation.swift; sourceTree = "<group>"; };
+		B9C1F40E27AAEB8D00C6D4DD /* PointOfInterestCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterestCategory.swift; sourceTree = "<group>"; };
 		B9C2455E23EDA2EA00E00523 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		B9C2456423EDBB4800E00523 /* FloatButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatButton.swift; sourceTree = "<group>"; };
 		B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingSearchURLItem.swift; sourceTree = "<group>"; };
@@ -718,7 +723,9 @@
 				B904A2A5243968990087BD4A /* MapsViewController.swift */,
 				B9C0BF462698689B00C54BA9 /* OfficialParkingInformationWebViewController.swift */,
 				B9BA5B5A26A8982C004D5927 /* SharedLocationAnnotation.swift */,
-				B9BA5B5826A897CF004D5927 /* SharedLocationAnnotationView.swift */,
+				B9C1F40C27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift */,
+				B9BA5B5826A897CF004D5927 /* PointOfInterestAnnotationView.swift */,
+				B92650112691CE29005FD73D /* SheetView.swift */,
 			);
 			path = Maps;
 			sourceTree = "<group>";
@@ -1048,6 +1055,10 @@
 				B92A61102576472A0073AB7B /* Assistant.swift */,
 				B9640ABC2575EBF200B779AD /* Firebase */,
 				B90A54FF274A4B8E0078585A /* LocationTracker.swift */,
+				B9C1F40E27AAEB8D00C6D4DD /* PointOfInterestCategory.swift */,
+				B97ABD3E27670D6E00C7EB1D /* PointOfInterestIcon.swift */,
+				B94BD2E82680486700B768A2 /* BorderedLabel.swift */,
+				B99C69AB26F5F6880064162D /* MapTypeSegmentedControl.swift */,
 				B9854F7F278DA88000E07C0C /* SpeedSensitiveVolumeController.swift */,
 				B9854FA3278F426C00E07C0C /* SystemAudioVolume.swift */,
 				B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */,
@@ -1056,9 +1067,6 @@
 				B9BC920823250A0A006F22FC /* Defaults.swift */,
 				B942553C22B8C3E2008B053B /* Logger.swift */,
 				B93321ED2323C9D500BFAB21 /* BorderedView.swift */,
-				B94BD2E82680486700B768A2 /* BorderedLabel.swift */,
-				B99C69AB26F5F6880064162D /* MapTypeSegmentedControl.swift */,
-				B97ABD3E27670D6E00C7EB1D /* PointOfInterestIcon.swift */,
 				B9CEA76922D8F1F50055C9A3 /* Extensions */,
 				B9BF2F0323F6946100967316 /* Vendor */,
 				B9CEA76A22D8F2380055C9A3 /* Storyboards */,
@@ -1081,7 +1089,6 @@
 				B9DD4CCC26517F920010B120 /* ParkingSearchKit.h */,
 				B9D0208C268F643E0020BF9A /* ParkingSearchMapViewManager.swift */,
 				B9D0208E268F69490020BF9A /* ParkingSearchOptionsView.swift */,
-				B92650112691CE29005FD73D /* SheetView.swift */,
 				B93C04622642CD32002CD861 /* ParkingAnnotation.swift */,
 				B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */,
 				B9E292A1279DDA0A00547269 /* ParkingSearch.swift */,
@@ -1861,6 +1868,7 @@
 				B915BEF5267F8754007068D7 /* StringExtension.swift in Sources */,
 				B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */,
 				B9B4F707268CB55D009C5DC5 /* RoadName.swift in Sources */,
+				B9C1F40F27AAEB8D00C6D4DD /* PointOfInterestCategory.swift in Sources */,
 				B95F514E23E5BBF70063CB3D /* SharedItem.swift in Sources */,
 				B944C69024A9E4C8000D1E99 /* MusicViewController.swift in Sources */,
 				B9D02089268CD1850020BF9A /* RoadTracker.swift in Sources */,
@@ -1891,7 +1899,7 @@
 				B9DC5B27229D59BE00B645D5 /* ETCPaymentTableViewController.swift in Sources */,
 				B92A61112576472A0073AB7B /* Assistant.swift in Sources */,
 				B9A45A9B252C229200CA7921 /* SharedItemDatabase.swift in Sources */,
-				B9BA5B5926A897CF004D5927 /* SharedLocationAnnotationView.swift in Sources */,
+				B9BA5B5926A897CF004D5927 /* PointOfInterestAnnotationView.swift in Sources */,
 				B9BF2F0523F6946100967316 /* GradientPathRenderer.swift in Sources */,
 				B9B4A89A2569310400FE0C9F /* DashboardViewController.swift in Sources */,
 				B9C87A1726671CCE00ABCBB4 /* ParkingSearchURLItem.swift in Sources */,
@@ -1933,11 +1941,13 @@
 				B99356E422A94D6900BA08AB /* BLESerialPort.swift in Sources */,
 				B932E5EC23F86C5F00726615 /* MusicItem.swift in Sources */,
 				B94BD2E92680486700B768A2 /* BorderedLabel.swift in Sources */,
+				B9C1F40927AAC47700C6D4DD /* SheetView.swift in Sources */,
 				B907C78E272555690085ED7E /* SceneDelegate.swift in Sources */,
 				B92FB3C023E95BE900EA702C /* SharedItemTableViewCell.swift in Sources */,
 				B98007202678D6AF00FC703E /* LocationInformationWidgetViewController.swift in Sources */,
 				B907C790272589530085ED7E /* AppState.swift in Sources */,
 				B94A59A026826E960074368A /* LocationInformationDebugViewController.swift in Sources */,
+				B9C1F40D27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift in Sources */,
 				B954CA3225693EDA00BAD0F0 /* RearviewWidgetViewController.swift in Sources */,
 				B9DC5B4A229EDA0000B645D5 /* SerialPort.swift in Sources */,
 				B9640AC22575EC0400B779AD /* FirebaseAuthentication.swift in Sources */,
@@ -1967,7 +1977,6 @@
 				B92ADE9B269ACA4C0086E4D8 /* Logger.swift in Sources */,
 				B94EC75427914DFF0008C447 /* UIApplicationExtension.swift in Sources */,
 				B9D0208D268F643E0020BF9A /* ParkingSearchMapViewManager.swift in Sources */,
-				B9C1DD1526922ABA0046E108 /* SheetView.swift in Sources */,
 				B900A13A26529C38000ED1B9 /* UIButtonExtension.swift in Sources */,
 				B9BE434C27A187F300AD86A5 /* Time.swift in Sources */,
 				B9C1DD2026948B7D0046E108 /* OfficialParkingSearch.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  SharedLocationAnnotationView.swift
+//  PointOfInterestAnnotationView.swift
 //  Dash
 //
 //  Created by Yuji Nakayama on 2021/07/22.
@@ -8,11 +8,7 @@
 
 import MapKit
 
-class SharedLocationAnnotationView: MKMarkerAnnotationView {
-    var location: Location? {
-        return (annotation as? SharedLocationAnnotation)?.location
-    }
-
+class PointOfInterestAnnotationView: MKMarkerAnnotationView {
     override var annotation: MKAnnotation? {
         didSet {
             updateGlyph()
@@ -21,7 +17,7 @@ class SharedLocationAnnotationView: MKMarkerAnnotationView {
 
     lazy var callout = Callout(annotationView: self)
 
-    init(annotation: SharedLocationAnnotation?, reuseIdentifier: String?) {
+    init(annotation: PointOfInterestAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
 
         collisionMode = .none
@@ -42,24 +38,20 @@ class SharedLocationAnnotationView: MKMarkerAnnotationView {
     }
 
     func updateGlyph() {
-        guard let location = location else { return }
-        let icon = PointOfInterestIcon(location: location)
+        guard let annotation = annotation as? PointOfInterestAnnotation else { return }
+        let icon = PointOfInterestIcon(categories: annotation.categories)
         glyphImage = icon.image
         markerTintColor = icon.color
     }
 }
 
-extension SharedLocationAnnotationView {
+extension PointOfInterestAnnotationView {
     class Callout {
         static let departureColor = UIColor(displayP3Red: 76 / 256, green: 217 / 256, blue: 100 / 256, alpha: 1)
 
-        weak var annotationView: SharedLocationAnnotationView?
+        weak var annotationView: PointOfInterestAnnotationView?
 
-        var location: Location? {
-            return annotationView?.location
-        }
-
-        init(annotationView: SharedLocationAnnotationView) {
+        init(annotationView: PointOfInterestAnnotationView) {
             self.annotationView = annotationView
 
             annotationView.canShowCallout = true
