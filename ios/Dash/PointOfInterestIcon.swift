@@ -85,7 +85,7 @@ fileprivate func specificIcon(for category: Location.Category) -> PointOfInteres
         color = UIColor(rgb: 0xEB5674)
     case .restArea:
         image = UIImage(systemName: "parkingsign")!
-        color = UIColor(rgb: 0x5AC177)
+        color = UIColor(rgb: 0x4AB87C)
     case .restaurant:
         image = UIImage(systemName: "fork.knife")!
         color = UIColor(rgb: 0xEA9A52)
