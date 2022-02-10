@@ -1,4 +1,4 @@
-import * as urlRegex from 'url-regex';
+import urlRegex from 'url-regex-safe';
 
 export function convertAlphanumericsToAscii(text: string | null | undefined): string | null {
     if (!text) {
