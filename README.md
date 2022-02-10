@@ -1,6 +1,6 @@
-# In-Car iPad Integration
+# Smart Car Dashboard
 
-This is my personal project for my in-car iPad integration, which provides some connected car features.
+This is my personal project for in-car iPad integration, which provides some connected car features.
 
 <img src="documents/payment.jpg" width="400">
 
@@ -10,7 +10,7 @@ This is my personal project for my in-car iPad integration, which provides some 
     * [Notification on passing through ETC gates / payments](https://www.youtube.com/watch?v=gPj36unAB28)
     * [Payment history management](https://twitter.com/nkym37/status/1191549586516541440)
 * Steering remote integration
-    * Control iPad's music and audio through steering remote
+    * Control iPad's music and audio volume through steering remote
 * Garage integration
     * [Open home garage gate with Siri or Home.app via HomeKit](https://twitter.com/nkym37/status/1234063006243287041)
 * iPhone integration (Remote app)
@@ -18,6 +18,8 @@ This is my personal project for my in-car iPad integration, which provides some 
     * Send Apple Music item from iPhone and play automatically
     * Send website from iPhone and open automatically
     * Send "Pick me up here" request from iPhone like Uber
+* Rearview camera
+    * [Real-time live view (about 100 ms latency with 1440x1080, 40fps) for safety and landscapes](https://twitter.com/nkym37/status/1487564744571572225)
 
 ## Required Equipments
 
