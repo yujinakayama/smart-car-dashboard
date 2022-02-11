@@ -63,8 +63,21 @@ class MusicItem: SharedItemProtocol {
     private func play(playParameters: MPMusicPlayerPlayParameters) {
         let player = MPMusicPlayerController.systemMusicPlayer
         let queueDescriptor = MPMusicPlayerPlayParametersQueueDescriptor(playParametersQueue: [playParameters])
-        player.prepend(queueDescriptor)
-        player.skipToNextItem()
+
+        if playParameters.kind == "song" {
+            player.prepend(queueDescriptor)
+            player.skipToNextItem()
+        } else {
+            player.setQueue(with: queueDescriptor)
+        }
+
         player.play()
+    }
+}
+
+fileprivate extension MPMusicPlayerPlayParameters {
+    // https://developer.apple.com/documentation/applemusicapi/playparameters
+    var kind: String {
+        return dictionary["kind"] as! String
     }
 }
