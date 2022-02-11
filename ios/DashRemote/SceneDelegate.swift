@@ -9,9 +9,9 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
     var window: UIWindow?
 
+    var pendingURL: URL?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -20,8 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else { return }
 
         // https://celsiusnotes.com/url-schemes-in-ios/
-        if connectionOptions.urlContexts.count > 0 {
-            self.scene(scene, openURLContexts: connectionOptions.urlContexts)
+        if let url = connectionOptions.urlContexts.first?.url {
+            pendingURL = url
         }
     }
 
@@ -35,6 +35,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        if let pendingURL = pendingURL {
+            handleURL(pendingURL)
+        }
+
+        pendingURL = nil
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
