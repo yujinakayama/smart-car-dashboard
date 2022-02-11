@@ -11,6 +11,8 @@ import MapKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
+    var pendingURL: URL?
+
     var tabBarController: TabBarController {
         return window?.rootViewController as! TabBarController
     }
@@ -38,6 +40,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         NotificationCenter.default.addObserver(self, selector: #selector(vehicleDidConnect), name: .VehicleDidConnect, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(vehicleDidDisconnect), name: .VehicleDidDisconnect, object: nil)
+
+        // https://hakobune.co.jp/category/engineer-blog/2584/
+        // https://developer.apple.com/documentation/xcode/defining-a-custom-url-scheme-for-your-app
+        if let url = connectionOptions.urlContexts.first?.url {
+            // Process the URL in sceneDidBecomeActive(_:)
+            // because at this time not all views are available.
+            pendingURL = url
+        }
     }
 
     // https://developer.apple.com/videos/play/wwdc2021/10057/
@@ -59,6 +69,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+
+        if let pendingURL = pendingURL {
+            handleURL(pendingURL)
+        }
+
+        pendingURL = nil
+
+
         startSpeedSensitiveVolumeControllerIfNeeded()
     }
 
@@ -85,7 +103,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let url = URLContexts.first?.url else { return }
+        handleURL(url)
+    }
 
+    private func handleURL(_ url: URL) {
         if Firebase.shared.authentication.handle(url) {
             return
         }
