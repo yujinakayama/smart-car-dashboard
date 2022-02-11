@@ -104,19 +104,7 @@ public class OfficialParkingSearch: NSObject {
         stop()
     }
 
-    public func start() throws {
-        // The web view needs to be added to view hierarchy
-        // so that it will actually render web pages and `innerText` will be available
-        if webView.window == nil {
-            guard let window = UIApplication.shared.foregroundWindowScene?.keyWindow else {
-                throw OfficialParkingSearchError.webViewMustBeAddedToWindowButNoKeyWindowIsAvailable
-            }
-
-            webView.isHidden = true
-            webView.frame = window.bounds
-            window.addSubview(webView)
-        }
-
+    public func start() {
         state = .searching
 
         if let cachedURL = cachedURL {

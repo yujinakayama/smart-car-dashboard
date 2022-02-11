@@ -402,7 +402,7 @@ class MapsViewController: UIViewController {
         if let officialParkingSearch = try? OfficialParkingSearch(destination: destination, webView: WebViewController.makeWebView()) {
             officialParkingSearch.delegate = self
             officialParkingSearch.webView.customUserAgent = WebViewController.userAgent(for: .mobile)
-            try! officialParkingSearch.start()
+            officialParkingSearch.start()
 
             officialParkingSearchStatusView.state = .searching
 
