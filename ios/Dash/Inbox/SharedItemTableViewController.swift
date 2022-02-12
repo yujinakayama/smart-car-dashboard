@@ -9,7 +9,7 @@
 import UIKit
 import SafariServices
 
-class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDelegate {
+class SharedItemTableViewController: UITableViewController {
     static let bottomInsetForAutoNextPageLoading: CGFloat = 200
 
     static func pushMapsViewControllerForParkingSearchInCurrentScene(location: Location) {
@@ -24,22 +24,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         sceneDelegate.tabBarController.selectedViewController = inboxNavigationController
     }
 
-    var database: SharedItemDatabase? {
-        return Firebase.shared.sharedItemDatabase
-    }
-
-    lazy var dataSource = SharedItemTableViewDataSource(tableView: tableView) { [weak self] (tableView, indexPath, itemIdentifier) in
-        guard let self = self else { return nil }
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SharedItemTableViewCell",for: indexPath) as! SharedItemTableViewCell
-        cell.item = self.item(for: indexPath)
-
-        if cell.parkingSearchButton.actions(forTarget: self, forControlEvent: .touchUpInside) == nil {
-            cell.parkingSearchButton.addTarget(self, action: #selector(self.parkingSearchButtonTapped), for: .touchUpInside)
-        }
-
-        return cell
-    }
+    var dataSource: SharedItemTableViewDataSource?
 
     var authentication: FirebaseAuthentication {
         return Firebase.shared.authentication
@@ -51,18 +36,12 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
 
     private var sharedItemDatabaseObservation: NSKeyValueObservation?
 
-    private var pendingUpdate: SharedItemDatabase.Update?
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        tableView.dataSource = dataSource
 
         sharedItemDatabaseObservation = Firebase.shared.observe(\.sharedItemDatabase, options: .initial) { [weak self] (firbase, change) in
             self?.sharedItemDatabaseDidChange()
         }
-
-        updateDataSource()
 
         updateLeftBarButtonItems()
         navigationItem.rightBarButtonItem = editButtonItem
@@ -74,24 +53,33 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         if authentication.vehicleID == nil {
             showSignInView()
         }
-
-        if let pendingUpdate = pendingUpdate {
-            applyUpdate(pendingUpdate)
-        }
     }
 
-    @objc func sharedItemDatabaseDidChange() {
+    func sharedItemDatabaseDidChange() {
         updateDataSource()
         updateLeftBarButtonItems()
     }
 
-    @objc func updateDataSource() {
-        if let database = database {
-            database.delegate = self
-            dataSource.setItems(database.items)
+    func updateDataSource() {
+        if let database = Firebase.shared.sharedItemDatabase {
+            let dataSource = SharedItemTableViewDataSource(database: database, tableView: tableView) { [unowned self] (tableView, indexPath, itemIdentifier) in
+                guard let dataSource = self.dataSource else { return nil }
+
+                let cell = tableView.dequeueReusableCell(withIdentifier: "SharedItemTableViewCell",for: indexPath) as! SharedItemTableViewCell
+                cell.item = dataSource.item(for: indexPath)
+
+                if cell.parkingSearchButton.actions(forTarget: self, forControlEvent: .touchUpInside) == nil {
+                    cell.parkingSearchButton.addTarget(self, action: #selector(self.parkingSearchButtonTapped), for: .touchUpInside)
+                }
+
+                return cell
+            }
+
+            self.dataSource = dataSource
+            tableView.dataSource = dataSource
         } else {
-            dataSource.setItems([])
-            pendingUpdate = nil
+            tableView.dataSource = nil
+            dataSource = nil
 
             if isVisible {
                 showSignInView()
@@ -153,7 +141,9 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
     func markSelectedItemsAsOpened(_ value: Bool) {
         assert(isEditing)
 
-        guard let indexPaths = tableView.indexPathsForSelectedRows else { return }
+        guard let dataSource = dataSource,
+              let indexPaths = tableView.indexPathsForSelectedRows
+        else { return }
 
         for indexPath in indexPaths {
             dataSource.item(for: indexPath).markAsOpened(value)
@@ -165,28 +155,15 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
     @objc func trashBarButtonItemDidTap() {
         assert(isEditing)
 
-        guard let indexPaths = tableView.indexPathsForSelectedRows else { return }
+        guard let dataSource = dataSource,
+              let indexPaths = tableView.indexPathsForSelectedRows
+        else { return }
 
         for indexPath in indexPaths {
             dataSource.item(for: indexPath).delete()
         }
 
         setEditing(false, animated: true)
-    }
-
-    func database(_ database: SharedItemDatabase, didUpdateItems update: SharedItemDatabase.Update) {
-        DispatchQueue.main.async { [self] in
-            if tableView.window == nil {
-                pendingUpdate = update
-            } else {
-                applyUpdate(update)
-            }
-        }
-    }
-
-    func applyUpdate(_ update: SharedItemDatabase.Update) {
-        dataSource.setItems(update.items, changes: update.changes, animated: !update.isCausedByPagination)
-        pendingUpdate = nil
     }
 
     func showSignInView() {
@@ -199,7 +176,7 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard !tableView.isEditing else { return }
+        guard let dataSource = dataSource, !tableView.isEditing else { return }
 
         let item = dataSource.item(for: indexPath)
         item.markAsOpened(true)
@@ -211,18 +188,23 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
     }
 
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard let database = database else { return }
+        guard let dataSource = dataSource else { return }
 
         let currentBottom = tableView.contentOffset.y + tableView.bounds.height
         let maxScrollableBottom = tableView.contentSize.height + tableView.adjustedContentInset.bottom
+        let isInScrollAreaForAutoNextPageLoading = currentBottom >= maxScrollableBottom - Self.bottomInsetForAutoNextPageLoading
 
-        if currentBottom >= maxScrollableBottom - Self.bottomInsetForAutoNextPageLoading {
+        if isInScrollAreaForAutoNextPageLoading, !wasInScrollAreaForAutoNextPageLoading {
             Task {
-                guard await !database.isLoadingPage else { return }
-                database.startLoadingNextPageIfAvailable()
+                guard await !dataSource.isLoadingNewPage else { return }
+                await dataSource.incrementPage()
             }
         }
+
+        wasInScrollAreaForAutoNextPageLoading = isInScrollAreaForAutoNextPageLoading
     }
+
+    private var wasInScrollAreaForAutoNextPageLoading = false
 
     @objc func parkingSearchButtonTapped(button: UIButton) {
         var view: UIView = button
@@ -241,11 +223,12 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
     }
 
     override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        guard let dataSource = dataSource else { return nil }
 
         let actionProvider: UIContextMenuActionProvider = { [weak self] (suggestedActions) in
             guard let self = self else { return UIMenu() }
 
-            switch self.item(for: indexPath) {
+            switch dataSource.item(for: indexPath) {
             case let location as Location:
                 return self.actionMenu(for: location)
             case let musicItem as MusicItem:
@@ -258,10 +241,6 @@ class SharedItemTableViewController: UITableViewController, SharedItemDatabaseDe
         }
 
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: actionProvider)
-    }
-
-    func item(for indexPath: IndexPath) -> SharedItemProtocol {
-        return dataSource.item(for: indexPath)
     }
 
     func pushMapsViewControllerForParkingSearch(location: Location) {

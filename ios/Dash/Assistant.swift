@@ -27,7 +27,10 @@ class Assistant {
     @objc func sceneWillEnterForeground() {
         if Defaults.shared.automaticallyOpensUnopenedLocationWhenAppIsOpened {
             locationOpener = LocationOpener(newItemThresholdTime: Defaults.shared.lastBackgroundEntranceTime)
-            locationOpener?.start()
+
+            Task {
+                await locationOpener?.run()
+            }
         } else {
             locationOpener = nil
         }
@@ -38,37 +41,16 @@ extension Assistant {
     class LocationOpener {
         let newItemThresholdTime: Date
         let maxDatabaseUpdateWaitTimeInterval: TimeInterval = 2
-        var finished = false
         private var location: Location?
 
         init(newItemThresholdTime: Date) {
             self.newItemThresholdTime = newItemThresholdTime
         }
 
-        func start() {
-            NotificationCenter.default.addObserver(self, selector: #selector(sharedItemDatabaseDidUpdateItems), name: .SharedItemDatabaseDidUpdateItems, object: nil)
-            Timer.scheduledTimer(timeInterval: maxDatabaseUpdateWaitTimeInterval, target: self, selector: #selector(timeoutTimerDidFire), userInfo: nil, repeats: false)
-        }
-
-        @objc func sharedItemDatabaseDidUpdateItems() {
-            logger.info()
-            openUnopenedLocationIfNeeded()
-        }
-
-        @objc func timeoutTimerDidFire() {
-            logger.info()
-            NotificationCenter.default.removeObserver(self, name: .SharedItemDatabaseDidUpdateItems, object: nil)
-            openUnopenedLocationIfNeeded()
-        }
-
-        private func openUnopenedLocationIfNeeded() {
+        func run() async {
             logger.info()
 
-            guard !finished else { return }
-
-            guard let database = Firebase.shared.sharedItemDatabase else { return }
-            let unopenedLocations = database.items.filter { $0 is Location && !$0.hasBeenOpened && ($0.creationDate ?? Date()) > newItemThresholdTime } as! [Location]
-            guard unopenedLocations.count == 1, let location = unopenedLocations.first else { return }
+            guard let location = await getLocationToOpen() else { return }
 
             location.markAsOpened(true)
             location.openDirectionsInMaps()
@@ -76,12 +58,24 @@ extension Assistant {
             if !location.categories.contains(where: { $0.isKindOfParking }),
                Defaults.shared.automaticallySearchParkingsWhenLocationIsAutomaticallyOpened
             {
-                SharedItemTableViewController.pushMapsViewControllerForParkingSearchInCurrentScene(location: location)
+                await SharedItemTableViewController.pushMapsViewControllerForParkingSearchInCurrentScene(location: location)
             }
 
             self.location = location
+        }
 
-            finished = true
+        func getLocationToOpen() async -> Location? {
+            guard let database = Firebase.shared.sharedItemDatabase else { return nil }
+
+            let query = database.items(type: .location, hasBeenOpened: false, createdAfter: newItemThresholdTime)
+
+            guard let unopenedLocations = try? await query.get() as? [Location] else { return nil }
+
+            if unopenedLocations.count == 1, let location = unopenedLocations.first {
+                return location
+            } else {
+                return nil
+            }
         }
     }
 }

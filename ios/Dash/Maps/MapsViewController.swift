@@ -169,6 +169,7 @@ class MapsViewController: UIViewController {
     }
 
     private var sharedItemDatabaseObservation: NSKeyValueObservation?
+    private var sharedItemQuerySubscription: FirestoreQuery<SharedItemProtocol>.CountSubscription?
 
     private var sharedLocationAnnotations: [MKAnnotation] = []
 
@@ -265,10 +266,17 @@ class MapsViewController: UIViewController {
 
     private func configureSharedItemDatabase() {
         sharedItemDatabaseObservation = Firebase.shared.observe(\.sharedItemDatabase, options: .initial) { [weak self] (firebase, change) in
-            self?.updateSharedLocationAnnotations()
-        }
+            guard let self = self else { return }
 
-        NotificationCenter.default.addObserver(self, selector: #selector(updateSharedLocationAnnotations), name: .SharedItemDatabaseDidUpdateItems, object: nil)
+            if let database = Firebase.shared.sharedItemDatabase {
+                self.sharedItemQuerySubscription = database.items(type: .location).subscribeToCountUpdates { (result) in
+                    self.updateSharedLocationAnnotations()
+                }
+            } else {
+                self.sharedItemQuerySubscription = nil
+                self.removeSharedLocationAnnotations()
+            }
+        }
     }
 
     private func changePlacementOfParkingSearchOptionsSheetViewIfNeeded() {
@@ -469,10 +477,14 @@ class MapsViewController: UIViewController {
         present(navigationController, animated: true)
     }
 
-    @objc private func updateSharedLocationAnnotations() {
+    private func updateSharedLocationAnnotations() {
         guard showsRecentSharedLocations else { return }
+
         removeSharedLocationAnnotations()
-        addSharedLocationAnnotations()
+
+        Task {
+            await addSharedLocationAnnotations()
+        }
     }
 
     private func removeSharedLocationAnnotations() {
@@ -480,22 +492,21 @@ class MapsViewController: UIViewController {
         sharedLocationAnnotations = []
     }
 
-    private func addSharedLocationAnnotations() {
+    private func addSharedLocationAnnotations() async {
         guard let database = Firebase.shared.sharedItemDatabase else { return }
 
         let threeDaysAgo = Date(timeIntervalSinceNow: -3 * 24 * 60 * 60)
+        let query = database.items(type: .location, createdAfter: threeDaysAgo)
 
-        let recentLocations = database.items.filter { (item) in
-            guard item is Location else { return false }
-            guard let creationDate = item.creationDate else { return false }
-            return creationDate >= threeDaysAgo
-        } as! [Location]
+        guard let recentLocations = try? await query.get() as? [Location] else { return }
 
         sharedLocationAnnotations = recentLocations.map { (location) in
             return SharedLocationAnnotation(location)
         }
 
-        mapView.addAnnotations(sharedLocationAnnotations)
+        await MainActor.run {
+            mapView.addAnnotations(sharedLocationAnnotations)
+        }
     }
 
     private func viewForSharedLocationAnnotation(_ annotation: SharedLocationAnnotation) -> MKAnnotationView {

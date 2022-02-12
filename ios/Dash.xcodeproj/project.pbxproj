@@ -26,7 +26,7 @@
 		B90E21F924CBB1BF008330AD /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90E21F824CBB1BF008330AD /* TabBarController.swift */; };
 		B90F5FD525EFF13D00C2578C /* CIImageDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F5FD425EFF13D00C2578C /* CIImageDisplayView.swift */; };
 		B90F5FFF25F3CA4D00C2578C /* SampleBufferDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F5FFE25F3CA4D00C2578C /* SampleBufferDecoder.swift */; };
-		B910AF25273956C700A61795 /* FirestoreQueryPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = B910AF24273956C700A61795 /* FirestoreQueryPagination.swift */; };
+		B910AF25273956C700A61795 /* FirestoreQueryPaginatedSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = B910AF24273956C700A61795 /* FirestoreQueryPaginatedSubscription.swift */; };
 		B915BEF5267F8754007068D7 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94215F026423A58003F94A0 /* StringExtension.swift */; };
 		B91B5DD523ED7886003F4AEF /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91B5DD423ED7886003F4AEF /* Account.swift */; };
 		B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
@@ -169,6 +169,9 @@
 		B9C1F40927AAC47700C6D4DD /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92650112691CE29005FD73D /* SheetView.swift */; };
 		B9C1F40D27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1F40C27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift */; };
 		B9C1F40F27AAEB8D00C6D4DD /* PointOfInterestCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1F40E27AAEB8D00C6D4DD /* PointOfInterestCategory.swift */; };
+		B9C1F41527B815C400C6D4DD /* FirestoreQuerySubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1F41427B815C400C6D4DD /* FirestoreQuerySubscription.swift */; };
+		B9C1F41727B8240F00C6D4DD /* FirestoreQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1F41627B8240F00C6D4DD /* FirestoreQuery.swift */; };
+		B9C1F41927B82B9400C6D4DD /* FirestoreQueryCountSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1F41827B82B9400C6D4DD /* FirestoreQueryCountSubscription.swift */; };
 		B9C2455F23EDA2EA00E00523 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
 		B9C2456523EDBB4800E00523 /* FloatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C2456423EDBB4800E00523 /* FloatButton.swift */; };
 		B9C87A1726671CCE00ABCBB4 /* ParkingSearchURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */; };
@@ -413,7 +416,7 @@
 		B90E21F824CBB1BF008330AD /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		B90F5FD425EFF13D00C2578C /* CIImageDisplayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CIImageDisplayView.swift; sourceTree = "<group>"; };
 		B90F5FFE25F3CA4D00C2578C /* SampleBufferDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleBufferDecoder.swift; sourceTree = "<group>"; };
-		B910AF24273956C700A61795 /* FirestoreQueryPagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreQueryPagination.swift; sourceTree = "<group>"; };
+		B910AF24273956C700A61795 /* FirestoreQueryPaginatedSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreQueryPaginatedSubscription.swift; sourceTree = "<group>"; };
 		B91B5DD423ED7886003F4AEF /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		B91E0B61254D047D002928D3 /* PairingURLItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingURLItem.swift; sourceTree = "<group>"; };
 		B92451D323E30ACE007556D5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -563,6 +566,9 @@
 		B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficialParkingSearch.swift; sourceTree = "<group>"; };
 		B9C1F40C27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterestAnnotation.swift; sourceTree = "<group>"; };
 		B9C1F40E27AAEB8D00C6D4DD /* PointOfInterestCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterestCategory.swift; sourceTree = "<group>"; };
+		B9C1F41427B815C400C6D4DD /* FirestoreQuerySubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreQuerySubscription.swift; sourceTree = "<group>"; };
+		B9C1F41627B8240F00C6D4DD /* FirestoreQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreQuery.swift; sourceTree = "<group>"; };
+		B9C1F41827B82B9400C6D4DD /* FirestoreQueryCountSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreQueryCountSubscription.swift; sourceTree = "<group>"; };
 		B9C2455E23EDA2EA00E00523 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		B9C2456423EDBB4800E00523 /* FloatButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatButton.swift; sourceTree = "<group>"; };
 		B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingSearchURLItem.swift; sourceTree = "<group>"; };
@@ -805,7 +811,10 @@
 				B9640AAA2575D9E800B779AD /* Firebase.swift */,
 				B9640AC12575EC0400B779AD /* FirebaseAuthentication.swift */,
 				B9B154ED2575FCED0031761F /* FirebaseMessaging.swift */,
-				B910AF24273956C700A61795 /* FirestoreQueryPagination.swift */,
+				B9C1F41627B8240F00C6D4DD /* FirestoreQuery.swift */,
+				B9C1F41427B815C400C6D4DD /* FirestoreQuerySubscription.swift */,
+				B910AF24273956C700A61795 /* FirestoreQueryPaginatedSubscription.swift */,
+				B9C1F41827B82B9400C6D4DD /* FirestoreQueryCountSubscription.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -1877,11 +1886,12 @@
 				B95F514E23E5BBF70063CB3D /* SharedItem.swift in Sources */,
 				B944C69024A9E4C8000D1E99 /* MusicViewController.swift in Sources */,
 				B9D02089268CD1850020BF9A /* RoadTracker.swift in Sources */,
+				B9C1F41927B82B9400C6D4DD /* FirestoreQueryCountSubscription.swift in Sources */,
 				B9E96CC822A4EF1300C2E009 /* ETCPayment.swift in Sources */,
 				B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */,
 				B9CEA76622D89A400055C9A3 /* ETCDataStore.swift in Sources */,
 				B931C4FF23D369760020DF13 /* ETCDevice.swift in Sources */,
-				B910AF25273956C700A61795 /* FirestoreQueryPagination.swift in Sources */,
+				B910AF25273956C700A61795 /* FirestoreQueryPaginatedSubscription.swift in Sources */,
 				B954CA2325693CCC00BAD0F0 /* WidgetPageViewController.swift in Sources */,
 				B9C04B42257775B8001D6E0F /* WebViewController.swift in Sources */,
 				B904A2A6243968990087BD4A /* MapsViewController.swift in Sources */,
@@ -1936,6 +1946,7 @@
 				B9D8E43A23D345D70078A057 /* UUIDExtension.swift in Sources */,
 				B9248B8B2728A27500952745 /* MPMediaItemExtension.swift in Sources */,
 				B90265AB23EB4CE000B2EF6B /* SharedItemTableViewDataSource.swift in Sources */,
+				B9C1F41527B815C400C6D4DD /* FirestoreQuerySubscription.swift in Sources */,
 				B90E21F924CBB1BF008330AD /* TabBarController.swift in Sources */,
 				B9CEA76E22D911140055C9A3 /* ETCSplitViewController.swift in Sources */,
 				B9CB753624AA1A17008264F5 /* VolumeView.swift in Sources */,
@@ -1954,6 +1965,7 @@
 				B94A59A026826E960074368A /* LocationInformationDebugViewController.swift in Sources */,
 				B9C1F40D27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift in Sources */,
 				B954CA3225693EDA00BAD0F0 /* RearviewWidgetViewController.swift in Sources */,
+				B9C1F41727B8240F00C6D4DD /* FirestoreQuery.swift in Sources */,
 				B9DC5B4A229EDA0000B645D5 /* SerialPort.swift in Sources */,
 				B9640AC22575EC0400B779AD /* FirebaseAuthentication.swift in Sources */,
 			);

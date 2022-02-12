@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseFirestoreSwift
 
 class TabBarBadgeManager {
     enum TabBarItemTag: Int {
@@ -16,6 +17,7 @@ class TabBarBadgeManager {
     let tabBarController: UITabBarController
 
     private var sharedItemDatabaseObservation: NSKeyValueObservation?
+    private var sharedItemQuerySubscription: FirestoreQuery<SharedItemProtocol>.CountSubscription?
 
     var tabBarItems: [UITabBarItem] {
         guard let viewControllers = tabBarController.viewControllers else { return [] }
@@ -30,19 +32,25 @@ class TabBarBadgeManager {
         sharedItemDatabaseObservation = Firebase.shared.observe(\.sharedItemDatabase, options: .initial) { [weak self] (firebase, change) in
             self?.sharedItemDatabaseDidChange()
         }
-
-        NotificationCenter.default.addObserver(self, selector: #selector(sharedItemDatabaseDidUpdateItems), name: .SharedItemDatabaseDidUpdateItems, object: nil)
     }
 
     func sharedItemDatabaseDidChange() {
-        if Firebase.shared.sharedItemDatabase == nil {
+        if let database = Firebase.shared.sharedItemDatabase {
+            sharedItemQuerySubscription = database.items(hasBeenOpened: false).subscribeToCountUpdates { [weak self] (result) in
+                self?.onCountUpdates(result: result)
+            }
+        } else {
+            sharedItemQuerySubscription = nil
             inboxTabBarItem.badgeValue = nil
         }
     }
 
-    @objc func sharedItemDatabaseDidUpdateItems(notification: Notification) {
-        guard let database = Firebase.shared.sharedItemDatabase else { return }
-        let unopenedCount = database.items.filter { !$0.hasBeenOpened }.count
-        inboxTabBarItem.badgeValue = (unopenedCount == 0) ? nil : "\(unopenedCount)"
+    func onCountUpdates(result: Result<Int, Error>) {
+        do {
+            let count = try result.get()
+            self.inboxTabBarItem.badgeValue = (count == 0) ? nil : "\(count)"
+        } catch {
+            logger.error(error)
+        }
     }
 }
