@@ -28,7 +28,25 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         delegate = self
+
+        NotificationCenter.default.addObserver(forName: .FirebaseAuthenticationDidChangeVehicleID, object: nil, queue: .main) { [weak self] (notification) in
+            self?.presentSignInViewControllerIfNeeded()
+        }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        DispatchQueue.main.async {
+            self.presentSignInViewControllerIfNeeded()
+        }
+    }
+
+    func presentSignInViewControllerIfNeeded() {
+        guard Firebase.shared.authentication.vehicleID == nil else { return }
+        performSegue(withIdentifier: "showSignIn", sender: self)
     }
 
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {

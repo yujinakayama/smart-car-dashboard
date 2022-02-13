@@ -7,39 +7,18 @@
 //
 
 import UIKit
-import CoreData
 
-class ETCCardTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
-    enum Section: Int, CaseIterable {
-        case allPayments = 0
-        case cards
+@MainActor
+class ETCCardTableViewController: UITableViewController {
+    typealias Section = ETCCardTableViewDataSource.Section
 
-        init?(_ sectionIndex: Int) {
-            if let section = Section(rawValue: sectionIndex) {
-                self = section
-            } else {
-                return nil
-            }
-        }
+    var dataSource: ETCCardTableViewDataSource?
 
-        init?(_ indexPath: IndexPath) {
-            if let section = Section(rawValue: indexPath.section) {
-                self = section
-            } else {
-                return nil
-            }
-        }
+    var deviceManager: ETCDeviceManager {
+        return Vehicle.default.etcDeviceManager
     }
 
-    var device: ETCDevice {
-        return Vehicle.default.etcDevice
-    }
-
-    lazy var deviceStatusBarItemManager = ETCDeviceStatusBarItemManager(device: device)
-
-    var fetchedResultsController: NSFetchedResultsController<ETCCardManagedObject>?
-
-    var keyValueObservations: [NSKeyValueObservation] = []
+    lazy var deviceStatusBarItemManager = ETCDeviceStatusBarItemManager(deviceManager: deviceManager)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +30,7 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
 
         startObservingCurrentCard()
 
-        startFetchingCards()
+        startUpdatingDataSource()
     }
 
     func setUpNavigationBar() {
@@ -60,60 +39,34 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
     }
 
     func startObservingCurrentCard() {
-        keyValueObservations.append(device.observe(\.currentCard) { [weak self] (currentCard, change) in
-            DispatchQueue.main.async {
-                self?.indicateCurrentCard()
-            }
-        })
+        NotificationCenter.default.addObserver(self, selector: #selector(indicateCurrentCard), name: .ETCDeviceDidDetectCardInsertion, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(indicateCurrentCard), name: .ETCDeviceDidDetectCardEjection, object: nil)
     }
 
-    func startFetchingCards() {
-        if let managedObjectContext = device.dataStore.viewContext {
-            fetchCards(managedObjectContext: managedObjectContext)
-        } else {
-            keyValueObservations.append(device.dataStore.observe(\.viewContext) { [weak self] (dataStore, change) in
-                guard let managedObjectContext = dataStore.viewContext else { return }
-                self?.fetchCards(managedObjectContext: managedObjectContext)
-            })
+    func startUpdatingDataSource() {
+        keyValueObservation = deviceManager.observe(\.database, options: .initial) { [weak self] (deviceManager, change) in
+            self?.updateDataSource(database: deviceManager.database)
         }
     }
 
-    func fetchCards(managedObjectContext: NSManagedObjectContext) {
-        fetchedResultsController = makeFetchedResultsController(managedObjectContext: managedObjectContext)
-        try! fetchedResultsController!.performFetch()
-        tableView.reloadData()
+    private var keyValueObservation: NSKeyValueObservation?
+
+    func updateDataSource(database: ETCDatabase?) {
+        if let database = database {
+            dataSource = ETCCardTableViewDataSource(database: database, tableView: tableView) { [unowned self] (tableView, indexPath, itemIdentifier) in
+                return self.tableView(tableView, cellForRowAt: indexPath)
+            }
+
+            tableView.dataSource = self.dataSource
+        } else {
+            tableView.dataSource = nil
+            dataSource = nil
+        }
     }
 
-    func makeFetchedResultsController(managedObjectContext: NSManagedObjectContext) -> NSFetchedResultsController<ETCCardManagedObject> {
-        let request: NSFetchRequest<ETCCardManagedObject> = ETCCardManagedObject.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-
-        let controller = NSFetchedResultsController(
-            fetchRequest: request,
-            managedObjectContext: managedObjectContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil
-        )
-
-        controller.delegate = self
-
-        return controller
-    }
-
-    func selectRowForAllPayments(animated: Bool) {
-        let indexPath = IndexPath(row: 0, section: Section.allPayments.rawValue)
-        tableView.selectRow(at: indexPath, animated: animated, scrollPosition: .none)
-    }
-
-    func selectRow(forCard cardUUIDString: String, animated: Bool) {
-        guard let cards = fetchedResultsController?.sections?.first?.objects as? [ETCCardManagedObject] else { return }
-        guard let row = cards.firstIndex(where: { $0.uuid.uuidString == cardUUIDString }) else { return }
-        let indexPath = IndexPath(row: row, section: Section.cards.rawValue)
-        tableView.selectRow(at: indexPath, animated: animated, scrollPosition: .none)
-    }
-
-    func indicateCurrentCard() {
-        tableView.reloadSections(IndexSet(integer: Section.cards.rawValue), with: .none)
+    @objc func indicateCurrentCard() {
+        let sections = IndexSet(integer: Section.cards.rawValue)
+        tableView.reloadSections(sections, with: .none)
     }
 
     // MARK: - Segues
@@ -128,39 +81,15 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
                 case .allPayments:
                     paymentTableViewController.card = nil
                 case .cards:
-                    paymentTableViewController.card = fetchedResultsController?.object(at: indexPath.adding(section: -1))
+                    paymentTableViewController.card = dataSource?.card(for: indexPath)
                 }
             }
         case "edit":
             let navigationController = segue.destination as! UINavigationController
             let cardEditViewController = navigationController.topViewController as! ETCCardEditViewController
-            cardEditViewController.card = (sender as! ETCCardManagedObject)
+            cardEditViewController.card = (sender as! ETCCard)
         default:
             break
-        }
-    }
-
-    // MARK: - UITableViewDataSource
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return Section.allCases.count
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch Section(section)! {
-        case .allPayments:
-            return 1
-        case .cards:
-            return fetchedResultsController?.sections?.first?.numberOfObjects ?? 0
-        }
-    }
-
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch Section(section)! {
-        case .allPayments:
-            return nil
-        case .cards:
-            return String(localized: "Cards")
         }
     }
 
@@ -170,9 +99,9 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
             return tableView.dequeueReusableCell(withIdentifier: "AllPaymentsCell", for: indexPath)
         case .cards:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ETCCardTableViewCell", for: indexPath) as! ETCCardTableViewCell
-            if let card = fetchedResultsController?.object(at: indexPath.adding(section: -1)) {
+            if let card = dataSource?.card(for: indexPath) {
                 cell.card = card
-                cell.isCurrentCard = card.objectID == device.currentCard?.objectID
+                cell.isCurrentCard = card.uuid == deviceManager.currentCard?.uuid
             } else {
                 cell.card = nil
                 cell.isCurrentCard = false
@@ -194,53 +123,10 @@ class ETCCardTableViewController: UITableViewController, NSFetchedResultsControl
     }
 
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        guard Section(indexPath)! == .cards else { return }
-        guard let card = fetchedResultsController?.object(at: indexPath.adding(section: -1)) else { return }
+        guard Section(indexPath)! == .cards,
+              let card = dataSource?.card(for: indexPath)
+        else { return }
+
         performSegue(withIdentifier: "edit", sender: card)
-    }
-
-    // MARK: - NSFetchedResultsControllerDelegate
-
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
-    }
-
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-        let sectionIndex = sectionIndex + 1
-
-        switch type {
-        case .insert:
-            tableView.insertSections(IndexSet(integer: sectionIndex), with: .left)
-        case .delete:
-            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
-        case .move:
-            break
-        case .update:
-            break
-        @unknown default:
-            break
-        }
-    }
-
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        let indexPath = indexPath?.adding(section: 1)
-        let newIndexPath = newIndexPath?.adding(section: 1)
-
-        switch type {
-        case .insert:
-            tableView.insertRows(at: [newIndexPath!], with: .left)
-        case .delete:
-            tableView.deleteRows(at: [indexPath!], with: .fade)
-        case .update:
-            tableView.reloadRows(at: [indexPath!], with: .none)
-        case .move:
-            tableView.moveRow(at: indexPath!, to: newIndexPath!)
-        @unknown default:
-            break
-        }
-    }
-
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
     }
 }

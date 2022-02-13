@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 
+@MainActor
 class AppState {
     static let activityType = "com.yujinakayama.Dash.AppState"
 
@@ -34,6 +35,7 @@ class AppState {
 }
 
 extension AppState {
+    @MainActor
     class App {
         let window: UIWindow
 
@@ -63,6 +65,7 @@ extension AppState {
 }
 
 extension AppState {
+    @MainActor
     class Preservation {
         let app: App
 
@@ -93,6 +96,7 @@ extension AppState {
 }
 
 extension AppState {
+    @MainActor
     class Restoration {
         let userActivity: NSUserActivity
         let app: App
@@ -120,6 +124,7 @@ extension AppState {
 }
 
 extension AppState {
+    @MainActor
     class Property {
         let app: App
 

@@ -48,7 +48,7 @@
 		B92C6EC724AC77B2001E9675 /* PlaybackProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92C6EC624AC77B2001E9675 /* PlaybackProgressView.swift */; };
 		B92E2AFC23E4958200BB4C0E /* UNNotificationContentExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92E2AFB23E4958200BB4C0E /* UNNotificationContentExtension.swift */; };
 		B92FB3C023E95BE900EA702C /* SharedItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92FB3BF23E95BE900EA702C /* SharedItemTableViewCell.swift */; };
-		B931C4FF23D369760020DF13 /* ETCDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B931C4FE23D369760020DF13 /* ETCDevice.swift */; };
+		B931C4FF23D369760020DF13 /* ETCDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B931C4FE23D369760020DF13 /* ETCDeviceManager.swift */; };
 		B932E5EC23F86C5F00726615 /* MusicItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932E5EB23F86C5F00726615 /* MusicItem.swift */; };
 		B932E5F023F9082600726615 /* RendezvousPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932E5EF23F9082600726615 /* RendezvousPoint.swift */; };
 		B932EE4B26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */; };
@@ -111,7 +111,6 @@
 		B98B784623ED4F1200A5102F /* DashCloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashCloudKit.framework */; platformFilter = ios; };
 		B98B784D23ED530E00A5102F /* SignInWithAppleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98B784C23ED530E00A5102F /* SignInWithAppleViewController.swift */; };
 		B98B784F23ED583600A5102F /* AppIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98B784E23ED583600A5102F /* AppIconImageView.swift */; };
-		B98E936A234C94C7004AE50F /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
 		B99356D922A9483F00BA08AB /* japan_etc_tollbooths.csv in Resources */ = {isa = PBXBuildFile; fileRef = B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */; };
 		B99356DB22A9484700BA08AB /* ETCPaymentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356DA22A9484700BA08AB /* ETCPaymentTests.swift */; };
 		B99356E422A94D6900BA08AB /* BLESerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E322A94D6900BA08AB /* BLESerialPort.swift */; };
@@ -150,7 +149,6 @@
 		B9BA5B5926A897CF004D5927 /* PointOfInterestAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BA5B5826A897CF004D5927 /* PointOfInterestAnnotationView.swift */; };
 		B9BA5B5B26A8982C004D5927 /* SharedLocationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BA5B5A26A8982C004D5927 /* SharedLocationAnnotation.swift */; };
 		B9BA5B5C26A89C83004D5927 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04662642D5FA002CD861 /* UIButtonExtension.swift */; };
-		B9BA819E2350931A00657DEB /* ETCPaymentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */; };
 		B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */; };
 		B9BC920923250A0A006F22FC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BC920823250A0A006F22FC /* Defaults.swift */; };
 		B9BE434C27A187F300AD86A5 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BE434B27A187F300AD86A5 /* Time.swift */; };
@@ -172,13 +170,16 @@
 		B9C1F41527B815C400C6D4DD /* FirestoreQuerySubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1F41427B815C400C6D4DD /* FirestoreQuerySubscription.swift */; };
 		B9C1F41727B8240F00C6D4DD /* FirestoreQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1F41627B8240F00C6D4DD /* FirestoreQuery.swift */; };
 		B9C1F41927B82B9400C6D4DD /* FirestoreQueryCountSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1F41827B82B9400C6D4DD /* FirestoreQueryCountSubscription.swift */; };
+		B9C1F41B27B8575800C6D4DD /* ETCCardTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1F41A27B8575800C6D4DD /* ETCCardTableViewDataSource.swift */; };
+		B9C1F41D27B87E5500C6D4DD /* ETCPaymentTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1F41C27B87E5500C6D4DD /* ETCPaymentTableViewDataSource.swift */; };
+		B9C1F41F27B88A6400C6D4DD /* ScrollViewPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1F41E27B88A6400C6D4DD /* ScrollViewPagination.swift */; };
 		B9C2455F23EDA2EA00E00523 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
 		B9C2456523EDBB4800E00523 /* FloatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C2456423EDBB4800E00523 /* FloatButton.swift */; };
 		B9C87A1726671CCE00ABCBB4 /* ParkingSearchURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */; };
 		B9CB753624AA1A17008264F5 /* VolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB753524AA1A17008264F5 /* VolumeView.swift */; };
 		B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */; };
 		B9CD5E5C27493E4A00B0BBF0 /* GetCurrentAudioOutputTypeIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CD5E5B27493E4A00B0BBF0 /* GetCurrentAudioOutputTypeIntentHandler.swift */; };
-		B9CEA76622D89A400055C9A3 /* ETCDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */; };
+		B9CEA76622D89A400055C9A3 /* ETCDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76522D89A400055C9A3 /* ETCDatabase.swift */; };
 		B9CEA76E22D911140055C9A3 /* ETCSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76D22D911140055C9A3 /* ETCSplitViewController.swift */; };
 		B9D02089268CD1850020BF9A /* RoadTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D02088268CD1850020BF9A /* RoadTracker.swift */; };
 		B9D0208B268CD2F60020BF9A /* VehicleMovement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D0208A268CD2F60020BF9A /* VehicleMovement.swift */; };
@@ -188,10 +189,9 @@
 		B9D4AF242671324B00849129 /* DashCloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashCloudKit.framework */; };
 		B9D4AF2A26727D8000849129 /* MapItemFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D4AF2926727D8000849129 /* MapItemFetcher.swift */; };
 		B9D4AF2E2673203400849129 /* UTTypeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D4AF2D2673203400849129 /* UTTypeExtension.swift */; };
-		B9D8E43823D345940078A057 /* ETCCardManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43723D345940078A057 /* ETCCardManagedObject.swift */; };
+		B9D8E43823D345940078A057 /* ETCCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43723D345940078A057 /* ETCCard.swift */; };
 		B9D8E43A23D345D70078A057 /* UUIDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43923D345D70078A057 /* UUIDExtension.swift */; };
 		B9DB8E5522D7A410003E4BD8 /* Dash.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B9DB8E5322D7A410003E4BD8 /* Dash.xcdatamodeld */; };
-		B9DB8E5922D7A481003E4BD8 /* ETCPaymentManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DB8E5722D7A481003E4BD8 /* ETCPaymentManagedObject.swift */; };
 		B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B24229D59BE00B645D5 /* AppDelegate.swift */; };
 		B9DC5B27229D59BE00B645D5 /* ETCPaymentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B26229D59BE00B645D5 /* ETCPaymentTableViewController.swift */; };
 		B9DC5B29229D59BE00B645D5 /* ETCPaymentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B28229D59BE00B645D5 /* ETCPaymentDetailViewController.swift */; };
@@ -436,7 +436,7 @@
 		B92C6EC624AC77B2001E9675 /* PlaybackProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackProgressView.swift; sourceTree = "<group>"; };
 		B92E2AFB23E4958200BB4C0E /* UNNotificationContentExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UNNotificationContentExtension.swift; sourceTree = "<group>"; };
 		B92FB3BF23E95BE900EA702C /* SharedItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedItemTableViewCell.swift; sourceTree = "<group>"; };
-		B931C4FE23D369760020DF13 /* ETCDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDevice.swift; sourceTree = "<group>"; };
+		B931C4FE23D369760020DF13 /* ETCDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceManager.swift; sourceTree = "<group>"; };
 		B932E5EB23F86C5F00726615 /* MusicItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicItem.swift; sourceTree = "<group>"; };
 		B932E5EF23F9082600726615 /* RendezvousPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendezvousPoint.swift; sourceTree = "<group>"; };
 		B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocationCoordinate2DExtension.swift; sourceTree = "<group>"; };
@@ -510,7 +510,6 @@
 		B98B784B23ED521A00A5102F /* Dash Remote.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Dash Remote.entitlements"; sourceTree = "<group>"; };
 		B98B784C23ED530E00A5102F /* SignInWithAppleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleViewController.swift; sourceTree = "<group>"; };
 		B98B784E23ED583600A5102F /* AppIconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconImageView.swift; sourceTree = "<group>"; };
-		B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentProtocol.swift; sourceTree = "<group>"; };
 		B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = japan_etc_tollbooths.csv; sourceTree = "<group>"; };
 		B99356DA22A9484700BA08AB /* ETCPaymentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCPaymentTests.swift; sourceTree = "<group>"; };
 		B99356E322A94D6900BA08AB /* BLESerialPort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLESerialPort.swift; sourceTree = "<group>"; };
@@ -569,13 +568,16 @@
 		B9C1F41427B815C400C6D4DD /* FirestoreQuerySubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreQuerySubscription.swift; sourceTree = "<group>"; };
 		B9C1F41627B8240F00C6D4DD /* FirestoreQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreQuery.swift; sourceTree = "<group>"; };
 		B9C1F41827B82B9400C6D4DD /* FirestoreQueryCountSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreQueryCountSubscription.swift; sourceTree = "<group>"; };
+		B9C1F41A27B8575800C6D4DD /* ETCCardTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewDataSource.swift; sourceTree = "<group>"; };
+		B9C1F41C27B87E5500C6D4DD /* ETCPaymentTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCPaymentTableViewDataSource.swift; sourceTree = "<group>"; };
+		B9C1F41E27B88A6400C6D4DD /* ScrollViewPagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewPagination.swift; sourceTree = "<group>"; };
 		B9C2455E23EDA2EA00E00523 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		B9C2456423EDBB4800E00523 /* FloatButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatButton.swift; sourceTree = "<group>"; };
 		B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingSearchURLItem.swift; sourceTree = "<group>"; };
 		B9CB753524AA1A17008264F5 /* VolumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeView.swift; sourceTree = "<group>"; };
 		B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationCenter.swift; sourceTree = "<group>"; };
 		B9CD5E5B27493E4A00B0BBF0 /* GetCurrentAudioOutputTypeIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCurrentAudioOutputTypeIntentHandler.swift; sourceTree = "<group>"; };
-		B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDataStore.swift; sourceTree = "<group>"; };
+		B9CEA76522D89A400055C9A3 /* ETCDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDatabase.swift; sourceTree = "<group>"; };
 		B9CEA76D22D911140055C9A3 /* ETCSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCSplitViewController.swift; sourceTree = "<group>"; };
 		B9D02088268CD1850020BF9A /* RoadTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoadTracker.swift; sourceTree = "<group>"; };
 		B9D0208A268CD2F60020BF9A /* VehicleMovement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleMovement.swift; sourceTree = "<group>"; };
@@ -584,11 +586,10 @@
 		B9D4AF21267124FC00849129 /* DashCloudClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashCloudClient.swift; sourceTree = "<group>"; };
 		B9D4AF2926727D8000849129 /* MapItemFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItemFetcher.swift; sourceTree = "<group>"; };
 		B9D4AF2D2673203400849129 /* UTTypeExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UTTypeExtension.swift; sourceTree = "<group>"; };
-		B9D8E43723D345940078A057 /* ETCCardManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCCardManagedObject.swift; sourceTree = "<group>"; };
+		B9D8E43723D345940078A057 /* ETCCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCCard.swift; sourceTree = "<group>"; };
 		B9D8E43923D345D70078A057 /* UUIDExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUIDExtension.swift; sourceTree = "<group>"; };
 		B9D8E43B23D345EC0078A057 /* DashV2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DashV2.xcdatamodel; sourceTree = "<group>"; };
 		B9DB8E5422D7A410003E4BD8 /* Dash.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Dash.xcdatamodel; sourceTree = "<group>"; };
-		B9DB8E5722D7A481003E4BD8 /* ETCPaymentManagedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentManagedObject.swift; sourceTree = "<group>"; };
 		B9DC5B21229D59BE00B645D5 /* Dash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9DC5B24229D59BE00B645D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9DC5B26229D59BE00B645D5 /* ETCPaymentTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentTableViewController.swift; sourceTree = "<group>"; };
@@ -964,16 +965,16 @@
 			children = (
 				B9CEA76D22D911140055C9A3 /* ETCSplitViewController.swift */,
 				B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */,
+				B9C1F41A27B8575800C6D4DD /* ETCCardTableViewDataSource.swift */,
 				B95BF23723EBF43900A30DE0 /* ETCCardEditViewController.swift */,
 				B9DC5B26229D59BE00B645D5 /* ETCPaymentTableViewController.swift */,
+				B9C1F41C27B87E5500C6D4DD /* ETCPaymentTableViewDataSource.swift */,
 				B9DC5B28229D59BE00B645D5 /* ETCPaymentDetailViewController.swift */,
 				B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */,
-				B931C4FE23D369760020DF13 /* ETCDevice.swift */,
-				B9CEA76522D89A400055C9A3 /* ETCDataStore.swift */,
-				B98E9369234C94C7004AE50F /* ETCPaymentProtocol.swift */,
-				B9DB8E5722D7A481003E4BD8 /* ETCPaymentManagedObject.swift */,
+				B931C4FE23D369760020DF13 /* ETCDeviceManager.swift */,
+				B9CEA76522D89A400055C9A3 /* ETCDatabase.swift */,
 				B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */,
-				B9D8E43723D345940078A057 /* ETCCardManagedObject.swift */,
+				B9D8E43723D345940078A057 /* ETCCard.swift */,
 				B9DC5B38229D5D8100B645D5 /* ETCDeviceConnection.swift */,
 				B99356E522A9525C00BA08AB /* ETCMessage.swift */,
 				B9DC5B49229EDA0000B645D5 /* SerialPort.swift */,
@@ -1074,6 +1075,7 @@
 				B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */,
 				B942554F22BAA5D1008B053B /* LocalNotification.swift */,
 				B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */,
+				B9C1F41E27B88A6400C6D4DD /* ScrollViewPagination.swift */,
 				B9BC920823250A0A006F22FC /* Defaults.swift */,
 				B942553C22B8C3E2008B053B /* Logger.swift */,
 				B93321ED2323C9D500BFAB21 /* BorderedView.swift */,
@@ -1863,7 +1865,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B9DB8E5922D7A481003E4BD8 /* ETCPaymentManagedObject.swift in Sources */,
 				B95F514A23E5B2C10063CB3D /* Website.swift in Sources */,
 				B99356E622A9525C00BA08AB /* ETCMessage.swift in Sources */,
 				B9AAF52027496AA80079BC3A /* Intents.intentdefinition in Sources */,
@@ -1884,20 +1885,21 @@
 				B9B4F707268CB55D009C5DC5 /* RoadName.swift in Sources */,
 				B9C1F40F27AAEB8D00C6D4DD /* PointOfInterestCategory.swift in Sources */,
 				B95F514E23E5BBF70063CB3D /* SharedItem.swift in Sources */,
+				B9C1F41D27B87E5500C6D4DD /* ETCPaymentTableViewDataSource.swift in Sources */,
 				B944C69024A9E4C8000D1E99 /* MusicViewController.swift in Sources */,
 				B9D02089268CD1850020BF9A /* RoadTracker.swift in Sources */,
+				B9C1F41B27B8575800C6D4DD /* ETCCardTableViewDataSource.swift in Sources */,
 				B9C1F41927B82B9400C6D4DD /* FirestoreQueryCountSubscription.swift in Sources */,
 				B9E96CC822A4EF1300C2E009 /* ETCPayment.swift in Sources */,
 				B99356EE22A96E1000BA08AB /* ETCPaymentTableViewCell.swift in Sources */,
-				B9CEA76622D89A400055C9A3 /* ETCDataStore.swift in Sources */,
-				B931C4FF23D369760020DF13 /* ETCDevice.swift in Sources */,
+				B9CEA76622D89A400055C9A3 /* ETCDatabase.swift in Sources */,
+				B931C4FF23D369760020DF13 /* ETCDeviceManager.swift in Sources */,
 				B910AF25273956C700A61795 /* FirestoreQueryPaginatedSubscription.swift in Sources */,
 				B954CA2325693CCC00BAD0F0 /* WidgetPageViewController.swift in Sources */,
 				B9C04B42257775B8001D6E0F /* WebViewController.swift in Sources */,
 				B904A2A6243968990087BD4A /* MapsViewController.swift in Sources */,
 				B9854F80278DA88000E07C0C /* SpeedSensitiveVolumeController.swift in Sources */,
 				B9DC5B29229D59BE00B645D5 /* ETCPaymentDetailViewController.swift in Sources */,
-				B98E936A234C94C7004AE50F /* ETCPaymentProtocol.swift in Sources */,
 				B9588B5D23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift in Sources */,
 				B92C6EC724AC77B2001E9675 /* PlaybackProgressView.swift in Sources */,
 				B932EE4B26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift in Sources */,
@@ -1936,7 +1938,7 @@
 				B92C6EC524AC68B7001E9675 /* SongTitleView.swift in Sources */,
 				B95F514623E5A8540063CB3D /* Location.swift in Sources */,
 				B9DC5B39229D5D8100B645D5 /* ETCDeviceConnection.swift in Sources */,
-				B9D8E43823D345940078A057 /* ETCCardManagedObject.swift in Sources */,
+				B9D8E43823D345940078A057 /* ETCCard.swift in Sources */,
 				B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */,
 				B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */,
 				B942553D22B8C3E2008B053B /* Logger.swift in Sources */,
@@ -1963,6 +1965,7 @@
 				B98007202678D6AF00FC703E /* LocationInformationWidgetViewController.swift in Sources */,
 				B907C790272589530085ED7E /* AppState.swift in Sources */,
 				B94A59A026826E960074368A /* LocationInformationDebugViewController.swift in Sources */,
+				B9C1F41F27B88A6400C6D4DD /* ScrollViewPagination.swift in Sources */,
 				B9C1F40D27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift in Sources */,
 				B954CA3225693EDA00BAD0F0 /* RearviewWidgetViewController.swift in Sources */,
 				B9C1F41727B8240F00C6D4DD /* FirestoreQuery.swift in Sources */,
@@ -2005,7 +2008,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */,
-				B9BA819E2350931A00657DEB /* ETCPaymentProtocol.swift in Sources */,
 				B942554522B8ED10008B053B /* ETCMessageTests.swift in Sources */,
 				B99356DB22A9484700BA08AB /* ETCPaymentTests.swift in Sources */,
 				B91BD8092323FD820064D2B5 /* ETCPayment.swift in Sources */,

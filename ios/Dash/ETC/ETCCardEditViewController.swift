@@ -9,7 +9,7 @@
 import UIKit
 
 class ETCCardEditViewController: UITableViewController {
-    var card: ETCCardManagedObject!
+    var card: ETCCard!
 
     @IBOutlet weak var pageScrollView: UIScrollView!
     @IBOutlet weak var pageControl: UIPageControl!
@@ -18,8 +18,7 @@ class ETCCardEditViewController: UITableViewController {
 
     var currentBrand: ETCCardBrand {
         get {
-            let int = Int16(pageControl.currentPage)
-            return ETCCardBrand(rawValue: int)!
+            return ETCCardBrand(rawValue: pageControl.currentPage)!
         }
 
         set {
@@ -60,8 +59,13 @@ class ETCCardEditViewController: UITableViewController {
 
     @IBAction func doneButtonDidTap(_ sender: Any) {
         card.brand = currentBrand
-        card.name = nameTextField.text
-        try? card.managedObjectContext?.save()
+        card.name = nameTextField.text ?? ""
+
+        do {
+            try card.save()
+        } catch {
+            logger.error(error)
+        }
 
         if mainCardSwitch.isOn {
             Defaults.shared.mainETCCardUUID = card.uuid

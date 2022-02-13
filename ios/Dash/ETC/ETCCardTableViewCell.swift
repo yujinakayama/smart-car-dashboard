@@ -17,7 +17,7 @@ class ETCCardTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var checkmarkImageView: UIImageView!
 
-    var card: ETCCardManagedObject! {
+    var card: ETCCard! {
         didSet {
             updateCardView()
             updateNameLabel()
@@ -50,10 +50,10 @@ class ETCCardTableViewCell: UITableViewCell {
     func updateNameLabel() {
         nameLabel.text = card.displayedName
 
-        if card.name != nil {
-            nameLabel.textColor = UIColor.label
-        } else {
+        if card.name.isEmpty {
             nameLabel.textColor = UIColor.secondaryLabel
+        } else {
+            nameLabel.textColor = UIColor.label
         }
     }
 }
