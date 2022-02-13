@@ -28,19 +28,12 @@ class ETCCardTableViewController: UITableViewController {
 
         setUpNavigationBar()
 
-        startObservingCurrentCard()
-
         startUpdatingDataSource()
     }
 
     func setUpNavigationBar() {
         navigationItem.leftBarButtonItem = editButtonItem
         deviceStatusBarItemManager.addBarItem(to: navigationItem)
-    }
-
-    func startObservingCurrentCard() {
-        NotificationCenter.default.addObserver(self, selector: #selector(indicateCurrentCard), name: .ETCDeviceDidDetectCardInsertion, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(indicateCurrentCard), name: .ETCDeviceDidDetectCardEjection, object: nil)
     }
 
     func startUpdatingDataSource() {
@@ -62,11 +55,6 @@ class ETCCardTableViewController: UITableViewController {
             tableView.dataSource = nil
             dataSource = nil
         }
-    }
-
-    @objc func indicateCurrentCard() {
-        let sections = IndexSet(integer: Section.cards.rawValue)
-        tableView.reloadSections(sections, with: .none)
     }
 
     // MARK: - Segues

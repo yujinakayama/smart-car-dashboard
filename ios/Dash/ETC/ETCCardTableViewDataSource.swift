@@ -22,6 +22,8 @@ class ETCCardTableViewDataSource: UITableViewDiffableDataSource<ETCCardTableView
         querySubscription = database.allCards.subscribeToUpdates { [weak self] (result) in
             self?.onUpdate(result: result)
         }
+
+        NotificationCenter.default.addObserver(self, selector: #selector(deviceManagerDidUpdateCurrentCard), name: .ETCDeviceDidUpdateCurrentCard, object: nil)
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection sectionIndex: Int) -> String? {
@@ -76,6 +78,12 @@ class ETCCardTableViewDataSource: UITableViewDiffableDataSource<ETCCardTableView
         snapshot.reloadItems(modifiedCardUUIDs)
 
         return snapshot
+    }
+
+    @objc private func deviceManagerDidUpdateCurrentCard() {
+        var snapshot = snapshot()
+        snapshot.reloadSections([Section.cards])
+        apply(snapshot, animatingDifferences: false)
     }
 }
 
