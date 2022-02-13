@@ -126,8 +126,8 @@ extension SharedItemTableViewDataSource {
             self.sections = sections
         }
 
-        var items: [SharedItemProtocol] {
+        lazy var items: [SharedItemProtocol] = {
             return sections.flatMap { $0.items }
-        }
+        }()
     }
 }
