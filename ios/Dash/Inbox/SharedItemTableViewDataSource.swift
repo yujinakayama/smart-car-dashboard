@@ -117,14 +117,9 @@ extension SharedItemTableViewDataSource {
                 return components.date!
             }
 
-            var sections: [Section] = []
-
-            for date in itemsByDate.keys.sorted().reversed() {
-                let section = Section(date: date, items: itemsByDate[date]!)
-                sections.append(section)
+            self.sections = itemsByDate.keys.sorted().reversed().map { (date) in
+                Section(date: date, items: itemsByDate[date]!)
             }
-
-            self.sections = sections
         }
 
         lazy var items: [SharedItemProtocol] = {
