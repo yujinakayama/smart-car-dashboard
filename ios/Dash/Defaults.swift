@@ -33,6 +33,7 @@ class Defaults {
         case additionalVolumeAt120KilometersPerHour
         case minimumSpeedInKilometersPerHourForAdditionalVolume
         case verboseLogging
+        case clearFirestoreOfflineCacheOnNextLaunch
     }
 
     init() {
@@ -227,6 +228,16 @@ extension Defaults {
     var verboseLogging: Bool {
         get {
             return bool(for: .verboseLogging)
+        }
+    }
+
+    var clearFirestoreOfflineCacheOnNextLaunch: Bool {
+        get {
+            return bool(for: .clearFirestoreOfflineCacheOnNextLaunch)
+        }
+
+        set {
+            set(newValue, for: .clearFirestoreOfflineCacheOnNextLaunch)
         }
     }
 }

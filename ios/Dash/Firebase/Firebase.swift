@@ -8,6 +8,7 @@
 
 import Foundation
 import FirebaseCore
+import FirebaseFirestore
 
 class Firebase: NSObject {
     static let shared = Firebase()
@@ -27,6 +28,8 @@ class Firebase: NSObject {
         super.init()
 
         NotificationCenter.default.addObserver(self, selector: #selector(firebaseAuthenticationDidUpdateVehicleID), name: .FirebaseAuthenticationDidChangeVehicleID, object: nil)
+
+        clearFirestoreOfflineCacheIfNeeded()
     }
 
     @objc func firebaseAuthenticationDidUpdateVehicleID() {
@@ -34,6 +37,16 @@ class Firebase: NSObject {
             sharedItemDatabase = SharedItemDatabase(vehicleID: vehicleID)
         } else {
             sharedItemDatabase = nil
+        }
+    }
+
+    private func clearFirestoreOfflineCacheIfNeeded() {
+        guard Defaults.shared.clearFirestoreOfflineCacheOnNextLaunch else { return }
+
+        Defaults.shared.clearFirestoreOfflineCacheOnNextLaunch = false
+
+        Firestore.firestore().clearPersistence { (error) in
+            logger.info("Finished with error: \(String(describing: error))")
         }
     }
 }
