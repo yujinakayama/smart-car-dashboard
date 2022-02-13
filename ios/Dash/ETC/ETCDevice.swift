@@ -10,7 +10,6 @@ import Foundation
 import CoreData
 
 extension Notification.Name {
-    static let ETCDeviceDidFinishDataStorePreparation = Notification.Name("ETCDeviceDidFinishDataStorePreparation")
     static let ETCDeviceDidConnect = Notification.Name("ETCDeviceDidConnect")
     static let ETCDeviceDidDisconnect = Notification.Name("ETCDeviceDidDisconnect")
     static let ETCDeviceDidDetectCardInsertion = Notification.Name("ETCDeviceDidDetectCardInsertion") // Physically inserted by human
@@ -104,8 +103,6 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
                 logger.severe(error)
                 fatalError()
             }
-
-            self.notificationCenter.post(name: .ETCDeviceDidFinishDataStorePreparation, object: self)
 
             self.setupSerialPortManager()
         }
