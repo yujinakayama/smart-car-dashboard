@@ -9,7 +9,7 @@
 import UIKit
 
 class ETCDeviceStatusBarItemManager {
-    let device: ETCDevice
+    let deviceManager: ETCDeviceManager
 
     weak var navigationItem: UINavigationItem?
 
@@ -23,10 +23,8 @@ class ETCDeviceStatusBarItemManager {
         return UIBarButtonItem(customView: imageView)
     }()
 
-    private var keyValueObservation: NSKeyValueObservation?
-
-    init(device: ETCDevice) {
-        self.device = device
+    init(deviceManager: ETCDeviceManager) {
+        self.deviceManager = deviceManager
         startObservingCurrentCard()
     }
 
@@ -36,24 +34,16 @@ class ETCDeviceStatusBarItemManager {
     }
 
     private func startObservingCurrentCard() {
-        keyValueObservation = device.observe(\.currentCard, changeHandler: { [weak self] (currentCard, change) in
-            DispatchQueue.main.async {
-                self?.updateNavigationItem()
-            }
-        })
-    }
-
-    @objc private func updateNavigationOnMainThread() {
-        DispatchQueue.main.async {
-            self.updateNavigationItem()
+        NotificationCenter.default.addObserver(forName: .ETCDeviceDidUpdateCurrentCard, object: nil, queue: .main) { [weak self] (notification) in
+            self?.updateNavigationItem()
         }
     }
 
     private func updateNavigationItem() {
         guard let navigationItem = navigationItem else { return }
 
-        if device.isConnected {
-            if let card = device.currentCard {
+        if deviceManager.isConnected {
+            if let card = deviceManager.currentCard {
                 navigationItem.rightBarButtonItem = makeCardBarButtonItem(for: card.displayedName, color: .secondaryLabel)
             } else {
                 navigationItem.rightBarButtonItem = makeCardBarButtonItem(for: String(localized: "No Card"), color: .systemRed)

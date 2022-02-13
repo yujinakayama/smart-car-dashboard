@@ -10,8 +10,8 @@ import UIKit
 
 class GoogleSignInViewController: UIViewController {
     @IBAction func signInWithGoogleButtonDidTap(_ sender: Any) {
-        Firebase.shared.authentication.presentSignInViewController(in: self) { (error) in
-            self.dismiss(animated: true)
+        Firebase.shared.authentication.presentSignInViewController(in: self) { [weak self] (error) in
+            self?.dismiss(animated: true)
         }
     }
 }

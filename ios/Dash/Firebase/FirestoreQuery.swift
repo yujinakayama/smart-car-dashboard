@@ -8,6 +8,7 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 class FirestoreQuery<DocumentObject> {
     typealias DocumentDecoder = (DocumentSnapshot) -> DocumentObject?
@@ -64,5 +65,20 @@ class FirestoreQuery<DocumentObject> {
         subscription.activate()
 
         return subscription
+    }
+}
+
+extension FirestoreQuery where DocumentObject: Decodable {
+    convenience init(_ query: Query) {
+        let documentDecoder: DocumentDecoder = { (documentSnapshot) in
+            do {
+                return try documentSnapshot.data(as: DocumentObject.self)
+            } catch {
+                logger.error(error)
+                return nil
+            }
+        }
+
+        self.init(query, documentDecoder: documentDecoder)
     }
 }

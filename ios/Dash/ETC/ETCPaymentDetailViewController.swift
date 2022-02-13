@@ -17,7 +17,7 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
 
     var infoBarButtonItem: UIBarButtonItem!
 
-    var payment: ETCPaymentProtocol? {
+    var payment: ETCPayment? {
         didSet {
             configureView()
         }

@@ -1,5 +1,5 @@
 //
-//  ETCUsage.swift
+//  ETCPayment.swift
 //  ETC
 //
 //  Created by Yuji Nakayama on 2019/06/03.
@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
-struct ETCPayment: ETCPaymentProtocol {
-    var amount: Int32
-    var date: Date
+struct ETCPayment: Codable {
+    var amount: Int
+    var exitDate: Date
     var entranceTollboothID: String
     var exitTollboothID: String
     var vehicleClassification: VehicleClassification
@@ -21,20 +22,6 @@ struct ETCPayment: ETCPaymentProtocol {
 
     var exitTollbooth: Tollbooth? {
         return Tollbooth.findTollbooth(id: exitTollboothID)
-    }
-
-    init(
-        amount: Int32,
-        date: Date,
-        entranceTollboothID: String,
-        exitTollboothID: String,
-        vehicleClassification: VehicleClassification
-    ) {
-        self.amount = amount
-        self.date = date
-        self.entranceTollboothID = entranceTollboothID
-        self.exitTollboothID = exitTollboothID
-        self.vehicleClassification = vehicleClassification
     }
 }
 
@@ -143,7 +130,7 @@ extension Road: Equatable {
 }
 
 // https://global.c-nexco.co.jp/en/navi/classifying/
-enum VehicleClassification: Int16 {
+enum VehicleClassification: Int, Codable {
     case light      = 5
     case standard   = 1
     case midSize    = 4

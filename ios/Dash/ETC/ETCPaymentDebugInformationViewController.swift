@@ -11,7 +11,7 @@ import UIKit
 class ETCPaymentDebugInformationViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
 
-    var payment: ETCPaymentProtocol?
+    var payment: ETCPayment?
 
     override func viewDidLoad() {
         if let payment = payment {

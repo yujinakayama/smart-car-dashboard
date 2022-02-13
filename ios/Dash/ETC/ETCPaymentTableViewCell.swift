@@ -33,7 +33,7 @@ class ETCPaymentTableViewCell: UITableViewCell {
     @IBOutlet weak var exitRoadLabel: UILabel!
     @IBOutlet weak var exitTollboothLabel: UILabel!
 
-    var payment: ETCPaymentProtocol! {
+    var payment: ETCPayment! {
         didSet {
             updateViews()
         }
@@ -60,7 +60,7 @@ class ETCPaymentTableViewCell: UITableViewCell {
     private func updateViews() {
         amountLabel.text = ETCPaymentTableViewCell.numberFormatter.string(from: NSNumber(value: payment.amount))
 
-        timeLabel.text = ETCPaymentTableViewCell.dateFormatter.string(from: payment.date)
+        timeLabel.text = ETCPaymentTableViewCell.dateFormatter.string(from: payment.exitDate)
 
         let entrance = payment.entranceTollbooth
         let exit = payment.exitTollbooth

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3pD-mC-pSF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3pD-mC-pSF">
     <device id="ipad12_9rounded" orientation="landscape" layout="splitview1_3" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -736,6 +736,7 @@
                         <segue destination="H1p-Uh-vWS" kind="relationship" relationship="viewControllers" id="Yb9-ec-BFu"/>
                         <segue destination="9rv-x1-HX3" kind="relationship" relationship="viewControllers" id="tYp-y0-GC7"/>
                         <segue destination="rTk-9Z-yGM" kind="relationship" relationship="viewControllers" id="eGv-fE-PSG"/>
+                        <segue destination="1MV-T3-y4O" kind="presentation" identifier="showSignIn" animates="NO" id="tDn-cO-8Fy"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="euK-cN-jp7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1069,9 +1070,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Inbox" id="08c-tQ-1d0"/>
-                    <connections>
-                        <segue destination="1MV-T3-y4O" kind="presentation" identifier="showSignIn" animates="NO" id="bw5-MR-F3K"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TrC-0c-WtB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1080,7 +1078,7 @@
         <!--Google Sign In View Controller-->
         <scene sceneID="8w7-6e-CcP">
             <objects>
-                <viewController modalPresentationStyle="currentContext" id="1MV-T3-y4O" customClass="GoogleSignInViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="1MV-T3-y4O" customClass="GoogleSignInViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QRj-M3-7CO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1107,7 +1105,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oex-Fs-seX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1014" y="986"/>
+            <point key="canvasLocation" x="-857" y="4475"/>
         </scene>
         <!--Inbox-->
         <scene sceneID="JrH-as-C6C">
@@ -1583,7 +1581,7 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="6S0-TO-JiA"/>
+        <segue reference="Tll-UG-LXB"/>
         <segue reference="ZuQ-m0-CKt"/>
     </inferredMetricsTieBreakers>
     <resources>

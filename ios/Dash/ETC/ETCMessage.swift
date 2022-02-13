@@ -304,7 +304,7 @@ enum ETCMessageFromDevice {
             do {
                 return ETCPayment(
                     amount: try amount(),
-                    date: try date(),
+                    exitDate: try exitDate(),
                     entranceTollboothID: try entranceTollboothID(),
                     exitTollboothID: try exitTollboothID(),
                     vehicleClassification: try vehicleClassification()
@@ -326,7 +326,7 @@ enum ETCMessageFromDevice {
             return "\(roadNumber)-\(tollboothNumber)"
         }
 
-        func date() throws -> Date {
+        func exitDate() throws -> Date {
             var dateComponents = DateComponents()
             dateComponents.calendar = Calendar(identifier: .gregorian)
             dateComponents.timeZone = TimeZone(identifier: "Asia/Tokyo")
@@ -347,16 +347,15 @@ enum ETCMessageFromDevice {
         func vehicleClassification() throws -> VehicleClassification {
             let integer = try extractIntegerFromPayload(in: 32...34)
 
-            if let vehicleClassification = VehicleClassification(rawValue: Int16(integer)) {
+            if let vehicleClassification = VehicleClassification(rawValue: integer) {
                 return vehicleClassification
             } else {
                 throw ETCMessageError.unknownVehicleClassification
             }
         }
 
-        func amount() throws -> Int32 {
-            let integer = try extractIntegerFromPayload(in: 35...40)
-            return Int32(integer)
+        func amount() throws -> Int {
+            return try extractIntegerFromPayload(in: 35...40)
         }
     }
 

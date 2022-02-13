@@ -52,7 +52,7 @@ struct PaymentNotification: LocalNotificationProtocol {
         return formatter
     }()
 
-    var payment: ETCPaymentProtocol
+    var payment: ETCPayment
 
     var title: String? {
         let entrance = payment.entranceTollbooth
@@ -93,7 +93,7 @@ struct PaymentNotification: LocalNotificationProtocol {
 }
 
 struct ETCCardInsertionNotification: LocalNotificationProtocol {
-    let insertedCard: ETCCardManagedObject
+    let insertedCard: ETCCard
 
     var title: String? {
         return insertedCard.displayedName
@@ -125,7 +125,7 @@ struct ETCCardEjectionNotification: LocalNotificationProtocol {
 }
 
 struct NoMainETCCardNotification: LocalNotificationProtocol {
-    let currentCard: ETCCardManagedObject?
+    let currentCard: ETCCard?
 
     var title: String? {
         return currentCard?.displayedName

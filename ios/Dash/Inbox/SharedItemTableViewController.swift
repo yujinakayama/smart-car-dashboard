@@ -10,8 +10,6 @@ import UIKit
 import SafariServices
 
 class SharedItemTableViewController: UITableViewController {
-    static let bottomInsetForAutoNextPageLoading: CGFloat = 200
-
     static func pushMapsViewControllerForParkingSearchInCurrentScene(location: Location) {
         guard let windowScene = UIApplication.shared.foregroundWindowScene,
               let sceneDelegate = windowScene.delegate as? SceneDelegate,
@@ -30,10 +28,6 @@ class SharedItemTableViewController: UITableViewController {
         return Firebase.shared.authentication
     }
 
-    var isVisible: Bool {
-        return isViewLoaded && view.window != nil
-    }
-
     private var sharedItemDatabaseObservation: NSKeyValueObservation?
 
     override func viewDidLoad() {
@@ -45,14 +39,6 @@ class SharedItemTableViewController: UITableViewController {
 
         updateLeftBarButtonItems()
         navigationItem.rightBarButtonItem = editButtonItem
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        if authentication.vehicleID == nil {
-            showSignInView()
-        }
     }
 
     func sharedItemDatabaseDidChange() {
@@ -70,10 +56,6 @@ class SharedItemTableViewController: UITableViewController {
         } else {
             tableView.dataSource = nil
             dataSource = nil
-
-            if isVisible {
-                showSignInView()
-            }
         }
     }
 
@@ -156,10 +138,6 @@ class SharedItemTableViewController: UITableViewController {
         setEditing(false, animated: true)
     }
 
-    func showSignInView() {
-        self.performSegue(withIdentifier: "showSignIn", sender: self)
-    }
-
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SharedItemTableViewCell",for: indexPath) as! SharedItemTableViewCell
 
@@ -196,21 +174,15 @@ class SharedItemTableViewController: UITableViewController {
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard let dataSource = dataSource else { return }
 
-        let currentBottom = tableView.contentOffset.y + tableView.bounds.height
-        let maxScrollableBottom = tableView.contentSize.height + tableView.adjustedContentInset.bottom
-        let isInScrollAreaForAutoNextPageLoading = currentBottom >= maxScrollableBottom - Self.bottomInsetForAutoNextPageLoading
-
-        if isInScrollAreaForAutoNextPageLoading, !wasInScrollAreaForAutoNextPageLoading {
+        if pagination.shouldLoadNextPage() {
             Task {
                 guard await !dataSource.isLoadingNewPage else { return }
                 await dataSource.incrementPage()
             }
         }
-
-        wasInScrollAreaForAutoNextPageLoading = isInScrollAreaForAutoNextPageLoading
     }
 
-    private var wasInScrollAreaForAutoNextPageLoading = false
+    private lazy var pagination = ScrollViewPagination(scrollView: tableView)
 
     @objc func parkingSearchButtonTapped(button: UIButton) {
         var view: UIView = button

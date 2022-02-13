@@ -11,10 +11,12 @@ import Foundation
 class Vehicle {
     static let `default` = Vehicle()
 
-    let etcDevice = ETCDevice()
+    let etcDeviceManager = ETCDeviceManager()
 
     init() {
         let notificationCenter = NotificationCenter.default
+
+        notificationCenter.addObserver(self, selector: #selector(firebaseAuthenticationDidUpdateVehicleID), name: .FirebaseAuthenticationDidChangeVehicleID, object: nil)
 
         notificationCenter.addObserver(forName: .ETCDeviceDidConnect, object: nil, queue: .main) { (notification) in
             notificationCenter.post(name: .VehicleDidConnect, object: self)
@@ -26,12 +28,22 @@ class Vehicle {
     }
 
     var isConnected: Bool {
-        return etcDevice.isConnected
+        return etcDeviceManager.isConnected
     }
 
     func connect() {
         if Defaults.shared.isETCIntegrationEnabled {
-            etcDevice.startPreparation()
+            etcDeviceManager.connect()
+        }
+    }
+
+    @objc func firebaseAuthenticationDidUpdateVehicleID() {
+        guard Defaults.shared.isETCIntegrationEnabled else { return }
+
+        if let vehicleID = Firebase.shared.authentication.vehicleID {
+            etcDeviceManager.database = ETCDatabase(vehicleID: vehicleID)
+        } else {
+            etcDeviceManager.database = nil
         }
     }
 }

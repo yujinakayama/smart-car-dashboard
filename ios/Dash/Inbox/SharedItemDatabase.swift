@@ -64,6 +64,16 @@ class SharedItemDatabase: NSObject {
     }
 
     private func wrappedQuery(_ query: Query) -> FirestoreQuery<SharedItemProtocol> {
-        return FirestoreQuery(query, documentDecoder: { try? SharedItem.makeItem(document: $0) })
+        return FirestoreQuery(
+            query,
+            documentDecoder: { (documentSnapshot) in
+                do {
+                    return try SharedItem.makeItem(document: documentSnapshot)
+                } catch {
+                    logger.error(error)
+                    return nil
+                }
+            }
+        )
     }
 }
