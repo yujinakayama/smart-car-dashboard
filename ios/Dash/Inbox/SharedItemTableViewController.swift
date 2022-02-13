@@ -62,20 +62,10 @@ class SharedItemTableViewController: UITableViewController {
 
     func updateDataSource() {
         if let database = Firebase.shared.sharedItemDatabase {
-            let dataSource = SharedItemTableViewDataSource(database: database, tableView: tableView) { [unowned self] (tableView, indexPath, itemIdentifier) in
-                guard let dataSource = self.dataSource else { return nil }
-
-                let cell = tableView.dequeueReusableCell(withIdentifier: "SharedItemTableViewCell",for: indexPath) as! SharedItemTableViewCell
-                cell.item = dataSource.item(for: indexPath)
-
-                if cell.parkingSearchButton.actions(forTarget: self, forControlEvent: .touchUpInside) == nil {
-                    cell.parkingSearchButton.addTarget(self, action: #selector(self.parkingSearchButtonTapped), for: .touchUpInside)
-                }
-
-                return cell
+            dataSource = SharedItemTableViewDataSource(database: database, tableView: tableView) { [unowned self] (tableView, indexPath, itemIdentifier) in
+                return self.tableView(tableView, cellForRowAt: indexPath)
             }
 
-            self.dataSource = dataSource
             tableView.dataSource = dataSource
         } else {
             tableView.dataSource = nil
@@ -168,6 +158,22 @@ class SharedItemTableViewController: UITableViewController {
 
     func showSignInView() {
         self.performSegue(withIdentifier: "showSignIn", sender: self)
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SharedItemTableViewCell",for: indexPath) as! SharedItemTableViewCell
+
+        cell.item = dataSource?.item(for: indexPath)
+
+        if cell.parkingSearchButton.actions(forTarget: self, forControlEvent: .touchUpInside) == nil {
+            cell.parkingSearchButton.addTarget(
+                self,
+                action: #selector(self.parkingSearchButtonTapped),
+                for: .touchUpInside
+            )
+        }
+
+        return cell
     }
 
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
