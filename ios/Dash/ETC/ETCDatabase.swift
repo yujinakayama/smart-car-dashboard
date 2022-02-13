@@ -45,18 +45,19 @@ class ETCDatabase: NSObject {
     }
 
     func findCard(uuid: UUID) async throws -> ETCCard? {
-        let reference = cardCollection.document(uuid.uuidString)
+        let reference = cardDocumentReference(uuid: uuid)
         return try await reference.getDocument().data(as: ETCCard.self)
     }
 
     func findOrCreateCard(uuid: UUID) async throws -> ETCCard {
-        let reference = cardCollection.document(uuid.uuidString)
+        let reference = cardDocumentReference(uuid: uuid)
 
         if let card = try await reference.getDocument().data(as: ETCCard.self) {
             return card
         } else {
-            let card = ETCCard(uuid: uuid)
+            var card = ETCCard(uuid: uuid)
             try reference.setData(from: card)
+            card.documentReference = reference
             return card
         }
     }
@@ -72,6 +73,10 @@ class ETCDatabase: NSObject {
 
         let query = paymentsQuery.whereField("card", isEqualTo: cardDocumentReference)
         return FirestoreQuery<ETCPayment>(query)
+    }
+
+    private func cardDocumentReference(uuid: UUID) -> DocumentReference {
+        return cardCollection.document(uuid.uuidString)
     }
 }
 

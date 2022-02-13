@@ -12,9 +12,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct ETCCard: Codable {
-    // documentRefernce may not be set even we have saved to Firestore
-    // due to the offline support in client SDK
-    @DocumentID var documentReference: DocumentReference?
+    @DocumentID var documentReference: DocumentReference!
 
     // Without name field in Firestore document the it will be ignored in query with "name" order
     var name: String = ""
@@ -27,11 +25,7 @@ struct ETCCard: Codable {
                 return uuid
             }
 
-            if let uuidString = documentReference?.documentID {
-                return UUID(uuidString: uuidString)!
-            }
-
-            fatalError()
+            return UUID(uuidString: documentReference.documentID)!
         }
 
         set {
