@@ -51,10 +51,11 @@ class ETCCardTableViewDataSource: UITableViewDiffableDataSource<ETCCardTableView
 
         do {
             let update = try result.get()
-            cards = update.documents
+            let cards = update.documents
             let dataSourceSnapshot = Self.makeDataSourceSnapshot(cards: cards, changes: update.changes)
 
             DispatchQueue.main.async {
+                self.cards = cards
                 self.apply(dataSourceSnapshot, animatingDifferences: !isInitialUpdate)
             }
         } catch {

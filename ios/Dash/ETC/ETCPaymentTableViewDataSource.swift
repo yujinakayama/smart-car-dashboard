@@ -59,10 +59,11 @@ class ETCPaymentTableViewDataSource: UITableViewDiffableDataSource<Date, UUID> {
     private func onUpdate(result: Result<FirestoreQuery<ETCPayment>.PaginatedSubscription.Update, Error>) {
         do {
             let update = try result.get()
-            tableViewData = TableViewData(payments: update.documents)
+            let tableViewData = TableViewData(payments: update.documents)
             let dataSourceSnapshot = Self.makeDataSourceSnapshot(tableViewData: tableViewData, changes: update.changes)
 
             DispatchQueue.main.async {
+                self.tableViewData = tableViewData
                 self.apply(dataSourceSnapshot, animatingDifferences: !update.isCausedByPagination)
             }
         } catch {
