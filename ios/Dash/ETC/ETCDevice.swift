@@ -105,11 +105,6 @@ class ETCDevice: NSObject, SerialPortManagerDelegate, ETCDeviceConnectionDelegat
             }
 
             self.setupSerialPortManager()
-
-            if let vehicleID = Firebase.shared.authentication.vehicleID {
-                let exporter = ETCDatabaseExporter(coreDataContext: dataStore.backgroundContext, firestoreVehicleID: vehicleID)
-                exporter.run()
-            }
         }
     }
 

@@ -27,7 +27,6 @@
 		B90F5FD525EFF13D00C2578C /* CIImageDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F5FD425EFF13D00C2578C /* CIImageDisplayView.swift */; };
 		B90F5FFF25F3CA4D00C2578C /* SampleBufferDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F5FFE25F3CA4D00C2578C /* SampleBufferDecoder.swift */; };
 		B910AF25273956C700A61795 /* FirestoreQueryPaginatedSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = B910AF24273956C700A61795 /* FirestoreQueryPaginatedSubscription.swift */; };
-		B910AF2727397D7A00A61795 /* ETCDatabaseExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B910AF2627397D7A00A61795 /* ETCDatabaseExporter.swift */; };
 		B915BEF5267F8754007068D7 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94215F026423A58003F94A0 /* StringExtension.swift */; };
 		B91B5DD523ED7886003F4AEF /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91B5DD423ED7886003F4AEF /* Account.swift */; };
 		B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
@@ -418,7 +417,6 @@
 		B90F5FD425EFF13D00C2578C /* CIImageDisplayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CIImageDisplayView.swift; sourceTree = "<group>"; };
 		B90F5FFE25F3CA4D00C2578C /* SampleBufferDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleBufferDecoder.swift; sourceTree = "<group>"; };
 		B910AF24273956C700A61795 /* FirestoreQueryPaginatedSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreQueryPaginatedSubscription.swift; sourceTree = "<group>"; };
-		B910AF2627397D7A00A61795 /* ETCDatabaseExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDatabaseExporter.swift; sourceTree = "<group>"; };
 		B91B5DD423ED7886003F4AEF /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		B91E0B61254D047D002928D3 /* PairingURLItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingURLItem.swift; sourceTree = "<group>"; };
 		B92451D323E30ACE007556D5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -964,7 +962,6 @@
 		B9CEA76822D8F1990055C9A3 /* ETC */ = {
 			isa = PBXGroup;
 			children = (
-				B910AF2627397D7A00A61795 /* ETCDatabaseExporter.swift */,
 				B9CEA76D22D911140055C9A3 /* ETCSplitViewController.swift */,
 				B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */,
 				B95BF23723EBF43900A30DE0 /* ETCCardEditViewController.swift */,
@@ -1952,7 +1949,6 @@
 				B9C1F41527B815C400C6D4DD /* FirestoreQuerySubscription.swift in Sources */,
 				B90E21F924CBB1BF008330AD /* TabBarController.swift in Sources */,
 				B9CEA76E22D911140055C9A3 /* ETCSplitViewController.swift in Sources */,
-				B910AF2727397D7A00A61795 /* ETCDatabaseExporter.swift in Sources */,
 				B9CB753624AA1A17008264F5 /* VolumeView.swift in Sources */,
 				B9EF566123DF3D61000D0CB2 /* GoogleSignInViewController.swift in Sources */,
 				B967D08225D51508000D9007 /* RearviewDefaults.swift in Sources */,
