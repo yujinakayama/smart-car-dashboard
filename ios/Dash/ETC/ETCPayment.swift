@@ -10,11 +10,26 @@ import Foundation
 import FirebaseFirestoreSwift
 
 struct ETCPayment: Codable {
+    static let uuidNamespace = UUID(uuidString: "5EDBF18B-7031-4B90-92E3-6E67360A2472")!
+    static let dateFormatter = ISO8601DateFormatter()
+
     var amount: Int
     var exitDate: Date
     var entranceTollboothID: String
     var exitTollboothID: String
     var vehicleClassification: VehicleClassification
+
+    var uuid: UUID {
+        let data = [
+            String(amount),
+            Self.dateFormatter.string(from: exitDate),
+            entranceTollboothID,
+            exitTollboothID,
+            String(vehicleClassification.rawValue)
+        ].joined(separator: "|").data(using: .utf8)!
+
+        return UUID(version: .v5, namespace: Self.uuidNamespace, name: data)
+    }
 
     var entranceTollbooth: Tollbooth? {
         return Tollbooth.findTollbooth(id: entranceTollboothID)

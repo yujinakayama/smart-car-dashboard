@@ -10,11 +10,11 @@ import UIKit
 import FirebaseFirestore
 
 @MainActor
-class ETCPaymentTableViewDataSource: UITableViewDiffableDataSource<Date, Date> {
+class ETCPaymentTableViewDataSource: UITableViewDiffableDataSource<Date, UUID> {
     private var tableViewData = TableViewData()
     private var querySubscription: FirestoreQuery<ETCPayment>.PaginatedSubscription!
 
-    init(database: ETCDatabase, card: ETCCard?, tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<Date, Date>.CellProvider) throws {
+    init(database: ETCDatabase, card: ETCCard?, tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<Date, UUID>.CellProvider) throws {
         super.init(tableView: tableView, cellProvider: cellProvider)
 
         let query: FirestoreQuery<ETCPayment>
@@ -70,18 +70,18 @@ class ETCPaymentTableViewDataSource: UITableViewDiffableDataSource<Date, Date> {
         }
     }
 
-    private static func makeDataSourceSnapshot(tableViewData: TableViewData, changes: [DocumentChange]) -> NSDiffableDataSourceSnapshot<Date, Date> {
-        var snapshot = NSDiffableDataSourceSnapshot<Date, Date>()
+    private static func makeDataSourceSnapshot(tableViewData: TableViewData, changes: [DocumentChange]) -> NSDiffableDataSourceSnapshot<Date, UUID> {
+        var snapshot = NSDiffableDataSourceSnapshot<Date, UUID>()
 
         snapshot.appendSections(tableViewData.sections.map { $0.date })
 
         for section in tableViewData.sections {
-            snapshot.appendItems(section.payments.map { $0.exitDate }, toSection: section.date)
+            snapshot.appendItems(section.payments.map { $0.uuid }, toSection: section.date)
         }
 
         let modifiedPaymentIndices = changes.filter { $0.type == .modified }.map { Int($0.newIndex) }
-        let modifiedPaymentDates = modifiedPaymentIndices.map { tableViewData.payments[$0].exitDate }
-        snapshot.reloadItems(modifiedPaymentDates)
+        let modifiedPaymentUUIDs = modifiedPaymentIndices.map { tableViewData.payments[$0].uuid }
+        snapshot.reloadItems(modifiedPaymentUUIDs)
 
         return snapshot
     }

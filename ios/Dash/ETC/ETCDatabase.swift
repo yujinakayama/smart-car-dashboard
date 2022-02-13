@@ -29,9 +29,9 @@ class ETCDatabase: NSObject {
     }
 
     func hasSaved(_ payment: ETCPayment) async throws -> Bool {
-        let query = paymentCollection.whereField("exitDate", isEqualTo: payment.exitDate).limit(to: 1)
-        let snapshot = try await query.getDocuments()
-        return snapshot.count > 0
+        let reference = paymentDocumentReference(payment)
+        let snapshot = try await reference.getDocument()
+        return snapshot.exists
     }
 
     func save(_ payment: ETCPayment, for card: ETCCard) throws {
@@ -41,7 +41,7 @@ class ETCDatabase: NSObject {
 
         var dictionary = try Firestore.Encoder().encode(payment)
         dictionary["card"] = cardDocumentReference
-        paymentCollection.document().setData(dictionary)
+        paymentDocumentReference(payment).setData(dictionary)
     }
 
     func findCard(uuid: UUID) async throws -> ETCCard? {
@@ -77,6 +77,10 @@ class ETCDatabase: NSObject {
 
     private func cardDocumentReference(uuid: UUID) -> DocumentReference {
         return cardCollection.document(uuid.uuidString)
+    }
+
+    private func paymentDocumentReference(_ payment: ETCPayment) -> DocumentReference {
+        return paymentCollection.document(payment.uuid.uuidString)
     }
 }
 
