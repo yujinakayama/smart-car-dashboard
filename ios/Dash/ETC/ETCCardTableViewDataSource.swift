@@ -23,7 +23,7 @@ class ETCCardTableViewDataSource: UITableViewDiffableDataSource<ETCCardTableView
             self?.onUpdate(result: result)
         }
 
-        NotificationCenter.default.addObserver(self, selector: #selector(deviceManagerDidUpdateCurrentCard), name: .ETCDeviceDidUpdateCurrentCard, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(deviceManagerDidUpdateCurrentCard), name: .ETCDeviceManagerDidUpdateCurrentCard, object: nil)
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection sectionIndex: Int) -> String? {

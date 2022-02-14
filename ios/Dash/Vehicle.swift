@@ -18,11 +18,11 @@ class Vehicle {
 
         notificationCenter.addObserver(self, selector: #selector(firebaseAuthenticationDidUpdateVehicleID), name: .FirebaseAuthenticationDidChangeVehicleID, object: nil)
 
-        notificationCenter.addObserver(forName: .ETCDeviceDidConnect, object: nil, queue: .main) { (notification) in
+        notificationCenter.addObserver(forName: .ETCDeviceManagerDidConnect, object: nil, queue: .main) { (notification) in
             notificationCenter.post(name: .VehicleDidConnect, object: self)
         }
 
-        notificationCenter.addObserver(forName: .ETCDeviceDidDisconnect, object: nil, queue: .main) { (notification) in
+        notificationCenter.addObserver(forName: .ETCDeviceManagerDidDisconnect, object: nil, queue: .main) { (notification) in
             notificationCenter.post(name: .VehicleDidDisconnect, object: self)
         }
     }

@@ -34,7 +34,7 @@ class ETCDeviceStatusBarItemManager {
     }
 
     private func startObservingCurrentCard() {
-        NotificationCenter.default.addObserver(forName: .ETCDeviceDidUpdateCurrentCard, object: nil, queue: .main) { [weak self] (notification) in
+        NotificationCenter.default.addObserver(forName: .ETCDeviceManagerDidUpdateCurrentCard, object: nil, queue: .main) { [weak self] (notification) in
             self?.updateNavigationItem()
         }
     }
