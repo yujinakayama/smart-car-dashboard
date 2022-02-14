@@ -13,7 +13,8 @@ import simd
 class GForceMeterWidgetViewController: UIViewController {
     @IBOutlet weak var gForceMeterView: GForceMeterView!
 
-    let accelerometer = Accelerometer()
+    var accelerometer: Accelerometer?
+    let accelerometerQueue = OperationQueue()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +28,9 @@ class GForceMeterWidgetViewController: UIViewController {
         loadDefaults()
 
         NotificationCenter.default.addObserver(self, selector: #selector(loadDefaults), name: UIScene.willEnterForegroundNotification, object: nil)
+
+        // We want to observe notification for user interface orientation but there's no such one
+        NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -47,6 +51,11 @@ class GForceMeterWidgetViewController: UIViewController {
     func startMetering() {
         logger.info()
 
+        let accelerometer = Accelerometer(
+            queue: accelerometerQueue,
+            interfaceOrientation: currentScene.interfaceOrientation
+        )
+
         accelerometer.startMetering() { [unowned self] (result) in
             switch result {
             case .success(let acceleration):
@@ -55,11 +64,14 @@ class GForceMeterWidgetViewController: UIViewController {
                 logger.error(error)
             }
         }
+
+        self.accelerometer = accelerometer
     }
 
     func stopMetering() {
         logger.info()
-        accelerometer.stopMetering()
+        accelerometer?.stopMetering()
+        accelerometer = nil
     }
 
     private func displayCalibratedAcceleration(_ acceleration: CMAcceleration) {
@@ -68,12 +80,16 @@ class GForceMeterWidgetViewController: UIViewController {
         }
 
         if let calibrationMatrix = calibrationMatrix {
-            gForceMeterView.acceleration = calibrate(acceleration, with: calibrationMatrix)
+            let calibratedAcceleration = calibrate(acceleration, with: calibrationMatrix)
+
+            DispatchQueue.main.async {
+                self.gForceMeterView.acceleration = calibratedAcceleration
+            }
         }
     }
 
     private func setCurrentAccelerationAsReference() {
-        guard let acceleration = accelerometer.acceleration else { return }
+        guard let acceleration = accelerometer?.acceleration else { return }
         Defaults.shared.referenceAccelerationForGForceMeter = acceleration
         calibrationMatrix = makeCalibrationMatrix(from: acceleration)
     }
@@ -109,6 +125,18 @@ class GForceMeterWidgetViewController: UIViewController {
         let r = matrix_identity_double3x3 + vx + vx * vx * Double((1 - c) / pow(s, 2))
 
         return r
+    }
+
+    @objc func deviceOrientationDidChange() {
+        if accelerometer?.isMetering == true {
+            // Restart accelerometer to apply the new user interface orientation
+            stopMetering()
+            startMetering()
+        }
+    }
+
+    var currentScene: UIWindowScene {
+        return UIApplication.shared.connectedScenes.first as! UIWindowScene
     }
 }
 
@@ -148,10 +176,20 @@ class Accelerometer {
         return motionManager.isAccelerometerActive
     }
 
+    let queue: OperationQueue
+    let interfaceOrientation: UIInterfaceOrientation
+
+    init(queue: OperationQueue, interfaceOrientation: UIInterfaceOrientation) {
+        self.queue = queue
+        self.interfaceOrientation = interfaceOrientation
+    }
+
     func startMetering(handler: @escaping (Result<CMAcceleration, Error>) -> Void) {
         guard !isMetering else { return }
 
-        motionManager.startAccelerometerUpdates(to: .main) { [unowned self] (accelerometerData, error) in
+        motionManager.startAccelerometerUpdates(to: queue) { [weak self] (accelerometerData, error) in
+            guard let self = self else { return }
+
             if let error = error {
                 handler(.failure(error))
                 return
@@ -183,11 +221,6 @@ class Accelerometer {
         default:
             return acceleration
         }
-    }
-
-    var interfaceOrientation: UIInterfaceOrientation {
-        let scene = UIApplication.shared.connectedScenes.first as! UIWindowScene
-        return scene.interfaceOrientation
     }
 }
 
