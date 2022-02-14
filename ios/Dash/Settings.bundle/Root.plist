@@ -170,7 +170,7 @@
 			<key>Key</key>
 			<string>currentValueRatioForSmoothing</string>
 			<key>DefaultValue</key>
-			<real>1</real>
+			<real>0.5</real>
 			<key>Values</key>
 			<array>
 				<real>1</real>
