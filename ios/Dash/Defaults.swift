@@ -30,6 +30,7 @@ class Defaults {
         case referenceAccelerationForGForceMeter
         case unitOfGForceMeterScale
         case pointerScalingBaseForVerticalAccelerationForGForceMeter
+        case currentValueRatioForSmoothing
         case speedSensitiveVolumeControlEnabled
         case additionalVolumeAt120KilometersPerHour
         case minimumSpeedInKilometersPerHourForAdditionalVolume
@@ -216,6 +217,12 @@ extension Defaults {
             } else {
                 return CGFloat(float)
             }
+        }
+    }
+
+    var currentValueRatioForSmoothing: Double {
+        get {
+            return double(for: .currentValueRatioForSmoothing)
         }
     }
 

@@ -16,8 +16,12 @@ class GForceMeterWidgetViewController: UIViewController {
     var accelerometer: Accelerometer?
     let accelerometerQueue = OperationQueue()
 
+    var isVisible = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        previousInterfaceOrientation = currentInterfaceOrientation
 
         view.addInteraction(UIContextMenuInteraction(delegate: self))
 
@@ -25,9 +29,9 @@ class GForceMeterWidgetViewController: UIViewController {
             calibrationMatrix = makeCalibrationMatrix(from: referenceAcceleration)
         }
 
-        loadDefaults()
+        NotificationCenter.default.addObserver(self, selector: #selector(startIfNeeded), name: UIScene.willEnterForegroundNotification, object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(loadDefaults), name: UIScene.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(stop), name: UIScene.didEnterBackgroundNotification, object: nil)
 
         // We want to observe notification for user interface orientation but there's no such one
         NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
@@ -35,25 +39,27 @@ class GForceMeterWidgetViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        startMetering()
+        isVisible = true
+        startIfNeeded()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
-        stopMetering()
         super.viewDidDisappear(animated)
+        isVisible = false
+        stop()
     }
 
-    @objc func loadDefaults() {
-        gForceMeterView.unitOfScale = Defaults.shared.unitOfGForceMeterScale
-        gForceMeterView.pointerScalingBaseForVerticalAcceleration = Defaults.shared.pointerScalingBaseForVerticalAccelerationForGForceMeter
-    }
+    @objc func startIfNeeded() {
+        guard accelerometer?.isMetering != true, isVisible else { return }
 
-    func startMetering() {
         logger.info()
+
+        updateGForceMeterViewConfiguration()
 
         let accelerometer = Accelerometer(
             queue: accelerometerQueue,
-            interfaceOrientation: currentScene.interfaceOrientation
+            interfaceOrientation: currentInterfaceOrientation,
+            currentValueRatioForSmoothing: Defaults.shared.currentValueRatioForSmoothing
         )
 
         accelerometer.startMetering() { [unowned self] (result) in
@@ -68,10 +74,15 @@ class GForceMeterWidgetViewController: UIViewController {
         self.accelerometer = accelerometer
     }
 
-    func stopMetering() {
+    @objc func stop() {
         logger.info()
         accelerometer?.stopMetering()
         accelerometer = nil
+    }
+
+    private func updateGForceMeterViewConfiguration() {
+        gForceMeterView.unitOfScale = Defaults.shared.unitOfGForceMeterScale
+        gForceMeterView.pointerScalingBaseForVerticalAcceleration = Defaults.shared.pointerScalingBaseForVerticalAccelerationForGForceMeter
     }
 
     private func displayCalibratedAcceleration(_ acceleration: CMAcceleration) {
@@ -96,7 +107,7 @@ class GForceMeterWidgetViewController: UIViewController {
 
     private var calibrationMatrix: simd_double3x3?
 
-    func calibrate(_ acceleration: CMAcceleration, with calibrationMatrix: simd_double3x3) -> CMAcceleration {
+    private func calibrate(_ acceleration: CMAcceleration, with calibrationMatrix: simd_double3x3) -> CMAcceleration {
         let vector = simd_double3(acceleration)
         let calibatedVector = calibrationMatrix * vector
         return CMAcceleration(calibatedVector)
@@ -127,17 +138,24 @@ class GForceMeterWidgetViewController: UIViewController {
         return r
     }
 
-    @objc func deviceOrientationDidChange() {
+    @objc private func deviceOrientationDidChange() {
+        if currentInterfaceOrientation == previousInterfaceOrientation { return }
+
+        previousInterfaceOrientation = currentInterfaceOrientation
+
         if accelerometer?.isMetering == true {
             // Restart accelerometer to apply the new user interface orientation
-            stopMetering()
-            startMetering()
+            stop()
+            startIfNeeded()
         }
     }
 
-    var currentScene: UIWindowScene {
-        return UIApplication.shared.connectedScenes.first as! UIWindowScene
+    private var currentInterfaceOrientation: UIInterfaceOrientation {
+        let scene = UIApplication.shared.connectedScenes.first as! UIWindowScene
+        return scene.interfaceOrientation
     }
+
+    private var previousInterfaceOrientation: UIInterfaceOrientation!
 }
 
 extension GForceMeterWidgetViewController: UIContextMenuInteractionDelegate {
@@ -178,10 +196,14 @@ class Accelerometer {
 
     let queue: OperationQueue
     let interfaceOrientation: UIInterfaceOrientation
+    let currentValueRatioForSmoothing: Double?
 
-    init(queue: OperationQueue, interfaceOrientation: UIInterfaceOrientation) {
+    private var previousSmoothedAcceleration: CMAcceleration?
+
+    init(queue: OperationQueue, interfaceOrientation: UIInterfaceOrientation, currentValueRatioForSmoothing: Double?) {
         self.queue = queue
         self.interfaceOrientation = interfaceOrientation
+        self.currentValueRatioForSmoothing = currentValueRatioForSmoothing
     }
 
     func startMetering(handler: @escaping (Result<CMAcceleration, Error>) -> Void) {
@@ -197,7 +219,8 @@ class Accelerometer {
 
             if let acceleration = accelerometerData?.acceleration {
                 let normalizedAcceleration = self.normalizeAccelerationBasedOnInterfaceOrientation(acceleration)
-                handler(.success(normalizedAcceleration))
+                let smoothedAcceleration = self.smooth(normalizedAcceleration)
+                handler(.success(smoothedAcceleration))
             } else {
                 fatalError()
             }
@@ -206,6 +229,7 @@ class Accelerometer {
 
     func stopMetering() {
         motionManager.stopAccelerometerUpdates()
+        previousSmoothedAcceleration = nil
     }
 
     private func normalizeAccelerationBasedOnInterfaceOrientation(_ acceleration: CMAcceleration) -> CMAcceleration {
@@ -221,6 +245,26 @@ class Accelerometer {
         default:
             return acceleration
         }
+    }
+
+    private func smooth(_ currentAcceleration: CMAcceleration) -> CMAcceleration {
+        guard let currentValueRatio = currentValueRatioForSmoothing,
+              currentValueRatio != 1,
+              let previousSmoothedAcceleration = previousSmoothedAcceleration
+        else {
+            previousSmoothedAcceleration = currentAcceleration
+            return currentAcceleration
+        }
+
+        let smoothedAcceleration = CMAcceleration(
+            x: currentAcceleration.x * currentValueRatio + previousSmoothedAcceleration.x * (1 - currentValueRatio),
+            y: currentAcceleration.y * currentValueRatio + previousSmoothedAcceleration.y * (1 - currentValueRatio),
+            z: currentAcceleration.z * currentValueRatio + previousSmoothedAcceleration.z * (1 - currentValueRatio)
+        )
+
+        self.previousSmoothedAcceleration = smoothedAcceleration
+
+        return smoothedAcceleration
     }
 }
 

@@ -164,6 +164,30 @@
 		</dict>
 		<dict>
 			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Current Value Ratio for Smoothing</string>
+			<key>Key</key>
+			<string>currentValueRatioForSmoothing</string>
+			<key>DefaultValue</key>
+			<real>1</real>
+			<key>Values</key>
+			<array>
+				<real>1</real>
+				<real>0.5</real>
+				<real>0.1</real>
+				<real>0.05</real>
+			</array>
+			<key>Titles</key>
+			<array>
+				<string>100% (Disable Smoothing)</string>
+				<string>50%</string>
+				<string>10%</string>
+				<string>5%</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
 			<string>Automatic Sound Volume Control</string>
