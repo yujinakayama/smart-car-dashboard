@@ -192,42 +192,98 @@ class Accelerometer {
 }
 
 @IBDesignable class GForceMeterView: UIView {
-    var unitOfScale: CGFloat = 0.5
+    var unitOfScale: CGFloat {
+        get {
+            return meterView.unitOfScale
+        }
+
+        set {
+            meterView.unitOfScale = newValue
+        }
+    }
 
     var pointerScalingBaseForVerticalAcceleration: CGFloat? {
-        didSet {
-            if pointerScalingBaseForVerticalAcceleration == nil {
-                accelerationPointerLayer.setAffineTransform(.identity)
-            }
+        get {
+            return meterView.pointerScalingBaseForVerticalAcceleration
+        }
+
+        set {
+            meterView.pointerScalingBaseForVerticalAcceleration = newValue
         }
     }
 
     var acceleration: CMAcceleration? {
         didSet {
-            accelerationPointerLayer.isHidden = acceleration == nil
-            updateAccelerationPointerPosition()
-            updateAccelerationPointerScale()
+            meterView.acceleration = acceleration
+            updateLabelTexts()
         }
     }
 
-    override var tintColor: UIColor! {
-        didSet {
-            updateColors()
-        }
+    private lazy var horizontalStackView: UIStackView = {
+        let horizontalStackView = UIStackView(arrangedSubviews: [
+            leftLabel,
+            leftLabelMarginView,
+            verticalStackView,
+            rightLabelMarginView,
+            rightLabel
+        ])
+
+        horizontalStackView.axis = .horizontal
+        horizontalStackView.alignment = .center
+        horizontalStackView.distribution = .equalSpacing
+        return horizontalStackView
+    }()
+
+    private lazy var verticalStackView: UIStackView = {
+        let verticalStackView = UIStackView(arrangedSubviews: [
+            frontLabel,
+            frontLabelMarginView,
+            meterView,
+            backLabelMarginView,
+            backLabel
+        ])
+
+        verticalStackView.axis = .vertical
+        verticalStackView.alignment = .center
+        verticalStackView.distribution = .fill
+        return verticalStackView
+    }()
+
+    private let meterView = MeterView()
+
+    private let frontLabel = GForceMeterView.makeLabel(textAlignment: .center)
+    private let backLabel = GForceMeterView.makeLabel(textAlignment: .center)
+    private let leftLabel = GForceMeterView.makeLabel(textAlignment: .right)
+    private let rightLabel = GForceMeterView.makeLabel(textAlignment: .left)
+
+    private var labels: [UILabel] {
+        return [
+            frontLabel,
+            backLabel,
+            leftLabel,
+            rightLabel
+        ]
     }
 
-    var scaleColor = UIColor.quaternaryLabel {
-        didSet {
-            updateColors()
-        }
+    private static func makeLabel(textAlignment: NSTextAlignment) -> UILabel {
+        let label = Label()
+        label.textColor = .secondaryLabel
+        label.textAlignment = textAlignment
+        return label
     }
 
-    override var bounds: CGRect {
-        didSet {
-            updateScaleShape()
-            updateAccelerationPointerSize()
-            updateAccelerationPointerPosition()
-        }
+    private let frontLabelMarginView = UIView()
+    private let backLabelMarginView = UIView()
+    private let leftLabelMarginView = UIView()
+    private let rightLabelMarginView = UIView()
+
+    private var marginViews: [UIView] {
+        return [
+            frontLabelMarginView,
+            backLabelMarginView,
+            leftLabelMarginView,
+            rightLabelMarginView
+        ]
     }
 
     override init(frame: CGRect) {
@@ -246,113 +302,247 @@ class Accelerometer {
     }
 
     private func commonInit() {
-        updateColors()
+        updateLabelTexts()
 
-        updateScaleShape()
-        layer.addSublayer(scaleLayer)
+        addSubview(horizontalStackView)
 
-        updateAccelerationPointerSize()
+        for view in ([horizontalStackView, verticalStackView, meterView] + labels + marginViews) {
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
 
-        updateAccelerationPointerPosition()
-        layer.addSublayer(accelerationPointerLayer)
+        // Label sizes
+        NSLayoutConstraint.activate(Array(labels.map { (label) in
+            [
+                label.widthAnchor.constraint(equalTo: heightAnchor, multiplier: 0.3),
+                label.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.03, constant: 10),
+            ]
+        }.joined()))
+
+        // Margins
+        NSLayoutConstraint.activate(Array(marginViews.map { (marginView) in
+            [
+                marginView.widthAnchor.constraint(equalTo: heightAnchor, multiplier: 0.04),
+                marginView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.04, constant: -3),
+            ]
+        }.joined()))
+
+        NSLayoutConstraint.activate([
+            horizontalStackView.topAnchor.constraint(equalTo: topAnchor),
+            horizontalStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            horizontalStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            verticalStackView.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor),
+            meterView.widthAnchor.constraint(equalTo: meterView.heightAnchor),
+        ])
     }
 
-    private func updateColors() {
-        scaleLayer.strokeColor = scaleColor.cgColor
-        accelerationPointerLayer.fillColor = tintColor.cgColor
-    }
+    private func updateLabelTexts() {
+        updateLabelTextsForAxis(
+            value: acceleration?.x ?? 0,
+            positiveLabel: rightLabel,
+            negativeLabel: leftLabel
+        )
 
-    private func updateAccelerationPointerSize() {
-        let sideLength = sqrt(scaleFrame.size.width) * 1.2
-        let size = CGSize(width: sideLength, height: sideLength)
-        accelerationPointerLayer.bounds = CGRect(origin: .zero, size: size)
-
-        accelerationPointerLayer.path = UIBezierPath(ovalIn: accelerationPointerLayer.bounds).cgPath
-    }
-
-    private func updateAccelerationPointerPosition() {
-        let scale = scaleLayer.frame
-
-        accelerationPointerLayer.position = CGPoint(
-            x: scale.midX + (CGFloat(acceleration?.x ?? 0) * CGFloat(scale.size.width / 2.0) / unitOfScale),
-            y: scale.midY - (CGFloat(acceleration?.y ?? 0) * CGFloat(scale.size.height / 2.0) / unitOfScale)
+        updateLabelTextsForAxis(
+            value: acceleration?.y ?? 0,
+            positiveLabel: frontLabel,
+            negativeLabel: backLabel
         )
     }
 
-    private func updateAccelerationPointerScale() {
-        guard let pointerScalingBase = pointerScalingBaseForVerticalAcceleration else { return }
+    private func updateLabelTextsForAxis(value: Double, positiveLabel: UILabel, negativeLabel: UILabel) {
+        let targetLabel: UILabel
+        let nonTargetLabel: UILabel
 
-        // https://www.desmos.com/calculator/jcctj2ah0v
-        let scale = pow(pointerScalingBase, CGFloat(acceleration?.z ?? -1) + 1)
-        accelerationPointerLayer.setAffineTransform(CGAffineTransform(scaleX: scale, y: scale))
+        if value >= 0 {
+            targetLabel = positiveLabel
+            nonTargetLabel = negativeLabel
+        } else {
+            targetLabel = negativeLabel
+            nonTargetLabel = positiveLabel
+        }
+
+        targetLabel.text = format(abs(value))
+        nonTargetLabel.text = format(0)
     }
 
-    private lazy var accelerationPointerLayer: CAShapeLayer = {
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.isHidden = true
-        return shapeLayer
-    }()
-
-    private func updateScaleShape() {
-        scaleLayer.frame = scaleFrame
-        scaleLayer.path = scalePath(in: scaleLayer.bounds).cgPath
+    private func format(_ value: Double) -> String {
+        return String(format: "%.1f", value)
     }
+}
 
-    private lazy var scaleLayer: CAShapeLayer = {
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.lineWidth = 1
-        shapeLayer.fillColor = nil
-        return shapeLayer
-    }()
+extension GForceMeterView {
+    @IBDesignable class MeterView: UIView {
+        var unitOfScale: CGFloat = 0.5
 
-    private func scalePath(in bounds: CGRect) -> UIBezierPath {
-        let path = UIBezierPath()
-        path.append(crossPath(in: bounds))
-        path.append(circlePath(in: bounds))
-        return path
-    }
+        var pointerScalingBaseForVerticalAcceleration: CGFloat? {
+            didSet {
+                if pointerScalingBaseForVerticalAcceleration == nil {
+                    accelerationPointerLayer.setAffineTransform(.identity)
+                }
+            }
+        }
 
-    private func circlePath(in bounds: CGRect) -> UIBezierPath {
-        return UIBezierPath(ovalIn: bounds)
-    }
+        var acceleration: CMAcceleration? {
+            didSet {
+                accelerationPointerLayer.isHidden = acceleration == nil
+                updateAccelerationPointerPosition()
+                updateAccelerationPointerScale()
+            }
+        }
 
-    private func crossPath(in bounds: CGRect) -> UIBezierPath {
-        let path = UIBezierPath()
+        override var tintColor: UIColor! {
+            didSet {
+                updateColors()
+            }
+        }
 
-        let bounds = bounds
+        var scaleColor = UIColor.quaternaryLabel {
+            didSet {
+                updateColors()
+            }
+        }
 
-        // Horizontal line
-        path.move(to: CGPoint(x: 0, y: bounds.midY))
-        path.addLine(to: CGPoint(x: bounds.maxX, y: bounds.midY))
+        override var bounds: CGRect {
+            didSet {
+                updateScaleShape()
+                updateAccelerationPointerSize()
+                updateAccelerationPointerPosition()
+            }
+        }
 
-        // Vertical line
-        path.move(to: CGPoint(x: bounds.midX, y: 0))
-        path.addLine(to: CGPoint(x: bounds.midX, y: bounds.maxY))
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            commonInit()
+        }
 
-        return path
-    }
+        required init?(coder: NSCoder) {
+            super.init(coder: coder)
+            commonInit()
+        }
 
-    private var scaleFrame: CGRect {
-        let sideLength = min(bounds.size.width, bounds.size.height)
+        override func prepareForInterfaceBuilder() {
+            super.prepareForInterfaceBuilder()
+            commonInit()
+        }
 
-        return CGRect(
-            x: bounds.midX - (sideLength / 2),
-            y: bounds.midY - (sideLength / 2),
-            width: sideLength,
-            height: sideLength
-        )
-    }
-
-    override func tintColorDidChange() {
-        super.tintColorDidChange()
-        updateColors()
-    }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+        private func commonInit() {
             updateColors()
+
+            updateScaleShape()
+            layer.addSublayer(scaleLayer)
+
+            updateAccelerationPointerSize()
+            updateAccelerationPointerPosition()
+            layer.addSublayer(accelerationPointerLayer)
+        }
+
+        private func updateColors() {
+            scaleLayer.strokeColor = scaleColor.cgColor
+            accelerationPointerLayer.fillColor = tintColor.cgColor
+        }
+
+        private func updateAccelerationPointerSize() {
+            let sideLength = sqrt(scaleFrame.size.width) * 1.2
+            let size = CGSize(width: sideLength, height: sideLength)
+            accelerationPointerLayer.bounds = CGRect(origin: .zero, size: size)
+
+            accelerationPointerLayer.path = UIBezierPath(ovalIn: accelerationPointerLayer.bounds).cgPath
+        }
+
+        private func updateAccelerationPointerPosition() {
+            let scale = scaleLayer.frame
+
+            accelerationPointerLayer.position = CGPoint(
+                x: scale.midX + (CGFloat(acceleration?.x ?? 0) * CGFloat(scale.size.width / 2.0) / unitOfScale),
+                y: scale.midY - (CGFloat(acceleration?.y ?? 0) * CGFloat(scale.size.height / 2.0) / unitOfScale)
+            )
+        }
+
+        private func updateAccelerationPointerScale() {
+            guard let pointerScalingBase = pointerScalingBaseForVerticalAcceleration else { return }
+
+            // https://www.desmos.com/calculator/jcctj2ah0v
+            let scale = pow(pointerScalingBase, CGFloat(acceleration?.z ?? -1) + 1)
+            accelerationPointerLayer.setAffineTransform(CGAffineTransform(scaleX: scale, y: scale))
+        }
+
+        private lazy var accelerationPointerLayer: CAShapeLayer = {
+            let shapeLayer = CAShapeLayer()
+            shapeLayer.isHidden = true
+            return shapeLayer
+        }()
+
+        private func updateScaleShape() {
+            scaleLayer.frame = scaleFrame
+            scaleLayer.path = scalePath(in: scaleLayer.bounds).cgPath
+        }
+
+        private lazy var scaleLayer: CAShapeLayer = {
+            let shapeLayer = CAShapeLayer()
+            shapeLayer.lineWidth = 1
+            shapeLayer.fillColor = nil
+            return shapeLayer
+        }()
+
+        private func scalePath(in bounds: CGRect) -> UIBezierPath {
+            let path = UIBezierPath()
+            path.append(crossPath(in: bounds))
+            path.append(circlePath(in: bounds))
+            return path
+        }
+
+        private func circlePath(in bounds: CGRect) -> UIBezierPath {
+            return UIBezierPath(ovalIn: bounds)
+        }
+
+        private func crossPath(in bounds: CGRect) -> UIBezierPath {
+            let path = UIBezierPath()
+
+            let bounds = bounds
+
+            // Horizontal line
+            path.move(to: CGPoint(x: 0, y: bounds.midY))
+            path.addLine(to: CGPoint(x: bounds.maxX, y: bounds.midY))
+
+            // Vertical line
+            path.move(to: CGPoint(x: bounds.midX, y: 0))
+            path.addLine(to: CGPoint(x: bounds.midX, y: bounds.maxY))
+
+            return path
+        }
+
+        private var scaleFrame: CGRect {
+            let sideLength = min(bounds.size.width, bounds.size.height)
+
+            return CGRect(
+                x: bounds.midX - (sideLength / 2),
+                y: bounds.midY - (sideLength / 2),
+                width: sideLength,
+                height: sideLength
+            )
+        }
+
+        override func tintColorDidChange() {
+            super.tintColorDidChange()
+            updateColors()
+        }
+
+        override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+            super.traitCollectionDidChange(previousTraitCollection)
+
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateColors()
+            }
+        }
+    }
+}
+
+extension GForceMeterView {
+    @IBDesignable class Label: UILabel {
+        override var bounds: CGRect {
+            didSet {
+                font = UIFont.monospacedDigitSystemFont(ofSize: bounds.height, weight: .semibold)
+            }
         }
     }
 }

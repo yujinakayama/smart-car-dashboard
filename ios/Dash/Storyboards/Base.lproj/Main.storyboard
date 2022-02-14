@@ -1425,25 +1425,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l5N-hO-tAC" customClass="GForceMeterView" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="94" y="24" width="187" height="187"/>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l5N-hO-tAC" customClass="GForceMeterView" customModule="Dash" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="21" width="375" height="169"/>
                                 <viewLayoutGuide key="safeArea" id="kJq-XR-hiN"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="l5N-hO-tAC" secondAttribute="height" multiplier="1:1" id="19l-Si-Mvt"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="250" id="Bs3-9O-sEA"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="HQC-di-pGu"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="l5N-hO-tAC" firstAttribute="height" secondItem="fnb-OL-YU3" secondAttribute="height" multiplier="0.8" priority="250" id="Gzn-Od-eC2"/>
-                            <constraint firstItem="l5N-hO-tAC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="HQC-di-pGu" secondAttribute="leading" id="M2U-mU-ZVx"/>
-                            <constraint firstItem="l5N-hO-tAC" firstAttribute="top" relation="greaterThanOrEqual" secondItem="HQC-di-pGu" secondAttribute="top" id="aDb-PR-zFq"/>
-                            <constraint firstItem="l5N-hO-tAC" firstAttribute="centerY" secondItem="fnb-OL-YU3" secondAttribute="centerY" priority="750" id="akq-zi-29K"/>
-                            <constraint firstItem="HQC-di-pGu" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="l5N-hO-tAC" secondAttribute="bottom" id="cbp-vQ-ply"/>
-                            <constraint firstItem="l5N-hO-tAC" firstAttribute="centerX" secondItem="fnb-OL-YU3" secondAttribute="centerX" id="gEj-Wn-LJs"/>
-                            <constraint firstItem="HQC-di-pGu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="l5N-hO-tAC" secondAttribute="trailing" id="zqX-pL-pXR"/>
+                            <constraint firstItem="HQC-di-pGu" firstAttribute="right" secondItem="l5N-hO-tAC" secondAttribute="right" id="ARA-I9-RbJ"/>
+                            <constraint firstItem="l5N-hO-tAC" firstAttribute="top" relation="greaterThanOrEqual" secondItem="HQC-di-pGu" secondAttribute="top" constant="-4" id="AzF-Ot-aqn"/>
+                            <constraint firstItem="l5N-hO-tAC" firstAttribute="left" secondItem="HQC-di-pGu" secondAttribute="left" id="BnV-Ag-Jeh"/>
+                            <constraint firstItem="l5N-hO-tAC" firstAttribute="height" secondItem="fnb-OL-YU3" secondAttribute="height" multiplier="0.8" priority="750" id="ECS-Bh-UUl"/>
+                            <constraint firstItem="HQC-di-pGu" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="l5N-hO-tAC" secondAttribute="bottom" constant="-4" id="FnE-7c-0Zl"/>
+                            <constraint firstItem="l5N-hO-tAC" firstAttribute="centerY" secondItem="fnb-OL-YU3" secondAttribute="centerY" priority="749" id="syL-j6-wgZ"/>
                         </constraints>
                     </view>
                     <size key="freeformSize" width="375" height="211"/>
@@ -1590,13 +1585,13 @@
             <size key="intrinsicContentSize" width="139" height="31"/>
         </designable>
         <designable name="TAK-Hz-Kv5">
-            <size key="intrinsicContentSize" width="23" height="22"/>
+            <size key="intrinsicContentSize" width="30" height="34"/>
         </designable>
         <designable name="fDi-RM-ZJK">
-            <size key="intrinsicContentSize" width="34" height="30"/>
+            <size key="intrinsicContentSize" width="21" height="24"/>
         </designable>
         <designable name="mfV-vr-luy">
-            <size key="intrinsicContentSize" width="24.5" height="22"/>
+            <size key="intrinsicContentSize" width="30" height="34"/>
         </designable>
     </designables>
     <inferredMetricsTieBreakers>

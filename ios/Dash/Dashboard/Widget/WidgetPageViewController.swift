@@ -9,7 +9,7 @@
 import UIKit
 
 class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource {
-    let pageControlHeight: CGFloat = 28
+    let pageControlHeight: CGFloat = 26
     let pageControlBottomMargin: CGFloat = 4
 
     lazy var widgetViewControllers: [UIViewController] = [
