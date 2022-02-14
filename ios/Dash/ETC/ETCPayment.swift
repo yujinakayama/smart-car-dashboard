@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import FirebaseFirestoreSwift
 
 struct ETCPayment: Codable {
     static let uuidNamespace = UUID(uuidString: "5EDBF18B-7031-4B90-92E3-6E67360A2472")!

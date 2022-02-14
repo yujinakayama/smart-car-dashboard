@@ -9,10 +9,6 @@
 import Foundation
 import FirebaseFirestore
 
-enum ETCDataStoreError: Error {
-    case currentCardMustBeSet
-}
-
 class ETCDatabase: NSObject {
     let vehicleID: String
 
