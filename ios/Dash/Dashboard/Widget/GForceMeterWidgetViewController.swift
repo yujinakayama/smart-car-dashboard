@@ -618,7 +618,7 @@ extension GForceMeterView {
     @IBDesignable class Label: UILabel {
         override var bounds: CGRect {
             didSet {
-                font = UIFont.monospacedDigitSystemFont(ofSize: bounds.height, weight: .semibold)
+                font = UIFont.monospacedDigitSystemFont(ofSize: bounds.height, weight: .medium)
             }
         }
     }
