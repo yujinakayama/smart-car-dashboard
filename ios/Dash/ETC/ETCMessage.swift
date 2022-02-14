@@ -344,10 +344,10 @@ enum ETCMessageFromDevice {
             }
         }
 
-        func vehicleClassification() throws -> VehicleClassification {
+        func vehicleClassification() throws -> ETCPayment.VehicleClassification {
             let integer = try extractIntegerFromPayload(in: 32...34)
 
-            if let vehicleClassification = VehicleClassification(rawValue: integer) {
+            if let vehicleClassification = ETCPayment.VehicleClassification(rawValue: integer) {
                 return vehicleClassification
             } else {
                 throw ETCMessageError.unknownVehicleClassification

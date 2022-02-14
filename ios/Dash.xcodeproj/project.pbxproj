@@ -66,6 +66,7 @@
 		B94E69D123F7A313004CCC7C /* WebsiteIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */; };
 		B94EC75327914C620008C447 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94EC75227914C620008C447 /* UIApplicationExtension.swift */; };
 		B94EC75427914DFF0008C447 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94EC75227914C620008C447 /* UIApplicationExtension.swift */; };
+		B9515F1627BA8C07001C1D8D /* ETCTollbooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9515F1527BA8C07001C1D8D /* ETCTollbooth.swift */; };
 		B954CA2325693CCC00BAD0F0 /* WidgetPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */; };
 		B954CA3225693EDA00BAD0F0 /* RearviewWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */; };
 		B9588B5D23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */; };
@@ -460,6 +461,7 @@
 		B94BD2E82680486700B768A2 /* BorderedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedLabel.swift; sourceTree = "<group>"; };
 		B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteIcon.swift; sourceTree = "<group>"; };
 		B94EC75227914C620008C447 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
+		B9515F1527BA8C07001C1D8D /* ETCTollbooth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCTollbooth.swift; sourceTree = "<group>"; };
 		B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetPageViewController.swift; sourceTree = "<group>"; };
 		B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewWidgetViewController.swift; sourceTree = "<group>"; };
 		B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentDebugInformationViewController.swift; sourceTree = "<group>"; };
@@ -974,6 +976,7 @@
 				B931C4FE23D369760020DF13 /* ETCDeviceManager.swift */,
 				B9CEA76522D89A400055C9A3 /* ETCDatabase.swift */,
 				B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */,
+				B9515F1527BA8C07001C1D8D /* ETCTollbooth.swift */,
 				B9D8E43723D345940078A057 /* ETCCard.swift */,
 				B9DC5B38229D5D8100B645D5 /* ETCDeviceConnection.swift */,
 				B99356E522A9525C00BA08AB /* ETCMessage.swift */,
@@ -1967,6 +1970,7 @@
 				B94A59A026826E960074368A /* LocationInformationDebugViewController.swift in Sources */,
 				B9C1F41F27B88A6400C6D4DD /* ScrollViewPagination.swift in Sources */,
 				B9C1F40D27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift in Sources */,
+				B9515F1627BA8C07001C1D8D /* ETCTollbooth.swift in Sources */,
 				B954CA3225693EDA00BAD0F0 /* RearviewWidgetViewController.swift in Sources */,
 				B9C1F41727B8240F00C6D4DD /* FirestoreQuery.swift in Sources */,
 				B9DC5B4A229EDA0000B645D5 /* SerialPort.swift in Sources */,

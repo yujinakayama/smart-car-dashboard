@@ -16,9 +16,9 @@ class ETCCardEditViewController: UITableViewController {
     @IBOutlet weak var nameTextField: UITextField!
     let mainCardSwitch = UISwitch()
 
-    var currentBrand: ETCCardBrand {
+    var currentBrand: ETCCard.Brand {
         get {
-            return ETCCardBrand(rawValue: pageControl.currentPage)!
+            return ETCCard.Brand(rawValue: pageControl.currentPage)!
         }
 
         set {

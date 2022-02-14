@@ -17,7 +17,7 @@ struct ETCCard: Codable {
     // Without name field in Firestore document the it will be ignored in query with "name" order
     var name: String = ""
 
-    var brand: ETCCardBrand = .unknown
+    var brand: Brand = .unknown
 
     var uuid: UUID {
         get {
@@ -52,10 +52,12 @@ struct ETCCard: Codable {
     }
 }
 
-enum ETCCardBrand: Int, Codable {
-    case unknown = 0
-    case visa
-    case mastercard
+extension ETCCard {
+    enum Brand: Int, Codable {
+        case unknown = 0
+        case visa
+        case mastercard
+    }
 }
 
 enum ETCCardError: Error {

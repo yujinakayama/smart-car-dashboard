@@ -166,7 +166,7 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
         }
     }
 
-    private func mapItem(for tollbooth: Tollbooth, completionHandler: @escaping (MKMapItem?) -> Void) {
+    private func mapItem(for tollbooth: ETCTollbooth, completionHandler: @escaping (MKMapItem?) -> Void) {
         // TODO: This tends to pick wrong location
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = "\(tollbooth.name)IC"
