@@ -7,8 +7,9 @@
 "All ETC Payments" = "ETC履歴";
 
 "Cards" = "カード";
-
 "No Card" = "カード未挿入";
+"Unknown Tollbooth" = "不明な料金所";
+"Unnamed Card" = "新規カード";
 
 "Departure" = "出発";
 "Arrival" = "到着";

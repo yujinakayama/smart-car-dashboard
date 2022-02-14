@@ -84,7 +84,7 @@ class ETCPaymentTableViewCell: UITableViewCell {
             entranceTollboothLabel.text = entrance.name
         } else {
             entranceRoadView.isHidden = true
-            entranceTollboothLabel.text = "不明な料金所"
+            entranceTollboothLabel.text = String(localized: "Unknown Tollbooth")
         }
 
         if let exit = exit {
@@ -109,7 +109,7 @@ class ETCPaymentTableViewCell: UITableViewCell {
             tollboothArrowView.isHidden = false
             exitRoadView.isHidden = true
             exitTollboothLabel.isHidden = false
-            exitTollboothLabel.text = "不明な料金所"
+            exitTollboothLabel.text = String(localized: "Unknown Tollbooth")
         }
     }
 

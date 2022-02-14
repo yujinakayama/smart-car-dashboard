@@ -40,7 +40,7 @@ struct ETCCard: Codable {
     }
 
     var displayedName: String {
-        return name.isEmpty ? "Unnamed Card" : name
+        return name.isEmpty ? String(localized: "Unnamed Card") : name
     }
 
     func save() throws {
