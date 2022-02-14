@@ -808,20 +808,37 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="2019/05/31 12:34" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Lp-b1-rnx">
-                                                    <rect key="frame" x="80" y="0.0" width="231" height="14.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="pVd-uR-tBd">
+                                                    <rect key="frame" x="231.5" y="0.0" width="79.5" height="14.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="1:23" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0YK-AR-A2c">
+                                                            <rect key="frame" x="0.0" y="0.0" width="24" height="14.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                            <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="JX9-eo-NcV">
+                                                            <rect key="frame" x="28" y="1.5" width="14" height="11"/>
+                                                            <color key="tintColor" systemColor="secondaryLabelColor"/>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                            </preferredSymbolConfiguration>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="23:45" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Lp-b1-rnx">
+                                                            <rect key="frame" x="46" y="0.0" width="33.5" height="14.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                            <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="1Lp-b1-rnx" firstAttribute="leading" secondItem="yXL-mj-wgO" secondAttribute="trailing" id="7RC-CX-yqK"/>
                                                 <constraint firstAttribute="bottom" secondItem="yXL-mj-wgO" secondAttribute="bottom" id="BWs-pD-zE5"/>
                                                 <constraint firstItem="yXL-mj-wgO" firstAttribute="top" secondItem="IBr-gx-mIp" secondAttribute="top" id="CV0-ge-BYW"/>
-                                                <constraint firstAttribute="trailing" secondItem="1Lp-b1-rnx" secondAttribute="trailing" id="eZt-gM-0nR"/>
-                                                <constraint firstItem="1Lp-b1-rnx" firstAttribute="top" secondItem="IBr-gx-mIp" secondAttribute="top" id="gJn-Q4-oeu"/>
+                                                <constraint firstItem="pVd-uR-tBd" firstAttribute="top" secondItem="IBr-gx-mIp" secondAttribute="top" id="JB0-Y0-20q"/>
                                                 <constraint firstItem="yXL-mj-wgO" firstAttribute="leading" secondItem="IBr-gx-mIp" secondAttribute="leading" id="iHu-4P-jrS"/>
+                                                <constraint firstAttribute="trailing" secondItem="pVd-uR-tBd" secondAttribute="trailing" id="tV1-mT-3Id"/>
                                             </constraints>
                                         </view>
                                         <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" distribution="equalSpacing" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="ZAn-lS-AfA">
@@ -919,14 +936,16 @@
                                 <connections>
                                     <outlet property="amountLabel" destination="ukE-X2-gHW" id="bys-ax-zyE"/>
                                     <outlet property="amountView" destination="yXL-mj-wgO" id="164-06-0Jz"/>
-                                    <outlet property="arrowView" destination="uB5-qW-VsK" id="Hq1-HE-dgR"/>
+                                    <outlet property="entranceRoadLabel" destination="CtC-aV-rx7" id="VEH-pW-shN"/>
+                                    <outlet property="entranceRoadView" destination="EML-DI-UKx" id="Com-ip-fb2"/>
+                                    <outlet property="entranceTimeLabel" destination="0YK-AR-A2c" id="fiC-gn-aVv"/>
+                                    <outlet property="entranceTollboothLabel" destination="ElS-Fh-95g" id="a6q-bF-N5u"/>
                                     <outlet property="exitRoadLabel" destination="mrm-PV-omm" id="oqj-jg-yiu"/>
                                     <outlet property="exitRoadView" destination="Rko-mV-7BI" id="sIc-GS-n8I"/>
+                                    <outlet property="exitTimeLabel" destination="1Lp-b1-rnx" id="m5q-Ov-7ll"/>
                                     <outlet property="exitTollboothLabel" destination="Flp-ga-yBP" id="voM-Ba-YeK"/>
-                                    <outlet property="roadLabel" destination="CtC-aV-rx7" id="VEH-pW-shN"/>
-                                    <outlet property="roadView" destination="EML-DI-UKx" id="Com-ip-fb2"/>
-                                    <outlet property="timeLabel" destination="1Lp-b1-rnx" id="m5q-Ov-7ll"/>
-                                    <outlet property="tollboothLabel" destination="ElS-Fh-95g" id="a6q-bF-N5u"/>
+                                    <outlet property="timeArrowView" destination="JX9-eo-NcV" id="W3A-Ad-1B1"/>
+                                    <outlet property="tollboothArrowView" destination="uB5-qW-VsK" id="Hq1-HE-dgR"/>
                                     <outlet property="yenLabel" destination="6wB-E0-moo" id="JaW-EC-5zD"/>
                                     <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" id="6S0-TO-JiA"/>
                                 </connections>
@@ -1581,7 +1600,7 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="Tll-UG-LXB"/>
+        <segue reference="6S0-TO-JiA"/>
         <segue reference="ZuQ-m0-CKt"/>
     </inferredMetricsTieBreakers>
     <resources>

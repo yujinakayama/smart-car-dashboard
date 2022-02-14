@@ -24,11 +24,15 @@ class ETCPaymentTableViewCell: UITableViewCell {
     @IBOutlet weak var yenLabel: UILabel!
     @IBOutlet weak var amountView: UIView!
     @IBOutlet weak var amountLabel: UILabel!
-    @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var roadView: UIView!
-    @IBOutlet weak var roadLabel: UILabel!
-    @IBOutlet weak var tollboothLabel: UILabel!
-    @IBOutlet weak var arrowView: UIImageView!
+
+    @IBOutlet weak var entranceTimeLabel: UILabel!
+    @IBOutlet weak var timeArrowView: UIImageView!
+    @IBOutlet weak var exitTimeLabel: UILabel!
+
+    @IBOutlet weak var entranceRoadView: UIView!
+    @IBOutlet weak var entranceRoadLabel: UILabel!
+    @IBOutlet weak var entranceTollboothLabel: UILabel!
+    @IBOutlet weak var tollboothArrowView: UIImageView!
     @IBOutlet weak var exitRoadView: UIView!
     @IBOutlet weak var exitRoadLabel: UILabel!
     @IBOutlet weak var exitTollboothLabel: UILabel!
@@ -58,29 +62,38 @@ class ETCPaymentTableViewCell: UITableViewCell {
     }
 
     private func updateViews() {
-        amountLabel.text = ETCPaymentTableViewCell.numberFormatter.string(from: NSNumber(value: payment.amount))
+        amountLabel.text = Self.numberFormatter.string(from: NSNumber(value: payment.amount))
 
-        timeLabel.text = ETCPaymentTableViewCell.dateFormatter.string(from: payment.exitDate)
+        exitTimeLabel.text = Self.dateFormatter.string(from: payment.exitDate)
+
+        if let entranceDate = payment.entranceDate {
+            entranceTimeLabel.isHidden = false
+            entranceTimeLabel.text = Self.dateFormatter.string(from: entranceDate)
+            timeArrowView.isHidden = false
+        } else {
+            entranceTimeLabel.isHidden = true
+            timeArrowView.isHidden = true
+        }
 
         let entrance = payment.entranceTollbooth
         let exit = payment.exitTollbooth
 
         if let entrance = entrance {
-            roadView.isHidden = false
-            roadLabel.text = entrance.road.abbreviatedName
-            tollboothLabel.text = entrance.name
+            entranceRoadView.isHidden = false
+            entranceRoadLabel.text = entrance.road.abbreviatedName
+            entranceTollboothLabel.text = entrance.name
         } else {
-            roadView.isHidden = true
-            tollboothLabel.text = "不明な料金所"
+            entranceRoadView.isHidden = true
+            entranceTollboothLabel.text = "不明な料金所"
         }
 
         if let exit = exit {
             if exit == entrance {
-                arrowView.isHidden = true
+                tollboothArrowView.isHidden = true
                 exitRoadView.isHidden = true
                 exitTollboothLabel.isHidden = true
             } else {
-                arrowView.isHidden = false
+                tollboothArrowView.isHidden = false
 
                 if exit.road.name == entrance?.road.name {
                     exitRoadView.isHidden = true
@@ -93,7 +106,7 @@ class ETCPaymentTableViewCell: UITableViewCell {
                 exitTollboothLabel.text = exit.name
             }
         } else {
-            arrowView.isHidden = false
+            tollboothArrowView.isHidden = false
             exitRoadView.isHidden = true
             exitTollboothLabel.isHidden = false
             exitTollboothLabel.text = "不明な料金所"

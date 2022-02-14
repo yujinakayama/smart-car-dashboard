@@ -14,12 +14,15 @@ struct ETCPayment: Codable {
     static let dateFormatter = ISO8601DateFormatter()
 
     var amount: Int
+    var entranceDate: Date?
     var exitDate: Date
     var entranceTollboothID: String
     var exitTollboothID: String
     var vehicleClassification: VehicleClassification
 
     var uuid: UUID {
+        // Do not include entranceDate to factor of the UUID
+        // since payment data provided from ETC devices don't have it
         let data = [
             String(amount),
             Self.dateFormatter.string(from: exitDate),

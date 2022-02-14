@@ -99,6 +99,23 @@ class ETCDeviceManager: NSObject, SerialPortManagerDelegate, ETCDeviceConnection
 
     private var lastPaymentNotificationTime: Date?
 
+    private var lastPendingGateEntranceDate: Date? {
+        get {
+            if let date = Defaults.shared.lastPendingETCGateEntranceDate,
+               date.distance(to: Date()) < 24 * 60 * 60
+            {
+                return date
+            } else {
+                return nil
+            }
+        }
+
+        set {
+            Defaults.shared.lastPendingETCGateEntranceDate = newValue
+        }
+    }
+
+
     var notificationCenter: NotificationCenter {
         return NotificationCenter.default
     }
@@ -146,7 +163,12 @@ class ETCDeviceManager: NSObject, SerialPortManagerDelegate, ETCDeviceConnection
             connection.send(ETCMessageToDevice.initialPaymentRecordRequest)
         case let response as ETCMessageFromDevice.PaymentRecordResponse:
             handlePaymentRecordResponse(response)
-        case is ETCMessageFromDevice.GateEntranceNotification, is ETCMessageFromDevice.GateExitNotification:
+        case is ETCMessageFromDevice.GateEntranceNotification:
+            if lastPendingGateEntranceDate == nil {
+                lastPendingGateEntranceDate = Date()
+            }
+            UserNotificationCenter.shared.requestDelivery(TollgatePassingThroughNotification())
+        case is ETCMessageFromDevice.GateExitNotification:
             UserNotificationCenter.shared.requestDelivery(TollgatePassingThroughNotification())
         case is ETCMessageFromDevice.PaymentNotification:
             justReceivedPaymentNotification = true
@@ -177,14 +199,23 @@ class ETCDeviceManager: NSObject, SerialPortManagerDelegate, ETCDeviceConnection
     }
 
     func handlePaymentRecordResponse(_ response: ETCMessageFromDevice.PaymentRecordResponse) {
-        guard let payment = response.payment else { return }
+        guard var payment = response.payment else { return }
 
         if justReceivedPaymentNotification {
             justReceivedPaymentNotification = false
+
+            if let lastPendingGateEntranceDate = lastPendingGateEntranceDate {
+                payment.entranceDate = lastPendingGateEntranceDate
+            }
+
+            lastPendingGateEntranceDate = nil
+
             UserNotificationCenter.shared.requestDelivery(PaymentNotification(payment: payment))
         }
 
         if let database = database, let currentCard = currentCard {
+            let payment = payment
+
             Task {
                 if !(try await database.hasSaved(payment)) {
                     try database.save(payment, for: currentCard)

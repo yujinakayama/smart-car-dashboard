@@ -26,6 +26,7 @@ class Defaults {
         case showTrackOnMaps
         case preferredMaxDistanceFromDestinationToParking
         case mainETCCardUUID
+        case lastPendingETCGateEntranceDate
         case referenceAccelerationForGForceMeter
         case unitOfGForceMeterScale
         case pointerScalingBaseForVerticalAccelerationForGForceMeter
@@ -96,6 +97,10 @@ class Defaults {
         return userDefaults.data(forKey: key.rawValue)
     }
 
+    private func object(for key: Key) -> Any? {
+        return userDefaults.object(forKey: key.rawValue)
+    }
+
     private func set(_ value: Any?, for key: Key) {
         userDefaults.setValue(value, forKey: key.rawValue)
     }
@@ -164,6 +169,16 @@ extension Defaults {
 
         set {
             set(newValue?.uuidString, for: .mainETCCardUUID)
+        }
+    }
+
+    var lastPendingETCGateEntranceDate: Date? {
+        get {
+            return object(for: .lastPendingETCGateEntranceDate) as? Date
+        }
+
+        set {
+            set(newValue, for: .lastPendingETCGateEntranceDate)
         }
     }
 
