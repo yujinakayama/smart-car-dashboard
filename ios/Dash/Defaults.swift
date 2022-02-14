@@ -10,6 +10,7 @@ import Foundation
 import MapKit
 import CoreMotion
 import simd
+import XCGLogger
 
 class Defaults {
     static var shared = Defaults()
@@ -34,7 +35,7 @@ class Defaults {
         case speedSensitiveVolumeControlEnabled
         case additionalVolumeAt120KilometersPerHour
         case minimumSpeedInKilometersPerHourForAdditionalVolume
-        case verboseLogging
+        case logLevel
         case clearFirestoreOfflineCacheOnNextLaunch
     }
 
@@ -247,9 +248,9 @@ extension Defaults {
         }
     }
 
-    var verboseLogging: Bool {
+    var logLevel: XCGLogger.Level {
         get {
-            return bool(for: .verboseLogging)
+            return XCGLogger.Level(rawValue: integer(for: .logLevel)) ?? .info
         }
     }
 

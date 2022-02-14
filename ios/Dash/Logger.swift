@@ -27,12 +27,7 @@ let logger: XCGLogger = {
 
     let logger = XCGLogger(identifier: "default", includeDefaultDestinations: true)
     logger.add(destination: fileDestination)
-
-    if Defaults.shared.verboseLogging {
-        logger.setup(level: .verbose, fileLevel: .verbose)
-    } else {
-        logger.setup(level: .debug, fileLevel: .debug)
-    }
+    logger.setup(level: .verbose, fileLevel: Defaults.shared.logLevel)
 
     return logger
 }()
