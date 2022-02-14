@@ -175,6 +175,7 @@
 			<array>
 				<real>1</real>
 				<real>0.5</real>
+				<real>0.3</real>
 				<real>0.1</real>
 				<real>0.05</real>
 			</array>
@@ -182,6 +183,7 @@
 			<array>
 				<string>100% (Disable Smoothing)</string>
 				<string>50%</string>
+				<string>30%</string>
 				<string>10%</string>
 				<string>5%</string>
 			</array>
