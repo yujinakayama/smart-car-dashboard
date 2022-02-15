@@ -73,6 +73,9 @@
 		B95BF23823EBF43900A30DE0 /* ETCCardEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95BF23723EBF43900A30DE0 /* ETCCardEditViewController.swift */; };
 		B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95BF23B23EBFFE300A30DE0 /* ETCCardView.swift */; };
 		B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift */; };
+		B95E14C027BBDC1B0037FC94 /* GForceMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95E14BF27BBDC1B0037FC94 /* GForceMeterView.swift */; };
+		B95E14C227BBDC480037FC94 /* Accelerometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95E14C127BBDC480037FC94 /* Accelerometer.swift */; };
+		B95E14C427BBDD150037FC94 /* AccelerationCalibrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95E14C327BBDD150037FC94 /* AccelerationCalibrator.swift */; };
 		B95F514623E5A8540063CB3D /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514523E5A8540063CB3D /* Location.swift */; };
 		B95F514A23E5B2C10063CB3D /* Website.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514923E5B2C10063CB3D /* Website.swift */; };
 		B95F514C23E5B53F0063CB3D /* RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */; };
@@ -469,6 +472,9 @@
 		B95BF23723EBF43900A30DE0 /* ETCCardEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCCardEditViewController.swift; sourceTree = "<group>"; };
 		B95BF23B23EBFFE300A30DE0 /* ETCCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardView.swift; sourceTree = "<group>"; };
 		B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceStatusBarItemManager.swift; sourceTree = "<group>"; };
+		B95E14BF27BBDC1B0037FC94 /* GForceMeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GForceMeterView.swift; sourceTree = "<group>"; };
+		B95E14C127BBDC480037FC94 /* Accelerometer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accelerometer.swift; sourceTree = "<group>"; };
+		B95E14C327BBDD150037FC94 /* AccelerationCalibrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccelerationCalibrator.swift; sourceTree = "<group>"; };
 		B95F514523E5A8540063CB3D /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		B95F514923E5B2C10063CB3D /* Website.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Website.swift; sourceTree = "<group>"; };
 		B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteNotification.swift; sourceTree = "<group>"; };
@@ -793,10 +799,21 @@
 				B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */,
 				B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */,
 				B94C0B71268C986600BAA450 /* LocationInformationWidget */,
-				B92A97D925E0AE8900D70A14 /* GForceMeterWidgetViewController.swift */,
+				B95E14BE27BBDC000037FC94 /* GForceMeterWidget */,
 				B9F272C3259C91990098CB3B /* AltitudeWidgetViewController.swift */,
 			);
 			path = Widget;
+			sourceTree = "<group>";
+		};
+		B95E14BE27BBDC000037FC94 /* GForceMeterWidget */ = {
+			isa = PBXGroup;
+			children = (
+				B92A97D925E0AE8900D70A14 /* GForceMeterWidgetViewController.swift */,
+				B95E14C127BBDC480037FC94 /* Accelerometer.swift */,
+				B95E14C327BBDD150037FC94 /* AccelerationCalibrator.swift */,
+				B95E14BF27BBDC1B0037FC94 /* GForceMeterView.swift */,
+			);
+			path = GForceMeterWidget;
 			sourceTree = "<group>";
 		};
 		B963C5362749351B0095F8D3 /* IntentsExtension */ = {
@@ -1878,6 +1895,7 @@
 				B9B154EE2575FCED0031761F /* FirebaseMessaging.swift in Sources */,
 				B94EC75327914C620008C447 /* UIApplicationExtension.swift in Sources */,
 				B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */,
+				B95E14C227BBDC480037FC94 /* Accelerometer.swift in Sources */,
 				B9F272C4259C91990098CB3B /* AltitudeWidgetViewController.swift in Sources */,
 				B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */,
 				B9DC5B46229EB8B200B645D5 /* BLESerialPortManager.swift in Sources */,
@@ -1886,6 +1904,7 @@
 				B92C6EC324AC2F0A001E9675 /* ArtworkView.swift in Sources */,
 				B99C69AC26F5F6880064162D /* MapTypeSegmentedControl.swift in Sources */,
 				B94E69D123F7A313004CCC7C /* WebsiteIcon.swift in Sources */,
+				B95E14C027BBDC1B0037FC94 /* GForceMeterView.swift in Sources */,
 				B915BEF5267F8754007068D7 /* StringExtension.swift in Sources */,
 				B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */,
 				B9B4F707268CB55D009C5DC5 /* RoadName.swift in Sources */,
@@ -1947,6 +1966,7 @@
 				B9DC5B39229D5D8100B645D5 /* ETCDeviceConnection.swift in Sources */,
 				B9D8E43823D345940078A057 /* ETCCard.swift in Sources */,
 				B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */,
+				B95E14C427BBDD150037FC94 /* AccelerationCalibrator.swift in Sources */,
 				B9CD1D9022A52A9200170082 /* UserNotificationCenter.swift in Sources */,
 				B942553D22B8C3E2008B053B /* Logger.swift in Sources */,
 				B9BC920923250A0A006F22FC /* Defaults.swift in Sources */,
