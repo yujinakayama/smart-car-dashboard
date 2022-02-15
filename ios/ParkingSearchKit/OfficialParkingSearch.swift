@@ -365,7 +365,7 @@ extension OfficialParkingSearch: WKNavigationDelegate {
 
         currentPageType = pageType(of: url)
 
-        logger.info("\(url) (\(String(describing: currentPageType))")
+        logger.debug("\(url) (\(String(describing: currentPageType))")
 
         switch currentPageType {
         case .googleSearchForm:

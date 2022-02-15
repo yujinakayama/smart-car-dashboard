@@ -91,7 +91,7 @@ class CameraOptionsAdjuster: NSObject, SunDelegate {
                 logger.error(error)
                 self.retryIfPossible(cameraOptions: cameraOptions)
             } else {
-                logger.info(response)
+                logger.debug(response)
             }
         }
 

@@ -92,12 +92,12 @@ class MusicViewController: UIViewController, PlaybackControlViewDelegate {
         artworkView.visualEffectScopeView = view
 
         MPMediaLibrary.requestAuthorization { [weak self] (mediaPlayerAuthorizationStatus) in
-            logger.info(mediaPlayerAuthorizationStatus)
+            logger.info(mediaPlayerAuthorizationStatus.rawValue)
 
             guard mediaPlayerAuthorizationStatus == .authorized else { return }
 
             SKCloudServiceController.requestAuthorization { [weak self] (cloudServiceAuthorizationStatus) in
-                logger.info(cloudServiceAuthorizationStatus)
+                logger.info(cloudServiceAuthorizationStatus.rawValue)
 
                 guard cloudServiceAuthorizationStatus == .authorized else { return }
 

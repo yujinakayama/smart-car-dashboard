@@ -90,7 +90,7 @@ class BLESerialPortManager: NSObject {
 
 extension BLESerialPortManager: CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        logger.info(centralManager.state)
+        logger.info(centralManager.state.rawValue)
 
         if centralManager.state == .poweredOn {
             findCurrentlyConnectedPeripheralOrStartScanning()

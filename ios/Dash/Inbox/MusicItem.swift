@@ -52,7 +52,7 @@ class MusicItem: SharedItemProtocol {
 
     private func tryPlaying(playParameters: MPMusicPlayerPlayParameters) {
         SKCloudServiceController.requestAuthorization { [weak self] (authorizationStatus) in
-            logger.info(authorizationStatus)
+            logger.info(authorizationStatus.rawValue)
 
             if authorizationStatus == .authorized {
                 self?.play(playParameters: playParameters)
