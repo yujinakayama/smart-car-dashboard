@@ -11,8 +11,8 @@ import XCGLogger
 
 let logger: XCGLogger = {
     let logger = XCGLogger(identifier: "default", includeDefaultDestinations: true)
+    logger.setup(level: .verbose)
     logger.add(destination: fileDestination)
-    logger.setup(level: .verbose, fileLevel: Defaults.shared.logLevel)
     return logger
 }()
 
@@ -29,10 +29,14 @@ fileprivate let fileDestination: FileDestination = {
 
     let logFileURL = logsDirectoryURL.appendingPathComponent("log.txt")
 
-    return AutoRotatingFileDestination(
+    let destination = AutoRotatingFileDestination(
         writeToFile: logFileURL,
         shouldAppend: true,
         maxTimeInterval: 60 * 60 * 24,
         targetMaxLogFiles: 100
     )
+
+    destination.outputLevel = Defaults.shared.logLevel
+
+    return destination
 }()
