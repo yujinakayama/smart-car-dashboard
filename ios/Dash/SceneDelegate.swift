@@ -7,7 +7,6 @@
 
 import UIKit
 import MapKit
-import CoreData
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -32,8 +31,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
-
-        removeCoreDataPersistentStore()
 
         _ = tabBarBadgeManager
 
@@ -163,31 +160,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         speedSensitiveVolumeController.additonalValuePerOneMeterPerSecond = Defaults.shared.additonalVolumePerOneMeterPerSecond
         speedSensitiveVolumeController.minimumSpeedForAdditionalVolume = Defaults.shared.minimumSpeedForAdditionalVolume
         speedSensitiveVolumeController.start()
-    }
-
-    let persistentContainer = NSPersistentContainer(name: "Dash")
-
-    func removeCoreDataPersistentStore() {
-        persistentContainer.loadPersistentStores { (description, error) in
-            if let error = error {
-                logger.error(error)
-                return
-            }
-
-            let stores = self.persistentContainer.persistentStoreCoordinator.persistentStores
-
-            for store in stores {
-                logger.info("Removing Core Data persistente store: \(store.identifier ?? "")")
-                try! self.persistentContainer.persistentStoreCoordinator.remove(store)
-
-                if let url = store.url {
-                    logger.info("Removing Core Data persistente store file: \(url.absoluteString)")
-                    try! FileManager.default.removeItem(at: url)
-                }
-            }
-
-            logger.info("Done.")
-        }
     }
 }
 
