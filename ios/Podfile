@@ -37,7 +37,8 @@ end
 # https://medium.com/@akfreas/how-to-use-cocoapods-with-your-internal-ios-frameworks-192aa472f64b
 def rearviewkit_dependencies
   pod 'BetterSegmentedControl'
-  pod 'Solar'
+  # https://github.com/ceeK/Solar/pull/45
+  pod 'Solar', git: 'https://github.com/Pehon1/Solar', branch: 'master'
   pod 'XCGLogger'
 end
 

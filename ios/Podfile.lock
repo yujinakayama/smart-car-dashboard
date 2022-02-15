@@ -531,7 +531,7 @@ PODS:
     - PINCache (~> 3.0.3)
     - PINRemoteImage/Core
   - PromisesObjC (2.0.0)
-  - Solar (2.1.0)
+  - Solar (2.2.0)
   - SwiftSoup (2.3.8)
   - TransitionButton (0.5.3)
   - XCGLogger (7.0.1):
@@ -553,7 +553,7 @@ DEPENDENCIES:
   - MarqueeLabel (from `https://github.com/yujinakayama/MarqueeLabel`, branch `fix-triggerScrollStart`)
   - PINCache (>= 3.0.1)
   - PINRemoteImage (~> 3.0)
-  - Solar
+  - Solar (from `https://github.com/Pehon1/Solar`, branch `master`)
   - SwiftSoup
   - TransitionButton
   - XCGLogger
@@ -591,7 +591,6 @@ SPEC REPOS:
     - PINOperation
     - PINRemoteImage
     - PromisesObjC
-    - Solar
     - SwiftSoup
     - TransitionButton
     - XCGLogger
@@ -600,11 +599,17 @@ EXTERNAL SOURCES:
   MarqueeLabel:
     :branch: fix-triggerScrollStart
     :git: https://github.com/yujinakayama/MarqueeLabel
+  Solar:
+    :branch: master
+    :git: https://github.com/Pehon1/Solar
 
 CHECKOUT OPTIONS:
   MarqueeLabel:
     :commit: afc7b18f3bead1d9e6bba4fd07c6e72d3bc5d47f
     :git: https://github.com/yujinakayama/MarqueeLabel
+  Solar:
+    :commit: 9d30448f802bfe1feb10108dc567f892d1f719c9
+    :git: https://github.com/Pehon1/Solar
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -639,11 +644,11 @@ SPEC CHECKSUMS:
   PINOperation: 00c935935f1e8cf0d1e2d6b542e75b88fc3e5e20
   PINRemoteImage: f1295b29f8c5e640e25335a1b2bd9d805171bd01
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
-  Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
+  Solar: 0f87952213b2737436565865a5a01a3e1c109f16
   SwiftSoup: ba8ea2c91151881a298cba4b0628ef31e835a77f
   TransitionButton: 36283346e17c64775a1b3bc3a7a72940a367de1f
   XCGLogger: 1943831ef907df55108b0b18657953f868de973b
 
-PODFILE CHECKSUM: f63cc74ce18bcdbc54810483f8eda99faf19e9bd
+PODFILE CHECKSUM: 174a6b6e80ffb746304b1f463678b726dfe48f13
 
 COCOAPODS: 1.11.2
