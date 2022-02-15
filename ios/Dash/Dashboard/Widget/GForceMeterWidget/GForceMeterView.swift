@@ -47,6 +47,16 @@ import CoreMotion
         }
     }
 
+    var peaks: [AccelerationHistory.Acceleration?]? {
+        get {
+            return meterView.peaks
+        }
+
+        set {
+            meterView.peaks = newValue
+        }
+    }
+
     private lazy var horizontalStackView: UIStackView = {
         let horizontalStackView = UIStackView(arrangedSubviews: [
             leftLabel,
@@ -230,6 +240,14 @@ extension GForceMeterView {
             }
         }
 
+        var peaks: [AccelerationHistory.Acceleration?]? {
+            didSet {
+                if peaks != oldValue {
+                    updatePeakShape()
+                }
+            }
+        }
+
         override var tintColor: UIColor! {
             didSet {
                 updateColors()
@@ -242,11 +260,19 @@ extension GForceMeterView {
             }
         }
 
+        var peakFillColor = UIColor.tertiarySystemFill {
+            didSet {
+                updateColors()
+            }
+        }
+
         override var bounds: CGRect {
             didSet {
                 updateScaleShape()
                 updateAccelerationPointerSize()
                 updateAccelerationPointerPosition()
+                updatePeakFrame()
+                updatePeakShape()
             }
         }
 
@@ -271,6 +297,9 @@ extension GForceMeterView {
             updateScaleShape()
             layer.addSublayer(scaleLayer)
 
+            updatePeakFrame()
+            layer.addSublayer(peakLayer)
+
             updateAccelerationPointerSize()
             updateAccelerationPointerPosition()
             layer.addSublayer(accelerationPointerLayer)
@@ -278,6 +307,7 @@ extension GForceMeterView {
 
         private func updateColors() {
             scaleLayer.strokeColor = scaleColor.cgColor
+            peakLayer.fillColor = peakFillColor.cgColor
             accelerationPointerLayer.fillColor = tintColor.cgColor
         }
 
@@ -311,6 +341,48 @@ extension GForceMeterView {
             shapeLayer.isHidden = true
             return shapeLayer
         }()
+
+        private func updatePeakFrame() {
+            peakLayer.frame = bounds
+        }
+
+        private func updatePeakShape() {
+            peakLayer.path = peakPath()?.cgPath
+        }
+
+        private lazy var peakLayer = CAShapeLayer()
+
+        private func peakPath() -> UIBezierPath? {
+            guard let peaks = peaks else { return nil }
+
+            let scale = scaleLayer.frame
+
+            let path = UIBezierPath()
+
+            for (index, peak) in peaks.enumerated() {
+                let point: CGPoint
+
+                if let peak = peak {
+                    point = CGPoint(
+                        x: scale.midX + (CGFloat(peak.acceleration.x) * CGFloat(scale.size.width / 2.0) / unitOfScale),
+                        y: scale.midY - (CGFloat(peak.acceleration.y) * CGFloat(scale.size.height / 2.0) / unitOfScale)
+                    )
+                } else {
+                    point = CGPoint(x: scale.midX, y: scale.midY)
+                }
+
+
+                if index == 0 {
+                    path.move(to: point)
+                } else {
+                    path.addLine(to: point)
+                }
+            }
+
+            path.close()
+
+            return path
+        }
 
         private func updateScaleShape() {
             scaleLayer.frame = scaleFrame

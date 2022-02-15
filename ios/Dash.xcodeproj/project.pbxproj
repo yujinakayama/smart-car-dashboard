@@ -76,6 +76,7 @@
 		B95E14C027BBDC1B0037FC94 /* GForceMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95E14BF27BBDC1B0037FC94 /* GForceMeterView.swift */; };
 		B95E14C227BBDC480037FC94 /* Accelerometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95E14C127BBDC480037FC94 /* Accelerometer.swift */; };
 		B95E14C427BBDD150037FC94 /* AccelerationCalibrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95E14C327BBDD150037FC94 /* AccelerationCalibrator.swift */; };
+		B95E14C627BBE0D50037FC94 /* AccelerationHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95E14C527BBE0D50037FC94 /* AccelerationHistory.swift */; };
 		B95F514623E5A8540063CB3D /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514523E5A8540063CB3D /* Location.swift */; };
 		B95F514A23E5B2C10063CB3D /* Website.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514923E5B2C10063CB3D /* Website.swift */; };
 		B95F514C23E5B53F0063CB3D /* RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */; };
@@ -473,6 +474,7 @@
 		B95E14BF27BBDC1B0037FC94 /* GForceMeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GForceMeterView.swift; sourceTree = "<group>"; };
 		B95E14C127BBDC480037FC94 /* Accelerometer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accelerometer.swift; sourceTree = "<group>"; };
 		B95E14C327BBDD150037FC94 /* AccelerationCalibrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccelerationCalibrator.swift; sourceTree = "<group>"; };
+		B95E14C527BBE0D50037FC94 /* AccelerationHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccelerationHistory.swift; sourceTree = "<group>"; };
 		B95F514523E5A8540063CB3D /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		B95F514923E5B2C10063CB3D /* Website.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Website.swift; sourceTree = "<group>"; };
 		B95F514B23E5B53F0063CB3D /* RemoteNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteNotification.swift; sourceTree = "<group>"; };
@@ -807,6 +809,7 @@
 				B92A97D925E0AE8900D70A14 /* GForceMeterWidgetViewController.swift */,
 				B95E14C127BBDC480037FC94 /* Accelerometer.swift */,
 				B95E14C327BBDD150037FC94 /* AccelerationCalibrator.swift */,
+				B95E14C527BBE0D50037FC94 /* AccelerationHistory.swift */,
 				B95E14BF27BBDC1B0037FC94 /* GForceMeterView.swift */,
 			);
 			path = GForceMeterWidget;
@@ -1897,6 +1900,7 @@
 				B97ABD3F27670D6E00C7EB1D /* PointOfInterestIcon.swift in Sources */,
 				B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift in Sources */,
 				B92C6EC324AC2F0A001E9675 /* ArtworkView.swift in Sources */,
+				B95E14C627BBE0D50037FC94 /* AccelerationHistory.swift in Sources */,
 				B99C69AC26F5F6880064162D /* MapTypeSegmentedControl.swift in Sources */,
 				B94E69D123F7A313004CCC7C /* WebsiteIcon.swift in Sources */,
 				B95E14C027BBDC1B0037FC94 /* GForceMeterView.swift in Sources */,

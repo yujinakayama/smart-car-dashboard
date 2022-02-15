@@ -32,6 +32,9 @@ class Defaults {
         case unitOfGForceMeterScale
         case pointerScalingBaseForVerticalAccelerationForGForceMeter
         case currentValueRatioForSmoothingInGForceMeter
+        case showPeaksInGForceMeter
+        case peakAngleResolutionForGForceMeter
+        case peakExpirationDurationForGForceMeter
         case speedSensitiveVolumeControlEnabled
         case additionalVolumeAt120KilometersPerHour
         case minimumSpeedInKilometersPerHourForAdditionalVolume
@@ -224,6 +227,24 @@ extension Defaults {
     var currentValueRatioForSmoothingInGForceMeter: Double {
         get {
             return double(for: .currentValueRatioForSmoothingInGForceMeter)
+        }
+    }
+
+    var showPeaksInGForceMeter: Bool {
+        get {
+            return bool(for: Key.showPeaksInGForceMeter)
+        }
+    }
+
+    var peakAngleResolutionForGForceMeter: Int {
+        get {
+            return integer(for: .peakAngleResolutionForGForceMeter)
+        }
+    }
+
+    var peakExpirationDurationForGForceMeter: TimeInterval {
+        get {
+            return double(for: .peakExpirationDurationForGForceMeter)
         }
     }
 

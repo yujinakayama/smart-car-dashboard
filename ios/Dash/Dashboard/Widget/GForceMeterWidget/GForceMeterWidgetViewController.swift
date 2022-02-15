@@ -20,7 +20,7 @@ class GForceMeterWidgetViewController: UIViewController {
 
     var calibrator: AccelerationCalibrator?
 
-    let history = AccelerationHistory(expirationTimeInterval: 5, peakAngleResolution: 60)
+    var history: AccelerationHistory?
 
     var isVisible = false
 
@@ -62,16 +62,26 @@ class GForceMeterWidgetViewController: UIViewController {
 
         updateGForceMeterViewConfiguration()
 
+        if Defaults.shared.showPeaksInGForceMeter {
+            history = AccelerationHistory(
+                expirationTimeInterval: Defaults.shared.peakExpirationDurationForGForceMeter,
+                peakAngleResolution: Defaults.shared.peakAngleResolutionForGForceMeter
+            )
+        }
+
         let accelerometer = Accelerometer(
+            updateInterval: updateInterval,
             queue: accelerometerQueue,
             interfaceOrientation: currentInterfaceOrientation,
-            currentValueRatioForSmoothing: Defaults.shared.currentValueRatioForSmoothing
+            currentValueRatioForSmoothing: Defaults.shared.currentValueRatioForSmoothingInGForceMeter
         )
 
         accelerometer.startMetering() { [unowned self] (result) in
             switch result {
             case .success(let acceleration):
-                self.displayCalibratedAcceleration(acceleration)
+                Task {
+                    await self.display(acceleration)
+                }
             case .failure(let error):
                 logger.error(error)
             }
@@ -82,25 +92,43 @@ class GForceMeterWidgetViewController: UIViewController {
 
     @objc func stop() {
         logger.info()
+
         accelerometer?.stopMetering()
         accelerometer = nil
+        history = nil
+
+        gForceMeterView.acceleration = nil
+        gForceMeterView.peaks = nil
     }
 
     private func updateGForceMeterViewConfiguration() {
+        gForceMeterView.pointerAnimationDuration = updateInterval
         gForceMeterView.unitOfScale = Defaults.shared.unitOfGForceMeterScale
         gForceMeterView.pointerScalingBaseForVerticalAcceleration = Defaults.shared.pointerScalingBaseForVerticalAccelerationForGForceMeter
     }
 
-    private func displayCalibratedAcceleration(_ acceleration: CMAcceleration) {
+    private func display(_ acceleration: CMAcceleration) async {
         if calibrator == nil {
             setCurrentAccelerationAsReference()
         }
 
-        if let calibrator = calibrator {
-            let calibratedAcceleration = calibrator.calibrate(acceleration)
+        guard let calibrator = calibrator else { return }
+        let calibratedAcceleration = calibrator.calibrate(acceleration)
 
-            DispatchQueue.main.async {
-                self.gForceMeterView.acceleration = calibratedAcceleration
+        let peaks: [AccelerationHistory.Acceleration?]?
+
+        if let history = history {
+            await history.append(calibratedAcceleration)
+            peaks = await history.currentPeaks
+        } else {
+            peaks = nil
+        }
+
+        await MainActor.run {
+            gForceMeterView.acceleration = calibratedAcceleration
+
+            if let peaks = peaks {
+                gForceMeterView.peaks = peaks
             }
         }
     }

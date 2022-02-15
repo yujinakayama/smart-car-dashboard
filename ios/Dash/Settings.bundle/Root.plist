@@ -180,6 +180,68 @@
 		</dict>
 		<dict>
 			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Show Peaks</string>
+			<key>Key</key>
+			<string>showPeaksInGForceMeter</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Peak Angle Resolution</string>
+			<key>Key</key>
+			<string>peakAngleResolutionForGForceMeter</string>
+			<key>DefaultValue</key>
+			<integer>90</integer>
+			<key>Values</key>
+			<array>
+				<integer>20</integer>
+				<integer>45</integer>
+				<integer>90</integer>
+				<integer>180</integer>
+				<integer>360</integer>
+			</array>
+			<key>Titles</key>
+			<array>
+				<string>18° (20 slices)</string>
+				<string>8° (45 slices)</string>
+				<string>4° (90 slices)</string>
+				<string>2° (180 slices)</string>
+				<string>1° (360 slices)</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Peak Expiration Duration</string>
+			<key>Key</key>
+			<string>peakExpirationDurationForGForceMeter</string>
+			<key>DefaultValue</key>
+			<integer>10</integer>
+			<key>Values</key>
+			<array>
+				<integer>5</integer>
+				<integer>10</integer>
+				<integer>30</integer>
+				<integer>60</integer>
+				<integer>180</integer>
+			</array>
+			<key>Titles</key>
+			<array>
+				<string>5 seconds</string>
+				<string>10 seconds</string>
+				<string>30 seconds</string>
+				<string>1 minute</string>
+				<string>3 minute</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
 			<string>Automatic Sound Volume Control</string>
