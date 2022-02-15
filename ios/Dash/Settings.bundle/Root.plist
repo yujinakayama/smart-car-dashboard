@@ -10,17 +10,17 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>ETC Integration</string>
+			<string>Connectivity</string>
 			<key>FooterText</key>
-			<string>You need to restart the app for this change to take effect.</string>
+			<string>The connection includes Bluetooth connection to the ETC device and the steering remote, and Wi-Fi connection to the rearview camera.</string>
 		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>ETC Integration</string>
+			<string>Connection with Vehicle</string>
 			<key>Key</key>
-			<string>etcIntegrationEnabled</string>
+			<string>connectionWithVehicle</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>

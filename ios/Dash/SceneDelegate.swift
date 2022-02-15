@@ -32,10 +32,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
 
-        if !Defaults.shared.isETCIntegrationEnabled {
-            tabBarController.removeTab(.etc)
-        }
-
         _ = tabBarBadgeManager
 
         NotificationCenter.default.addObserver(self, selector: #selector(vehicleDidConnect), name: .VehicleDidConnect, object: nil)

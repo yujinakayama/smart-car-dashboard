@@ -18,7 +18,7 @@ class Defaults {
     private let userDefaults = UserDefaults.standard
 
     private enum Key: String {
-        case etcIntegrationEnabled
+        case connectionWithVehicle
         case lastBackgroundEntranceTime
         case mapTypeForETCRoute
         case automaticallyOpensUnopenedLocationWhenAppIsOpened
@@ -109,9 +109,9 @@ class Defaults {
 }
 
 extension Defaults {
-    var isETCIntegrationEnabled: Bool {
+    var isConnectionWithVehicleEnabled: Bool {
         get {
-            return bool(for: .etcIntegrationEnabled)
+            return bool(for: .connectionWithVehicle)
         }
     }
 

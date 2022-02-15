@@ -32,14 +32,12 @@ class Vehicle {
     }
 
     func connect() {
-        if Defaults.shared.isETCIntegrationEnabled {
+        if Defaults.shared.isConnectionWithVehicleEnabled {
             etcDeviceManager.connect()
         }
     }
 
     @objc func firebaseAuthenticationDidUpdateVehicleID() {
-        guard Defaults.shared.isETCIntegrationEnabled else { return }
-
         if let vehicleID = Firebase.shared.authentication.vehicleID {
             etcDeviceManager.database = ETCDatabase(vehicleID: vehicleID)
         } else {

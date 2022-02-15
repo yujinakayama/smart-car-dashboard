@@ -22,10 +22,6 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         return viewControllers?.first { $0.tabBarItem.tag == tab.rawValue }
     }
 
-    func removeTab(_ tab: Tab) {
-        viewControllers = viewControllers?.filter { $0.tabBarItem.tag != tab.rawValue }
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
