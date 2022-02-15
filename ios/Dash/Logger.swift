@@ -10,24 +10,29 @@ import Foundation
 import XCGLogger
 
 let logger: XCGLogger = {
+    let logger = XCGLogger(identifier: "default", includeDefaultDestinations: true)
+    logger.add(destination: fileDestination)
+    logger.setup(level: .verbose, fileLevel: Defaults.shared.logLevel)
+    return logger
+}()
+
+fileprivate let fileDestination: FileDestination = {
     let fileManager = FileManager.default
 
     let documentsDirectoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+
     let logsDirectoryURL = documentsDirectoryURL.appendingPathComponent("Logs")
+
     if !fileManager.fileExists(atPath: logsDirectoryURL.absoluteString) {
         try! fileManager.createDirectory(at: logsDirectoryURL, withIntermediateDirectories: true)
     }
+
     let logFileURL = logsDirectoryURL.appendingPathComponent("log.txt")
-    let fileDestination = AutoRotatingFileDestination(
+
+    return AutoRotatingFileDestination(
         writeToFile: logFileURL,
         shouldAppend: true,
         maxTimeInterval: 60 * 60 * 24,
         targetMaxLogFiles: 100
     )
-
-    let logger = XCGLogger(identifier: "default", includeDefaultDestinations: true)
-    logger.add(destination: fileDestination)
-    logger.setup(level: .verbose, fileLevel: Defaults.shared.logLevel)
-
-    return logger
 }()
