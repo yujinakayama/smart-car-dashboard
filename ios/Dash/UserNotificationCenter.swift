@@ -15,7 +15,7 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
 
     let authorizationOptions: UNAuthorizationOptions = [.sound, .alert]
 
-    var notificationCenter: UNUserNotificationCenter {
+    var userNotificationCenter: UNUserNotificationCenter {
         return UNUserNotificationCenter.current()
     }
 
@@ -23,16 +23,21 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
 
     override init() {
         super.init()
-        notificationCenter.delegate = self
+        userNotificationCenter.delegate = self
     }
 
     func setUp() {
         requestAuthorization()
+
         UIApplication.shared.registerForRemoteNotifications()
+
+        NotificationCenter.default.addObserver(forName: UIScene.willEnterForegroundNotification, object: nil, queue: .main) { [weak self] (notification) in
+            self?.userNotificationCenter.removeAllDeliveredNotifications()
+        }
     }
 
     func requestAuthorization() {
-        notificationCenter.requestAuthorization(options: authorizationOptions) { (granted, error) in
+        userNotificationCenter.requestAuthorization(options: authorizationOptions) { (granted, error) in
             logger.info((granted, error))
         }
     }
@@ -73,6 +78,10 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
         process(notification)
 
         completionHandler(notification.request.content.foregroundPresentationOptions)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
+            self?.userNotificationCenter.removeAllDeliveredNotifications()
+        }
     }
 
     private var processingNotification: RemoteNotification?
