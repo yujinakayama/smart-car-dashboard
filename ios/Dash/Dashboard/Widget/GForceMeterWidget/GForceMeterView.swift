@@ -260,7 +260,8 @@ extension GForceMeterView {
             }
         }
 
-        var peakFillColor = UIColor.tertiarySystemFill {
+        // This color should not have alpha because it causes different color line in rendered peak shape
+        var peakFillColor = UIColor.systemGray5 {
             didSet {
                 updateColors()
             }
@@ -272,6 +273,7 @@ extension GForceMeterView {
                 updateAccelerationPointerSize()
                 updateAccelerationPointerPosition()
                 updatePeakFrame()
+                updatePeakLineWidth()
                 updatePeakShape()
             }
         }
@@ -294,11 +296,12 @@ extension GForceMeterView {
         private func commonInit() {
             updateColors()
 
+            updatePeakFrame()
+            updatePeakLineWidth()
+            layer.addSublayer(peakLayer)
+
             updateScaleShape()
             layer.addSublayer(scaleLayer)
-
-            updatePeakFrame()
-            layer.addSublayer(peakLayer)
 
             updateAccelerationPointerSize()
             updateAccelerationPointerPosition()
@@ -306,8 +309,9 @@ extension GForceMeterView {
         }
 
         private func updateColors() {
-            scaleLayer.strokeColor = scaleColor.cgColor
             peakLayer.fillColor = peakFillColor.cgColor
+            peakLayer.strokeColor = peakFillColor.cgColor
+            scaleLayer.strokeColor = scaleColor.cgColor
             accelerationPointerLayer.fillColor = tintColor.cgColor
         }
 
@@ -346,11 +350,19 @@ extension GForceMeterView {
             peakLayer.frame = bounds
         }
 
+        private func updatePeakLineWidth() {
+            peakLayer.lineWidth = max(scaleFrame.width / 150, 1)
+        }
+
         private func updatePeakShape() {
             peakLayer.path = peakPath()?.cgPath
         }
 
-        private lazy var peakLayer = CAShapeLayer()
+        private lazy var peakLayer: CAShapeLayer = {
+            let shapeLayer = CAShapeLayer()
+            shapeLayer.lineJoin = .round
+            return shapeLayer
+        }()
 
         private func peakPath() -> UIBezierPath? {
             guard let peaks = peaks else { return nil }
