@@ -20,6 +20,16 @@ import CoreMotion
         }
     }
 
+    var pointerAnimationDuration: TimeInterval? {
+        get {
+            meterView.pointerAnimationDuration
+        }
+
+        set {
+            meterView.pointerAnimationDuration = newValue
+        }
+    }
+
     var pointerScalingBaseForVerticalAcceleration: CGFloat? {
         get {
             return meterView.pointerScalingBaseForVerticalAcceleration
@@ -192,6 +202,8 @@ extension GForceMeterView {
     @IBDesignable class MeterView: UIView {
         var unitOfScale: CGFloat = 0.5
 
+        var pointerAnimationDuration: TimeInterval?
+
         var pointerScalingBaseForVerticalAcceleration: CGFloat? {
             didSet {
                 if pointerScalingBaseForVerticalAcceleration == nil {
@@ -202,9 +214,19 @@ extension GForceMeterView {
 
         var acceleration: CMAcceleration? {
             didSet {
+                CATransaction.begin()
+
+                if let animationDuration = pointerAnimationDuration {
+                    CATransaction.setAnimationDuration(animationDuration)
+                } else {
+                    CATransaction.setDisableActions(true)
+                }
+
                 accelerationPointerLayer.isHidden = acceleration == nil
                 updateAccelerationPointerPosition()
                 updateAccelerationPointerScale()
+
+                CATransaction.commit()
             }
         }
 

@@ -10,11 +10,7 @@ import UIKit
 import CoreMotion
 
 class Accelerometer {
-    lazy var motionManager: CMMotionManager = {
-        let motionManager = CMMotionManager()
-        motionManager.accelerometerUpdateInterval = 1 / 30
-        return motionManager
-    }()
+    let motionManager = CMMotionManager()
 
     var acceleration: CMAcceleration? {
         if let acceleration = motionManager.accelerometerData?.acceleration {
@@ -34,7 +30,8 @@ class Accelerometer {
 
     private var previousSmoothedAcceleration: CMAcceleration?
 
-    init(queue: OperationQueue, interfaceOrientation: UIInterfaceOrientation, currentValueRatioForSmoothing: Double?) {
+    init(updateInterval: TimeInterval, queue: OperationQueue, interfaceOrientation: UIInterfaceOrientation, currentValueRatioForSmoothing: Double?) {
+        motionManager.accelerometerUpdateInterval = updateInterval
         self.queue = queue
         self.interfaceOrientation = interfaceOrientation
         self.currentValueRatioForSmoothing = currentValueRatioForSmoothing
