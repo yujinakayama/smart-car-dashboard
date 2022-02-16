@@ -77,6 +77,8 @@ class GForceMeterWidgetViewController: UIViewController {
         )
 
         accelerometer.startMetering() { [unowned self] (result) in
+            guard accelerometer.isMetering else { return }
+
             switch result {
             case .success(let acceleration):
                 Task {
