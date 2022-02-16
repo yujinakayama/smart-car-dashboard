@@ -31,7 +31,7 @@ class Defaults {
         case referenceAccelerationForGForceMeter
         case unitOfGForceMeterScale
         case pointerScalingBaseForVerticalAccelerationForGForceMeter
-        case currentValueRatioForSmoothing
+        case currentValueRatioForSmoothingInGForceMeter
         case speedSensitiveVolumeControlEnabled
         case additionalVolumeAt120KilometersPerHour
         case minimumSpeedInKilometersPerHourForAdditionalVolume
@@ -221,9 +221,9 @@ extension Defaults {
         }
     }
 
-    var currentValueRatioForSmoothing: Double {
+    var currentValueRatioForSmoothingInGForceMeter: Double {
         get {
-            return double(for: .currentValueRatioForSmoothing)
+            return double(for: .currentValueRatioForSmoothingInGForceMeter)
         }
     }
 

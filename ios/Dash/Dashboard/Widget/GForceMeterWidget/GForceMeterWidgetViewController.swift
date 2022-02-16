@@ -13,10 +13,14 @@ import simd
 class GForceMeterWidgetViewController: UIViewController {
     @IBOutlet weak var gForceMeterView: GForceMeterView!
 
+    let updateInterval: TimeInterval = 1 / 30
+
     var accelerometer: Accelerometer?
     let accelerometerQueue = OperationQueue()
 
     var calibrator: AccelerationCalibrator?
+
+    let history = AccelerationHistory(expirationTimeInterval: 5, peakAngleResolution: 60)
 
     var isVisible = false
 

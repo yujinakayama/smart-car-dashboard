@@ -158,7 +158,7 @@
 			<key>Title</key>
 			<string>Current Value Ratio for Smoothing</string>
 			<key>Key</key>
-			<string>currentValueRatioForSmoothing</string>
+			<string>currentValueRatioForSmoothingInGForceMeter</string>
 			<key>DefaultValue</key>
 			<real>0.5</real>
 			<key>Values</key>
