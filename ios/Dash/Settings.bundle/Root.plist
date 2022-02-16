@@ -160,7 +160,7 @@
 			<key>Key</key>
 			<string>currentValueRatioForSmoothingInGForceMeter</string>
 			<key>DefaultValue</key>
-			<real>0.5</real>
+			<real>0.3</real>
 			<key>Values</key>
 			<array>
 				<real>1</real>
