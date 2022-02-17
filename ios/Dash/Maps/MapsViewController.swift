@@ -611,8 +611,20 @@ extension MapsViewController: ParkingSearchMapViewManagerDelegate {
     }
 
     func parkingSearchMapViewManager(_ manager: ParkingSearchMapViewManager, didSelectParkingForSearchingOnWeb parking: ParkingProtocol) {
+        var queryWords = [parking.normalizedName]
+
+        if !parking.normalizedName.contains("駐車場") {
+            queryWords.append("駐車場")
+        }
+
+        queryWords.append(contentsOf: [
+            parking.mapItem.placemark.administrativeArea,
+            parking.mapItem.placemark.locality,
+        ].compactMap { $0 })
+
         var urlComponents = URLComponents(string: "https://google.com/search")!
-        urlComponents.queryItems = [URLQueryItem(name: "q", value: "\(parking.normalizedName) 駐車場")]
+        urlComponents.queryItems = [URLQueryItem(name: "q", value: queryWords.joined(separator: " "))]
+
         guard let url = urlComponents.url else { return }
         presentWebViewController(url: url)
     }
