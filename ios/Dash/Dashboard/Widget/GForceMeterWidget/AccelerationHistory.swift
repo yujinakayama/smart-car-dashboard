@@ -64,17 +64,9 @@ actor AccelerationHistory {
         let currentTime = Date()
 
         accelerationsByAngleIndex.forEach { (index, accelerations) in
-            var accelerations = accelerations
-
-            let firstValidIndex = accelerations.firstIndex { $0.time.distance(to: currentTime) < expirationTimeInterval }
-
-            if let elementCountToRemove = firstValidIndex {
-                accelerations.removeFirst(elementCountToRemove)
-            } else {
-                accelerations.removeAll()
+            accelerationsByAngleIndex[index] = accelerations.filter { (acceleration) in
+                acceleration.time.distance(to: currentTime) < expirationTimeInterval
             }
-
-            accelerationsByAngleIndex[index] = accelerations
         }
     }
 }
