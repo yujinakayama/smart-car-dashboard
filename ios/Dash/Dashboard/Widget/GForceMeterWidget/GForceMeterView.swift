@@ -204,6 +204,9 @@ import CoreMotion
     }
 
     private func format(_ value: Double) -> String {
+        // Avoiding unintentional rounding by String(format:):
+        // e.g. String(format: "%.1f", 0.26) returns "0.3"
+        let value = floor(value * 10) / 10
         return String(format: "%.1f", value)
     }
 }
