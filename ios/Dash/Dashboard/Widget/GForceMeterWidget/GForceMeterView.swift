@@ -66,6 +66,8 @@ import CoreMotion
             rightLabel
         ])
 
+        horizontalStackView.sendSubviewToBack(verticalStackView)
+
         horizontalStackView.axis = .horizontal
         horizontalStackView.alignment = .center
         horizontalStackView.distribution = .equalSpacing
@@ -80,6 +82,8 @@ import CoreMotion
             backLabelMarginView,
             backLabel
         ])
+
+        verticalStackView.sendSubviewToBack(meterView)
 
         verticalStackView.axis = .vertical
         verticalStackView.alignment = .center
