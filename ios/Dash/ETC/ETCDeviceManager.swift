@@ -204,7 +204,9 @@ class ETCDeviceManager: NSObject, SerialPortManagerDelegate, ETCDeviceConnection
         if justReceivedPaymentNotification {
             justReceivedPaymentNotification = false
 
-            if let lastPendingGateEntranceDate = lastPendingGateEntranceDate {
+            if let lastPendingGateEntranceDate = lastPendingGateEntranceDate,
+               lastPendingGateEntranceDate.distance(to: Date()) > 10
+            {
                 payment.entranceDate = lastPendingGateEntranceDate
             }
 
