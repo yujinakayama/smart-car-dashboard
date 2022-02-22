@@ -204,8 +204,10 @@ class ETCDeviceManager: NSObject, SerialPortManagerDelegate, ETCDeviceConnection
         if justReceivedPaymentNotification {
             justReceivedPaymentNotification = false
 
+            // When received GateEntranceNotification and PaymentNotification at a same tollbooth,
+            // payment.exitDate tends to be 1-3 seconds earlier than lastPendingGateEntranceDate.
             if let lastPendingGateEntranceDate = lastPendingGateEntranceDate,
-               lastPendingGateEntranceDate.distance(to: Date()) > 10
+               lastPendingGateEntranceDate < payment.exitDate
             {
                 payment.entranceDate = lastPendingGateEntranceDate
             }
