@@ -260,21 +260,7 @@ private extension SharedItemTableViewController {
                 guard let self = self else { return }
                 location.markAsOpened(true)
                 self.pushMapsViewControllerForParkingSearch(location: location)
-            }
-        ])
-
-        let otherAppActionsMenu = UIMenu(title: "", options: .displayInline, children: [
-            UIAction(title: String(localized: "Google Maps"), image: UIImage(systemName: "g.circle.fill")) { (action) in
-                location.markAsOpened(true)
-                UIApplication.shared.open(location.googleMapsDirectionsURL)
             },
-            UIAction(title: String(localized: "Yahoo! CarNavi"), image: UIImage(systemName: "y.circle.fill")) { (action) in
-                location.markAsOpened(true)
-                UIApplication.shared.open(location.yahooCarNaviURL)
-            }
-        ])
-
-        let webActionsMenu = UIMenu(title: "", options: .displayInline, children: [
             {
                 guard let websiteURL = location.websiteURL else { return nil }
 
@@ -303,10 +289,20 @@ private extension SharedItemTableViewController {
             }
         ].compactMap { $0 })
 
+        let otherAppActionsMenu = UIMenu(title: "", options: .displayInline, children: [
+            UIAction(title: String(localized: "Google Maps"), image: UIImage(systemName: "g.circle.fill")) { (action) in
+                location.markAsOpened(true)
+                UIApplication.shared.open(location.googleMapsDirectionsURL)
+            },
+            UIAction(title: String(localized: "Yahoo! CarNavi"), image: UIImage(systemName: "y.circle.fill")) { (action) in
+                location.markAsOpened(true)
+                UIApplication.shared.open(location.yahooCarNaviURL)
+            }
+        ])
+
         return UIMenu(children: [
             locationActionsMenu,
-            otherAppActionsMenu,
-            webActionsMenu
+            otherAppActionsMenu
         ])
     }
 
