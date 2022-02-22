@@ -1,5 +1,5 @@
 //
-//  SharedItemTableViewCell.swift
+//  InboxItemTableViewCell.swift
 //  Dash
 //
 //  Created by Yuji Nakayama on 2020/02/04.
@@ -9,7 +9,7 @@
 import UIKit
 import PINRemoteImage
 
-class SharedItemTableViewCell: UITableViewCell {
+class InboxItemTableViewCell: UITableViewCell {
     enum IconType {
         case template
         case image
@@ -101,7 +101,7 @@ class SharedItemTableViewCell: UITableViewCell {
         updateActionButtonVisibility()
     }
 
-    var item: SharedItemProtocol? {
+    var item: InboxItemProtocol? {
         didSet {
             iconBackgroundView.cornerRadius = defaultIconCornerRadius
 
@@ -167,7 +167,7 @@ class SharedItemTableViewCell: UITableViewCell {
         detailLabel.text = website.url.host
     }
 
-    private func configureView(for unknownItem: SharedItemProtocol?) {
+    private func configureView(for unknownItem: InboxItemProtocol?) {
         iconType = .template
         iconImageView.image = UIImage(systemName: "questionmark")
         iconBackgroundView.backgroundColor = .gray
@@ -238,8 +238,8 @@ class SharedItemTableViewCell: UITableViewCell {
         let pointSize = iconBackgroundView.bounds.size
 
         return CGSize(
-            width: pointSize.width * SharedItemTableViewCell.screenScale,
-            height: pointSize.height * SharedItemTableViewCell.screenScale
+            width: pointSize.width * InboxItemTableViewCell.screenScale,
+            height: pointSize.height * InboxItemTableViewCell.screenScale
         )
     }
 }

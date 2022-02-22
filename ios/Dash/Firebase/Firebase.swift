@@ -16,7 +16,7 @@ class Firebase: NSObject {
     let authentication: FirebaseAuthentication
     let messaging: FirebaseMessaging
 
-    @objc dynamic var sharedItemDatabase: SharedItemDatabase?
+    @objc dynamic var inboxItemDatabase: InboxItemDatabase?
 
     override init() {
         FirebaseApp.configure()
@@ -34,9 +34,9 @@ class Firebase: NSObject {
 
     @objc func firebaseAuthenticationDidUpdateVehicleID() {
         if let vehicleID = authentication.vehicleID {
-            sharedItemDatabase = SharedItemDatabase(vehicleID: vehicleID)
+            inboxItemDatabase = InboxItemDatabase(vehicleID: vehicleID)
         } else {
-            sharedItemDatabase = nil
+            inboxItemDatabase = nil
         }
     }
 

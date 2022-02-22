@@ -1,5 +1,5 @@
 //
-//  SharedItem.swift
+//  InboxItem.swift
 //  Dash
 //
 //  Created by Yuji Nakayama on 2020/02/01.
@@ -13,7 +13,7 @@ import FirebaseFirestoreSwift
 import WebKit
 
 // TODO: Split metadata and content so that we can handle them easily on instantiation.
-protocol SharedItemProtocol: Decodable {
+protocol InboxItemProtocol: Decodable {
     var firebaseDocument: DocumentReference? { get set }
     var identifier: String! { get set }
     var title: String? { get }
@@ -23,7 +23,7 @@ protocol SharedItemProtocol: Decodable {
     func open(from viewController: UIViewController)
 }
 
-extension SharedItemProtocol {
+extension InboxItemProtocol {
     func openInDefaultApp() {
         UIApplication.shared.open(url, options: [:])
     }
@@ -55,12 +55,12 @@ extension SharedItemProtocol {
     }
 }
 
-enum SharedItemError: Error {
+enum InboxItemError: Error {
     case invalidDictionaryStructure
     case documentDoesNotExist
 }
 
-struct SharedItem {
+struct InboxItem {
     enum ItemType: String {
         case location
         case musicItem
@@ -69,22 +69,22 @@ struct SharedItem {
 
         init(dictionary: [String: Any]) throws {
             guard let typeString = dictionary["type"] as? String else {
-                throw SharedItemError.invalidDictionaryStructure
+                throw InboxItemError.invalidDictionaryStructure
             }
 
             self = ItemType(rawValue: typeString) ?? .unknown
         }
     }
 
-    static func makeItem(document: DocumentSnapshot) throws -> SharedItemProtocol {
+    static func makeItem(document: DocumentSnapshot) throws -> InboxItemProtocol {
         guard let dictionary = document.data() else {
-            throw SharedItemError.documentDoesNotExist
+            throw InboxItemError.documentDoesNotExist
         }
 
         let type = try ItemType(dictionary: dictionary)
         let decoder = Firestore.Decoder() // Supports decoding Firestore's Timestamp
 
-        var item: SharedItemProtocol
+        var item: InboxItemProtocol
 
         switch type {
         case .location:
@@ -103,7 +103,7 @@ struct SharedItem {
         return item
     }
 
-    static func makeItem(dictionary: [String: Any]) throws -> SharedItemProtocol {
+    static func makeItem(dictionary: [String: Any]) throws -> InboxItemProtocol {
         let type = try ItemType(dictionary: dictionary)
         let decoder = DictionaryDecoder()
 

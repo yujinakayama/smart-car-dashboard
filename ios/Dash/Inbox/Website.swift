@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseFirestore
 
-class Website: SharedItemProtocol {
+class Website: InboxItemProtocol {
     var firebaseDocument: DocumentReference?
     var identifier: String!
 

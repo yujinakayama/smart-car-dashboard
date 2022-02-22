@@ -11,7 +11,7 @@ import FirebaseFirestore
 import MediaPlayer
 import StoreKit
 
-class MusicItem: SharedItemProtocol {
+class MusicItem: InboxItemProtocol {
     var firebaseDocument: DocumentReference?
     var identifier: String!
 

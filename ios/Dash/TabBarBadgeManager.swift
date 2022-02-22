@@ -16,8 +16,8 @@ class TabBarBadgeManager {
 
     let tabBarController: UITabBarController
 
-    private var sharedItemDatabaseObservation: NSKeyValueObservation?
-    private var sharedItemQuerySubscription: FirestoreQuery<SharedItemProtocol>.CountSubscription?
+    private var inboxItemDatabaseObservation: NSKeyValueObservation?
+    private var inboxItemQuerySubscription: FirestoreQuery<InboxItemProtocol>.CountSubscription?
 
     var tabBarItems: [UITabBarItem] {
         guard let viewControllers = tabBarController.viewControllers else { return [] }
@@ -29,18 +29,18 @@ class TabBarBadgeManager {
     init(tabBarController: UITabBarController) {
         self.tabBarController = tabBarController
 
-        sharedItemDatabaseObservation = Firebase.shared.observe(\.sharedItemDatabase, options: .initial) { [weak self] (firebase, change) in
-            self?.sharedItemDatabaseDidChange()
+        inboxItemDatabaseObservation = Firebase.shared.observe(\.inboxItemDatabase, options: .initial) { [weak self] (firebase, change) in
+            self?.inboxItemDatabaseDidChange()
         }
     }
 
-    func sharedItemDatabaseDidChange() {
-        if let database = Firebase.shared.sharedItemDatabase {
-            sharedItemQuerySubscription = database.items(hasBeenOpened: false).subscribeToCountUpdates { [weak self] (result) in
+    func inboxItemDatabaseDidChange() {
+        if let database = Firebase.shared.inboxItemDatabase {
+            inboxItemQuerySubscription = database.items(hasBeenOpened: false).subscribeToCountUpdates { [weak self] (result) in
                 self?.onCountUpdates(result: result)
             }
         } else {
-            sharedItemQuerySubscription = nil
+            inboxItemQuerySubscription = nil
             inboxTabBarItem.badgeValue = nil
         }
     }

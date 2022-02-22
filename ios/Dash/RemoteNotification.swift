@@ -37,7 +37,7 @@ class RemoteNotification {
     }
 
     private func processShareNotification() {
-        guard let item = sharedItem, let rootViewController =  rootViewController else { return }
+        guard let item = inboxItem, let rootViewController =  rootViewController else { return }
 
         item.open(from: rootViewController)
 
@@ -45,10 +45,10 @@ class RemoteNotification {
            !location.categories.contains(where: { $0.isKindOfParking }),
            Defaults.shared.automaticallySearchParkingsWhenLocationIsAutomaticallyOpened
         {
-            SharedItemTableViewController.pushMapsViewControllerForParkingSearchInCurrentScene(location: location)
+            InboxItemTableViewController.pushMapsViewControllerForParkingSearchInCurrentScene(location: location)
         }
 
-        Firebase.shared.sharedItemDatabase?.findItem(identifier: item.identifier) { (item, error) in
+        Firebase.shared.inboxItemDatabase?.findItem(identifier: item.identifier) { (item, error) in
             if let error = error {
                 logger.error(error)
             }
@@ -59,14 +59,14 @@ class RemoteNotification {
         strongReference = item
     }
 
-    private var sharedItem: SharedItemProtocol? {
+    private var inboxItem: InboxItemProtocol? {
         guard let itemDictionary = userInfo["item"] as? [String: Any] else {
             logger.error(userInfo)
             return nil
         }
 
         do {
-            return try SharedItem.makeItem(dictionary: itemDictionary)
+            return try InboxItem.makeItem(dictionary: itemDictionary)
         } catch {
             logger.error(error)
             return nil

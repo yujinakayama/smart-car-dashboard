@@ -1,5 +1,5 @@
 //
-//  SharedItemDatabase.swift
+//  InboxItemDatabase.swift
 //  Dash
 //
 //  Created by Yuji Nakayama on 2020/10/06.
@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseFirestore
 
-class SharedItemDatabase: NSObject {
+class InboxItemDatabase: NSObject {
     let vehicleID: String
 
     private lazy var collection = Firestore.firestore().collection("vehicles").document(vehicleID).collection("items")
@@ -20,7 +20,7 @@ class SharedItemDatabase: NSObject {
         self.vehicleID = vehicleID
     }
 
-    func findItem(identifier: String, completion: @escaping (SharedItemProtocol?, Error?) -> Void) {
+    func findItem(identifier: String, completion: @escaping (InboxItemProtocol?, Error?) -> Void) {
         let document = collection.document(identifier)
 
         document.getDocument { (snapshot, error) in
@@ -35,7 +35,7 @@ class SharedItemDatabase: NSObject {
             }
 
             do {
-                let item = try SharedItem.makeItem(document: snapshot)
+                let item = try InboxItem.makeItem(document: snapshot)
                 completion(item, nil)
             } catch {
                 completion(nil, error)
@@ -45,7 +45,7 @@ class SharedItemDatabase: NSObject {
 
     lazy var allItems = wrappedQuery(query)
 
-    func items(type: SharedItem.ItemType? = nil, hasBeenOpened: Bool? = nil, createdAfter minCreationDate: Date? = nil) -> FirestoreQuery<SharedItemProtocol> {
+    func items(type: InboxItem.ItemType? = nil, hasBeenOpened: Bool? = nil, createdAfter minCreationDate: Date? = nil) -> FirestoreQuery<InboxItemProtocol> {
         var query = query
 
         if let type = type {
@@ -63,12 +63,12 @@ class SharedItemDatabase: NSObject {
         return wrappedQuery(query)
     }
 
-    private func wrappedQuery(_ query: Query) -> FirestoreQuery<SharedItemProtocol> {
+    private func wrappedQuery(_ query: Query) -> FirestoreQuery<InboxItemProtocol> {
         return FirestoreQuery(
             query,
             documentDecoder: { (documentSnapshot) in
                 do {
-                    return try SharedItem.makeItem(document: documentSnapshot)
+                    return try InboxItem.makeItem(document: documentSnapshot)
                 } catch {
                     logger.error(error)
                     return nil

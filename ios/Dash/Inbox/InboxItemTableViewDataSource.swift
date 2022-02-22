@@ -1,5 +1,5 @@
 //
-//  SharedItemTableViewDataSource.swift
+//  InboxItemTableViewDataSource.swift
 //  Dash
 //
 //  Created by Yuji Nakayama on 2020/02/06.
@@ -10,12 +10,12 @@ import UIKit
 import FirebaseFirestore
 
 @MainActor
-class SharedItemTableViewDataSource: UITableViewDiffableDataSource<Date, String> {
-    private var querySubscription: FirestoreQuery<SharedItemProtocol>.PaginatedSubscription!
+class InboxItemTableViewDataSource: UITableViewDiffableDataSource<Date, String> {
+    private var querySubscription: FirestoreQuery<InboxItemProtocol>.PaginatedSubscription!
 
     private var tableViewData = TableViewData()
 
-    init(database: SharedItemDatabase, tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<Date, String>.CellProvider) {
+    init(database: InboxItemDatabase, tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<Date, String>.CellProvider) {
         super.init(tableView: tableView, cellProvider: cellProvider)
 
         querySubscription = database.allItems.subscribeToUpdates(documentCountPerPage: 20) { [weak self] (result) in
@@ -58,11 +58,11 @@ class SharedItemTableViewDataSource: UITableViewDiffableDataSource<Date, String>
         await querySubscription.incrementPage()
     }
 
-    func item(for indexPath: IndexPath) -> SharedItemProtocol {
+    func item(for indexPath: IndexPath) -> InboxItemProtocol {
         return tableViewData.sections[indexPath.section].items[indexPath.row]
     }
 
-    private func onUpdate(result: Result<FirestoreQuery<SharedItemProtocol>.PaginatedSubscription.Update, Error>) {
+    private func onUpdate(result: Result<FirestoreQuery<InboxItemProtocol>.PaginatedSubscription.Update, Error>) {
         do {
             let update = try result.get()
             let tableViewData = TableViewData(items: update.documents)
@@ -94,11 +94,11 @@ class SharedItemTableViewDataSource: UITableViewDiffableDataSource<Date, String>
     }
 }
 
-extension SharedItemTableViewDataSource {
+extension InboxItemTableViewDataSource {
     private class TableViewData {
         struct Section {
             let date: Date
-            let items: [SharedItemProtocol]
+            let items: [InboxItemProtocol]
         }
 
         let sections: [Section]
@@ -107,8 +107,8 @@ extension SharedItemTableViewDataSource {
             sections = []
         }
 
-        init(items: [SharedItemProtocol]) {
-            let itemsByDate = Dictionary<Date, [SharedItemProtocol]>(grouping: items) { (item) in
+        init(items: [InboxItemProtocol]) {
+            let itemsByDate = Dictionary<Date, [InboxItemProtocol]>(grouping: items) { (item) in
                 var components = Calendar.current.dateComponents(in: TimeZone.current, from: item.creationDate!)
                 components.hour = nil
                 components.minute = nil
@@ -122,7 +122,7 @@ extension SharedItemTableViewDataSource {
             }
         }
 
-        lazy var items: [SharedItemProtocol] = {
+        lazy var items: [InboxItemProtocol] = {
             return sections.flatMap { $0.items }
         }()
     }

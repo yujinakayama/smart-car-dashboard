@@ -168,8 +168,8 @@ class MapsViewController: UIViewController {
         }
     }
 
-    private var sharedItemDatabaseObservation: NSKeyValueObservation?
-    private var sharedItemQuerySubscription: FirestoreQuery<SharedItemProtocol>.CountSubscription?
+    private var inboxItemDatabaseObservation: NSKeyValueObservation?
+    private var inboxItemQuerySubscription: FirestoreQuery<InboxItemProtocol>.CountSubscription?
 
     private var sharedLocationAnnotations: [MKAnnotation] = []
 
@@ -187,7 +187,7 @@ class MapsViewController: UIViewController {
 
         configureSubviews()
 
-        configureSharedItemDatabase()
+        configureInboxItemDatabase()
 
         applyCurrentMode()
 
@@ -264,16 +264,16 @@ class MapsViewController: UIViewController {
         changePlacementOfOfficialParkingSearchStatusViewIfNeeded()
     }
 
-    private func configureSharedItemDatabase() {
-        sharedItemDatabaseObservation = Firebase.shared.observe(\.sharedItemDatabase, options: .initial) { [weak self] (firebase, change) in
+    private func configureInboxItemDatabase() {
+        inboxItemDatabaseObservation = Firebase.shared.observe(\.inboxItemDatabase, options: .initial) { [weak self] (firebase, change) in
             guard let self = self else { return }
 
-            if let database = Firebase.shared.sharedItemDatabase {
-                self.sharedItemQuerySubscription = database.items(type: .location).subscribeToCountUpdates { (result) in
+            if let database = Firebase.shared.inboxItemDatabase {
+                self.inboxItemQuerySubscription = database.items(type: .location).subscribeToCountUpdates { (result) in
                     self.updateSharedLocationAnnotations()
                 }
             } else {
-                self.sharedItemQuerySubscription = nil
+                self.inboxItemQuerySubscription = nil
                 self.removeSharedLocationAnnotations()
             }
         }
@@ -493,7 +493,7 @@ class MapsViewController: UIViewController {
     }
 
     private func addSharedLocationAnnotations() async {
-        guard let database = Firebase.shared.sharedItemDatabase else { return }
+        guard let database = Firebase.shared.inboxItemDatabase else { return }
 
         let threeDaysAgo = Date(timeIntervalSinceNow: -3 * 24 * 60 * 60)
         let query = database.items(type: .location, createdAfter: threeDaysAgo)

@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseFirestore
 
-class UnknownItem: SharedItemProtocol {
+class UnknownItem: InboxItemProtocol {
     var firebaseDocument: DocumentReference?
     var identifier: String!
 

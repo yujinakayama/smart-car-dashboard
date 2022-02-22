@@ -12,7 +12,7 @@ import FirebaseFirestore
 import CommonCrypto
 import ParkingSearchKit
 
-class Location: SharedItemProtocol {
+class Location: InboxItemProtocol {
     var firebaseDocument: DocumentReference?
     var identifier: String!
 

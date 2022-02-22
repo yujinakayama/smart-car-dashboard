@@ -539,14 +539,14 @@
                                 <rect key="frame" x="0.0" y="49.5" width="375" height="82"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2sj-lq-fub" id="UN9-2d-DFc">
-                                    <rect key="frame" x="0.0" y="0.0" width="349.5" height="82"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="350.5" height="82"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="HKU-bN-sRN">
-                                            <rect key="frame" x="24" y="19" width="309.5" height="44"/>
+                                            <rect key="frame" x="24" y="19" width="310.5" height="44"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="All Payments" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wLH-Uf-nlx">
-                                                    <rect key="frame" x="0.0" y="10.5" width="309.5" height="23"/>
+                                                    <rect key="frame" x="0.0" y="10.5" width="310.5" height="23"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -570,11 +570,11 @@
                                 <rect key="frame" x="0.0" y="131.5" width="375" height="68.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yhp-zq-xeI" id="l4J-ek-iqJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="349.5" height="68.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="358.5" height="68.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="MZx-NX-l6V">
-                                            <rect key="frame" x="24" y="19" width="309.5" height="30.5"/>
+                                            <rect key="frame" x="24" y="19" width="310.5" height="30.5"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u8s-v0-sEG" customClass="ETCCardView" customModule="Dash" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.5" width="47.5" height="30"/>
@@ -592,13 +592,13 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="My Card" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z8y-WU-Yma">
-                                                    <rect key="frame" x="59.5" y="4" width="218" height="23"/>
+                                                    <rect key="frame" x="59.5" y="4" width="220" height="23"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="checkmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="mTz-mb-dFn">
-                                                    <rect key="frame" x="289.5" y="6.5" width="20" height="18"/>
+                                                    <rect key="frame" x="291.5" y="6.5" width="19" height="18"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="semibold"/>
                                                 </imageView>
                                             </subviews>
@@ -979,15 +979,15 @@
             </objects>
             <point key="canvasLocation" x="17" y="182"/>
         </scene>
-        <!--Shared Item Table View Controller-->
+        <!--Inbox Item Table View Controller-->
         <scene sceneID="p0o-EX-VWk">
             <objects>
-                <tableViewController id="08M-uz-mue" userLabel="Shared Item Table View Controller" customClass="SharedItemTableViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="08M-uz-mue" userLabel="Inbox Item Table View Controller" customClass="InboxItemTableViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5gS-Vr-VFB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SharedItemTableViewCell" id="21U-sd-i0w" customClass="SharedItemTableViewCell" customModule="Dash" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="InboxItemTableViewCell" id="21U-sd-i0w" customClass="InboxItemTableViewCell" customModule="Dash" customModuleProvider="target">
                                 <rect key="frame" x="16" y="32" width="343" height="72.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="21U-sd-i0w" id="Veg-iI-dCl">
@@ -1248,7 +1248,7 @@
                                     <viewLayoutGuide key="frameLayoutGuide" id="5h7-YP-2DW"/>
                                 </scrollView>
                                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Vl4-jF-Jhk">
-                                    <rect key="frame" x="110" y="154" width="155.5" height="26"/>
+                                    <rect key="frame" x="130" y="154" width="115.5" height="26"/>
                                     <color key="pageIndicatorTintColor" systemColor="tertiaryLabelColor"/>
                                     <color key="currentPageIndicatorTintColor" systemColor="labelColor"/>
                                     <connections>
@@ -1468,7 +1468,7 @@
                                 <rect key="frame" x="30" y="76" width="315" height="71.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="43e-NT-N9W">
-                                        <rect key="frame" x="52.5" y="0.0" width="210.5" height="33.5"/>
+                                        <rect key="frame" x="59" y="0.0" width="197.5" height="33.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東名高速道路" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9at-Od-YIK">
                                                 <rect key="frame" x="0.0" y="0.0" width="170.5" height="33.5"/>
@@ -1476,7 +1476,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="E1" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="fDi-RM-ZJK" customClass="BorderedLabel" customModule="Dash" customModuleProvider="target">
-                                                <rect key="frame" x="176.5" y="1.5" width="34" height="30"/>
+                                                <rect key="frame" x="176.5" y="4.5" width="21" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                                 <nil key="highlightedColor"/>

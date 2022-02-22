@@ -58,14 +58,14 @@ extension Assistant {
             if !location.categories.contains(where: { $0.isKindOfParking }),
                Defaults.shared.automaticallySearchParkingsWhenLocationIsAutomaticallyOpened
             {
-                await SharedItemTableViewController.pushMapsViewControllerForParkingSearchInCurrentScene(location: location)
+                await InboxItemTableViewController.pushMapsViewControllerForParkingSearchInCurrentScene(location: location)
             }
 
             self.location = location
         }
 
         func getLocationToOpen() async -> Location? {
-            guard let database = Firebase.shared.sharedItemDatabase else { return nil }
+            guard let database = Firebase.shared.inboxItemDatabase else { return nil }
 
             let query = database.items(type: .location, hasBeenOpened: false, createdAfter: newItemThresholdTime)
 

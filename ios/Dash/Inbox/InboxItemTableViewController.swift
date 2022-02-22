@@ -1,5 +1,5 @@
 //
-//  SharedItemTableViewController.swift
+//  InboxItemTableViewController.swift
 //  Dash
 //
 //  Created by Yuji Nakayama on 2020/01/27.
@@ -9,46 +9,46 @@
 import UIKit
 import SafariServices
 
-class SharedItemTableViewController: UITableViewController {
+class InboxItemTableViewController: UITableViewController {
     static func pushMapsViewControllerForParkingSearchInCurrentScene(location: Location) {
         guard let windowScene = UIApplication.shared.foregroundWindowScene,
               let sceneDelegate = windowScene.delegate as? SceneDelegate,
               let inboxNavigationController = sceneDelegate.tabBarController.viewController(for: .inbox) as? UINavigationController,
-              let sharedItemTableViewController = inboxNavigationController.viewControllers.first as? SharedItemTableViewController
+              let inboxItemTableViewController = inboxNavigationController.viewControllers.first as? InboxItemTableViewController
         else { return }
 
         inboxNavigationController.popToRootViewController(animated: false)
-        sharedItemTableViewController.pushMapsViewControllerForParkingSearch(location: location)
+        inboxItemTableViewController.pushMapsViewControllerForParkingSearch(location: location)
         sceneDelegate.tabBarController.selectedViewController = inboxNavigationController
     }
 
-    var dataSource: SharedItemTableViewDataSource?
+    var dataSource: InboxItemTableViewDataSource?
 
     var authentication: FirebaseAuthentication {
         return Firebase.shared.authentication
     }
 
-    private var sharedItemDatabaseObservation: NSKeyValueObservation?
+    private var inboxItemDatabaseObservation: NSKeyValueObservation?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        sharedItemDatabaseObservation = Firebase.shared.observe(\.sharedItemDatabase, options: .initial) { [weak self] (firbase, change) in
-            self?.sharedItemDatabaseDidChange()
+        inboxItemDatabaseObservation = Firebase.shared.observe(\.inboxItemDatabase, options: .initial) { [weak self] (firbase, change) in
+            self?.inboxItemDatabaseDidChange()
         }
 
         updateLeftBarButtonItems()
         navigationItem.rightBarButtonItem = editButtonItem
     }
 
-    func sharedItemDatabaseDidChange() {
+    func inboxItemDatabaseDidChange() {
         updateDataSource()
         updateLeftBarButtonItems()
     }
 
     func updateDataSource() {
-        if let database = Firebase.shared.sharedItemDatabase {
-            dataSource = SharedItemTableViewDataSource(database: database, tableView: tableView) { [unowned self] (tableView, indexPath, itemIdentifier) in
+        if let database = Firebase.shared.inboxItemDatabase {
+            dataSource = InboxItemTableViewDataSource(database: database, tableView: tableView) { [unowned self] (tableView, indexPath, itemIdentifier) in
                 return self.tableView(tableView, cellForRowAt: indexPath)
             }
 
@@ -139,7 +139,7 @@ class SharedItemTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SharedItemTableViewCell",for: indexPath) as! SharedItemTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "InboxItemTableViewCell",for: indexPath) as! InboxItemTableViewCell
 
         cell.item = dataSource?.item(for: indexPath)
 
@@ -188,7 +188,7 @@ class SharedItemTableViewController: UITableViewController {
         var view: UIView = button
 
         while let superview = view.superview {
-            if let cell = superview as? SharedItemTableViewCell {
+            if let cell = superview as? InboxItemTableViewCell {
                 if let location = cell.item as? Location {
                     location.markAsOpened(true)
                     pushMapsViewControllerForParkingSearch(location: location)
@@ -253,7 +253,7 @@ class SharedItemTableViewController: UITableViewController {
     }
 }
 
-private extension SharedItemTableViewController {
+private extension InboxItemTableViewController {
     func actionMenu(for location: Location) -> UIMenu {
         let locationActionsMenu = UIMenu(title: "", options: .displayInline, children: [
             UIAction(title: String(localized: "Search Parkings"), image: UIImage(systemName: "parkingsign")) { [weak self] (action) in
