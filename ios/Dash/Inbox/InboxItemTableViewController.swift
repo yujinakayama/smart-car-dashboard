@@ -264,19 +264,6 @@ private extension InboxItemTableViewController {
                 location.markAsOpened(true)
                 self.pushMapsViewControllerForParkingSearch(location: location)
             },
-            {
-                guard let websiteURL = location.websiteURL else { return nil }
-
-                let action = UIAction(title: String(localized: "Open Website"), image: UIImage(systemName: "safari")) { [weak self] (action) in
-                    guard let self = self else { return }
-                    location.markAsOpened(true)
-                    self.presentWebViewController(url: websiteURL)
-                }
-
-                action.subtitle = hostnameParser.parse(websiteURL)?.rootDomain
-
-                return action
-            }(),
             UIAction(title: String(localized: "Search Web"), image: UIImage(systemName: "magnifyingglass")) { [weak self] (action) in
                 guard let self = self else { return }
 
@@ -293,7 +280,20 @@ private extension InboxItemTableViewController {
 
                 location.markAsOpened(true)
                 self.presentWebViewController(url: url)
-            }
+            },
+            {
+                guard let websiteURL = location.websiteURL else { return nil }
+
+                let action = UIAction(title: String(localized: "Open Website"), image: UIImage(systemName: "safari")) { [weak self] (action) in
+                    guard let self = self else { return }
+                    location.markAsOpened(true)
+                    self.presentWebViewController(url: websiteURL)
+                }
+
+                action.subtitle = hostnameParser.parse(websiteURL)?.rootDomain
+
+                return action
+            }()
         ].compactMap { $0 })
 
         let otherAppActionsMenu = UIMenu(title: "", options: .displayInline, children: [
