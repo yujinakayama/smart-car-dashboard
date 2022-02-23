@@ -20,6 +20,8 @@ class Website: InboxItemProtocol {
 
     lazy var icon = WebsiteIcon(websiteURL: url)
 
+    lazy var simplifiedHost = url.host?.replacingOccurrences(of: "^www\\d*\\.", with: "", options: .regularExpression)
+
     func open(from viewController: UIViewController) {
         openInInAppBrowser(from: viewController)
     }

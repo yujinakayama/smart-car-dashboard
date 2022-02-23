@@ -164,7 +164,7 @@ class InboxItemTableViewCell: UITableViewCell {
         }
 
         nameLabel.text = website.title ?? website.url.absoluteString
-        detailLabel.text = website.url.host
+        detailLabel.text = website.simplifiedHost
     }
 
     private func configureView(for unknownItem: InboxItemProtocol?) {
