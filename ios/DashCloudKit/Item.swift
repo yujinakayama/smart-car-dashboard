@@ -1,6 +1,6 @@
 //
-//  SharingItem.swift
-//  ShareKit
+//  Item.swift
+//  DashCloudKit
 //
 //  Created by Yuji Nakayama on 2020/02/07.
 //  Copyright © 2020 Yuji Nakayama. All rights reserved.
@@ -11,13 +11,13 @@ import UniformTypeIdentifiers
 import MapKit
 
 public class Item {
-    private let encoder: SharingItemEncoderProtocol
+    private let encoder: ItemEncoderProtocol
 
     public init(extensionItem: NSExtensionItem) {
         encoder = ExtensionItemEncoder(extensionItem: extensionItem)
     }
 
-    public init(encoder: SharingItemEncoderProtocol) {
+    public init(encoder: ItemEncoderProtocol) {
         self.encoder = encoder
     }
 
@@ -30,13 +30,13 @@ public class Item {
     }
 }
 
-public protocol SharingItemEncoderProtocol {
+public protocol ItemEncoderProtocol {
     var hasEncodableContent: Bool { get }
     func encode(completionHandler: @escaping (Result<[String: Any], Error>) -> Void)
 }
 
 extension Item {
-    public class Encoder: SharingItemEncoderProtocol {
+    public class Encoder: ItemEncoderProtocol {
         private var encodedDictionary: [String: Any] = [:]
 
         public init() {
@@ -107,7 +107,7 @@ extension Item {
         case noAttachments
     }
 
-    class ExtensionItemEncoder: SharingItemEncoderProtocol {
+    class ExtensionItemEncoder: ItemEncoderProtocol {
         static let supportedTypes: Set<UTType> = [
             .url,
             .plainText,

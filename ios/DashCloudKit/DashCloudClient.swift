@@ -32,19 +32,19 @@ public class DashCloudClient {
         self.urlSessionConfiguration = urlSessionConfiguration
     }
 
-    public func share(_ item: Item, with vehicleID: String, completionHandler: @escaping (Error?) -> Void) {
+    public func add(_ item: Item, toInboxOf vehicleID: String, completionHandler: @escaping (Error?) -> Void) {
         item.encode { (result) in
             switch result {
             case .success(let attachments):
-                self.share(attachments, with: vehicleID, completionHandler: completionHandler)
+                self.add(attachments, toInboxOf: vehicleID, completionHandler: completionHandler)
             case .failure(let error):
                 completionHandler(error)
             }
         }
     }
 
-    private func share(_ attachments: [String: Any], with vehicleID: String, completionHandler: @escaping (Error?) -> Void) {
-        let url = URL(string: "share", relativeTo: baseURL)!
+    private func add(_ attachments: [String: Any], toInboxOf vehicleID: String, completionHandler: @escaping (Error?) -> Void) {
+        let url = URL(string: "addItemToInbox", relativeTo: baseURL)!
 
         let payload: [String: Any] = [
             "vehicleID": vehicleID,

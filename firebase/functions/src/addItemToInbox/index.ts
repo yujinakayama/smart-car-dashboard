@@ -10,7 +10,7 @@ import { isAppleMusicItem, normalizeAppleMusicItem } from './appleMusic';
 import { normalizeWebpage } from './website';
 import { notify } from './notification';
 
-export const share = functions.region('asia-northeast1').https.onRequest(async (functionRequest, functionResponse) => {
+export const addItemToInbox = functions.region('asia-northeast1').https.onRequest(async (functionRequest, functionResponse) => {
     if (functionRequest.method === 'GET') {
         await warmUpFirestore();
         functionResponse.sendStatus(200);

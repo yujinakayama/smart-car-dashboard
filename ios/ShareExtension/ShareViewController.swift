@@ -65,7 +65,7 @@ class ShareViewController: UIViewController {
 
         hud.textLabel.text = "Sending"
 
-        cloudClient.share(item, with: vehicleID) { (error) in
+        cloudClient.add(item, toInboxOf: vehicleID) { (error) in
             if let error = error {
                 self.cancelRequest(withError: error, message: "Failed")
             } else {

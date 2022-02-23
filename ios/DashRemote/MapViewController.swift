@@ -109,7 +109,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, AccountDelegate {
         encoder.add(url)
         let item = Item(encoder: encoder)
 
-        cloudClient.share(item, with: vehicleID) { (error) in
+        cloudClient.add(item, toInboxOf: vehicleID) { (error) in
             if error != nil {
                 self.pickUpButton.stopAnimation(animationStyle: .shake, revertAfterDelay: 1)
             } else {

@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions';
 
-import { Attachments, InputData } from './share/inputData';
-import { isGoogleMapsLocation, normalizeGoogleMapsLocation } from './share/googleMaps';
+import { Attachments, InputData } from './addItemToInbox/inputData';
+import { isGoogleMapsLocation, normalizeGoogleMapsLocation } from './addItemToInbox/googleMaps';
 
 
 export const geocode = functions.region('asia-northeast1').https.onRequest(async (functionRequest, functionResponse) => {
