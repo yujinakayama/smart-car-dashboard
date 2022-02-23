@@ -93,17 +93,17 @@ public class OfficialParkingSearchStatusView: UIStackView {
             configuration.baseForegroundColor = .label
             configuration.image = exclamationImage
             configuration.showsActivityIndicator = false
-        case .found:
+        case .found(let parkingInformation):
             button.isEnabled = true
 
-            var description: String?
+            let description: String?
 
-            if let parkingInformation = parkingInformation {
-                if let capacity = parkingInformation.capacity {
-                    description = "\(capacity)台"
-                } else if let existence = parkingInformation.existence {
-                    description = existence ? "あり" : "なし"
-                }
+            if let capacity = parkingInformation.capacity {
+                description = "\(capacity)台"
+            } else if let existence = parkingInformation.existence {
+                description = existence ? "あり" : "なし"
+            } else {
+                description = nil
             }
 
             if let description = description {

@@ -47,8 +47,6 @@ public class OfficialParkingSearch: NSObject {
 
     public weak var delegate: OfficialParkingSearchDelegate?
 
-    public var parkingInformation: ParkingInformation?
-
     private let geocoder = CLGeocoder()
 
     private var location: CLLocation {
@@ -243,7 +241,7 @@ public class OfficialParkingSearch: NSObject {
         return true
     }
 
-    private func tryExtractingParkingInformation(completion: @escaping (Result<ParkingInformation?, Error>) -> Void) {
+    private func tryExtractingParkingDescription(completion: @escaping (Result<String?, Error>) -> Void) {
         let function = """
             (element) => {
                 if (!element) {
@@ -262,8 +260,7 @@ public class OfficialParkingSearch: NSObject {
         evaluateJavaScriptWithElementDescribingParking(function) { (result) in
             switch result {
             case .success(let value as String):
-                let parkingInformation = ParkingInformation(description: value)
-                completion(.success(parkingInformation))
+                completion(.success(value))
             case .success:
                 completion(.success(nil))
             case .failure(let error):
@@ -383,17 +380,19 @@ extension OfficialParkingSearch: WKNavigationDelegate {
         case .other:
             cachedURL = url
 
-            tryExtractingParkingInformation { (result) in
+            tryExtractingParkingDescription { (result) in
+                let parkingInformation: ParkingInformation
+
                 switch result {
-                case .success(let parkingInformation):
-                    logger.debug("Extracted parking description: \(String(describing: parkingInformation?.description))")
-                    self.parkingInformation = parkingInformation
+                case .success(let description):
+                    logger.debug("Extracted parking description: \(String(describing: description))")
+                    parkingInformation = ParkingInformation(url: url, description: description)
                 case .failure(let error):
                     logger.error(error)
-                    self.parkingInformation = nil
+                    parkingInformation = ParkingInformation(url: url)
                 }
 
-                self.state = .found
+                self.state = .found(parkingInformation)
             }
         default:
             break
@@ -406,20 +405,32 @@ extension OfficialParkingSearch {
         case idle
         case searching
         case actionRequired
-        case found
+        case found(ParkingInformation)
         case notFound
     }
 }
 
 extension OfficialParkingSearch {
-    public class ParkingInformation {
+    public class ParkingInformation: Equatable {
+        public static func == (lhs: OfficialParkingSearch.ParkingInformation, rhs: OfficialParkingSearch.ParkingInformation) -> Bool {
+            return lhs.url == rhs.url && lhs.description == rhs.description
+        }
+
         static let sentenceRegularExpression = try! NSRegularExpression(pattern: "[^。\\n\\(\\)（）]+")
         static let existenceRegularExpression = try! NSRegularExpression(pattern: "^(?:(有り?|あり)|(無し?|なし))$")
         static let capacityRegularExpression = try! NSRegularExpression(pattern: "(\\d+)台")
 
-        public let description: String
+        public let url: URL
+        public let description: String?
+
+        init(url: URL, description: String? = nil) {
+            self.url = url
+            self.description = description
+        }
 
         lazy var existence: Bool? = {
+            guard let sentences = sentences else { return nil }
+
             let existences: [Bool] = sentences.map { (sentence) in
                 if let result = Self.existenceRegularExpression.firstMatch(in: sentence) {
                     return result.range(at: 1).location != NSNotFound
@@ -436,6 +447,8 @@ extension OfficialParkingSearch {
         }()
 
         public lazy var capacity: Int? = {
+            guard let normalizedDescription = normalizedDescription else { return nil }
+
             let capacities: [Int] = Self.capacityRegularExpression.matches(in: normalizedDescription).map { (result) in
                 let numberText = normalizedDescription[result.range(at: 1)]
                 return Int(numberText)
@@ -448,16 +461,13 @@ extension OfficialParkingSearch {
             }
         }()
 
-        init(description: String) {
-            self.description = description
-        }
-
-        private lazy var sentences: [String] = {
+        private lazy var sentences: [String]? = {
+            guard let normalizedDescription = normalizedDescription else { return nil }
             let results = Self.sentenceRegularExpression.matches(in: normalizedDescription)
             return results.map { normalizedDescription[$0.range] }
         }()
 
-        private lazy var normalizedDescription = description.covertFullwidthAlphanumericsToHalfwidth().convertFullwidthWhitespacesToHalfwidth()
+        private lazy var normalizedDescription = description?.covertFullwidthAlphanumericsToHalfwidth().convertFullwidthWhitespacesToHalfwidth()
     }
 }
 
