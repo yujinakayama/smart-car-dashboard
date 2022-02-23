@@ -8,6 +8,7 @@
 
 import UIKit
 import SafariServices
+import TLDExtract
 
 class InboxItemTableViewController: UITableViewController {
     static func pushMapsViewControllerForParkingSearchInCurrentScene(location: Location) {
@@ -27,6 +28,8 @@ class InboxItemTableViewController: UITableViewController {
     var authentication: FirebaseAuthentication {
         return Firebase.shared.authentication
     }
+
+    private let hostnameParser = try! TLDExtract(useFrozenData: true)
 
     private var inboxItemDatabaseObservation: NSKeyValueObservation?
 
@@ -264,11 +267,15 @@ private extension InboxItemTableViewController {
             {
                 guard let websiteURL = location.websiteURL else { return nil }
 
-                return UIAction(title: String(localized: "Open Website"), image: UIImage(systemName: "safari")) { [weak self] (action) in
+                let action = UIAction(title: String(localized: "Open Website"), image: UIImage(systemName: "safari")) { [weak self] (action) in
                     guard let self = self else { return }
                     location.markAsOpened(true)
                     self.presentWebViewController(url: websiteURL)
                 }
+
+                action.subtitle = hostnameParser.parse(websiteURL)?.rootDomain
+
+                return action
             }(),
             UIAction(title: String(localized: "Search Web"), image: UIImage(systemName: "magnifyingglass")) { [weak self] (action) in
                 guard let self = self else { return }
