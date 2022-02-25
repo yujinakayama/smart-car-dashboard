@@ -19,7 +19,9 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
 
     var payment: ETCPayment? {
         didSet {
-            configureView()
+            if isViewLoaded {
+                configureView()
+            }
         }
     }
 
