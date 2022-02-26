@@ -101,7 +101,7 @@ struct PPParkError: Error, Decodable {
 }
 
 extension PPPark {
-    public struct Parking: ParkingProtocol, Decodable {
+    public struct Parking: Decodable {
         public var address: String
         public var availability: Availability?
         public var capacityDescription: String?
@@ -155,13 +155,26 @@ extension PPPark {
             rank = try values.decodeIfPresent(Int.self, forKey: .rank)
             reservation = try values.decodeIfPresent(Reservation.self, forKey: .reservation)
         }
+    }
+}
 
-        public var mapItem: MKMapItem {
-            let placemark = MKPlacemark(coordinate: coordinate)
-            let mapItem = MKMapItem(placemark: placemark)
-            mapItem.name = normalizedName
-            return mapItem
-        }
+extension PPPark.Parking: ParkingProtocol {
+    static let capacityRegularExpression = try! NSRegularExpression(pattern: "^(\\d+)台$")
+
+    public var capacity: Int? {
+        guard let description = capacityDescription,
+              let matchingResult = Self.capacityRegularExpression.matches(in: description).first
+        else { return nil }
+
+        let numberText = description[matchingResult.range(at: 1)]
+        return Int(numberText)
+    }
+
+    public var mapItem: MKMapItem {
+        let placemark = MKPlacemark(coordinate: coordinate)
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = normalizedName
+        return mapItem
     }
 }
 

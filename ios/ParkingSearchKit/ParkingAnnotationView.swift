@@ -156,7 +156,6 @@ extension ParkingAnnotationView {
         lazy var detailView: UIView = {
             let stackView = UIStackView(arrangedSubviews: [
                 rulerView,
-                capacityItemView,
                 openingHoursItemView,
                 priceDescriptionItemView,
                 reservationView,
@@ -176,7 +175,6 @@ extension ParkingAnnotationView {
             return view
         }()
 
-        lazy var capacityItemView = makeItemView(heading: "台数", contentLabel: capacityLabel)
         lazy var openingHoursItemView = makeItemView(heading: "営業時間", contentLabel: openingHoursLabel)
         lazy var priceDescriptionItemView = makeItemView(heading: "料金", contentLabel: priceDescriptionLabel)
 
@@ -217,7 +215,6 @@ extension ParkingAnnotationView {
             return button
         }()
 
-        lazy var capacityLabel = makeContentLabel()
         lazy var openingHoursLabel = makeContentLabel()
         lazy var priceDescriptionLabel = makeContentLabel()
 
@@ -306,14 +303,6 @@ extension ParkingAnnotationView {
             tagListView.parking = parking
 
             nameLabelControl.label.text = parking.normalizedName
-
-            if tagListView.capacityTagView.isHidden, let description = normalizeText(parking.capacityDescription) {
-                capacityLabel.text = description
-                capacityItemView.isHidden = false
-            } else {
-                capacityLabel.text = nil
-                capacityItemView.isHidden = true
-            }
 
             if let description = normalizeText(parking.openingHoursDescription) {
                 openingHoursLabel.text = description
@@ -504,8 +493,6 @@ extension ParkingAnnotationView.Callout {
     class TagListView: UIStackView {
         static let distanceFormatter = MKDistanceFormatter()
 
-        let simpleCapacityRegularExpression = try! NSRegularExpression(pattern: "^\\d+台$")
-
         var parking: ParkingProtocol? {
             didSet {
                 update()
@@ -534,8 +521,8 @@ extension ParkingAnnotationView.Callout {
         func update() {
             guard let parking = parking else { return }
 
-            if hasSimpleCapacityDescription {
-                capacityTagView.text = parking.capacityDescription
+            if let capacity = parking.capacity {
+                capacityTagView.text = "\(capacity)台"
                 capacityTagView.isHidden = false
             } else {
                 capacityTagView.isHidden = true
@@ -547,11 +534,6 @@ extension ParkingAnnotationView.Callout {
             fullTagView.isHidden = parking.reservation?.status != .full && parking.availability?.status != .full
             crowdedTagView.isHidden = parking.availability?.status != .crowded
             vacantTagView.isHidden = parking.reservation?.status != .vacant && parking.availability?.status != .vacant
-        }
-
-        var hasSimpleCapacityDescription: Bool {
-            guard let capacityDescription = parking?.capacityDescription else { return false }
-            return simpleCapacityRegularExpression.numberOfMatches(in: capacityDescription) == 1
         }
 
         lazy var capacityTagView = TagView(textColor: .secondaryLabel, borderColor: .secondaryLabel)

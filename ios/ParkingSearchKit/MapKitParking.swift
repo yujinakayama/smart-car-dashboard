@@ -63,7 +63,7 @@ extension MapKitParking: ParkingProtocol {
     }
 
     var availability: Availability? { return nil }
-    var capacityDescription: String? { return nil }
+    var capacity: Int? { return nil }
     var isClosedNow: Bool? { return nil }
     var openingHoursDescription: String? { return nil }
     var priceDescription: String? { return nil }

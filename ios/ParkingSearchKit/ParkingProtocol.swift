@@ -12,7 +12,7 @@ import MapKit
 
 public protocol ParkingProtocol {
     var availability: Availability? { get }
-    var capacityDescription: String? { get }
+    var capacity: Int? { get }
     var coordinate: CLLocationCoordinate2D { get }
     var distance: CLLocationDistance { get }
     var isClosedNow: Bool? { get }
