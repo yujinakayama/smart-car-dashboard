@@ -177,19 +177,21 @@ class WebViewController: UIViewController {
 
         keyValueObservations.append(webView.observe(\.estimatedProgress, options: [.initial, .old], changeHandler: { [unowned self] (webView, change) in
             let progress = webView.estimatedProgress
+            let completed = progress == 1
+            let increasing = progress > (change.oldValue ?? 0)
 
-            if progress < 1 {
+            if !completed {
                 self.progressView.alpha = 1
             }
 
-            let increasing = progress > (change.oldValue ?? 0)
-
             if increasing {
-                UIView.animate(withDuration: 0.25, delay: 0, options: .beginFromCurrentState) {
+                let animationDuration = completed ? 0.1 : 0.25
+
+                UIView.animate(withDuration: animationDuration, delay: 0, options: .beginFromCurrentState) {
                     self.progressView.progress = Float(progress)
                     self.progressView.layoutIfNeeded()
                 } completion: { (finished) in
-                    if progress == 1 {
+                    if completed {
                         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseIn]) {
                             self.progressView.alpha = 0
                         } completion: { (finished) in
