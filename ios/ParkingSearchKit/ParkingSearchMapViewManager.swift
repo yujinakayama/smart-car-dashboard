@@ -127,7 +127,7 @@ public class ParkingSearchMapViewManager: NSObject {
                     destination: destination,
                     entranceDate: entranceDate,
                     exitDate: entranceDate + timeDuration
-                ).start()
+                ).search()
 
                 showParkings(parkings)
             } catch {

@@ -17,6 +17,8 @@
 		B900A13A26529C38000ED1B9 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04662642D5FA002CD861 /* UIButtonExtension.swift */; };
 		B900A13D2652BCF4000ED1B9 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94215F026423A58003F94A0 /* StringExtension.swift */; };
 		B90265AB23EB4CE000B2EF6B /* InboxItemTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90265AA23EB4CE000B2EF6B /* InboxItemTableViewDataSource.swift */; };
+		B90363C527C9BB8A003C7965 /* MapKitParkingSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90363C427C9BB8A003C7965 /* MapKitParkingSearch.swift */; };
+		B90363CF27CA097F003C7965 /* Times.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90363CE27CA097F003C7965 /* Times.swift */; };
 		B904A2A6243968990087BD4A /* MapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B904A2A5243968990087BD4A /* MapsViewController.swift */; };
 		B907C78E272555690085ED7E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B907C78D272555690085ED7E /* SceneDelegate.swift */; };
 		B907C790272589530085ED7E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B907C78F272589490085ED7E /* AppState.swift */; };
@@ -411,6 +413,8 @@
 		B9008EAE25FBB6D7005DAD13 /* NoMainETCCard.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = NoMainETCCard.wav; sourceTree = "<group>"; };
 		B9025F62254D2180001E25DF /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
 		B90265AA23EB4CE000B2EF6B /* InboxItemTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxItemTableViewDataSource.swift; sourceTree = "<group>"; };
+		B90363C427C9BB8A003C7965 /* MapKitParkingSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKitParkingSearch.swift; sourceTree = "<group>"; };
+		B90363CE27CA097F003C7965 /* Times.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Times.swift; sourceTree = "<group>"; };
 		B904A2A5243968990087BD4A /* MapsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsViewController.swift; sourceTree = "<group>"; };
 		B90700A3250E31B1004E7D7A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B907C78D272555690085ED7E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -1127,7 +1131,9 @@
 				B9E292A1279DDA0A00547269 /* ParkingSearch.swift */,
 				B9A16A13279EEE7C0042E16A /* ParkingProtocol.swift */,
 				B9F8DBE725EA288B00F6FA55 /* PPPark.swift */,
+				B90363C427C9BB8A003C7965 /* MapKitParkingSearch.swift */,
 				B9A16A4827A015420042E16A /* MapKitParking.swift */,
+				B90363CE27CA097F003C7965 /* Times.swift */,
 				B9DF6F5827006A7400DC19D0 /* RelativeDatePicker.swift */,
 				B9ADFEAC2704B19000F230E0 /* TimePicker.swift */,
 				B984C019263DA08D00AF79AE /* TimeDurationPicker.swift */,
@@ -2004,6 +2010,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B90363CF27CA097F003C7965 /* Times.swift in Sources */,
 				B9DF6F5927006A7400DC19D0 /* RelativeDatePicker.swift in Sources */,
 				B9C0BF4526984D3D00C54BA9 /* Cache.swift in Sources */,
 				B9A16A14279EEE7C0042E16A /* ParkingProtocol.swift in Sources */,
@@ -2011,6 +2018,7 @@
 				B9DD4CD926517FBF0010B120 /* ParkingAnnotationView.swift in Sources */,
 				B9D0208F268F69490020BF9A /* ParkingSearchOptionsView.swift in Sources */,
 				B92ADE77269990370086E4D8 /* NSRegularExpressionExtension.swift in Sources */,
+				B90363C527C9BB8A003C7965 /* MapKitParkingSearch.swift in Sources */,
 				B9DD4CDA26517FBF0010B120 /* PPPark.swift in Sources */,
 				B9A16A1D279F3F1B0042E16A /* String+Similarity.swift in Sources */,
 				B900A13D2652BCF4000ED1B9 /* StringExtension.swift in Sources */,

@@ -11,8 +11,8 @@ import CoreLocation
 import MapKit
 
 public protocol ParkingProtocol {
-    var availability: Availability? { get }
-    var capacityDescription: String? { get }
+    var availability: ParkingAvailability? { get }
+    var capacity: Int? { get }
     var coordinate: CLLocationCoordinate2D { get }
     var distance: CLLocationDistance { get }
     var isClosedNow: Bool? { get }
@@ -23,6 +23,16 @@ public protocol ParkingProtocol {
     var priceDescription: String? { get }
     var rank: Int? { get }
     var reservation: Reservation? { get }
+}
+
+public enum ParkingAvailability {
+    case vacant
+    case crowded
+    case full
+}
+
+extension ParkingProtocol {
+    public typealias Reservation = PPPark.Reservation
 }
 
 public extension ParkingProtocol {
@@ -64,9 +74,4 @@ public extension ParkingProtocol {
     var isOnStreet: Bool {
         isParkingMeter
     }
-}
-
-extension ParkingProtocol {
-    public typealias Availability = PPPark.Availability
-    public typealias Reservation = PPPark.Reservation
 }

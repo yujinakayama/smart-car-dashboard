@@ -21,7 +21,7 @@ struct MapKitParking {
 
     var isForCars: Bool {
         let isForCars = Self.nonCarParkingNamePattern.rangeOfFirstMatch(in: name).location == NSNotFound
-        logger.debug("\(isForCars) \(name)")
+        logger.verbose("\(isForCars) \(name)")
         return isForCars
     }
 
@@ -62,8 +62,8 @@ extension MapKitParking: ParkingProtocol {
         }
     }
 
-    var availability: Availability? { return nil }
-    var capacityDescription: String? { return nil }
+    var availability: ParkingAvailability? { return nil }
+    var capacity: Int? { return nil }
     var isClosedNow: Bool? { return nil }
     var openingHoursDescription: String? { return nil }
     var priceDescription: String? { return nil }
