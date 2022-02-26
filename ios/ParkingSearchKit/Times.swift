@@ -25,11 +25,14 @@ class Times {
     static private func url(for region: MKCoordinateRegion) -> URL {
         var components = URLComponents(string: "https://times-info.net/view/teeda.ajax?component=service_bukService&action=ajaxGetMapBukIcon")!
 
+        let northEast = TokyoDatumCoordinate2D(region.northEast)
+        let southWest = TokyoDatumCoordinate2D(region.southWest)
+
         components.queryItems?.append(contentsOf: [
-            URLQueryItem(name: "north", value: String(region.center.latitude + region.span.latitudeDelta)),
-            URLQueryItem(name: "south", value: String(region.center.latitude - region.span.latitudeDelta)),
-            URLQueryItem(name: "east", value: String(region.center.longitude + region.span.longitudeDelta)),
-            URLQueryItem(name: "west", value: String(region.center.longitude - region.span.longitudeDelta)),
+            URLQueryItem(name: "north", value: String(northEast.latitude)),
+            URLQueryItem(name: "east", value: String(northEast.longitude)),
+            URLQueryItem(name: "south", value: String(southWest.latitude)),
+            URLQueryItem(name: "west", value: String(southWest.longitude)),
         ])
 
         return components.url!
@@ -119,19 +122,6 @@ extension Times {
         }
     }
 
-    struct TokyoDatumCoordinate2D {
-        var latitude: CLLocationDegrees
-        var longitude: CLLocationDegrees
-
-        // https://simplesimples.com/web/markup/javascript/exchange_latlng_javascript/
-        var worldGeodeticSystemCoordinate: CLLocationCoordinate2D {
-            return CLLocationCoordinate2D(
-                latitude: latitude - latitude * 0.00010695 + longitude * 0.000017464 + 0.0046017,
-                longitude: longitude - latitude * 0.000046038 - longitude * 0.000083043 + 0.010040
-            )
-        }
-    }
-
     enum Availability: Int {
         case vacant = 0
         case crowded = 1
@@ -166,6 +156,21 @@ extension Times.Parking: ParkingProtocol {
     var reservation: Reservation? { return nil }
 }
 
+fileprivate extension MKCoordinateRegion {
+    var northEast: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(
+            latitude: center.latitude + span.latitudeDelta,
+            longitude: center.longitude + span.longitudeDelta
+        )
+    }
+
+    var southWest: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(
+            latitude: center.latitude - span.latitudeDelta,
+            longitude: center.longitude - span.longitudeDelta
+        )
+    }
+}
 
 /*
  {

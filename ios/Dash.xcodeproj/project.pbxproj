@@ -29,6 +29,7 @@
 		B90F5FD525EFF13D00C2578C /* CIImageDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F5FD425EFF13D00C2578C /* CIImageDisplayView.swift */; };
 		B90F5FFF25F3CA4D00C2578C /* SampleBufferDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F5FFE25F3CA4D00C2578C /* SampleBufferDecoder.swift */; };
 		B910AF25273956C700A61795 /* FirestoreQueryPaginatedSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = B910AF24273956C700A61795 /* FirestoreQueryPaginatedSubscription.swift */; };
+		B915562A27CA4542008219EB /* TokyoDatumCoordinate2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = B915562927CA4542008219EB /* TokyoDatumCoordinate2D.swift */; };
 		B915BEF5267F8754007068D7 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94215F026423A58003F94A0 /* StringExtension.swift */; };
 		B91B5DD523ED7886003F4AEF /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91B5DD423ED7886003F4AEF /* Account.swift */; };
 		B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E522A9525C00BA08AB /* ETCMessage.swift */; };
@@ -426,6 +427,7 @@
 		B90F5FD425EFF13D00C2578C /* CIImageDisplayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CIImageDisplayView.swift; sourceTree = "<group>"; };
 		B90F5FFE25F3CA4D00C2578C /* SampleBufferDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleBufferDecoder.swift; sourceTree = "<group>"; };
 		B910AF24273956C700A61795 /* FirestoreQueryPaginatedSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreQueryPaginatedSubscription.swift; sourceTree = "<group>"; };
+		B915562927CA4542008219EB /* TokyoDatumCoordinate2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokyoDatumCoordinate2D.swift; sourceTree = "<group>"; };
 		B91B5DD423ED7886003F4AEF /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		B91E0B61254D047D002928D3 /* PairingURLItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingURLItem.swift; sourceTree = "<group>"; };
 		B92451D323E30ACE007556D5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -1141,6 +1143,7 @@
 				B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */,
 				B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */,
 				B92ADE9A269ACA4C0086E4D8 /* Logger.swift */,
+				B915562927CA4542008219EB /* TokyoDatumCoordinate2D.swift */,
 				B9A16A15279EF9BB0042E16A /* CLLocationCoordinate2DExtension.swift */,
 				B9A16A1C279F3F1B0042E16A /* String+Similarity.swift */,
 				B9DD4CCD26517F920010B120 /* Info.plist */,
@@ -2026,6 +2029,7 @@
 				B9ADFEAD2704B19100F230E0 /* TimePicker.swift in Sources */,
 				B9DD4CD726517FBF0010B120 /* TimeDurationPicker.swift in Sources */,
 				B9A16A16279EF9BB0042E16A /* CLLocationCoordinate2DExtension.swift in Sources */,
+				B915562A27CA4542008219EB /* TokyoDatumCoordinate2D.swift in Sources */,
 				B9E292A2279DDA0A00547269 /* ParkingSearch.swift in Sources */,
 				B9DD4CD626517FBF0010B120 /* ParkingAnnotation.swift in Sources */,
 				B92ADE9B269ACA4C0086E4D8 /* Logger.swift in Sources */,
