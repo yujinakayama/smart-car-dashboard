@@ -531,9 +531,9 @@ extension ParkingAnnotationView.Callout {
             distanceTagView.text = Self.distanceFormatter.string(fromDistance: parking.distance).replacingOccurrences(of: " ", with: "")
 
             reservationTagView.isHidden = parking.reservation == nil
-            fullTagView.isHidden = parking.reservation?.status != .full && parking.availability?.status != .full
-            crowdedTagView.isHidden = parking.availability?.status != .crowded
-            vacantTagView.isHidden = parking.reservation?.status != .vacant && parking.availability?.status != .vacant
+            fullTagView.isHidden = parking.reservation?.availability != .full && parking.availability != .full
+            crowdedTagView.isHidden = parking.availability != .crowded
+            vacantTagView.isHidden = parking.reservation?.availability != .vacant && parking.availability != .vacant
         }
 
         lazy var capacityTagView = TagView(textColor: .secondaryLabel, borderColor: .secondaryLabel)

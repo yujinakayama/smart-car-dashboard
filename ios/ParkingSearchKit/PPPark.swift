@@ -103,7 +103,7 @@ struct PPParkError: Error, Decodable {
 extension PPPark {
     public struct Parking: Decodable {
         public var address: String
-        public var availability: Availability?
+        public var availabilityInfo: AvailabilityInformation?
         public var capacityDescription: String?
         public var coordinate: CLLocationCoordinate2D
         public var distance: CLLocationDistance
@@ -118,7 +118,7 @@ extension PPPark {
 
         enum CodingKeys: String, CodingKey {
             case address
-            case availability = "fv"
+            case availabilityInfo = "fv"
             case capacityDescription = "capacity"
             case distance
             case isClosedNow = "closed"
@@ -137,7 +137,7 @@ extension PPPark {
             let values = try decoder.container(keyedBy: CodingKeys.self)
 
             address = try values.decode(String.self, forKey: .address)
-            availability = try values.decodeIfPresent(Availability.self, forKey: .availability)
+            availabilityInfo = try values.decodeIfPresent(AvailabilityInformation.self, forKey: .availabilityInfo)
             capacityDescription = try values.decodeIfPresent(String.self, forKey: .capacityDescription)
             distance = try values.decode(Double.self, forKey: .distance)
             isClosedNow = try values.decode(Int.self, forKey: .isClosedNow) != 0
@@ -161,6 +161,10 @@ extension PPPark {
 extension PPPark.Parking: ParkingProtocol {
     static let capacityRegularExpression = try! NSRegularExpression(pattern: "^(\\d+)台$")
 
+    public var availability: ParkingAvailability? {
+        return availabilityInfo?.availability?.normalized
+    }
+
     public var capacity: Int? {
         guard let description = capacityDescription,
               let matchingResult = Self.capacityRegularExpression.matches(in: description).first
@@ -179,7 +183,7 @@ extension PPPark.Parking: ParkingProtocol {
 }
 
 extension PPPark {
-    public struct Availability: Decodable {
+    public struct AvailabilityInformation: Decodable {
         static let dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -188,10 +192,10 @@ extension PPPark {
         }()
 
         public var lastUpdateDate: Date?
-        public var status: AvailabilityStatus?
+        public var availability: Availability?
 
         enum CodingKeys: String, CodingKey {
-            case status
+            case availability = "status"
             case lastUpdateDate = "last"
         }
 
@@ -202,30 +206,43 @@ extension PPPark {
                 lastUpdateDate = Self.dateFormatter.date(from: lastUpdateDateString)!
             }
 
-            if let statusRawValue = try values.decodeIfPresent(Int.self, forKey: .status) {
-                status = AvailabilityStatus(rawValue: statusRawValue) ?? .unsupported
+            if let availabilityRawValue = try values.decodeIfPresent(Int.self, forKey: .availability) {
+                availability = Availability(rawValue: availabilityRawValue) ?? .unsupported
             }
         }
     }
 
-    public enum AvailabilityStatus: Int, Decodable {
+    public enum Availability: Int, Decodable {
         case unsupported = -1
         case vacant = 0
         case crowded = 1
         case full = 2
         case closed = 7
+
+        var normalized: ParkingAvailability? {
+            switch self {
+            case .vacant:
+                return .vacant
+            case .crowded:
+                return .crowded
+            case .full:
+                return .full
+            default:
+                return nil
+            }
+        }
     }
 }
 
 extension PPPark {
     public struct Reservation: Decodable {
         public var provider: String
-        public var status: ReservationStatus?
+        public var availability: ReservationAvailability?
         public var url: URL?
 
         enum CodingKeys: String, CodingKey {
             case provider
-            case status
+            case availability = "status"
             case url
         }
 
@@ -234,15 +251,15 @@ extension PPPark {
 
             provider = try values.decode(String.self, forKey: .provider)
 
-            if let statusRawValue = try values.decodeIfPresent(Int.self, forKey: .status) {
-                status = ReservationStatus(rawValue: statusRawValue) ?? .unsupported
+            if let availabilityRawValue = try values.decodeIfPresent(Int.self, forKey: .availability) {
+                availability = ReservationAvailability(rawValue: availabilityRawValue) ?? .unsupported
             }
 
             url = try values.decodeIfPresent(URL.self, forKey: .url)
         }
     }
 
-    public enum ReservationStatus: Int, Decodable {
+    public enum ReservationAvailability: Int, Decodable {
         case unsupported = -1
         case vacant = 1
         case full = 2
