@@ -48,6 +48,12 @@ class WebViewController: UIViewController {
 
     let webView: WKWebView
 
+    let progressView: UIProgressView = {
+        let progressView = UIProgressView()
+        progressView.progressViewStyle = .bar
+        return progressView
+    }()
+
     var preferredContentMode: PreferredContentMode {
         didSet {
             applyContentMode()
@@ -97,6 +103,8 @@ class WebViewController: UIViewController {
         navigationItem.rightBarButtonItem = doneBarButtonItem
 
         addWebView()
+
+        addProgressView()
 
         applyContentMode()
 
@@ -151,6 +159,48 @@ class WebViewController: UIViewController {
         ])
 
         webView.isHidden = false
+    }
+
+    private func addProgressView() {
+        guard let navigationBar = navigationController?.navigationBar else { return }
+
+        navigationBar.addSubview(progressView)
+
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            progressView.leftAnchor.constraint(equalTo: navigationBar.leftAnchor),
+            progressView.rightAnchor.constraint(equalTo: navigationBar.rightAnchor),
+            progressView.bottomAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: -1),
+            progressView.heightAnchor.constraint(equalToConstant: 2)
+        ])
+
+        keyValueObservations.append(webView.observe(\.estimatedProgress, options: [.initial, .old], changeHandler: { [unowned self] (webView, change) in
+            let progress = webView.estimatedProgress
+
+            if progress < 1 {
+                self.progressView.alpha = 1
+            }
+
+            let increasing = progress > (change.oldValue ?? 0)
+
+            if increasing {
+                UIView.animate(withDuration: 0.25, delay: 0, options: .beginFromCurrentState) {
+                    self.progressView.progress = Float(progress)
+                    self.progressView.layoutIfNeeded()
+                } completion: { (finished) in
+                    if progress == 1 {
+                        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseIn]) {
+                            self.progressView.alpha = 0
+                        } completion: { (finished) in
+                            self.progressView.progress = 0
+                        }
+                    }
+                }
+            } else {
+                self.progressView.progress = Float(progress)
+            }
+        }))
     }
 
     private func applyContentMode() {
