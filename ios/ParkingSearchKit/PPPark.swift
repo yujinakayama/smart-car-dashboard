@@ -103,6 +103,7 @@ struct PPParkError: Error, Decodable {
 extension PPPark {
     public struct Parking: Decodable {
         public var address: String
+        public var availability: ParkingAvailability?
         public var availabilityInfo: AvailabilityInformation?
         public var capacityDescription: String?
         public var coordinate: CLLocationCoordinate2D
@@ -138,6 +139,7 @@ extension PPPark {
 
             address = try values.decode(String.self, forKey: .address)
             availabilityInfo = try values.decodeIfPresent(AvailabilityInformation.self, forKey: .availabilityInfo)
+            availability = availabilityInfo?.availability?.normalized
             capacityDescription = try values.decodeIfPresent(String.self, forKey: .capacityDescription)
             distance = try values.decode(Double.self, forKey: .distance)
             isClosedNow = try values.decode(Int.self, forKey: .isClosedNow) != 0
@@ -160,10 +162,6 @@ extension PPPark {
 
 extension PPPark.Parking: ParkingProtocol {
     static let capacityRegularExpression = try! NSRegularExpression(pattern: "^(\\d+)台$")
-
-    public var availability: ParkingAvailability? {
-        return availabilityInfo?.availability?.normalized
-    }
 
     public var capacity: Int? {
         guard let description = capacityDescription,

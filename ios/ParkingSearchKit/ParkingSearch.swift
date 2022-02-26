@@ -28,10 +28,12 @@ class ParkingSearch {
     func search() async throws -> [ParkingProtocol] {
         async let ppparkParkings = searchParkingsWithPPPark()
         async let mapKitParkings = searchParkingsWithMapKit()
+        async let timesParkings = searchParkingsWithTimes()
 
         let aggregation = Aggregation(
             ppparkParkings: try await ppparkParkings,
-            mapKitParkings: try await mapKitParkings
+            mapKitParkings: try await mapKitParkings,
+            timesParkings: try await timesParkings
         )
 
         return aggregation.aggregatedParkings
@@ -45,23 +47,50 @@ class ParkingSearch {
         let parkingSearch = MapKitParkingSearch(destination: destination, entranceDate: entranceDate, exitDate: exitDate)
         return try await parkingSearch.search()
     }
+
+    private func searchParkingsWithTimes() async throws -> [Times.Parking] {
+        let region = MKCoordinateRegion(center: destination, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        return try await Times.searchParkings(within: region)
+    }
 }
 
 extension ParkingSearch {
     class Aggregation {
         let ppparkParkings: [PPPark.Parking]
         let mapKitParkings: [MapKitParking]
+        let timesParkings: [Times.Parking]
 
-        init(ppparkParkings: [PPPark.Parking], mapKitParkings: [MapKitParking]) {
+        init(ppparkParkings: [PPPark.Parking], mapKitParkings: [MapKitParking], timesParkings: [Times.Parking]) {
             self.ppparkParkings = ppparkParkings
             self.mapKitParkings = mapKitParkings
+            self.timesParkings = timesParkings
         }
 
         lazy var aggregatedParkings: [ParkingProtocol] = {
-            var parkings: [ParkingProtocol] = ppparkParkings
+            var parkings: [ParkingProtocol] = ppparkParkingsWithTimesAvailability
             parkings.append(contentsOf: Array(uniquedParkingsListedOnlyOnMapKit))
             return parkings
         }()
+
+        private var ppparkParkingsWithTimesAvailability: [PPPark.Parking] {
+            logger.verbose("Assigning PPPark parkings availability from corresponding Times parkings")
+
+            return ppparkParkings.map { (ppparkParking) in
+                if ppparkParking.availability != nil { return ppparkParking }
+
+                var ppparkParking = ppparkParking
+
+                let matchingTimesParking = timesParkings.first { (timesParking) in
+                    considersParkingsAreSame(timesParking, ppparkParking)
+                }
+
+                if let matchingTimesParking = matchingTimesParking {
+                    ppparkParking.availability = matchingTimesParking.availability
+                }
+
+                return ppparkParking
+            }
+        }
 
         private var uniquedParkingsListedOnlyOnMapKit: [MapKitParking] {
             logger.verbose("Removing duplicated MapKit parkings")
