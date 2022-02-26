@@ -21,7 +21,7 @@ struct MapKitParking {
 
     var isForCars: Bool {
         let isForCars = Self.nonCarParkingNamePattern.rangeOfFirstMatch(in: name).location == NSNotFound
-        logger.debug("\(isForCars) \(name)")
+        logger.verbose("\(isForCars) \(name)")
         return isForCars
     }
 

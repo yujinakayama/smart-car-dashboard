@@ -64,13 +64,13 @@ extension ParkingSearch {
         }()
 
         private var uniquedParkingsListedOnlyOnMapKit: [MapKitParking] {
-            logger.debug("Removing duplicated MapKit parkings")
+            logger.verbose("Removing duplicated MapKit parkings")
 
             let set = parkingsListedOnlyOnMapKit.uniqued { (parkingA, parkingB) in
                 considersParkingsAreSame(parkingA, parkingB)
             } picking: { (duplications) in
                 let picked = duplications.max { $0.detailLevel < $1.detailLevel }!
-                logger.debug("Picking \(picked.name) from duplications: \(duplications.map { $0.name })")
+                logger.verbose("Picking \(picked.name) from duplications: \(duplications.map { $0.name })")
                 return picked
             }
 
