@@ -74,7 +74,10 @@ class WebViewController: UIViewController {
     init(webView: WKWebView? = nil, contentMode: PreferredContentMode = .auto) {
         self.webView = webView ?? Self.makeWebView()
         self.preferredContentMode = contentMode
+
         super.init(nibName: nil, bundle: nil)
+
+        self.webView.uiDelegate = self
         configureToolBarButtonItems()
     }
 
@@ -278,5 +281,13 @@ extension WebViewController {
     enum ContentMode {
         case mobile
         case desktop
+    }
+}
+
+extension WebViewController: WKUIDelegate {
+    // Open target="_blank" links with current web view
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        webView.load(navigationAction.request)
+        return nil
     }
 }
