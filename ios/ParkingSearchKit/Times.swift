@@ -212,7 +212,7 @@ fileprivate extension MKCoordinateRegion {
    var availability = 7 & flags
    var isUnbranded = 1 & (flags >>>= 3)
    var isNewlyOpened = 1 & (flags >>>= 1)
-   var isUpdated = 1 & (flags >>>= 1)
+   var isRunningMorePointReturnCampaign = 1 & (flags >>>= 1)
    var isAvailableForMotorbike = 1 & (flags >>>= 1)
    var isAvailableForBicycle = 1 & (flags >>>= 1)
 
@@ -241,7 +241,7 @@ fileprivate extension MKCoordinateRegion {
    } else if (isNewlyOpened) {
      basename = "new_"
      extension = "gif"
-   } else if (isUpdated) {
+   } else if (isRunningMorePointReturnCampaign) {
      basename = "up_"
      extension = "gif"
    } else {
