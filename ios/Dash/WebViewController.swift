@@ -132,24 +132,24 @@ class WebViewController: UIViewController {
             openInSafariBarButtonItem
         ]
 
-        keyValueObservations.append(webView.observe(\.title, options: .initial, changeHandler: { [unowned self] (webView, change) in
-            navigationItem.title = webView.title
+        keyValueObservations.append(webView.observe(\.title, options: .initial, changeHandler: { [weak self] (webView, change) in
+            self?.navigationItem.title = webView.title
         }))
 
-        keyValueObservations.append(webView.observe(\.isLoading, options: .initial, changeHandler: { [unowned self] (webView, change) in
-            updateReloadOrStopLoadingBarButtonItem()
+        keyValueObservations.append(webView.observe(\.isLoading, options: .initial, changeHandler: { [weak self] (webView, change) in
+            self?.updateReloadOrStopLoadingBarButtonItem()
         }))
 
-        keyValueObservations.append(webView.observe(\.canGoBack, options: .initial, changeHandler: { [unowned self] (webView, change) in
-            backwardBarButtonItem.isEnabled = webView.canGoBack
+        keyValueObservations.append(webView.observe(\.canGoBack, options: .initial, changeHandler: { [weak self] (webView, change) in
+            self?.backwardBarButtonItem.isEnabled = webView.canGoBack
         }))
 
-        keyValueObservations.append(webView.observe(\.canGoForward, options: .initial, changeHandler: { [unowned self] (webView, change) in
-            forwardBarButtonItem.isEnabled = webView.canGoForward
+        keyValueObservations.append(webView.observe(\.canGoForward, options: .initial, changeHandler: { [weak self] (webView, change) in
+            self?.forwardBarButtonItem.isEnabled = webView.canGoForward
         }))
 
-        keyValueObservations.append(webView.observe(\.url, options: .initial, changeHandler: { [unowned self] (webView, change) in
-            openInSafariBarButtonItem.isEnabled = webView.url != nil
+        keyValueObservations.append(webView.observe(\.url, options: .initial, changeHandler: { [weak self] (webView, change) in
+            self?.openInSafariBarButtonItem.isEnabled = webView.url != nil
         }))
     }
 
@@ -182,7 +182,9 @@ class WebViewController: UIViewController {
             progressView.heightAnchor.constraint(equalToConstant: 2)
         ])
 
-        keyValueObservations.append(webView.observe(\.estimatedProgress, options: [.initial, .old], changeHandler: { [unowned self] (webView, change) in
+        keyValueObservations.append(webView.observe(\.estimatedProgress, options: [.initial, .old], changeHandler: { [weak self] (webView, change) in
+            guard let self = self else { return }
+
             let progress = webView.estimatedProgress
             let completed = progress == 1
             let increasing = progress > (change.oldValue ?? 0)
