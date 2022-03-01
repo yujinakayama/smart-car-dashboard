@@ -117,6 +117,10 @@ class WebViewController: UIViewController {
         }
     }
 
+    deinit {
+        progressView.removeFromSuperview()
+    }
+
     private func configureToolBarButtonItems() {
         toolbarItems = [
             backwardBarButtonItem,
