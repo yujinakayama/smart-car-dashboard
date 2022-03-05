@@ -66,7 +66,7 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
 
         Firebase.shared.messaging.markNotificationAsReceived(response.notification)
 
-        process(response.notification)
+        process(response.notification, context: .openedByUser)
 
         completionHandler()
     }
@@ -75,7 +75,7 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         logger.info(notification)
 
-        process(notification)
+        process(notification, context: .receivedInForeground)
 
         completionHandler(notification.request.content.foregroundPresentationOptions)
 
@@ -86,9 +86,9 @@ class UserNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
 
     private var processingNotification: RemoteNotification?
 
-    func process(_ notification: UNNotification) {
+    func process(_ notification: UNNotification, context: RemoteNotification.Context) {
         let remoteNotification = RemoteNotification(userInfo: notification.request.content.userInfo)
-        remoteNotification.process()
+        remoteNotification.process(context: context)
         processingNotification = remoteNotification
     }
 }

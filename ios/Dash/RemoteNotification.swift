@@ -27,17 +27,20 @@ class RemoteNotification {
         return NotificationType(rawValue: string)
     }
 
-    func process() {
+    func process(context: Context) {
         switch type {
         case .share:
-            processShareNotification()
+            processShareNotification(context: context)
         default:
             break
         }
     }
 
-    private func processShareNotification() {
-        guard let item = inboxItem, let rootViewController =  rootViewController else { return }
+    private func processShareNotification(context: Context) {
+        guard let item = inboxItem,
+              shouldOpen(item, context: context), // TODO: Make configurable
+              let rootViewController =  rootViewController
+        else { return }
 
         item.open(from: rootViewController)
 
@@ -59,6 +62,19 @@ class RemoteNotification {
         strongReference = item
     }
 
+    private func shouldOpen(_ inboxItem: InboxItemProtocol, context: Context) -> Bool {
+        switch context {
+        case .openedByUser:
+            return true
+        case .receivedInForeground:
+            if inboxItem is Location {
+                return !Vehicle.default.isMoving
+            } else {
+                return true
+            }
+        }
+    }
+
     private var inboxItem: InboxItemProtocol? {
         guard let itemDictionary = userInfo["item"] as? [String: Any] else {
             logger.error(userInfo)
@@ -75,5 +91,12 @@ class RemoteNotification {
 
     var rootViewController: UIViewController? {
         return UIApplication.shared.foregroundWindowScene?.keyWindow?.rootViewController
+    }
+}
+
+extension RemoteNotification {
+    enum Context {
+        case receivedInForeground
+        case openedByUser
     }
 }
