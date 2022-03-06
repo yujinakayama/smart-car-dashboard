@@ -19,7 +19,7 @@ struct CameraOptions: Encodable {
         metering: .average,
         hflip: true,
         drc: .high,
-        awbgains: AWBGains(blue: 1.4, red: 1.6),
+        awbgains: AWBGains(blue: 1.45, red: 1.5),
         width: 1440,
         height: 1080,
         framerate: 40,
