@@ -265,17 +265,22 @@ class MapsViewController: UIViewController {
     }
 
     private func configureInboxItemDatabase() {
-        inboxItemDatabaseObservation = Firebase.shared.observe(\.inboxItemDatabase, options: .initial) { [weak self] (firebase, change) in
-            guard let self = self else { return }
+        if showsRecentSharedLocations {
+            inboxItemDatabaseObservation = Firebase.shared.observe(\.inboxItemDatabase, options: .initial) { [weak self] (firebase, change) in
+                guard let self = self else { return }
 
-            if let database = Firebase.shared.inboxItemDatabase {
-                self.inboxItemQuerySubscription = database.items(type: .location).subscribeToCountUpdates { (result) in
-                    self.updateSharedLocationAnnotations()
+                if let database = Firebase.shared.inboxItemDatabase {
+                    self.inboxItemQuerySubscription = database.items(type: .location).subscribeToCountUpdates { (result) in
+                        self.updateSharedLocationAnnotations()
+                    }
+                } else {
+                    self.inboxItemQuerySubscription = nil
+                    self.removeSharedLocationAnnotations()
                 }
-            } else {
-                self.inboxItemQuerySubscription = nil
-                self.removeSharedLocationAnnotations()
             }
+        } else {
+            inboxItemDatabaseObservation?.invalidate()
+            inboxItemDatabaseObservation = nil
         }
     }
 
@@ -478,8 +483,6 @@ class MapsViewController: UIViewController {
     }
 
     private func updateSharedLocationAnnotations() {
-        guard showsRecentSharedLocations else { return }
-
         removeSharedLocationAnnotations()
 
         Task {
