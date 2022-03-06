@@ -22,7 +22,7 @@ class Website: InboxItemProtocol {
 
     lazy var simplifiedHost = url.host?.replacingOccurrences(of: "^www\\d*\\.", with: "", options: .regularExpression)
 
-    func open(from viewController: UIViewController) {
+    func open(from viewController: UIViewController) async {
         openInInAppBrowser(from: viewController)
     }
 }

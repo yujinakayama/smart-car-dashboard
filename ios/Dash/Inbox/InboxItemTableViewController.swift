@@ -167,7 +167,10 @@ class InboxItemTableViewController: UITableViewController {
 
         let item = dataSource.item(for: indexPath)
         item.markAsOpened(true)
-        item.open(from: self)
+
+        Task {
+            await item.open(from: self)
+        }
 
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)

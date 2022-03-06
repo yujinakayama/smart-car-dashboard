@@ -20,7 +20,9 @@ protocol InboxItemProtocol: Decodable {
     var url: URL { get }
     var creationDate: Date? { get }
     var hasBeenOpened: Bool { get }
-    func open(from viewController: UIViewController)
+
+    @MainActor
+    func open(from viewController: UIViewController) async
 }
 
 extension InboxItemProtocol {

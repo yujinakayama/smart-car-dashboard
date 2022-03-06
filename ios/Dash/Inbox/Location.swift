@@ -36,17 +36,14 @@ class Location: InboxItemProtocol {
         return name
     }
 
-    func open(from viewController: UIViewController) {
-        openDirectionsInMaps()
+    func open(from viewController: UIViewController) async {
+        await openDirectionsInMaps()
     }
 
-    func openDirectionsInMaps() {
+    func openDirectionsInMaps() async {
         if Defaults.shared.snapLocationToPointOfInterest, !categories.contains(.rendezvous) {
-            findCorrespondingPointOfInterest { [weak self] (pointOfInterestMapItem) in
-                guard let self = self else { return }
-                let mapItem = pointOfInterestMapItem ?? self.mapItem
-                self.openDirectionsInMaps(to: mapItem)
-            }
+            let foundMapItem = try? await findCorrespondingPointOfInterest()
+            openDirectionsInMaps(to: foundMapItem ?? mapItem)
         } else {
             openDirectionsInMaps(to: mapItem)
         }
@@ -58,13 +55,12 @@ class Location: InboxItemProtocol {
         ])
     }
 
-    private func findCorrespondingPointOfInterest(completionHandler: @escaping (MKMapItem?) -> Void) {
+    private func findCorrespondingPointOfInterest() async throws -> MKMapItem? {
         guard let pointOfInterestFinder = pointOfInterestFinder else {
-            completionHandler(nil)
-            return
+            return nil
         }
 
-        pointOfInterestFinder.find(completionHandler: completionHandler)
+        return try await pointOfInterestFinder.find()
     }
 
     var mapItem: MKMapItem {
@@ -114,10 +110,6 @@ class Location: InboxItemProtocol {
             }
         }
 
-        var isCached: Bool {
-            PointOfInterestFinder.cache.containsObject(forKey: cacheKey)
-        }
-
         private lazy var cacheKey: String = {
             let key = String(format: "%@|%f,%f|%f", name, coordinate.latitude, coordinate.longitude, maxDistance)
             return Cache.digestString(of: key)
@@ -129,28 +121,18 @@ class Location: InboxItemProtocol {
             self.maxDistance = maxDistance
         }
 
-        func find(completionHandler: @escaping (MKMapItem?) -> Void) {
-            if isCached {
-                completionHandler(cachedMapItem)
-                return
+        func find() async throws -> MKMapItem? {
+            if let cachedMapItem = cachedMapItem {
+                return cachedMapItem
             }
 
-            MKLocalSearch(request: request).start { [weak self] (response, error) in
-                guard let self = self else { return }
+            let response = try await MKLocalSearch(request: request).start()
 
-                guard error == nil else {
-                    completionHandler(nil)
-                    return
-                }
-
-                var foundMapItem: MKMapItem?
-
-                if let mapItem = response?.mapItems.first, self.isClose(mapItem) {
-                    foundMapItem = mapItem
-                }
-
-                self.cachedMapItem = foundMapItem
-                completionHandler(foundMapItem)
+            if let mapItem = response.mapItems.first, isClose(mapItem) {
+                cachedMapItem = mapItem
+                return mapItem
+            } else {
+                return nil
             }
         }
 

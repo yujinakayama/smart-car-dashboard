@@ -53,7 +53,8 @@ extension Assistant {
             guard let location = await getLocationToOpen() else { return }
 
             location.markAsOpened(true)
-            location.openDirectionsInMaps()
+
+            await location.openDirectionsInMaps()
 
             if !location.categories.contains(where: { $0.isKindOfParking }),
                Defaults.shared.automaticallySearchParkingsWhenLocationIsAutomaticallyOpened

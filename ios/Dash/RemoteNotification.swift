@@ -42,7 +42,9 @@ class RemoteNotification {
               let rootViewController =  rootViewController
         else { return }
 
-        item.open(from: rootViewController)
+        Task {
+            await item.open(from: rootViewController)
+        }
 
         if let location = item as? Location,
            !location.categories.contains(where: { $0.isKindOfParking }),

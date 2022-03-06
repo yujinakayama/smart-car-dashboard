@@ -28,7 +28,7 @@ class MusicItem: InboxItemProtocol {
         return name
     }
 
-    func open(from viewController: UIViewController) {
+    func open(from viewController: UIViewController) async {
         if let playParameters = playParameters {
             play(playParameters: playParameters)
         } else {
