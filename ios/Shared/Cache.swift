@@ -97,4 +97,8 @@ public class Cache {
 
         await pinCache.setObjectAsync(objectToCache, forKey: key)
     }
+
+    public func removeObject(forKey key: String) {
+        pinCache.removeObject(forKey: key)
+    }
 }

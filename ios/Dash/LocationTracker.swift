@@ -92,6 +92,7 @@ class LocationTracker: NSObject {
 
     private func restoreCurrentTrackFromCache() -> Track? {
         guard let data = cache.object(forKey: Self.currentTrackCacheKey) as? Data else { return nil }
+        cache.removeObject(forKey: Self.currentTrackCacheKey)
         return try? CodableCBORDecoder().decode(Track.self, from: data)
     }
 }
