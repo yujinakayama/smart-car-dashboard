@@ -803,8 +803,8 @@
 				B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */,
 				B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */,
 				B94C0B71268C986600BAA450 /* LocationInformationWidget */,
-				B95E14BE27BBDC000037FC94 /* GForceMeterWidget */,
 				B9F272C3259C91990098CB3B /* AltitudeWidgetViewController.swift */,
+				B95E14BE27BBDC000037FC94 /* GForceMeterWidget */,
 			);
 			path = Widget;
 			sourceTree = "<group>";
