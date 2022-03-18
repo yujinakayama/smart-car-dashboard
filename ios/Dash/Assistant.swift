@@ -50,6 +50,8 @@ extension Assistant {
         func run() async {
             logger.info()
 
+            if Vehicle.default.isMoving { return }
+
             guard let location = await getLocationToOpen() else { return }
 
             location.markAsOpened(true)
