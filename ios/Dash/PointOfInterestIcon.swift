@@ -71,7 +71,7 @@ fileprivate func specificIcon(for category: PointOfInterestCategory) -> PointOfI
     case .park, .nationalPark:
         image = UIImage(systemName: "leaf.fill")!
         color = UIColor(rgb: 0x54B741)
-    case .parking:
+    case .parking, .roadsideStation:
         image = UIImage(systemName: "parkingsign")!
         color = UIColor(rgb: 0x4C9EF8)
     case .pharmacy, .drugstore:

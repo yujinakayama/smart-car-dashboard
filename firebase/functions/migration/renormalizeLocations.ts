@@ -1,10 +1,10 @@
 import { initializeApp, cert } from 'firebase-admin/app';
-import { DocumentData, FieldValue, getFirestore } from 'firebase-admin/firestore';
+import { DocumentData, getFirestore } from 'firebase-admin/firestore';
 
-import { Attachments, InputData } from '../src/share/inputData';
-import { Location } from '../src/share/normalizedData';
-import { isAppleMapsLocation, normalizeAppleMapsLocation } from '../src/share/appleMaps';
-import { isGoogleMapsLocation, normalizeGoogleMapsLocation } from '../src/share/googleMaps';
+import { Attachments, InputData } from '../src/addItemToInbox/inputData';
+import { Location } from '../src/addItemToInbox/normalizedData';
+import { isAppleMapsLocation, normalizeAppleMapsLocation } from '../src/addItemToInbox/appleMaps';
+import { isGoogleMapsLocation, normalizeGoogleMapsLocation } from '../src/addItemToInbox/googleMaps';
 
 const serviceAccount = require('./firebase-service-account.json');
 
@@ -44,11 +44,12 @@ async function renormalize(document: FirebaseFirestore.QueryDocumentSnapshot<Doc
     const location = await normalize(inputData);
     await document.ref.update(location);
   } catch (error) {
-    console.log(error.message);
-    document.ref.update({ categories: [] });
-  }
-
-  document.ref.update({ category: FieldValue.delete() });
+    if (error instanceof Error) {
+      console.error(error.toString());
+    } else {
+      console.error(error);
+    }
+  } 
 }
 
 function normalize(inputData: InputData): Promise<Location> {

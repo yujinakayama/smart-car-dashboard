@@ -202,6 +202,7 @@ enum PointOfInterestCategory: String {
     case shintoShrine
     case rendezvous
     case restArea
+    case roadsideStation
 
     case unknown
 }

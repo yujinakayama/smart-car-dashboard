@@ -318,6 +318,10 @@ function normalizeCategories(place: Partial<PlaceData>): string[] {
         if (names.some((name) => name.match(/(\W(PA|SA)|(パーキング|サービス)エリア)$|ハイウェイオアシス|EXPASA/))) {
             categories.unshift('restArea');
         }
+
+        if (place.name.startsWith('道の駅')) {
+            categories.unshift('roadsideStation');
+        }
     }
 
     return categories;
