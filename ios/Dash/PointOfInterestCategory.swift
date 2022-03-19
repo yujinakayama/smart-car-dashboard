@@ -217,7 +217,7 @@ extension PointOfInterestCategory: Decodable {
 extension PointOfInterestCategory {
     var isKindOfParking: Bool {
         switch self {
-        case .parking, .restArea:
+        case .parking, .restArea, .roadsideStation:
             return true
         default:
             return false
