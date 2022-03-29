@@ -51,9 +51,8 @@ class ETCDatabase: NSObject {
         if let card = try await reference.getDocument().data(as: ETCCard.self) {
             return card
         } else {
-            var card = ETCCard(uuid: uuid)
-            try reference.setData(from: card)
-            card.documentReference = reference
+            let card = ETCCard(documentReference: reference)
+            try card.save()
             return card
         }
     }

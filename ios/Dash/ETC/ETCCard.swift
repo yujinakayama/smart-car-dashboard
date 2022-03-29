@@ -19,24 +19,12 @@ struct ETCCard: Codable {
 
     var brand: Brand = .unknown
 
-    var uuid: UUID {
-        get {
-            if let uuid = _uuid {
-                return uuid
-            }
-
-            return UUID(uuidString: documentReference.documentID)!
-        }
-
-        set {
-            _uuid = newValue
-        }
+    init(documentReference: DocumentReference) {
+        self.documentReference = documentReference
     }
 
-    private var _uuid: UUID?
-
-    init(uuid: UUID) {
-        self.uuid = uuid
+    var uuid: UUID {
+        return UUID(uuidString: documentReference.documentID)!
     }
 
     var displayedName: String {
