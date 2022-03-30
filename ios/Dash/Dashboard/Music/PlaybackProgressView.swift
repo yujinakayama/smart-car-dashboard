@@ -10,7 +10,7 @@ import UIKit
 import MediaPlayer
 
 @IBDesignable class PlaybackProgressView: UIView {
-    let slider: Slider = {
+    lazy var slider: Slider = {
         let slider = Slider()
         slider.addTarget(self, action: #selector(sliderValueDidChange), for: .valueChanged)
         slider.isContinuous = true

@@ -28,7 +28,7 @@ import MediaPlayer
         }
     }
 
-    let backwardButton: UIButton = {
+    lazy var backwardButton: UIButton = {
         let button = UIButton(type: .custom)
 
         button.addTarget(self, action: #selector(backwardButtonDidTap), for: .touchUpInside)
@@ -43,7 +43,7 @@ import MediaPlayer
         return button
     }()
 
-    let playPauseButton: UIButton = {
+    lazy var playPauseButton: UIButton = {
         let button = UIButton(type: .custom)
 
         button.addTarget(self, action: #selector(playPauseButtonDidTap), for: .touchUpInside)
@@ -58,7 +58,7 @@ import MediaPlayer
         return button
     }()
 
-    let forwardButton: UIButton = {
+    lazy var forwardButton: UIButton = {
         let button = UIButton(type: .custom)
 
         button.addTarget(self, action: #selector(forwardButtonDidTap), for: .touchUpInside)
