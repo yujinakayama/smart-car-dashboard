@@ -498,8 +498,8 @@ class MapsViewController: UIViewController {
     private func addSharedLocationAnnotations() async {
         guard let database = Firebase.shared.inboxItemDatabase else { return }
 
-        let threeDaysAgo = Date(timeIntervalSinceNow: -3 * 24 * 60 * 60)
-        let query = database.items(type: .location, createdAfter: threeDaysAgo)
+        let oneWeekAgo = Date(timeIntervalSinceNow: -7 * 24 * 60 * 60)
+        let query = database.items(type: .location, createdAfter: oneWeekAgo)
 
         guard let recentLocations = try? await query.get() as? [Location] else { return }
 
