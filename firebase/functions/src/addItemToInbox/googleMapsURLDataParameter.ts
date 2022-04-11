@@ -46,7 +46,12 @@ class Geometry {
     location?: Location;
 
     constructor(object: any) {
-        this.ftid = object['1'];
+        const identifier = object['1'];
+
+        if (identifier.startsWith('0x')) {
+            this.ftid = identifier;
+        }
+
         this.location = object['8'] && new Location(object['8']);
     }
 }
