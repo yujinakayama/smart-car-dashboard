@@ -187,10 +187,16 @@ async function normalizeLocationWithCoordinate(expandedURL: URL, inputData: Inpu
 
 // Last resort
 async function normalizeLocationWithQuery(expandedURL: URL, inputData: InputData): Promise<Location | null> {
-    const query = expandedURL.searchParams.get('q');
+    let query = expandedURL.searchParams.get('q');
 
     if (!query) {
-        return null;
+        const placeName = expandedURL.pathname.match(/^\/maps\/place\/([^\/]+)/)?.[1];
+
+        if (placeName) {
+            query = decodeURIComponent(placeName);
+        } else {
+            return null;
+        }
     }
 
     const response = await googleMapsClient.findPlaceFromText({
