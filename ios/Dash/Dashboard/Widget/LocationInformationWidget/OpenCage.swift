@@ -248,6 +248,8 @@ extension OpenCage {
 
     // https://github.com/OpenCageData/address-formatting/blob/c379c9f/conf/components.yaml
     struct Address: Decodable {
+        static let prefectureTypes = ["都", "道", "府", "県"]
+
         let country: String?
         let postcode: String?
         let state: String?
@@ -309,6 +311,18 @@ extension OpenCage {
             }
 
             return nil
+        }
+
+        var prefectureType: String? {
+            guard let lastCharacter = prefecture?.last else { return nil }
+
+            let lastCharacterString = String(lastCharacter)
+
+            if Self.prefectureTypes.contains(lastCharacterString) {
+                return lastCharacterString
+            } else {
+                return nil
+            }
         }
     }
 }
