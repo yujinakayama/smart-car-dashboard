@@ -9,6 +9,8 @@
 import Foundation
 
 class RoadName: Equatable {
+    static let nameComponentPattern = try! NSRegularExpression(pattern: "[^\\(\\)（）]+")
+
     let road: OpenCage.Road?
     let address: OpenCage.Address?
 
@@ -38,9 +40,12 @@ class RoadName: Equatable {
     var popularNames: [String] {
         guard let road = road else { return [] }
 
-        let popularNames = road.popularNames.map { $0.covertFullwidthAlphanumericsToHalfwidth() }
+        let popularNames = road.popularNames.map { (name) -> [String] in
+            let name = name.covertFullwidthAlphanumericsToHalfwidth()
+            return Self.nameComponentPattern.matches(in: name).map { name[$0.range] }
+        }.joined()
 
-        guard let routeNumber = road.routeNumber else { return popularNames }
+        guard let routeNumber = road.routeNumber else { return Array(popularNames) }
 
         // Some roads have popular name only with route number (e.g. Popular name "123" for 国道123号),
         // which is redundant and meaningless.
