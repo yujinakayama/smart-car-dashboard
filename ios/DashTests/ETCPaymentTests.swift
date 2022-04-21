@@ -21,10 +21,10 @@ class ETCPaymentTests: XCTestCase {
 
         let payment = ETCPayment(
             amount: 650,
-            date: dateComponents.date!,
+            exitDate: dateComponents.date!,
             entranceTollboothID: "12-137",
             exitTollboothID: "12-585",
-            vehicleClassification: VehicleClassification(rawValue: 1)!
+            vehicleClassification: ETCPayment.VehicleClassification(rawValue: 1)!
         )
 
         XCTAssertEqual(payment.entranceTollbooth?.road.name, "首都高速道路")
@@ -33,14 +33,14 @@ class ETCPaymentTests: XCTestCase {
         XCTAssertEqual(payment.entranceTollbooth?.name, "五反田")
         XCTAssertEqual(payment.exitTollbooth?.road.name, "首都高速道路")
         XCTAssertEqual(payment.exitTollbooth?.name, "台場")
-        XCTAssertEqual(iso8601(payment.date), "2019-05-31T01:23:56+09:00")
+        XCTAssertEqual(iso8601(payment.exitDate), "2019-05-31T01:23:56+09:00")
         XCTAssertEqual(payment.vehicleClassification, .standard)
     }
 
     func testTollbooth() {
-        var tollbooth: Tollbooth?
+        var tollbooth: ETCTollbooth?
 
-        tollbooth = Tollbooth.findTollbooth(id: "04-049")
+        tollbooth = ETCTollbooth.findTollbooth(id: "04-049")
         XCTAssertEqual(tollbooth?.name, "茅ヶ崎JCT")
         XCTAssertEqual(tollbooth?.road.name, "首都圏中央連絡自動車道")
         XCTAssertEqual(tollbooth?.road.abbreviatedName, "圏央道")

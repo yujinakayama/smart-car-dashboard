@@ -64,6 +64,8 @@
 		B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554F22BAA5D1008B053B /* LocalNotification.swift */; };
 		B944C69024A9E4C8000D1E99 /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B944C68F24A9E4C8000D1E99 /* MusicViewController.swift */; };
 		B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B944C69124A9E647000D1E99 /* PlaybackControlView.swift */; };
+		B948F95B281177B000511CA7 /* UUIDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43923D345D70078A057 /* UUIDExtension.swift */; };
+		B948F95C2811782400511CA7 /* ETCTollbooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9515F1527BA8C07001C1D8D /* ETCTollbooth.swift */; };
 		B94A59A026826E960074368A /* LocationInformationDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94A599F26826E960074368A /* LocationInformationDebugViewController.swift */; };
 		B94BD2E92680486700B768A2 /* BorderedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94BD2E82680486700B768A2 /* BorderedLabel.swift */; };
 		B94E69D123F7A313004CCC7C /* WebsiteIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */; };
@@ -2047,8 +2049,10 @@
 			files = (
 				B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */,
 				B942554522B8ED10008B053B /* ETCMessageTests.swift in Sources */,
+				B948F95B281177B000511CA7 /* UUIDExtension.swift in Sources */,
 				B99356DB22A9484700BA08AB /* ETCPaymentTests.swift in Sources */,
 				B91BD8092323FD820064D2B5 /* ETCPayment.swift in Sources */,
+				B948F95C2811782400511CA7 /* ETCTollbooth.swift in Sources */,
 				B9E96CBB22A3CE7500C2E009 /* DashTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
