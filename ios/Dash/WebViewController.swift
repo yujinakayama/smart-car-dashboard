@@ -10,15 +10,34 @@ import UIKit
 import WebKit
 
 class WebViewController: UIViewController {
+    static let osVersion = UIDevice.current.systemVersion
+
     // https://stackoverflow.com/a/65825682/784241
     static let defaultUserAgent: String = WKWebView().value(forKey: "userAgent") as! String
 
+    static let webKitVersion: String? = {
+        let pattern = try! NSRegularExpression(pattern: "AppleWebKit/(\\S+)")
+        guard let result = pattern.firstMatch(in: defaultUserAgent) else { return nil }
+        return defaultUserAgent[result.range(at: 1)]
+    }()
+
+    // Safari
+    // Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Safari/605.1.15
+    // Mozilla/5.0 (iPad; CPU OS 15_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Mobile/15E148 Safari/604.1
+
+    // WKWebView
+    // Mozilla/5.0 (iPad; CPU OS 15_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148
+
+    static let safariLikeUserAgentSuffix = " Version/\(osVersion) Safari/\(webKitVersion ?? "0")"
+
     static let mobileUserAgent = defaultUserAgent
         .replacingOccurrences(of: "iPad|Macintosh", with: "iPhone", options: .regularExpression)
+        + safariLikeUserAgentSuffix
 
     static let desktopUserAgent = defaultUserAgent
         .replacingOccurrences(of: "iPhone|iPad", with: "Macintosh", options: .regularExpression)
         .replacingOccurrences(of: " Mobile/\\S+", with: "", options: .regularExpression)
+        + safariLikeUserAgentSuffix
 
     static func makeWebView() -> WKWebView {
         let configuration = WKWebViewConfiguration()
@@ -26,8 +45,12 @@ class WebViewController: UIViewController {
         configuration.ignoresViewportScaleLimits = true
         configuration.mediaTypesRequiringUserActionForPlayback = .all
 
-        // Fix the content mode to the mobile one since this cannot be dynamically changed
-        // after creating WKWebView instance.
+        // Fix the content mode to the mobile one since:
+        //
+        // * We want to use user-agents imitating Safari.
+        // * The .recommended mode uses .desktop mode in half split screen in iPad Pro,
+        //   which is too narrow for desktop websites.
+        //
         // Instead, we dynamically modify user agent by ourselves.
         configuration.defaultWebpagePreferences.preferredContentMode = .mobile
 
