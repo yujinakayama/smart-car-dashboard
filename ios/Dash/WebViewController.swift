@@ -287,7 +287,15 @@ class WebViewController: UIViewController {
     }
 
     @objc func reload() {
-        webView.reload()
+        let dataStore = webView.configuration.websiteDataStore
+
+        let cacheTypes = Set([WKWebsiteDataTypeMemoryCache, WKWebsiteDataTypeDiskCache])
+
+        dataStore.fetchDataRecords(ofTypes: cacheTypes) { (records) in
+            dataStore.removeData(ofTypes: cacheTypes, for: records) { [weak self] in
+                self?.webView.reload()
+            }
+        }
     }
 
     @objc func stopLoading() {
