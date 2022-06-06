@@ -36,9 +36,16 @@ export interface MusicItem extends BaseNormalizedData {
     } | null;
 }
 
+export interface Video extends BaseNormalizedData {
+    type: 'video';
+    creator: string | null;
+    thumbnailURL: string | null;
+    title: string | null;
+}
+
 export interface Website extends BaseNormalizedData {
     type: 'website';
     title: string | null;
 }
 
-export type NormalizedData = Location | MusicItem | Website;
+export type NormalizedData = Location | MusicItem | Video | Website;

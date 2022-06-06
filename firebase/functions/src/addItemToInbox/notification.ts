@@ -64,6 +64,13 @@ function makeNotificationPayload(item: Item, identifier: string): NotificationPa
             }
 
             break;
+        case 'video':
+            alert = {
+                title: '動画',
+                body: normalizedData.title || undefined
+            }
+
+            break;
         case 'website':
             alert = {
                 title: 'Webサイト',

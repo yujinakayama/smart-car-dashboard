@@ -7,6 +7,7 @@ import { Item } from './item';
 import { isAppleMapsLocation, normalizeAppleMapsLocation } from './appleMaps';
 import { isGoogleMapsLocation, normalizeGoogleMapsLocation } from './googleMaps';
 import { isAppleMusicItem, normalizeAppleMusicItem } from './appleMusic';
+import { isYouTubeVideo, normalizeYouTubeVideo } from './youtube';
 import { normalizeWebpage } from './website';
 import { notify } from './notification';
 
@@ -59,6 +60,8 @@ function normalize(inputData: InputData): Promise<NormalizedData> {
         return normalizeGoogleMapsLocation(inputData);
     } else if (isAppleMusicItem(inputData)) {
         return normalizeAppleMusicItem(inputData);
+    } else if (isYouTubeVideo(inputData)) {
+        return normalizeYouTubeVideo(inputData);
     } else {
         return normalizeWebpage(inputData);
     }
