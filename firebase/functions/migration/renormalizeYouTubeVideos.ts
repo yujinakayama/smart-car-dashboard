@@ -17,10 +17,10 @@ async function main() {
 
   for (const vehicle of vehiclesSnapshot.docs) {
     const vehicleItems = firestore.collection('vehicles').doc(vehicle.id).collection('items');
-    const websiteSnapshot = await vehicleItems.where('type', '==', 'website').get();
+    const videoSnapshot = await vehicleItems.where('type', '==', 'video').get();
 
-    for (const website of websiteSnapshot.docs) {
-      renormalize(website)
+    for (const video of videoSnapshot.docs) {
+      renormalize(video)
     }
   }
 }

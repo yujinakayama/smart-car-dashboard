@@ -1,4 +1,4 @@
-import { google } from 'googleapis'
+import { google, youtube_v3 } from 'googleapis'
 import * as functions from 'firebase-functions'
 
 import { InputData } from './inputData'
@@ -27,8 +27,26 @@ export async function normalizeYouTubeVideo(inputData: InputData): Promise<Video
         throw new Error(`YouTube URL must have a video ID: ${inputData.url}`)
     }
 
+    const video = await fetchVideo(videoID)
+
+    let channel: youtube_v3.Schema$ChannelSnippet | null = null
+
+    if (video.channelId) {
+        channel = await fetchChannel(video.channelId)
+    }
+
+    return {
+        type: 'video',
+        creator: video.channelTitle || null,
+        title: video.title || null,
+        thumbnailURL: channel?.thumbnails?.medium?.url || null,
+        url: inputData.url.toString()
+    }
+}
+
+async function fetchVideo(id: string): Promise<youtube_v3.Schema$VideoSnippet> {
     const response = await client.videos.list({
-        id: [videoID],
+        id: [id],
         part: ['snippet'],
         auth: apiKey
     })
@@ -38,14 +56,22 @@ export async function normalizeYouTubeVideo(inputData: InputData): Promise<Video
     if (!video) {
         throw new Error(`Failed fetching data for YouTube video: ${response.statusText}`)
     }
-  
-    const snippet = video.snippet!
 
-    return {
-        type: 'video',
-        creator: snippet.channelTitle || null,
-        title: snippet.title || null,
-        thumbnailURL: snippet.thumbnails?.default?.url || null,
-        url: inputData.url.toString()
+    return video.snippet!
+}
+
+async function fetchChannel(id: string): Promise<youtube_v3.Schema$ChannelSnippet> {
+    const response = await client.channels.list({
+        id: [id],
+        part: ['snippet'],
+        auth: apiKey
+    })
+
+    const channel = response.data.items?.[0]
+
+    if (!channel) {
+        throw new Error(`Failed fetching data for YouTube channel: ${response.statusText}`)
     }
+
+    return channel.snippet!
 }
