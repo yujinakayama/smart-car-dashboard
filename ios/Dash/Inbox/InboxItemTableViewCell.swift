@@ -158,11 +158,7 @@ class InboxItemTableViewCell: UITableViewCell {
         iconBackgroundView.backgroundColor = .systemTeal
 
         if let thumbnailURL = video.thumbnailURL {
-            setRemoteImage(url: thumbnailURL) { (error) in
-                if error == nil {
-                    self.iconBackgroundView.cornerRadius = 2
-                }
-            }
+            setRemoteImage(url: thumbnailURL)
         }
 
         nameLabel.text = video.title
