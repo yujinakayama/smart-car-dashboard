@@ -1,9 +1,9 @@
-import * as admin from 'firebase-admin';
+import * as admin from 'firebase-admin'
 
-import { Item } from './item';
-import { NormalizedData } from './normalizedData';
+import { Item } from './item'
+import { NormalizedData } from './normalizedData'
 
-admin.initializeApp();
+admin.initializeApp()
 
 interface ItemWithIdentifier extends Item {
     identifier: string;
@@ -24,7 +24,7 @@ enum UNNotificationPresentationOptions {
 }
 
 export function notify(vehicleID: string, item: Item, itemIdentifier: string): Promise<any> {
-    const payload = makeNotificationPayload(item, itemIdentifier);
+    const payload = makeNotificationPayload(item, itemIdentifier)
 
     const message = {
         topic: vehicleID,
@@ -32,51 +32,52 @@ export function notify(vehicleID: string, item: Item, itemIdentifier: string): P
             // admin.messaging.ApnsPayload type requires `object` value for custom keys but it's wrong
             payload: payload as any
         }
-    };
+    }
 
-    return admin.messaging().send(message);
+    return admin.messaging().send(message)
 }
 
 function makeNotificationPayload(item: Item, identifier: string): NotificationPayload {
-    const normalizedData = item as unknown as NormalizedData;
+    const normalizedData = item as unknown as NormalizedData
 
-    let alert: admin.messaging.ApsAlert;
+    let alert: admin.messaging.ApsAlert
 
     switch (normalizedData.type) {
-        case 'location':
-            alert = {
-                title: '目的地',
-                body: normalizedData.name || undefined
-            }
-            break;
-        case 'musicItem':
-            let body: string;
+    case 'location':
+        alert = {
+            title: '目的地',
+            body: normalizedData.name || undefined
+        }
+        break
+    case 'musicItem': {
+        let body: string
 
-            if (normalizedData.name) {
-                body = [normalizedData.name, normalizedData.creator].filter(e => e).join(' - ');
-            } else {
-                body = normalizedData.url;
-            }
+        if (normalizedData.name) {
+            body = [normalizedData.name, normalizedData.creator].filter(e => e).join(' - ')
+        } else {
+            body = normalizedData.url
+        }
 
-            alert = {
-                title: '音楽',
-                body: body
-            }
+        alert = {
+            title: '音楽',
+            body: body
+        }
 
-            break;
-        case 'video':
-            alert = {
-                title: '動画',
-                body: normalizedData.title || undefined
-            }
+        break
+    }
+    case 'video':
+        alert = {
+            title: '動画',
+            body: normalizedData.title || undefined
+        }
 
-            break;
-        case 'website':
-            alert = {
-                title: 'Webサイト',
-                body: normalizedData.title || normalizedData.url
-            }
-            break;
+        break
+    case 'website':
+        alert = {
+            title: 'Webサイト',
+            body: normalizedData.title || normalizedData.url
+        }
+        break
     }
 
     return {
@@ -90,5 +91,5 @@ function makeNotificationPayload(item: Item, identifier: string): NotificationPa
             ...item
         },
         notificationType: 'share'
-    };
+    }
 }

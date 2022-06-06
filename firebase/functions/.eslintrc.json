@@ -24,6 +24,7 @@
             "error",
             "unix"
         ],
+        "no-unused-vars": "off",
         "quotes": [
             "error",
             "single"
@@ -31,6 +32,20 @@
         "semi": [
             "error",
             "never"
+        ],
+        "no-constant-condition": [
+            "error",
+            { "checkLoops": false }
+        ],
+        "@typescript-eslint/ban-ts-comment": [
+            "error",
+            { "ts-ignore": "allow-with-description" }
+        ],
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            { "argsIgnorePattern": "^_" }
         ]
     }
 }

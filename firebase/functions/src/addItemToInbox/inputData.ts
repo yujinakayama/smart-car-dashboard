@@ -1,6 +1,6 @@
-import { URL } from 'url';
+import { URL } from 'url'
 
-import { urlPattern } from './util';
+import { urlPattern } from './util'
 
 export interface Request {
     vehicleID: string;
@@ -9,28 +9,28 @@ export interface Request {
 }
 
 export class InputData {
-    attachments: Attachments;
-    url: URL;
+    attachments: Attachments
+    url: URL
 
     constructor(attachments: Attachments) {
-        this.attachments = attachments;
-        this.url = new URL(this.extractURL());
+        this.attachments = attachments
+        this.url = new URL(this.extractURL())
     }
 
     private extractURL(): string {
         if (this.attachments['public.url']) {
-            return this.attachments['public.url'];
+            return this.attachments['public.url']
         }
 
         if (this.attachments['public.plain-text']) {
-            const urls = this.attachments['public.plain-text'].match(urlPattern);
+            const urls = this.attachments['public.plain-text'].match(urlPattern)
 
             if (urls && urls[0]) {
-                return urls[0];
+                return urls[0]
             }
         }
 
-        throw new Error('Attachments have no URL');
+        throw new Error('Attachments have no URL')
     }
 }
 

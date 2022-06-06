@@ -1,12 +1,12 @@
-import { AddressType, Client, Language, PlaceData, PlaceDetailsRequest, PlaceInputType, PlaceType1, PlaceType2 } from "@googlemaps/google-maps-services-js";
-import axios from 'axios';
-import * as functions from 'firebase-functions';
+import { AddressType, Client, Language, PlaceData, PlaceDetailsRequest, PlaceInputType, PlaceType1, PlaceType2 } from '@googlemaps/google-maps-services-js'
+import axios from 'axios'
+import * as functions from 'firebase-functions'
 
-import { URL } from 'url';
+import { URL } from 'url'
 
 import { decodeURLDataParameter } from './googleMapsURLDataParameter'
-import { InputData } from './inputData';
-import { Location, Address } from './normalizedData';
+import { InputData } from './inputData'
+import { Location, Address } from './normalizedData'
 import { convertAlphanumericsToAscii } from './util'
 
 // https://developers.google.com/maps/documentation/geocoding/intro#Types
@@ -64,16 +64,16 @@ const googleMapsAddressComponentKeys = [
     'airport',
     'park',
     'point_of_interest'
-];
+]
 
-const client = new Client();
-const apiKey = process.env.GOOGLE_API_KEY || functions.config().google.api_key;
+const client = new Client()
+const apiKey = process.env.GOOGLE_API_KEY || functions.config().google.api_key
 
 export function isGoogleMapsLocation(inputData: InputData): boolean {
-    const url = inputData.url;
+    const url = inputData.url
 
     if (url.toString().startsWith('https://goo.gl/maps/')) {
-        return true;
+        return true
     }
 
     return !!url.hostname.match(/((www|maps)\.)google\.(com|co\.jp)/)
@@ -81,42 +81,42 @@ export function isGoogleMapsLocation(inputData: InputData): boolean {
 }
 
 export async function normalizeGoogleMapsLocation(inputData: InputData): Promise<Location> {
-    const expandedURL = await expandShortenURL(inputData.url);
+    const expandedURL = await expandShortenURL(inputData.url)
 
-    let locationData: Location | null;
+    let locationData: Location | null
 
-    locationData = await normalizeLocationWithFtid(expandedURL, inputData);
+    locationData = await normalizeLocationWithFtid(expandedURL, inputData)
     if (locationData) {
-        return locationData;
+        return locationData
     }
 
-    locationData = await normalizeLocationWithCoordinate(expandedURL, inputData);
+    locationData = await normalizeLocationWithCoordinate(expandedURL, inputData)
     if (locationData) {
-        return locationData;
+        return locationData
     }
 
-    locationData = await normalizeLocationWithQuery(expandedURL, inputData);
+    locationData = await normalizeLocationWithQuery(expandedURL, inputData)
     if (locationData) {
-        return locationData;
+        return locationData
     }
 
-    throw new Error('Cannot find details for the Google Maps URL');
+    throw new Error('Cannot find details for the Google Maps URL')
 }
 
 async function expandShortenURL(url: URL): Promise<URL> {
     if (url.hostname !== 'goo.gl') {
-        return url;
+        return url
     }
 
     const response = await axios.get(url.toString(), {
         maxRedirects: 0,
-        validateStatus: (statusCode) => true
-    });
+        validateStatus: (_statusCode) => true
+    })
 
-    const expandedURLString = response.headers['location'];
+    const expandedURLString = response.headers['location']
 
     if (expandedURLString) {
-        return new URL(expandedURLString);
+        return new URL(expandedURLString)
     } else {
         throw new Error(`URL could not be expanded: ${url.toString()}`)
     }
@@ -125,36 +125,36 @@ async function expandShortenURL(url: URL): Promise<URL> {
 // Point of Interests
 // https://stackoverflow.com/a/47042514/784241
 async function normalizeLocationWithFtid(expandedURL: URL, inputData: InputData): Promise<Location | null> {
-    let ftid = expandedURL.searchParams.get('ftid');
+    let ftid = expandedURL.searchParams.get('ftid')
 
     if (!ftid) {
-        const matches = expandedURL.pathname.match(/\/data=([^\/]+)/)
-        const dataParameter = matches && matches[1];
+        const matches = expandedURL.pathname.match(/\/data=([^/]+)/)
+        const dataParameter = matches && matches[1]
 
         if (!dataParameter) {
-            return null;
+            return null
         }
 
-        const data = decodeURLDataParameter(dataParameter);
-        ftid = data.place?.geometry?.ftid || null;
+        const data = decodeURLDataParameter(dataParameter)
+        ftid = data.place?.geometry?.ftid || null
     }
 
     if (!ftid) {
-        return null;
+        return null
     }
 
-    return normalizeLocationWithIdentifier({ ftid: ftid }, expandedURL, inputData);
+    return normalizeLocationWithIdentifier({ ftid: ftid }, expandedURL, inputData)
 }
 
 async function normalizeLocationWithCoordinate(expandedURL: URL, inputData: InputData): Promise<Location | null> {
-    const query = expandedURL.searchParams.get('q');
+    const query = expandedURL.searchParams.get('q')
 
     if (!query) {
-        return null;
+        return null
     }
 
-    if (!query.match(/^[\d\.]+,[\d\.]+$/)) {
-        return null;
+    if (!query.match(/^[\d.]+,[\d.]+$/)) {
+        return null
     }
 
     const response = await client.reverseGeocode({
@@ -163,12 +163,12 @@ async function normalizeLocationWithCoordinate(expandedURL: URL, inputData: Inpu
             language: Language.ja,
             key: apiKey
         }
-    });
+    })
 
-    const place = response.data.results[0];
+    const place = response.data.results[0]
 
     if (!place) {
-        return null;
+        return null
     }
 
     return {
@@ -182,20 +182,20 @@ async function normalizeLocationWithCoordinate(expandedURL: URL, inputData: Inpu
         name: convertAlphanumericsToAscii(inputData.attachments['public.plain-text']),
         url: expandedURL.toString(),
         websiteURL: null
-    };
+    }
 }
 
 // Last resort
 async function normalizeLocationWithQuery(expandedURL: URL, inputData: InputData): Promise<Location | null> {
-    let query = expandedURL.searchParams.get('q');
+    let query = expandedURL.searchParams.get('q')
 
     if (!query) {
-        const placeName = expandedURL.pathname.match(/^\/maps\/place\/([^\/]+)/)?.[1];
+        const placeName = expandedURL.pathname.match(/^\/maps\/place\/([^/]+)/)?.[1]
 
         if (placeName) {
-            query = decodeURIComponent(placeName);
+            query = decodeURIComponent(placeName)
         } else {
-            return null;
+            return null
         }
     }
 
@@ -206,20 +206,20 @@ async function normalizeLocationWithQuery(expandedURL: URL, inputData: InputData
             language: Language.ja,
             key: apiKey
         }
-    });
+    })
 
     const place = response.data.candidates[0]
 
     if (!place) {
-        return null;
+        return null
     }
 
-    return normalizeLocationWithIdentifier({ placeid: place.place_id }, expandedURL, inputData);
+    return normalizeLocationWithIdentifier({ placeid: place.place_id }, expandedURL, inputData)
 }
 
 async function normalizeLocationWithIdentifier(id: { placeid?: string, ftid?: string }, expandedURL: URL, inputData: InputData): Promise<Location | null> {
     if (!id.placeid && !id.ftid) {
-        throw new Error('Either placeid or ftid must be given');
+        throw new Error('Either placeid or ftid must be given')
     }
 
     const requestParameters: PlaceDetailsRequest = {
@@ -232,24 +232,24 @@ async function normalizeLocationWithIdentifier(id: { placeid?: string, ftid?: st
     }
 
     if (id.ftid) {
-        // @ts-ignore
+        // @ts-ignore ftid is not officially supported but works
         requestParameters.params.ftid = id.ftid
     }
 
-    const response = await client.placeDetails(requestParameters);
+    const response = await client.placeDetails(requestParameters)
 
-    const place = response.data.result;
+    const place = response.data.result
 
     if (!place.geometry || !place.address_components) {
-        return null;
+        return null
     }
 
-    let name: string | undefined;
+    let name: string | undefined
     
     if (isPointOfInterest(place)) {
-        name = place.name || inputData.attachments['public.plain-text'];
+        name = place.name || inputData.attachments['public.plain-text']
     } else {
-        name = inputData.attachments['public.plain-text'] || place.name;
+        name = inputData.attachments['public.plain-text'] || place.name
     }
 
     return {
@@ -263,17 +263,17 @@ async function normalizeLocationWithIdentifier(id: { placeid?: string, ftid?: st
         name: convertAlphanumericsToAscii(name),
         url: expandedURL.toString(),
         websiteURL: place.website ? (new URL(place.website)).toString() : null // // To handle internationalized domain names
-    };
+    }
 }
 
 function normalizeAddressComponents(rawAddressComponents: object[]): Address {
     const components: GoogleMapsAddressComponents = rawAddressComponents.reverse().reduce((object: any, rawComponent: any) => {
         const key = rawComponent.types.find((type: string) => googleMapsAddressComponentKeys.includes(type))
         if (!object[key]) {
-            object[key] = convertAlphanumericsToAscii(rawComponent.long_name);
+            object[key] = convertAlphanumericsToAscii(rawComponent.long_name)
         }
-        return object;
-    }, {});
+        return object
+    }, {})
 
     return {
         country: components.country || null,
@@ -288,49 +288,49 @@ function normalizeAddressComponents(rawAddressComponents: object[]): Address {
             components.sublocality_level_5
         ].filter((e) => e).join('') || null,
         houseNumber: components.premise || null
-    };
+    }
 }
 
 function isPointOfInterest(place: Partial<PlaceData>): boolean {
     if (!place.types) {
-        return false;
+        return false
     }
 
-    return place.types[0] !== PlaceType2.premise;
+    return place.types[0] !== PlaceType2.premise
 }
 
 function normalizeCategories(place: Partial<PlaceData>): string[] {
-    const types = place.types;
+    const types = place.types
 
     if (!types) {
-        return [];
+        return []
     }
 
-    const categories = types.map((type) => convertToCamelCase(type.toString()));
+    const categories = types.map((type) => convertToCamelCase(type.toString()))
 
     if (place.name) {
-        const names = extractNameSegments(convertAlphanumericsToAscii(place.name) ?? '');
+        const names = extractNameSegments(convertAlphanumericsToAscii(place.name) ?? '')
 
         if (types.includes(PlaceType2.place_of_worship) && !isGooglePredefinedWorshipPlace(types)) {
             if (names.some((name) => name.match(/(寺|院|大師|薬師|観音|帝釈天)$/))) {
                 // https://ja.wikipedia.org/wiki/日本の寺院一覧
-                categories.unshift('buddhistTemple');
+                categories.unshift('buddhistTemple')
             } else if (names.some((name) => name.match(/(神社|大社|宮|祠)$/))) {
                 // https://ja.wikipedia.org/wiki/神社一覧
-                categories.unshift('shintoShrine');
+                categories.unshift('shintoShrine')
             }
         }
 
         if (names.some((name) => name.match(/(\W(PA|SA)|(パーキング|サービス)エリア)$|ハイウェイオアシス|EXPASA/))) {
-            categories.unshift('restArea');
+            categories.unshift('restArea')
         }
 
         if (place.name.startsWith('道の駅')) {
-            categories.unshift('roadsideStation');
+            categories.unshift('roadsideStation')
         }
     }
 
-    return categories;
+    return categories
 }
 
 function isGooglePredefinedWorshipPlace(types: AddressType[]): boolean {
@@ -338,15 +338,16 @@ function isGooglePredefinedWorshipPlace(types: AddressType[]): boolean {
            types.includes(PlaceType1.church) ||
            types.includes(PlaceType1.hindu_temple) ||
            types.includes(PlaceType1.mosque) ||
-           types.includes(PlaceType1.synagogue);
+           types.includes(PlaceType1.synagogue)
 }
 
 function convertToCamelCase(string: string): string {
     return string.replace(/(_[a-z])/g, (match) => {
-        return match.toUpperCase();
-    }).replace(/_/g, '');
+        return match.toUpperCase()
+    }).replace(/_/g, '')
 }
 
 function extractNameSegments(name: string): string[] {
-    return name.split(/[\s　\(\)（）]+/).filter((string) => string);
+    // eslint-disable-next-line no-irregular-whitespace
+    return name.split(/[\s　()（）]+/).filter((string) => string)
 }
