@@ -217,6 +217,8 @@ class InboxItemTableViewController: UITableViewController {
                 return self.actionMenu(for: location)
             case let musicItem as MusicItem:
                 return self.actionMenu(for: musicItem)
+            case let video as Video:
+                return self.actionMenu(for: video)
             case let website as Website:
                 return self.actionMenu(for: website)
             default:
@@ -321,6 +323,16 @@ private extension InboxItemTableViewController {
             UIAction(title: String(localized: "Show in Apple Music"), image: UIImage(systemName: "music.note")) { (action) in
                 musicItem.markAsOpened(true)
                 UIApplication.shared.open(musicItem.url)
+            }
+        ])
+    }
+
+    func actionMenu(for video: Video) -> UIMenu {
+        return UIMenu(children: [
+            UIAction(title: String(localized: "Open in In-App Browser"), image: UIImage(systemName: "safari")) { [weak self] (action) in
+                guard let self = self else { return }
+                video.markAsOpened(true)
+                video.openInInAppBrowser(from: self)
             }
         ])
     }

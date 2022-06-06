@@ -246,6 +246,7 @@
 		B9FACF4C25D4299900F05CAE /* RearviewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9F4377B25D41C19004B9140 /* RearviewKit.framework */; };
 		B9FACF4D25D4299900F05CAE /* RearviewKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B9F4377B25D41C19004B9140 /* RearviewKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B9FB33E124AE2ACD00FEB782 /* PlaybackModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FB33E024AE2ACD00FEB782 /* PlaybackModeButton.swift */; };
+		B9FF2907284E04F400CCB320 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FF2906284E04F400CCB320 /* Video.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -642,6 +643,7 @@
 		B9F9EFD5256D3D6B00C33781 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		B9FA6CC724CED3D00038E990 /* SongDataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongDataRequest.swift; sourceTree = "<group>"; };
 		B9FB33E024AE2ACD00FEB782 /* PlaybackModeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackModeButton.swift; sourceTree = "<group>"; };
+		B9FF2906284E04F400CCB320 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		BBF96480A5CBA83FEB75EF07 /* Pods-DashRemote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote.debug.xcconfig"; path = "Target Support Files/Pods-DashRemote/Pods-DashRemote.debug.xcconfig"; sourceTree = "<group>"; };
 		D72D61E07B471561E0FDF3FC /* Pods-Rearview.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rearview.release.xcconfig"; path = "Target Support Files/Pods-Rearview/Pods-Rearview.release.xcconfig"; sourceTree = "<group>"; };
 		E8E732016FBB1AB0B6B32FD4 /* Pods-RearviewKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RearviewKit.release.xcconfig"; path = "Target Support Files/Pods-RearviewKit/Pods-RearviewKit.release.xcconfig"; sourceTree = "<group>"; };
@@ -892,6 +894,7 @@
 				B95F514D23E5BBF70063CB3D /* InboxItem.swift */,
 				B95F514523E5A8540063CB3D /* Location.swift */,
 				B932E5EB23F86C5F00726615 /* MusicItem.swift */,
+				B9FF2906284E04F400CCB320 /* Video.swift */,
 				B95F514923E5B2C10063CB3D /* Website.swift */,
 				B9B717DD23E6B26900A47207 /* UnknownItem.swift */,
 				B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */,
@@ -1958,6 +1961,7 @@
 				B99AD73727BA9D6000EE467A /* NSLayoutConstraintExtension.swift in Sources */,
 				B9C0BF472698689B00C54BA9 /* OfficialParkingInformationWebViewController.swift in Sources */,
 				B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */,
+				B9FF2907284E04F400CCB320 /* Video.swift in Sources */,
 				B90C297225E3FB80004466C9 /* SIMDExtension.swift in Sources */,
 				B90A5500274A4B8E0078585A /* LocationTracker.swift in Sources */,
 				B9BA5B5B26A8982C004D5927 /* SharedLocationAnnotation.swift in Sources */,

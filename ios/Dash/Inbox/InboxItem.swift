@@ -66,6 +66,7 @@ struct InboxItem {
     enum ItemType: String {
         case location
         case musicItem
+        case video
         case website
         case unknown
 
@@ -93,6 +94,8 @@ struct InboxItem {
             item = try decoder.decode(Location.self, from: dictionary)
         case .musicItem:
             item = try decoder.decode(MusicItem.self, from: dictionary)
+        case .video:
+            item = try decoder.decode(Video.self, from: dictionary)
         case .website:
             item = try decoder.decode(Website.self, from: dictionary)
         case .unknown:
@@ -114,6 +117,8 @@ struct InboxItem {
             return try decoder.decode(Location.self, from: dictionary)
         case .musicItem:
             return try decoder.decode(MusicItem.self, from: dictionary)
+        case .video:
+            return try decoder.decode(Video.self, from: dictionary)
         case .website:
             return try decoder.decode(Website.self, from: dictionary)
         case .unknown:

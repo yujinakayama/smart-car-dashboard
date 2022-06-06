@@ -110,6 +110,8 @@ class InboxItemTableViewCell: UITableViewCell {
                 configureView(for: location)
             case let musicItem as MusicItem:
                 configureView(for: musicItem)
+            case let video as Video:
+                configureView(for: video)
             case let website as Website:
                 configureView(for: website)
             default:
@@ -148,6 +150,23 @@ class InboxItemTableViewCell: UITableViewCell {
 
         nameLabel.text = musicItem.name
         detailLabel.text = musicItem.creator
+    }
+
+    private func configureView(for video: Video) {
+        iconType = .template
+        iconImageView.image = UIImage(systemName: "film")
+        iconBackgroundView.backgroundColor = .systemTeal
+
+        if let thumbnailURL = video.thumbnailURL {
+            setRemoteImage(url: thumbnailURL) { (error) in
+                if error == nil {
+                    self.iconBackgroundView.cornerRadius = 2
+                }
+            }
+        }
+
+        nameLabel.text = video.title
+        detailLabel.text = video.creator
     }
 
     private func configureView(for website: Website) {
