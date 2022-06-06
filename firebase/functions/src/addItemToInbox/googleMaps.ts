@@ -66,8 +66,8 @@ const googleMapsAddressComponentKeys = [
     'point_of_interest'
 ];
 
-const googleMapsClient = new Client();
-const googleMapsAPIKey = process.env.GOOGLE_MAPS_API_KEY || functions.config().googlemaps.api_key;
+const client = new Client();
+const apiKey = process.env.GOOGLE_API_KEY || functions.config().google.api_key;
 
 export function isGoogleMapsLocation(inputData: InputData): boolean {
     const url = inputData.url;
@@ -157,11 +157,11 @@ async function normalizeLocationWithCoordinate(expandedURL: URL, inputData: Inpu
         return null;
     }
 
-    const response = await googleMapsClient.reverseGeocode({
+    const response = await client.reverseGeocode({
         params: {
             latlng: query,
             language: Language.ja,
-            key: googleMapsAPIKey
+            key: apiKey
         }
     });
 
@@ -199,12 +199,12 @@ async function normalizeLocationWithQuery(expandedURL: URL, inputData: InputData
         }
     }
 
-    const response = await googleMapsClient.findPlaceFromText({
+    const response = await client.findPlaceFromText({
         params: {
             input: query,
             inputtype: PlaceInputType.textQuery,
             language: Language.ja,
-            key: googleMapsAPIKey
+            key: apiKey
         }
     });
 
@@ -227,7 +227,7 @@ async function normalizeLocationWithIdentifier(id: { placeid?: string, ftid?: st
             place_id: id.placeid || '',
             fields: ['address_component', 'geometry', 'name', 'type', 'website'],
             language: Language.ja,
-            key: googleMapsAPIKey
+            key: apiKey
         }
     }
 
@@ -236,7 +236,7 @@ async function normalizeLocationWithIdentifier(id: { placeid?: string, ftid?: st
         requestParameters.params.ftid = id.ftid
     }
 
-    const response = await googleMapsClient.placeDetails(requestParameters);
+    const response = await client.placeDetails(requestParameters);
 
     const place = response.data.result;
 
