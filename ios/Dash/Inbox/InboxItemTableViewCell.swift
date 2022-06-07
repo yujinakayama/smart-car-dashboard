@@ -10,11 +10,6 @@ import UIKit
 import PINRemoteImage
 
 class InboxItemTableViewCell: UITableViewCell {
-    enum IconType {
-        case template
-        case image
-    }
-
     typealias Icon = (image: UIImage, color: UIColor)
 
     static let screenScale = UIScreen.main.scale
@@ -103,7 +98,7 @@ class InboxItemTableViewCell: UITableViewCell {
 
     var item: InboxItemProtocol? {
         didSet {
-            iconBackgroundView.cornerRadius = defaultIconCornerRadius
+            iconShape = .standardRoundedRectangle
 
             switch item {
             case let location as Location:
@@ -143,7 +138,7 @@ class InboxItemTableViewCell: UITableViewCell {
         if let artworkURL = musicItem.artworkURL(size: iconImagePixelSize) {
             setRemoteImage(url: artworkURL) { (error) in
                 if error == nil {
-                    self.iconBackgroundView.cornerRadius = 2
+                    self.iconShape = .sharpRoundedRectangle
                 }
             }
         }
@@ -158,7 +153,11 @@ class InboxItemTableViewCell: UITableViewCell {
         iconBackgroundView.backgroundColor = .systemTeal
 
         if let thumbnailURL = video.thumbnailURL {
-            setRemoteImage(url: thumbnailURL)
+            setRemoteImage(url: thumbnailURL) { (error) in
+                if error == nil {
+                    self.iconShape = .circle
+                }
+            }
         }
 
         nameLabel.text = video.title
@@ -219,6 +218,11 @@ class InboxItemTableViewCell: UITableViewCell {
         actionStackView.isHidden = actionStackView.arrangedSubviews.allSatisfy { $0.isHidden }
     }
 
+    enum IconType {
+        case template
+        case image
+    }
+
     private var iconType: IconType = .template {
         didSet {
             switch iconType {
@@ -230,6 +234,25 @@ class InboxItemTableViewCell: UITableViewCell {
 
             if iconType != oldValue {
                 setNeedsUpdateConstraints()
+            }
+        }
+    }
+
+    enum IconShape {
+        case standardRoundedRectangle
+        case sharpRoundedRectangle
+        case circle
+    }
+
+    private var iconShape: IconShape = .standardRoundedRectangle {
+        didSet {
+            switch iconShape {
+            case .standardRoundedRectangle:
+                iconBackgroundView.cornerRadius = defaultIconCornerRadius
+            case .sharpRoundedRectangle:
+                iconBackgroundView.cornerRadius = 2
+            case .circle:
+                iconBackgroundView.cornerRadius = iconBackgroundView.bounds.width / 2
             }
         }
     }
