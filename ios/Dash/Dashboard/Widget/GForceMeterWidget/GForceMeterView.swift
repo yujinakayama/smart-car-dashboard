@@ -10,6 +10,8 @@ import UIKit
 import CoreMotion
 
 @IBDesignable class GForceMeterView: UIView {
+    static let numberOfDecimalPlacesInLabels = 2
+
     var unitOfScale: CGFloat {
         get {
             return meterView.unitOfScale
@@ -210,8 +212,10 @@ import CoreMotion
     private func format(_ value: Double) -> String {
         // Avoiding unintentional rounding by String(format:):
         // e.g. String(format: "%.1f", 0.26) returns "0.3"
-        let value = floor(value * 10) / 10
-        return String(format: "%.1f", value)
+        let precision = Double(truncating: pow(10, Self.numberOfDecimalPlacesInLabels) as NSNumber)
+        let value = floor(value * precision) / precision
+
+        return String(format: "%.\(Self.numberOfDecimalPlacesInLabels)f", value)
     }
 }
 
