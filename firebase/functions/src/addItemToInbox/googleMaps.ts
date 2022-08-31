@@ -72,7 +72,7 @@ const apiKey = process.env.GOOGLE_API_KEY || functions.config().google.api_key
 export function isGoogleMapsLocation(inputData: InputData): boolean {
     const url = inputData.url
 
-    if (url.toString().startsWith('https://goo.gl/maps/')) {
+    if (url.toString().startsWith('https://goo.gl/maps/') || url.toString().startsWith('https://maps.app.goo.gl/')) {
         return true
     }
 
@@ -104,7 +104,7 @@ export async function normalizeGoogleMapsLocation(inputData: InputData): Promise
 }
 
 async function expandShortenURL(url: URL): Promise<URL> {
-    if (url.hostname !== 'goo.gl') {
+    if (!isShortenURL(url)) {
         return url
     }
 
@@ -120,6 +120,10 @@ async function expandShortenURL(url: URL): Promise<URL> {
     } else {
         throw new Error(`URL could not be expanded: ${url.toString()}`)
     }
+}
+
+function isShortenURL(url: URL): boolean {
+    return ['goo.gl', 'maps.app.goo.gl'].includes(url.hostname)
 }
 
 // Point of Interests
