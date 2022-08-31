@@ -1,6 +1,9 @@
 import { AddressType, Client, Language, PlaceData, PlaceDetailsRequest, PlaceInputType, PlaceType1, PlaceType2 } from '@googlemaps/google-maps-services-js'
 import axios from 'axios'
 import * as functions from 'firebase-functions'
+// @ts-ignore: no type definition provided
+import { parse_host as parseHost } from 'tld-extract'
+
 
 import { URL } from 'url'
 
@@ -72,12 +75,16 @@ const apiKey = process.env.GOOGLE_API_KEY || functions.config().google.api_key
 export function isGoogleMapsLocation(inputData: InputData): boolean {
     const url = inputData.url
 
-    if (url.toString().startsWith('https://goo.gl/maps/') || url.toString().startsWith('https://maps.app.goo.gl/')) {
+    if (isGoogleShortenURL(url)) {
         return true
     }
 
     return !!url.hostname.match(/((www|maps)\.)google\.(com|co\.jp)/)
         && !!url.pathname.startsWith('/maps/place/')
+}
+
+function isGoogleShortenURL(url: URL): boolean {
+    return parseHost(url.host).domain == 'goo.gl'
 }
 
 export async function normalizeGoogleMapsLocation(inputData: InputData): Promise<Location> {
@@ -104,7 +111,7 @@ export async function normalizeGoogleMapsLocation(inputData: InputData): Promise
 }
 
 async function expandShortenURL(url: URL): Promise<URL> {
-    if (!isShortenURL(url)) {
+    if (!isGoogleShortenURL(url)) {
         return url
     }
 
@@ -120,10 +127,6 @@ async function expandShortenURL(url: URL): Promise<URL> {
     } else {
         throw new Error(`URL could not be expanded: ${url.toString()}`)
     }
-}
-
-function isShortenURL(url: URL): boolean {
-    return ['goo.gl', 'maps.app.goo.gl'].includes(url.hostname)
 }
 
 // Point of Interests
