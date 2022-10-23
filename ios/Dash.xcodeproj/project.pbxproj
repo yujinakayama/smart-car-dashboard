@@ -25,6 +25,8 @@
 		B907C7922726CFB50085ED7E /* RearviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B907C7912726CFB50085ED7E /* RearviewManager.swift */; };
 		B90A5500274A4B8E0078585A /* LocationTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90A54FF274A4B8E0078585A /* LocationTracker.swift */; };
 		B90C297225E3FB80004466C9 /* SIMDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90C297125E3FB80004466C9 /* SIMDExtension.swift */; };
+		B90CB2982904F95C003903D4 /* MKMapFeatureAnnotationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90CB2972904F95B003903D4 /* MKMapFeatureAnnotationExtension.swift */; };
+		B90CB29C29050A19003903D4 /* AppleMaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90CB29B29050A19003903D4 /* AppleMaps.swift */; };
 		B90E21F924CBB1BF008330AD /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90E21F824CBB1BF008330AD /* TabBarController.swift */; };
 		B90F5FD525EFF13D00C2578C /* CIImageDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F5FD425EFF13D00C2578C /* CIImageDisplayView.swift */; };
 		B90F5FFF25F3CA4D00C2578C /* SampleBufferDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F5FFE25F3CA4D00C2578C /* SampleBufferDecoder.swift */; };
@@ -426,6 +428,8 @@
 		B907C7912726CFB50085ED7E /* RearviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewManager.swift; sourceTree = "<group>"; };
 		B90A54FF274A4B8E0078585A /* LocationTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTracker.swift; sourceTree = "<group>"; };
 		B90C297125E3FB80004466C9 /* SIMDExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIMDExtension.swift; sourceTree = "<group>"; };
+		B90CB2972904F95B003903D4 /* MKMapFeatureAnnotationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKMapFeatureAnnotationExtension.swift; sourceTree = "<group>"; };
+		B90CB29B29050A19003903D4 /* AppleMaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMaps.swift; sourceTree = "<group>"; };
 		B90E21F824CBB1BF008330AD /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		B90F5FD425EFF13D00C2578C /* CIImageDisplayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CIImageDisplayView.swift; sourceTree = "<group>"; };
 		B90F5FFE25F3CA4D00C2578C /* SampleBufferDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleBufferDecoder.swift; sourceTree = "<group>"; };
@@ -749,6 +753,7 @@
 				B904A2A5243968990087BD4A /* MapsViewController.swift */,
 				B9C0BF462698689B00C54BA9 /* OfficialParkingInformationWebViewController.swift */,
 				B9BA5B5A26A8982C004D5927 /* SharedLocationAnnotation.swift */,
+				B90CB2972904F95B003903D4 /* MKMapFeatureAnnotationExtension.swift */,
 				B9C1F40C27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift */,
 				B9BA5B5826A897CF004D5927 /* PointOfInterestAnnotationView.swift */,
 				B92650112691CE29005FD73D /* SheetView.swift */,
@@ -1101,6 +1106,7 @@
 				B90A54FF274A4B8E0078585A /* LocationTracker.swift */,
 				B9C1F40E27AAEB8D00C6D4DD /* PointOfInterestCategory.swift */,
 				B97ABD3E27670D6E00C7EB1D /* PointOfInterestIcon.swift */,
+				B90CB29B29050A19003903D4 /* AppleMaps.swift */,
 				B94BD2E82680486700B768A2 /* BorderedLabel.swift */,
 				B99C69AB26F5F6880064162D /* MapTypeSegmentedControl.swift */,
 				B9854F7F278DA88000E07C0C /* SpeedSensitiveVolumeController.swift */,
@@ -1949,6 +1955,7 @@
 				B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */,
 				B9B154F82576075C0031761F /* TabBarBadgeManager.swift in Sources */,
 				B95F514C23E5B53F0063CB3D /* RemoteNotification.swift in Sources */,
+				B90CB29C29050A19003903D4 /* AppleMaps.swift in Sources */,
 				B9BA5B5C26A89C83004D5927 /* UIButtonExtension.swift in Sources */,
 				B92ADE79269990E20086E4D8 /* NSRegularExpressionExtension.swift in Sources */,
 				B9DC5B27229D59BE00B645D5 /* ETCPaymentTableViewController.swift in Sources */,
@@ -1989,6 +1996,7 @@
 				B9248B8B2728A27500952745 /* MPMediaItemExtension.swift in Sources */,
 				B90265AB23EB4CE000B2EF6B /* InboxItemTableViewDataSource.swift in Sources */,
 				B9C1F41527B815C400C6D4DD /* FirestoreQuerySubscription.swift in Sources */,
+				B90CB2982904F95C003903D4 /* MKMapFeatureAnnotationExtension.swift in Sources */,
 				B90E21F924CBB1BF008330AD /* TabBarController.swift in Sources */,
 				B9CEA76E22D911140055C9A3 /* ETCSplitViewController.swift in Sources */,
 				B9CB753624AA1A17008264F5 /* VolumeView.swift in Sources */,

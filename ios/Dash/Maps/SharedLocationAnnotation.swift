@@ -31,4 +31,16 @@ class SharedLocationAnnotation: NSObject, PointOfInterestAnnotation {
     var categories: [PointOfInterestCategory] {
         return location.categories
     }
+
+    var mapItem: MKMapItem {
+        return location.mapItem
+    }
+
+    func markAsOpened(_ value: Bool) {
+        location.markAsOpened(value)
+    }
+
+    func openDirectionsInMaps() async {
+        await location.openDirectionsInMaps()
+    }
 }

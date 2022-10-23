@@ -514,31 +514,31 @@ class MapsViewController: UIViewController {
         }
     }
 
-    private func viewForSharedLocationAnnotation(_ annotation: SharedLocationAnnotation) -> MKAnnotationView {
+    private func viewForPointOfInterestAnnotation(_ annotation: PointOfInterestAnnotation) -> MKAnnotationView {
         if let view = mapView.dequeueReusableAnnotationView(withIdentifier: Self.pointOfInterestAnnotationViewIdentifier) as? PointOfInterestAnnotationView {
             view.annotation = annotation
             return view
         } else {
             let view = PointOfInterestAnnotationView(annotation: annotation, reuseIdentifier: Self.pointOfInterestAnnotationViewIdentifier)
-            view.callout.departureButton.addTarget(self, action: #selector(openDirectionsInMapsForSelectedSharedLocationAnnotation), for: .touchUpInside)
-            view.callout.parkingSearchButton.addTarget(self, action: #selector(startSearchingParkingsForSelectedSharedLocationAnnotation), for: .touchUpInside)
+            view.callout.departureButton.addTarget(self, action: #selector(openDirectionsInMapsForSelectedPointOfInterestAnnotation), for: .touchUpInside)
+            view.callout.parkingSearchButton.addTarget(self, action: #selector(startSearchingParkingsForSeletedPointOfInterestAnnotation), for: .touchUpInside)
             return view
         }
     }
 
-    @objc func openDirectionsInMapsForSelectedSharedLocationAnnotation() {
-        guard let location = (mapView.selectedAnnotations.first as? SharedLocationAnnotation)?.location else { return }
+    @objc func openDirectionsInMapsForSelectedPointOfInterestAnnotation() {
+        guard let annotation = (mapView.selectedAnnotations.first as? PointOfInterestAnnotation) else { return }
 
-        location.markAsOpened(true)
+        annotation.markAsOpened(true)
 
         Task {
-            await location.openDirectionsInMaps()
+            await annotation.openDirectionsInMaps()
         }
     }
 
-    @objc func startSearchingParkingsForSelectedSharedLocationAnnotation() {
-        guard let location = (mapView.selectedAnnotations.first as? SharedLocationAnnotation)?.location else { return }
-        startSearchingParkings(destination: location.mapItem)
+    @objc func startSearchingParkingsForSeletedPointOfInterestAnnotation() {
+        guard let annotation = (mapView.selectedAnnotations.first as? PointOfInterestAnnotation) else { return }
+        startSearchingParkings(destination: annotation.mapItem)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -583,7 +583,9 @@ extension MapsViewController: MKMapViewDelegate {
         if annotation is MKUserLocation {
             return mapView.dequeueReusableAnnotationView(withIdentifier: Self.directionalUserLocationAnnotationViewIdentifier, for: annotation)
         } else if let annotation = annotation as? SharedLocationAnnotation {
-            return viewForSharedLocationAnnotation(annotation)
+            return viewForPointOfInterestAnnotation(annotation)
+        } else if let annotation = annotation as? MKMapFeatureAnnotation {
+            return viewForPointOfInterestAnnotation(annotation)
         } else if currentMode == .parkingSearch {
             return parkingSearchManager.view(for: annotation)
         } else {

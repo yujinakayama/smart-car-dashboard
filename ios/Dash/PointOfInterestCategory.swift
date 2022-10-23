@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MapKit
 
 enum PointOfInterestCategory: String {
     // https://developers.google.com/maps/documentation/places/web-service/supported_types
@@ -215,9 +216,28 @@ extension PointOfInterestCategory: Decodable {
 }
 
 extension PointOfInterestCategory {
+    init?(_ mapKitPointOfInterestCategory: MKPointOfInterestCategory) {
+        let normalizedValue = mapKitPointOfInterestCategory.rawValue
+            .trimmingPrefix(/MKPOICategory/)
+            .replacing(/^[A-Z]+(?![a-z])|^[A-Z][a-z]+/) { (firstWordMatch) in
+                firstWordMatch.base.lowercased()
+            }
+
+        self.init(rawValue: String(normalizedValue))
+    }
+
     var isKindOfParking: Bool {
         switch self {
         case .parking, .restArea, .roadsideStation:
+            return true
+        default:
+            return false
+        }
+    }
+
+    var requiresAccurateCoordinate: Bool {
+        switch self {
+        case .parking, .rendezvous:
             return true
         default:
             return false
