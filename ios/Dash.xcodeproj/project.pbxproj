@@ -88,7 +88,7 @@
 		B95F514E23E5BBF70063CB3D /* InboxItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514D23E5BBF70063CB3D /* InboxItem.swift */; };
 		B963C5352749351B0095F8D3 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B963C5342749351A0095F8D3 /* Intents.framework */; };
 		B963C5382749351B0095F8D3 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B963C5372749351B0095F8D3 /* IntentHandler.swift */; };
-		B963C53C2749351B0095F8D3 /* IntentsExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B963C5332749351A0095F8D3 /* IntentsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B963C53C2749351B0095F8D3 /* IntentsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B963C5332749351A0095F8D3 /* IntentsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B9640AAB2575D9E800B779AD /* Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9640AAA2575D9E800B779AD /* Firebase.swift */; };
 		B9640AC22575EC0400B779AD /* FirebaseAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9640AC12575EC0400B779AD /* FirebaseAuthentication.swift */; };
 		B964BCC323E066FF00288E0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B964BCC223E066FF00288E0D /* AppDelegate.swift */; };
@@ -99,7 +99,7 @@
 		B964BCCF23E0670100288E0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B964BCCD23E0670100288E0D /* LaunchScreen.storyboard */; };
 		B964BCDB23E067EB00288E0D /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B964BCDA23E067EB00288E0D /* ShareViewController.swift */; };
 		B964BCDE23E067EB00288E0D /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B964BCDC23E067EB00288E0D /* MainInterface.storyboard */; };
-		B964BCE223E067EB00288E0D /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B964BCD823E067EB00288E0D /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B964BCE223E067EB00288E0D /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B964BCD823E067EB00288E0D /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B967D08225D51508000D9007 /* RearviewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */; };
 		B96810752614C5C300D647FA /* ImageFilterChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96810742614C5C300D647FA /* ImageFilterChain.swift */; };
 		B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */; };
@@ -137,7 +137,7 @@
 		B9A16A4927A015420042E16A /* MapKitParking.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A16A4827A015420042E16A /* MapKitParking.swift */; };
 		B9A3B67C26537A9B00D1D64C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9A3B67B26537A9B00D1D64C /* Media.xcassets */; };
 		B9A3B67E26537A9B00D1D64C /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A3B67D26537A9B00D1D64C /* ActionViewController.swift */; };
-		B9A3B68526537A9B00D1D64C /* ParkingSearchActionExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B9A3B67926537A9B00D1D64C /* ParkingSearchActionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B9A3B68526537A9B00D1D64C /* ParkingSearchActionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B9A3B67926537A9B00D1D64C /* ParkingSearchActionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B9A3DDEA2792C41200A2BEC4 /* MapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A3DDE92792C41200A2BEC4 /* MapItem.swift */; };
 		B9A45A9B252C229200CA7921 /* InboxItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A45A9A252C229200CA7921 /* InboxItemDatabase.swift */; };
 		B9A481FE23EF01DB00AA7590 /* SuccessCheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */; };
@@ -330,15 +330,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B964BCE623E067EB00288E0D /* Embed App Extensions */ = {
+		B964BCE623E067EB00288E0D /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				B964BCE223E067EB00288E0D /* ShareExtension.appex in Embed App Extensions */,
+				B964BCE223E067EB00288E0D /* ShareExtension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B98B783C23ED4C3F00A5102F /* Embed Frameworks */ = {
@@ -364,16 +364,16 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B9A3B68626537A9B00D1D64C /* Embed App Extensions */ = {
+		B9A3B68626537A9B00D1D64C /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				B963C53C2749351B0095F8D3 /* IntentsExtension.appex in Embed App Extensions */,
-				B9A3B68526537A9B00D1D64C /* ParkingSearchActionExtension.appex in Embed App Extensions */,
+				B963C53C2749351B0095F8D3 /* IntentsExtension.appex in Embed Foundation Extensions */,
+				B9A3B68526537A9B00D1D64C /* ParkingSearchActionExtension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B9B18DD723EDFFF60096D603 /* Embed Frameworks */ = {
@@ -1263,7 +1263,7 @@
 				B964BCBC23E066FF00288E0D /* Sources */,
 				B964BCBD23E066FF00288E0D /* Frameworks */,
 				B964BCBE23E066FF00288E0D /* Resources */,
-				B964BCE623E067EB00288E0D /* Embed App Extensions */,
+				B964BCE623E067EB00288E0D /* Embed Foundation Extensions */,
 				A773838481E7D6113B54F30A /* [CP] Embed Pods Frameworks */,
 				B9B18DD723EDFFF60096D603 /* Embed Frameworks */,
 			);
@@ -1366,7 +1366,7 @@
 				B9DC5B1F229D59BE00B645D5 /* Resources */,
 				BCC6DA0CF269B8E30DEAAA76 /* [CP] Embed Pods Frameworks */,
 				B98B783C23ED4C3F00A5102F /* Embed Frameworks */,
-				B9A3B68626537A9B00D1D64C /* Embed App Extensions */,
+				B9A3B68626537A9B00D1D64C /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -1452,7 +1452,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1320;
-				LastUpgradeCheck = 1250;
+				LastUpgradeCheck = 1400;
 				ORGANIZATIONNAME = "Yuji Nakayama";
 				TargetAttributes = {
 					B963C5322749351A0095F8D3 = {
