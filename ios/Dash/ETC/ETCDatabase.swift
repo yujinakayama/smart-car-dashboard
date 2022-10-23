@@ -48,7 +48,11 @@ class ETCDatabase: NSObject {
     func findOrCreateCard(uuid: UUID) async throws -> ETCCard {
         let reference = cardDocumentReference(uuid: uuid)
 
-        if let card = try await reference.getDocument().data(as: ETCCard.self) {
+        // DocumentSnapshot.data(as:) will decode the document to the type provided.
+        // If you expect that a document might not exist, use an optional type (e.g. Book?.self) to account for this.
+        // https://firebase.google.com/support/release-notes/ios#swift_extensions_8
+        // https://github.com/firebase/firebase-ios-sdk/pull/9101
+        if let card = try await reference.getDocument().data(as: ETCCard?.self) {
             return card
         } else {
             let card = ETCCard(documentReference: reference)
