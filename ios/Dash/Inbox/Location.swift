@@ -27,11 +27,6 @@ class Location: InboxItemProtocol {
 
     lazy var formattedAddress = address.format()
 
-    lazy var pointOfInterestFinder: PointOfInterestFinder? = {
-        guard let name = name else { return nil }
-        return PointOfInterestFinder(name: name, coordinate: coordinate, maxDistance: 50)
-    }()
-
     var title: String? {
         return name
     }
@@ -41,26 +36,10 @@ class Location: InboxItemProtocol {
     }
 
     func openDirectionsInMaps() async {
-        if Defaults.shared.snapLocationToPointOfInterest, !categories.contains(.rendezvous) {
-            let foundMapItem = try? await findCorrespondingPointOfInterest()
-            openDirectionsInMaps(to: foundMapItem ?? mapItem)
-        } else {
-            openDirectionsInMaps(to: mapItem)
-        }
-    }
-
-    private func openDirectionsInMaps(to mapItem: MKMapItem) {
-        mapItem.openInMaps(launchOptions: [
-            MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
-        ])
-    }
-
-    private func findCorrespondingPointOfInterest() async throws -> MKMapItem? {
-        guard let pointOfInterestFinder = pointOfInterestFinder else {
-            return nil
-        }
-
-        return try await pointOfInterestFinder.find()
+        await AppleMaps.shared.openDirections(
+            to: mapItem,
+            snappingToPointOfInterest: shouldBeSnappedToPointOfInterestInAppleMaps
+        )
     }
 
     var mapItem: MKMapItem {
@@ -69,6 +48,14 @@ class Location: InboxItemProtocol {
         let mapItem = MKMapItem(placemark: placemark)
         mapItem.name = name
         return mapItem
+    }
+
+    private var shouldBeSnappedToPointOfInterestInAppleMaps: Bool {
+        guard Defaults.shared.snapLocationToPointOfInterest else {
+            return false
+        }
+
+        return categories.allSatisfy { !$0.requiresAccurateCoordinate }
     }
 
     var googleMapsDirectionsURL: URL {
@@ -90,70 +77,6 @@ class Location: InboxItemProtocol {
         ]
 
         return components.url!
-    }
-
-    class PointOfInterestFinder {
-        // 10MB, 7 days
-        static let cache = Cache(name: "PointOfInterestFinder", byteLimit: 10 * 1024 * 1024, ageLimit: 60 * 60 * 24 * 7) // 7 days
-
-        let name: String
-        let coordinate: CLLocationCoordinate2D
-        let maxDistance: CLLocationDistance
-
-        private (set) var cachedMapItem: MKMapItem? {
-            get {
-                return Self.cache.object(forKey: cacheKey) as? MKMapItem
-            }
-
-            set {
-                Self.cache.setObject(newValue, forKey: cacheKey)
-            }
-        }
-
-        private lazy var cacheKey: String = {
-            let key = String(format: "%@|%f,%f|%f", name, coordinate.latitude, coordinate.longitude, maxDistance)
-            return Cache.digestString(of: key)
-        }()
-
-        init(name: String, coordinate: CLLocationCoordinate2D, maxDistance: CLLocationDistance) {
-            self.name = name
-            self.coordinate = coordinate
-            self.maxDistance = maxDistance
-        }
-
-        func find() async throws -> MKMapItem? {
-            if let cachedMapItem = cachedMapItem {
-                return cachedMapItem
-            }
-
-            let response = try await MKLocalSearch(request: request).start()
-
-            if let mapItem = response.mapItems.first, isClose(mapItem) {
-                cachedMapItem = mapItem
-                return mapItem
-            } else {
-                return nil
-            }
-        }
-
-        private var request: MKLocalSearch.Request {
-            let request = MKLocalSearch.Request()
-            request.naturalLanguageQuery = name
-            request.region = MKCoordinateRegion(center: coordinate, latitudinalMeters: maxDistance, longitudinalMeters: maxDistance)
-            return request
-        }
-
-        private func isClose(_ mapItem: MKMapItem) -> Bool {
-            guard let pointOfInterestLocation = mapItem.placemark.location else {
-                return false
-            }
-
-            return pointOfInterestLocation.distance(from: location) <= maxDistance
-        }
-
-        private var location: CLLocation {
-            return CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        }
     }
 }
 
