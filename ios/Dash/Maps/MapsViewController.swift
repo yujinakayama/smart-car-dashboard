@@ -30,9 +30,7 @@ class MapsViewController: UIViewController {
         mapView.isScrollEnabled = true
         mapView.isZoomEnabled = true
 
-        if #available(iOS 16.0, *) {
-            mapView.selectableMapFeatures = [.pointsOfInterest, .physicalFeatures]
-        }
+        mapView.selectableMapFeatures = [.pointsOfInterest, .physicalFeatures]
 
         mapView.register(DirectionalUserLocationAnnotationView.self, forAnnotationViewWithReuseIdentifier: Self.directionalUserLocationAnnotationViewIdentifier)
 

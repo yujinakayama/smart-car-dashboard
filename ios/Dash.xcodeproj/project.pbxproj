@@ -2672,7 +2672,7 @@
 				DEVELOPMENT_TEAM = 8LSN3WQC77;
 				INFOPLIST_FILE = Dash/Info.plist;
 				INFOPLIST_PREPROCESS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2699,7 +2699,7 @@
 				DEVELOPMENT_TEAM = 8LSN3WQC77;
 				INFOPLIST_FILE = Dash/Info.plist;
 				INFOPLIST_PREPROCESS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
