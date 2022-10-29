@@ -26,8 +26,6 @@ class SystemAudioVolume {
         volumeView.setVolumeThumbImage(UIImage(), for: .normal)
         volumeView.setMinimumVolumeSliderImage(UIImage(), for: .normal)
         volumeView.setMaximumVolumeSliderImage(UIImage(), for: .normal)
-
-        lastSeenValue = audioSession.outputVolume
     }
 
     deinit {
@@ -67,16 +65,19 @@ class SystemAudioVolume {
 
     private(set) var value: Float {
         get {
-            return audioSession.outputVolume
+            // On iOS 16, audioSession.outputVolume cannot be used here
+            // since it returns rounded value with 0.05 step (e.g. 0.75, 0.8, 0.85).
+            return privateVolumeSlider.value
         }
 
         set {
+            print("setting \(newValue)")
             privateVolumeSlider.value = newValue
-            lastSeenValue = newValue
+            lastSeenValue = value
         }
     }
 
-    private var lastSeenValue: Float
+    private var lastSeenValue: Float?
 
     private lazy var privateVolumeSlider = volumeView.subviews.first { $0 is UISlider} as! UISlider
 
@@ -91,8 +92,16 @@ class SystemAudioVolume {
     }
 
     private func notifyIfChangedByOthers() {
-        if value != lastSeenValue {
+        guard let lastSeenValue = lastSeenValue else {
             lastSeenValue = value
+            return
+        }
+
+        print("lastSeen: \(lastSeenValue), current: \(value)")
+
+        if value != lastSeenValue {
+            print("changed!")
+            self.lastSeenValue = value
             delegate?.systemAudioVolumeDidDetectChangeByOthers(self)
         }
     }
