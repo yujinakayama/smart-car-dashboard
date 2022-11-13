@@ -90,33 +90,33 @@ static void startBLEServer() {
 };
 
 static void sendBluetoothCommandForSteeringRemoteInput(SteeringRemoteInput steeringRemoteInput) {
-  HIDInputCode code = HIDInputCodeNone;
+  HIDConsumerInput code = HIDConsumerInputNone;
 
   switch (steeringRemoteInput) {
     case SteeringRemoteInputNext:
-      code = HIDInputCodeScanNextTrack;
+      code = HIDConsumerInputScanNextTrack;
       break;
     case SteeringRemoteInputPrevious:
-      code = HIDInputCodeScanPreviousTrack;
+      code = HIDConsumerInputScanPreviousTrack;
       break;
     case SteeringRemoteInputPlus:
-      code = HIDInputCodeVolumeIncrement;
+      code = HIDConsumerInputVolumeIncrement;
       break;
     case SteeringRemoteInputMinus:
-      code = HIDInputCodeVolumeDecrement;
+      code = HIDConsumerInputVolumeDecrement;
       break;
     case SteeringRemoteInputMute:
-      code = HIDInputCodePlayPause;
+      code = HIDConsumerInputPlayPause;
       break;
     default:
       break;
   }
 
-  if (code == HIDInputCodeNone) {
+  if (code == HIDConsumerInputNone) {
     return;
   }
 
-  hid->sendInputCode(code);
+  hid->sendConsumerInput(code);
 }
 
 static void keepiPadAwake() {
@@ -124,7 +124,7 @@ static void keepiPadAwake() {
 
   if (currentMillis > lastiPadSleepPreventionMillis + kiPadSleepPreventionIntervalMillis) {
     ESP_LOGI(TAG, "Sending Help key code to keep the iPad awake");
-    hid->sendInputCode(HIDInputCodeHelp);
+    hid->sendConsumerInput(HIDConsumerInputHelp);
     lastiPadSleepPreventionMillis = currentMillis;
   }
 }

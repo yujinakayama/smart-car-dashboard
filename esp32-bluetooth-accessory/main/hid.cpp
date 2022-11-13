@@ -117,15 +117,15 @@ void HID::startServices() {
   hidDevice->startServices();
 };
 
-void HID::sendInputCode(HIDInputCode code) {
-  uint8_t keyPressedReport[] = {code};
-  notifyInputReport(keyPressedReport, sizeof(keyPressedReport));
+void HID::sendConsumerInput(HIDConsumerInput input) {
+  uint8_t keyPressedReport[] = {input};
+  notifyConsumerInputReport(keyPressedReport, sizeof(keyPressedReport));
 
-  uint8_t keyUnpressedReport[] = {HIDInputCodeNone};
-  notifyInputReport(keyUnpressedReport, sizeof(keyUnpressedReport));
+  uint8_t keyUnpressedReport[] = {HIDConsumerInputNone};
+  notifyConsumerInputReport(keyUnpressedReport, sizeof(keyUnpressedReport));
 }
 
-void HID::notifyInputReport(uint8_t* report, size_t size) {
+void HID::notifyConsumerInputReport(uint8_t* report, size_t size) {
   consumerInputReportCharacteristic->setValue(report, size);
   consumerInputReportCharacteristic->notify(true);
 }
