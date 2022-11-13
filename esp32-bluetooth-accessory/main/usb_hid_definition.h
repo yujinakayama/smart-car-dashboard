@@ -90,11 +90,3 @@ const uint8_t kUSBHIDReportFlagNullPosition   = 1 << 6;
 // Invalid output to a control is ignored by the device.
 const uint8_t kUSBHIDReportFlagNonVolatile    = 0 << 7;
 const uint8_t kUSBHIDReportFlagVolatile       = 1 << 7;
-
-// Indicates that the control emits a fixed-size stream of bytes.
-// The contents of the data field are determined by the application.
-// The contents of the buffer are not interpreted as a single numeric quantity.
-// Report data defined by a Buffered Bytes item must be aligned on an 8-bit boundary.
-// The data from a bar code reader is an example.
-const uint8_t kUSBHIDReportFlagBitField       = 0 << 8;
-const uint8_t kUSBHIDReportFlagBufferedBytes  = 1 << 8;
