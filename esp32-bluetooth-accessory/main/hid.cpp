@@ -25,6 +25,7 @@ static const uint8_t kReportMap[] = {
     // Beginning of Keyboard report
     REPORT_ID(1), kKeyboardReportID,
 
+    // 1st byte: modifier keys (bit flags)
     USAGE_PAGE(1),      0x07, // Keyboard/Keypad
     USAGE_MINIMUM(1),   0xE0, // Left Control
     USAGE_MAXIMUM(1),   0xE7, // Right GUI
@@ -40,6 +41,7 @@ static const uint8_t kReportMap[] = {
                  kUSBHIDReportFlagPreferredState |
                  kUSBHIDReportFlagNoNullPosition,
 
+    // 2nd byte: other keys (mainly ASCII characters)
     USAGE_PAGE(1),      0x07, // Keyboard/Keypad
     USAGE_MINIMUM(1),   0x00,
     USAGE_MAXIMUM(1),   0xFF,
@@ -60,8 +62,8 @@ static const uint8_t kReportMap[] = {
     // Beginning of Consumer report
     REPORT_ID(1), kConsumerReportID,
 
+    // 1st byte: consumer controls (bit flags)
     USAGE_PAGE(1),      0x0C, // Consumer
-    USAGE(1),           0x40, // Menu
     USAGE(1),           0x95, // Help
     USAGE(1),           0xB5, // Scan Next Track
     USAGE(1),           0xB6, // Scan Previous Track
@@ -69,6 +71,7 @@ static const uint8_t kReportMap[] = {
     USAGE(1),           0xE2, // Mute
     USAGE(1),           0xE9, // Volume Increment
     USAGE(1),           0xEA, // Volume Decrement
+    USAGE(2),           0x9D, 0x02, // Globe Key (0x029D, see https://developer.apple.com/accessories/Accessory-Design-Guidelines.pdf)
     REPORT_COUNT(1),       8, // 8 buttons
     REPORT_SIZE(1),        1, // 1 bit for each button
     LOGICAL_MINIMUM(1),    0,
@@ -94,13 +97,14 @@ static const uint8_t kReportMap[] = {
 HID::HID(BLEServer* server) {
   this->server = server;
   hidDevice = createHIDDevice();
+  keyboardInputReportCharacteristic = hidDevice->inputReport(kKeyboardReportID);
   consumerInputReportCharacteristic = hidDevice->inputReport(kConsumerReportID);
 }
 
 BLEHIDDevice* HID::createHIDDevice() {
   BLEHIDDevice* hidDevice = new BLEHIDDevice(server);
   hidDevice->reportMap((uint8_t*)kReportMap, sizeof(kReportMap));
-  hidDevice->pnp(2, 0x05AC, 0x0255, 0);
+  hidDevice->pnp(2, 0x05AC, 0x029c, 1);
   return hidDevice;
 };
 
@@ -112,12 +116,39 @@ void HID::startServices() {
   hidDevice->startServices();
 };
 
-void HID::sendConsumerInput(HIDConsumerInput input) {
-  uint8_t keyPressedReport[] = {input};
-  notifyConsumerInputReport(keyPressedReport, sizeof(keyPressedReport));
+void HID::performKeyboardInput(HIDKeyboardModifierKey modifierKey, HIDKeyboardKey key) {
+  pressKeyboardInput(modifierKey, key);
+  releaseKeyboardInput();
+}
 
-  uint8_t keyUnpressedReport[] = {HIDConsumerInputNone};
-  notifyConsumerInputReport(keyUnpressedReport, sizeof(keyUnpressedReport));
+void HID::pressKeyboardInput(HIDKeyboardModifierKey modifierKey, HIDKeyboardKey key) {
+  uint8_t report[] = {modifierKey, key};
+  notifyKeyboardInputReport(report, sizeof(report));
+}
+
+void HID::releaseKeyboardInput() {
+  uint8_t report[] = {HIDKeyboardModifierKeyNone, HIDKeyboardKeyNone};
+  notifyKeyboardInputReport(report, sizeof(report));
+}
+
+void HID::notifyKeyboardInputReport(uint8_t* report, size_t size) {
+  keyboardInputReportCharacteristic->setValue(report, size);
+  keyboardInputReportCharacteristic->notify(true);
+}
+
+void HID::performConsumerInput(HIDConsumerInput input) {
+  pressConsumerInput(input);
+  releaseConsumerInput();
+}
+
+void HID::pressConsumerInput(HIDConsumerInput input) {
+  uint8_t report[] = {input};
+  notifyConsumerInputReport(report, sizeof(report));
+}
+
+void HID::releaseConsumerInput() {
+  uint8_t report[] = {HIDConsumerInputNone};
+  notifyConsumerInputReport(report, sizeof(report));
 }
 
 void HID::notifyConsumerInputReport(uint8_t* report, size_t size) {
