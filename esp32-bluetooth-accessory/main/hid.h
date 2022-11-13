@@ -21,7 +21,7 @@ class HID {
 public:
   BLEServer* server;
   BLEHIDDevice* hidDevice;
-  BLECharacteristic* inputReportCharacteristic;
+  BLECharacteristic* consumerInputReportCharacteristic;
 
   HID(BLEServer* server);
   BLEService* getHIDService();

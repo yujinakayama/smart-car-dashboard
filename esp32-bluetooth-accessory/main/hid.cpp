@@ -72,7 +72,7 @@ static const uint8_t kReportMap[] = {
     USAGE(1),           0xE2, // Mute
     USAGE(1),           0xE9, // Volume Increment
     USAGE(1),           0xEA, // Volume Decrement
-    REPORT_COUNT(1),       6, // 6 buttons
+    REPORT_COUNT(1),       8, // 8 buttons
     REPORT_SIZE(1),        1, // 1 bit for each button
     LOGICAL_MINIMUM(1),    0,
     LOGICAL_MAXIMUM(1),    1,
@@ -85,10 +85,10 @@ static const uint8_t kReportMap[] = {
                  kUSBHIDReportFlagNoNullPosition |
                  kUSBHIDReportFlagBitField,
 
-    // Padding
-    REPORT_COUNT(1),       1,
-    REPORT_SIZE(1),        1,
-    HIDINPUT(1), kUSBHIDReportFlagConstant,
+    // No padding is needed since the the report is already aligned with 8 bit.
+    // REPORT_COUNT(1),       1,
+    // REPORT_SIZE(1),        1,
+    // HIDINPUT(1), kUSBHIDReportFlagConstant,
 
     // End of Consumer report
 
@@ -98,10 +98,7 @@ static const uint8_t kReportMap[] = {
 HID::HID(BLEServer* server) {
   this->server = server;
   hidDevice = createHIDDevice();
-  // inputReport() is defined as BLEHIDDevice::inputReport(uint8_t reportID)
-  // but using each input report for report ID 1 and 2 does not work for some reason.
-  // Anyway we can indicate report ID with the first byte of notification data.
-  inputReportCharacteristic = hidDevice->inputReport(1);
+  consumerInputReportCharacteristic = hidDevice->inputReport(kConsumerReportID);
 }
 
 BLEHIDDevice* HID::createHIDDevice() {
@@ -120,14 +117,14 @@ void HID::startServices() {
 };
 
 void HID::sendInputCode(HIDInputCode code) {
-  uint8_t keyPressedReport[] = {kConsumerReportID, code};
+  uint8_t keyPressedReport[] = {code};
   notifyInputReport(keyPressedReport, sizeof(keyPressedReport));
 
-  uint8_t keyUnpressedReport[] = {kConsumerReportID, HIDInputCodeNone};
+  uint8_t keyUnpressedReport[] = {HIDInputCodeNone};
   notifyInputReport(keyUnpressedReport, sizeof(keyUnpressedReport));
 }
 
 void HID::notifyInputReport(uint8_t* report, size_t size) {
-  inputReportCharacteristic->setValue(report, size);
-  inputReportCharacteristic->notify(true);
+  consumerInputReportCharacteristic->setValue(report, size);
+  consumerInputReportCharacteristic->notify(true);
 }
