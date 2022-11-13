@@ -98,10 +98,7 @@ static const uint8_t kReportMap[] = {
 HID::HID(BLEServer* server) {
   this->server = server;
   hidDevice = createHIDDevice();
-  // inputReport() is defined as BLEHIDDevice::inputReport(uint8_t reportID)
-  // but using each input report for report ID 1 and 2 does not work for some reason.
-  // Anyway we can indicate report ID with the first byte of notification data.
-  inputReportCharacteristic = hidDevice->inputReport(1);
+  consumerInputReportCharacteristic = hidDevice->inputReport(kConsumerReportID);
 }
 
 BLEHIDDevice* HID::createHIDDevice() {
@@ -120,14 +117,14 @@ void HID::startServices() {
 };
 
 void HID::sendInputCode(HIDInputCode code) {
-  uint8_t keyPressedReport[] = {kConsumerReportID, code};
+  uint8_t keyPressedReport[] = {code};
   notifyInputReport(keyPressedReport, sizeof(keyPressedReport));
 
-  uint8_t keyUnpressedReport[] = {kConsumerReportID, HIDInputCodeNone};
+  uint8_t keyUnpressedReport[] = {HIDInputCodeNone};
   notifyInputReport(keyUnpressedReport, sizeof(keyUnpressedReport));
 }
 
 void HID::notifyInputReport(uint8_t* report, size_t size) {
-  inputReportCharacteristic->setValue(report, size);
-  inputReportCharacteristic->notify(true);
+  consumerInputReportCharacteristic->setValue(report, size);
+  consumerInputReportCharacteristic->notify(true);
 }
