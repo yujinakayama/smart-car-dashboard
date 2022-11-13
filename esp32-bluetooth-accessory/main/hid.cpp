@@ -72,7 +72,7 @@ static const uint8_t kReportMap[] = {
     USAGE(1),           0xE2, // Mute
     USAGE(1),           0xE9, // Volume Increment
     USAGE(1),           0xEA, // Volume Decrement
-    REPORT_COUNT(1),       6, // 6 buttons
+    REPORT_COUNT(1),       8, // 8 buttons
     REPORT_SIZE(1),        1, // 1 bit for each button
     LOGICAL_MINIMUM(1),    0,
     LOGICAL_MAXIMUM(1),    1,
@@ -85,10 +85,10 @@ static const uint8_t kReportMap[] = {
                  kUSBHIDReportFlagNoNullPosition |
                  kUSBHIDReportFlagBitField,
 
-    // Padding
-    REPORT_COUNT(1),       1,
-    REPORT_SIZE(1),        1,
-    HIDINPUT(1), kUSBHIDReportFlagConstant,
+    // No padding is needed since the the report is already aligned with 8 bit.
+    // REPORT_COUNT(1),       1,
+    // REPORT_SIZE(1),        1,
+    // HIDINPUT(1), kUSBHIDReportFlagConstant,
 
     // End of Consumer report
 
