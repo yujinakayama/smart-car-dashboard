@@ -38,8 +38,7 @@ static const uint8_t kReportMap[] = {
                  kUSBHIDReportFlagNoWrap |
                  kUSBHIDReportFlagLinear |
                  kUSBHIDReportFlagPreferredState |
-                 kUSBHIDReportFlagNoNullPosition |
-                 kUSBHIDReportFlagBitField,
+                 kUSBHIDReportFlagNoNullPosition,
 
     USAGE_PAGE(1),      0x07, // Keyboard/Keypad
     USAGE_MINIMUM(1),   0x00,
@@ -54,8 +53,7 @@ static const uint8_t kReportMap[] = {
                  kUSBHIDReportFlagNoWrap |
                  kUSBHIDReportFlagLinear |
                  kUSBHIDReportFlagPreferredState |
-                 kUSBHIDReportFlagNoNullPosition |
-                 kUSBHIDReportFlagBitField,
+                 kUSBHIDReportFlagNoNullPosition,
 
     // End of Keyboard report
 
@@ -81,8 +79,7 @@ static const uint8_t kReportMap[] = {
                  kUSBHIDReportFlagNoWrap |
                  kUSBHIDReportFlagLinear |
                  kUSBHIDReportFlagPreferredState |
-                 kUSBHIDReportFlagNoNullPosition |
-                 kUSBHIDReportFlagBitField,
+                 kUSBHIDReportFlagNoNullPosition,
 
     // No padding is needed since the the report is already aligned with 8 bit.
     // REPORT_COUNT(1),       1,
