@@ -10,6 +10,7 @@ static const uint8_t kKeyboardReportID = 1;
 static const uint8_t kConsumerReportID = 2;
 
 // http://who-t.blogspot.com/2018/12/understanding-hid-report-descriptors.html
+// https://github.com/T-vK/ESP32-BLE-Keyboard/blob/f8dd4852113a722a6b8dc8af987e94cf84d73ad5/BleKeyboard.cpp
 // https://www.usb.org/sites/default/files/documents/hut1_12v2.pdf
 static const uint8_t kReportMap[] = {
   // We define the root usage page as Consumer device instead of Keyboard
