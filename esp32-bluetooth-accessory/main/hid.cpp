@@ -13,20 +13,18 @@ static const uint8_t kConsumerReportID = 2;
 // https://github.com/T-vK/ESP32-BLE-Keyboard/blob/f8dd4852113a722a6b8dc8af987e94cf84d73ad5/BleKeyboard.cpp
 // https://www.usb.org/sites/default/files/documents/hut1_12v2.pdf
 static const uint8_t kReportMap[] = {
-  // We define the root usage page as Consumer device instead of Keyboard
-  // because iOS automatically hides the software keyboard when hardware keyboard is connected
-  // but we want to avoid that behavior since this is just a sort of remote
-  // that cannot replace keyboard.
-  USAGE_PAGE(1),        0x0C, // Consumer
-  USAGE(1),             0x01, // Consumer Control
+  // We define the root usage page as "Generic Desktop Controls" - "Keypad" device rather than
+  // "Generic Desktop Controls" - "Keyboard" or "Consumer" - "Consumer Control" because:
+  // * With "Generic Desk Controls" - "Keyboard", iOS hides software keyboard
+  // * With "Consumer" - "Consumer Control", modifier keys (e.g. command key) does not work
+  USAGE_PAGE(1),        0x01, // Generic Desktop Controls
+  USAGE(1),             0x07, // Keypad
 
   COLLECTION(1),        0x01, // Application Collection
 
     // Beginning of Keyboard report
     REPORT_ID(1), kKeyboardReportID,
 
-    // Sadly, without root usage Generic Desktop Page (0x01) - Keyboard (0x06)
-    // Left GUI (0xE3) and Right GUI (0xE7) don't work as the Command key on iOS :(
     USAGE_PAGE(1),      0x07, // Keyboard/Keypad
     USAGE_MINIMUM(1),   0xE0, // Left Control
     USAGE_MAXIMUM(1),   0xE7, // Right GUI
