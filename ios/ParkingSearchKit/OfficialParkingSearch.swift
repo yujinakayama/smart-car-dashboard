@@ -26,6 +26,7 @@ public class OfficialParkingSearch: NSObject {
         "navitime.co.jp",
         "navitime.com",
         "parkinggod.jp",
+        "times-info.net",
     ]
 
     static let excludedDomainsHashValue = excludedDomains.reduce(0, { (hashValue, domain) in hashValue ^ domain.hashValue })
