@@ -46,8 +46,8 @@ class SystemAudioVolume {
         notifyIfChangedByOthers()
 
         if observation == nil {
-            observation = audioSession.observe(\.outputVolume, changeHandler: { [weak self] (audioSession, change) in
-                self?.notifyIfChangedByOthers()
+            observation = audioSession.observe(\.outputVolume, changeHandler: { [unowned self] (audioSession, change) in
+                self.notifyIfChangedByOthers()
             })
         }
     }
@@ -65,19 +65,18 @@ class SystemAudioVolume {
 
     private(set) var value: Float {
         get {
-            // On iOS 16, audioSession.outputVolume cannot be used here
-            // since it returns rounded value with 0.05 step (e.g. 0.75, 0.8, 0.85).
-            return privateVolumeSlider.value
+            // On iOS 16, audioSession.outputVolume returns rounded value with 0.05 step (e.g. 0.75, 0.8, 0.85).
+            // However we cannot use privateVolumeSlider.value here since it reflect actual value with large latency.
+            return audioSession.outputVolume
         }
 
         set {
-            print("setting \(newValue)")
             privateVolumeSlider.value = newValue
-            lastSeenValue = value
+            isSettingValueNow = true
         }
     }
 
-    private var lastSeenValue: Float?
+    private var isSettingValueNow = false
 
     private lazy var privateVolumeSlider = volumeView.subviews.first { $0 is UISlider} as! UISlider
 
@@ -92,18 +91,12 @@ class SystemAudioVolume {
     }
 
     private func notifyIfChangedByOthers() {
-        guard let lastSeenValue = lastSeenValue else {
-            lastSeenValue = value
+        if isSettingValueNow {
+            isSettingValueNow = false
             return
         }
 
-        print("lastSeen: \(lastSeenValue), current: \(value)")
-
-        if value != lastSeenValue {
-            print("changed!")
-            self.lastSeenValue = value
-            delegate?.systemAudioVolumeDidDetectChangeByOthers(self)
-        }
+        delegate?.systemAudioVolumeDidDetectChangeByOthers(self)
     }
 
     private func setVolumeViewVisibility(_ visible: Bool) {
