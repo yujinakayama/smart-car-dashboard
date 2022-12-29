@@ -23,6 +23,7 @@ class Vehicle: NSObject {
         let locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationManager.pausesLocationUpdatesAutomatically = false
         return locationManager
     }()
 

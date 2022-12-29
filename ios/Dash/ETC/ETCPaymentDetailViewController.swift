@@ -13,7 +13,11 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mapTypeSegmentedControl: MapTypeSegmentedControl!
 
-    let locationManager = CLLocationManager()
+    let locationManager = {
+        let locationManager = CLLocationManager()
+        locationManager.pausesLocationUpdatesAutomatically = false
+        return locationManager
+    }()
 
     var infoBarButtonItem: UIBarButtonItem!
 

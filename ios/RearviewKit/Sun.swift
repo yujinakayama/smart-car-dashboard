@@ -24,7 +24,14 @@ class Sun: NSObject, CLLocationManagerDelegate {
 
     var appearance: Appearance?
 
-    let locationManager = CLLocationManager()
+    lazy var locationManager = {
+        let locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyReduced
+        locationManager.pausesLocationUpdatesAutomatically = false
+        return locationManager
+    }()
+
     private var location: CLLocation?
 
     var isTrackingAppearance = false
@@ -37,12 +44,6 @@ class Sun: NSObject, CLLocationManagerDelegate {
         dateFormatter.timeStyle = .short
         return dateFormatter
     }()
-
-    override init() {
-        super.init()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyReduced
-    }
 
     func startTrackingAppearance() {
         logger.info()

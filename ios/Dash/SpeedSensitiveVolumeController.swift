@@ -16,6 +16,7 @@ class SpeedSensitiveVolumeController: NSObject {
         let locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.pausesLocationUpdatesAutomatically = false
         return locationManager
     }()
 

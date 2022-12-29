@@ -54,7 +54,11 @@ class MapsViewController: UIViewController {
         }
     }
 
-    let locationManager = CLLocationManager()
+    let locationManager = {
+        let locationManager = CLLocationManager()
+        locationManager.pausesLocationUpdatesAutomatically = false
+        return locationManager
+    }()
 
     var hasInitiallyEnabledUserTrackingMode = false
 

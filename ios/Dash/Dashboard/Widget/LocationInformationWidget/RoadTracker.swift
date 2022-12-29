@@ -21,6 +21,7 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
         let locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.pausesLocationUpdatesAutomatically = false
         return locationManager
     }()
 

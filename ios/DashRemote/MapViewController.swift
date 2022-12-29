@@ -16,7 +16,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, AccountDelegate {
     @IBOutlet weak var pickUpButton: TransitionButton!
 
     private var hasInitiallyZoomedToUserLocation = false
-    let locationManager = CLLocationManager()
+
+    let locationManager = {
+        let locationManager = CLLocationManager()
+        locationManager.pausesLocationUpdatesAutomatically = false
+        return locationManager
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()

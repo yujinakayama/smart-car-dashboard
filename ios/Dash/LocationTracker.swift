@@ -31,6 +31,7 @@ class LocationTracker: NSObject {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.distanceFilter = 3
+        locationManager.pausesLocationUpdatesAutomatically = false
         return locationManager
     }()
 
