@@ -26,7 +26,7 @@
 "dgH-Z0-R0U.title" = "ETC";
 
 /* Class = "UILabel"; text = "All Payments"; ObjectID = "wLH-Uf-nlx"; */
-"wLH-Uf-nlx.text" = "全カードの履歴";
+"wLH-Uf-nlx.text" = "すべてのカードの履歴";
 
 /* Class = "UILabel"; text = "¥"; ObjectID = "6wB-E0-moo"; */
 "6wB-E0-moo.text" = "¥";
