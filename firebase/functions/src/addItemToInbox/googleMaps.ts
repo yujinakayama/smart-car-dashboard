@@ -79,8 +79,8 @@ export function isGoogleMapsLocation(inputData: InputData): boolean {
         return true
     }
 
-    return !!url.hostname.match(/((www|maps)\.)google\.(com|co\.jp)/)
-        && !!url.pathname.startsWith('/maps/place/')
+    return !!url.hostname.match(/((www|maps)\.)google\.(com|co\.jp)$/)
+        && (url.searchParams.has('q') || url.searchParams.has('ftid'))
 }
 
 function isGoogleShortenURL(url: URL): boolean {
