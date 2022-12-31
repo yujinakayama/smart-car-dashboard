@@ -177,8 +177,6 @@ class MapsViewController: UIViewController {
     private var inboxItemDatabaseObservation: NSKeyValueObservation?
     private var inboxItemQuerySubscription: FirestoreQuery<InboxItemProtocol>.CountSubscription?
 
-    private var sharedLocationAnnotations: [MKAnnotation] = []
-
     var isVisible = false
 
     override func viewDidLoad() {
@@ -497,8 +495,8 @@ class MapsViewController: UIViewController {
     }
 
     private func removeSharedLocationAnnotations() {
+        let sharedLocationAnnotations = mapView.annotations.filter { $0 is SharedLocationAnnotation }
         mapView.removeAnnotations(sharedLocationAnnotations)
-        sharedLocationAnnotations = []
     }
 
     private func addSharedLocationAnnotations() async {
@@ -509,7 +507,7 @@ class MapsViewController: UIViewController {
 
         guard let recentLocations = try? await query.get() as? [Location] else { return }
 
-        sharedLocationAnnotations = recentLocations.map { (location) in
+        let sharedLocationAnnotations = recentLocations.map { (location) in
             return SharedLocationAnnotation(location)
         }
 
