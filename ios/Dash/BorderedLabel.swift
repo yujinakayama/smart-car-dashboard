@@ -47,45 +47,70 @@ import UIKit
         }
     }
 
-    @IBInspectable var topPaddingInset: CGFloat = 0 {
+    @IBInspectable var topInset: CGFloat = 0 {
         didSet {
             invalidateIntrinsicContentSize()
         }
     }
 
-    @IBInspectable var leftPaddingInset: CGFloat = 0 {
+    @IBInspectable var leftInset: CGFloat = 0 {
         didSet {
             invalidateIntrinsicContentSize()
         }
     }
 
-    @IBInspectable var bottomPaddingInset: CGFloat = 0 {
+    @IBInspectable var bottomInset: CGFloat = 0 {
         didSet {
             invalidateIntrinsicContentSize()
         }
     }
 
-    @IBInspectable var rightPaddingInset: CGFloat = 0 {
+    @IBInspectable var rightInset: CGFloat = 0 {
         didSet {
             invalidateIntrinsicContentSize()
         }
     }
 
-    var paddingInset: UIEdgeInsets {
-        return UIEdgeInsets(top: topPaddingInset, left: leftPaddingInset, bottom: bottomPaddingInset, right: rightPaddingInset)
+    var insets: UIEdgeInsets {
+        get {
+            return UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
+        }
+
+        set {
+            topInset = newValue.top
+            leftInset = newValue.left
+            bottomInset = newValue.bottom
+            rightInset = newValue.right
+        }
+    }
+
+    init(insets: UIEdgeInsets) {
+        super.init(frame: CGRect.zero)
+        self.insets = insets
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
 
     override func drawText(in rect: CGRect) {
-        super.drawText(in: rect.inset(by: paddingInset))
+        super.drawText(in: rect.inset(by: insets))
     }
 
     override var intrinsicContentSize: CGSize {
         let contentSize = super.intrinsicContentSize
 
         return CGSize(
-            width: contentSize.width + paddingInset.left + paddingInset.right,
-            height: contentSize.height + paddingInset.top + paddingInset.bottom
+            width: contentSize.width + insets.left + insets.right,
+            height: contentSize.height + insets.top + insets.bottom
         )
+    }
+
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        var fittingSize = super.sizeThatFits(size)
+        fittingSize.width = fittingSize.width + insets.left + insets.right
+        fittingSize.height = fittingSize.height + insets.top + insets.bottom
+        return fittingSize
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

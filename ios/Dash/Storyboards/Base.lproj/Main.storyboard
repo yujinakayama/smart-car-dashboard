@@ -1490,16 +1490,16 @@
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                         <real key="value" value="5"/>
                                                     </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="leftPaddingInset">
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="leftInset">
                                                         <real key="value" value="7"/>
                                                     </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="rightPaddingInset">
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
                                                         <real key="value" value="6"/>
                                                     </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="bottomPaddingInset">
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="bottomInset">
                                                         <real key="value" value="3"/>
                                                     </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="topPaddingInset">
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="topInset">
                                                         <real key="value" value="3"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
