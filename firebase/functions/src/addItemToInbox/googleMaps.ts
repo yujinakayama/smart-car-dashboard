@@ -150,7 +150,7 @@ async function normalizeLocationWithFtid(expandedURL: URL, inputData: InputData)
         return null
     }
 
-    return normalizeLocationWithIdentifier({ ftid: ftid }, expandedURL, inputData)
+    return await normalizeLocationWithIdentifier({ ftid: ftid }, expandedURL, inputData)
 }
 
 async function normalizeLocationWithCoordinate(expandedURL: URL, inputData: InputData): Promise<Location | null> {

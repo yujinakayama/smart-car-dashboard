@@ -67,11 +67,11 @@ function normalize(inputData: InputData): Promise<NormalizedData> {
     }
 }
 
-async function addItemToFirestore(item: Item, document: FirebaseFirestore.DocumentReference): Promise<any> {
+async function addItemToFirestore(item: Item, document: FirebaseFirestore.DocumentReference): Promise<admin.firestore.WriteResult> {
     const data = {
         creationDate: admin.firestore.FieldValue.serverTimestamp(),
         ...item
     }
 
-    return document.create(data)
+    return await document.create(data)
 }
