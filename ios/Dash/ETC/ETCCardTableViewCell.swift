@@ -15,7 +15,7 @@ class ETCCardTableViewCell: UITableViewCell {
 
     @IBOutlet weak var cardView: ETCCardView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var checkmarkImageView: UIImageView!
+    @IBOutlet weak var insertionStatusLabel: UILabel!
 
     var card: ETCCard! {
         didSet {
@@ -26,7 +26,7 @@ class ETCCardTableViewCell: UITableViewCell {
 
     var isCurrentCard = false {
         didSet {
-            checkmarkImageView.isHidden = !isCurrentCard
+            insertionStatusLabel.isHidden = !isCurrentCard
         }
     }
 

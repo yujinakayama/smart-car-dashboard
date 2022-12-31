@@ -28,6 +28,9 @@
 /* Class = "UILabel"; text = "All Payments"; ObjectID = "wLH-Uf-nlx"; */
 "wLH-Uf-nlx.text" = "すべてのカードの履歴";
 
+/* Class = "UILabel"; text = "Inserted"; ObjectID = "L8f-9B-9HH"; */
+"L8f-9B-9HH.text" = "挿入中";
+
 /* Class = "UILabel"; text = "¥"; ObjectID = "6wB-E0-moo"; */
 "6wB-E0-moo.text" = "¥";
 
