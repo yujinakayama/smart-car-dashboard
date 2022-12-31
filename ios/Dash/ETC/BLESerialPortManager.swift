@@ -31,11 +31,11 @@ class BLESerialPortManager: NSObject {
 
     func startDiscovery() {
         #if targetEnvironment(simulator)
-        // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-        //     guard let self = self else { return }
-        //     let serialPort = MockSerialPort()
-        //     self.delegate?.serialPortManager(self, didFindSerialPort: serialPort)
-        // }
+         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+             guard let self = self else { return }
+             let serialPort = MockSerialPort()
+             self.delegate?.serialPortManager(self, didFindSerialPort: serialPort)
+         }
         #else
         _ = centralManager // Invokes centralManagerDidUpdateState()
         #endif
