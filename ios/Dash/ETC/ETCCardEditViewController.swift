@@ -69,6 +69,8 @@ class ETCCardEditViewController: UITableViewController {
 
         if mainCardSwitch.isOn {
             Defaults.shared.mainETCCardUUID = card.uuid
+        } else if Defaults.shared.mainETCCardUUID == card.uuid {
+            Defaults.shared.mainETCCardUUID = nil
         }
 
         dismiss(animated: true)
