@@ -18,8 +18,8 @@
     "@googlemaps/google-maps-services-js": "^3.3.4",
     "@yujinakayama/apple-music": "^0.4.0",
     "axios": "^0.21.2",
-    "firebase-admin": "^10.0.0",
-    "firebase-functions": "^3.11.0",
+    "firebase-admin": "^11.4.1",
+    "firebase-functions": "^3.24.1",
     "libxmljs": "^0.19.7",
     "re2": "^1.17.3",
     "url-regex-safe": "^3.0.0"
