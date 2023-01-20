@@ -18,6 +18,16 @@ public class PPPark {
     }
 
     func searchParkings(around coordinate: CLLocationCoordinate2D, entranceDate: Date, exitDate: Date) async throws -> [Parking] {
+        let response = try await performRequest(coordinate: coordinate, entranceDate: entranceDate, exitDate: exitDate)
+
+        guard let parkings = response.parkings else {
+            return []
+        }
+
+        return parkings.filter { $0.isForCars }
+    }
+
+    private func performRequest(coordinate: CLLocationCoordinate2D, entranceDate: Date, exitDate: Date) async throws -> PPPark.Response {
         var request = URLRequest(url: URL(string: "https://api.pppark.com/search_v1.1")!)
         request.httpMethod = "POST"
         request.httpBody = requestBody(coordinate: coordinate, entranceDate: entranceDate, exitDate: exitDate)
@@ -31,7 +41,7 @@ public class PPPark {
             throw error
         }
 
-        return response.parkings ?? []
+        return response
     }
 
     private func requestBody(coordinate: CLLocationCoordinate2D, entranceDate: Date, exitDate: Date) -> Data {
@@ -177,6 +187,16 @@ extension PPPark.Parking: ParkingProtocol {
         let mapItem = MKMapItem(placemark: placemark)
         mapItem.name = normalizedName
         return mapItem
+    }
+}
+
+extension PPPark.Parking {
+    static let nonCarParkingNamePattern = try! NSRegularExpression(pattern: "駐輪|二輪|オートバイ|バイク")
+
+    var isForCars: Bool {
+        let isForCars = Self.nonCarParkingNamePattern.rangeOfFirstMatch(in: name).location == NSNotFound
+        logger.verbose("\(isForCars) \(name)")
+        return isForCars
     }
 }
 
