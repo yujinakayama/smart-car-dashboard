@@ -304,13 +304,15 @@ class MapsViewController: UIViewController {
 
         if officialParkingSearch == nil { return }
 
-        if traitCollection.horizontalSizeClass == .compact {
-            officialParkingSearchStatusView.backgroundColor = nil
-            statusBarUnderNavigationBar.addArrangedSubview(officialParkingSearchStatusView)
-            statusBarUnderNavigationBar.isHidden = false
-        } else {
-            officialParkingSearchStatusView.backgroundColor = .tertiarySystemFill
-            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: officialParkingSearchStatusView)
+        DispatchQueue.main.async {
+            if self.traitCollection.horizontalSizeClass == .compact {
+                self.officialParkingSearchStatusView.backgroundColor = nil
+                self.statusBarUnderNavigationBar.addArrangedSubview(self.officialParkingSearchStatusView)
+                self.statusBarUnderNavigationBar.isHidden = false
+            } else {
+                self.officialParkingSearchStatusView.backgroundColor = .tertiarySystemFill
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.officialParkingSearchStatusView)
+            }
         }
     }
 
