@@ -249,12 +249,25 @@ public class OfficialParkingSearch: NSObject {
                     return null;
                 }
 
-                if (element.tagName == 'TH' || element.tagName == 'DT') {
-                    const descriptionElement = element.nextElementSibling;
-                    return descriptionElement?.innerText.trim() || descriptionElement.textContent.trim();
-                } else {
+                const ancestorElementsOf = (baseElement) => {
+                    const elements = [baseElement];
+                    let element = baseElement;
+                    while (element = element.parentElement) {
+                        elements.push(element);
+                    }
+                    return elements;
+                };
+
+                const labelElement = ancestorElementsOf(element).find((e) => {
+                    return ['DT', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'TD', 'TH'].includes(e.tagName);
+                });
+
+                if (!labelElement) {
                     return null;
                 }
+
+                const descriptionElement = labelElement.nextElementSibling;
+                return descriptionElement?.innerText.trim() || descriptionElement?.textContent.trim();
             }
         """
 
@@ -295,8 +308,9 @@ public class OfficialParkingSearch: NSObject {
                 H4: 97,
                 H5: 96,
                 H6: 95,
-                TH: 20,
-                DT: 19,
+                TH: 30,
+                DT: 29,
+                TD: 20,
                 DIV: 10,
                 A: -10,
                 SMALL: -20,
