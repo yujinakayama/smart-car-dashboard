@@ -448,6 +448,10 @@ extension OfficialParkingSearch {
         }()
 
         public lazy var capacity: Int? = {
+            if existence == false {
+                return nil
+            }
+
             guard let normalizedDescription = normalizedDescription else { return nil }
 
             let capacities: [Int] = Self.capacityRegularExpression.matches(in: normalizedDescription).map { (result) in
