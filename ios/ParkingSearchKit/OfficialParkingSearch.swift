@@ -417,10 +417,6 @@ extension OfficialParkingSearch {
             return lhs.url == rhs.url && lhs.description == rhs.description
         }
 
-        static let sentenceRegularExpression = try! NSRegularExpression(pattern: "[^。\\n\\(\\)（）]+")
-        static let existenceRegularExpression = try! NSRegularExpression(pattern: "^(?:(有り?|あり)|(無し?|なし))$")
-        static let capacityRegularExpression = try! NSRegularExpression(pattern: "(\\d+)台")
-
         public let url: URL
         public let description: String?
 
@@ -429,12 +425,12 @@ extension OfficialParkingSearch {
             self.description = description
         }
 
-        lazy var existence: Bool? = {
+        lazy var existence: Bool? = { () -> Bool? in
             guard let sentences = sentences else { return nil }
 
             let existences: [Bool] = sentences.map { (sentence) in
-                if let result = Self.existenceRegularExpression.firstMatch(in: sentence) {
-                    return result.range(at: 1).location != NSNotFound
+                if let match = sentence.wholeMatch(of: /(有り?|あり)|(無し?|なし)/) {
+                    return match.1 != nil
                 } else {
                     return nil
                 }
@@ -447,16 +443,15 @@ extension OfficialParkingSearch {
             }
         }()
 
-        public lazy var capacity: Int? = {
+        public lazy var capacity: Int? = { () -> Int? in
             if existence == false {
                 return nil
             }
 
             guard let normalizedDescription = normalizedDescription else { return nil }
 
-            let capacities: [Int] = Self.capacityRegularExpression.matches(in: normalizedDescription).map { (result) in
-                let numberText = normalizedDescription[result.range(at: 1)]
-                return Int(numberText)
+            let capacities: [Int] = normalizedDescription.matches(of: /(\d+)台/).map { (match) in
+                return Int(match.1)
             }.compactMap { $0 }
 
             if capacities.count == 1, let capacity = capacities.first {
@@ -468,8 +463,8 @@ extension OfficialParkingSearch {
 
         private lazy var sentences: [String]? = {
             guard let normalizedDescription = normalizedDescription else { return nil }
-            let results = Self.sentenceRegularExpression.matches(in: normalizedDescription)
-            return results.map { normalizedDescription[$0.range] }
+            let sentences = normalizedDescription.split(separator: /\s*[。\n\(\)（）【】]\s*/)
+            return sentences.map { String($0) }
         }()
 
         private lazy var normalizedDescription = description?.covertFullwidthAlphanumericsToHalfwidth().convertFullwidthWhitespacesToHalfwidth()
