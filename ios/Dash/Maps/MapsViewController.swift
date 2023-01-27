@@ -167,7 +167,9 @@ class MapsViewController: UIViewController {
     var showsRecentSharedLocations = true {
         didSet {
             if showsRecentSharedLocations {
-                updateSharedLocationAnnotations()
+                Task {
+                    await updateSharedLocationAnnotations()
+                }
             } else {
                 removeSharedLocationAnnotations()
             }
@@ -275,7 +277,9 @@ class MapsViewController: UIViewController {
 
                 if let database = Firebase.shared.inboxItemDatabase {
                     self.inboxItemQuerySubscription = database.items(type: .location).subscribeToCountUpdates { (result) in
-                        self.updateSharedLocationAnnotations()
+                        Task {
+                            await self.updateSharedLocationAnnotations()
+                        }
                     }
                 } else {
                     self.inboxItemQuerySubscription = nil
@@ -488,34 +492,44 @@ class MapsViewController: UIViewController {
         present(navigationController, animated: true)
     }
 
-    private func updateSharedLocationAnnotations() {
-        removeSharedLocationAnnotations()
+    private func removeSharedLocationAnnotations() {
+        let annotations = mapView.annotations.filter { $0 is SharedLocationAnnotation }
+        mapView.removeAnnotations(annotations)
+    }
 
-        Task {
-            await addSharedLocationAnnotations()
+    private func updateSharedLocationAnnotations() async {
+        guard let recentLocations = await recentLocations() else { return }
+
+        let existingAnnotations = mapView.annotations.filter { $0 is SharedLocationAnnotation } as! [SharedLocationAnnotation]
+        let existingLocations = Set(existingAnnotations.map { $0.location })
+
+        let locationsToAdd = recentLocations.subtracting(existingLocations)
+        let annotationsToAdd = locationsToAdd.map { (location) in
+            return SharedLocationAnnotation(location)
+        }
+
+        let locationsToRemove = existingLocations.subtracting(recentLocations)
+        let annotationsToRemove = locationsToRemove.compactMap { (location) in
+            return existingAnnotations.first { $0.location == location }
+        }
+
+        await MainActor.run {
+            mapView.removeAnnotations(annotationsToRemove)
+            mapView.addAnnotations(annotationsToAdd)
         }
     }
 
-    private func removeSharedLocationAnnotations() {
-        let sharedLocationAnnotations = mapView.annotations.filter { $0 is SharedLocationAnnotation }
-        mapView.removeAnnotations(sharedLocationAnnotations)
-    }
-
-    private func addSharedLocationAnnotations() async {
-        guard let database = Firebase.shared.inboxItemDatabase else { return }
+    private func recentLocations() async -> Set<Location>? {
+        guard let database = Firebase.shared.inboxItemDatabase else { return nil }
 
         let oneWeekAgo = Date(timeIntervalSinceNow: -7 * 24 * 60 * 60)
         let query = database.items(type: .location, createdAfter: oneWeekAgo)
 
-        guard let recentLocations = try? await query.get() as? [Location] else { return }
-
-        let sharedLocationAnnotations = recentLocations.map { (location) in
-            return SharedLocationAnnotation(location)
+        guard let locations = try? await query.get() as? [Location] else {
+            return nil
         }
 
-        await MainActor.run {
-            mapView.addAnnotations(sharedLocationAnnotations)
-        }
+        return Set(locations)
     }
 
     private func viewForPointOfInterestAnnotation(_ annotation: PointOfInterestAnnotation) -> MKAnnotationView {

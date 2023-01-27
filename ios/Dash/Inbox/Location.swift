@@ -80,6 +80,18 @@ class Location: InboxItemProtocol {
     }
 }
 
+extension Location: Equatable, Hashable {
+    static func == (lhs: Location, rhs: Location) -> Bool {
+        return lhs.coordinate == rhs.coordinate && lhs.name == rhs.name
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(coordinate.latitude)
+        hasher.combine(coordinate.longitude)
+        hasher.combine(name)
+    }
+}
+
 extension Location {
     struct Address: Decodable {
         let country: String?
