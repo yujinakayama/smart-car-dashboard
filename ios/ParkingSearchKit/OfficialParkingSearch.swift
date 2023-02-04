@@ -464,7 +464,7 @@ extension OfficialParkingSearch {
 
             guard let normalizedDescription = normalizedDescription else { return nil }
 
-            let capacities: [Int] = normalizedDescription.matches(of: /(\d+)台/).map { (match) in
+            let capacities: [Int] = normalizedDescription.matches(of: /(\d+,)台/).map { (match) in
                 return Int(match.1)
             }.compactMap { $0 }
 
