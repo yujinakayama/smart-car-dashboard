@@ -122,5 +122,7 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>MBXAccessToken</key>
+	<string>pk.eyJ1Ijoibmt5bXlqIiwiYSI6ImNsZTlmeDFybjA2MHkzcnMyNmFjdmoyZnEifQ.ZXozyg9XgfkXvbWt34c-LQ</string>
 </dict>
 </plist>

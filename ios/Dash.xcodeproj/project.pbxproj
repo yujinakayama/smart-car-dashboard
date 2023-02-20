@@ -68,7 +68,6 @@
 		B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B944C69124A9E647000D1E99 /* PlaybackControlView.swift */; };
 		B948F95B281177B000511CA7 /* UUIDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43923D345D70078A057 /* UUIDExtension.swift */; };
 		B948F95C2811782400511CA7 /* ETCTollbooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9515F1527BA8C07001C1D8D /* ETCTollbooth.swift */; };
-		B94A59A026826E960074368A /* LocationInformationDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94A599F26826E960074368A /* LocationInformationDebugViewController.swift */; };
 		B94BD2E92680486700B768A2 /* BorderedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94BD2E82680486700B768A2 /* BorderedLabel.swift */; };
 		B94E69D123F7A313004CCC7C /* WebsiteIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */; };
 		B94EC75327914C620008C447 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94EC75227914C620008C447 /* UIApplicationExtension.swift */; };
@@ -243,6 +242,8 @@
 		B9FACF4C25D4299900F05CAE /* RearviewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9F4377B25D41C19004B9140 /* RearviewKit.framework */; };
 		B9FACF4D25D4299900F05CAE /* RearviewKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B9F4377B25D41C19004B9140 /* RearviewKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B9FB33E124AE2ACD00FEB782 /* PlaybackModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FB33E024AE2ACD00FEB782 /* PlaybackModeButton.swift */; };
+		B9FF272929AFA60A00B29DFC /* bayshore-daikoku.gpx in Resources */ = {isa = PBXBuildFile; fileRef = B9FF272529AFA60A00B29DFC /* bayshore-daikoku.gpx */; };
+		B9FF272B29AFA60A00B29DFC /* shintomei-kakegawa-to-enshumori.gpx in Resources */ = {isa = PBXBuildFile; fileRef = B9FF272729AFA60A00B29DFC /* shintomei-kakegawa-to-enshumori.gpx */; };
 		B9FF2907284E04F400CCB320 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FF2906284E04F400CCB320 /* Video.swift */; };
 /* End PBXBuildFile section */
 
@@ -460,7 +461,6 @@
 		B942554F22BAA5D1008B053B /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		B944C68F24A9E4C8000D1E99 /* MusicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
 		B944C69124A9E647000D1E99 /* PlaybackControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackControlView.swift; sourceTree = "<group>"; };
-		B94A599F26826E960074368A /* LocationInformationDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInformationDebugViewController.swift; sourceTree = "<group>"; };
 		B94BD2E82680486700B768A2 /* BorderedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedLabel.swift; sourceTree = "<group>"; };
 		B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteIcon.swift; sourceTree = "<group>"; };
 		B94EC75227914C620008C447 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
@@ -628,6 +628,8 @@
 		B9F9EFD5256D3D6B00C33781 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		B9FA6CC724CED3D00038E990 /* SongDataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongDataRequest.swift; sourceTree = "<group>"; };
 		B9FB33E024AE2ACD00FEB782 /* PlaybackModeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackModeButton.swift; sourceTree = "<group>"; };
+		B9FF272529AFA60A00B29DFC /* bayshore-daikoku.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "bayshore-daikoku.gpx"; sourceTree = "<group>"; };
+		B9FF272729AFA60A00B29DFC /* shintomei-kakegawa-to-enshumori.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "shintomei-kakegawa-to-enshumori.gpx"; sourceTree = "<group>"; };
 		B9FF2906284E04F400CCB320 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		BBF96480A5CBA83FEB75EF07 /* Pods-DashRemote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote.debug.xcconfig"; path = "Target Support Files/Pods-DashRemote/Pods-DashRemote.debug.xcconfig"; sourceTree = "<group>"; };
 		D72D61E07B471561E0FDF3FC /* Pods-Rearview.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rearview.release.xcconfig"; path = "Target Support Files/Pods-Rearview/Pods-Rearview.release.xcconfig"; sourceTree = "<group>"; };
@@ -772,7 +774,6 @@
 			children = (
 				B980071F2678D6AF00FC703E /* LocationInformationWidgetViewController.swift */,
 				B9D02088268CD1850020BF9A /* RoadTracker.swift */,
-				B94A599F26826E960074368A /* LocationInformationDebugViewController.swift */,
 				B9B4F706268CB55D009C5DC5 /* RoadName.swift */,
 				B9D0208A268CD2F60020BF9A /* VehicleMovement.swift */,
 				B980071D2678B81C00FC703E /* OpenCage.swift */,
@@ -1028,6 +1029,7 @@
 				B9DC5B22229D59BE00B645D5 /* Products */,
 				B9CD1D8B22A51AAD00170082 /* Frameworks */,
 				FC2BACFC9EC4F82C9699C39B /* Pods */,
+				B9FF272429AFA60A00B29DFC /* SimulatedLocations */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1154,6 +1156,15 @@
 				B9F4377E25D41C19004B9140 /* Info.plist */,
 			);
 			path = RearviewKit;
+			sourceTree = "<group>";
+		};
+		B9FF272429AFA60A00B29DFC /* SimulatedLocations */ = {
+			isa = PBXGroup;
+			children = (
+				B9FF272529AFA60A00B29DFC /* bayshore-daikoku.gpx */,
+				B9FF272729AFA60A00B29DFC /* shintomei-kakegawa-to-enshumori.gpx */,
+			);
+			path = SimulatedLocations;
 			sourceTree = "<group>";
 		};
 		FC2BACFC9EC4F82C9699C39B /* Pods */ = {
@@ -1520,6 +1531,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B92451D423E30ACE007556D5 /* Settings.bundle in Resources */,
+				B9FF272929AFA60A00B29DFC /* bayshore-daikoku.gpx in Resources */,
 				B9DC5B31229D59BF00B645D5 /* LaunchScreen.storyboard in Resources */,
 				B9E6CCA1234F69B800E18603 /* Payment.wav in Resources */,
 				B99356D922A9483F00BA08AB /* japan_etc_tollbooths.csv in Resources */,
@@ -1530,6 +1542,7 @@
 				B99C698126F5F1E30064162D /* Localizable.strings in Resources */,
 				B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */,
 				B9989E3E23E8752100FAFD06 /* Share.wav in Resources */,
+				B9FF272B29AFA60A00B29DFC /* shintomei-kakegawa-to-enshumori.gpx in Resources */,
 				B9008EAF25FBB6D7005DAD13 /* NoMainETCCard.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1935,7 +1948,6 @@
 				B92FB3C023E95BE900EA702C /* InboxItemTableViewCell.swift in Sources */,
 				B98007202678D6AF00FC703E /* LocationInformationWidgetViewController.swift in Sources */,
 				B907C790272589530085ED7E /* AppState.swift in Sources */,
-				B94A59A026826E960074368A /* LocationInformationDebugViewController.swift in Sources */,
 				B9C1F41F27B88A6400C6D4DD /* ScrollViewPagination.swift in Sources */,
 				B9C1F40D27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift in Sources */,
 				B9515F1627BA8C07001C1D8D /* ETCTollbooth.swift in Sources */,

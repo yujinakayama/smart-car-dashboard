@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import MapboxCoreNavigation
 
 class LocationInformationWidgetViewController: UIViewController, RoadTrackerDelegate {
     @IBOutlet weak var roadView: UIView!
@@ -19,9 +20,7 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
 
     let roadTracker = RoadTracker()
 
-    var currentPlace: OpenCage.Place?
-
-    weak var debugger: RoadTrackerDelegate?
+    var currentEdge: RoadGraph.Edge.Metadata?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,8 +28,6 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
         roadTracker.delegate = self
 
         setLowLocationAccuracyLabelText()
-
-        view.addInteraction(UIContextMenuInteraction(delegate: self))
     }
 
     func setLowLocationAccuracyLabelText() {
@@ -62,22 +59,24 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
 
     override func viewDidDisappear(_ animated: Bool) {
         roadTracker.stopTracking()
-        currentPlace = nil
+        currentEdge = nil
         super.viewDidDisappear(animated)
     }
 
     func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentLocation location: CLLocation) {
         DispatchQueue.main.async {
             self.lowLocationAccuracyLabel.isHidden = roadTracker.considersLocationAccurate(location)
-            self.debugger?.roadTracker(roadTracker, didUpdateCurrentLocation: location)
         }
     }
 
-    func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentPlace place: OpenCage.Place, for location: CLLocation, with reason: RoadTracker.UpdateReason) {
-        var shouldAnimate = false
+    func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentEdge edge: RoadGraph.Edge.Metadata) {
+        logger.info()
 
-        if let previousPlace = currentPlace {
-            shouldAnimate = RoadName(place: previousPlace) != RoadName(place: place)
+        let roadName = RoadName(edge: edge)
+
+        var shouldAnimate = false
+        if let previousEdge = currentEdge {
+            shouldAnimate = roadName != RoadName(edge: previousEdge)
         } else {
             shouldAnimate = true
         }
@@ -92,28 +91,25 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
                 }
             }
 
-            self.updateLabels(for: place, animated: shouldAnimate)
-
-
-            self.debugger?.roadTracker(roadTracker, didUpdateCurrentPlace: place, for: location, with: reason)
+            self.updateLabels(for: roadName, animated: shouldAnimate)
         }
 
-        currentPlace = place
+        currentEdge = edge
     }
 
-    func updateLabels(for place: OpenCage.Place, animated: Bool) {
+    func updateLabels(for roadName: RoadName, animated: Bool) {
         if animated {
             withAnimation {
-                self.updateLabels(for: place)
+                self.updateLabels(for: roadName)
             }
         } else {
-            updateLabels(for: place)
+            updateLabels(for: roadName)
         }
     }
 
-    func updateLabels(for place: OpenCage.Place) {
-        updateRoadNameLabels(for: place)
-        updateAddressLabel(for: place)
+    func updateLabels(for roadName: RoadName) {
+        updateRoadNameLabels(for: roadName)
+        updateAddressLabel(for: roadName)
         hideLabelsWithNoContent()
     }
 
@@ -140,9 +136,7 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
         }
     }
 
-    func updateRoadNameLabels(for place: OpenCage.Place) {
-        let roadName = RoadName(place: place)
-
+    func updateRoadNameLabels(for roadName: RoadName) {
         if let popularName = roadName.popularName {
             roadNameLabel.text = popularName
             canonicalRoadNameLabel.text = roadName.canonicalRoadName
@@ -158,32 +152,13 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
         }
     }
 
-    func updateAddressLabel(for place: OpenCage.Place) {
-        addressLabel.text = currentPlace?.address.components.joined(separator: " ")
+    func updateAddressLabel(for roadName: RoadName) {
+        addressLabel.text = roadName.prefecture?.rawValue
     }
 
     func hideLabelsWithNoContent() {
         roadNameLabel.isHidden = roadNameLabel.text == nil
         canonicalRoadNameLabel.isHidden = canonicalRoadNameLabel.text == nil
         addressLabel.isHidden = addressLabel.text == nil
-    }
-}
-
-extension LocationInformationWidgetViewController: UIContextMenuInteractionDelegate {
-    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-        let actionProvider: UIContextMenuActionProvider = { (suggestedActions) in
-            let action = UIAction(title: "Debug", image: UIImage(systemName: "ladybug")) { (action) in
-                let debugViewContoller = LocationInformationDebugViewController()
-                self.debugger = debugViewContoller
-
-                let navigationController = UINavigationController(rootViewController: debugViewContoller)
-                navigationController.modalPresentationStyle = .overCurrentContext
-                self.present(navigationController, animated: true)
-            }
-
-            return UIMenu(title: "", children: [action])
-        }
-
-        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: actionProvider)
     }
 }

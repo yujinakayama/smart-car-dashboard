@@ -8,201 +8,111 @@
 
 import Foundation
 import CoreLocation
+import MapboxCoreNavigation
 
 protocol RoadTrackerDelegate: NSObjectProtocol {
     func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentLocation location: CLLocation)
-    func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentPlace place: OpenCage.Place, for location: CLLocation, with reason: RoadTracker.UpdateReason)
+    func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentEdge edge: RoadGraph.Edge.Metadata)
 }
 
 class RoadTracker: NSObject, CLLocationManagerDelegate {
     weak var delegate: RoadTrackerDelegate?
 
-    private lazy var locationManager: CLLocationManager = {
-        let locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.pausesLocationUpdatesAutomatically = false
-        return locationManager
+    private lazy var passiveLocationManager: PassiveLocationManager = {
+        let passiveLocationManager = PassiveLocationManager()
+        passiveLocationManager.delegate = self
+        return passiveLocationManager
     }()
 
-    private lazy var openCage: OpenCage = {
-        let path = Bundle.main.path(forResource: "opencage_api_key", ofType: "txt")!
-        let apiKey = try! String(contentsOfFile: path)
-        return OpenCage(apiKey: apiKey)
-    }()
+    private let electronicHorizonOptions = ElectronicHorizonOptions(
+        length: 1000,
+        expansionLevel: 0,
+        branchLength: 100,
+        minTimeDeltaBetweenUpdates: nil
+    )
+
+    private var coreLocationManager: CLLocationManager {
+        return passiveLocationManager.systemLocationManager
+    }
+
+    private var roadGraph: RoadGraph {
+        return passiveLocationManager.roadGraph
+    }
 
     var isTracking = false
 
     // horizontalAccuracy returns fixed value 65.0 in reinforced concrete buildings, which is unstable
     static let unreliableLocationAccuracy: CLLocationAccuracy = 65
 
-    // https://opencagedata.com/pricing
-    static let maximumRequestCountPerDay = 2500
+    override init() {
+        super.init()
 
-    // 34.56 seconds
-    static var fixedUpdateInterval: TimeInterval = TimeInterval((60 * 60 * 24) / maximumRequestCountPerDay)
-
-    static let minimumMovementDistanceForIntervalUpdate: CLLocationDistance = 10
-
-    private var currentRequestTask: Task<Void, Never>?
-
-    var currentPlace: OpenCage.Place? {
-        didSet {
-            currentRegion = currentPlace?.region.extended(by: Self.regionExtensionDistance)
-        }
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(electronicHorizonDidUpdatePosition),
+            name: .electronicHorizonDidUpdatePosition,
+            object: nil
+        )
     }
-
-    private var currentRegion: OpenCage.Region?
-
-    // We should extend original regions to avoid too frequent boundary detection caused by GPS errors
-    // especially on roads running through north to south, or east to west, which tend to have very narrow region.
-    static let regionExtensionDistance: CLLocationDistance = 5
-
-    private var lastRequestLocation: CLLocation?
-
-    private let vehicleMovement = VehicleMovement()
 
     func startTracking() {
         logger.info()
 
         isTracking = true
 
-        switch locationManager.authorizationStatus {
+        switch coreLocationManager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
             DispatchQueue.main.async {
-                self.locationManager.startUpdatingLocation()
+                self.passiveLocationManager.startUpdatingLocation()
+                self.passiveLocationManager.startUpdatingElectronicHorizon(with: self.electronicHorizonOptions)
             }
         default:
-            locationManager.requestWhenInUseAuthorization()
+            coreLocationManager.requestWhenInUseAuthorization()
         }
     }
 
     func stopTracking() {
         logger.info()
-
-        locationManager.stopUpdatingLocation()
+        passiveLocationManager.stopUpdatingElectronicHorizon()
         isTracking = false
-
-        currentRequestTask?.cancel()
-        currentRequestTask = nil
-        currentPlace = nil
-        lastRequestLocation = nil
-        vehicleMovement.reset()
-    }
-
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        logger.info(manager.authorizationStatus.rawValue)
-
-        guard isTracking else { return }
-
-        switch manager.authorizationStatus {
-        case .authorizedAlways, .authorizedWhenInUse:
-            locationManager.startUpdatingLocation()
-        default:
-            break
-        }
-    }
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard isTracking, let location = locations.last else { return }
-
-        delegate?.roadTracker(self, didUpdateCurrentLocation: location)
-
-        performRequestIfNeeded(for: location)
     }
 
     func considersLocationAccurate(_ location: CLLocation) -> Bool {
         return location.horizontalAccuracy < Self.unreliableLocationAccuracy
     }
 
-    private func performRequestIfNeeded(for location: CLLocation) {
-        vehicleMovement.record(location)
+    @objc func electronicHorizonDidUpdatePosition(_ notification: Notification) {
+        guard let edge = notification.userInfo?[RoadGraph.NotificationUserInfoKey.treeKey] as? RoadGraph.Edge,
+              let edgeMetadata = roadGraph.edgeMetadata(edgeIdentifier: edge.identifier)
+        else { return }
 
-        // Avoid parallel requests
-        guard currentRequestTask == nil else { return }
-
-        let isLocationAccurate = considersLocationAccurate(location)
-
-        // If we have moved out from the region of the previous road, update.
-        if isLocationAccurate,
-           let currentRegion = currentRegion, let lastRequestLocation = lastRequestLocation,
-           currentRegion.contains(lastRequestLocation.coordinate), !currentRegion.contains(location.coordinate)
-        {
-            performRequest(for: location, reason: .outOfRegion)
-            return
-        }
-
-        // Even if we are still considered to be inside of the region of the current road,
-        // update in a fixed interval because:
-        // * The region is rectangular but actual road is not
-        // * The current road may be wrong
-        if let lastRequestLocation = lastRequestLocation {
-            if location.timestamp >= lastRequestLocation.timestamp + Self.fixedUpdateInterval,
-               location.distance(from: lastRequestLocation) >= Self.minimumMovementDistanceForIntervalUpdate
-            {
-                performRequest(for: location, reason: .interval)
-                return
-            }
-        } else {
-            performRequest(for: location, reason: .initial)
-            return
-        }
-
-        // If we turned at an intersection, update
-        if isLocationAccurate, vehicleMovement.isEstimatedToHaveJustTurned {
-            vehicleMovement.reset()
-
-            DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
-                self.performRequest(for: self.locationManager.location ?? location, reason: .turn)
-            }
-
-            return
-        }
-    }
-
-    private func performRequest(for location: CLLocation, reason: UpdateReason) {
-        currentRequestTask = Task {
-            let place: OpenCage.Place
-
-            do {
-                place = try await openCage.reverseGeocode(coordinate: location.coordinate)
-            } catch {
-                logger.error(error)
-                return
-            }
-
-            logger.debug(place)
-
-            currentPlace = place
-            lastRequestLocation = location
-            delegate?.roadTracker(self, didUpdateCurrentPlace: place, for: location, with: reason)
-
-            currentRequestTask = nil
-        }
+        delegate?.roadTracker(self, didUpdateCurrentEdge: edgeMetadata)
     }
 }
 
-extension RoadTracker {
-    enum LocationReliability {
-        case normal
-        case low
-    }
-}
+extension RoadTracker: PassiveLocationManagerDelegate {
+    func passiveLocationManagerDidChangeAuthorization(_ manager: MapboxCoreNavigation.PassiveLocationManager) {
+        logger.info(coreLocationManager.authorizationStatus.rawValue)
 
-extension RoadTracker {
-    enum UpdateReason: String {
-        case initial
-        case interval
-        case turn
-        case outOfRegion
+        guard isTracking else { return }
 
-        var description: String {
-            switch self {
-            case .outOfRegion:
-                return "Out of Region"
-            default:
-                return rawValue.capitalized
-            }
+        switch coreLocationManager.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
+            self.passiveLocationManager.startUpdatingLocation()
+            passiveLocationManager.startUpdatingElectronicHorizon(with: electronicHorizonOptions)
+        default:
+            break
         }
+    }
+
+    func passiveLocationManager(_ manager: MapboxCoreNavigation.PassiveLocationManager, didUpdateLocation location: CLLocation, rawLocation: CLLocation) {
+        delegate?.roadTracker(self, didUpdateCurrentLocation: location)
+    }
+
+    func passiveLocationManager(_ manager: MapboxCoreNavigation.PassiveLocationManager, didUpdateHeading newHeading: CLHeading) {
+    }
+
+    func passiveLocationManager(_ manager: MapboxCoreNavigation.PassiveLocationManager, didFailWithError error: Error) {
+        logger.error(error)
     }
 }
