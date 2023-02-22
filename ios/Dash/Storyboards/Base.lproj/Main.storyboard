@@ -1490,8 +1490,8 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="RZr-ov-Imt">
                                 <rect key="frame" x="30" y="76" width="315" height="71.5"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="43e-NT-N9W">
-                                        <rect key="frame" x="59" y="0.0" width="197.5" height="33.5"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="43e-NT-N9W">
+                                        <rect key="frame" x="58" y="0.0" width="199.5" height="33.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東名高速道路" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9at-Od-YIK">
                                                 <rect key="frame" x="0.0" y="0.0" width="170.5" height="33.5"/>
@@ -1499,7 +1499,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="E1" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="fDi-RM-ZJK" customClass="BorderedLabel" customModule="Dash" customModuleProvider="target">
-                                                <rect key="frame" x="176.5" y="4.5" width="21" height="24"/>
+                                                <rect key="frame" x="178.5" y="4.5" width="21" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1611,13 +1611,13 @@
             <size key="intrinsicContentSize" width="139" height="31"/>
         </designable>
         <designable name="TAK-Hz-Kv5">
-            <size key="intrinsicContentSize" width="30" height="34"/>
+            <size key="intrinsicContentSize" width="23" height="22"/>
         </designable>
         <designable name="fDi-RM-ZJK">
             <size key="intrinsicContentSize" width="21" height="24"/>
         </designable>
         <designable name="mfV-vr-luy">
-            <size key="intrinsicContentSize" width="30" height="34"/>
+            <size key="intrinsicContentSize" width="24.5" height="22"/>
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
