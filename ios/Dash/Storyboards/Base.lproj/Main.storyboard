@@ -536,17 +536,17 @@
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="AllPaymentsCell" rowHeight="82" id="2sj-lq-fub">
-                                <rect key="frame" x="0.0" y="49.5" width="375" height="82"/>
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="82"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2sj-lq-fub" id="UN9-2d-DFc">
-                                    <rect key="frame" x="0.0" y="0.0" width="350.5" height="82"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="356.5" height="82"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="HKU-bN-sRN">
-                                            <rect key="frame" x="24" y="19" width="310.5" height="44"/>
+                                            <rect key="frame" x="24" y="19" width="308.5" height="44"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="All Payments" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wLH-Uf-nlx">
-                                                    <rect key="frame" x="0.0" y="10.5" width="310.5" height="23"/>
+                                                    <rect key="frame" x="0.0" y="10.5" width="308.5" height="23"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -567,14 +567,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="ETCCardTableViewCell" editingAccessoryType="detailButton" id="Yhp-zq-xeI" customClass="ETCCardTableViewCell" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="131.5" width="375" height="68.5"/>
+                                <rect key="frame" x="0.0" y="137.5" width="375" height="68.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yhp-zq-xeI" id="l4J-ek-iqJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="358.5" height="68.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="356.5" height="68.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="MZx-NX-l6V">
-                                            <rect key="frame" x="24" y="19" width="310.5" height="30.5"/>
+                                            <rect key="frame" x="24" y="19" width="308.5" height="30.5"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u8s-v0-sEG" customClass="ETCCardView" customModule="Dash" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.5" width="47.5" height="30"/>
@@ -598,7 +598,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="Inserted" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L8f-9B-9HH" customClass="BorderedLabel" customModule="Dash" customModuleProvider="target">
-                                                    <rect key="frame" x="257" y="7.5" width="51.5" height="16"/>
+                                                    <rect key="frame" x="257" y="7.4999999999999991" width="51.5" height="16"/>
                                                     <color key="backgroundColor" systemColor="tintColor"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -790,7 +790,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ETCPaymentTableViewCell" rowHeight="102" id="WCw-Qf-5nD" customClass="ETCPaymentTableViewCell" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="16" y="32" width="343" height="102"/>
+                                <rect key="frame" x="16" y="38" width="343" height="102"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WCw-Qf-5nD" id="37f-cq-3Eg">
                                     <rect key="frame" x="0.0" y="0.0" width="343" height="102"/>
@@ -832,23 +832,23 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="pVd-uR-tBd">
-                                                    <rect key="frame" x="231.5" y="0.0" width="79.5" height="14.5"/>
+                                                    <rect key="frame" x="217.5" y="0.0" width="93.5" height="18"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="1:23" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0YK-AR-A2c">
-                                                            <rect key="frame" x="0.0" y="0.0" width="24" height="14.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="29.5" height="18"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                             <color key="textColor" systemColor="secondaryLabelColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="JX9-eo-NcV">
-                                                            <rect key="frame" x="28" y="1.5" width="14" height="11"/>
+                                                            <rect key="frame" x="33.5" y="3.5" width="15" height="12"/>
                                                             <color key="tintColor" systemColor="secondaryLabelColor"/>
                                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                             </preferredSymbolConfiguration>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="23:45" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Lp-b1-rnx">
-                                                            <rect key="frame" x="46" y="0.0" width="33.5" height="14.5"/>
+                                                            <rect key="frame" x="52.5" y="0.0" width="41" height="18"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                             <color key="textColor" systemColor="secondaryLabelColor"/>
                                                             <nil key="highlightedColor"/>
@@ -865,7 +865,7 @@
                                             </constraints>
                                         </view>
                                         <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" distribution="equalSpacing" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="ZAn-lS-AfA">
-                                            <rect key="frame" x="16" y="63" width="224.5" height="19"/>
+                                            <rect key="frame" x="16" y="63" width="243.5" height="19"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="EML-DI-UKx" customClass="BorderedView" customModule="Dash" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="1" width="50" height="17.5"/>
@@ -896,20 +896,20 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="台場" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ElS-Fh-95g">
-                                                    <rect key="frame" x="56" y="1" width="29" height="17"/>
+                                                    <rect key="frame" x="56" y="0.0" width="35" height="19"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="uB5-qW-VsK">
-                                                    <rect key="frame" x="91" y="4" width="14" height="11"/>
+                                                    <rect key="frame" x="97" y="4" width="15" height="12"/>
                                                     <color key="tintColor" systemColor="secondaryLabelColor"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     </preferredSymbolConfiguration>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Rko-mV-7BI" customClass="BorderedView" customModule="Dash" customModuleProvider="target">
-                                                    <rect key="frame" x="111" y="1" width="50" height="17.5"/>
+                                                    <rect key="frame" x="118" y="1" width="50" height="17.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="東名高速" textAlignment="natural" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mrm-PV-omm">
                                                             <rect key="frame" x="5" y="2" width="41" height="13.5"/>
@@ -937,7 +937,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="横浜青葉" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Flp-ga-yBP">
-                                                    <rect key="frame" x="167" y="1" width="57.5" height="17"/>
+                                                    <rect key="frame" x="174" y="0.0" width="69.5" height="19"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1011,7 +1011,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="InboxItemTableViewCell" id="21U-sd-i0w" customClass="InboxItemTableViewCell" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="16" y="32" width="343" height="72.5"/>
+                                <rect key="frame" x="16" y="38" width="343" height="72.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="21U-sd-i0w" id="Veg-iI-dCl">
                                     <rect key="frame" x="0.0" y="0.0" width="343" height="72.5"/>
@@ -1061,16 +1061,16 @@
                                                     </variation>
                                                 </view>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="lBb-rb-QYA">
-                                                    <rect key="frame" x="60" y="8" width="189" height="34.5"/>
+                                                    <rect key="frame" x="60" y="6" width="147" height="39"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="東京国際空港ターミナル羽田空港国際線駐車場" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bnC-nn-FyW">
-                                                            <rect key="frame" x="0.0" y="0.0" width="189" height="17"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="147" height="20.5"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="maps.apple.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jCM-La-U6U">
-                                                            <rect key="frame" x="0.0" y="21" width="189" height="13.5"/>
+                                                            <rect key="frame" x="0.0" y="24.5" width="147" height="14.5"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                             <color key="textColor" systemColor="secondaryLabelColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1078,7 +1078,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="VMK-Dj-kBk">
-                                                    <rect key="frame" x="261" y="0.5" width="50" height="50"/>
+                                                    <rect key="frame" x="219" y="0.5" width="92" height="50"/>
                                                 </stackView>
                                             </subviews>
                                         </stackView>
@@ -1126,7 +1126,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" role="primary" translatesAutoresizingMaskIntoConstraints="NO" id="3d5-rM-KEm">
-                                <rect key="frame" x="111" y="496.5" width="153.5" height="31"/>
+                                <rect key="frame" x="99.5" y="495" width="176" height="34"/>
                                 <inset key="contentEdgeInsets" minX="18" minY="8" maxX="18" maxY="9"/>
                                 <state key="normal" title="Sign in with Google"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Sign in with Google" cornerStyle="dynamic">
@@ -1271,7 +1271,7 @@
                                     <viewLayoutGuide key="frameLayoutGuide" id="5h7-YP-2DW"/>
                                 </scrollView>
                                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Vl4-jF-Jhk">
-                                    <rect key="frame" x="130" y="154" width="115.5" height="26"/>
+                                    <rect key="frame" x="129.5" y="154" width="116.5" height="26"/>
                                     <color key="pageIndicatorTintColor" systemColor="tertiaryLabelColor"/>
                                     <color key="currentPageIndicatorTintColor" systemColor="labelColor"/>
                                     <connections>
@@ -1408,7 +1408,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="67" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eij-rK-Z1p">
-                                <rect key="frame" x="145.5" y="62.5" width="84.5" height="86"/>
+                                <rect key="frame" x="145.5" y="62.5" width="84" height="86"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="72"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1604,6 +1604,9 @@
         </scene>
     </scenes>
     <designables>
+        <designable name="L8f-9B-9HH">
+            <size key="intrinsicContentSize" width="51.5" height="16"/>
+        </designable>
         <designable name="PSg-N3-wKj">
             <size key="intrinsicContentSize" width="139" height="31"/>
         </designable>
@@ -1624,13 +1627,12 @@
     <resources>
         <image name="Mastercard" width="117" height="73"/>
         <image name="Visa" width="496" height="161"/>
-        <image name="arrow.right" catalog="system" width="128" height="98"/>
-        <image name="checkmark" catalog="system" width="128" height="114"/>
+        <image name="arrow.right" catalog="system" width="128" height="95"/>
         <image name="map.fill" catalog="system" width="128" height="110"/>
-        <image name="mappin" catalog="system" width="105" height="128"/>
-        <image name="signature" catalog="system" width="128" height="90"/>
-        <image name="speedometer" catalog="system" width="128" height="121"/>
-        <image name="tray.and.arrow.down.fill" catalog="system" width="128" height="114"/>
+        <image name="mappin" catalog="system" width="106" height="128"/>
+        <image name="signature" catalog="system" width="128" height="89"/>
+        <image name="speedometer" catalog="system" width="128" height="123"/>
+        <image name="tray.and.arrow.down.fill" catalog="system" width="128" height="115"/>
         <image name="yensign.square.fill" catalog="system" width="128" height="114"/>
         <namedColor name="Hairline Border Color">
             <color white="0.0" alpha="0.10000000149011612" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1648,7 +1650,7 @@
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1666,7 +1668,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="tertiaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29803921568627451" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tintColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
