@@ -103,7 +103,7 @@ class Road: Equatable {
             let prefectureType = prefecture?.suffix ?? "都道府県"
             return "\(prefectureType)道"
         case .tertiary:
-            return "\(municipalityType ?? "市町村")道"
+            return "\(municipality ?? "市町村")道"
         case .track:
             return "農道・林道"
         default:
@@ -127,18 +127,6 @@ class Road: Equatable {
         return prefecturesByRegionCode[regionCode]
     }
 
-    var municipalityType: String? {
-        guard let lastCharacter = municipality?.last else {
-            return nil
-        }
-
-        if Self.municipalityTypes.contains(lastCharacter) {
-            return String(lastCharacter)
-        } else {
-            return nil
-        }
-    }
-
     var municipality: String? {
         guard let locality = placemark.locality else { return nil }
 
@@ -148,8 +136,6 @@ class Road: Equatable {
             return locality
         }
     }
-
-    private static let municipalityTypes: [Character] = ["市", "区", "町", "村"]
 }
 
 // https://ja.wikipedia.org/wiki/ISO_3166-2:JP
