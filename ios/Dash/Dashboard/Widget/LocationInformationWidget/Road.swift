@@ -7,14 +7,16 @@
 //
 
 import Foundation
+import CoreLocation
 import MapboxCoreNavigation
 
-class RoadName: Equatable {
+class Road: Equatable {
     static let nameComponentPattern = try! NSRegularExpression(pattern: "[^\\(\\)（）]+")
 
     let edge: RoadGraph.Edge.Metadata
+    let placemark: CLPlacemark
 
-    static func == (lhs: RoadName, rhs: RoadName) -> Bool {
+    static func == (lhs: Road, rhs: Road) -> Bool {
         if let lhsPopularName = lhs.popularName {
             return lhsPopularName == rhs.popularName
         }
@@ -22,8 +24,9 @@ class RoadName: Equatable {
         return lhs.shield  == rhs.shield
     }
 
-    init(edge: RoadGraph.Edge.Metadata) {
+    init(edge: RoadGraph.Edge.Metadata, placemark: CLPlacemark) {
         self.edge = edge
+        self.placemark = placemark
     }
 
     private var names: [String] {
@@ -100,12 +103,21 @@ class RoadName: Equatable {
             let prefectureType = prefecture?.suffix ?? "都道府県"
             return "\(prefectureType)道"
         case .tertiary:
-            return "市町村道"
+            return "\(municipalityType ?? "市町村")道"
         case .track:
             return "農道・林道"
         default:
             return "一般道路"
         }
+    }
+
+    var address: [String] {
+        return [
+            placemark.administrativeArea,
+            placemark.subAdministrativeArea,
+            placemark.locality,
+            placemark.subLocality
+        ].compactMap { $0 }
     }
 
     var prefecture: Prefecture? {
@@ -114,6 +126,30 @@ class RoadName: Equatable {
         }
         return prefecturesByRegionCode[regionCode]
     }
+
+    var municipalityType: String? {
+        guard let lastCharacter = municipality?.last else {
+            return nil
+        }
+
+        if Self.municipalityTypes.contains(lastCharacter) {
+            return String(lastCharacter)
+        } else {
+            return nil
+        }
+    }
+
+    var municipality: String? {
+        guard let locality = placemark.locality else { return nil }
+
+        if let match = try? /(.+市).+区/.wholeMatch(in: locality) {
+            return String(match.output.1)
+        } else {
+            return locality
+        }
+    }
+
+    private static let municipalityTypes: [Character] = ["市", "区", "町", "村"]
 }
 
 // https://ja.wikipedia.org/wiki/ISO_3166-2:JP

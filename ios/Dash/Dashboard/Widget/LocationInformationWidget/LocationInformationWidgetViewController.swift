@@ -20,7 +20,7 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
 
     let roadTracker = RoadTracker()
 
-    var currentEdge: RoadGraph.Edge.Metadata?
+    var currentRoad: Road?
 
     let geocoder = CLGeocoder()
 
@@ -61,7 +61,7 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
 
     override func viewDidDisappear(_ animated: Bool) {
         roadTracker.stopTracking()
-        currentEdge = nil
+        currentRoad = nil
         super.viewDidDisappear(animated)
     }
 
@@ -73,14 +73,12 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
         
     }
 
-    func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentEdge edge: RoadGraph.Edge.Metadata) {
+    func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentRoad road: Road) {
         logger.info()
 
-        let roadName = RoadName(edge: edge)
-
         var shouldAnimate = false
-        if let previousEdge = currentEdge {
-            shouldAnimate = roadName != RoadName(edge: previousEdge)
+        if let previousRoad = currentRoad {
+            shouldAnimate = road != previousRoad
         } else {
             shouldAnimate = true
         }
@@ -95,25 +93,25 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
                 }
             }
 
-            self.updateLabels(for: roadName, animated: shouldAnimate)
+            self.updateLabels(for: road, animated: shouldAnimate)
         }
 
-        currentEdge = edge
+        currentRoad = road
     }
 
-    func updateLabels(for roadName: RoadName, animated: Bool) {
+    func updateLabels(for road: Road, animated: Bool) {
         if animated {
             withAnimation {
-                self.updateLabels(for: roadName)
+                self.updateLabels(for: road)
             }
         } else {
-            updateLabels(for: roadName)
+            updateLabels(for: road)
         }
     }
 
-    func updateLabels(for roadName: RoadName) {
-        updateRoadNameLabels(for: roadName)
-        updateAddressLabel(for: roadName)
+    func updateLabels(for road: Road) {
+        updateRoadNameLabels(for: road)
+        updateAddressLabel(for: road)
         hideLabelsWithNoContent()
     }
 
@@ -140,14 +138,14 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
         }
     }
 
-    func updateRoadNameLabels(for roadName: RoadName) {
-        if let popularName = roadName.popularName {
+    func updateRoadNameLabels(for road: Road) {
+        if let popularName = road.popularName {
             roadNameLabel.text = popularName
-            canonicalRoadNameLabel.text = roadName.canonicalRoadName
-        } else if let canonicalRoadName = roadName.canonicalRoadName {
+            canonicalRoadNameLabel.text = road.canonicalRoadName
+        } else if let canonicalRoadName = road.canonicalRoadName {
             roadNameLabel.text = canonicalRoadName
             canonicalRoadNameLabel.text = nil
-        } else if let unnumberedRouteName = roadName.unnumberedRouteName {
+        } else if let unnumberedRouteName = road.unnumberedRouteName {
             roadNameLabel.text = unnumberedRouteName
             canonicalRoadNameLabel.text = nil
         } else {
@@ -156,8 +154,8 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
         }
     }
 
-    func updateAddressLabel(for roadName: RoadName) {
-        addressLabel.text = roadName.prefecture?.rawValue
+    func updateAddressLabel(for road: Road) {
+        addressLabel.text = road.address.joined(separator: " ")
     }
 
     func hideLabelsWithNoContent() {

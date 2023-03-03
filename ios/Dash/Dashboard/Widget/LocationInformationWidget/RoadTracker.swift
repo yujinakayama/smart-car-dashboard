@@ -12,7 +12,7 @@ import MapboxCoreNavigation
 
 protocol RoadTrackerDelegate: NSObjectProtocol {
     func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentLocation location: CLLocation)
-    func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentEdge edge: RoadGraph.Edge.Metadata)
+    func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentRoad road: Road)
 }
 
 class RoadTracker: NSObject, CLLocationManagerDelegate {
@@ -39,7 +39,11 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
         return passiveLocationManager.roadGraph
     }
 
+    private var geocoder = CLGeocoder()
+
     var isTracking = false
+
+    private var currentPlacemark: CLPlacemark?
 
     // horizontalAccuracy returns fixed value 65.0 in reinforced concrete buildings, which is unstable
     static let unreliableLocationAccuracy: CLLocationAccuracy = 65
@@ -82,12 +86,43 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
     }
 
     @objc func electronicHorizonDidUpdatePosition(_ notification: Notification) {
-        print(notification.userInfo)
         guard let edge = notification.userInfo?[RoadGraph.NotificationUserInfoKey.treeKey] as? RoadGraph.Edge,
-              let edgeMetadata = roadGraph.edgeMetadata(edgeIdentifier: edge.identifier)
+              let edgeMetadata = roadGraph.edgeMetadata(edgeIdentifier: edge.identifier),
+              let currentPlacemark = currentPlacemark
         else { return }
 
-        delegate?.roadTracker(self, didUpdateCurrentEdge: edgeMetadata)
+        let road = Road(edge: edgeMetadata, placemark: currentPlacemark)
+        delegate?.roadTracker(self, didUpdateCurrentRoad: road)
+    }
+
+    private func reverseGeocode(for location: CLLocation) {
+        guard shouldRequestGeocoding(for: location) else {return }
+
+        let locale = Locale(identifier: "ja_JP")
+
+        geocoder.reverseGeocodeLocation(location, preferredLocale: locale) { [weak self] (placemarks, error) in
+            guard let self = self, self.isTracking else { return }
+
+            if let error = error {
+                logger.error(error)
+                return
+            }
+
+            guard let placemark = placemarks?.first else { return }
+            self.currentPlacemark = placemark
+        }
+    }
+
+    private func shouldRequestGeocoding(for location: CLLocation) -> Bool {
+        guard let lastLocation = currentPlacemark?.location else {
+            return true
+        }
+
+        if Date() > lastLocation.timestamp + 30 {
+            return true
+        }
+
+        return location.distance(from: lastLocation) > 500
     }
 }
 
@@ -108,6 +143,7 @@ extension RoadTracker: PassiveLocationManagerDelegate {
 
     func passiveLocationManager(_ manager: MapboxCoreNavigation.PassiveLocationManager, didUpdateLocation location: CLLocation, rawLocation: CLLocation) {
         delegate?.roadTracker(self, didUpdateCurrentLocation: location)
+        reverseGeocode(for: location)
     }
 
     func passiveLocationManager(_ manager: MapboxCoreNavigation.PassiveLocationManager, didUpdateHeading newHeading: CLHeading) {

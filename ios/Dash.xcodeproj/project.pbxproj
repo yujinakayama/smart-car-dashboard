@@ -151,7 +151,7 @@
 		B9B4F701268CB367009C5DC5 /* PairedVehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A676254D0EB30012A4CB /* PairedVehicle.swift */; };
 		B9B4F702268CB3D0009C5DC5 /* CLLocationCoordinate2DExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */; };
 		B9B4F703268CB3F5009C5DC5 /* ParkingSearchURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */; };
-		B9B4F707268CB55D009C5DC5 /* RoadName.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B4F706268CB55D009C5DC5 /* RoadName.swift */; };
+		B9B4F707268CB55D009C5DC5 /* Road.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B4F706268CB55D009C5DC5 /* Road.swift */; };
 		B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B717DD23E6B26900A47207 /* UnknownItem.swift */; };
 		B9B7452029968B2C00C85825 /* MapboxCoreNavigation in Frameworks */ = {isa = PBXBuildFile; productRef = B9B7451F29968B2C00C85825 /* MapboxCoreNavigation */; };
 		B9BA5B5926A897CF004D5927 /* PointOfInterestAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BA5B5826A897CF004D5927 /* PointOfInterestAnnotationView.swift */; };
@@ -169,6 +169,7 @@
 		B9C0CEE22508F641006D246E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9C0CEE12508F641006D246E /* Assets.xcassets */; };
 		B9C0CEE52508F641006D246E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9C0CEE32508F641006D246E /* LaunchScreen.storyboard */; };
 		B9C0CEED250C3A27006D246E /* HeartAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEEC250C3A27006D246E /* HeartAnimation.swift */; };
+		B9C1A09C29B2551F00FA0B55 /* metropolitan-rainbowbridge-to-shibuya.gpx in Resources */ = {isa = PBXBuildFile; fileRef = B9C1A09B29B2551F00FA0B55 /* metropolitan-rainbowbridge-to-shibuya.gpx */; };
 		B9C1DD1A2692EE350046E108 /* TLDExtract in Frameworks */ = {isa = PBXBuildFile; productRef = B9C1DD192692EE350046E108 /* TLDExtract */; };
 		B9C1DD1C269457910046E108 /* OfficialParkingSearchStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */; };
 		B9C1DD2026948B7D0046E108 /* OfficialParkingSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */; };
@@ -547,7 +548,7 @@
 		B9B399CB25965BDC00C7977F /* CameraOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOptions.swift; sourceTree = "<group>"; };
 		B9B39AB62598B11700C7977F /* HUDSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDSegmentedControl.swift; sourceTree = "<group>"; };
 		B9B4A8992569310400FE0C9F /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
-		B9B4F706268CB55D009C5DC5 /* RoadName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoadName.swift; sourceTree = "<group>"; };
+		B9B4F706268CB55D009C5DC5 /* Road.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Road.swift; sourceTree = "<group>"; };
 		B9B717DD23E6B26900A47207 /* UnknownItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownItem.swift; sourceTree = "<group>"; };
 		B9BA5B5826A897CF004D5927 /* PointOfInterestAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterestAnnotationView.swift; sourceTree = "<group>"; };
 		B9BA5B5A26A8982C004D5927 /* SharedLocationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedLocationAnnotation.swift; sourceTree = "<group>"; };
@@ -566,6 +567,7 @@
 		B9C0CEE62508F641006D246E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9C0CEEA2508F711006D246E /* H264ByteStreamParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = H264ByteStreamParser.swift; sourceTree = "<group>"; };
 		B9C0CEEC250C3A27006D246E /* HeartAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartAnimation.swift; sourceTree = "<group>"; };
+		B9C1A09B29B2551F00FA0B55 /* metropolitan-rainbowbridge-to-shibuya.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "metropolitan-rainbowbridge-to-shibuya.gpx"; sourceTree = "<group>"; };
 		B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialParkingSearchStatusView.swift; sourceTree = "<group>"; };
 		B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficialParkingSearch.swift; sourceTree = "<group>"; };
 		B9C1F40C27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterestAnnotation.swift; sourceTree = "<group>"; };
@@ -774,7 +776,7 @@
 			children = (
 				B980071F2678D6AF00FC703E /* LocationInformationWidgetViewController.swift */,
 				B9D02088268CD1850020BF9A /* RoadTracker.swift */,
-				B9B4F706268CB55D009C5DC5 /* RoadName.swift */,
+				B9B4F706268CB55D009C5DC5 /* Road.swift */,
 				B9D0208A268CD2F60020BF9A /* VehicleMovement.swift */,
 				B980071D2678B81C00FC703E /* OpenCage.swift */,
 			);
@@ -1162,6 +1164,7 @@
 			isa = PBXGroup;
 			children = (
 				B9FF272529AFA60A00B29DFC /* bayshore-daikoku.gpx */,
+				B9C1A09B29B2551F00FA0B55 /* metropolitan-rainbowbridge-to-shibuya.gpx */,
 				B9FF272729AFA60A00B29DFC /* shintomei-kakegawa-to-enshumori.gpx */,
 			);
 			path = SimulatedLocations;
@@ -1530,6 +1533,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9C1A09C29B2551F00FA0B55 /* metropolitan-rainbowbridge-to-shibuya.gpx in Resources */,
 				B92451D423E30ACE007556D5 /* Settings.bundle in Resources */,
 				B9FF272929AFA60A00B29DFC /* bayshore-daikoku.gpx in Resources */,
 				B9DC5B31229D59BF00B645D5 /* LaunchScreen.storyboard in Resources */,
@@ -1862,7 +1866,7 @@
 				B95E14C027BBDC1B0037FC94 /* GForceMeterView.swift in Sources */,
 				B915BEF5267F8754007068D7 /* StringExtension.swift in Sources */,
 				B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */,
-				B9B4F707268CB55D009C5DC5 /* RoadName.swift in Sources */,
+				B9B4F707268CB55D009C5DC5 /* Road.swift in Sources */,
 				B9C1F40F27AAEB8D00C6D4DD /* PointOfInterestCategory.swift in Sources */,
 				B95F514E23E5BBF70063CB3D /* InboxItem.swift in Sources */,
 				B9C1F41D27B87E5500C6D4DD /* ETCPaymentTableViewDataSource.swift in Sources */,
