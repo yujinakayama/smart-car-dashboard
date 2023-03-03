@@ -122,7 +122,7 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
             return true
         }
 
-        return location.distance(from: lastLocation) > 500
+        return location.distance(from: lastLocation) > 250
     }
 }
 
