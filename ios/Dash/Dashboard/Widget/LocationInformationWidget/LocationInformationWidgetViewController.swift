@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import MapboxCoreNavigation
 
 class LocationInformationWidgetViewController: UIViewController, RoadTrackerDelegate {
     @IBOutlet weak var roadView: UIView!
@@ -19,9 +20,9 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
 
     let roadTracker = RoadTracker()
 
-    var currentPlace: OpenCage.Place?
+    var currentRoad: Road?
 
-    weak var debugger: RoadTrackerDelegate?
+    let geocoder = CLGeocoder()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,8 +30,6 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
         roadTracker.delegate = self
 
         setLowLocationAccuracyLabelText()
-
-        view.addInteraction(UIContextMenuInteraction(delegate: self))
     }
 
     func setLowLocationAccuracyLabelText() {
@@ -62,22 +61,24 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
 
     override func viewDidDisappear(_ animated: Bool) {
         roadTracker.stopTracking()
-        currentPlace = nil
+        currentRoad = nil
         super.viewDidDisappear(animated)
     }
 
     func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentLocation location: CLLocation) {
+
         DispatchQueue.main.async {
             self.lowLocationAccuracyLabel.isHidden = roadTracker.considersLocationAccurate(location)
-            self.debugger?.roadTracker(roadTracker, didUpdateCurrentLocation: location)
         }
+        
     }
 
-    func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentPlace place: OpenCage.Place, for location: CLLocation, with reason: RoadTracker.UpdateReason) {
-        var shouldAnimate = false
+    func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentRoad road: Road) {
+        logger.info()
 
-        if let previousPlace = currentPlace {
-            shouldAnimate = RoadName(place: previousPlace) != RoadName(place: place)
+        var shouldAnimate = false
+        if let previousRoad = currentRoad {
+            shouldAnimate = road != previousRoad
         } else {
             shouldAnimate = true
         }
@@ -92,28 +93,25 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
                 }
             }
 
-            self.updateLabels(for: place, animated: shouldAnimate)
-
-
-            self.debugger?.roadTracker(roadTracker, didUpdateCurrentPlace: place, for: location, with: reason)
+            self.updateLabels(for: road, animated: shouldAnimate)
         }
 
-        currentPlace = place
+        currentRoad = road
     }
 
-    func updateLabels(for place: OpenCage.Place, animated: Bool) {
+    func updateLabels(for road: Road, animated: Bool) {
         if animated {
             withAnimation {
-                self.updateLabels(for: place)
+                self.updateLabels(for: road)
             }
         } else {
-            updateLabels(for: place)
+            updateLabels(for: road)
         }
     }
 
-    func updateLabels(for place: OpenCage.Place) {
-        updateRoadNameLabels(for: place)
-        updateAddressLabel(for: place)
+    func updateLabels(for road: Road) {
+        updateRoadNameLabels(for: road)
+        updateAddressLabel(for: road)
         hideLabelsWithNoContent()
     }
 
@@ -140,16 +138,14 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
         }
     }
 
-    func updateRoadNameLabels(for place: OpenCage.Place) {
-        let roadName = RoadName(place: place)
-
-        if let popularName = roadName.popularName {
+    func updateRoadNameLabels(for road: Road) {
+        if let popularName = road.popularName {
             roadNameLabel.text = popularName
-            canonicalRoadNameLabel.text = roadName.canonicalRoadName
-        } else if let canonicalRoadName = roadName.canonicalRoadName {
+            canonicalRoadNameLabel.text = road.canonicalRoadName
+        } else if let canonicalRoadName = road.canonicalRoadName {
             roadNameLabel.text = canonicalRoadName
             canonicalRoadNameLabel.text = nil
-        } else if let unnumberedRouteName = roadName.unnumberedRouteName {
+        } else if let unnumberedRouteName = road.unnumberedRouteName {
             roadNameLabel.text = unnumberedRouteName
             canonicalRoadNameLabel.text = nil
         } else {
@@ -158,32 +154,13 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
         }
     }
 
-    func updateAddressLabel(for place: OpenCage.Place) {
-        addressLabel.text = currentPlace?.address.components.joined(separator: " ")
+    func updateAddressLabel(for road: Road) {
+        addressLabel.text = road.address.joined(separator: " ")
     }
 
     func hideLabelsWithNoContent() {
         roadNameLabel.isHidden = roadNameLabel.text == nil
         canonicalRoadNameLabel.isHidden = canonicalRoadNameLabel.text == nil
         addressLabel.isHidden = addressLabel.text == nil
-    }
-}
-
-extension LocationInformationWidgetViewController: UIContextMenuInteractionDelegate {
-    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-        let actionProvider: UIContextMenuActionProvider = { (suggestedActions) in
-            let action = UIAction(title: "Debug", image: UIImage(systemName: "ladybug")) { (action) in
-                let debugViewContoller = LocationInformationDebugViewController()
-                self.debugger = debugViewContoller
-
-                let navigationController = UINavigationController(rootViewController: debugViewContoller)
-                navigationController.modalPresentationStyle = .overCurrentContext
-                self.present(navigationController, animated: true)
-            }
-
-            return UIMenu(title: "", children: [action])
-        }
-
-        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: actionProvider)
     }
 }

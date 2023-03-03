@@ -68,7 +68,6 @@
 		B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B944C69124A9E647000D1E99 /* PlaybackControlView.swift */; };
 		B948F95B281177B000511CA7 /* UUIDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43923D345D70078A057 /* UUIDExtension.swift */; };
 		B948F95C2811782400511CA7 /* ETCTollbooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9515F1527BA8C07001C1D8D /* ETCTollbooth.swift */; };
-		B94A59A026826E960074368A /* LocationInformationDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94A599F26826E960074368A /* LocationInformationDebugViewController.swift */; };
 		B94BD2E92680486700B768A2 /* BorderedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94BD2E82680486700B768A2 /* BorderedLabel.swift */; };
 		B94E69D123F7A313004CCC7C /* WebsiteIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */; };
 		B94EC75327914C620008C447 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94EC75227914C620008C447 /* UIApplicationExtension.swift */; };
@@ -152,8 +151,9 @@
 		B9B4F701268CB367009C5DC5 /* PairedVehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A676254D0EB30012A4CB /* PairedVehicle.swift */; };
 		B9B4F702268CB3D0009C5DC5 /* CLLocationCoordinate2DExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */; };
 		B9B4F703268CB3F5009C5DC5 /* ParkingSearchURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */; };
-		B9B4F707268CB55D009C5DC5 /* RoadName.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B4F706268CB55D009C5DC5 /* RoadName.swift */; };
+		B9B4F707268CB55D009C5DC5 /* Road.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B4F706268CB55D009C5DC5 /* Road.swift */; };
 		B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B717DD23E6B26900A47207 /* UnknownItem.swift */; };
+		B9B7452029968B2C00C85825 /* MapboxCoreNavigation in Frameworks */ = {isa = PBXBuildFile; productRef = B9B7451F29968B2C00C85825 /* MapboxCoreNavigation */; };
 		B9BA5B5926A897CF004D5927 /* PointOfInterestAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BA5B5826A897CF004D5927 /* PointOfInterestAnnotationView.swift */; };
 		B9BA5B5B26A8982C004D5927 /* SharedLocationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BA5B5A26A8982C004D5927 /* SharedLocationAnnotation.swift */; };
 		B9BA5B5C26A89C83004D5927 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04662642D5FA002CD861 /* UIButtonExtension.swift */; };
@@ -169,6 +169,7 @@
 		B9C0CEE22508F641006D246E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9C0CEE12508F641006D246E /* Assets.xcassets */; };
 		B9C0CEE52508F641006D246E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9C0CEE32508F641006D246E /* LaunchScreen.storyboard */; };
 		B9C0CEED250C3A27006D246E /* HeartAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEEC250C3A27006D246E /* HeartAnimation.swift */; };
+		B9C1A09C29B2551F00FA0B55 /* metropolitan-rainbowbridge-to-shibuya.gpx in Resources */ = {isa = PBXBuildFile; fileRef = B9C1A09B29B2551F00FA0B55 /* metropolitan-rainbowbridge-to-shibuya.gpx */; };
 		B9C1DD1A2692EE350046E108 /* TLDExtract in Frameworks */ = {isa = PBXBuildFile; productRef = B9C1DD192692EE350046E108 /* TLDExtract */; };
 		B9C1DD1C269457910046E108 /* OfficialParkingSearchStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */; };
 		B9C1DD2026948B7D0046E108 /* OfficialParkingSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */; };
@@ -242,6 +243,8 @@
 		B9FACF4C25D4299900F05CAE /* RearviewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9F4377B25D41C19004B9140 /* RearviewKit.framework */; };
 		B9FACF4D25D4299900F05CAE /* RearviewKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B9F4377B25D41C19004B9140 /* RearviewKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B9FB33E124AE2ACD00FEB782 /* PlaybackModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FB33E024AE2ACD00FEB782 /* PlaybackModeButton.swift */; };
+		B9FF272929AFA60A00B29DFC /* bayshore-daikoku.gpx in Resources */ = {isa = PBXBuildFile; fileRef = B9FF272529AFA60A00B29DFC /* bayshore-daikoku.gpx */; };
+		B9FF272B29AFA60A00B29DFC /* shintomei-kakegawa-to-enshumori.gpx in Resources */ = {isa = PBXBuildFile; fileRef = B9FF272729AFA60A00B29DFC /* shintomei-kakegawa-to-enshumori.gpx */; };
 		B9FF2907284E04F400CCB320 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FF2906284E04F400CCB320 /* Video.swift */; };
 /* End PBXBuildFile section */
 
@@ -459,7 +462,6 @@
 		B942554F22BAA5D1008B053B /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		B944C68F24A9E4C8000D1E99 /* MusicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
 		B944C69124A9E647000D1E99 /* PlaybackControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackControlView.swift; sourceTree = "<group>"; };
-		B94A599F26826E960074368A /* LocationInformationDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInformationDebugViewController.swift; sourceTree = "<group>"; };
 		B94BD2E82680486700B768A2 /* BorderedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedLabel.swift; sourceTree = "<group>"; };
 		B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteIcon.swift; sourceTree = "<group>"; };
 		B94EC75227914C620008C447 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
@@ -546,7 +548,7 @@
 		B9B399CB25965BDC00C7977F /* CameraOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOptions.swift; sourceTree = "<group>"; };
 		B9B39AB62598B11700C7977F /* HUDSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDSegmentedControl.swift; sourceTree = "<group>"; };
 		B9B4A8992569310400FE0C9F /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
-		B9B4F706268CB55D009C5DC5 /* RoadName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoadName.swift; sourceTree = "<group>"; };
+		B9B4F706268CB55D009C5DC5 /* Road.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Road.swift; sourceTree = "<group>"; };
 		B9B717DD23E6B26900A47207 /* UnknownItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownItem.swift; sourceTree = "<group>"; };
 		B9BA5B5826A897CF004D5927 /* PointOfInterestAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterestAnnotationView.swift; sourceTree = "<group>"; };
 		B9BA5B5A26A8982C004D5927 /* SharedLocationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedLocationAnnotation.swift; sourceTree = "<group>"; };
@@ -565,6 +567,7 @@
 		B9C0CEE62508F641006D246E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9C0CEEA2508F711006D246E /* H264ByteStreamParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = H264ByteStreamParser.swift; sourceTree = "<group>"; };
 		B9C0CEEC250C3A27006D246E /* HeartAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartAnimation.swift; sourceTree = "<group>"; };
+		B9C1A09B29B2551F00FA0B55 /* metropolitan-rainbowbridge-to-shibuya.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "metropolitan-rainbowbridge-to-shibuya.gpx"; sourceTree = "<group>"; };
 		B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialParkingSearchStatusView.swift; sourceTree = "<group>"; };
 		B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficialParkingSearch.swift; sourceTree = "<group>"; };
 		B9C1F40C27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterestAnnotation.swift; sourceTree = "<group>"; };
@@ -627,6 +630,8 @@
 		B9F9EFD5256D3D6B00C33781 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		B9FA6CC724CED3D00038E990 /* SongDataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongDataRequest.swift; sourceTree = "<group>"; };
 		B9FB33E024AE2ACD00FEB782 /* PlaybackModeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackModeButton.swift; sourceTree = "<group>"; };
+		B9FF272529AFA60A00B29DFC /* bayshore-daikoku.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "bayshore-daikoku.gpx"; sourceTree = "<group>"; };
+		B9FF272729AFA60A00B29DFC /* shintomei-kakegawa-to-enshumori.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "shintomei-kakegawa-to-enshumori.gpx"; sourceTree = "<group>"; };
 		B9FF2906284E04F400CCB320 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		BBF96480A5CBA83FEB75EF07 /* Pods-DashRemote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote.debug.xcconfig"; path = "Target Support Files/Pods-DashRemote/Pods-DashRemote.debug.xcconfig"; sourceTree = "<group>"; };
 		D72D61E07B471561E0FDF3FC /* Pods-Rearview.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rearview.release.xcconfig"; path = "Target Support Files/Pods-Rearview/Pods-Rearview.release.xcconfig"; sourceTree = "<group>"; };
@@ -687,6 +692,7 @@
 				B9DD4CD126517F920010B120 /* ParkingSearchKit.framework in Frameworks */,
 				B979457127A81AFE007040E7 /* SwiftCBOR in Frameworks */,
 				B9FACF4C25D4299900F05CAE /* RearviewKit.framework in Frameworks */,
+				B9B7452029968B2C00C85825 /* MapboxCoreNavigation in Frameworks */,
 				01861A4B14032E6339D8E511 /* Pods_Dash.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -770,8 +776,7 @@
 			children = (
 				B980071F2678D6AF00FC703E /* LocationInformationWidgetViewController.swift */,
 				B9D02088268CD1850020BF9A /* RoadTracker.swift */,
-				B94A599F26826E960074368A /* LocationInformationDebugViewController.swift */,
-				B9B4F706268CB55D009C5DC5 /* RoadName.swift */,
+				B9B4F706268CB55D009C5DC5 /* Road.swift */,
 				B9D0208A268CD2F60020BF9A /* VehicleMovement.swift */,
 				B980071D2678B81C00FC703E /* OpenCage.swift */,
 			);
@@ -1026,6 +1031,7 @@
 				B9DC5B22229D59BE00B645D5 /* Products */,
 				B9CD1D8B22A51AAD00170082 /* Frameworks */,
 				FC2BACFC9EC4F82C9699C39B /* Pods */,
+				B9FF272429AFA60A00B29DFC /* SimulatedLocations */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1152,6 +1158,16 @@
 				B9F4377E25D41C19004B9140 /* Info.plist */,
 			);
 			path = RearviewKit;
+			sourceTree = "<group>";
+		};
+		B9FF272429AFA60A00B29DFC /* SimulatedLocations */ = {
+			isa = PBXGroup;
+			children = (
+				B9FF272529AFA60A00B29DFC /* bayshore-daikoku.gpx */,
+				B9C1A09B29B2551F00FA0B55 /* metropolitan-rainbowbridge-to-shibuya.gpx */,
+				B9FF272729AFA60A00B29DFC /* shintomei-kakegawa-to-enshumori.gpx */,
+			);
+			path = SimulatedLocations;
 			sourceTree = "<group>";
 		};
 		FC2BACFC9EC4F82C9699C39B /* Pods */ = {
@@ -1327,6 +1343,7 @@
 			name = Dash;
 			packageProductDependencies = (
 				B979457027A81AFE007040E7 /* SwiftCBOR */,
+				B9B7451F29968B2C00C85825 /* MapboxCoreNavigation */,
 			);
 			productName = ETC;
 			productReference = B9DC5B21229D59BE00B645D5 /* Dash.app */;
@@ -1447,6 +1464,7 @@
 				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */,
 				B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */,
 				B979456F27A81AFE007040E7 /* XCRemoteSwiftPackageReference "SwiftCBOR" */,
+				B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */,
 			);
 			productRefGroup = B9DC5B22229D59BE00B645D5 /* Products */;
 			projectDirPath = "";
@@ -1515,7 +1533,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9C1A09C29B2551F00FA0B55 /* metropolitan-rainbowbridge-to-shibuya.gpx in Resources */,
 				B92451D423E30ACE007556D5 /* Settings.bundle in Resources */,
+				B9FF272929AFA60A00B29DFC /* bayshore-daikoku.gpx in Resources */,
 				B9DC5B31229D59BF00B645D5 /* LaunchScreen.storyboard in Resources */,
 				B9E6CCA1234F69B800E18603 /* Payment.wav in Resources */,
 				B99356D922A9483F00BA08AB /* japan_etc_tollbooths.csv in Resources */,
@@ -1526,6 +1546,7 @@
 				B99C698126F5F1E30064162D /* Localizable.strings in Resources */,
 				B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */,
 				B9989E3E23E8752100FAFD06 /* Share.wav in Resources */,
+				B9FF272B29AFA60A00B29DFC /* shintomei-kakegawa-to-enshumori.gpx in Resources */,
 				B9008EAF25FBB6D7005DAD13 /* NoMainETCCard.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1845,7 +1866,7 @@
 				B95E14C027BBDC1B0037FC94 /* GForceMeterView.swift in Sources */,
 				B915BEF5267F8754007068D7 /* StringExtension.swift in Sources */,
 				B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */,
-				B9B4F707268CB55D009C5DC5 /* RoadName.swift in Sources */,
+				B9B4F707268CB55D009C5DC5 /* Road.swift in Sources */,
 				B9C1F40F27AAEB8D00C6D4DD /* PointOfInterestCategory.swift in Sources */,
 				B95F514E23E5BBF70063CB3D /* InboxItem.swift in Sources */,
 				B9C1F41D27B87E5500C6D4DD /* ETCPaymentTableViewDataSource.swift in Sources */,
@@ -1931,7 +1952,6 @@
 				B92FB3C023E95BE900EA702C /* InboxItemTableViewCell.swift in Sources */,
 				B98007202678D6AF00FC703E /* LocationInformationWidgetViewController.swift in Sources */,
 				B907C790272589530085ED7E /* AppState.swift in Sources */,
-				B94A59A026826E960074368A /* LocationInformationDebugViewController.swift in Sources */,
 				B9C1F41F27B88A6400C6D4DD /* ScrollViewPagination.swift in Sources */,
 				B9C1F40D27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift in Sources */,
 				B9515F1627BA8C07001C1D8D /* ETCTollbooth.swift in Sources */,
@@ -2316,7 +2336,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 8.2.1;
+				MARKETING_VERSION = 8.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash.ParkingSearchActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2341,7 +2361,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 8.2.1;
+				MARKETING_VERSION = 8.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash.ParkingSearchActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2520,7 +2540,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FDB9D0E23106CE353F300B76 /* Pods-Dash.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Dash/Dash.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -2534,7 +2553,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 8.2.1;
+				MARKETING_VERSION = 8.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2547,7 +2566,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 869C973AA26AD90E148028FB /* Pods-Dash.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Dash/Dash.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -2561,7 +2579,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 8.2.1;
+				MARKETING_VERSION = 8.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2846,6 +2864,14 @@
 				kind = branch;
 			};
 		};
+		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mapbox/mapbox-navigation-ios.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gumob/TLDExtractSwift";
@@ -2866,6 +2892,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B979456F27A81AFE007040E7 /* XCRemoteSwiftPackageReference "SwiftCBOR" */;
 			productName = SwiftCBOR;
+		};
+		B9B7451F29968B2C00C85825 /* MapboxCoreNavigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */;
+			productName = MapboxCoreNavigation;
 		};
 		B9C1DD192692EE350046E108 /* TLDExtract */ = {
 			isa = XCSwiftPackageProductDependency;

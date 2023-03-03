@@ -7,8 +7,7 @@
 //
 
 import UIKit
-import ParkingSearchKit
-import MapKit
+import MapboxCoreNavigation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
