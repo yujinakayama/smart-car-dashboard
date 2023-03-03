@@ -82,6 +82,7 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
     }
 
     @objc func electronicHorizonDidUpdatePosition(_ notification: Notification) {
+        print(notification.userInfo)
         guard let edge = notification.userInfo?[RoadGraph.NotificationUserInfoKey.treeKey] as? RoadGraph.Edge,
               let edgeMetadata = roadGraph.edgeMetadata(edgeIdentifier: edge.identifier)
         else { return }

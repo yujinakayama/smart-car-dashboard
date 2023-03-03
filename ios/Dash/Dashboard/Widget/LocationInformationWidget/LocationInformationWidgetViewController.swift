@@ -22,6 +22,8 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
 
     var currentEdge: RoadGraph.Edge.Metadata?
 
+    let geocoder = CLGeocoder()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -64,9 +66,11 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
     }
 
     func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentLocation location: CLLocation) {
+
         DispatchQueue.main.async {
             self.lowLocationAccuracyLabel.isHidden = roadTracker.considersLocationAccurate(location)
         }
+        
     }
 
     func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentEdge edge: RoadGraph.Edge.Metadata) {
