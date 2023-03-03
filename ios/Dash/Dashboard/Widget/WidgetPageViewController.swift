@@ -24,6 +24,8 @@ class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelega
         pageControl.numberOfPages = widgetViewControllers.count
         pageControl.hidesForSinglePage = true
 
+        pageControl.addTarget(self, action: #selector(pageControlDidChangeValue), for: .valueChanged)
+
         view.addSubview(pageControl)
 
         pageControl.translatesAutoresizingMaskIntoConstraints = false
@@ -104,6 +106,12 @@ class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelega
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         guard let previousIndex = widgetViewControllers.firstIndex(of: viewController) else { return nil }
         return widgetViewController(at: previousIndex + 1)
+    }
+
+
+    @objc func pageControlDidChangeValue() {
+        guard let widgetViewController = widgetViewController(at: pageControl.currentPage) else { return  }
+        setViewControllers([widgetViewController], direction: .forward, animated: false)
     }
 
     private func widgetViewController(at index: Int) -> UIViewController? {
