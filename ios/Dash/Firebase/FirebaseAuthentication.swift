@@ -33,15 +33,18 @@ class FirebaseAuthentication: NSObject {
 
     private var authStateListener: AuthStateDidChangeListenerHandle?
 
-    private lazy var googleSignInConfiguration = GIDConfiguration(clientID: FirebaseApp.app()!.options.clientID!)
+    private var googleSignIn: GIDSignIn {
+        return GIDSignIn.sharedInstance
+    }
 
     override init() {
         super.init()
+        configureGoogleSignIn()
         beginGeneratingNotifications()
     }
 
     func presentSignInViewController(in presentingViewController: UIViewController, completion: @escaping (Error?) -> Void) {
-        GIDSignIn.sharedInstance.signIn(with: googleSignInConfiguration, presenting: presentingViewController) { [weak self] (user, error) in
+        googleSignIn.signIn(withPresenting: presentingViewController) { [weak self] (result, error) in
             guard let self = self else { return }
 
             if let error = error {
@@ -50,13 +53,13 @@ class FirebaseAuthentication: NSObject {
                 return
             }
 
-            guard let googleAuthentication = user?.authentication,
-                  let idToken = googleAuthentication.idToken
+            guard let user = result?.user,
+                  let idToken = user.idToken
             else { return }
 
             let firebaseCredential = GoogleAuthProvider.credential(
-                withIDToken: idToken,
-                accessToken: googleAuthentication.accessToken
+                withIDToken: idToken.tokenString,
+                accessToken: user.accessToken.tokenString
             )
 
             self.signInToFirebase(with: firebaseCredential, completion: completion)
@@ -84,7 +87,11 @@ class FirebaseAuthentication: NSObject {
     }
 
     func handle(_ url: URL) -> Bool {
-        return GIDSignIn.sharedInstance.handle(url)
+        return googleSignIn.handle(url)
+    }
+
+    private func configureGoogleSignIn() {
+        googleSignIn.configuration = GIDConfiguration(clientID: FirebaseApp.app()!.options.clientID!)
     }
 
     private func beginGeneratingNotifications() {
