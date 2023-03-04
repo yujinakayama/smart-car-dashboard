@@ -57,15 +57,19 @@ class LocationInformationWidgetViewController: UIViewController {
             lowLocationAccuracyLabel.isHidden = true
 
             activityIndicatorView.startAnimating()
-
-            roadTracker.startTracking()
         }
+
+        roadTracker.registerObserver(self)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
-        roadTracker.stopTracking()
+        roadTracker.unregisterObserver(self)
         currentRoad = nil
         super.viewDidDisappear(animated)
+    }
+
+    deinit {
+        roadTracker.unregisterObserver(self)
     }
 
     @objc func roadTrackerDidUpdateCurrentLocation(notification: Notification) {

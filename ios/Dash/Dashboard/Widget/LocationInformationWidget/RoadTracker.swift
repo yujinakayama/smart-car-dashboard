@@ -45,6 +45,8 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
 
     private var currentPlacemark: CLPlacemark?
 
+    private var observerIdentifiers = Set<ObjectIdentifier>()
+
     // horizontalAccuracy returns fixed value 65.0 in reinforced concrete buildings, which is unstable
     static let unreliableLocationAccuracy: CLLocationAccuracy = 65
 
@@ -59,7 +61,26 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
         )
     }
 
-    func startTracking() {
+    func registerObserver(_ observer: AnyObject) {
+        logger.info()
+        observerIdentifiers.insert(ObjectIdentifier(observer))
+        print(observerIdentifiers)
+        startTrackingIfNeeded()
+    }
+
+    func unregisterObserver(_ observer: AnyObject) {
+        logger.info()
+        observerIdentifiers.remove(ObjectIdentifier(observer))
+        print(observerIdentifiers)
+
+        if observerIdentifiers.isEmpty {
+            stopTrackingIfNeeded()
+        }
+    }
+
+    private func startTrackingIfNeeded() {
+        guard !isTracking else { return }
+
         logger.info()
 
         isTracking = true
@@ -75,11 +96,14 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
         }
     }
 
-    func stopTracking() {
+    private func stopTrackingIfNeeded() {
+        guard isTracking else { return }
+
         logger.info()
+
+        isTracking = false
         coreLocationManager.stopUpdatingLocation()
         passiveLocationManager.stopUpdatingElectronicHorizon()
-        isTracking = false
         currentPlacemark = nil
     }
 
