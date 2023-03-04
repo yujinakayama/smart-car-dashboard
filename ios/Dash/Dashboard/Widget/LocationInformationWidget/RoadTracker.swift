@@ -10,13 +10,13 @@ import Foundation
 import CoreLocation
 import MapboxCoreNavigation
 
-protocol RoadTrackerDelegate: NSObjectProtocol {
-    func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentLocation location: CLLocation)
-    func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentRoad road: Road)
+extension Notification.Name {
+    static let RoadTrackerDidUpdateCurrentLocation = Notification.Name("RoadTrackerDidUpdateCurrentLocation")
+    static let RoadTrackerDidUpdateCurrentRoad = Notification.Name("RoadTrackerDidUpdateCurrentRoad")
 }
 
 class RoadTracker: NSObject, CLLocationManagerDelegate {
-    weak var delegate: RoadTrackerDelegate?
+    static let shared = RoadTracker()
 
     private lazy var passiveLocationManager: PassiveLocationManager = {
         let passiveLocationManager = PassiveLocationManager()
@@ -67,7 +67,7 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
         switch coreLocationManager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
             DispatchQueue.main.async {
-                self.passiveLocationManager.startUpdatingLocation()
+                self.coreLocationManager.startUpdatingLocation()
                 self.passiveLocationManager.startUpdatingElectronicHorizon(with: self.electronicHorizonOptions)
             }
         default:
@@ -77,8 +77,10 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
 
     func stopTracking() {
         logger.info()
+        coreLocationManager.stopUpdatingLocation()
         passiveLocationManager.stopUpdatingElectronicHorizon()
         isTracking = false
+        currentPlacemark = nil
     }
 
     func considersLocationAccurate(_ location: CLLocation) -> Bool {
@@ -86,16 +88,18 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
     }
 
     @objc func electronicHorizonDidUpdatePosition(_ notification: Notification) {
-        guard let edge = notification.userInfo?[RoadGraph.NotificationUserInfoKey.treeKey] as? RoadGraph.Edge,
+        guard isTracking,
+              let edge = notification.userInfo?[RoadGraph.NotificationUserInfoKey.treeKey] as? RoadGraph.Edge,
               let edgeMetadata = roadGraph.edgeMetadata(edgeIdentifier: edge.identifier),
               let currentPlacemark = currentPlacemark
         else { return }
 
-        let road = Road(edge: edgeMetadata, placemark: currentPlacemark)
-        delegate?.roadTracker(self, didUpdateCurrentRoad: road)
+        NotificationCenter.default.post(name: .RoadTrackerDidUpdateCurrentRoad, object: self, userInfo: [
+            NotificationKeys.road: Road(edge: edgeMetadata, placemark: currentPlacemark)
+        ])
     }
 
-    private func reverseGeocode(for location: CLLocation) {
+    private func reverseGeocodeIfNeeded(for location: CLLocation) {
         guard shouldRequestGeocoding(for: location) else {return }
 
         let locale = Locale(identifier: "ja_JP")
@@ -114,6 +118,10 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
     }
 
     private func shouldRequestGeocoding(for location: CLLocation) -> Bool {
+        guard isTracking else {
+            return false
+        }
+
         guard let lastLocation = currentPlacemark?.location else {
             return true
         }
@@ -142,8 +150,13 @@ extension RoadTracker: PassiveLocationManagerDelegate {
     }
 
     func passiveLocationManager(_ manager: MapboxCoreNavigation.PassiveLocationManager, didUpdateLocation location: CLLocation, rawLocation: CLLocation) {
-        delegate?.roadTracker(self, didUpdateCurrentLocation: location)
-        reverseGeocode(for: location)
+        guard isTracking else { return }
+
+        NotificationCenter.default.post(name: .RoadTrackerDidUpdateCurrentLocation, object: self, userInfo: [
+            NotificationKeys.location: location
+        ])
+
+        reverseGeocodeIfNeeded(for: location)
     }
 
     func passiveLocationManager(_ manager: MapboxCoreNavigation.PassiveLocationManager, didUpdateHeading newHeading: CLHeading) {
@@ -151,5 +164,12 @@ extension RoadTracker: PassiveLocationManagerDelegate {
 
     func passiveLocationManager(_ manager: MapboxCoreNavigation.PassiveLocationManager, didFailWithError error: Error) {
         logger.error(error)
+    }
+}
+
+extension RoadTracker {
+    struct NotificationKeys {
+        static let road = "RoadTracker-road"
+        static let location = "RoadTracker-location"
     }
 }

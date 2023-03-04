@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import MapboxCoreNavigation
 
-class LocationInformationWidgetViewController: UIViewController, RoadTrackerDelegate {
+class LocationInformationWidgetViewController: UIViewController {
     @IBOutlet weak var roadView: UIView!
     @IBOutlet weak var roadNameLabel: UILabel!
     @IBOutlet weak var canonicalRoadNameLabel: UILabel!
@@ -18,7 +18,9 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var lowLocationAccuracyLabel: UILabel!
 
-    let roadTracker = RoadTracker()
+    var roadTracker: RoadTracker {
+        return RoadTracker.shared
+    }
 
     var currentRoad: Road?
 
@@ -27,7 +29,8 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        roadTracker.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(roadTrackerDidUpdateCurrentLocation), name: .RoadTrackerDidUpdateCurrentLocation, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(roadTrackerDidUpdateCurrentRoad), name: .RoadTrackerDidUpdateCurrentRoad, object: nil)
 
         setLowLocationAccuracyLabelText()
     }
@@ -65,16 +68,24 @@ class LocationInformationWidgetViewController: UIViewController, RoadTrackerDele
         super.viewDidDisappear(animated)
     }
 
-    func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentLocation location: CLLocation) {
+    @objc func roadTrackerDidUpdateCurrentLocation(notification: Notification) {
+        logger.debug()
+
+        guard let location = notification.userInfo?[RoadTracker.NotificationKeys.location] as? CLLocation else {
+            return
+        }
 
         DispatchQueue.main.async {
-            self.lowLocationAccuracyLabel.isHidden = roadTracker.considersLocationAccurate(location)
+            self.lowLocationAccuracyLabel.isHidden = self.roadTracker.considersLocationAccurate(location)
         }
-        
     }
 
-    func roadTracker(_ roadTracker: RoadTracker, didUpdateCurrentRoad road: Road) {
-        logger.info()
+    @objc func roadTrackerDidUpdateCurrentRoad(notification: Notification) {
+        logger.debug()
+
+        guard let road = notification.userInfo?[RoadTracker.NotificationKeys.road] as? Road else {
+            return
+        }
 
         var shouldAnimate = false
         if let previousRoad = currentRoad {
