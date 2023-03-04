@@ -1331,6 +1331,7 @@
 				BCC6DA0CF269B8E30DEAAA76 /* [CP] Embed Pods Frameworks */,
 				B98B783C23ED4C3F00A5102F /* Embed Frameworks */,
 				B9A3B68626537A9B00D1D64C /* Embed Foundation Extensions */,
+				B98E632F29B34D2200E01871 /* Embed Mapbox Access Token */,
 			);
 			buildRules = (
 			);
@@ -1679,6 +1680,25 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DashRemote/Pods-DashRemote-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		B98E632F29B34D2200E01871 /* Embed Mapbox Access Token */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "Embed Mapbox Access Token";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# https://docs.mapbox.com/help/troubleshooting/private-access-token-android-and-ios/#ios\n# Look for a global file named 'mapbox' or '.mapbox' within the home directory\ntoken_file=Dash/mapbox_access_token.txt\ntoken=\"$(cat $token_file 2>/dev/null)\"\nif [ \"$token\" ]; then\n  plutil -replace MBXAccessToken -string $token \"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\nelse\n  echo 'warning: Missing Mapbox access token'\n  open 'https://account.mapbox.com/access-tokens/'\n  echo \"warning: Get an access token from <https://account.mapbox.com/access-tokens/>, then create a new file at $token_file or $token_file2 that contains the access token.\"\nfi\n";
 		};
 		B9A3C09823E1A4E400EF1C4A /* Modify Info.plist */ = {
 			isa = PBXShellScriptBuildPhase;

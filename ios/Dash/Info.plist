@@ -123,6 +123,6 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>MBXAccessToken</key>
-	<string>pk.eyJ1Ijoibmt5bXlqIiwiYSI6ImNsZTlmeDFybjA2MHkzcnMyNmFjdmoyZnEifQ.ZXozyg9XgfkXvbWt34c-LQ</string>
+	<string>THIS_WILL_BE_REPLACED_IN_BUILD_PHASE</string>
 </dict>
 </plist>

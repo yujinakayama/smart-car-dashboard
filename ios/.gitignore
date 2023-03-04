@@ -87,4 +87,5 @@ iOSInjectionProject/
 
 # Secrets
 GoogleService-Info.plist
+mapbox_access_token.txt
 opencage_api_key.txt
