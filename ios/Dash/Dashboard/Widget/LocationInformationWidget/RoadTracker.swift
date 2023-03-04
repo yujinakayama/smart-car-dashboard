@@ -43,12 +43,11 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
 
     var isTracking = false
 
+    var currentRoad: Road?
+    var currentLocation: CLLocation?
     private var currentPlacemark: CLPlacemark?
 
     private var observerIdentifiers = Set<ObjectIdentifier>()
-
-    // horizontalAccuracy returns fixed value 65.0 in reinforced concrete buildings, which is unstable
-    static let unreliableLocationAccuracy: CLLocationAccuracy = 65
 
     override init() {
         super.init()
@@ -104,11 +103,9 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
         isTracking = false
         coreLocationManager.stopUpdatingLocation()
         passiveLocationManager.stopUpdatingElectronicHorizon()
+        currentRoad = nil
+        currentLocation = nil
         currentPlacemark = nil
-    }
-
-    func considersLocationAccurate(_ location: CLLocation) -> Bool {
-        return location.horizontalAccuracy < Self.unreliableLocationAccuracy
     }
 
     @objc func electronicHorizonDidUpdatePosition(_ notification: Notification) {
@@ -118,8 +115,11 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
               let currentPlacemark = currentPlacemark
         else { return }
 
+        let road = Road(edge: edgeMetadata, placemark: currentPlacemark)
+        currentRoad = road
+
         NotificationCenter.default.post(name: .RoadTrackerDidUpdateCurrentRoad, object: self, userInfo: [
-            NotificationKeys.road: Road(edge: edgeMetadata, placemark: currentPlacemark)
+            NotificationKeys.road: road
         ])
     }
 
@@ -175,6 +175,8 @@ extension RoadTracker: PassiveLocationManagerDelegate {
 
     func passiveLocationManager(_ manager: MapboxCoreNavigation.PassiveLocationManager, didUpdateLocation location: CLLocation, rawLocation: CLLocation) {
         guard isTracking else { return }
+
+        currentLocation = location
 
         NotificationCenter.default.post(name: .RoadTrackerDidUpdateCurrentLocation, object: self, userInfo: [
             NotificationKeys.location: location

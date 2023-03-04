@@ -22,9 +22,14 @@ class LocationInformationWidgetViewController: UIViewController {
         return RoadTracker.shared
     }
 
-    var currentRoad: Road?
+    var lastRoad: Road?
 
     let geocoder = CLGeocoder()
+
+    var showsLocationAccuracyWarning = true
+
+    // horizontalAccuracy returns fixed value 65.0 in reinforced concrete buildings, which is unstable
+    static let unreliableLocationAccuracy: CLLocationAccuracy = 65
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +38,13 @@ class LocationInformationWidgetViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(roadTrackerDidUpdateCurrentRoad), name: .RoadTrackerDidUpdateCurrentRoad, object: nil)
 
         setLowLocationAccuracyLabelText()
+    }
+
+    func scaleLabelFontSizes(scale: CGFloat) {
+        for label in [roadNameLabel, canonicalRoadNameLabel, addressLabel, lowLocationAccuracyLabel] as! [UILabel] {
+            let font = label.font!
+            label.font = font.withSize(font.pointSize * scale)
+        }
     }
 
     func setLowLocationAccuracyLabelText() {
@@ -48,14 +60,13 @@ class LocationInformationWidgetViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        if !roadTracker.isTracking {
-            roadNameLabel.text = nil
-            canonicalRoadNameLabel.text = nil
-            addressLabel.text = nil
-            hideLabelsWithNoContent()
+        resetViews()
+        lastRoad = nil
 
-            lowLocationAccuracyLabel.isHidden = true
-
+        if let road = roadTracker.currentRoad, let location = roadTracker.currentLocation {
+            update(for: road)
+            updateLowLocationAccuracyLabel(location: location)
+        } else {
             activityIndicatorView.startAnimating()
         }
 
@@ -64,7 +75,7 @@ class LocationInformationWidgetViewController: UIViewController {
 
     override func viewDidDisappear(_ animated: Bool) {
         roadTracker.unregisterObserver(self)
-        currentRoad = nil
+        resetViews()
         super.viewDidDisappear(animated)
     }
 
@@ -79,9 +90,7 @@ class LocationInformationWidgetViewController: UIViewController {
             return
         }
 
-        DispatchQueue.main.async {
-            self.lowLocationAccuracyLabel.isHidden = self.roadTracker.considersLocationAccurate(location)
-        }
+        updateLowLocationAccuracyLabel(location: location)
     }
 
     @objc func roadTrackerDidUpdateCurrentRoad(notification: Notification) {
@@ -91,9 +100,13 @@ class LocationInformationWidgetViewController: UIViewController {
             return
         }
 
+        update(for: road)
+    }
+
+    func update(for road: Road) {
         var shouldAnimate = false
-        if let previousRoad = currentRoad {
-            shouldAnimate = road != previousRoad
+        if let lastRoad = lastRoad {
+            shouldAnimate = road != lastRoad
         } else {
             shouldAnimate = true
         }
@@ -111,7 +124,7 @@ class LocationInformationWidgetViewController: UIViewController {
             self.updateLabels(for: road, animated: shouldAnimate)
         }
 
-        currentRoad = road
+        lastRoad = road
     }
 
     func updateLabels(for road: Road, animated: Bool) {
@@ -132,7 +145,7 @@ class LocationInformationWidgetViewController: UIViewController {
 
     func withAnimation(_ changes: @escaping () -> Void) {
         UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut) {
-            self.roadView.layer.setAffineTransform(.init(scaleX: 1.4, y: 1.4))
+            self.roadView.layer.setAffineTransform(.init(scaleX: 1.2, y: 1.2))
             self.roadView.layer.opacity = 0
             self.addressLabel.layer.opacity = 0
         } completion: { (finished) in
@@ -177,5 +190,26 @@ class LocationInformationWidgetViewController: UIViewController {
         roadNameLabel.isHidden = roadNameLabel.text == nil
         canonicalRoadNameLabel.isHidden = canonicalRoadNameLabel.text == nil
         addressLabel.isHidden = addressLabel.text == nil
+    }
+
+    func resetViews() {
+        roadNameLabel.text = nil
+        canonicalRoadNameLabel.text = nil
+        addressLabel.text = nil
+        hideLabelsWithNoContent()
+        lowLocationAccuracyLabel.isHidden = true
+        activityIndicatorView.stopAnimating()
+    }
+
+    func updateLowLocationAccuracyLabel(location: CLLocation) {
+        guard showsLocationAccuracyWarning else { return }
+
+        DispatchQueue.main.async {
+            self.lowLocationAccuracyLabel.isHidden = self.considersLocationAccurate(location)
+        }
+    }
+
+    func considersLocationAccurate(_ location: CLLocation) -> Bool {
+        return location.horizontalAccuracy < Self.unreliableLocationAccuracy
     }
 }

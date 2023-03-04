@@ -539,7 +539,7 @@
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="82"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2sj-lq-fub" id="UN9-2d-DFc">
-                                    <rect key="frame" x="0.0" y="0.0" width="356.5" height="82"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="348.5" height="82"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="HKU-bN-sRN">
@@ -570,7 +570,7 @@
                                 <rect key="frame" x="0.0" y="137.5" width="375" height="68.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yhp-zq-xeI" id="l4J-ek-iqJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="356.5" height="68.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="348.5" height="68.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="MZx-NX-l6V">
@@ -1481,62 +1481,83 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Low Location Accuracy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3sJ-3G-c3A">
-                                <rect key="frame" x="116" y="32" width="143" height="16"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
-                                <color key="textColor" systemColor="secondaryLabelColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="RZr-ov-Imt">
-                                <rect key="frame" x="30" y="76" width="315" height="71.5"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7xa-7k-ywV" userLabel="Container View">
+                                <rect key="frame" x="0.0" y="24" width="375" height="187"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="43e-NT-N9W">
-                                        <rect key="frame" x="58" y="0.0" width="199.5" height="33.5"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東名高速道路" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9at-Od-YIK">
-                                                <rect key="frame" x="0.0" y="0.0" width="170.5" height="33.5"/>
-                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="28"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="E1" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="fDi-RM-ZJK" customClass="BorderedLabel" customModule="Dash" customModuleProvider="target">
-                                                <rect key="frame" x="178.5" y="4.5" width="21" height="24"/>
-                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
-                                                <color key="textColor" systemColor="secondaryLabelColor"/>
-                                                <nil key="highlightedColor"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                        <color key="value" systemColor="secondaryLabelColor"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                        <real key="value" value="1"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="5"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="leftInset">
-                                                        <real key="value" value="7"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
-                                                        <real key="value" value="6"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="bottomInset">
-                                                        <real key="value" value="3"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="topInset">
-                                                        <real key="value" value="3"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東京都 世田谷区 岡本1丁目" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9la-1g-ZNa">
-                                        <rect key="frame" x="36" y="47.5" width="243" height="24"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Low Location Accuracy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3sJ-3G-c3A">
+                                        <rect key="frame" x="116" y="8" width="143" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                         <color key="textColor" systemColor="secondaryLabelColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="RZr-ov-Imt">
+                                        <rect key="frame" x="20" y="58" width="335" height="71.5"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="43e-NT-N9W">
+                                                <rect key="frame" x="68" y="0.0" width="199.5" height="33.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東名高速道路" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9at-Od-YIK">
+                                                        <rect key="frame" x="0.0" y="0.0" width="170.5" height="33.5"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="28"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="E1" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="fDi-RM-ZJK" customClass="BorderedLabel" customModule="Dash" customModuleProvider="target">
+                                                        <rect key="frame" x="178.5" y="4.5" width="21" height="24"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                                <color key="value" systemColor="secondaryLabelColor"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="5"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="leftInset">
+                                                                <real key="value" value="7"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
+                                                                <real key="value" value="6"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="bottomInset">
+                                                                <real key="value" value="3"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="topInset">
+                                                                <real key="value" value="3"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fd8-G1-DxU" userLabel="Vertical Spacing View">
+                                                <rect key="frame" x="167.5" y="33.5" width="0.0" height="14"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" id="j9U-sH-9r2"/>
+                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="14" id="s8O-ju-qtf"/>
+                                                </constraints>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東京都 世田谷区 岡本1丁目" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9la-1g-ZNa">
+                                                <rect key="frame" x="46" y="47.5" width="243" height="24"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
-                            </stackView>
+                                <constraints>
+                                    <constraint firstItem="3sJ-3G-c3A" firstAttribute="centerX" secondItem="7xa-7k-ywV" secondAttribute="centerX" id="0DO-3z-dba"/>
+                                    <constraint firstItem="RZr-ov-Imt" firstAttribute="centerY" secondItem="7xa-7k-ywV" secondAttribute="centerY" id="TXn-1a-nNl"/>
+                                    <constraint firstItem="RZr-ov-Imt" firstAttribute="leading" secondItem="7xa-7k-ywV" secondAttribute="leading" constant="20" id="V6K-da-d7j"/>
+                                    <constraint firstItem="3sJ-3G-c3A" firstAttribute="top" secondItem="7xa-7k-ywV" secondAttribute="top" priority="750" constant="8" id="Wui-jh-qzE"/>
+                                    <constraint firstItem="RZr-ov-Imt" firstAttribute="centerX" secondItem="7xa-7k-ywV" secondAttribute="centerX" id="kbo-H6-jFb"/>
+                                    <constraint firstAttribute="trailing" secondItem="RZr-ov-Imt" secondAttribute="trailing" constant="20" id="p01-ND-rht"/>
+                                </constraints>
+                            </view>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="1xI-gO-E5D">
                                 <rect key="frame" x="169" y="87" width="37" height="37"/>
                             </activityIndicatorView>
@@ -1544,13 +1565,12 @@
                         <viewLayoutGuide key="safeArea" id="uSu-KT-kgu"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="uSu-KT-kgu" firstAttribute="trailing" secondItem="RZr-ov-Imt" secondAttribute="trailing" constant="30" id="18P-PS-HwT"/>
+                            <constraint firstItem="7xa-7k-ywV" firstAttribute="top" secondItem="uSu-KT-kgu" secondAttribute="top" id="1b4-6v-NmH"/>
                             <constraint firstItem="1xI-gO-E5D" firstAttribute="centerY" secondItem="mhd-D5-c1S" secondAttribute="centerY" id="Flz-nP-V4Z"/>
-                            <constraint firstItem="RZr-ov-Imt" firstAttribute="leading" secondItem="uSu-KT-kgu" secondAttribute="leading" constant="30" id="KHp-yv-PoA"/>
-                            <constraint firstItem="3sJ-3G-c3A" firstAttribute="centerX" secondItem="mhd-D5-c1S" secondAttribute="centerX" id="KS8-wD-jN6"/>
-                            <constraint firstItem="RZr-ov-Imt" firstAttribute="centerX" secondItem="mhd-D5-c1S" secondAttribute="centerX" id="cvA-O0-gax"/>
-                            <constraint firstItem="RZr-ov-Imt" firstAttribute="centerY" secondItem="mhd-D5-c1S" secondAttribute="centerY" constant="6" id="dYA-xf-zmv"/>
-                            <constraint firstItem="3sJ-3G-c3A" firstAttribute="top" secondItem="uSu-KT-kgu" secondAttribute="top" constant="8" id="km2-2p-fWs"/>
+                            <constraint firstAttribute="bottom" secondItem="7xa-7k-ywV" secondAttribute="bottom" id="bFt-Jx-41n"/>
+                            <constraint firstItem="7xa-7k-ywV" firstAttribute="leading" secondItem="mhd-D5-c1S" secondAttribute="leading" id="ckj-sk-9fN"/>
+                            <constraint firstItem="Fd8-G1-DxU" firstAttribute="height" secondItem="mhd-D5-c1S" secondAttribute="height" multiplier="0.076" priority="750" constant="-2" id="euZ-zk-ECv"/>
+                            <constraint firstAttribute="trailing" secondItem="7xa-7k-ywV" secondAttribute="trailing" id="jcq-IC-BiN"/>
                             <constraint firstItem="1xI-gO-E5D" firstAttribute="centerX" secondItem="mhd-D5-c1S" secondAttribute="centerX" id="sH5-h5-zBb"/>
                         </constraints>
                     </view>
@@ -1611,13 +1631,13 @@
             <size key="intrinsicContentSize" width="139" height="31"/>
         </designable>
         <designable name="TAK-Hz-Kv5">
-            <size key="intrinsicContentSize" width="23" height="22"/>
+            <size key="intrinsicContentSize" width="30" height="34"/>
         </designable>
         <designable name="fDi-RM-ZJK">
             <size key="intrinsicContentSize" width="21" height="24"/>
         </designable>
         <designable name="mfV-vr-luy">
-            <size key="intrinsicContentSize" width="24.5" height="22"/>
+            <size key="intrinsicContentSize" width="30" height="34"/>
         </designable>
     </designables>
     <inferredMetricsTieBreakers>

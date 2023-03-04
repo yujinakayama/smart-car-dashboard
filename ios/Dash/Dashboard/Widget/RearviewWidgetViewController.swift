@@ -12,6 +12,22 @@ import RearviewKit
 class RearviewWidgetViewController: UIViewController {
     var rearviewViewController: RearviewViewController?
 
+    lazy var widgetViewController: LocationInformationWidgetViewController = {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "LocationInformationWidgetViewController") as! LocationInformationWidgetViewController
+
+        viewController.view.backgroundColor = viewController.view.backgroundColor?.withAlphaComponent(0.93)
+        viewController.view.layer.cornerCurve = .continuous
+        viewController.view.layer.cornerRadius = 8
+        viewController.view.translatesAutoresizingMaskIntoConstraints = false
+
+        viewController.scaleLabelFontSizes(scale: 0.9)
+        viewController.showsLocationAccuracyWarning = false
+        viewController.activityIndicatorView.style = .medium
+
+        return viewController
+    }()
+
     var isVisible = false
 
     var justHandedOffFromOtherApp: Bool {
@@ -137,37 +153,82 @@ class RearviewWidgetViewController: UIViewController {
         rearviewViewController?.stop()
     }
 
+    func setUpOrTearDownWidgetViewControllerIfNeeded() {
+        if traitCollection.horizontalSizeClass == .compact {
+            tearDownWidgetViewControllerIfNeeded()
+        } else {
+            setUpWidgetViewControllerIfNeeded()
+        }
+    }
+
+    func setUpWidgetViewControllerIfNeeded() {
+        guard widgetViewController.parent != self else { return }
+
+        addChild(widgetViewController)
+        view.addSubview(widgetViewController.view)
+        NSLayoutConstraint.activate(widgetViewControllerConstraints)
+        widgetViewController.didMove(toParent: self)
+    }
+
+    func tearDownWidgetViewControllerIfNeeded() {
+        guard widgetViewController.parent == self else { return }
+
+        widgetViewController.willMove(toParent: nil)
+        NSLayoutConstraint.deactivate(widgetViewControllerConstraints)
+        widgetViewController.view.removeFromSuperview()
+        widgetViewController.removeFromParent()
+    }
+
+    lazy var widgetViewControllerConstraints = [
+        widgetViewController.view.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
+        view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: widgetViewController.view.bottomAnchor),
+        widgetViewController.view.widthAnchor.constraint(equalToConstant: 280),
+        widgetViewController.view.heightAnchor.constraint(equalToConstant: 78)
+    ]
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
-        guard let rearviewViewController = rearviewViewController else { return }
+        // traitCollectionDidChange() is invoked when the scene just entered background
+        // and it reports wrong horizontalSizeClass, so we ignore it
+        guard let scene = view.window?.windowScene,
+              (scene.activationState == .foregroundActive || scene.activationState == .foregroundInactive)
+        else { return }
 
-        if traitCollection.horizontalSizeClass == .compact {
-            rearviewViewController.sensitivityModeControlPosition = .center
-        } else {
-            rearviewViewController.sensitivityModeControlPosition = .bottom
+        if let rearviewViewController = rearviewViewController {
+            if traitCollection.horizontalSizeClass == .compact {
+                rearviewViewController.sensitivityModeControlPosition = .center
+            } else {
+                rearviewViewController.sensitivityModeControlPosition = .bottom
+            }
         }
+
+        setUpOrTearDownWidgetViewControllerIfNeeded()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isVisible = true
         startIfNeeded()
+        setUpOrTearDownWidgetViewControllerIfNeeded()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         isVisible = false
         stop()
+        tearDownWidgetViewControllerIfNeeded()
     }
 
     @objc func sceneWillEnterForeground() {
         setUpRearviewViewControllerIfPossible()
         startIfNeeded()
+        setUpOrTearDownWidgetViewControllerIfNeeded()
     }
 
     @objc func sceneDidEnterBackground() {
         tearDownRearviewViewControllerIfNeeded()
+        tearDownWidgetViewControllerIfNeeded()
 
         warningLabel?.removeFromSuperview()
         warningLabel = nil
