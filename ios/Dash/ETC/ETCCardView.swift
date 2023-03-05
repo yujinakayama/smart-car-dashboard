@@ -8,7 +8,7 @@
 
 import UIKit
 
-@IBDesignable class ETCCardView: BorderedView {
+@IBDesignable class ETCCardView: UIView {
     // https://www.quora.com/What-are-the-average-dimensions-for-a-credit-card
     let realCardWidth: CGFloat = 85.60
     let realCardHeight: CGFloat = 53.98
@@ -30,7 +30,7 @@ import UIKit
         }
     }
 
-    @IBInspectable override var cornerRadius: CGFloat {
+    @IBInspectable var cornerRadius: CGFloat {
         get {
             return layer.cornerRadius
         }
