@@ -536,7 +536,7 @@
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="AllPaymentsCell" rowHeight="82" id="2sj-lq-fub">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="82"/>
+                                <rect key="frame" x="0.0" y="55.5" width="1366" height="82"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2sj-lq-fub" id="UN9-2d-DFc">
                                     <rect key="frame" x="0.0" y="0.0" width="356.5" height="82"/>
@@ -567,10 +567,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="ETCCardTableViewCell" editingAccessoryType="detailButton" id="Yhp-zq-xeI" customClass="ETCCardTableViewCell" customModule="Dash" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="137.5" width="375" height="68.5"/>
+                                <rect key="frame" x="0.0" y="137.5" width="1366" height="68.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yhp-zq-xeI" id="l4J-ek-iqJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="356.5" height="68.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="1339.5" height="68.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="MZx-NX-l6V">
@@ -1436,10 +1436,10 @@
             <size key="intrinsicContentSize" width="139" height="31"/>
         </designable>
         <designable name="TAK-Hz-Kv5">
-            <size key="intrinsicContentSize" width="30" height="34"/>
+            <size key="intrinsicContentSize" width="23" height="22"/>
         </designable>
         <designable name="mfV-vr-luy">
-            <size key="intrinsicContentSize" width="30" height="34"/>
+            <size key="intrinsicContentSize" width="24.5" height="22"/>
         </designable>
     </designables>
     <inferredMetricsTieBreakers>

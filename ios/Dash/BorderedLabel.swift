@@ -89,6 +89,11 @@ import UIKit
         self.insets = insets
     }
 
+    // For some reason Interface Builder crashes without this
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
