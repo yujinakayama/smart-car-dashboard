@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Altitude Widget View Controller-->
+        <scene sceneID="QTS-9K-4Hu">
+            <objects>
+                <viewController storyboardIdentifier="AltitudeWidgetViewController" id="8xw-lF-jZk" customClass="AltitudeWidgetViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Kzr-o0-DYt">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Altitude" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Dr-eM-Gh4">
+                                <rect key="frame" x="153.5" y="38.5" width="68" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="67" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vLc-fn-QRp">
+                                <rect key="frame" x="145.5" y="62.5" width="84.5" height="86"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="72"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="m" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rf8-57-pai">
+                                <rect key="frame" x="178" y="142.5" width="19" height="26.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="dBy-bK-Th4"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="rf8-57-pai" firstAttribute="centerX" secondItem="vLc-fn-QRp" secondAttribute="centerX" id="4f3-Nc-7Ue"/>
+                            <constraint firstItem="vLc-fn-QRp" firstAttribute="centerY" secondItem="Kzr-o0-DYt" secondAttribute="centerY" id="CIs-e7-Q13"/>
+                            <constraint firstItem="rf8-57-pai" firstAttribute="top" secondItem="vLc-fn-QRp" secondAttribute="bottom" constant="-6" id="e9c-r7-zf2"/>
+                            <constraint firstItem="0Dr-eM-Gh4" firstAttribute="centerX" secondItem="vLc-fn-QRp" secondAttribute="centerX" id="jIJ-BO-lZM"/>
+                            <constraint firstItem="0Dr-eM-Gh4" firstAttribute="bottom" secondItem="vLc-fn-QRp" secondAttribute="top" id="ng1-g1-8At"/>
+                            <constraint firstItem="vLc-fn-QRp" firstAttribute="centerX" secondItem="Kzr-o0-DYt" secondAttribute="centerX" id="yeA-MC-Xms"/>
+                        </constraints>
+                    </view>
+                    <size key="freeformSize" width="375" height="211"/>
+                    <connections>
+                        <outlet property="altitudeLabel" destination="vLc-fn-QRp" id="gAQ-Vr-Mqx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oEu-gZ-1Xe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="194" y="-192"/>
+        </scene>
+        <!--G Force Meter Widget View Controller-->
+        <scene sceneID="2ue-g9-0n6">
+            <objects>
+                <viewController storyboardIdentifier="GMeterWidgetViewController" id="waP-hs-vYc" userLabel="G Force Meter Widget View Controller" customClass="GForceMeterWidgetViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VVN-U9-84W">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nOs-0A-PP3" customClass="GForceMeterView" customModule="Dash" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="21" width="375" height="169"/>
+                                <viewLayoutGuide key="safeArea" id="qVv-5R-AoV"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="iBD-EY-aA1"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="iBD-EY-aA1" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="nOs-0A-PP3" secondAttribute="bottom" constant="-4" id="0SP-J8-D6j"/>
+                            <constraint firstItem="nOs-0A-PP3" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iBD-EY-aA1" secondAttribute="top" constant="-4" id="HKZ-ex-kg7"/>
+                            <constraint firstItem="nOs-0A-PP3" firstAttribute="left" secondItem="iBD-EY-aA1" secondAttribute="left" id="Igb-4p-bgB"/>
+                            <constraint firstItem="nOs-0A-PP3" firstAttribute="centerY" secondItem="VVN-U9-84W" secondAttribute="centerY" priority="749" id="SeP-Wd-5g6"/>
+                            <constraint firstItem="nOs-0A-PP3" firstAttribute="height" secondItem="VVN-U9-84W" secondAttribute="height" multiplier="0.8" priority="750" id="ccZ-lg-kKb"/>
+                            <constraint firstItem="iBD-EY-aA1" firstAttribute="right" secondItem="nOs-0A-PP3" secondAttribute="right" id="pUM-DN-md3"/>
+                        </constraints>
+                    </view>
+                    <size key="freeformSize" width="375" height="211"/>
+                    <connections>
+                        <outlet property="gForceMeterView" destination="nOs-0A-PP3" id="ipe-XI-bAQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LuW-4P-Y3B" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="193" y="7"/>
+        </scene>
+        <!--Location Information Widget View Controller-->
+        <scene sceneID="6cP-hP-GFW">
+            <objects>
+                <viewController storyboardIdentifier="LocationInformationWidgetViewController" id="reg-dA-R3i" customClass="LocationInformationWidgetViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="esr-4O-hyc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Caf-mp-ul5" userLabel="Container View">
+                                <rect key="frame" x="0.0" y="24" width="375" height="187"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Low Location Accuracy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Au-0L-lMa">
+                                        <rect key="frame" x="116" y="8" width="143" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="uGk-wZ-doc">
+                                        <rect key="frame" x="20" y="58" width="335" height="71.5"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="651-Uo-jxa">
+                                                <rect key="frame" x="61.5" y="0.0" width="212.5" height="33.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東名高速道路" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ZDE-jk-6TH">
+                                                        <rect key="frame" x="0.0" y="0.0" width="170.5" height="33.5"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="28"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="E1" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="7Gx-Jx-v31" customClass="BorderedLabel" customModule="Dash" customModuleProvider="target">
+                                                        <rect key="frame" x="178.5" y="1.5" width="34" height="30"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                                <color key="value" systemColor="secondaryLabelColor"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="5"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="leftInset">
+                                                                <real key="value" value="7"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
+                                                                <real key="value" value="6"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="bottomInset">
+                                                                <real key="value" value="3"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="topInset">
+                                                                <real key="value" value="3"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LkV-7G-41V" userLabel="Vertical Spacing View">
+                                                <rect key="frame" x="167.5" y="33.5" width="0.0" height="14"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="14" id="Atz-n4-I3N"/>
+                                                    <constraint firstAttribute="width" id="hcM-1G-XQx"/>
+                                                </constraints>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東京都 世田谷区 岡本1丁目" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="n00-iQ-d2a">
+                                                <rect key="frame" x="46" y="47.5" width="243" height="24"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="3Au-0L-lMa" firstAttribute="top" secondItem="Caf-mp-ul5" secondAttribute="top" priority="750" constant="8" id="1Ms-AV-cfz"/>
+                                    <constraint firstItem="uGk-wZ-doc" firstAttribute="centerY" secondItem="Caf-mp-ul5" secondAttribute="centerY" id="5rP-PT-GY6"/>
+                                    <constraint firstAttribute="trailing" secondItem="uGk-wZ-doc" secondAttribute="trailing" constant="20" id="KvY-9j-uzy"/>
+                                    <constraint firstItem="3Au-0L-lMa" firstAttribute="centerX" secondItem="Caf-mp-ul5" secondAttribute="centerX" id="ZeT-I2-Lpm"/>
+                                    <constraint firstItem="uGk-wZ-doc" firstAttribute="centerX" secondItem="Caf-mp-ul5" secondAttribute="centerX" id="d7K-4Z-2Ko"/>
+                                    <constraint firstItem="uGk-wZ-doc" firstAttribute="leading" secondItem="Caf-mp-ul5" secondAttribute="leading" constant="20" id="pCF-7C-lym"/>
+                                </constraints>
+                            </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="p96-te-XPG">
+                                <rect key="frame" x="169" y="87" width="37" height="37"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="iYH-5I-vaz"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Caf-mp-ul5" firstAttribute="top" secondItem="iYH-5I-vaz" secondAttribute="top" id="Sqv-cU-pEy"/>
+                            <constraint firstAttribute="trailing" secondItem="Caf-mp-ul5" secondAttribute="trailing" id="Wnr-4x-BY9"/>
+                            <constraint firstItem="p96-te-XPG" firstAttribute="centerX" secondItem="esr-4O-hyc" secondAttribute="centerX" id="aJM-Vb-oDh"/>
+                            <constraint firstItem="p96-te-XPG" firstAttribute="centerY" secondItem="esr-4O-hyc" secondAttribute="centerY" id="igv-lY-gOt"/>
+                            <constraint firstItem="Caf-mp-ul5" firstAttribute="leading" secondItem="esr-4O-hyc" secondAttribute="leading" id="itd-P2-6VO"/>
+                            <constraint firstAttribute="bottom" secondItem="Caf-mp-ul5" secondAttribute="bottom" id="iuX-XO-RhV"/>
+                            <constraint firstItem="LkV-7G-41V" firstAttribute="height" secondItem="esr-4O-hyc" secondAttribute="height" multiplier="0.076" priority="750" constant="-2" id="nts-e3-bLj"/>
+                        </constraints>
+                    </view>
+                    <size key="freeformSize" width="375" height="211"/>
+                    <connections>
+                        <outlet property="activityIndicatorView" destination="p96-te-XPG" id="MWn-ka-dud"/>
+                        <outlet property="addressLabel" destination="n00-iQ-d2a" id="PZ4-fa-kgP"/>
+                        <outlet property="canonicalRoadNameLabel" destination="7Gx-Jx-v31" id="Fl4-Hj-0C0"/>
+                        <outlet property="lowLocationAccuracyLabel" destination="3Au-0L-lMa" id="J0d-ea-K7c"/>
+                        <outlet property="roadNameLabel" destination="ZDE-jk-6TH" id="5zY-gy-osW"/>
+                        <outlet property="roadView" destination="651-Uo-jxa" id="Vb8-6g-trO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fak-wP-va6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="194" y="215"/>
+        </scene>
+    </scenes>
+    <designables>
+        <designable name="7Gx-Jx-v31">
+            <size key="intrinsicContentSize" width="34" height="30"/>
+        </designable>
+    </designables>
+    <resources>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

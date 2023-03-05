@@ -12,12 +12,16 @@ class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelega
     let pageControlHeight: CGFloat = 26
     let pageControlBottomMargin: CGFloat = 4
 
-    lazy var widgetViewControllers: [UIViewController] = [
-        RearviewWidgetViewController(),
-        storyboard!.instantiateViewController(identifier: "LocationInformationWidgetViewController"),
-        storyboard!.instantiateViewController(identifier: "AltitudeWidgetViewController"),
-        storyboard!.instantiateViewController(identifier: "GMeterWidgetViewController"),
-    ]
+    lazy var widgetViewControllers: [UIViewController] = {
+        let storyboard = UIStoryboard(name: "Widgets", bundle: nil)
+
+        return [
+            RearviewWidgetViewController(),
+            storyboard.instantiateViewController(identifier: "LocationInformationWidgetViewController"),
+            storyboard.instantiateViewController(identifier: "AltitudeWidgetViewController"),
+            storyboard.instantiateViewController(identifier: "GMeterWidgetViewController"),
+        ]
+    }()
 
     lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()

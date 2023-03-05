@@ -120,6 +120,7 @@
 		B98B784D23ED530E00A5102F /* SignInWithAppleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98B784C23ED530E00A5102F /* SignInWithAppleViewController.swift */; };
 		B98B784F23ED583600A5102F /* AppIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98B784E23ED583600A5102F /* AppIconImageView.swift */; };
 		B98E633129B3A17700E01871 /* ginza.gpx in Resources */ = {isa = PBXBuildFile; fileRef = B98E633029B3A17700E01871 /* ginza.gpx */; };
+		B98E633429B446EE00E01871 /* Widgets.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B98E633629B446EE00E01871 /* Widgets.storyboard */; };
 		B99356D922A9483F00BA08AB /* japan_etc_tollbooths.csv in Resources */ = {isa = PBXBuildFile; fileRef = B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */; };
 		B99356DB22A9484700BA08AB /* ETCPaymentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356DA22A9484700BA08AB /* ETCPaymentTests.swift */; };
 		B99356E422A94D6900BA08AB /* BLESerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E322A94D6900BA08AB /* BLESerialPort.swift */; };
@@ -519,6 +520,8 @@
 		B98B784C23ED530E00A5102F /* SignInWithAppleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleViewController.swift; sourceTree = "<group>"; };
 		B98B784E23ED583600A5102F /* AppIconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconImageView.swift; sourceTree = "<group>"; };
 		B98E633029B3A17700E01871 /* ginza.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ginza.gpx; sourceTree = "<group>"; };
+		B98E633529B446EE00E01871 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Widgets.storyboard; sourceTree = "<group>"; };
+		B98E633829B446F600E01871 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Widgets.strings; sourceTree = "<group>"; };
 		B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = japan_etc_tollbooths.csv; sourceTree = "<group>"; };
 		B99356DA22A9484700BA08AB /* ETCPaymentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCPaymentTests.swift; sourceTree = "<group>"; };
 		B99356E322A94D6900BA08AB /* BLESerialPort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLESerialPort.swift; sourceTree = "<group>"; };
@@ -1012,6 +1015,7 @@
 			isa = PBXGroup;
 			children = (
 				B9DC5B2A229D59BE00B645D5 /* Main.storyboard */,
+				B98E633629B446EE00E01871 /* Widgets.storyboard */,
 				B9DC5B2F229D59BF00B645D5 /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
@@ -1553,6 +1557,7 @@
 				B9FF272B29AFA60A00B29DFC /* shintomei-kakegawa-to-enshumori.gpx in Resources */,
 				B9008EAF25FBB6D7005DAD13 /* NoMainETCCard.wav in Resources */,
 				B98E633129B3A17700E01871 /* ginza.gpx in Resources */,
+				B98E633429B446EE00E01871 /* Widgets.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2132,6 +2137,15 @@
 				B964BCDD23E067EB00288E0D /* Base */,
 			);
 			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+		B98E633629B446EE00E01871 /* Widgets.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B98E633529B446EE00E01871 /* Base */,
+				B98E633829B446F600E01871 /* ja */,
+			);
+			name = Widgets.storyboard;
 			sourceTree = "<group>";
 		};
 		B99C698326F5F1E30064162D /* Localizable.strings */ = {

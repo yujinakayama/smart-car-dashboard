@@ -13,7 +13,7 @@ class RearviewWidgetViewController: UIViewController {
     var rearviewViewController: RearviewViewController?
 
     lazy var widgetViewController: LocationInformationWidgetViewController = {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let storyboard = UIStoryboard(name: "Widgets", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "LocationInformationWidgetViewController") as! LocationInformationWidgetViewController
 
         viewController.view.backgroundColor = viewController.view.backgroundColor?.withAlphaComponent(0.93)
