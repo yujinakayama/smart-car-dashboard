@@ -591,13 +591,13 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="My Card" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z8y-WU-Yma">
-                                                    <rect key="frame" x="59.5" y="5" width="193.5" height="20.5"/>
+                                                    <rect key="frame" x="59.5" y="5" width="179.5" height="20.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="Inserted" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L8f-9B-9HH" customClass="BorderedLabel" customModule="Dash" customModuleProvider="target">
-                                                    <rect key="frame" x="265" y="8.5" width="43.5" height="13.5"/>
+                                                    <rect key="frame" x="251" y="4.5" width="57.5" height="21.5"/>
                                                     <color key="backgroundColor" systemColor="tintColor"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -798,7 +798,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IBr-gx-mIp">
                                             <rect key="frame" x="16" y="20" width="311" height="29"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="yXL-mj-wgO" customClass="BorderedView" customModule="Dash" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="yXL-mj-wgO">
                                                     <rect key="frame" x="0.0" y="0.0" width="80" height="29"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" text="1280" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ukE-X2-gHW">
@@ -864,67 +864,69 @@
                                             </constraints>
                                         </view>
                                         <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" distribution="equalSpacing" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="ZAn-lS-AfA">
-                                            <rect key="frame" x="16" y="63" width="243.5" height="19"/>
+                                            <rect key="frame" x="16" y="63" width="233.5" height="19"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="EML-DI-UKx" customClass="BorderedView" customModule="Dash" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="1" width="50" height="17.5"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="首都高速" textAlignment="natural" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CtC-aV-rx7">
-                                                            <rect key="frame" x="5" y="2" width="41" height="13.5"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
-                                                            <color key="textColor" systemColor="secondaryLabelColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="CtC-aV-rx7" secondAttribute="trailing" constant="4" id="5hw-qu-0KQ"/>
-                                                        <constraint firstAttribute="bottom" secondItem="CtC-aV-rx7" secondAttribute="bottom" constant="2" id="DSJ-Br-xyn"/>
-                                                        <constraint firstItem="CtC-aV-rx7" firstAttribute="leading" secondItem="EML-DI-UKx" secondAttribute="leading" constant="5" id="Df9-oT-9Fj"/>
-                                                        <constraint firstItem="CtC-aV-rx7" firstAttribute="top" secondItem="EML-DI-UKx" secondAttribute="top" constant="2" id="Zks-cE-zEk"/>
-                                                    </constraints>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="首都高速" textAlignment="natural" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CtC-aV-rx7" customClass="BorderedLabel" customModule="Dash" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="3" width="45" height="13.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                    <nil key="highlightedColor"/>
                                                     <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="topInset">
+                                                            <real key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
+                                                            <real key="value" value="4"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="bottomInset">
+                                                            <real key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="leftInset">
+                                                            <real key="value" value="5"/>
+                                                        </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                                             <color key="value" systemColor="secondaryLabelColor"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                            <real key="value" value="1"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                             <real key="value" value="4"/>
                                                         </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
-                                                </view>
+                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="台場" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ElS-Fh-95g">
-                                                    <rect key="frame" x="56" y="0.0" width="35" height="19"/>
+                                                    <rect key="frame" x="51" y="0.0" width="35" height="19"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="uB5-qW-VsK">
-                                                    <rect key="frame" x="97" y="4" width="15" height="12"/>
+                                                    <rect key="frame" x="92" y="4" width="15" height="12"/>
                                                     <color key="tintColor" systemColor="secondaryLabelColor"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     </preferredSymbolConfiguration>
                                                 </imageView>
-                                                <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Rko-mV-7BI" customClass="BorderedView" customModule="Dash" customModuleProvider="target">
-                                                    <rect key="frame" x="118" y="1" width="50" height="17.5"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="東名高速" textAlignment="natural" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mrm-PV-omm">
-                                                            <rect key="frame" x="5" y="2" width="41" height="13.5"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
-                                                            <color key="textColor" systemColor="secondaryLabelColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstItem="mrm-PV-omm" firstAttribute="top" secondItem="Rko-mV-7BI" secondAttribute="top" constant="2" id="G7z-ro-4Ec"/>
-                                                        <constraint firstItem="mrm-PV-omm" firstAttribute="leading" secondItem="Rko-mV-7BI" secondAttribute="leading" constant="5" id="Rlk-QB-jOX"/>
-                                                        <constraint firstAttribute="trailing" secondItem="mrm-PV-omm" secondAttribute="trailing" constant="4" id="l4C-ze-dvm"/>
-                                                        <constraint firstAttribute="bottom" secondItem="mrm-PV-omm" secondAttribute="bottom" constant="2" id="mzg-At-3Os"/>
-                                                    </constraints>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="東名高速" textAlignment="natural" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mrm-PV-omm" customClass="BorderedLabel" customModule="Dash" customModuleProvider="target">
+                                                    <rect key="frame" x="113" y="3" width="45" height="13.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                    <nil key="highlightedColor"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="4"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="topInset">
+                                                            <real key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="bottomInset">
+                                                            <real key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="leftInset">
+                                                            <real key="value" value="5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
                                                             <real key="value" value="4"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
@@ -934,9 +936,9 @@
                                                             <real key="value" value="1"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
-                                                </view>
+                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="横浜青葉" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Flp-ga-yBP">
-                                                    <rect key="frame" x="174" y="0.0" width="69.5" height="19"/>
+                                                    <rect key="frame" x="164" y="0.0" width="69.5" height="19"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -959,11 +961,9 @@
                                     <outlet property="amountLabel" destination="ukE-X2-gHW" id="bys-ax-zyE"/>
                                     <outlet property="amountView" destination="yXL-mj-wgO" id="164-06-0Jz"/>
                                     <outlet property="entranceRoadLabel" destination="CtC-aV-rx7" id="VEH-pW-shN"/>
-                                    <outlet property="entranceRoadView" destination="EML-DI-UKx" id="Com-ip-fb2"/>
                                     <outlet property="entranceTimeLabel" destination="0YK-AR-A2c" id="fiC-gn-aVv"/>
                                     <outlet property="entranceTollboothLabel" destination="ElS-Fh-95g" id="a6q-bF-N5u"/>
                                     <outlet property="exitRoadLabel" destination="mrm-PV-omm" id="oqj-jg-yiu"/>
-                                    <outlet property="exitRoadView" destination="Rko-mV-7BI" id="sIc-GS-n8I"/>
                                     <outlet property="exitTimeLabel" destination="1Lp-b1-rnx" id="m5q-Ov-7ll"/>
                                     <outlet property="exitTollboothLabel" destination="Flp-ga-yBP" id="voM-Ba-YeK"/>
                                     <outlet property="timeArrowView" destination="JX9-eo-NcV" id="W3A-Ad-1B1"/>
@@ -1171,7 +1171,7 @@
             <objects>
                 <tableViewController id="rm7-Qu-Kz2" customClass="ETCCardEditViewController" customModule="Dash" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="FCs-lq-ZD1">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="1004"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="BxA-Xb-WFh">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="210"/>
@@ -1427,16 +1427,16 @@
     </scenes>
     <designables>
         <designable name="L8f-9B-9HH">
-            <size key="intrinsicContentSize" width="43.5" height="13.5"/>
+            <size key="intrinsicContentSize" width="57.5" height="21.5"/>
         </designable>
         <designable name="PSg-N3-wKj">
             <size key="intrinsicContentSize" width="139" height="31"/>
         </designable>
         <designable name="TAK-Hz-Kv5">
-            <size key="intrinsicContentSize" width="30" height="34"/>
+            <size key="intrinsicContentSize" width="23" height="22"/>
         </designable>
         <designable name="mfV-vr-luy">
-            <size key="intrinsicContentSize" width="30" height="34"/>
+            <size key="intrinsicContentSize" width="24.5" height="22"/>
         </designable>
     </designables>
     <inferredMetricsTieBreakers>

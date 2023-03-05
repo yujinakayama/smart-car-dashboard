@@ -29,11 +29,9 @@ class ETCPaymentTableViewCell: UITableViewCell {
     @IBOutlet weak var timeArrowView: UIImageView!
     @IBOutlet weak var exitTimeLabel: UILabel!
 
-    @IBOutlet weak var entranceRoadView: UIView!
     @IBOutlet weak var entranceRoadLabel: UILabel!
     @IBOutlet weak var entranceTollboothLabel: UILabel!
     @IBOutlet weak var tollboothArrowView: UIImageView!
-    @IBOutlet weak var exitRoadView: UIView!
     @IBOutlet weak var exitRoadLabel: UILabel!
     @IBOutlet weak var exitTollboothLabel: UILabel!
 
@@ -79,26 +77,26 @@ class ETCPaymentTableViewCell: UITableViewCell {
         let exit = payment.exitTollbooth
 
         if let entrance = entrance {
-            entranceRoadView.isHidden = false
+            entranceRoadLabel.isHidden = false
             entranceRoadLabel.text = entrance.road.abbreviatedName
             entranceTollboothLabel.text = entrance.name
         } else {
-            entranceRoadView.isHidden = true
+            entranceRoadLabel.isHidden = true
             entranceTollboothLabel.text = String(localized: "Unknown Tollbooth")
         }
 
         if let exit = exit {
             if exit == entrance {
                 tollboothArrowView.isHidden = true
-                exitRoadView.isHidden = true
+                exitRoadLabel.isHidden = true
                 exitTollboothLabel.isHidden = true
             } else {
                 tollboothArrowView.isHidden = false
 
                 if exit.road.name == entrance?.road.name {
-                    exitRoadView.isHidden = true
+                    exitRoadLabel.isHidden = true
                 } else {
-                    exitRoadView.isHidden = false
+                    exitRoadLabel.isHidden = false
                     exitRoadLabel.text = exit.road.abbreviatedName
                 }
 
@@ -107,7 +105,7 @@ class ETCPaymentTableViewCell: UITableViewCell {
             }
         } else {
             tollboothArrowView.isHidden = false
-            exitRoadView.isHidden = true
+            exitRoadLabel.isHidden = true
             exitTollboothLabel.isHidden = false
             exitTollboothLabel.text = String(localized: "Unknown Tollbooth")
         }
