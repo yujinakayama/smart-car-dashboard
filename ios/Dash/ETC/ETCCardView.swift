@@ -55,49 +55,33 @@ import UIKit
         return imageView
     }()
 
-    lazy var imageViewMarginConstraints = {
-        return [
-            imageView.topAnchor.constraint(equalTo: topAnchor, constant: imageViewMargin),
-            imageView.leftAnchor.constraint(equalTo: leftAnchor, constant: imageViewMargin),
-            bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: imageViewMargin),
-            rightAnchor.constraint(equalTo: imageView.rightAnchor, constant: imageViewMargin)
-        ]
-    }()
-
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setUp()
+        commonInit()
     }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUp()
+        commonInit()
     }
 
-    override func prepareForInterfaceBuilder() {
-        super.prepareForInterfaceBuilder()
-        setUp()
-    }
-
-    func setUp() {
-        NSLayoutConstraint.activate([widthAnchor.constraint(equalTo: heightAnchor, multiplier: aspectRatio)])
+    func commonInit() {
         addSubview(imageView)
-        NSLayoutConstraint.activate(imageViewMarginConstraints)
+
+        NSLayoutConstraint.activate([
+            widthAnchor.constraint(equalTo: heightAnchor, multiplier: aspectRatio),
+            imageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.8),
+            imageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.8),
+            imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+        ])
     }
 
     override func layoutSubviews() {
+        super.layoutSubviews()
+
         if !specifiedCornerRadius {
             layer.cornerRadius = standardCornerRadius
         }
-
-        for constraint in imageViewMarginConstraints {
-            constraint.constant = imageViewMargin
-        }
-
-        super.layoutSubviews()
-    }
-
-    var imageViewMargin: CGFloat {
-        return bounds.width * 0.1
     }
 }
