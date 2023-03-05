@@ -16,10 +16,6 @@ import UIKit
     lazy var aspectRatio: CGFloat = realCardWidth / realCardHeight
     lazy var cornerRadiusRatio: CGFloat = realCardCornerRadius / realCardWidth
 
-    override class var requiresConstraintBasedLayout: Bool {
-        return true
-    }
-
     @IBInspectable var image: UIImage? {
         get {
             return imageView.image
@@ -69,7 +65,6 @@ import UIKit
         addSubview(imageView)
 
         NSLayoutConstraint.activate([
-            widthAnchor.constraint(equalTo: heightAnchor, multiplier: aspectRatio),
             imageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.8),
             imageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.8),
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
