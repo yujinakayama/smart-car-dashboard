@@ -18,6 +18,8 @@ class LocationInformationWidgetViewController: UIViewController {
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var lowLocationAccuracyLabel: UILabel!
 
+    var isVisible = false
+
     var roadTracker: RoadTracker {
         return RoadTracker.shared
     }
@@ -33,6 +35,8 @@ class LocationInformationWidgetViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        resetViews()
 
         NotificationCenter.default.addObserver(self, selector: #selector(roadTrackerDidUpdateCurrentLocation), name: .RoadTrackerDidUpdateCurrentLocation, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(roadTrackerDidUpdateCurrentRoad), name: .RoadTrackerDidUpdateCurrentRoad, object: nil)
@@ -57,11 +61,11 @@ class LocationInformationWidgetViewController: UIViewController {
         lowLocationAccuracyLabel.attributedText = attributedText
     }
 
+    // viewWillAppear is also called when coming back to the page without completely switch to another page
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        resetViews()
-        lastRoad = nil
+        isVisible = true
 
         if let road = roadTracker.currentRoad, let location = roadTracker.currentLocation {
             update(for: road)
@@ -74,9 +78,11 @@ class LocationInformationWidgetViewController: UIViewController {
     }
 
     override func viewDidDisappear(_ animated: Bool) {
-        roadTracker.unregisterObserver(self)
-        resetViews()
         super.viewDidDisappear(animated)
+        isVisible = false
+        roadTracker.unregisterObserver(self)
+        lastRoad = nil
+        resetViews()
     }
 
     deinit {
@@ -84,6 +90,8 @@ class LocationInformationWidgetViewController: UIViewController {
     }
 
     @objc func roadTrackerDidUpdateCurrentLocation(notification: Notification) {
+        guard isVisible else { return }
+
         logger.debug()
 
         guard let location = notification.userInfo?[RoadTracker.NotificationKeys.location] as? CLLocation else {
@@ -94,6 +102,8 @@ class LocationInformationWidgetViewController: UIViewController {
     }
 
     @objc func roadTrackerDidUpdateCurrentRoad(notification: Notification) {
+        guard isVisible else { return }
+
         logger.debug()
 
         guard let road = notification.userInfo?[RoadTracker.NotificationKeys.road] as? Road else {
