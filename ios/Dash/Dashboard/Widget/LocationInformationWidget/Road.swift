@@ -9,6 +9,7 @@
 import Foundation
 import CoreLocation
 import MapboxCoreNavigation
+import MapboxDirections
 
 class Road: Equatable {
     static let nameComponentPattern = try! NSRegularExpression(pattern: "[^\\(\\)（）]+")
@@ -21,7 +22,11 @@ class Road: Equatable {
             return lhsPopularName == rhs.popularName
         }
 
-        return lhs.shield  == rhs.shield
+        if let lhsIdentifier = lhs.identifier {
+            return lhsIdentifier == rhs.identifier
+        }
+
+        return lhs.roadClass == rhs.roadClass && lhs.routeNumber == rhs.routeNumber
     }
 
     init(edge: RoadGraph.Edge.Metadata, placemark: CLPlacemark) {
@@ -40,6 +45,10 @@ class Road: Equatable {
             }
         }
         return nil
+    }
+
+    var roadClass: MapboxStreetsRoadClass {
+        return edge.mapboxStreetsRoadClass
     }
 
     var routeNumber: Int? {
@@ -81,7 +90,7 @@ class Road: Equatable {
 
         guard let routeNumber = routeNumber else { return nil }
 
-        switch edge.mapboxStreetsRoadClass {
+        switch roadClass {
         case .trunk:
             return "国道\(routeNumber)号"
         case .primary, .secondary, .tertiary:
@@ -96,7 +105,7 @@ class Road: Equatable {
     }
 
     var unnumberedRouteName: String? {
-        switch edge.mapboxStreetsRoadClass {
+        switch roadClass {
         case .trunk:
             return "国道"
         case .primary, .secondary:
