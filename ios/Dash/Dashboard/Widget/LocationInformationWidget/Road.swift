@@ -106,6 +106,8 @@ class Road: Equatable {
 
     var unnumberedRouteName: String? {
         switch roadClass {
+        case .motorway:
+            return "自動専用道路"
         case .trunk:
             return "国道"
         case .primary, .secondary:
@@ -115,6 +117,10 @@ class Road: Equatable {
             return "\(municipality ?? "市町村")道"
         case .track:
             return "農道・林道"
+        case .service:
+            return "通路"
+        case .motorwayLink, .trunkLink, .primaryLink, .secondaryLink, .tertiaryLink:
+            return "連絡路"
         default:
             return "一般道路"
         }
