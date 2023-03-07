@@ -12,21 +12,7 @@ import RearviewKit
 class RearviewWidgetViewController: UIViewController {
     var rearviewViewController: RearviewViewController?
 
-    lazy var widgetViewController: LocationInformationWidgetViewController = {
-        let storyboard = UIStoryboard(name: "Widgets", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "LocationInformationWidgetViewController") as! LocationInformationWidgetViewController
-
-        viewController.view.backgroundColor = viewController.view.backgroundColor?.withAlphaComponent(0.93)
-        viewController.view.layer.cornerCurve = .continuous
-        viewController.view.layer.cornerRadius = 8
-        viewController.view.translatesAutoresizingMaskIntoConstraints = false
-
-        viewController.scaleLabelFontSizes(scale: 0.9)
-        viewController.showsLocationAccuracyWarning = false
-        viewController.activityIndicatorView.style = .medium
-
-        return viewController
-    }()
+    var widgetViewController: LocationInformationWidgetViewController?
 
     var isVisible = false
 
@@ -162,29 +148,48 @@ class RearviewWidgetViewController: UIViewController {
     }
 
     func setUpWidgetViewControllerIfNeeded() {
-        guard widgetViewController.parent != self else { return }
+        guard widgetViewController == nil else { return }
+
+        let widgetViewController = instanciateWidgetViewController()
 
         addChild(widgetViewController)
         view.addSubview(widgetViewController.view)
-        NSLayoutConstraint.activate(widgetViewControllerConstraints)
+        NSLayoutConstraint.activate([
+            widgetViewController.view.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
+            view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: widgetViewController.view.bottomAnchor),
+            widgetViewController.view.widthAnchor.constraint(equalToConstant: 280),
+            widgetViewController.view.heightAnchor.constraint(equalToConstant: 78)
+        ])
         widgetViewController.didMove(toParent: self)
+
+        self.widgetViewController = widgetViewController
     }
 
     func tearDownWidgetViewControllerIfNeeded() {
-        guard widgetViewController.parent == self else { return }
+        guard let widgetViewController = widgetViewController else { return }
 
         widgetViewController.willMove(toParent: nil)
-        NSLayoutConstraint.deactivate(widgetViewControllerConstraints)
         widgetViewController.view.removeFromSuperview()
         widgetViewController.removeFromParent()
+
+        self.widgetViewController = nil
     }
 
-    lazy var widgetViewControllerConstraints = [
-        widgetViewController.view.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-        view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: widgetViewController.view.bottomAnchor),
-        widgetViewController.view.widthAnchor.constraint(equalToConstant: 280),
-        widgetViewController.view.heightAnchor.constraint(equalToConstant: 78)
-    ]
+    func instanciateWidgetViewController() -> LocationInformationWidgetViewController {
+        let storyboard = UIStoryboard(name: "Widgets", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "LocationInformationWidgetViewController") as! LocationInformationWidgetViewController
+
+        viewController.view.backgroundColor = viewController.view.backgroundColor?.withAlphaComponent(0.93)
+        viewController.view.layer.cornerCurve = .continuous
+        viewController.view.layer.cornerRadius = 8
+        viewController.view.translatesAutoresizingMaskIntoConstraints = false
+
+        viewController.scaleLabelFontSizes(scale: 0.9)
+        viewController.showsLocationAccuracyWarning = false
+        viewController.activityIndicatorView.style = .medium
+
+        return viewController
+    }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
