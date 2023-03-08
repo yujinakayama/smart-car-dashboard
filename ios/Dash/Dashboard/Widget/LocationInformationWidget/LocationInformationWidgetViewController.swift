@@ -116,7 +116,11 @@ class LocationInformationWidgetViewController: UIViewController {
     func update(for road: Road) {
         var shouldAnimate = false
         if let lastRoad = lastRoad {
-            shouldAnimate = road != lastRoad
+            if road.roadClass == .service, road.placemark.name != lastRoad.placemark.name {
+                shouldAnimate = true
+            } else {
+                shouldAnimate = road != lastRoad
+            }
         } else {
             shouldAnimate = true
         }
