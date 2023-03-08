@@ -47,6 +47,8 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
     var currentLocation: CLLocation?
     private var currentPlacemark: CLPlacemark?
 
+    private var justEnteredServiceRoad = false
+
     private var observerIdentifiers = Set<ObjectIdentifier>()
 
     override init() {
@@ -116,11 +118,17 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
         else { return }
 
         let road = Road(edge: edgeMetadata, placemark: currentPlacemark)
-        currentRoad = road
+        justEnteredServiceRoad = road.roadClass == .service && currentRoad?.roadClass != .service
 
-        NotificationCenter.default.post(name: .RoadTrackerDidUpdateCurrentRoad, object: self, userInfo: [
-            NotificationKeys.road: road
-        ])
+        // When just entered service road, perform geocoding request for the location name
+        // and wait for the next horizon update
+        if !justEnteredServiceRoad {
+            currentRoad = road
+
+            NotificationCenter.default.post(name: .RoadTrackerDidUpdateCurrentRoad, object: self, userInfo: [
+                NotificationKeys.road: road
+            ])
+        }
     }
 
     private func reverseGeocodeIfNeeded(for location: CLLocation) {
@@ -144,6 +152,11 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
     private func shouldRequestGeocoding(for location: CLLocation) -> Bool {
         guard isTracking else {
             return false
+        }
+
+        if justEnteredServiceRoad {
+            justEnteredServiceRoad = false
+            return true
         }
 
         guard let lastLocation = currentPlacemark?.location else {
