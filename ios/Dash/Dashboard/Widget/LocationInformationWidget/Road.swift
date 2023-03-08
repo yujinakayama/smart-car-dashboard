@@ -129,7 +129,6 @@ class Road: Equatable {
     var address: [String] {
         return [
             placemark.administrativeArea,
-            placemark.subAdministrativeArea,
             placemark.locality,
             placemark.subLocality
         ].compactMap { $0 }
