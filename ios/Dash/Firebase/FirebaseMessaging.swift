@@ -17,8 +17,12 @@ class FirebaseMessaging: NSObject {
 
         set {
             Messaging.messaging().apnsToken = newValue
+            processPendingTopics()
         }
     }
+
+    private var pendingTopicToUnsubscribe: String?
+    private var pendingTopicToSubscribe: String?
 
     override init() {
         super.init()
@@ -32,13 +36,44 @@ class FirebaseMessaging: NSObject {
 
     @objc func firebaseAuthenticationDidUpdateVehicleID(notification: Notification) {
         if let oldVehicleID = notification.userInfo?[FirebaseAuthentication.UserInfoKey.oldVehicleID] as? String {
-            logger.info("Unsubscribing from Cloud Messaging topic \(oldVehicleID)")
-            Messaging.messaging().unsubscribe(fromTopic: oldVehicleID)
+            // Subscribing to a topic without APNS token fails
+            if deviceToken == nil {
+                pendingTopicToUnsubscribe = oldVehicleID
+            } else {
+                logger.info("Unsubscribing from Cloud Messaging topic \(oldVehicleID)")
+                Messaging.messaging().unsubscribe(fromTopic: oldVehicleID) { (error) in
+                    logger.error(error)
+                }
+            }
         }
 
         if let newVehicleID = notification.userInfo?[FirebaseAuthentication.UserInfoKey.newVehicleID] as? String {
-            logger.info("Subscribing to Cloud Messaging topic \(newVehicleID)")
-            Messaging.messaging().subscribe(toTopic: newVehicleID)
+            if deviceToken == nil {
+                pendingTopicToSubscribe = newVehicleID
+            } else {
+                logger.info("Subscribing to Cloud Messaging topic \(newVehicleID)")
+                Messaging.messaging().subscribe(toTopic: newVehicleID) { (error) in
+                    logger.error(error)
+                }
+            }
+        }
+    }
+
+    private func processPendingTopics() {
+        if let topic = pendingTopicToUnsubscribe {
+            logger.info("Unsubscribing from Cloud Messaging topic \(topic)")
+            Messaging.messaging().unsubscribe(fromTopic: topic) { (error) in
+                logger.error(error)
+            }
+            pendingTopicToUnsubscribe = nil
+        }
+
+        if let topic = pendingTopicToSubscribe {
+            logger.info("Subscribing to Cloud Messaging topic \(topic)")
+            Messaging.messaging().subscribe(toTopic: topic) { (error) in
+                logger.error(error)
+            }
+            pendingTopicToSubscribe = nil
         }
     }
 }
