@@ -119,8 +119,15 @@ class Road: Equatable {
             return "農道・林道"
         case .service:
             return "通路"
-        case .motorwayLink, .trunkLink, .primaryLink, .secondaryLink, .tertiaryLink:
-            return "連絡路"
+        case .motorwayLink:
+            return "IC•JCT連絡路"
+        case .trunkLink:
+            return "国道連絡路"
+        case .primaryLink, .secondaryLink:
+            let prefectureType = prefecture?.suffix ?? "都道府県"
+            return "\(prefectureType)道連絡路"
+        case .tertiaryLink:
+            return "\(municipality ?? "市町村")道連絡路"
         default:
             return "一般道路"
         }
