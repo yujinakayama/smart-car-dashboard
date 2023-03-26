@@ -105,7 +105,6 @@
 		B979457127A81AFE007040E7 /* SwiftCBOR in Frameworks */ = {isa = PBXBuildFile; productRef = B979457027A81AFE007040E7 /* SwiftCBOR */; };
 		B97ABD3F27670D6E00C7EB1D /* PointOfInterestIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97ABD3E27670D6E00C7EB1D /* PointOfInterestIcon.swift */; };
 		B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97BAE6124B61DB100AE7D13 /* Vehicle.swift */; };
-		B980071E2678B81C00FC703E /* OpenCage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B980071D2678B81C00FC703E /* OpenCage.swift */; };
 		B98007202678D6AF00FC703E /* LocationInformationWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B980071F2678D6AF00FC703E /* LocationInformationWidgetViewController.swift */; };
 		B9854F80278DA88000E07C0C /* SpeedSensitiveVolumeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9854F7F278DA88000E07C0C /* SpeedSensitiveVolumeController.swift */; };
 		B9854FA4278F426C00E07C0C /* SystemAudioVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9854FA3278F426C00E07C0C /* SystemAudioVolume.swift */; };
@@ -192,7 +191,6 @@
 		B9CEA76622D89A400055C9A3 /* ETCDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76522D89A400055C9A3 /* ETCDatabase.swift */; };
 		B9CEA76E22D911140055C9A3 /* ETCSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CEA76D22D911140055C9A3 /* ETCSplitViewController.swift */; };
 		B9D02089268CD1850020BF9A /* RoadTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D02088268CD1850020BF9A /* RoadTracker.swift */; };
-		B9D0208B268CD2F60020BF9A /* VehicleMovement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D0208A268CD2F60020BF9A /* VehicleMovement.swift */; };
 		B9D0208D268F643E0020BF9A /* ParkingSearchMapViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D0208C268F643E0020BF9A /* ParkingSearchMapViewManager.swift */; };
 		B9D0208F268F69490020BF9A /* ParkingSearchOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D0208E268F69490020BF9A /* ParkingSearchOptionsView.swift */; };
 		B9D4AF22267124FC00849129 /* DashCloudClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D4AF21267124FC00849129 /* DashCloudClient.swift */; };
@@ -505,7 +503,6 @@
 		B97A8229255449C800CD2870 /* CameraOptionsAdjuster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOptionsAdjuster.swift; sourceTree = "<group>"; };
 		B97ABD3E27670D6E00C7EB1D /* PointOfInterestIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterestIcon.swift; sourceTree = "<group>"; };
 		B97BAE6124B61DB100AE7D13 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
-		B980071D2678B81C00FC703E /* OpenCage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenCage.swift; sourceTree = "<group>"; };
 		B980071F2678D6AF00FC703E /* LocationInformationWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInformationWidgetViewController.swift; sourceTree = "<group>"; };
 		B984C019263DA08D00AF79AE /* TimeDurationPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDurationPicker.swift; sourceTree = "<group>"; };
 		B9854F7F278DA88000E07C0C /* SpeedSensitiveVolumeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedSensitiveVolumeController.swift; sourceTree = "<group>"; };
@@ -591,7 +588,6 @@
 		B9CEA76522D89A400055C9A3 /* ETCDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDatabase.swift; sourceTree = "<group>"; };
 		B9CEA76D22D911140055C9A3 /* ETCSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCSplitViewController.swift; sourceTree = "<group>"; };
 		B9D02088268CD1850020BF9A /* RoadTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoadTracker.swift; sourceTree = "<group>"; };
-		B9D0208A268CD2F60020BF9A /* VehicleMovement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleMovement.swift; sourceTree = "<group>"; };
 		B9D0208C268F643E0020BF9A /* ParkingSearchMapViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingSearchMapViewManager.swift; sourceTree = "<group>"; };
 		B9D0208E268F69490020BF9A /* ParkingSearchOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingSearchOptionsView.swift; sourceTree = "<group>"; };
 		B9D4AF21267124FC00849129 /* DashCloudClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashCloudClient.swift; sourceTree = "<group>"; };
@@ -782,8 +778,6 @@
 				B980071F2678D6AF00FC703E /* LocationInformationWidgetViewController.swift */,
 				B9D02088268CD1850020BF9A /* RoadTracker.swift */,
 				B9B4F706268CB55D009C5DC5 /* Road.swift */,
-				B9D0208A268CD2F60020BF9A /* VehicleMovement.swift */,
-				B980071D2678B81C00FC703E /* OpenCage.swift */,
 			);
 			path = LocationInformationWidget;
 			sourceTree = "<group>";
@@ -1918,7 +1912,6 @@
 				B932EE4B26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift in Sources */,
 				B95BF23823EBF43900A30DE0 /* ETCCardEditViewController.swift in Sources */,
 				B9F9EFD6256D3D6B00C33781 /* Cache.swift in Sources */,
-				B980071E2678B81C00FC703E /* OpenCage.swift in Sources */,
 				B9FA6CC824CED3D00038E990 /* SongDataRequest.swift in Sources */,
 				B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */,
 				B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */,
@@ -1946,7 +1939,6 @@
 				B9FB33E124AE2ACD00FEB782 /* PlaybackModeButton.swift in Sources */,
 				B92A97DA25E0AE8900D70A14 /* GForceMeterWidgetViewController.swift in Sources */,
 				B91E0B62254D047D002928D3 /* PairingURLItem.swift in Sources */,
-				B9D0208B268CD2F60020BF9A /* VehicleMovement.swift in Sources */,
 				B92E2AFC23E4958200BB4C0E /* UNNotificationContentExtension.swift in Sources */,
 				B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */,
 				B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */,
