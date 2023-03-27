@@ -185,7 +185,9 @@ class WebViewController: UIViewController {
             webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             view.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
             webView.topAnchor.constraint(equalTo: view.topAnchor),
-            view.bottomAnchor.constraint(equalTo: webView.bottomAnchor),
+            // Align to bottom of safe area to fix safe area issues with toolbar, giving up transparent toolbar:
+            // https://scrapbox.io/rinsuki/WKWebViewにUIToolbarを正しく載せたい (We don't use the suggested solution since it didn't work)
+            view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: webView.bottomAnchor),
         ])
 
         webView.isHidden = false
