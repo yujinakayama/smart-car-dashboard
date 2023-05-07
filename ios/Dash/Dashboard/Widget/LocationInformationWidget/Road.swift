@@ -108,12 +108,12 @@ class Road: Equatable {
         switch roadClass {
         case .motorway:
             return "自動専用道路"
-        case .trunk:
+        case .trunk, .trunkLink:
             return "国道"
-        case .primary, .secondary:
+        case .primary, .secondary, .primaryLink, .secondaryLink:
             let prefectureType = prefecture?.suffix ?? "都道府県"
             return "\(prefectureType)道"
-        case .tertiary:
+        case .tertiary, .tertiaryLink:
             return "\(municipality ?? "市町村")道"
         case .track:
             return "農道・林道"
@@ -121,13 +121,6 @@ class Road: Equatable {
             return "通路"
         case .motorwayLink:
             return "IC•JCT連絡路"
-        case .trunkLink:
-            return "国道連絡路"
-        case .primaryLink, .secondaryLink:
-            let prefectureType = prefecture?.suffix ?? "都道府県"
-            return "\(prefectureType)道連絡路"
-        case .tertiaryLink:
-            return "\(municipality ?? "市町村")道連絡路"
         default:
             return "一般道路"
         }
