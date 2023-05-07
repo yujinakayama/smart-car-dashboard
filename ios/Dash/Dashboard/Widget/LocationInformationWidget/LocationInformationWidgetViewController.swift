@@ -203,7 +203,7 @@ class LocationInformationWidgetViewController: UIViewController {
     }
 
     func updateAddressLabel(for road: Road) {
-        addressLabel.text = road.address.joined(separator: " ")
+        addressLabel.text = road.address.components.joined(separator: " ")
     }
 
     func hideLabelsWithNoContent() {

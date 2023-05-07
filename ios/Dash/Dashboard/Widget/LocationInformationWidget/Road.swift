@@ -114,7 +114,7 @@ class Road: Equatable {
             let prefectureType = prefecture?.suffix ?? "都道府県"
             return "\(prefectureType)道"
         case .tertiary, .tertiaryLink:
-            return "\(municipality ?? "市町村")道"
+            return "\(address.municipality ?? "市町村")道"
         case .track:
             return "農道・林道"
         case .service:
@@ -126,13 +126,7 @@ class Road: Equatable {
         }
     }
 
-    var address: [String] {
-        return [
-            placemark.administrativeArea,
-            placemark.locality,
-            placemark.subLocality
-        ].compactMap { $0 }
-    }
+    lazy var address = Address(placemark: placemark)
 
     var prefecture: Prefecture? {
         guard let regionCode = edge.regionCode else {
@@ -140,16 +134,58 @@ class Road: Equatable {
         }
         return prefecturesByRegionCode[regionCode]
     }
+}
 
-    var municipality: String? {
-        guard let locality = placemark.locality else { return nil }
+struct Address {
+    var placemark: CLPlacemark
 
-        if let match = try? /(.+市).+区/.wholeMatch(in: locality) {
-            return String(match.output.1)
+    
+    var prefecture: String? {
+        return placemark.administrativeArea
+    }
+
+    var commandery: String? {
+        return placemark.subAdministrativeArea
+    }
+
+    var municipality: String?
+
+    var ward: String?
+
+    var town: String? {
+        return placemark.subLocality
+    }
+    
+    var components: [String] {
+        return [
+            prefecture,
+            commandery,
+            municipality,
+            ward,
+            town
+        ].compactMap { $0 }
+    }
+    
+    init(placemark: CLPlacemark) {
+        self.placemark = placemark
+        parseLocality()
+    }
+    
+    private mutating func parseLocality() {
+        guard var locality = placemark.locality else { return }
+        
+        if let commandery = commandery {
+            locality.trimPrefix(commandery)
+        }
+        
+        if let match = try? /(.+市)(.+区)/.wholeMatch(in: locality) {
+            municipality = String(match.output.1)
+            ward = String(match.output.2)
         } else {
-            return locality
+            municipality = locality
         }
     }
+    
 }
 
 // https://ja.wikipedia.org/wiki/ISO_3166-2:JP
