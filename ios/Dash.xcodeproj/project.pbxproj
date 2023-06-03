@@ -106,6 +106,7 @@
 		B97ABD3F27670D6E00C7EB1D /* PointOfInterestIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97ABD3E27670D6E00C7EB1D /* PointOfInterestIcon.swift */; };
 		B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97BAE6124B61DB100AE7D13 /* Vehicle.swift */; };
 		B98007202678D6AF00FC703E /* LocationInformationWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B980071F2678D6AF00FC703E /* LocationInformationWidgetViewController.swift */; };
+		B983BF402A2ADE80001A8E57 /* MapConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B983BF3F2A2ADE80001A8E57 /* MapConfigurator.swift */; };
 		B9854F80278DA88000E07C0C /* SpeedSensitiveVolumeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9854F7F278DA88000E07C0C /* SpeedSensitiveVolumeController.swift */; };
 		B9854FA4278F426C00E07C0C /* SystemAudioVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9854FA3278F426C00E07C0C /* SystemAudioVolume.swift */; };
 		B988A66C254D0E570012A4CB /* PairingRequirementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A66B254D0E570012A4CB /* PairingRequirementViewController.swift */; };
@@ -129,7 +130,7 @@
 		B9989E3E23E8752100FAFD06 /* Share.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9989E3D23E8752100FAFD06 /* Share.wav */; };
 		B99AD73727BA9D6000EE467A /* NSLayoutConstraintExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99AD73627BA9D6000EE467A /* NSLayoutConstraintExtension.swift */; };
 		B99C698126F5F1E30064162D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B99C698326F5F1E30064162D /* Localizable.strings */; };
-		B99C69AC26F5F6880064162D /* MapTypeSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99C69AB26F5F6880064162D /* MapTypeSegmentedControl.swift */; };
+		B99C69AC26F5F6880064162D /* MapConfiguratorSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99C69AB26F5F6880064162D /* MapConfiguratorSegmentedControl.swift */; };
 		B9A16A14279EEE7C0042E16A /* ParkingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A16A13279EEE7C0042E16A /* ParkingProtocol.swift */; };
 		B9A16A16279EF9BB0042E16A /* CLLocationCoordinate2DExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A16A15279EF9BB0042E16A /* CLLocationCoordinate2DExtension.swift */; };
 		B9A16A1D279F3F1B0042E16A /* String+Similarity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A16A1C279F3F1B0042E16A /* String+Similarity.swift */; };
@@ -504,6 +505,7 @@
 		B97ABD3E27670D6E00C7EB1D /* PointOfInterestIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterestIcon.swift; sourceTree = "<group>"; };
 		B97BAE6124B61DB100AE7D13 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		B980071F2678D6AF00FC703E /* LocationInformationWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInformationWidgetViewController.swift; sourceTree = "<group>"; };
+		B983BF3F2A2ADE80001A8E57 /* MapConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConfigurator.swift; sourceTree = "<group>"; };
 		B984C019263DA08D00AF79AE /* TimeDurationPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDurationPicker.swift; sourceTree = "<group>"; };
 		B9854F7F278DA88000E07C0C /* SpeedSensitiveVolumeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedSensitiveVolumeController.swift; sourceTree = "<group>"; };
 		B9854FA3278F426C00E07C0C /* SystemAudioVolume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemAudioVolume.swift; sourceTree = "<group>"; };
@@ -530,7 +532,7 @@
 		B99C696426F59CCD0064162D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		B99C696526F59CCD0064162D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		B99C698226F5F1E30064162D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
-		B99C69AB26F5F6880064162D /* MapTypeSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTypeSegmentedControl.swift; sourceTree = "<group>"; };
+		B99C69AB26F5F6880064162D /* MapConfiguratorSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConfiguratorSegmentedControl.swift; sourceTree = "<group>"; };
 		B9A16A13279EEE7C0042E16A /* ParkingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkingProtocol.swift; sourceTree = "<group>"; };
 		B9A16A15279EF9BB0042E16A /* CLLocationCoordinate2DExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocationCoordinate2DExtension.swift; sourceTree = "<group>"; };
 		B9A16A1C279F3F1B0042E16A /* String+Similarity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Similarity.swift"; sourceTree = "<group>"; };
@@ -1073,7 +1075,8 @@
 				B97ABD3E27670D6E00C7EB1D /* PointOfInterestIcon.swift */,
 				B90CB29B29050A19003903D4 /* AppleMaps.swift */,
 				B94BD2E82680486700B768A2 /* BorderedLabel.swift */,
-				B99C69AB26F5F6880064162D /* MapTypeSegmentedControl.swift */,
+				B983BF3F2A2ADE80001A8E57 /* MapConfigurator.swift */,
+				B99C69AB26F5F6880064162D /* MapConfiguratorSegmentedControl.swift */,
 				B9854F7F278DA88000E07C0C /* SpeedSensitiveVolumeController.swift */,
 				B9854FA3278F426C00E07C0C /* SystemAudioVolume.swift */,
 				B9CD1D8F22A52A9100170082 /* UserNotificationCenter.swift */,
@@ -1884,7 +1887,7 @@
 				B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift in Sources */,
 				B92C6EC324AC2F0A001E9675 /* ArtworkView.swift in Sources */,
 				B95E14C627BBE0D50037FC94 /* AccelerationHistory.swift in Sources */,
-				B99C69AC26F5F6880064162D /* MapTypeSegmentedControl.swift in Sources */,
+				B99C69AC26F5F6880064162D /* MapConfiguratorSegmentedControl.swift in Sources */,
 				B94E69D123F7A313004CCC7C /* WebsiteIcon.swift in Sources */,
 				B95E14C027BBDC1B0037FC94 /* GForceMeterView.swift in Sources */,
 				B915BEF5267F8754007068D7 /* StringExtension.swift in Sources */,
@@ -1926,6 +1929,7 @@
 				B9BA5B5926A897CF004D5927 /* PointOfInterestAnnotationView.swift in Sources */,
 				B9BF2F0523F6946100967316 /* GradientPathRenderer.swift in Sources */,
 				B9B4A89A2569310400FE0C9F /* DashboardViewController.swift in Sources */,
+				B983BF402A2ADE80001A8E57 /* MapConfigurator.swift in Sources */,
 				B9C87A1726671CCE00ABCBB4 /* ParkingSearchURLItem.swift in Sources */,
 				B99AD73727BA9D6000EE467A /* NSLayoutConstraintExtension.swift in Sources */,
 				B9C0BF472698689B00C54BA9 /* OfficialParkingInformationWebViewController.swift in Sources */,
@@ -2366,7 +2370,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 8.6.3;
+				MARKETING_VERSION = 8.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash.ParkingSearchActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2391,7 +2395,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 8.6.3;
+				MARKETING_VERSION = 8.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash.ParkingSearchActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2583,7 +2587,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 8.6.3;
+				MARKETING_VERSION = 8.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2609,7 +2613,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 8.6.3;
+				MARKETING_VERSION = 8.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

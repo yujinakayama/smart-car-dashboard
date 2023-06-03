@@ -41,10 +41,10 @@ class MapsViewController: UIViewController {
         return mapView
     }()
 
-    lazy var mapTypeSegmentedControl: MapTypeSegmentedControl = {
-        let segmentedControl = MapTypeSegmentedControl(mapTypes: [.standard, .hybridFlyover])
-        segmentedControl.selectedMapType = mapView.mapType
-        segmentedControl.addTarget(self, action: #selector(mapTypeSegmentedControlDidChange), for: .valueChanged)
+    lazy var configuratorSegmentedControl: MapConfiguratorSegmentedControl = {
+        let segmentedControl = MapConfiguratorSegmentedControl(configurators: [.standard, .satellite])
+        segmentedControl.selectedConfigurator = .standard
+        segmentedControl.addTarget(self, action: #selector(applySelectedConfigurator), for: .valueChanged)
         return segmentedControl
     }()
 
@@ -239,7 +239,7 @@ class MapsViewController: UIViewController {
 
     private func configureSubviews() {
         view.addSubview(mapView)
-        view.addSubview(mapTypeSegmentedControl)
+        view.addSubview(configuratorSegmentedControl)
         view.addSubview(statusBarUnderNavigationBar)
 
         view.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
@@ -252,10 +252,10 @@ class MapsViewController: UIViewController {
         ])
 
         NSLayoutConstraint.activate([
-            mapTypeSegmentedControl.leftAnchor.constraint(greaterThanOrEqualTo: view.layoutMarginsGuide.leftAnchor),
-            view.layoutMarginsGuide.rightAnchor.constraint(equalTo: mapTypeSegmentedControl.rightAnchor),
-            mapTypeSegmentedControl.topAnchor.constraint(equalTo: statusBarUnderNavigationBar.bottomAnchor, constant: 20),
-            mapTypeSegmentedControl.widthAnchor.constraint(greaterThanOrEqualToConstant: 200),
+            configuratorSegmentedControl.leftAnchor.constraint(greaterThanOrEqualTo: view.layoutMarginsGuide.leftAnchor),
+            view.layoutMarginsGuide.rightAnchor.constraint(equalTo: configuratorSegmentedControl.rightAnchor),
+            configuratorSegmentedControl.topAnchor.constraint(equalTo: statusBarUnderNavigationBar.bottomAnchor, constant: 20),
+            configuratorSegmentedControl.widthAnchor.constraint(greaterThanOrEqualToConstant: 200),
         ])
 
         NSLayoutConstraint.activate([
@@ -264,6 +264,8 @@ class MapsViewController: UIViewController {
             statusBarUnderNavigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
         ])
 
+        applySelectedConfigurator()
+        
         changePlacementOfParkingSearchOptionsSheetViewIfNeeded()
         view.addSubview(parkingSearchOptionsSheetView)
 
@@ -358,8 +360,8 @@ class MapsViewController: UIViewController {
         startSearchingParkings(destination: coordinate)
     }
 
-    @objc func mapTypeSegmentedControlDidChange() {
-        mapView.mapType = mapTypeSegmentedControl.selectedMapType ?? .standard
+    @objc func applySelectedConfigurator() {
+        configuratorSegmentedControl.selectedConfigurator?.configure(mapView)
         updatePointOfInterestFilter()
     }
 
@@ -378,10 +380,10 @@ class MapsViewController: UIViewController {
 
     // TODO: Make customizable on UI
     var pointOfInterestFilterForStandardMode: MKPointOfInterestFilter? {
-        switch mapView.mapType {
-        case .standard:
+        switch mapView.preferredConfiguration {
+        case is MKStandardMapConfiguration:
             return nil
-        case .hybrid:
+        case is MKHybridMapConfiguration:
             return MKPointOfInterestFilter(including: [
                 .airport,
                 .amusementPark,

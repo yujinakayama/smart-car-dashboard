@@ -11,7 +11,7 @@ import MapKit
 
 class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var mapTypeSegmentedControl: MapTypeSegmentedControl!
+    @IBOutlet weak var configuratorSegmentedControl: MapConfiguratorSegmentedControl!
 
     let locationManager = {
         let locationManager = CLLocationManager()
@@ -43,8 +43,9 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
         mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: annotationViewIdentifier)
 
-        mapTypeSegmentedControl.mapTypes = [.standard, .hybrid]
-        mapTypeSegmentedControl.selectedMapType = mapView.mapType
+        configuratorSegmentedControl.configurators = [.standard, .satellite]
+        configuratorSegmentedControl.selectedConfigurator = .standard
+        applySelectedConfigurator()
 
         let infoButton = UIButton(type: .infoLight)
         infoButton.addTarget(self, action: #selector(infoButtonDidTouchUpInside), for: .touchUpInside)
@@ -239,8 +240,8 @@ class ETCPaymentDetailViewController: UIViewController, MKMapViewDelegate {
         return renderer
     }
 
-    @IBAction func mapTypeSegmentedControlDidChange() {
-        mapView.mapType = mapTypeSegmentedControl.selectedMapType ?? .standard
+    @IBAction func applySelectedConfigurator() {
+        configuratorSegmentedControl.selectedConfigurator?.configure(mapView)
     }
 
     @IBAction func infoButtonDidTouchUpInside(button: UIButton) {

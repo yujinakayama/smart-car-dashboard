@@ -207,15 +207,15 @@ extension AppState {
 
     class MapsMapType: Property {
         override func serialize() -> Any? {
-            return app.mapsViewController?.mapView.mapType.rawValue
+            return app.mapsViewController?.configuratorSegmentedControl.selectedConfiguratorIdentifier
         }
 
         override func restore(_ value: Any) {
-            guard let value = value as? UInt, let mapType = MKMapType(rawValue: value) else { return }
+            guard let identifier = value as? String else { return }
             guard let mapsViewController = app.mapsViewController else { return }
 
-            mapsViewController.mapTypeSegmentedControl.selectedMapType = mapType
-            mapsViewController.mapTypeSegmentedControlDidChange()
+            mapsViewController.configuratorSegmentedControl.selectedConfiguratorIdentifier = identifier
+            mapsViewController.applySelectedConfigurator()
         }
     }
 

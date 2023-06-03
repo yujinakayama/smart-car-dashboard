@@ -1,5 +1,5 @@
 //
-//  MapTypeSegmentedControl.swift
+//  MapConfiguratorSegmentedControl.swift
 //  Dash
 //
 //  Created by Yuji Nakayama on 2021/09/18.
@@ -9,11 +9,11 @@
 import UIKit
 import MapKit
 
-@IBDesignable class MapTypeSegmentedControl: UISegmentedControl {
-    init(mapTypes: [MKMapType]) {
+@IBDesignable class MapConfiguratorSegmentedControl: UISegmentedControl {
+    init(configurators: [MapConfigurator]) {
         super.init(frame: .zero)
         commonInit()
-        self.mapTypes = mapTypes
+        self.configurators = configurators
         updateSegments()
     }
 
@@ -38,23 +38,23 @@ import MapKit
         backgroundColor = UIColor(named: "Map Type Segmented Control Background Color")
     }
 
-    var mapTypes: [MKMapType] = [] {
+    var configurators: [MapConfigurator] = [] {
         didSet {
             updateSegments()
         }
     }
 
-    var selectedMapType: MKMapType? {
+    var selectedConfigurator: MapConfigurator? {
         get {
             if selectedSegmentIndex == Self.noSegment {
                 return nil
             } else {
-                return mapTypes[selectedSegmentIndex]
+                return configurators[selectedSegmentIndex]
             }
         }
 
         set {
-            if let mapType = newValue, let index = mapTypes.firstIndex(of: mapType) {
+            if let newConfigurator = newValue, let index = configurators.firstIndex(where: { $0.identifier == newConfigurator.identifier }) {
                 selectedSegmentIndex = index
             } else {
                 selectedSegmentIndex = Self.noSegment
@@ -62,24 +62,25 @@ import MapKit
         }
     }
 
+    var selectedConfiguratorIdentifier: String? {
+        get {
+            return selectedConfigurator?.identifier
+        }
+
+        set {
+            if let newIdentifier = newValue, let index = configurators.firstIndex(where: { $0.identifier == newIdentifier }) {
+                selectedSegmentIndex = index
+            } else {
+                selectedSegmentIndex = Self.noSegment
+            }
+        }
+    }
+    
     private func updateSegments() {
         removeAllSegments()
 
-        for (index, mapType) in mapTypes.enumerated() {
-            insertSegment(withTitle: mapType.name, at: index, animated: false)
-        }
-    }
-}
-
-fileprivate extension MKMapType {
-    var name: String? {
-        switch self {
-        case .standard, .mutedStandard:
-            return String(localized: "Map")
-        case .satellite, .hybrid, .satelliteFlyover, .hybridFlyover:
-            return String(localized: "Satellite")
-        default:
-            return nil
+        for (index, configurator) in configurators.enumerated() {
+            insertSegment(withTitle: configurator.name, at: index, animated: false)
         }
     }
 }
