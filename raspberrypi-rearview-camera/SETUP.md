@@ -290,7 +290,7 @@ Deploy `raspivid-adjuster-server`:
 
 ```
 $ sudo -u raspivid-adjuster-server -i
-$ curl http://url/to/binary -o /opt/bin/raspivid-adjuster-server
+$ curl https://github.com/yujinakayama/smart-car-dashboard/releases/download/raspivid-adjuster-server-20230620-0127/raspivid-adjuster-server -o /opt/bin/raspivid-adjuster-server
 ```
 
 Create systemd unit file:
