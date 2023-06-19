@@ -248,6 +248,9 @@ User=raspivid-server
 
 [Install]
 WantedBy=multi-user.target
+```
+
+```
 $ sudo nano /etc/systemd/system/raspivid-server-restarter.service
 [Unit]
 After=network.target
@@ -283,35 +286,11 @@ Create a user to run `raspivid-adjuster-server`:
 $ sudo useradd --user-group --create-home raspivid-adjuster-server
 ```
 
-Install ruby:
-
-https://github.com/rbenv/ruby-build/wiki#suggested-build-environment
-
-```
-$ sudo apt install git
-$ sudo apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev
-$ sudo -u raspivid-adjuster-server -i
-$ git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-$ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.profile
-$ echo 'eval "$(rbenv init -)"' >> ~/.profile
-$ exit
-$ sudo -u raspivid-adjuster-server -i
-$ mkdir -p "$(rbenv root)"/plugins
-$ git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
-$ rbenv install 2.7.2
-$ rbenv global 2.7.2
-```
-
 Deploy `raspivid-adjuster-server`:
 
-https://github.com/rbenv/rbenv/wiki/Deploying-with-rbenv#app-bundles-and-binstubs
-
 ```
-$ sudo systemctl start systemd-timesyncd.service # Sync clock with ntp so that rubygems certificate validation won't fail
 $ sudo -u raspivid-adjuster-server -i
-$ git clone https://github.com/yujinakayama/ipad-car-integration
-$ cd ipad-car-integration/raspberrypi-rearview-camera/raspivid-adjuster-server
-$ bundle install --deployment --binstubs
+$ curl http://url/to/binary -o /opt/bin/raspivid-adjuster-server
 ```
 
 Create systemd unit file:
@@ -324,9 +303,7 @@ After=network.target
 
 [Service]
 Type=simple
-WorkingDirectory=/home/raspivid-adjuster-server/ipad-car-integration/raspberrypi-rearview-camera/raspivid-adjuster-server
-Environment=PATH=/home/raspivid-adjuster-server/.rbenv/shims:/home/raspivid-adjuster-server/.rbenv/bin:/usr/sbin:/usr/bin:/sbin:/bin
-ExecStart=/home/raspivid-adjuster-server/ipad-car-integration/raspberrypi-rearview-camera/raspivid-adjuster-server/bin/rackup --host 0.0.0.0 --port 5002
+ExecStart=/opt/bin/raspivid-adjuster-server
 Restart=always
 User=raspivid-adjuster-server
 
