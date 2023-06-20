@@ -11,7 +11,6 @@ target 'Dash' do
   pod 'Firebase/Firestore'
   pod 'FirebaseFirestoreSwift', '>= 8.7.0-beta'
   pod 'Firebase/Messaging'
-  pod 'GoogleSignIn'
   pod 'MarqueeLabel', git: 'https://github.com/yujinakayama/MarqueeLabel', branch: 'fix-triggerScrollStart'
   pod 'PINRemoteImage', '~> 3.0'
 end
