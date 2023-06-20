@@ -807,9 +807,6 @@ PODS:
     - nanopb/encode (= 2.30909.0)
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
-  - ObjcExceptionBridging (1.0.1):
-    - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
-  - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
   - PINCache (3.0.3):
     - PINCache/Arc-exception-safe (= 3.0.3)
     - PINCache/Core (= 3.0.3)
@@ -829,10 +826,6 @@ PODS:
   - Solar (2.2.0)
   - SwiftSoup (2.5.3)
   - TransitionButton (0.5.3)
-  - XCGLogger (7.0.1):
-    - XCGLogger/Core (= 7.0.1)
-  - XCGLogger/Core (7.0.1):
-    - ObjcExceptionBridging
 
 DEPENDENCIES:
   - BetterSegmentedControl
@@ -851,7 +844,6 @@ DEPENDENCIES:
   - Solar (from `https://github.com/Pehon1/Solar`, branch `master`)
   - SwiftSoup
   - TransitionButton
-  - XCGLogger
 
 SPEC REPOS:
   trunk:
@@ -884,14 +876,12 @@ SPEC REPOS:
     - leveldb-library
     - Libuv-gRPC
     - nanopb
-    - ObjcExceptionBridging
     - PINCache
     - PINOperation
     - PINRemoteImage
     - PromisesObjC
     - SwiftSoup
     - TransitionButton
-    - XCGLogger
 
 EXTERNAL SOURCES:
   MarqueeLabel:
@@ -940,7 +930,6 @@ SPEC CHECKSUMS:
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
   MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
-  ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
   PINOperation: daa34d4aa1d8449089be7d405b9d974abc4724c6
   PINRemoteImage: f1295b29f8c5e640e25335a1b2bd9d805171bd01
@@ -948,8 +937,7 @@ SPEC CHECKSUMS:
   Solar: 0f87952213b2737436565865a5a01a3e1c109f16
   SwiftSoup: 33e8d374021a6c332788f78fa29a93227d8a7699
   TransitionButton: 36283346e17c64775a1b3bc3a7a72940a367de1f
-  XCGLogger: 1943831ef907df55108b0b18657953f868de973b
 
-PODFILE CHECKSUM: 44004933f0759b7784279625b47e49fedf4aae47
+PODFILE CHECKSUM: 978353cdcf26bac2a3e317d98de2b07df086fe55
 
 COCOAPODS: 1.12.1

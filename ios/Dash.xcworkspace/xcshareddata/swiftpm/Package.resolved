@@ -143,6 +143,15 @@
         "revision" : "87b5b37108ba9f37f0885b586d8f6355d8240dd8",
         "version" : "2.6.1"
       }
+    },
+    {
+      "identity" : "xcglogger",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/DaveWoodCom/XCGLogger",
+      "state" : {
+        "revision" : "a9c4667b247928a29bdd41be2ec2c8d304215a54",
+        "version" : "7.0.1"
+      }
     }
   ],
   "version" : 2
