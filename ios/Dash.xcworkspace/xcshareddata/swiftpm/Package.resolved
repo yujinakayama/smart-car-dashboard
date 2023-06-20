@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "dictionarycoding",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/elegantchaos/DictionaryCoding",
+      "state" : {
+        "revision" : "ae19e456bd550fed8f341e5bae4318333c53a5b4",
+        "version" : "1.0.9"
+      }
+    },
+    {
       "identity" : "directionaluserlocationannotationview",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/yujinakayama/DirectionalUserLocationAnnotationView.git",

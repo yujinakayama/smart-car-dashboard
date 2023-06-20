@@ -32,6 +32,7 @@
 		B9085FE02A61A8D20014CCC1 /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = B9085FDF2A61A8D20014CCC1 /* JGProgressHUD */; };
 		B9085FE32A61A92D0014CCC1 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = B9085FE22A61A92D0014CCC1 /* KeychainAccess */; };
 		B9085FE62A61A9A40014CCC1 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = B9085FE52A61A9A40014CCC1 /* SwiftSoup */; };
+		B9085FE92A61AA0A0014CCC1 /* DictionaryCoding in Frameworks */ = {isa = PBXBuildFile; productRef = B9085FE82A61AA0A0014CCC1 /* DictionaryCoding */; };
 		B90A5500274A4B8E0078585A /* LocationTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90A54FF274A4B8E0078585A /* LocationTracker.swift */; };
 		B90C297225E3FB80004466C9 /* SIMDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90C297125E3FB80004466C9 /* SIMDExtension.swift */; };
 		B90CB2982904F95C003903D4 /* MKMapFeatureAnnotationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90CB2972904F95B003903D4 /* MKMapFeatureAnnotationExtension.swift */; };
@@ -741,6 +742,7 @@
 				B9DD4CD126517F920010B120 /* ParkingSearchKit.framework in Frameworks */,
 				B979457127A81AFE007040E7 /* SwiftCBOR in Frameworks */,
 				B9FACF4C25D4299900F05CAE /* RearviewKit.framework in Frameworks */,
+				B9085FE92A61AA0A0014CCC1 /* DictionaryCoding in Frameworks */,
 				B9085FD22A61A6B50014CCC1 /* XCGLogger in Frameworks */,
 				B9B7452029968B2C00C85825 /* MapboxCoreNavigation in Frameworks */,
 				01861A4B14032E6339D8E511 /* Pods_Dash.framework in Frameworks */,
@@ -1446,6 +1448,7 @@
 				B9085FCF2A61A6B50014CCC1 /* ObjcExceptionBridging */,
 				B9085FD12A61A6B50014CCC1 /* XCGLogger */,
 				B9085FE52A61A9A40014CCC1 /* SwiftSoup */,
+				B9085FE82A61AA0A0014CCC1 /* DictionaryCoding */,
 			);
 			productName = ETC;
 			productReference = B9DC5B21229D59BE00B645D5 /* Dash.app */;
@@ -1602,6 +1605,7 @@
 				B9085FDE2A61A8D20014CCC1 /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
 				B9085FE12A61A92D0014CCC1 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				B9085FE42A61A9A40014CCC1 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				B9085FE72A61AA0A0014CCC1 /* XCRemoteSwiftPackageReference "DictionaryCoding" */,
 			);
 			productRefGroup = B9DC5B22229D59BE00B645D5 /* Products */;
 			projectDirPath = "";
@@ -3140,6 +3144,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		B9085FE72A61AA0A0014CCC1 /* XCRemoteSwiftPackageReference "DictionaryCoding" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elegantchaos/DictionaryCoding";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yujinakayama/DirectionalUserLocationAnnotationView.git";
@@ -3224,6 +3236,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B9085FE42A61A9A40014CCC1 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
 			productName = SwiftSoup;
+		};
+		B9085FE82A61AA0A0014CCC1 /* DictionaryCoding */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9085FE72A61AA0A0014CCC1 /* XCRemoteSwiftPackageReference "DictionaryCoding" */;
+			productName = DictionaryCoding;
 		};
 		B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -608,7 +608,6 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.24):
     - BoringSSL-GRPC/Interface (= 0.0.24)
   - BoringSSL-GRPC/Interface (0.0.24)
-  - DictionaryCoding (1.0.6)
   - Firebase/Analytics (10.6.0):
     - Firebase/Core
   - Firebase/Auth (10.6.0):
@@ -824,7 +823,6 @@ PODS:
   - TransitionButton (0.5.3)
 
 DEPENDENCIES:
-  - DictionaryCoding
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Firestore
@@ -842,7 +840,6 @@ SPEC REPOS:
     - abseil
     - AppAuth
     - BoringSSL-GRPC
-    - DictionaryCoding
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -891,7 +888,6 @@ SPEC CHECKSUMS:
   abseil: ebe5b5529fb05d93a8bdb7951607be08b7fa71bc
   AppAuth: 8fca6b5563a5baef2c04bee27538025e4ceb2add
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
-  DictionaryCoding: 0ebf6aa87afe8be803c544b85b8d894907c0e019
   Firebase: f13680471b021937f2230ea8503c7809d8c29806
   FirebaseAnalytics: 9f382605c5ee412b039212f054bf7a403d9850c1
   FirebaseAuth: 743e5cd568af59d6d99a91ea9300843672515cf7
@@ -922,6 +918,6 @@ SPEC CHECKSUMS:
   Solar: 0f87952213b2737436565865a5a01a3e1c109f16
   TransitionButton: 36283346e17c64775a1b3bc3a7a72940a367de1f
 
-PODFILE CHECKSUM: bef00d5babfbe4123678657b0d08ed4f9769e6c5
+PODFILE CHECKSUM: 61b90c6aa05d9756448449ff6fdaacd3a8b54090
 
 COCOAPODS: 1.12.1
