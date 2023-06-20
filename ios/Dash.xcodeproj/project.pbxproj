@@ -66,6 +66,7 @@
 		B942555022BAA5D1008B053B /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942554F22BAA5D1008B053B /* LocalNotification.swift */; };
 		B944C69024A9E4C8000D1E99 /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B944C68F24A9E4C8000D1E99 /* MusicViewController.swift */; };
 		B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B944C69124A9E647000D1E99 /* PlaybackControlView.swift */; };
+		B9458C612A41C69D00F9ABE5 /* OpenDash.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9458C602A41C69D00F9ABE5 /* OpenDash.swift */; };
 		B948F95B281177B000511CA7 /* UUIDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43923D345D70078A057 /* UUIDExtension.swift */; };
 		B948F95C2811782400511CA7 /* ETCTollbooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9515F1527BA8C07001C1D8D /* ETCTollbooth.swift */; };
 		B94BD2E92680486700B768A2 /* BorderedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94BD2E82680486700B768A2 /* BorderedLabel.swift */; };
@@ -463,6 +464,7 @@
 		B942554F22BAA5D1008B053B /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		B944C68F24A9E4C8000D1E99 /* MusicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
 		B944C69124A9E647000D1E99 /* PlaybackControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackControlView.swift; sourceTree = "<group>"; };
+		B9458C602A41C69D00F9ABE5 /* OpenDash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDash.swift; sourceTree = "<group>"; };
 		B94BD2E82680486700B768A2 /* BorderedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedLabel.swift; sourceTree = "<group>"; };
 		B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteIcon.swift; sourceTree = "<group>"; };
 		B94EC75227914C620008C447 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
@@ -774,6 +776,14 @@
 			path = Music;
 			sourceTree = "<group>";
 		};
+		B9458C622A41C6A700F9ABE5 /* Intents */ = {
+			isa = PBXGroup;
+			children = (
+				B9458C602A41C69D00F9ABE5 /* OpenDash.swift */,
+			);
+			path = Intents;
+			sourceTree = "<group>";
+		};
 		B94C0B71268C986600BAA450 /* LocationInformationWidget */ = {
 			isa = PBXGroup;
 			children = (
@@ -1058,6 +1068,7 @@
 			children = (
 				B99C698326F5F1E30064162D /* Localizable.strings */,
 				B9DC5B24229D59BE00B645D5 /* AppDelegate.swift */,
+				B9458C622A41C6A700F9ABE5 /* Intents */,
 				B907C78D272555690085ED7E /* SceneDelegate.swift */,
 				B907C78F272589490085ED7E /* AppState.swift */,
 				B90E21F824CBB1BF008330AD /* TabBarController.swift */,
@@ -1980,6 +1991,7 @@
 				B9C1F41F27B88A6400C6D4DD /* ScrollViewPagination.swift in Sources */,
 				B9C1F40D27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift in Sources */,
 				B9515F1627BA8C07001C1D8D /* ETCTollbooth.swift in Sources */,
+				B9458C612A41C69D00F9ABE5 /* OpenDash.swift in Sources */,
 				B954CA3225693EDA00BAD0F0 /* RearviewWidgetViewController.swift in Sources */,
 				B9C1F41727B8240F00C6D4DD /* FirestoreQuery.swift in Sources */,
 				B9DC5B4A229EDA0000B645D5 /* SerialPort.swift in Sources */,

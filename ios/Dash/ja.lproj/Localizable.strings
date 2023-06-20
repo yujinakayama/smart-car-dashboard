@@ -46,3 +46,8 @@
 
 "Map" = "マップ";
 "Satellite" = "航空写真";
+
+// OpenDash Intent
+
+"Open Dash" = "Dashを開く";
+"Opens Dash app." = "Dashを開きます。";
