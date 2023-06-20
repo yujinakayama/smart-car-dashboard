@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "bettersegmentedcontrol",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/gmarm/BetterSegmentedControl",
+      "state" : {
+        "revision" : "a2b2116761f71320cee7e69b4249863f0f372c71",
+        "version" : "2.0.1"
+      }
+    },
+    {
       "identity" : "directionaluserlocationannotationview",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/yujinakayama/DirectionalUserLocationAnnotationView.git",

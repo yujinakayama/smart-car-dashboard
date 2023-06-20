@@ -29,6 +29,7 @@
 		B9085FD62A61A6D60014CCC1 /* ObjcExceptionBridging in Frameworks */ = {isa = PBXBuildFile; productRef = B9085FD52A61A6D60014CCC1 /* ObjcExceptionBridging */; };
 		B9085FD82A61A6DE0014CCC1 /* XCGLogger in Frameworks */ = {isa = PBXBuildFile; productRef = B9085FD72A61A6DE0014CCC1 /* XCGLogger */; };
 		B9085FDA2A61A6E30014CCC1 /* ObjcExceptionBridging in Frameworks */ = {isa = PBXBuildFile; productRef = B9085FD92A61A6E30014CCC1 /* ObjcExceptionBridging */; };
+		B9085FDD2A61A8020014CCC1 /* BetterSegmentedControl in Frameworks */ = {isa = PBXBuildFile; productRef = B9085FDC2A61A8020014CCC1 /* BetterSegmentedControl */; };
 		B90A5500274A4B8E0078585A /* LocationTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90A54FF274A4B8E0078585A /* LocationTracker.swift */; };
 		B90C297225E3FB80004466C9 /* SIMDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90C297125E3FB80004466C9 /* SIMDExtension.swift */; };
 		B90CB2982904F95C003903D4 /* MKMapFeatureAnnotationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90CB2972904F95B003903D4 /* MKMapFeatureAnnotationExtension.swift */; };
@@ -779,6 +780,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				66DA20D749E1EF848B3B203E /* Pods_RearviewKit.framework in Frameworks */,
+				B9085FDD2A61A8020014CCC1 /* BetterSegmentedControl in Frameworks */,
 				B9085FD82A61A6DE0014CCC1 /* XCGLogger in Frameworks */,
 				B9085FDA2A61A6E30014CCC1 /* ObjcExceptionBridging in Frameworks */,
 			);
@@ -1526,6 +1528,7 @@
 			packageProductDependencies = (
 				B9085FD72A61A6DE0014CCC1 /* XCGLogger */,
 				B9085FD92A61A6E30014CCC1 /* ObjcExceptionBridging */,
+				B9085FDC2A61A8020014CCC1 /* BetterSegmentedControl */,
 			);
 			productName = RearviewKit;
 			productReference = B9F4377B25D41C19004B9140 /* RearviewKit.framework */;
@@ -1586,11 +1589,12 @@
 			);
 			mainGroup = B9DC5B18229D59BE00B645D5;
 			packageReferences = (
-				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */,
+				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */,
 				B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */,
 				B979456F27A81AFE007040E7 /* XCRemoteSwiftPackageReference "SwiftCBOR" */,
-				B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */,
+				B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */,
 				B9085FCE2A61A6B50014CCC1 /* XCRemoteSwiftPackageReference "XCGLogger" */,
+				B9085FDB2A61A8020014CCC1 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */,
 			);
 			productRefGroup = B9DC5B22229D59BE00B645D5 /* Products */;
 			projectDirPath = "";
@@ -3121,7 +3125,15 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */ = {
+		B9085FDB2A61A8020014CCC1 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gmarm/BetterSegmentedControl";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yujinakayama/DirectionalUserLocationAnnotationView.git";
 			requirement = {
@@ -3137,7 +3149,7 @@
 				kind = branch;
 			};
 		};
-		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */ = {
+		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mapbox/mapbox-navigation-ios.git";
 			requirement = {
@@ -3186,9 +3198,14 @@
 			package = B9085FCE2A61A6B50014CCC1 /* XCRemoteSwiftPackageReference "XCGLogger" */;
 			productName = ObjcExceptionBridging;
 		};
+		B9085FDC2A61A8020014CCC1 /* BetterSegmentedControl */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9085FDB2A61A8020014CCC1 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */;
+			productName = BetterSegmentedControl;
+		};
 		B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */;
+			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */;
 			productName = DirectionalUserLocationAnnotationView;
 		};
 		B979457027A81AFE007040E7 /* SwiftCBOR */ = {
@@ -3198,7 +3215,7 @@
 		};
 		B9B7451F29968B2C00C85825 /* MapboxCoreNavigation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */;
+			package = B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */;
 			productName = MapboxCoreNavigation;
 		};
 		B9C1DD192692EE350046E108 /* TLDExtract */ = {
