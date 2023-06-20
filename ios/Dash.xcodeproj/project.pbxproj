@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		01861A4B14032E6339D8E511 /* Pods_Dash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 125AA3B115ABAB0DD3288056 /* Pods_Dash.framework */; };
 		0B41F2C816E331BA2FB139A3 /* Pods_DashRemote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A188A66685EA4375D4818F /* Pods_DashRemote.framework */; };
-		412025EE69F3FE2D953808D6 /* Pods_DashRemote_ShareExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B941AEADBC8F07DBE594C95A /* Pods_DashRemote_ShareExtension.framework */; };
 		66DA20D749E1EF848B3B203E /* Pods_RearviewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0198292C4BC2FEDD3C5A08E3 /* Pods_RearviewKit.framework */; };
 		75D3A42AAA73CA0E953322EA /* Pods_Rearview.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C66DD7AC35DF7FDDB0FB1B /* Pods_Rearview.framework */; };
 		B5EB7C0045FE04EA280FAFF2 /* Pods_CacheKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B341964DBDBB6AAD2646F68 /* Pods_CacheKit.framework */; };
@@ -30,6 +29,7 @@
 		B9085FD82A61A6DE0014CCC1 /* XCGLogger in Frameworks */ = {isa = PBXBuildFile; productRef = B9085FD72A61A6DE0014CCC1 /* XCGLogger */; };
 		B9085FDA2A61A6E30014CCC1 /* ObjcExceptionBridging in Frameworks */ = {isa = PBXBuildFile; productRef = B9085FD92A61A6E30014CCC1 /* ObjcExceptionBridging */; };
 		B9085FDD2A61A8020014CCC1 /* BetterSegmentedControl in Frameworks */ = {isa = PBXBuildFile; productRef = B9085FDC2A61A8020014CCC1 /* BetterSegmentedControl */; };
+		B9085FE02A61A8D20014CCC1 /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = B9085FDF2A61A8D20014CCC1 /* JGProgressHUD */; };
 		B90A5500274A4B8E0078585A /* LocationTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90A54FF274A4B8E0078585A /* LocationTracker.swift */; };
 		B90C297225E3FB80004466C9 /* SIMDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90C297125E3FB80004466C9 /* SIMDExtension.swift */; };
 		B90CB2982904F95C003903D4 /* MKMapFeatureAnnotationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90CB2972904F95B003903D4 /* MKMapFeatureAnnotationExtension.swift */; };
@@ -433,7 +433,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		018C0FC4E70FD814CF520AD5 /* Pods-DashRemote-ShareExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote-ShareExtension.debug.xcconfig"; path = "Target Support Files/Pods-DashRemote-ShareExtension/Pods-DashRemote-ShareExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		0198292C4BC2FEDD3C5A08E3 /* Pods_RearviewKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RearviewKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		125AA3B115ABAB0DD3288056 /* Pods_Dash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CF65395131B1292F6415A43 /* Pods-DashRemote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote.release.xcconfig"; path = "Target Support Files/Pods-DashRemote/Pods-DashRemote.release.xcconfig"; sourceTree = "<group>"; };
@@ -445,7 +444,6 @@
 		71476600354D5232EEB87AFC /* Pods-CacheKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CacheKit.debug.xcconfig"; path = "Target Support Files/Pods-CacheKit/Pods-CacheKit.debug.xcconfig"; sourceTree = "<group>"; };
 		79A188A66685EA4375D4818F /* Pods_DashRemote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DashRemote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		869C973AA26AD90E148028FB /* Pods-Dash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dash.release.xcconfig"; path = "Target Support Files/Pods-Dash/Pods-Dash.release.xcconfig"; sourceTree = "<group>"; };
-		A383EF13705DD2A97098F1F8 /* Pods-DashRemote-ShareExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote-ShareExtension.release.xcconfig"; path = "Target Support Files/Pods-DashRemote-ShareExtension/Pods-DashRemote-ShareExtension.release.xcconfig"; sourceTree = "<group>"; };
 		B9008EAE25FBB6D7005DAD13 /* NoMainETCCard.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = NoMainETCCard.wav; sourceTree = "<group>"; };
 		B9025F62254D2180001E25DF /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
 		B90265AA23EB4CE000B2EF6B /* InboxItemTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxItemTableViewDataSource.swift; sourceTree = "<group>"; };
@@ -496,7 +494,6 @@
 		B940A45F250E5B57006BDFBB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewDefaults.swift; sourceTree = "<group>"; };
 		B940A465250F0EBB006BDFBB /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
-		B941AEADBC8F07DBE594C95A /* Pods_DashRemote_ShareExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DashRemote_ShareExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B94215F026423A58003F94A0 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		B942553C22B8C3E2008B053B /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B942554422B8ED10008B053B /* ETCMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCMessageTests.swift; sourceTree = "<group>"; };
@@ -702,7 +699,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				412025EE69F3FE2D953808D6 /* Pods_DashRemote_ShareExtension.framework in Frameworks */,
+				B9085FE02A61A8D20014CCC1 /* JGProgressHUD in Frameworks */,
 				B9A4820123EFCEC200AA7590 /* MapKit.framework in Frameworks */,
 				B98B784623ED4F1200A5102F /* DashCloudKit.framework in Frameworks */,
 			);
@@ -1012,7 +1009,6 @@
 				B9C2455E23EDA2EA00E00523 /* MapKit.framework */,
 				125AA3B115ABAB0DD3288056 /* Pods_Dash.framework */,
 				79A188A66685EA4375D4818F /* Pods_DashRemote.framework */,
-				B941AEADBC8F07DBE594C95A /* Pods_DashRemote_ShareExtension.framework */,
 				0198292C4BC2FEDD3C5A08E3 /* Pods_RearviewKit.framework */,
 				54C66DD7AC35DF7FDDB0FB1B /* Pods_Rearview.framework */,
 				B963C5342749351A0095F8D3 /* Intents.framework */,
@@ -1263,8 +1259,6 @@
 				869C973AA26AD90E148028FB /* Pods-Dash.release.xcconfig */,
 				BBF96480A5CBA83FEB75EF07 /* Pods-DashRemote.debug.xcconfig */,
 				1CF65395131B1292F6415A43 /* Pods-DashRemote.release.xcconfig */,
-				018C0FC4E70FD814CF520AD5 /* Pods-DashRemote-ShareExtension.debug.xcconfig */,
-				A383EF13705DD2A97098F1F8 /* Pods-DashRemote-ShareExtension.release.xcconfig */,
 				55B63F95FAEA20086745553D /* Pods-RearviewKit.debug.xcconfig */,
 				E8E732016FBB1AB0B6B32FD4 /* Pods-RearviewKit.release.xcconfig */,
 				425C056D1C977242B289F14E /* Pods-Rearview.debug.xcconfig */,
@@ -1340,7 +1334,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B964BCE323E067EB00288E0D /* Build configuration list for PBXNativeTarget "ShareExtension" */;
 			buildPhases = (
-				A0F351071CC537560CF6BC1A /* [CP] Check Pods Manifest.lock */,
 				B964BCD423E067EB00288E0D /* Sources */,
 				B964BCD523E067EB00288E0D /* Frameworks */,
 				B964BCD623E067EB00288E0D /* Resources */,
@@ -1352,6 +1345,9 @@
 				B98B784923ED4F1200A5102F /* PBXTargetDependency */,
 			);
 			name = ShareExtension;
+			packageProductDependencies = (
+				B9085FDF2A61A8D20014CCC1 /* JGProgressHUD */,
+			);
 			productName = ShareExtension;
 			productReference = B964BCD823E067EB00288E0D /* ShareExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -1589,12 +1585,13 @@
 			);
 			mainGroup = B9DC5B18229D59BE00B645D5;
 			packageReferences = (
-				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */,
+				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */,
 				B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */,
 				B979456F27A81AFE007040E7 /* XCRemoteSwiftPackageReference "SwiftCBOR" */,
-				B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */,
+				B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */,
 				B9085FCE2A61A6B50014CCC1 /* XCRemoteSwiftPackageReference "XCGLogger" */,
 				B9085FDB2A61A8020014CCC1 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */,
+				B9085FDE2A61A8D20014CCC1 /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
 			);
 			productRefGroup = B9DC5B22229D59BE00B645D5 /* Products */;
 			projectDirPath = "";
@@ -1754,28 +1751,6 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-RearviewKit-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A0F351071CC537560CF6BC1A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-DashRemote-ShareExtension-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2393,7 +2368,6 @@
 		};
 		B964BCE423E067EB00288E0D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 018C0FC4E70FD814CF520AD5 /* Pods-DashRemote-ShareExtension.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -2418,7 +2392,6 @@
 		};
 		B964BCE523E067EB00288E0D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A383EF13705DD2A97098F1F8 /* Pods-DashRemote-ShareExtension.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -3133,7 +3106,15 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */ = {
+		B9085FDE2A61A8D20014CCC1 /* XCRemoteSwiftPackageReference "JGProgressHUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/JonasGessner/JGProgressHUD";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yujinakayama/DirectionalUserLocationAnnotationView.git";
 			requirement = {
@@ -3149,7 +3130,7 @@
 				kind = branch;
 			};
 		};
-		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */ = {
+		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mapbox/mapbox-navigation-ios.git";
 			requirement = {
@@ -3203,9 +3184,14 @@
 			package = B9085FDB2A61A8020014CCC1 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */;
 			productName = BetterSegmentedControl;
 		};
+		B9085FDF2A61A8D20014CCC1 /* JGProgressHUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9085FDE2A61A8D20014CCC1 /* XCRemoteSwiftPackageReference "JGProgressHUD" */;
+			productName = JGProgressHUD;
+		};
 		B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */;
+			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */;
 			productName = DirectionalUserLocationAnnotationView;
 		};
 		B979457027A81AFE007040E7 /* SwiftCBOR */ = {
@@ -3215,7 +3201,7 @@
 		};
 		B9B7451F29968B2C00C85825 /* MapboxCoreNavigation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */;
+			package = B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */;
 			productName = MapboxCoreNavigation;
 		};
 		B9C1DD192692EE350046E108 /* TLDExtract */ = {

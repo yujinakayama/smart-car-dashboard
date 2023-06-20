@@ -21,10 +21,6 @@ end
 target 'DashRemote' do
   pod 'KeychainAccess'
   pod 'TransitionButton', inhibit_warnings: true
-
-  target 'ShareExtension' do
-    pod 'JGProgressHUD'
-  end
 end
 
 target 'CacheKit' do

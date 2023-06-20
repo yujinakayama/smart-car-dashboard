@@ -791,7 +791,6 @@ PODS:
     - AppAuth/Core (~> 1.6)
     - GTMSessionFetcher/Core (< 4.0, >= 1.5)
   - GTMSessionFetcher/Core (3.1.0)
-  - JGProgressHUD (2.2)
   - KeychainAccess (4.2.2)
   - leveldb-library (1.22.1)
   - Libuv-gRPC (0.0.10):
@@ -834,7 +833,6 @@ DEPENDENCIES:
   - Firebase/Messaging
   - FirebaseFirestoreSwift (>= 8.7.0-beta)
   - GoogleSignIn
-  - JGProgressHUD
   - KeychainAccess
   - MarqueeLabel (from `https://github.com/yujinakayama/MarqueeLabel`, branch `fix-triggerScrollStart`)
   - PINCache (>= 3.0.1)
@@ -868,7 +866,6 @@ SPEC REPOS:
     - gRPC-Core
     - GTMAppAuth
     - GTMSessionFetcher
-    - JGProgressHUD
     - KeychainAccess
     - leveldb-library
     - Libuv-gRPC
@@ -920,7 +917,6 @@ SPEC CHECKSUMS:
   gRPC-Core: 943e491cb0d45598b0b0eb9e910c88080369290b
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
   GTMSessionFetcher: c9e714f7eec91a55641e2bab9f45fd83a219b882
-  JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
@@ -934,6 +930,6 @@ SPEC CHECKSUMS:
   SwiftSoup: 33e8d374021a6c332788f78fa29a93227d8a7699
   TransitionButton: 36283346e17c64775a1b3bc3a7a72940a367de1f
 
-PODFILE CHECKSUM: bc901736893b2a1cee3bcf2cc3a34e293fc812a6
+PODFILE CHECKSUM: 33065bcb85bc1e347a3a844719bb7e7b527771eb
 
 COCOAPODS: 1.12.1
