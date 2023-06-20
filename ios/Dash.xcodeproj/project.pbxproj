@@ -31,6 +31,7 @@
 		B9085FDD2A61A8020014CCC1 /* BetterSegmentedControl in Frameworks */ = {isa = PBXBuildFile; productRef = B9085FDC2A61A8020014CCC1 /* BetterSegmentedControl */; };
 		B9085FE02A61A8D20014CCC1 /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = B9085FDF2A61A8D20014CCC1 /* JGProgressHUD */; };
 		B9085FE32A61A92D0014CCC1 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = B9085FE22A61A92D0014CCC1 /* KeychainAccess */; };
+		B9085FE62A61A9A40014CCC1 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = B9085FE52A61A9A40014CCC1 /* SwiftSoup */; };
 		B90A5500274A4B8E0078585A /* LocationTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90A54FF274A4B8E0078585A /* LocationTracker.swift */; };
 		B90C297225E3FB80004466C9 /* SIMDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90C297125E3FB80004466C9 /* SIMDExtension.swift */; };
 		B90CB2982904F95C003903D4 /* MKMapFeatureAnnotationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90CB2972904F95B003903D4 /* MKMapFeatureAnnotationExtension.swift */; };
@@ -744,6 +745,7 @@
 				B9B7452029968B2C00C85825 /* MapboxCoreNavigation in Frameworks */,
 				01861A4B14032E6339D8E511 /* Pods_Dash.framework in Frameworks */,
 				B9DD29ED2A51D733003345AB /* CacheKit.framework in Frameworks */,
+				B9085FE62A61A9A40014CCC1 /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1443,6 +1445,7 @@
 				B9B7451F29968B2C00C85825 /* MapboxCoreNavigation */,
 				B9085FCF2A61A6B50014CCC1 /* ObjcExceptionBridging */,
 				B9085FD12A61A6B50014CCC1 /* XCGLogger */,
+				B9085FE52A61A9A40014CCC1 /* SwiftSoup */,
 			);
 			productName = ETC;
 			productReference = B9DC5B21229D59BE00B645D5 /* Dash.app */;
@@ -1598,6 +1601,7 @@
 				B9085FDB2A61A8020014CCC1 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */,
 				B9085FDE2A61A8D20014CCC1 /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
 				B9085FE12A61A92D0014CCC1 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				B9085FE42A61A9A40014CCC1 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 			);
 			productRefGroup = B9DC5B22229D59BE00B645D5 /* Products */;
 			projectDirPath = "";
@@ -3128,6 +3132,14 @@
 				kind = branch;
 			};
 		};
+		B9085FE42A61A9A40014CCC1 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yujinakayama/DirectionalUserLocationAnnotationView.git";
@@ -3207,6 +3219,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B9085FE12A61A92D0014CCC1 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
+		};
+		B9085FE52A61A9A40014CCC1 /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9085FE42A61A9A40014CCC1 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
 		};
 		B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */ = {
 			isa = XCSwiftPackageProductDependency;

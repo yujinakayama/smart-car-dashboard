@@ -15,11 +15,10 @@ target 'Dash' do
   pod 'GoogleSignIn'
   pod 'MarqueeLabel', git: 'https://github.com/yujinakayama/MarqueeLabel', branch: 'fix-triggerScrollStart'
   pod 'PINRemoteImage', '~> 3.0'
-  pod 'SwiftSoup'
 end
 
 target 'DashRemote' do
-  pod 'TransitionButton', inhibit_warnings: true
+  pod 'TransitionButton', inhibit_warnings: true # SPM support is broken
 end
 
 target 'CacheKit' do
