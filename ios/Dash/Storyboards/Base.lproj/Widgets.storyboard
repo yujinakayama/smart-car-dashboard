@@ -107,10 +107,10 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="uGk-wZ-doc">
-                                        <rect key="frame" x="20" y="58" width="335" height="71.5"/>
+                                        <rect key="frame" x="16" y="58" width="343" height="71.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="651-Uo-jxa">
-                                                <rect key="frame" x="68" y="0.0" width="199.5" height="33.5"/>
+                                                <rect key="frame" x="72" y="0.0" width="199.5" height="33.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東名高速道路" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ZDE-jk-6TH">
                                                         <rect key="frame" x="0.0" y="0.0" width="170.5" height="33.5"/>
@@ -149,7 +149,7 @@
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LkV-7G-41V" userLabel="Vertical Spacing View">
-                                                <rect key="frame" x="167.5" y="33.5" width="0.0" height="14"/>
+                                                <rect key="frame" x="171.5" y="33.5" width="0.0" height="14"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="14" id="Atz-n4-I3N"/>
@@ -157,7 +157,7 @@
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東京都 世田谷区 岡本1丁目" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="n00-iQ-d2a">
-                                                <rect key="frame" x="46" y="47.5" width="243" height="24"/>
+                                                <rect key="frame" x="50" y="47.5" width="243" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                                 <nil key="highlightedColor"/>
@@ -168,10 +168,10 @@
                                 <constraints>
                                     <constraint firstItem="3Au-0L-lMa" firstAttribute="top" secondItem="Caf-mp-ul5" secondAttribute="top" priority="750" constant="8" id="1Ms-AV-cfz"/>
                                     <constraint firstItem="uGk-wZ-doc" firstAttribute="centerY" secondItem="Caf-mp-ul5" secondAttribute="centerY" id="5rP-PT-GY6"/>
-                                    <constraint firstAttribute="trailing" secondItem="uGk-wZ-doc" secondAttribute="trailing" constant="20" id="KvY-9j-uzy"/>
+                                    <constraint firstAttribute="trailing" secondItem="uGk-wZ-doc" secondAttribute="trailing" constant="16" id="KvY-9j-uzy"/>
                                     <constraint firstItem="3Au-0L-lMa" firstAttribute="centerX" secondItem="Caf-mp-ul5" secondAttribute="centerX" id="ZeT-I2-Lpm"/>
                                     <constraint firstItem="uGk-wZ-doc" firstAttribute="centerX" secondItem="Caf-mp-ul5" secondAttribute="centerX" id="d7K-4Z-2Ko"/>
-                                    <constraint firstItem="uGk-wZ-doc" firstAttribute="leading" secondItem="Caf-mp-ul5" secondAttribute="leading" constant="20" id="pCF-7C-lym"/>
+                                    <constraint firstItem="uGk-wZ-doc" firstAttribute="leading" secondItem="Caf-mp-ul5" secondAttribute="leading" constant="16" id="pCF-7C-lym"/>
                                 </constraints>
                             </view>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="p96-te-XPG">
