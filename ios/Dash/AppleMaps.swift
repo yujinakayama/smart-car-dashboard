@@ -9,6 +9,7 @@
 import Foundation
 import CoreLocation
 import MapKit
+import CacheKit
 
 class AppleMaps {
     static let shared = AppleMaps()

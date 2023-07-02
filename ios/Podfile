@@ -14,14 +14,12 @@ target 'Dash' do
   pod 'Firebase/Messaging'
   pod 'GoogleSignIn'
   pod 'MarqueeLabel', git: 'https://github.com/yujinakayama/MarqueeLabel', branch: 'fix-triggerScrollStart'
-  pod 'PINCache', '>= 3.0.1'
   pod 'PINRemoteImage', '~> 3.0'
   pod 'SwiftSoup'
   pod 'XCGLogger'
 end
 
 target 'ParkingSearchKit' do
-  pod 'PINCache', '>= 3.0.1'
   pod 'XCGLogger'
 end
 
@@ -32,6 +30,10 @@ target 'DashRemote' do
   target 'ShareExtension' do
     pod 'JGProgressHUD'
   end
+end
+
+target 'CacheKit' do
+  pod 'PINCache', '>= 3.0.1'
 end
 
 # https://medium.com/@akfreas/how-to-use-cocoapods-with-your-internal-ios-frameworks-192aa472f64b

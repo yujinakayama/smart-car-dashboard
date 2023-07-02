@@ -8,6 +8,7 @@
 
 import UIKit
 import MediaPlayer
+import CacheKit
 
 @IBDesignable class ArtworkView: UIView {
     var image: UIImage? {

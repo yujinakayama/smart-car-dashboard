@@ -8,7 +8,7 @@
 
 import Foundation
 import SwiftSoup
-import CommonCrypto
+import CacheKit
 
 enum WebsiteIconError: Error {
     case invalidWebsiteURL

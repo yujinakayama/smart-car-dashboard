@@ -8,6 +8,7 @@
 
 import Foundation
 import MusicKit
+import CacheKit
 
 class SongDataRequest {
     enum LanguageTag: String {
