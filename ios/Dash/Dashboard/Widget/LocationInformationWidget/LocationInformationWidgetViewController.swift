@@ -116,11 +116,7 @@ class LocationInformationWidgetViewController: UIViewController {
     func update(for road: Road) {
         var shouldAnimate = false
         if let lastRoad = lastRoad {
-            if road.roadClass == .service, road.placemark.name != lastRoad.placemark.name {
-                shouldAnimate = true
-            } else {
-                shouldAnimate = road != lastRoad
-            }
+            shouldAnimate = road != lastRoad
         } else {
             shouldAnimate = true
         }
@@ -181,12 +177,6 @@ class LocationInformationWidgetViewController: UIViewController {
     }
 
     func updateRoadNameLabels(for road: Road) {
-        if road.roadClass == .service, let placemarkName = road.placemark.name {
-            roadNameLabel.text = placemarkName
-            canonicalRoadNameLabel.text = road.canonicalRoadName
-            return
-        }
-
         if let popularName = road.popularName {
             roadNameLabel.text = popularName
             canonicalRoadNameLabel.text = road.canonicalRoadName

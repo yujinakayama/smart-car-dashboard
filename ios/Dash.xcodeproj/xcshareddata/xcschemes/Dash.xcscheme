@@ -70,7 +70,7 @@
          </BuildableReference>
       </BuildableProductRunnable>
       <LocationScenarioReference
-         identifier = "../SimulatedLocations/metropolitan-rainbowbridge-to-shibuya.gpx"
+         identifier = "../SimulatedLocations/ebinasa.gpx"
          referenceType = "0">
       </LocationScenarioReference>
    </LaunchAction>

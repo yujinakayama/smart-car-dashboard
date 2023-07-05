@@ -13,83 +13,55 @@ import MapboxDirections
 
 class Road: Equatable {
     static let nameComponentPattern = try! NSRegularExpression(pattern: "[^\\(\\)（）]+")
-
+    
     let edge: RoadGraph.Edge.Metadata
     let placemark: CLPlacemark
-
+    
     static func == (lhs: Road, rhs: Road) -> Bool {
         if let lhsPopularName = lhs.popularName {
             return lhsPopularName == rhs.popularName
         }
-
+        
         if let lhsIdentifier = lhs.identifier {
             return lhsIdentifier == rhs.identifier
         }
-
+        
         return lhs.roadClass == rhs.roadClass && lhs.routeNumber == rhs.routeNumber
     }
-
+    
     init(edge: RoadGraph.Edge.Metadata, placemark: CLPlacemark) {
         self.edge = edge
         self.placemark = placemark
     }
 
-    private var names: [String] {
-        return edge.names.filter { $0.shield == nil }.map { $0.text }
-    }
-
-    private var shield: RoadShield? {
-        for name in edge.names {
-            if let shield = name.shield {
-                return shield
-            }
-        }
-        return nil
-    }
-
-    var roadClass: MapboxStreetsRoadClass {
-        return edge.mapboxStreetsRoadClass
-    }
-
-    var routeNumber: Int? {
-        guard let reference = shield?.displayRef else {
-            return nil
-        }
-        return Int(reference)
-    }
-
-    var identifier: String? {
-        guard let reference = shield?.displayRef else {
-            return nil
-        }
-
-        if Int(reference) == nil {
-            return reference
-        } else {
-            return nil
-        }
-    }
-
     var popularName: String? {
-        return popularNames.first
+        if roadClass == .service {
+            return placemark.name
+        } else {
+            return popularNames.first
+        }
     }
-
-    var popularNames: [String] {
-        let names = names.map { (name) -> [String] in
+    
+    private lazy var popularNames: [String] = {
+        let names = rawNames.map { (name) -> [String] in
             let name = name.covertFullwidthAlphanumericsToHalfwidth()
             return Self.nameComponentPattern.matches(in: name).map { name[$0.range] }
         }.joined()
-
+        
         return Array(names)
+    }()
+    
+    private var rawNames: [String] {
+        return edge.names.filter { $0.shield == nil }.map { $0.text }
     }
-
+    
     var canonicalRoadName: String? {
         if let identifier = identifier {
             return identifier
         }
-
+        
         guard let routeNumber = routeNumber else { return nil }
-
+        
         switch roadClass {
         case .trunk:
             return "国道\(routeNumber)号"
@@ -103,7 +75,7 @@ class Road: Equatable {
             return nil
         }
     }
-
+    
     var unnumberedRouteName: String? {
         switch roadClass {
         case .motorway:
@@ -125,21 +97,52 @@ class Road: Equatable {
             return "一般道路"
         }
     }
-
-    lazy var address = Address(placemark: placemark)
-
-    var prefecture: Prefecture? {
+    
+    var roadClass: MapboxStreetsRoadClass {
+        return edge.mapboxStreetsRoadClass
+    }
+    
+    private var routeNumber: Int? {
+        guard let reference = shield?.displayRef else {
+            return nil
+        }
+        return Int(reference)
+    }
+    
+    private var identifier: String? {
+        guard let reference = shield?.displayRef else {
+            return nil
+        }
+        
+        if Int(reference) == nil {
+            return reference
+        } else {
+            return nil
+        }
+    }
+    
+    private var shield: RoadShield? {
+        for name in edge.names {
+            if let shield = name.shield {
+                return shield
+            }
+        }
+        return nil
+    }
+    
+    private var prefecture: Prefecture? {
         guard let regionCode = edge.regionCode else {
             return nil
         }
         return prefecturesByRegionCode[regionCode]
     }
+    
+    lazy var address = Address(placemark: placemark)
 }
 
 struct Address {
     var placemark: CLPlacemark
 
-    
     var prefecture: String? {
         return placemark.administrativeArea
     }

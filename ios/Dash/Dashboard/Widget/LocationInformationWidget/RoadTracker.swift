@@ -47,8 +47,6 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
     var currentLocation: CLLocation?
     private var currentPlacemark: CLPlacemark?
 
-    private var justEnteredServiceRoad = false
-
     private var observerIdentifiers = Set<ObjectIdentifier>()
 
     override init() {
@@ -113,50 +111,50 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
     @objc func electronicHorizonDidUpdatePosition(_ notification: Notification) {
         guard isTracking,
               let edge = notification.userInfo?[RoadGraph.NotificationUserInfoKey.treeKey] as? RoadGraph.Edge,
-              let edgeMetadata = roadGraph.edgeMetadata(edgeIdentifier: edge.identifier),
-              let currentPlacemark = currentPlacemark
+              let edgeMetadata = roadGraph.edgeMetadata(edgeIdentifier: edge.identifier)
         else { return }
 
-        let road = Road(edge: edgeMetadata, placemark: currentPlacemark)
-        justEnteredServiceRoad = road.roadClass == .service && currentRoad?.roadClass != .service
-
-        // When just entered service road, perform geocoding request for the location name
-        // and wait for the next horizon update
-        if !justEnteredServiceRoad {
-            currentRoad = road
-
-            NotificationCenter.default.post(name: .RoadTrackerDidUpdateCurrentRoad, object: self, userInfo: [
-                NotificationKeys.road: road
-            ])
+        Task {
+            await updateCurrentRoad(edgeMetadata)
         }
     }
 
-    private func reverseGeocodeIfNeeded(for location: CLLocation) {
-        guard shouldRequestGeocoding(for: location) else {return }
+    func updateCurrentRoad(_ edge: RoadGraph.Edge.Metadata) async {
+        let shouldUpdateCurrentPlacemarkNow =
+            currentPlacemark == nil ||
+            // When just entered service road, perform geocoding request for the location name
+            (edge.mapboxStreetsRoadClass == .service && currentRoad?.edge.mapboxStreetsRoadClass != .service)
 
+        if shouldUpdateCurrentPlacemarkNow, let currentLocation = currentLocation {
+            logger.debug("Updating currentPlacemark due to road update; before: \(currentPlacemark?.name ?? "")")
+            await performReverseGeocoding(for: currentLocation)
+            logger.debug("Updating currentPlacemark due to road update; after: \(currentPlacemark?.name ?? "")")
+        }
+        
+        guard let currentPlacemark = currentPlacemark else { return }
+        
+        let road = Road(edge: edge, placemark: currentPlacemark)
+        currentRoad = road
+
+        NotificationCenter.default.post(name: .RoadTrackerDidUpdateCurrentRoad, object: self, userInfo: [
+            NotificationKeys.road: road
+        ])
+    }
+    
+    private func performReverseGeocoding(for location: CLLocation) async {
         let locale = Locale(identifier: "ja_JP")
 
-        geocoder.reverseGeocodeLocation(location, preferredLocale: locale) { [weak self] (placemarks, error) in
-            guard let self = self, self.isTracking else { return }
-
-            if let error = error {
-                logger.error(error)
-                return
-            }
-
-            guard let placemark = placemarks?.first else { return }
-            self.currentPlacemark = placemark
+        do {
+            let placemarks = try await geocoder.reverseGeocodeLocation(location, preferredLocale: locale)
+            currentPlacemark = placemarks.first
+        } catch {
+            logger.error(error)
         }
     }
 
-    private func shouldRequestGeocoding(for location: CLLocation) -> Bool {
+    private func shouldPerformReverseGeocoding(for location: CLLocation) -> Bool {
         guard isTracking else {
             return false
-        }
-
-        if justEnteredServiceRoad {
-            justEnteredServiceRoad = false
-            return true
         }
 
         guard let lastLocation = currentPlacemark?.location else {
@@ -195,7 +193,11 @@ extension RoadTracker: PassiveLocationManagerDelegate {
             NotificationKeys.location: location
         ])
 
-        reverseGeocodeIfNeeded(for: location)
+        if shouldPerformReverseGeocoding(for: location) {
+            Task {
+                await performReverseGeocoding(for: location)
+            }
+        }
     }
 
     func passiveLocationManager(_ manager: MapboxCoreNavigation.PassiveLocationManager, didUpdateHeading newHeading: CLHeading) {

@@ -67,6 +67,7 @@
 		B944C69024A9E4C8000D1E99 /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B944C68F24A9E4C8000D1E99 /* MusicViewController.swift */; };
 		B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B944C69124A9E647000D1E99 /* PlaybackControlView.swift */; };
 		B9458C612A41C69D00F9ABE5 /* OpenDash.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9458C602A41C69D00F9ABE5 /* OpenDash.swift */; };
+		B9483DA42A5596E00062EA26 /* ebinasa.gpx in Resources */ = {isa = PBXBuildFile; fileRef = B9483DA32A5596E00062EA26 /* ebinasa.gpx */; };
 		B948F95B281177B000511CA7 /* UUIDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43923D345D70078A057 /* UUIDExtension.swift */; };
 		B948F95C2811782400511CA7 /* ETCTollbooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9515F1527BA8C07001C1D8D /* ETCTollbooth.swift */; };
 		B94BD2E92680486700B768A2 /* BorderedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94BD2E82680486700B768A2 /* BorderedLabel.swift */; };
@@ -465,6 +466,7 @@
 		B944C68F24A9E4C8000D1E99 /* MusicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
 		B944C69124A9E647000D1E99 /* PlaybackControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackControlView.swift; sourceTree = "<group>"; };
 		B9458C602A41C69D00F9ABE5 /* OpenDash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDash.swift; sourceTree = "<group>"; };
+		B9483DA32A5596E00062EA26 /* ebinasa.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ebinasa.gpx; sourceTree = "<group>"; };
 		B94BD2E82680486700B768A2 /* BorderedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedLabel.swift; sourceTree = "<group>"; };
 		B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteIcon.swift; sourceTree = "<group>"; };
 		B94EC75227914C620008C447 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
@@ -1178,6 +1180,7 @@
 			isa = PBXGroup;
 			children = (
 				B9FF272529AFA60A00B29DFC /* bayshore-daikoku.gpx */,
+				B9483DA32A5596E00062EA26 /* ebinasa.gpx */,
 				B98E633029B3A17700E01871 /* ginza.gpx */,
 				B9C1A09B29B2551F00FA0B55 /* metropolitan-rainbowbridge-to-shibuya.gpx */,
 				B9FF272729AFA60A00B29DFC /* shintomei-kakegawa-to-enshumori.gpx */,
@@ -1564,6 +1567,7 @@
 				B9989E3E23E8752100FAFD06 /* Share.wav in Resources */,
 				B9FF272B29AFA60A00B29DFC /* shintomei-kakegawa-to-enshumori.gpx in Resources */,
 				B9008EAF25FBB6D7005DAD13 /* NoMainETCCard.wav in Resources */,
+				B9483DA42A5596E00062EA26 /* ebinasa.gpx in Resources */,
 				B98E633129B3A17700E01871 /* ginza.gpx in Resources */,
 				B98E633429B446EE00E01871 /* Widgets.storyboard in Resources */,
 			);
