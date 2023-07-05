@@ -123,7 +123,9 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
         let shouldUpdateCurrentPlacemarkNow =
             currentPlacemark == nil ||
             // When just entered service road, perform geocoding request for the location name
-            (edge.mapboxStreetsRoadClass == .service && currentRoad?.edge.mapboxStreetsRoadClass != .service)
+            (edge.mapboxStreetsRoadClass == .service && currentRoad?.edge.mapboxStreetsRoadClass != .service) ||
+            // Update address when prefecture is changed
+            (edge.regionCode != currentRoad?.edge.regionCode)
 
         if shouldUpdateCurrentPlacemarkNow, let currentLocation = currentLocation {
             logger.debug("Updating currentPlacemark due to road update; before: \(currentPlacemark?.name ?? "")")
