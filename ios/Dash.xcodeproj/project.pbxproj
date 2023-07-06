@@ -2390,7 +2390,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 8.9.1;
+				MARKETING_VERSION = 8.9.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash.ParkingSearchActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2415,7 +2415,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 8.9.1;
+				MARKETING_VERSION = 8.9.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash.ParkingSearchActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2607,7 +2607,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 8.9.1;
+				MARKETING_VERSION = 8.9.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2633,7 +2633,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 8.9.1;
+				MARKETING_VERSION = 8.9.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
