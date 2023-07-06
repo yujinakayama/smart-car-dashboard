@@ -13,14 +13,29 @@ import Turf
 class LandmarkTracker: NSObject {
     static let shared = LandmarkTracker()
  
+    private var lastNearestLandmark: MKMapItem?
+    private var lastNearestLandmarkSearchTime :Date?
+    
     private var landmarkCollection: LandmarkCollection?
-        
+
     func relativeLocationToNearestLandmark(from location: CLLocation) async -> LandmarkRelativeLocation? {
+        // Within 6 seconds from last nearest landmark search,
+        // use the cached landmark.
+        if let lastNearestLandmark = lastNearestLandmark,
+           let lastNearestLandmarkSearchTime = lastNearestLandmarkSearchTime,
+           lastNearestLandmarkSearchTime.distance(to: Date()) < 6
+        {
+            return LandmarkRelativeLocation(landmark: lastNearestLandmark, currentLocation: location)
+        }
+
         guard let landmarkCollection = await updateLandmarkCollectionIfNeeded(around: location) else {
             return nil
         }
         
-        return landmarkCollection.relativeLocationToNearestLandmark(from: location)
+        let relativeLocation = landmarkCollection.relativeLocationToNearestLandmark(from: location)
+        lastNearestLandmark = relativeLocation?.landmark
+        lastNearestLandmarkSearchTime = Date()
+        return relativeLocation
     }
 
     private func updateLandmarkCollectionIfNeeded(around center: CLLocation) async -> LandmarkCollection? {
@@ -62,6 +77,7 @@ struct LandmarkCollection {
     // Consider improving NNS algorithm
     // https://rahvee.gitlab.io/comparison-nearest-neighbor-search/
     func relativeLocationToNearestLandmark(from location: CLLocation) -> LandmarkRelativeLocation? {
+        logger.debug("Searching nearest landmark from \(landmarks.count) items")
         let relativeLocations = landmarks.map { LandmarkRelativeLocation(landmark: $0, currentLocation: location) }
         return relativeLocations.sorted { $0.distance < $1.distance }.first
     }
