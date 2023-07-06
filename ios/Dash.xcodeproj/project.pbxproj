@@ -68,6 +68,7 @@
 		B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B944C69124A9E647000D1E99 /* PlaybackControlView.swift */; };
 		B9458C612A41C69D00F9ABE5 /* OpenDash.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9458C602A41C69D00F9ABE5 /* OpenDash.swift */; };
 		B9483DA42A5596E00062EA26 /* ebinasa.gpx in Resources */ = {isa = PBXBuildFile; fileRef = B9483DA32A5596E00062EA26 /* ebinasa.gpx */; };
+		B9483DA62A559A360062EA26 /* LandmarkTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9483DA52A559A360062EA26 /* LandmarkTracker.swift */; };
 		B948F95B281177B000511CA7 /* UUIDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43923D345D70078A057 /* UUIDExtension.swift */; };
 		B948F95C2811782400511CA7 /* ETCTollbooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9515F1527BA8C07001C1D8D /* ETCTollbooth.swift */; };
 		B94BD2E92680486700B768A2 /* BorderedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94BD2E82680486700B768A2 /* BorderedLabel.swift */; };
@@ -467,6 +468,7 @@
 		B944C69124A9E647000D1E99 /* PlaybackControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackControlView.swift; sourceTree = "<group>"; };
 		B9458C602A41C69D00F9ABE5 /* OpenDash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDash.swift; sourceTree = "<group>"; };
 		B9483DA32A5596E00062EA26 /* ebinasa.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ebinasa.gpx; sourceTree = "<group>"; };
+		B9483DA52A559A360062EA26 /* LandmarkTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandmarkTracker.swift; sourceTree = "<group>"; };
 		B94BD2E82680486700B768A2 /* BorderedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedLabel.swift; sourceTree = "<group>"; };
 		B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteIcon.swift; sourceTree = "<group>"; };
 		B94EC75227914C620008C447 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
@@ -792,6 +794,7 @@
 				B980071F2678D6AF00FC703E /* LocationInformationWidgetViewController.swift */,
 				B9D02088268CD1850020BF9A /* RoadTracker.swift */,
 				B9B4F706268CB55D009C5DC5 /* Road.swift */,
+				B9483DA52A559A360062EA26 /* LandmarkTracker.swift */,
 			);
 			path = LocationInformationWidget;
 			sourceTree = "<group>";
@@ -1963,6 +1966,7 @@
 				B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */,
 				B92C6EC524AC68B7001E9675 /* SongTitleView.swift in Sources */,
 				B95F514623E5A8540063CB3D /* Location.swift in Sources */,
+				B9483DA62A559A360062EA26 /* LandmarkTracker.swift in Sources */,
 				B9DC5B39229D5D8100B645D5 /* ETCDeviceConnection.swift in Sources */,
 				B9D8E43823D345940078A057 /* ETCCard.swift in Sources */,
 				B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */,

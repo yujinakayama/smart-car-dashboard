@@ -20,6 +20,7 @@ class Defaults {
     private enum Key: String {
         case connectionWithVehicle
         case lastBackgroundEntranceTime
+        case locationInformationWidgetMode
         case mapTypeForETCRoute
         case automaticallyOpensUnopenedLocationWhenAppIsOpened
         case snapLocationToPointOfInterest
@@ -187,6 +188,17 @@ extension Defaults {
         }
     }
 
+    var locationInformationWidgetMode: LocationInformationWidgetViewController.LocationMode {
+        get {
+            let rawValue = integer(for: .locationInformationWidgetMode)
+            return .init(rawValue: rawValue) ?? .address
+        }
+
+        set {
+            set(newValue.rawValue, for: .locationInformationWidgetMode)
+        }
+    }
+    
     var referenceAccelerationForGForceMeter: CMAcceleration? {
         get {
             guard let data = data(for: .referenceAccelerationForGForceMeter) else { return nil }

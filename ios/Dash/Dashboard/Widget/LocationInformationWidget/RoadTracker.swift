@@ -44,7 +44,11 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
     var isTracking = false
 
     var currentRoad: Road?
-    var currentLocation: CLLocation?
+
+    var currentLocation: CLLocation? {
+        return passiveLocationManager.location
+    }
+
     private var currentPlacemark: CLPlacemark?
 
     private var observerIdentifiers = Set<ObjectIdentifier>()
@@ -104,7 +108,6 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
         coreLocationManager.stopUpdatingLocation()
         passiveLocationManager.stopUpdatingElectronicHorizon()
         currentRoad = nil
-        currentLocation = nil
         currentPlacemark = nil
     }
 
@@ -188,8 +191,6 @@ extension RoadTracker: PassiveLocationManagerDelegate {
 
     func passiveLocationManager(_ manager: MapboxCoreNavigation.PassiveLocationManager, didUpdateLocation location: CLLocation, rawLocation: CLLocation) {
         guard isTracking else { return }
-
-        currentLocation = location
 
         NotificationCenter.default.post(name: .RoadTrackerDidUpdateCurrentLocation, object: self, userInfo: [
             NotificationKeys.location: location
