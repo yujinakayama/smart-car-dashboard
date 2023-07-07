@@ -131,6 +131,8 @@ class LocationInformationWidgetViewController: UIViewController {
     }
 
     @objc func viewDidRecognizeTap() {
+        guard lastRoad != nil else { return }
+
         Task {
             await toggleLocationView()
         }
@@ -242,6 +244,7 @@ class LocationInformationWidgetViewController: UIViewController {
 
     func withRoadChangeAnimation(_ changes: @escaping () -> Void) {
         let initialShow = roadNameLabel.isHidden
+        let activeLocationView = self.activeLocationView
 
         if initialShow {
             activeLocationView.layer.opacity = 0
@@ -265,7 +268,7 @@ class LocationInformationWidgetViewController: UIViewController {
 
             if initialShow {
                 UIView.animate(withDuration: 1, delay: 0.4, options: .curveEaseInOut) {
-                    self.activeLocationView.layer.opacity = 1
+                    activeLocationView.layer.opacity = 1
                 }
             }
         }
