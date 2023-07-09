@@ -29,6 +29,8 @@ class Defaults {
         case preferredMaxDistanceFromDestinationToParking
         case mainETCCardUUID
         case lastPendingETCGateEntranceDate
+        case policyOfMostInterestingLandmarkDetection
+        case forwardAngleOfMostInterestingLandmarkDetection
         case referenceAccelerationForGForceMeter
         case unitOfGForceMeterScale
         case pointerScalingBaseForVerticalAccelerationForGForceMeter
@@ -196,6 +198,30 @@ extension Defaults {
 
         set {
             set(newValue.rawValue, for: .locationInformationWidgetMode)
+        }
+    }
+
+    var policyOfMostInterestingLandmarkDetection: LandmarkTracker.Policy {
+        get {
+            let rawValue = string(for: .policyOfMostInterestingLandmarkDetection)
+
+            switch rawValue {
+            case "nearest":
+                return .nearest
+            case "onlyForward":
+                let forwardAngle = double(for: .forwardAngleOfMostInterestingLandmarkDetection)
+                return .onlyForward(forwardAngle: forwardAngle)
+            default:
+                return .nearest
+            }
+        }
+
+        set {
+            set(newValue.description, for: .policyOfMostInterestingLandmarkDetection)
+
+            if case .onlyForward(let forwardAngle) = newValue {
+                set(forwardAngle, for: .forwardAngleOfMostInterestingLandmarkDetection)
+            }
         }
     }
     

@@ -50,6 +50,10 @@ class LocationInformationWidgetViewController: UIViewController {
         return LandmarkTracker.shared
     }
     
+    var policyOfMostInterestingLandmarkDetection: LandmarkTracker.Policy {
+        return Defaults.shared.policyOfMostInterestingLandmarkDetection
+    }
+
     lazy var distanceFormatter = NatualDistanceFormatter()
     
     var showsLocationAccuracyWarning = true
@@ -150,7 +154,7 @@ class LocationInformationWidgetViewController: UIViewController {
             relativeLocationLabel.text = " "
             
             if let currentLocation = roadTracker.currentLocation,
-               let relativeLocation = await landmarkTracker.relativeLocationToNearestLandmark(from: currentLocation)
+               let relativeLocation = await landmarkTracker.relativeLocationToMostInterestingLandmark(around: currentLocation, with: policyOfMostInterestingLandmarkDetection)
             {
                 updateRelativeLocationView(for: relativeLocation)
             }
@@ -181,7 +185,7 @@ class LocationInformationWidgetViewController: UIViewController {
 
         if locationMode == .landmarkRelativeLocation {
             Task {
-                if let relativeLocation = await landmarkTracker.relativeLocationToNearestLandmark(from: location) {
+                if let relativeLocation = await landmarkTracker.relativeLocationToMostInterestingLandmark(around: location, with: policyOfMostInterestingLandmarkDetection) {
                     updateRelativeLocationView(for: relativeLocation)
                 }
             }
