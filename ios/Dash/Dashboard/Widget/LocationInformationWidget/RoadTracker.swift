@@ -25,9 +25,9 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
     }()
 
     private let electronicHorizonOptions = ElectronicHorizonOptions(
-        length: 1000,
+        length: 1,
         expansionLevel: 0,
-        branchLength: 100,
+        branchLength: 0,
         minTimeDeltaBetweenUpdates: nil
     )
 
