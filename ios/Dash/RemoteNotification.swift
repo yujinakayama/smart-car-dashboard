@@ -6,7 +6,7 @@
 //  Copyright © 2020 Yuji Nakayama. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import DictionaryCoding
 
 class RemoteNotification {

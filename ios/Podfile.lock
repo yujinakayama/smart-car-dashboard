@@ -596,20 +596,12 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
-  - AppAuth (1.6.0):
-    - AppAuth/Core (= 1.6.0)
-    - AppAuth/ExternalUserAgent (= 1.6.0)
-  - AppAuth/Core (1.6.0)
-  - AppAuth/ExternalUserAgent (1.6.0):
-    - AppAuth/Core
-  - BetterSegmentedControl (2.0.1)
   - BoringSSL-GRPC (0.0.24):
     - BoringSSL-GRPC/Implementation (= 0.0.24)
     - BoringSSL-GRPC/Interface (= 0.0.24)
   - BoringSSL-GRPC/Implementation (0.0.24):
     - BoringSSL-GRPC/Interface (= 0.0.24)
   - BoringSSL-GRPC/Interface (0.0.24)
-  - DictionaryCoding (1.0.6)
   - Firebase/Analytics (10.6.0):
     - Firebase/Core
   - Firebase/Auth (10.6.0):
@@ -714,10 +706,6 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleSignIn (7.0.0):
-    - AppAuth (~> 1.5)
-    - GTMAppAuth (< 3.0, >= 1.3)
-    - GTMSessionFetcher/Core (< 4.0, >= 1.1)
   - GoogleUtilities/AppDelegateSwizzler (7.11.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -788,12 +776,7 @@ PODS:
     - gRPC-Core/Interface (= 1.44.0)
     - Libuv-gRPC (= 0.0.10)
   - gRPC-Core/Interface (1.44.0)
-  - GTMAppAuth (2.0.0):
-    - AppAuth/Core (~> 1.6)
-    - GTMSessionFetcher/Core (< 4.0, >= 1.5)
   - GTMSessionFetcher/Core (3.1.0)
-  - JGProgressHUD (2.2)
-  - KeychainAccess (4.2.2)
   - leveldb-library (1.22.1)
   - Libuv-gRPC (0.0.10):
     - Libuv-gRPC/Implementation (= 0.0.10)
@@ -807,9 +790,6 @@ PODS:
     - nanopb/encode (= 2.30909.0)
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
-  - ObjcExceptionBridging (1.0.1):
-    - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
-  - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
   - PINCache (3.0.3):
     - PINCache/Arc-exception-safe (= 3.0.3)
     - PINCache/Core (= 3.0.3)
@@ -827,39 +807,24 @@ PODS:
     - PINRemoteImage/Core
   - PromisesObjC (2.2.0)
   - Solar (2.2.0)
-  - SwiftSoup (2.5.3)
   - TransitionButton (0.5.3)
-  - XCGLogger (7.0.1):
-    - XCGLogger/Core (= 7.0.1)
-  - XCGLogger/Core (7.0.1):
-    - ObjcExceptionBridging
 
 DEPENDENCIES:
-  - BetterSegmentedControl
-  - DictionaryCoding
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Firestore
   - Firebase/Messaging
   - FirebaseFirestoreSwift (>= 8.7.0-beta)
-  - GoogleSignIn
-  - JGProgressHUD
-  - KeychainAccess
   - MarqueeLabel (from `https://github.com/yujinakayama/MarqueeLabel`, branch `fix-triggerScrollStart`)
   - PINCache (>= 3.0.1)
   - PINRemoteImage (~> 3.0)
   - Solar (from `https://github.com/Pehon1/Solar`, branch `master`)
-  - SwiftSoup
   - TransitionButton
-  - XCGLogger
 
 SPEC REPOS:
   trunk:
     - abseil
-    - AppAuth
-    - BetterSegmentedControl
     - BoringSSL-GRPC
-    - DictionaryCoding
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -873,25 +838,18 @@ SPEC REPOS:
     - FirebaseSharedSwift
     - GoogleAppMeasurement
     - GoogleDataTransport
-    - GoogleSignIn
     - GoogleUtilities
     - "gRPC-C++"
     - gRPC-Core
-    - GTMAppAuth
     - GTMSessionFetcher
-    - JGProgressHUD
-    - KeychainAccess
     - leveldb-library
     - Libuv-gRPC
     - nanopb
-    - ObjcExceptionBridging
     - PINCache
     - PINOperation
     - PINRemoteImage
     - PromisesObjC
-    - SwiftSoup
     - TransitionButton
-    - XCGLogger
 
 EXTERNAL SOURCES:
   MarqueeLabel:
@@ -911,10 +869,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   abseil: ebe5b5529fb05d93a8bdb7951607be08b7fa71bc
-  AppAuth: 8fca6b5563a5baef2c04bee27538025e4ceb2add
-  BetterSegmentedControl: 09607b27861d49cbce48b7673b74f9150a3d371a
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
-  DictionaryCoding: 0ebf6aa87afe8be803c544b85b8d894907c0e019
   Firebase: f13680471b021937f2230ea8503c7809d8c29806
   FirebaseAnalytics: 9f382605c5ee412b039212f054bf7a403d9850c1
   FirebaseAuth: 743e5cd568af59d6d99a91ea9300843672515cf7
@@ -928,28 +883,21 @@ SPEC CHECKSUMS:
   FirebaseSharedSwift: 103ae5bacb5468cd7727ae141f338fa94d7ee1f2
   GoogleAppMeasurement: 686b48c3c895f3c55c70719041913d5d150b74f6
   GoogleDataTransport: ea169759df570f4e37bdee1623ec32a7e64e67c4
-  GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
   GoogleUtilities: c2bdc4cf2ce786c4d2e6b3bcfd599a25ca78f06f
   "gRPC-C++": 9675f953ace2b3de7c506039d77be1f2e77a8db2
   gRPC-Core: 943e491cb0d45598b0b0eb9e910c88080369290b
-  GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
   GTMSessionFetcher: c9e714f7eec91a55641e2bab9f45fd83a219b882
-  JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
-  KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
   MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
-  ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
   PINOperation: daa34d4aa1d8449089be7d405b9d974abc4724c6
   PINRemoteImage: f1295b29f8c5e640e25335a1b2bd9d805171bd01
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   Solar: 0f87952213b2737436565865a5a01a3e1c109f16
-  SwiftSoup: 33e8d374021a6c332788f78fa29a93227d8a7699
   TransitionButton: 36283346e17c64775a1b3bc3a7a72940a367de1f
-  XCGLogger: 1943831ef907df55108b0b18657953f868de973b
 
-PODFILE CHECKSUM: 44004933f0759b7784279625b47e49fedf4aae47
+PODFILE CHECKSUM: beb8c1bc454cb9b8745e3a02f0b7663ac16d1cab
 
 COCOAPODS: 1.12.1
