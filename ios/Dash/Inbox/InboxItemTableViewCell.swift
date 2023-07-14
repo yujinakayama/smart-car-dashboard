@@ -96,6 +96,25 @@ class InboxItemTableViewCell: UITableViewCell {
         updateActionButtonVisibility()
     }
 
+    // https://rolandleth.com/tech/blog/increasing-the-tap-area-of-a-uibutton
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if !actionStackView.isHidden {
+            for actionButton in actionStackView.arrangedSubviews {
+                if actionButton.isHidden { continue }
+
+                // If the tapped point is within horizontal range of an action button (even if vertially outside),
+                // the tap should be targetted to the button (i.e. enlarging vertial tappable area).
+                let actionButtonFrame = convert(actionButton.bounds, from: actionButton)
+                let actionButtonHorizontalRange = actionButtonFrame.minX...actionButtonFrame.maxX
+                if actionButtonHorizontalRange.contains(point.x) {
+                    return actionButton
+                }
+            }
+        }
+
+        return super.hitTest(point, with: event)
+    }
+    
     var item: InboxItemProtocol? {
         didSet {
             iconShape = .standardRoundedRectangle
