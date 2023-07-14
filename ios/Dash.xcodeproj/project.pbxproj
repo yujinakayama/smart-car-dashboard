@@ -135,6 +135,7 @@
 		B98B784F23ED583600A5102F /* AppIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98B784E23ED583600A5102F /* AppIconImageView.swift */; };
 		B98E633129B3A17700E01871 /* ginza.gpx in Resources */ = {isa = PBXBuildFile; fileRef = B98E633029B3A17700E01871 /* ginza.gpx */; };
 		B98E633429B446EE00E01871 /* Widgets.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B98E633629B446EE00E01871 /* Widgets.storyboard */; };
+		B99025A12A61B70B00BDCDE9 /* MarqueeLabel in Frameworks */ = {isa = PBXBuildFile; productRef = B99025A02A61B70B00BDCDE9 /* MarqueeLabel */; };
 		B99356D922A9483F00BA08AB /* japan_etc_tollbooths.csv in Resources */ = {isa = PBXBuildFile; fileRef = B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */; };
 		B99356DB22A9484700BA08AB /* ETCPaymentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356DA22A9484700BA08AB /* ETCPaymentTests.swift */; };
 		B99356E422A94D6900BA08AB /* BLESerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E322A94D6900BA08AB /* BLESerialPort.swift */; };
@@ -746,6 +747,7 @@
 				B9085FEC2A61AA720014CCC1 /* GoogleSignIn in Frameworks */,
 				B9085FE92A61AA0A0014CCC1 /* DictionaryCoding in Frameworks */,
 				B9085FD22A61A6B50014CCC1 /* XCGLogger in Frameworks */,
+				B99025A12A61B70B00BDCDE9 /* MarqueeLabel in Frameworks */,
 				B9B7452029968B2C00C85825 /* MapboxCoreNavigation in Frameworks */,
 				01861A4B14032E6339D8E511 /* Pods_Dash.framework in Frameworks */,
 				B9DD29ED2A51D733003345AB /* CacheKit.framework in Frameworks */,
@@ -1452,6 +1454,7 @@
 				B9085FE52A61A9A40014CCC1 /* SwiftSoup */,
 				B9085FE82A61AA0A0014CCC1 /* DictionaryCoding */,
 				B9085FEB2A61AA720014CCC1 /* GoogleSignIn */,
+				B99025A02A61B70B00BDCDE9 /* MarqueeLabel */,
 			);
 			productName = ETC;
 			productReference = B9DC5B21229D59BE00B645D5 /* Dash.app */;
@@ -1611,6 +1614,7 @@
 				B9085FE42A61A9A40014CCC1 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				B9085FE72A61AA0A0014CCC1 /* XCRemoteSwiftPackageReference "DictionaryCoding" */,
 				B9085FEA2A61AA720014CCC1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				B990259F2A61B70B00BDCDE9 /* XCRemoteSwiftPackageReference "MarqueeLabel" */,
 			);
 			productRefGroup = B9DC5B22229D59BE00B645D5 /* Products */;
 			projectDirPath = "";
@@ -3205,6 +3209,14 @@
 				kind = branch;
 			};
 		};
+		B990259F2A61B70B00BDCDE9 /* XCRemoteSwiftPackageReference "MarqueeLabel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yujinakayama/MarqueeLabel";
+			requirement = {
+				branch = "fix-triggerScrollStart";
+				kind = branch;
+			};
+		};
 		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mapbox/mapbox-navigation-ios.git";
@@ -3293,6 +3305,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B979456F27A81AFE007040E7 /* XCRemoteSwiftPackageReference "SwiftCBOR" */;
 			productName = SwiftCBOR;
+		};
+		B99025A02A61B70B00BDCDE9 /* MarqueeLabel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B990259F2A61B70B00BDCDE9 /* XCRemoteSwiftPackageReference "MarqueeLabel" */;
+			productName = MarqueeLabel;
 		};
 		B9B7451F29968B2C00C85825 /* MapboxCoreNavigation */ = {
 			isa = XCSwiftPackageProductDependency;

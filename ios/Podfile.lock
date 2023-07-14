@@ -784,7 +784,6 @@ PODS:
   - Libuv-gRPC/Implementation (0.0.10):
     - Libuv-gRPC/Interface (= 0.0.10)
   - Libuv-gRPC/Interface (0.0.10)
-  - MarqueeLabel (4.0.2)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
     - nanopb/encode (= 2.30909.0)
@@ -815,7 +814,6 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Messaging
   - FirebaseFirestoreSwift (>= 8.7.0-beta)
-  - MarqueeLabel (from `https://github.com/yujinakayama/MarqueeLabel`, branch `fix-triggerScrollStart`)
   - PINCache (>= 3.0.1)
   - PINRemoteImage (~> 3.0)
   - Solar (from `https://github.com/Pehon1/Solar`, branch `master`)
@@ -852,17 +850,11 @@ SPEC REPOS:
     - TransitionButton
 
 EXTERNAL SOURCES:
-  MarqueeLabel:
-    :branch: fix-triggerScrollStart
-    :git: https://github.com/yujinakayama/MarqueeLabel
   Solar:
     :branch: master
     :git: https://github.com/Pehon1/Solar
 
 CHECKOUT OPTIONS:
-  MarqueeLabel:
-    :commit: afc7b18f3bead1d9e6bba4fd07c6e72d3bc5d47f
-    :git: https://github.com/yujinakayama/MarqueeLabel
   Solar:
     :commit: 9d30448f802bfe1feb10108dc567f892d1f719c9
     :git: https://github.com/Pehon1/Solar
@@ -889,7 +881,6 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: c9e714f7eec91a55641e2bab9f45fd83a219b882
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
-  MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
   PINOperation: daa34d4aa1d8449089be7d405b9d974abc4724c6
@@ -898,6 +889,6 @@ SPEC CHECKSUMS:
   Solar: 0f87952213b2737436565865a5a01a3e1c109f16
   TransitionButton: 36283346e17c64775a1b3bc3a7a72940a367de1f
 
-PODFILE CHECKSUM: beb8c1bc454cb9b8745e3a02f0b7663ac16d1cab
+PODFILE CHECKSUM: 9feeee13f6cd4107193e5f3d1a8b5b22434d97e0
 
 COCOAPODS: 1.12.1
