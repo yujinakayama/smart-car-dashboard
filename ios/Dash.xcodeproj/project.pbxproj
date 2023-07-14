@@ -136,6 +136,7 @@
 		B98E633129B3A17700E01871 /* ginza.gpx in Resources */ = {isa = PBXBuildFile; fileRef = B98E633029B3A17700E01871 /* ginza.gpx */; };
 		B98E633429B446EE00E01871 /* Widgets.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B98E633629B446EE00E01871 /* Widgets.storyboard */; };
 		B99025A12A61B70B00BDCDE9 /* MarqueeLabel in Frameworks */ = {isa = PBXBuildFile; productRef = B99025A02A61B70B00BDCDE9 /* MarqueeLabel */; };
+		B99025A32A61B82B00BDCDE9 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = B99025A22A61B82B00BDCDE9 /* KeychainAccess */; };
 		B99356D922A9483F00BA08AB /* japan_etc_tollbooths.csv in Resources */ = {isa = PBXBuildFile; fileRef = B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */; };
 		B99356DB22A9484700BA08AB /* ETCPaymentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356DA22A9484700BA08AB /* ETCPaymentTests.swift */; };
 		B99356E422A94D6900BA08AB /* BLESerialPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99356E322A94D6900BA08AB /* BLESerialPort.swift */; };
@@ -705,6 +706,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B99025A32A61B82B00BDCDE9 /* KeychainAccess in Frameworks */,
 				B9085FE02A61A8D20014CCC1 /* JGProgressHUD in Frameworks */,
 				B9A4820123EFCEC200AA7590 /* MapKit.framework in Frameworks */,
 				B98B784623ED4F1200A5102F /* DashCloudKit.framework in Frameworks */,
@@ -1360,6 +1362,7 @@
 			name = ShareExtension;
 			packageProductDependencies = (
 				B9085FDF2A61A8D20014CCC1 /* JGProgressHUD */,
+				B99025A22A61B82B00BDCDE9 /* KeychainAccess */,
 			);
 			productName = ShareExtension;
 			productReference = B964BCD823E067EB00288E0D /* ShareExtension.appex */;
@@ -2348,7 +2351,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "DashRemote/Dash Remote.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8LSN3WQC77;
 				INFOPLIST_FILE = DashRemote/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -2357,7 +2360,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.5.1;
+				MARKETING_VERSION = 3.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.DashRemote;
 				PRODUCT_NAME = "Dash Remote";
 				SUPPORTS_MACCATALYST = YES;
@@ -2373,7 +2376,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "DashRemote/Dash Remote.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8LSN3WQC77;
 				INFOPLIST_FILE = DashRemote/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -2382,7 +2385,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.5.1;
+				MARKETING_VERSION = 3.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.DashRemote;
 				PRODUCT_NAME = "Dash Remote";
 				SUPPORTS_MACCATALYST = YES;
@@ -2396,7 +2399,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8LSN3WQC77;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -2405,7 +2408,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.5.0;
+				MARKETING_VERSION = 3.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.DashRemote.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2420,7 +2423,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8LSN3WQC77;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -2429,7 +2432,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.5.0;
+				MARKETING_VERSION = 3.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.DashRemote.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3310,6 +3313,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B990259F2A61B70B00BDCDE9 /* XCRemoteSwiftPackageReference "MarqueeLabel" */;
 			productName = MarqueeLabel;
+		};
+		B99025A22A61B82B00BDCDE9 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9085FE12A61A92D0014CCC1 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
 		};
 		B9B7451F29968B2C00C85825 /* MapboxCoreNavigation */ = {
 			isa = XCSwiftPackageProductDependency;
