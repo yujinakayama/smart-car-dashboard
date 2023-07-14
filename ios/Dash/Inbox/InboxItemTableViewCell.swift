@@ -38,7 +38,7 @@ class InboxItemTableViewCell: UITableViewCell {
         var configuration = UIButton.Configuration.gray()
         configuration.buttonSize = .small
         configuration.cornerStyle = .capsule
-        configuration.attributedTitle = AttributedString(String(localized: "駐車場検索"), attributes: .init([.font: font]))
+        configuration.attributedTitle = AttributedString(String(localized: "Search Parkings"), attributes: .init([.font: font]))
 
         let button = UIButton(configuration: configuration)
         button.setContentHuggingPriority(.required, for: .horizontal)
