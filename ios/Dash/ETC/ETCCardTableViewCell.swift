@@ -30,6 +30,11 @@ class ETCCardTableViewCell: UITableViewCell {
         }
     }
 
+    override func awakeFromNib() {
+        let fontMetrics = UIFontMetrics(forTextStyle: .subheadline)
+        insertionStatusLabel.font = fontMetrics.scaledFont(for: .boldSystemFont(ofSize: 12))
+    }
+    
     func updateCardView() {
         switch card.brand {
         case .unknown:
