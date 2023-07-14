@@ -230,7 +230,6 @@
 		B9DD29EE2A51D733003345AB /* CacheKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B9DD29E72A51D733003345AB /* CacheKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B9DD29F22A51D785003345AB /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F9EFD5256D3D6B00C33781 /* Cache.swift */; };
 		B9DD29F32A51D7A0003345AB /* CacheKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9DD29E72A51D733003345AB /* CacheKit.framework */; };
-		B9DD29F42A51D7A0003345AB /* CacheKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B9DD29E72A51D733003345AB /* CacheKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B9DD4CCE26517F920010B120 /* ParkingSearchKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B9DD4CCC26517F920010B120 /* ParkingSearchKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B9DD4CD126517F920010B120 /* ParkingSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9DD4CCA26517F920010B120 /* ParkingSearchKit.framework */; };
 		B9DD4CD226517F920010B120 /* ParkingSearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B9DD4CCA26517F920010B120 /* ParkingSearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -410,17 +409,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				B9B18DD423EDFFF40096D603 /* DashCloudKit.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B9DD29F72A51D7A0003345AB /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				B9DD29F42A51D7A0003345AB /* CacheKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1490,7 +1478,6 @@
 				B9DD4CC626517F920010B120 /* Sources */,
 				B9DD4CC726517F920010B120 /* Frameworks */,
 				B9DD4CC826517F920010B120 /* Resources */,
-				B9DD29F72A51D7A0003345AB /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
