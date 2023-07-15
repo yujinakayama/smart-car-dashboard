@@ -38,7 +38,10 @@ class ETCCardTableViewController: UITableViewController {
 
     func startUpdatingDataSource() {
         keyValueObservation = deviceManager.observe(\.database, options: .initial) { [weak self] (deviceManager, change) in
-            self?.updateDataSource(database: deviceManager.database)
+            guard let self = self else { return }
+            Task {
+                await self.updateDataSource(database: deviceManager.database)
+            }
         }
     }
 
