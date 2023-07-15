@@ -19,7 +19,6 @@
 		B90363C527C9BB8A003C7965 /* MapKitParkingSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90363C427C9BB8A003C7965 /* MapKitParkingSearch.swift */; };
 		B90363CF27CA097F003C7965 /* Times.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90363CE27CA097F003C7965 /* Times.swift */; };
 		B904A2A6243968990087BD4A /* MapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B904A2A5243968990087BD4A /* MapsViewController.swift */; };
-		B906AEBF2A6239E6008C7458 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B906AEBE2A6239E6008C7458 /* FirebaseAnalytics */; };
 		B906AEC12A6239E6008C7458 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B906AEC02A6239E6008C7458 /* FirebaseAuth */; };
 		B906AEC32A6239E6008C7458 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B906AEC22A6239E6008C7458 /* FirebaseFirestore */; };
 		B906AEC52A6239E6008C7458 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B906AEC42A6239E6008C7458 /* FirebaseFirestoreSwift */; };
@@ -733,7 +732,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B906AEC72A6239E6008C7458 /* FirebaseMessaging in Frameworks */,
-				B906AEBF2A6239E6008C7458 /* FirebaseAnalytics in Frameworks */,
 				B906AEC52A6239E6008C7458 /* FirebaseFirestoreSwift in Frameworks */,
 				B906AEC12A6239E6008C7458 /* FirebaseAuth in Frameworks */,
 				B9085FD02A61A6B50014CCC1 /* ObjcExceptionBridging in Frameworks */,
@@ -1453,7 +1451,6 @@
 				B9085FE82A61AA0A0014CCC1 /* DictionaryCoding */,
 				B9085FEB2A61AA720014CCC1 /* GoogleSignIn */,
 				B99025A02A61B70B00BDCDE9 /* MarqueeLabel */,
-				B906AEBE2A6239E6008C7458 /* FirebaseAnalytics */,
 				B906AEC02A6239E6008C7458 /* FirebaseAuth */,
 				B906AEC22A6239E6008C7458 /* FirebaseFirestore */,
 				B906AEC42A6239E6008C7458 /* FirebaseFirestoreSwift */,
@@ -3281,11 +3278,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B906AEBE2A6239E6008C7458 /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
 		B906AEC02A6239E6008C7458 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
