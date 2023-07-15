@@ -130,7 +130,7 @@
 		B98B784123ED4C5000A5102F /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98B784023ED4C5000A5102F /* Item.swift */; };
 		B98B784223ED4C5A00A5102F /* GoogleServieInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92451D523E3204D007556D5 /* GoogleServieInfo.swift */; };
 		B98B784323ED4C6600A5102F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9A3C09423E163F500EF1C4A /* GoogleService-Info.plist */; };
-		B98B784623ED4F1200A5102F /* DashCloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashCloudKit.framework */; platformFilter = ios; };
+		B98B784623ED4F1200A5102F /* DashCloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashCloudKit.framework */; };
 		B98B784D23ED530E00A5102F /* SignInWithAppleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98B784C23ED530E00A5102F /* SignInWithAppleViewController.swift */; };
 		B98B784F23ED583600A5102F /* AppIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98B784E23ED583600A5102F /* AppIconImageView.swift */; };
 		B98E633129B3A17700E01871 /* ginza.gpx in Resources */ = {isa = PBXBuildFile; fileRef = B98E633029B3A17700E01871 /* ginza.gpx */; };
@@ -2200,7 +2200,6 @@
 		};
 		B98B784923ED4F1200A5102F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			platformFilter = ios;
 			target = B98B783223ED4C3F00A5102F /* DashCloudKit */;
 			targetProxy = B98B784823ED4F1200A5102F /* PBXContainerItemProxy */;
 		};
@@ -2458,8 +2457,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2497,8 +2496,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
