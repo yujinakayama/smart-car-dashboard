@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		01861A4B14032E6339D8E511 /* Pods_Dash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 125AA3B115ABAB0DD3288056 /* Pods_Dash.framework */; };
 		0B41F2C816E331BA2FB139A3 /* Pods_DashRemote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A188A66685EA4375D4818F /* Pods_DashRemote.framework */; };
-		66DA20D749E1EF848B3B203E /* Pods_RearviewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0198292C4BC2FEDD3C5A08E3 /* Pods_RearviewKit.framework */; };
-		75D3A42AAA73CA0E953322EA /* Pods_Rearview.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C66DD7AC35DF7FDDB0FB1B /* Pods_Rearview.framework */; };
 		B5EB7C0045FE04EA280FAFF2 /* Pods_CacheKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B341964DBDBB6AAD2646F68 /* Pods_CacheKit.framework */; };
 		B9008EAF25FBB6D7005DAD13 /* NoMainETCCard.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9008EAE25FBB6D7005DAD13 /* NoMainETCCard.wav */; };
 		B900A13A26529C38000ED1B9 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04662642D5FA002CD861 /* UIButtonExtension.swift */; };
@@ -23,6 +21,7 @@
 		B906AEC32A6239E6008C7458 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B906AEC22A6239E6008C7458 /* FirebaseFirestore */; };
 		B906AEC52A6239E6008C7458 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B906AEC42A6239E6008C7458 /* FirebaseFirestoreSwift */; };
 		B906AEC72A6239E6008C7458 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B906AEC62A6239E6008C7458 /* FirebaseMessaging */; };
+		B906AECA2A623D37008C7458 /* Solar in Frameworks */ = {isa = PBXBuildFile; productRef = B906AEC92A623D37008C7458 /* Solar */; };
 		B907C78E272555690085ED7E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B907C78D272555690085ED7E /* SceneDelegate.swift */; };
 		B907C790272589530085ED7E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B907C78F272589490085ED7E /* AppState.swift */; };
 		B907C7922726CFB50085ED7E /* RearviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B907C7912726CFB50085ED7E /* RearviewManager.swift */; };
@@ -430,14 +429,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0198292C4BC2FEDD3C5A08E3 /* Pods_RearviewKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RearviewKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		125AA3B115ABAB0DD3288056 /* Pods_Dash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CF65395131B1292F6415A43 /* Pods-DashRemote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote.release.xcconfig"; path = "Target Support Files/Pods-DashRemote/Pods-DashRemote.release.xcconfig"; sourceTree = "<group>"; };
 		2B341964DBDBB6AAD2646F68 /* Pods_CacheKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CacheKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F7D1DE4869CFA2B790331AF /* Pods-CacheKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CacheKit.release.xcconfig"; path = "Target Support Files/Pods-CacheKit/Pods-CacheKit.release.xcconfig"; sourceTree = "<group>"; };
-		425C056D1C977242B289F14E /* Pods-Rearview.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rearview.debug.xcconfig"; path = "Target Support Files/Pods-Rearview/Pods-Rearview.debug.xcconfig"; sourceTree = "<group>"; };
-		54C66DD7AC35DF7FDDB0FB1B /* Pods_Rearview.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rearview.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		55B63F95FAEA20086745553D /* Pods-RearviewKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RearviewKit.debug.xcconfig"; path = "Target Support Files/Pods-RearviewKit/Pods-RearviewKit.debug.xcconfig"; sourceTree = "<group>"; };
 		71476600354D5232EEB87AFC /* Pods-CacheKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CacheKit.debug.xcconfig"; path = "Target Support Files/Pods-CacheKit/Pods-CacheKit.debug.xcconfig"; sourceTree = "<group>"; };
 		79A188A66685EA4375D4818F /* Pods_DashRemote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DashRemote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		869C973AA26AD90E148028FB /* Pods-Dash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dash.release.xcconfig"; path = "Target Support Files/Pods-Dash/Pods-Dash.release.xcconfig"; sourceTree = "<group>"; };
@@ -675,8 +670,6 @@
 		B9FF272729AFA60A00B29DFC /* shintomei-kakegawa-to-enshumori.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "shintomei-kakegawa-to-enshumori.gpx"; sourceTree = "<group>"; };
 		B9FF2906284E04F400CCB320 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		BBF96480A5CBA83FEB75EF07 /* Pods-DashRemote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote.debug.xcconfig"; path = "Target Support Files/Pods-DashRemote/Pods-DashRemote.debug.xcconfig"; sourceTree = "<group>"; };
-		D72D61E07B471561E0FDF3FC /* Pods-Rearview.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rearview.release.xcconfig"; path = "Target Support Files/Pods-Rearview/Pods-Rearview.release.xcconfig"; sourceTree = "<group>"; };
-		E8E732016FBB1AB0B6B32FD4 /* Pods-RearviewKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RearviewKit.release.xcconfig"; path = "Target Support Files/Pods-RearviewKit/Pods-RearviewKit.release.xcconfig"; sourceTree = "<group>"; };
 		FDB9D0E23106CE353F300B76 /* Pods-Dash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dash.debug.xcconfig"; path = "Target Support Files/Pods-Dash/Pods-Dash.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -723,7 +716,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9F4378225D41C19004B9140 /* RearviewKit.framework in Frameworks */,
-				75D3A42AAA73CA0E953322EA /* Pods_Rearview.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -782,9 +774,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66DA20D749E1EF848B3B203E /* Pods_RearviewKit.framework in Frameworks */,
 				B9085FDD2A61A8020014CCC1 /* BetterSegmentedControl in Frameworks */,
 				B9085FD82A61A6DE0014CCC1 /* XCGLogger in Frameworks */,
+				B906AECA2A623D37008C7458 /* Solar in Frameworks */,
 				B9085FDA2A61A6E30014CCC1 /* ObjcExceptionBridging in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1015,8 +1007,6 @@
 				B9C2455E23EDA2EA00E00523 /* MapKit.framework */,
 				125AA3B115ABAB0DD3288056 /* Pods_Dash.framework */,
 				79A188A66685EA4375D4818F /* Pods_DashRemote.framework */,
-				0198292C4BC2FEDD3C5A08E3 /* Pods_RearviewKit.framework */,
-				54C66DD7AC35DF7FDDB0FB1B /* Pods_Rearview.framework */,
 				B963C5342749351A0095F8D3 /* Intents.framework */,
 				2B341964DBDBB6AAD2646F68 /* Pods_CacheKit.framework */,
 			);
@@ -1264,10 +1254,6 @@
 				869C973AA26AD90E148028FB /* Pods-Dash.release.xcconfig */,
 				BBF96480A5CBA83FEB75EF07 /* Pods-DashRemote.debug.xcconfig */,
 				1CF65395131B1292F6415A43 /* Pods-DashRemote.release.xcconfig */,
-				55B63F95FAEA20086745553D /* Pods-RearviewKit.debug.xcconfig */,
-				E8E732016FBB1AB0B6B32FD4 /* Pods-RearviewKit.release.xcconfig */,
-				425C056D1C977242B289F14E /* Pods-Rearview.debug.xcconfig */,
-				D72D61E07B471561E0FDF3FC /* Pods-Rearview.release.xcconfig */,
 				71476600354D5232EEB87AFC /* Pods-CacheKit.debug.xcconfig */,
 				3F7D1DE4869CFA2B790331AF /* Pods-CacheKit.release.xcconfig */,
 			);
@@ -1401,12 +1387,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B9C0CEE92508F641006D246E /* Build configuration list for PBXNativeTarget "Rearview" */;
 			buildPhases = (
-				79FBD000CA50954476634386 /* [CP] Check Pods Manifest.lock */,
 				B9C0CED22508F63F006D246E /* Sources */,
 				B9C0CED32508F63F006D246E /* Frameworks */,
 				B9C0CED42508F63F006D246E /* Resources */,
 				B9F4378725D41C19004B9140 /* Embed Frameworks */,
-				F5FB522ADD1B571A40F9F680 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1526,7 +1510,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B9F4378425D41C19004B9140 /* Build configuration list for PBXNativeTarget "RearviewKit" */;
 			buildPhases = (
-				994642B4FB5813941C888159 /* [CP] Check Pods Manifest.lock */,
 				B9F4377625D41C19004B9140 /* Headers */,
 				B9F4377725D41C19004B9140 /* Sources */,
 				B9F4377825D41C19004B9140 /* Frameworks */,
@@ -1541,6 +1524,7 @@
 				B9085FD72A61A6DE0014CCC1 /* XCGLogger */,
 				B9085FD92A61A6E30014CCC1 /* ObjcExceptionBridging */,
 				B9085FDC2A61A8020014CCC1 /* BetterSegmentedControl */,
+				B906AEC92A623D37008C7458 /* Solar */,
 			);
 			productName = RearviewKit;
 			productReference = B9F4377B25D41C19004B9140 /* RearviewKit.framework */;
@@ -1615,6 +1599,7 @@
 				B9085FEA2A61AA720014CCC1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				B990259F2A61B70B00BDCDE9 /* XCRemoteSwiftPackageReference "MarqueeLabel" */,
 				B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				B906AEC82A623D37008C7458 /* XCRemoteSwiftPackageReference "Solar" */,
 			);
 			productRefGroup = B9DC5B22229D59BE00B645D5 /* Products */;
 			projectDirPath = "";
@@ -1735,50 +1720,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		79FBD000CA50954476634386 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Rearview-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		994642B4FB5813941C888159 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-RearviewKit-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		A773838481E7D6113B54F30A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1895,23 +1836,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F5FB522ADD1B571A40F9F680 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Rearview/Pods-Rearview-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Rearview/Pods-Rearview-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Rearview/Pods-Rearview-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FF0964F940FD8EE7634CAC0C /* [CP] Check Pods Manifest.lock */ = {
@@ -2566,7 +2490,6 @@
 		};
 		B9C0CEE72508F641006D246E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 425C056D1C977242B289F14E /* Pods-Rearview.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Rearview/Rearview.entitlements;
@@ -2592,7 +2515,6 @@
 		};
 		B9C0CEE82508F641006D246E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D72D61E07B471561E0FDF3FC /* Pods-Rearview.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Rearview/Rearview.entitlements;
@@ -2996,7 +2918,6 @@
 		};
 		B9F4378525D41C19004B9140 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 55B63F95FAEA20086745553D /* Pods-RearviewKit.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -3032,7 +2953,6 @@
 		};
 		B9F4378625D41C19004B9140 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E8E732016FBB1AB0B6B32FD4 /* Pods-RearviewKit.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -3179,6 +3099,14 @@
 				minimumVersion = 10.0.0;
 			};
 		};
+		B906AEC82A623D37008C7458 /* XCRemoteSwiftPackageReference "Solar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yujinakayama/Solar";
+			requirement = {
+				branch = "pr-45-on-latest-master";
+				kind = branch;
+			};
+		};
 		B9085FCE2A61A6B50014CCC1 /* XCRemoteSwiftPackageReference "XCGLogger" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DaveWoodCom/XCGLogger";
@@ -3297,6 +3225,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		B906AEC92A623D37008C7458 /* Solar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B906AEC82A623D37008C7458 /* XCRemoteSwiftPackageReference "Solar" */;
+			productName = Solar;
 		};
 		B9085FCF2A61A6B50014CCC1 /* ObjcExceptionBridging */ = {
 			isa = XCSwiftPackageProductDependency;

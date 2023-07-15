@@ -17,20 +17,6 @@ target 'CacheKit' do
   pod 'PINCache', '>= 3.0.1'
 end
 
-# https://medium.com/@akfreas/how-to-use-cocoapods-with-your-internal-ios-frameworks-192aa472f64b
-def rearviewkit_dependencies
-  # https://github.com/ceeK/Solar/pull/45
-  pod 'Solar', git: 'https://github.com/Pehon1/Solar', branch: 'master'
-end
-
-target 'Rearview' do
-  rearviewkit_dependencies
-end
-
-target 'RearviewKit' do
-  rearviewkit_dependencies
-end
-
 post_install do |installer|
   # Suppress warning "Conversion to Swift 5 is available" from FirebaseFirestoreSwift
   # This removes the warning about swift conversion, hopefuly forever!
