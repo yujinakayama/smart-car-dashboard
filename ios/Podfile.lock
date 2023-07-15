@@ -1,29 +1,16 @@
 PODS:
-  - PINCache (3.0.3):
-    - PINCache/Arc-exception-safe (= 3.0.3)
-    - PINCache/Core (= 3.0.3)
-  - PINCache/Arc-exception-safe (3.0.3):
-    - PINCache/Core
-  - PINCache/Core (3.0.3):
-    - PINOperation (~> 1.2.1)
-  - PINOperation (1.2.2)
   - TransitionButton (0.5.3)
 
 DEPENDENCIES:
-  - PINCache (>= 3.0.1)
   - TransitionButton
 
 SPEC REPOS:
   trunk:
-    - PINCache
-    - PINOperation
     - TransitionButton
 
 SPEC CHECKSUMS:
-  PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
-  PINOperation: daa34d4aa1d8449089be7d405b9d974abc4724c6
   TransitionButton: 36283346e17c64775a1b3bc3a7a72940a367de1f
 
-PODFILE CHECKSUM: d6179c378de6f439557646e4a5a13c497b91546d
+PODFILE CHECKSUM: 8f2d4b097e8940e6f2a86d40a59f1d7af292fd52
 
 COCOAPODS: 1.12.1

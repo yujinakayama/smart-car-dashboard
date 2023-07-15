@@ -9,10 +9,6 @@ target 'DashRemote' do
   pod 'TransitionButton', inhibit_warnings: true # SPM support is broken
 end
 
-target 'CacheKit' do
-  pod 'PINCache', '>= 3.0.1'
-end
-
 post_install do |installer|
   # Suppress warning "Conversion to Swift 5 is available" from FirebaseFirestoreSwift
   # This removes the warning about swift conversion, hopefuly forever!
