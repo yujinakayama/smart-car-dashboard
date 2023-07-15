@@ -14,11 +14,12 @@ import FirebaseFirestoreSwift
 struct ETCCard: Codable {
     @DocumentID var documentReference: DocumentReference!
 
-    // Without name field in Firestore document the it will be ignored in query with "name" order
     var name: String = ""
 
     var brand: Brand = .unknown
 
+    var order: UInt = 0
+    
     init(documentReference: DocumentReference) {
         self.documentReference = documentReference
     }

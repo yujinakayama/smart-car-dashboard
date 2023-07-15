@@ -15,7 +15,7 @@ class ETCDatabase: NSObject {
     private lazy var vehicleDocument = Firestore.firestore().collection("vehicles").document(vehicleID)
 
     private lazy var cardCollection = vehicleDocument.collection("etcCards")
-    private lazy var cardsQuery = cardCollection.order(by: "name")
+    private lazy var cardsQuery = cardCollection.order(by: "order")
 
     private lazy var paymentCollection = vehicleDocument.collection("etcPayments")
     private lazy var paymentsQuery = paymentCollection.order(by: "exitDate", descending: true)
