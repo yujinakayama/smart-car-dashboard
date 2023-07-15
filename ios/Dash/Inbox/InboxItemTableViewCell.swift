@@ -94,22 +94,27 @@ class InboxItemTableViewCell: UITableViewCell {
     }
 
     // https://rolandleth.com/tech/blog/increasing-the-tap-area-of-a-uibutton
+    // https://khanlou.com/2018/09/hacking-hit-tests/
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        if !actionStackView.isHidden {
-            for actionButton in actionStackView.arrangedSubviews {
-                if actionButton.isHidden { continue }
+        let defaultHitView = super.hitTest(point, with: event)
 
-                // If the tapped point is within horizontal range of an action button (even if vertially outside),
-                // the tap should be targetted to the button (i.e. enlarging vertial tappable area).
-                let actionButtonFrame = convert(actionButton.bounds, from: actionButton)
-                let actionButtonHorizontalRange = actionButtonFrame.minX...actionButtonFrame.maxX
-                if actionButtonHorizontalRange.contains(point.x) {
-                    return actionButton
-                }
+        guard defaultHitView == contentView, !actionStackView.isHidden else {
+            return defaultHitView
+        }
+
+        for actionButton in actionStackView.arrangedSubviews {
+            if actionButton.isHidden { continue }
+
+            // If the tapped point is within horizontal range of an action button (even if vertially outside),
+            // the tap should be targetted to the button (i.e. enlarging vertial tappable area).
+            let pointInActionButtonSpace = actionButton.convert(point, from: self)
+            let actionButtonHorizontalRange = actionButton.bounds.minX...actionButton.bounds.maxX
+            if actionButtonHorizontalRange.contains(pointInActionButtonSpace.x) {
+                return actionButton
             }
         }
 
-        return super.hitTest(point, with: event)
+        return defaultHitView
     }
     
     var item: InboxItemProtocol? {
