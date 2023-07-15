@@ -74,7 +74,6 @@
 		B932E5F023F9082600726615 /* RendezvousPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932E5EF23F9082600726615 /* RendezvousPoint.swift */; };
 		B932EE4B26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */; };
 		B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93321ED2323C9D500BFAB21 /* BorderedView.swift */; };
-		B93DB880267A0BA900298980 /* opencage_api_key.txt in Resources */ = {isa = PBXBuildFile; fileRef = B93DB87F267A0BA900298980 /* opencage_api_key.txt */; };
 		B940A460250E5B57006BDFBB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B940A45F250E5B57006BDFBB /* Settings.bundle */; };
 		B940A462250E5CDD006BDFBB /* RearviewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */; };
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
@@ -489,7 +488,6 @@
 		B93C04622642CD32002CD861 /* ParkingAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAnnotation.swift; sourceTree = "<group>"; };
 		B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAnnotationView.swift; sourceTree = "<group>"; };
 		B93C04662642D5FA002CD861 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
-		B93DB87F267A0BA900298980 /* opencage_api_key.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = opencage_api_key.txt; sourceTree = "<group>"; };
 		B940A45F250E5B57006BDFBB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewDefaults.swift; sourceTree = "<group>"; };
 		B940A465250F0EBB006BDFBB /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
@@ -1174,7 +1172,6 @@
 				B9DC5B32229D59BF00B645D5 /* Info.plist */,
 				B9253D7923E015A80037E156 /* Dash.entitlements */,
 				B99356D822A9483F00BA08AB /* japan_etc_tollbooths.csv */,
-				B93DB87F267A0BA900298980 /* opencage_api_key.txt */,
 			);
 			path = Dash;
 			sourceTree = "<group>";
@@ -1696,7 +1693,6 @@
 				B9DC5B31229D59BF00B645D5 /* LaunchScreen.storyboard in Resources */,
 				B9E6CCA1234F69B800E18603 /* Payment.wav in Resources */,
 				B99356D922A9483F00BA08AB /* japan_etc_tollbooths.csv in Resources */,
-				B93DB880267A0BA900298980 /* opencage_api_key.txt in Resources */,
 				B9DC5B2E229D59BF00B645D5 /* Assets.xcassets in Resources */,
 				B9E6CC9C234F65A000E18603 /* TollgatePassingThrough.wav in Resources */,
 				B9DC5B2C229D59BE00B645D5 /* Main.storyboard in Resources */,
