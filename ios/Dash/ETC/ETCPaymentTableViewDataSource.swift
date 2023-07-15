@@ -71,7 +71,7 @@ class ETCPaymentTableViewDataSource: UITableViewDiffableDataSource<Date, UUID> {
         }
     }
 
-    private static func makeDataSourceSnapshot(tableViewData: TableViewData, changes: [DocumentChange]) -> NSDiffableDataSourceSnapshot<Date, UUID> {
+    private static func makeDataSourceSnapshot(tableViewData: TableViewData, changes: [FirestoreDocumentChange]) -> NSDiffableDataSourceSnapshot<Date, UUID> {
         var snapshot = NSDiffableDataSourceSnapshot<Date, UUID>()
 
         snapshot.appendSections(tableViewData.sections.map { $0.date })
@@ -80,9 +80,15 @@ class ETCPaymentTableViewDataSource: UITableViewDiffableDataSource<Date, UUID> {
             snapshot.appendItems(section.payments.map { $0.uuid }, toSection: section.date)
         }
 
-        let modifiedPaymentIndices = changes.filter { $0.type == .modified }.map { Int($0.newIndex) }
-        let modifiedPaymentUUIDs = modifiedPaymentIndices.map { tableViewData.payments[$0].uuid }
-        snapshot.reloadItems(modifiedPaymentUUIDs)
+        let updatedPaymentUUIDs = changes.compactMap { change in
+            if case .update(let index) = change {
+                return tableViewData.payments[Int(index)].uuid
+            } else {
+                return nil
+            }
+        }
+
+        snapshot.reconfigureItems(updatedPaymentUUIDs)
 
         return snapshot
     }
