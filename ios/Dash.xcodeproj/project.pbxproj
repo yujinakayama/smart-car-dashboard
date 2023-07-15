@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		01861A4B14032E6339D8E511 /* Pods_Dash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 125AA3B115ABAB0DD3288056 /* Pods_Dash.framework */; };
 		0B41F2C816E331BA2FB139A3 /* Pods_DashRemote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A188A66685EA4375D4818F /* Pods_DashRemote.framework */; };
 		B5EB7C0045FE04EA280FAFF2 /* Pods_CacheKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B341964DBDBB6AAD2646F68 /* Pods_CacheKit.framework */; };
 		B9008EAF25FBB6D7005DAD13 /* NoMainETCCard.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9008EAE25FBB6D7005DAD13 /* NoMainETCCard.wav */; };
@@ -105,6 +104,7 @@
 		B95F514E23E5BBF70063CB3D /* InboxItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F514D23E5BBF70063CB3D /* InboxItem.swift */; };
 		B9640AAB2575D9E800B779AD /* Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9640AAA2575D9E800B779AD /* Firebase.swift */; };
 		B9640AC22575EC0400B779AD /* FirebaseAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9640AC12575EC0400B779AD /* FirebaseAuthentication.swift */; };
+		B964B2FF2A62462D003543CC /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B964B2FE2A62462D003543CC /* ImageLoader.swift */; };
 		B964BCC323E066FF00288E0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B964BCC223E066FF00288E0D /* AppDelegate.swift */; };
 		B964BCC523E066FF00288E0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B964BCC423E066FF00288E0D /* SceneDelegate.swift */; };
 		B964BCC723E066FF00288E0D /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B964BCC623E066FF00288E0D /* MapViewController.swift */; };
@@ -429,13 +429,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		125AA3B115ABAB0DD3288056 /* Pods_Dash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CF65395131B1292F6415A43 /* Pods-DashRemote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote.release.xcconfig"; path = "Target Support Files/Pods-DashRemote/Pods-DashRemote.release.xcconfig"; sourceTree = "<group>"; };
 		2B341964DBDBB6AAD2646F68 /* Pods_CacheKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CacheKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F7D1DE4869CFA2B790331AF /* Pods-CacheKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CacheKit.release.xcconfig"; path = "Target Support Files/Pods-CacheKit/Pods-CacheKit.release.xcconfig"; sourceTree = "<group>"; };
 		71476600354D5232EEB87AFC /* Pods-CacheKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CacheKit.debug.xcconfig"; path = "Target Support Files/Pods-CacheKit/Pods-CacheKit.debug.xcconfig"; sourceTree = "<group>"; };
 		79A188A66685EA4375D4818F /* Pods_DashRemote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DashRemote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		869C973AA26AD90E148028FB /* Pods-Dash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dash.release.xcconfig"; path = "Target Support Files/Pods-Dash/Pods-Dash.release.xcconfig"; sourceTree = "<group>"; };
 		B9008EAE25FBB6D7005DAD13 /* NoMainETCCard.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = NoMainETCCard.wav; sourceTree = "<group>"; };
 		B9025F62254D2180001E25DF /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
 		B90265AA23EB4CE000B2EF6B /* InboxItemTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxItemTableViewDataSource.swift; sourceTree = "<group>"; };
@@ -515,6 +513,7 @@
 		B963C5342749351A0095F8D3 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		B9640AAA2575D9E800B779AD /* Firebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firebase.swift; sourceTree = "<group>"; };
 		B9640AC12575EC0400B779AD /* FirebaseAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthentication.swift; sourceTree = "<group>"; };
+		B964B2FE2A62462D003543CC /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		B964BCC023E066FF00288E0D /* Dash Remote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dash Remote.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B964BCC223E066FF00288E0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B964BCC423E066FF00288E0D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -670,7 +669,6 @@
 		B9FF272729AFA60A00B29DFC /* shintomei-kakegawa-to-enshumori.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "shintomei-kakegawa-to-enshumori.gpx"; sourceTree = "<group>"; };
 		B9FF2906284E04F400CCB320 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		BBF96480A5CBA83FEB75EF07 /* Pods-DashRemote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DashRemote.debug.xcconfig"; path = "Target Support Files/Pods-DashRemote/Pods-DashRemote.debug.xcconfig"; sourceTree = "<group>"; };
-		FDB9D0E23106CE353F300B76 /* Pods-Dash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dash.debug.xcconfig"; path = "Target Support Files/Pods-Dash/Pods-Dash.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -737,7 +735,6 @@
 				B9085FD22A61A6B50014CCC1 /* XCGLogger in Frameworks */,
 				B99025A12A61B70B00BDCDE9 /* MarqueeLabel in Frameworks */,
 				B9B7452029968B2C00C85825 /* MapboxCoreNavigation in Frameworks */,
-				01861A4B14032E6339D8E511 /* Pods_Dash.framework in Frameworks */,
 				B9DD29ED2A51D733003345AB /* CacheKit.framework in Frameworks */,
 				B9085FE62A61A9A40014CCC1 /* SwiftSoup in Frameworks */,
 			);
@@ -1005,7 +1002,6 @@
 			isa = PBXGroup;
 			children = (
 				B9C2455E23EDA2EA00E00523 /* MapKit.framework */,
-				125AA3B115ABAB0DD3288056 /* Pods_Dash.framework */,
 				79A188A66685EA4375D4818F /* Pods_DashRemote.framework */,
 				B963C5342749351A0095F8D3 /* Intents.framework */,
 				2B341964DBDBB6AAD2646F68 /* Pods_CacheKit.framework */,
@@ -1139,6 +1135,7 @@
 				B97ABD3E27670D6E00C7EB1D /* PointOfInterestIcon.swift */,
 				B90CB29B29050A19003903D4 /* AppleMaps.swift */,
 				B94BD2E82680486700B768A2 /* BorderedLabel.swift */,
+				B964B2FE2A62462D003543CC /* ImageLoader.swift */,
 				B983BF3F2A2ADE80001A8E57 /* MapConfigurator.swift */,
 				B99C69AB26F5F6880064162D /* MapConfiguratorSegmentedControl.swift */,
 				B9854F7F278DA88000E07C0C /* SpeedSensitiveVolumeController.swift */,
@@ -1250,8 +1247,6 @@
 		FC2BACFC9EC4F82C9699C39B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				FDB9D0E23106CE353F300B76 /* Pods-Dash.debug.xcconfig */,
-				869C973AA26AD90E148028FB /* Pods-Dash.release.xcconfig */,
 				BBF96480A5CBA83FEB75EF07 /* Pods-DashRemote.debug.xcconfig */,
 				1CF65395131B1292F6415A43 /* Pods-DashRemote.release.xcconfig */,
 				71476600354D5232EEB87AFC /* Pods-CacheKit.debug.xcconfig */,
@@ -1406,12 +1401,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B9DC5B35229D59BF00B645D5 /* Build configuration list for PBXNativeTarget "Dash" */;
 			buildPhases = (
-				D1976B69B2C9268348B831AA /* [CP] Check Pods Manifest.lock */,
 				B9A3C09823E1A4E400EF1C4A /* Modify Info.plist */,
 				B9DC5B1D229D59BE00B645D5 /* Sources */,
 				B9DC5B1E229D59BE00B645D5 /* Frameworks */,
 				B9DC5B1F229D59BE00B645D5 /* Resources */,
-				BCC6DA0CF269B8E30DEAAA76 /* [CP] Embed Pods Frameworks */,
 				B98B783C23ED4C3F00A5102F /* Embed Frameworks */,
 				B9A3B68626537A9B00D1D64C /* Embed Foundation Extensions */,
 				B98E632F29B34D2200E01871 /* Embed Mapbox Access Token */,
@@ -1586,10 +1579,10 @@
 			);
 			mainGroup = B9DC5B18229D59BE00B645D5;
 			packageReferences = (
-				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */,
+				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */,
 				B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */,
 				B979456F27A81AFE007040E7 /* XCRemoteSwiftPackageReference "SwiftCBOR" */,
-				B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */,
+				B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */,
 				B9085FCE2A61A6B50014CCC1 /* XCRemoteSwiftPackageReference "XCGLogger" */,
 				B9085FDB2A61A8020014CCC1 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */,
 				B9085FDE2A61A8D20014CCC1 /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
@@ -1598,7 +1591,7 @@
 				B9085FE72A61AA0A0014CCC1 /* XCRemoteSwiftPackageReference "DictionaryCoding" */,
 				B9085FEA2A61AA720014CCC1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				B990259F2A61B70B00BDCDE9 /* XCRemoteSwiftPackageReference "MarqueeLabel" */,
-				B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */,
 				B906AEC82A623D37008C7458 /* XCRemoteSwiftPackageReference "Solar" */,
 			);
 			productRefGroup = B9DC5B22229D59BE00B645D5 /* Products */;
@@ -1777,45 +1770,6 @@
 			shellPath = "/usr/bin/env ruby";
 			shellScript = "# This script is to avoid exposure of my Firebase project ID on GitHub\n\ngoogle_info = File.read('Dash/GoogleService-Info.plist')\nreverse_client_id = google_info.scan(/com\\.googleusercontent\\.apps\\.[^<]+/).first || raise\n\ninfo_path = ENV['SCRIPT_INPUT_FILE_0']\ninfo = File.read(info_path)\ninfo.sub!('YOUR_FIREBASE_URL_SCHEME', reverse_client_id)\nFile.write(info_path, info)\n";
 		};
-		BCC6DA0CF269B8E30DEAAA76 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Dash/Pods-Dash-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Dash/Pods-Dash-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dash/Pods-Dash-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D1976B69B2C9268348B831AA /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Dash-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		E3AF852E690B03EF17378015 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1936,6 +1890,7 @@
 				B9B154EE2575FCED0031761F /* FirebaseMessaging.swift in Sources */,
 				B94EC75327914C620008C447 /* UIApplicationExtension.swift in Sources */,
 				B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */,
+				B964B2FF2A62462D003543CC /* ImageLoader.swift in Sources */,
 				B95E14C227BBDC480037FC94 /* Accelerometer.swift in Sources */,
 				B9F272C4259C91990098CB3B /* AltitudeWidgetViewController.swift in Sources */,
 				B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */,
@@ -2660,7 +2615,6 @@
 		};
 		B9DC5B36229D59BF00B645D5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FDB9D0E23106CE353F300B76 /* Pods-Dash.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -2690,7 +2644,6 @@
 		};
 		B9DC5B37229D59BF00B645D5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 869C973AA26AD90E148028FB /* Pods-Dash.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -3091,7 +3044,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -3163,7 +3116,7 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */ = {
+		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yujinakayama/DirectionalUserLocationAnnotationView.git";
 			requirement = {
@@ -3187,7 +3140,7 @@
 				kind = branch;
 			};
 		};
-		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */ = {
+		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mapbox/mapbox-navigation-ios.git";
 			requirement = {
@@ -3208,22 +3161,22 @@
 /* Begin XCSwiftPackageProductDependency section */
 		B906AEC02A6239E6008C7458 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseAuth;
 		};
 		B906AEC22A6239E6008C7458 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseFirestore;
 		};
 		B906AEC42A6239E6008C7458 /* FirebaseFirestoreSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseFirestoreSwift;
 		};
 		B906AEC62A6239E6008C7458 /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseMessaging;
 		};
 		B906AEC92A623D37008C7458 /* Solar */ = {
@@ -3293,7 +3246,7 @@
 		};
 		B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */;
+			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */;
 			productName = DirectionalUserLocationAnnotationView;
 		};
 		B979457027A81AFE007040E7 /* SwiftCBOR */ = {
@@ -3313,7 +3266,7 @@
 		};
 		B9B7451F29968B2C00C85825 /* MapboxCoreNavigation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */;
+			package = B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */;
 			productName = MapboxCoreNavigation;
 		};
 		B9C1DD192692EE350046E108 /* TLDExtract */ = {

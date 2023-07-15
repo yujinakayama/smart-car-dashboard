@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import PINRemoteImage
 
 class InboxItemTableViewCell: UITableViewCell {
     typealias Icon = (image: UIImage, color: UIColor)
@@ -46,8 +45,9 @@ class InboxItemTableViewCell: UITableViewCell {
     }()
 
     var defaultIconCornerRadius: CGFloat!
-
-    var iconImageTask: Task<Void, Never>?
+    
+    var task: Task<Void, Error>?
+    let imageLoader = ImageLoader()
 
     override func awakeFromNib() {
         defaultIconCornerRadius = iconBackgroundView.cornerRadius
@@ -80,11 +80,8 @@ class InboxItemTableViewCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-
-        iconImageTask?.cancel()
-        iconImageTask = nil
-
-        iconImageView.pin_cancelImageDownload()
+        task?.cancel()
+        task = nil
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -154,16 +151,14 @@ class InboxItemTableViewCell: UITableViewCell {
         iconImageView.image = UIImage(systemName: "music.note")
         iconBackgroundView.backgroundColor = .systemPink
 
-        if let artworkURL = musicItem.artworkURL(size: iconImagePixelSize) {
-            setRemoteImage(url: artworkURL) { (error) in
-                if error == nil {
-                    self.iconShape = .sharpRoundedRectangle
-                }
-            }
-        }
-
         nameLabel.text = musicItem.name
         detailLabel.text = musicItem.creator
+
+        if let artworkURL = musicItem.artworkURL(size: iconImagePixelSize) {
+            task = Task {
+                await setIconImage(from: artworkURL, shape: .sharpRoundedRectangle)
+            }
+        }
     }
 
     private func configureView(for video: Video) {
@@ -171,16 +166,14 @@ class InboxItemTableViewCell: UITableViewCell {
         iconImageView.image = UIImage(systemName: "film")
         iconBackgroundView.backgroundColor = .systemTeal
 
-        if let thumbnailURL = video.thumbnailURL {
-            setRemoteImage(url: thumbnailURL) { (error) in
-                if error == nil {
-                    self.iconShape = .circle
-                }
-            }
-        }
-
         nameLabel.text = video.title
         detailLabel.text = video.creator
+
+        if let thumbnailURL = video.thumbnailURL {
+            task = Task {
+                await setIconImage(from: thumbnailURL, shape: .circle)
+            }
+        }
     }
 
     private func configureView(for website: Website) {
@@ -188,16 +181,14 @@ class InboxItemTableViewCell: UITableViewCell {
         iconImageView.image = UIImage(systemName: "safari.fill")
         iconBackgroundView.backgroundColor = .systemBlue
 
-        iconImageTask = Task {
-            if let iconURL = await website.icon.getURL() {
-                DispatchQueue.main.async {
-                    self.setRemoteImage(url: iconURL)
-                }
-            }
-        }
-
         nameLabel.text = website.title ?? website.url.absoluteString
         detailLabel.text = website.simplifiedHost
+
+        task = Task {
+            guard let iconURL = await website.icon.getURL() else { return }
+            try Task.checkCancellation()
+            await setIconImage(from: iconURL, shape: .standardRoundedRectangle)
+        }
     }
 
     private func configureView(for unknownItem: InboxItemProtocol?) {
@@ -208,25 +199,13 @@ class InboxItemTableViewCell: UITableViewCell {
         nameLabel.text = String(localized: "Unknown Item")
         detailLabel.text = unknownItem?.url.absoluteString
     }
-
-    private func setRemoteImage(url: URL, completionHandler: ((Error?) -> Void)? = nil) {
-        let originalIconType = iconType
-        let originalImage = iconImageView.image
-        let originalBackgroundColor = iconBackgroundView.backgroundColor
-
-        DispatchQueue.main.async {
-            self.iconImageView.pin_setImage(from: url) { (result) in
-                if result.error == nil {
-                    self.iconType = .image
-                    self.iconBackgroundView.backgroundColor = .white
-                } else {
-                    self.iconType = originalIconType
-                    self.iconImageView.image = originalImage
-                    self.iconBackgroundView.backgroundColor = originalBackgroundColor
-                }
-
-                completionHandler?(result.error)
-            }
+    
+    private func setIconImage(from url: URL, shape: IconShape) async {
+        if let image = try? await imageLoader.loadImage(from: url) {
+            iconImageView.image = image
+            iconBackgroundView.backgroundColor = .white
+            iconType = .image
+            iconShape = shape
         }
     }
 

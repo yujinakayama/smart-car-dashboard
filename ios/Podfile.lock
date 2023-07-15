@@ -7,33 +7,23 @@ PODS:
   - PINCache/Core (3.0.3):
     - PINOperation (~> 1.2.1)
   - PINOperation (1.2.2)
-  - PINRemoteImage (3.0.3):
-    - PINRemoteImage/PINCache (= 3.0.3)
-  - PINRemoteImage/Core (3.0.3):
-    - PINOperation
-  - PINRemoteImage/PINCache (3.0.3):
-    - PINCache (~> 3.0.3)
-    - PINRemoteImage/Core
   - TransitionButton (0.5.3)
 
 DEPENDENCIES:
   - PINCache (>= 3.0.1)
-  - PINRemoteImage (~> 3.0)
   - TransitionButton
 
 SPEC REPOS:
   trunk:
     - PINCache
     - PINOperation
-    - PINRemoteImage
     - TransitionButton
 
 SPEC CHECKSUMS:
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
   PINOperation: daa34d4aa1d8449089be7d405b9d974abc4724c6
-  PINRemoteImage: f1295b29f8c5e640e25335a1b2bd9d805171bd01
   TransitionButton: 36283346e17c64775a1b3bc3a7a72940a367de1f
 
-PODFILE CHECKSUM: 50a48cbf3aa10cea9058bb2d5f3d980e6c560f45
+PODFILE CHECKSUM: d6179c378de6f439557646e4a5a13c497b91546d
 
 COCOAPODS: 1.12.1
