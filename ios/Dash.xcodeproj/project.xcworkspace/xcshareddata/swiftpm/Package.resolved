@@ -149,8 +149,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mapbox/mapbox-common-ios.git",
       "state" : {
-        "revision" : "775d6d749821f41ab25798eeaad1089ae250fd4c",
-        "version" : "23.3.0-rc.1"
+        "revision" : "f46c17b958f465c120d89bff4c4fa888a8d4a798",
+        "version" : "23.7.0-beta.1"
       }
     },
     {
@@ -158,8 +158,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mapbox/mapbox-core-maps-ios.git",
       "state" : {
-        "revision" : "d16dc2b0a053611b81b3b2ce4052a8662f849d72",
-        "version" : "10.11.0-rc.1"
+        "revision" : "55f883970d3ed0a489353dc2f765ae4120bc5533",
+        "version" : "10.15.0-beta.1"
       }
     },
     {
@@ -167,8 +167,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mapbox/mapbox-directions-swift.git",
       "state" : {
-        "revision" : "181580fd090b9324abb8eac0a47f3e31196b1f52",
-        "version" : "2.10.0-beta.2"
+        "revision" : "edcc5b30009e784f17c1cced1075878eaf781187",
+        "version" : "2.10.0"
       }
     },
     {
@@ -185,8 +185,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mapbox/mapbox-maps-ios.git",
       "state" : {
-        "revision" : "26038a040a1409276291fa998fb7bac094cbad70",
-        "version" : "10.11.0-rc.1"
+        "revision" : "c6b7ec640f26657c23674c9a051fcabba4ebcf27",
+        "version" : "10.15.0-beta.1"
       }
     },
     {
@@ -195,7 +195,7 @@
       "location" : "https://github.com/mapbox/mapbox-navigation-ios.git",
       "state" : {
         "branch" : "main",
-        "revision" : "374041581b2f48654b28080a799a394ae10fd80c"
+        "revision" : "abcc71da911c53d4c79cc4c2dc298287ee2dc914"
       }
     },
     {
@@ -203,8 +203,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mapbox/mapbox-navigation-native-ios.git",
       "state" : {
-        "revision" : "97d13c73f0d592639050a7d981d112a4f6680e8b",
-        "version" : "125.0.0"
+        "revision" : "bedbb75271ed9d09b2ec8097683f1e55a3b9941a",
+        "version" : "142.0.0"
       }
     },
     {
@@ -312,7 +312,7 @@
       "location" : "https://github.com/unrelentingtech/SwiftCBOR",
       "state" : {
         "branch" : "master",
-        "revision" : "980cf7b0883947678a27620ea0d90cca1a15488e"
+        "revision" : "edc01765cf6b3685bb622bb09242ef5964fb991b"
       }
     },
     {
@@ -331,6 +331,15 @@
       "state" : {
         "branch" : "master",
         "revision" : "8c051b60df00a3fd5c568bab657534857eb4287f"
+      }
+    },
+    {
+      "identity" : "transitionbutton",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AladinWay/TransitionButton",
+      "state" : {
+        "branch" : "master",
+        "revision" : "ffd08cbaabb7a896ea63d80a8fa93a2759cacc5c"
       }
     },
     {
