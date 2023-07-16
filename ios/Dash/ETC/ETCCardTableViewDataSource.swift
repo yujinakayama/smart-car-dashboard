@@ -16,6 +16,8 @@ class ETCCardTableViewDataSource: UITableViewDiffableDataSource<ETCCardTableView
     private var cards: [ETCCard] = []
     private var querySubscription: FirestoreQuery<ETCCard>.Subscription!
 
+    private var justChangedFromUI = false
+    
     init(database: ETCDatabase, tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<Section, UUID>.CellProvider) {
         super.init(tableView: tableView, cellProvider: cellProvider)
 
@@ -37,6 +39,26 @@ class ETCCardTableViewDataSource: UITableViewDiffableDataSource<ETCCardTableView
         }
     }
 
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return Section(indexPath) == .cards
+    }
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        guard Section(sourceIndexPath) == .cards else { return }
+
+        justChangedFromUI = true
+        
+        var reorderedCards = cards
+        let movedCard = reorderedCards.remove(at: sourceIndexPath.row)
+        reorderedCards.insert(movedCard, at: destinationIndexPath.row)
+
+        let batch = self.querySubscription.query.firestore.batch()
+        for (index, card) in reorderedCards.enumerated() {
+            batch.updateData([ETCCard.orderFieldKey: UInt(index + 1)], forDocument: card.documentReference)
+        }
+        batch.commit()
+    }
+    
     func card(for indexPath: IndexPath) -> ETCCard? {
         switch Section(indexPath) {
         case .allPayments:
@@ -58,14 +80,22 @@ class ETCCardTableViewDataSource: UITableViewDiffableDataSource<ETCCardTableView
 
             DispatchQueue.main.async {
                 self.cards = cards
-                self.apply(dataSourceSnapshot, animatingDifferences: !isInitialUpdate)
+
+                if self.justChangedFromUI {
+                    self.justChangedFromUI = false
+                    // Disable diff calculation and animation
+                    // because the table view is already showing the expected list
+                    self.applySnapshotUsingReloadData(dataSourceSnapshot)
+                } else {
+                    self.apply(dataSourceSnapshot, animatingDifferences: !isInitialUpdate)
+                }
             }
         } catch {
             logger.error(error)
         }
     }
 
-    private static func makeDataSourceSnapshot(cards: [ETCCard], changes: [DocumentChange]) -> NSDiffableDataSourceSnapshot<Section, UUID> {
+    private static func makeDataSourceSnapshot(cards: [ETCCard], changes: [FirestoreDocumentChange]) -> NSDiffableDataSourceSnapshot<Section, UUID> {
         var snapshot = NSDiffableDataSourceSnapshot<Section, UUID>()
 
         snapshot.appendSections(Section.allCases)
@@ -73,9 +103,15 @@ class ETCCardTableViewDataSource: UITableViewDiffableDataSource<ETCCardTableView
         snapshot.appendItems([Self.allPaymentsRowUUID], toSection: .allPayments)
         snapshot.appendItems(cards.map { $0.uuid }, toSection: .cards)
 
-        let modifiedCardIndices = changes.filter { $0.type == .modified }.map { Int($0.newIndex) }
-        let modifiedCardUUIDs = modifiedCardIndices.map { cards[$0].uuid }
-        snapshot.reloadItems(modifiedCardUUIDs)
+        let updatedCardUUIDs = changes.compactMap { change in
+            if case .update(let index) = change {
+                return cards[Int(index)].uuid
+            } else {
+                return nil
+            }
+        }
+
+        snapshot.reconfigureItems(updatedCardUUIDs)
 
         return snapshot
     }

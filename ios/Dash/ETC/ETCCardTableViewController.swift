@@ -25,6 +25,7 @@ class ETCCardTableViewController: UITableViewController {
 
         tableView.contentInset.top += 12
         tableView.tableFooterView = UIView()
+        tableView.allowsSelectionDuringEditing = true
 
         setUpNavigationBar()
 
@@ -38,7 +39,10 @@ class ETCCardTableViewController: UITableViewController {
 
     func startUpdatingDataSource() {
         keyValueObservation = deviceManager.observe(\.database, options: .initial) { [weak self] (deviceManager, change) in
-            self?.updateDataSource(database: deviceManager.database)
+            guard let self = self else { return }
+            Task {
+                await self.updateDataSource(database: deviceManager.database)
+            }
         }
     }
 
@@ -73,9 +77,11 @@ class ETCCardTableViewController: UITableViewController {
                 }
             }
         case "edit":
-            let navigationController = segue.destination as! UINavigationController
-            let cardEditViewController = navigationController.topViewController as! ETCCardEditViewController
-            cardEditViewController.card = (sender as! ETCCard)
+            if let indexPath = tableView.indexPathForSelectedRow, Section(indexPath) == .cards {
+                let navigationController = segue.destination as! UINavigationController
+                let cardEditViewController = navigationController.topViewController as! ETCCardEditViewController
+                cardEditViewController.card = dataSource?.card(for: indexPath)
+            }
         default:
             break
         }
@@ -110,11 +116,13 @@ class ETCCardTableViewController: UITableViewController {
         return false
     }
 
-    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        guard Section(indexPath)! == .cards,
-              let card = dataSource?.card(for: indexPath)
-        else { return }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if isEditing {
+            performSegue(withIdentifier: "edit", sender: self)
+        } else {
+            performSegue(withIdentifier: "show", sender: self)
+        }
 
-        performSegue(withIdentifier: "edit", sender: card)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

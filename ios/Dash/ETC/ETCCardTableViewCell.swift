@@ -31,6 +31,8 @@ class ETCCardTableViewCell: UITableViewCell {
     }
 
     override func awakeFromNib() {
+        editingAccessoryType = .none
+        
         let fontMetrics = UIFontMetrics(forTextStyle: .subheadline)
         insertionStatusLabel.font = fontMetrics.scaledFont(for: .boldSystemFont(ofSize: 12))
     }

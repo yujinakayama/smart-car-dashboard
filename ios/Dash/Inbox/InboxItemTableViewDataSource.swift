@@ -77,7 +77,7 @@ class InboxItemTableViewDataSource: UITableViewDiffableDataSource<Date, String> 
         }
     }
 
-    private static func makeDataSourceSnapshot(tableViewData: TableViewData, changes: [DocumentChange]) -> NSDiffableDataSourceSnapshot<Date, String> {
+    private static func makeDataSourceSnapshot(tableViewData: TableViewData, changes: [FirestoreDocumentChange]) -> NSDiffableDataSourceSnapshot<Date, String> {
         var snapshot = NSDiffableDataSourceSnapshot<Date, String>()
 
         snapshot.appendSections(tableViewData.sections.map { $0.date })
@@ -86,9 +86,15 @@ class InboxItemTableViewDataSource: UITableViewDiffableDataSource<Date, String> 
             snapshot.appendItems(section.items.map { $0.identifier }, toSection: section.date)
         }
 
-        let modifiedItemIndices = changes.filter { $0.type == .modified }.map { Int($0.newIndex) }
-        let modifiedItemIdentifiers = modifiedItemIndices.map { tableViewData.items[$0].identifier! }
-        snapshot.reloadItems(modifiedItemIdentifiers)
+        let updatedItemIdentifiers = changes.compactMap { change in
+            if case .update(let index) = change {
+                return tableViewData.items[Int(index)].identifier
+            } else {
+                return nil
+            }
+        }
+
+        snapshot.reconfigureItems(updatedItemIdentifiers)
 
         return snapshot
     }

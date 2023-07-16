@@ -52,6 +52,7 @@
 		B92451D423E30ACE007556D5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B92451D323E30ACE007556D5 /* Settings.bundle */; };
 		B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */; };
 		B9248B8B2728A27500952745 /* MPMediaItemExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9248B8A2728A27500952745 /* MPMediaItemExtension.swift */; };
+		B92736E02A632FEB0088A818 /* FirestoreDocumentChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92736DF2A632FEB0088A818 /* FirestoreDocumentChange.swift */; };
 		B92A61112576472A0073AB7B /* Assistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92A61102576472A0073AB7B /* Assistant.swift */; };
 		B92A97DA25E0AE8900D70A14 /* GForceMeterWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92A97D925E0AE8900D70A14 /* GForceMeterWidgetViewController.swift */; };
 		B92ADCCC23D416220090E86A /* ETCCardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */; };
@@ -456,6 +457,7 @@
 		B9248B8A2728A27500952745 /* MPMediaItemExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPMediaItemExtension.swift; sourceTree = "<group>"; };
 		B9253D7923E015A80037E156 /* Dash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dash.entitlements; sourceTree = "<group>"; };
 		B92650112691CE29005FD73D /* SheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetView.swift; sourceTree = "<group>"; };
+		B92736DF2A632FEB0088A818 /* FirestoreDocumentChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreDocumentChange.swift; sourceTree = "<group>"; };
 		B92A61102576472A0073AB7B /* Assistant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assistant.swift; sourceTree = "<group>"; };
 		B92A97D925E0AE8900D70A14 /* GForceMeterWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GForceMeterWidgetViewController.swift; sourceTree = "<group>"; };
 		B92ADCCB23D416220090E86A /* ETCCardTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewController.swift; sourceTree = "<group>"; };
@@ -873,6 +875,7 @@
 				B9C1F41427B815C400C6D4DD /* FirestoreQuerySubscription.swift */,
 				B910AF24273956C700A61795 /* FirestoreQueryPaginatedSubscription.swift */,
 				B9C1F41827B82B9400C6D4DD /* FirestoreQueryCountSubscription.swift */,
+				B92736DF2A632FEB0088A818 /* FirestoreDocumentChange.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -1905,6 +1908,7 @@
 				B9741F7523DF200600F061E7 /* InboxItemTableViewController.swift in Sources */,
 				B99356E422A94D6900BA08AB /* BLESerialPort.swift in Sources */,
 				B932E5EC23F86C5F00726615 /* MusicItem.swift in Sources */,
+				B92736E02A632FEB0088A818 /* FirestoreDocumentChange.swift in Sources */,
 				B94BD2E92680486700B768A2 /* BorderedLabel.swift in Sources */,
 				B9C1F40927AAC47700C6D4DD /* SheetView.swift in Sources */,
 				B907C78E272555690085ED7E /* SceneDelegate.swift in Sources */,
