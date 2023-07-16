@@ -16,6 +16,7 @@ class ETCCardTableViewDataSource: UITableViewDiffableDataSource<ETCCardTableView
     private var cards: [ETCCard] = []
     private var querySubscription: FirestoreQuery<ETCCard>.Subscription!
 
+    // If true, the current source of truth is UI
     private var justChangedFromUI = false
     
     init(database: ETCDatabase, tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<Section, UUID>.CellProvider) {
@@ -71,23 +72,34 @@ class ETCCardTableViewDataSource: UITableViewDiffableDataSource<ETCCardTableView
     }
 
     private func onUpdate(result: Result<FirestoreQuery<ETCCard>.Subscription.Update, Error>) {
-        let isInitialUpdate = cards.isEmpty
-
         do {
             let update = try result.get()
-            let cards = update.documents
-            let dataSourceSnapshot = Self.makeDataSourceSnapshot(cards: cards, changes: update.changes)
 
-            DispatchQueue.main.async {
-                self.cards = cards
+            if justChangedFromUI {
+                justChangedFromUI = false
+                let snapshot = makeSnapshotForListUpdate(cards: update.documents)
 
-                if self.justChangedFromUI {
-                    self.justChangedFromUI = false
+                // Delay reloading a bit so that ongoing UI animation won't be canceled
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    self.cards = update.documents
                     // Disable diff calculation and animation
                     // because the table view is already showing the expected list
-                    self.applySnapshotUsingReloadData(dataSourceSnapshot)
-                } else {
-                    self.apply(dataSourceSnapshot, animatingDifferences: !isInitialUpdate)
+                    self.applySnapshotUsingReloadData(snapshot)
+                }
+            } else {
+                let isInitialUpdate = cards.isEmpty
+
+                // Splitting snapshots for list update (addition, removal, and automatic reordering by identifier diff)
+                // and item updates (reconfiguring or reloading each cell)
+                // because it seems that calling `snapshot.reconfigureItems()` overwrites internal reordering operation flag
+                // and it causes strange broken behavior when reordering cells from UI.
+                let snapshotForListUpdate = makeSnapshotForListUpdate(cards: update.documents)
+                let snapshotForItemUpdates = makeSnapshotForItemUpdates(baseSnapshot: snapshotForListUpdate, changes: update.changes)
+
+                DispatchQueue.main.async {
+                    self.cards = update.documents
+                    self.apply(snapshotForListUpdate, animatingDifferences: !isInitialUpdate)
+                    self.apply(snapshotForItemUpdates, animatingDifferences: !isInitialUpdate)
                 }
             }
         } catch {
@@ -95,14 +107,15 @@ class ETCCardTableViewDataSource: UITableViewDiffableDataSource<ETCCardTableView
         }
     }
 
-    private static func makeDataSourceSnapshot(cards: [ETCCard], changes: [FirestoreDocumentChange<ETCCard>]) -> NSDiffableDataSourceSnapshot<Section, UUID> {
+    private func makeSnapshotForListUpdate(cards: [ETCCard]) -> NSDiffableDataSourceSnapshot<Section, UUID> {
         var snapshot = NSDiffableDataSourceSnapshot<Section, UUID>()
-
         snapshot.appendSections(Section.allCases)
-
         snapshot.appendItems([Self.allPaymentsRowUUID], toSection: .allPayments)
         snapshot.appendItems(cards.map { $0.uuid }, toSection: .cards)
-        
+        return snapshot
+    }
+
+    private func makeSnapshotForItemUpdates(baseSnapshot: NSDiffableDataSourceSnapshot<Section, UUID>, changes: [FirestoreDocumentChange<ETCCard>]) -> NSDiffableDataSourceSnapshot<Section, UUID> {
         let updatedCardUUIDs = changes.compactMap { change in
             switch change.type {
             case .modification:
@@ -112,8 +125,8 @@ class ETCCardTableViewDataSource: UITableViewDiffableDataSource<ETCCardTableView
             }
         }
 
+        var snapshot = baseSnapshot
         snapshot.reconfigureItems(updatedCardUUIDs)
-
         return snapshot
     }
 
