@@ -116,6 +116,19 @@ class ETCCardTableViewController: UITableViewController {
         return false
     }
 
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if !isEditing {
+            return indexPath
+        } else {
+            if Section(indexPath) == .cards {
+                return indexPath
+            } else {
+                // Section.allPayments cannot be selected when in edit mode
+                return nil
+            }
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isEditing {
             performSegue(withIdentifier: "edit", sender: self)
