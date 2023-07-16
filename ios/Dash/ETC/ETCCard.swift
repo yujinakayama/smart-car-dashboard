@@ -12,6 +12,8 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct ETCCard: Codable {
+    static let orderFieldKey = "order"
+
     @DocumentID var documentReference: DocumentReference!
 
     var name: String = ""
