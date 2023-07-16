@@ -11,7 +11,7 @@ import FirebaseFirestore
 
 class FirestoreQuerySubscription<DocumentObject> {
     typealias DocumentDecoder = (DocumentSnapshot) -> DocumentObject?
-    typealias Update = (documents: [DocumentObject], changes: [FirestoreDocumentChange])
+    typealias Update = (documents: [DocumentObject], changes: [FirestoreDocumentChange<DocumentObject>])
     typealias UpdateHandler = (Result<Update, Error>) -> Void
 
     let query: Query
@@ -38,7 +38,13 @@ class FirestoreQuerySubscription<DocumentObject> {
                 self.updateHandler(.failure(error))
             } else if let querySnapshot = querySnapshot {
                 let documents = querySnapshot.documents.compactMap { self.documentDecoder($0) }
-                let changes = querySnapshot.documentChanges.map { FirestoreDocumentChange($0) }
+
+                let changes: [FirestoreDocumentChange<DocumentObject>] = querySnapshot.documentChanges.compactMap { change in
+                    guard let document = self.documentDecoder(change.document) else { return nil }
+                    let changeType = FirestoreDocumentChangeType(change)
+                    return FirestoreDocumentChange<DocumentObject>(type: changeType, document: document)
+                }
+
                 let update = (documents: documents, changes: changes)
                 self.updateHandler(.success(update))
             }

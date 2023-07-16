@@ -77,7 +77,7 @@ class InboxItemTableViewDataSource: UITableViewDiffableDataSource<Date, String> 
         }
     }
 
-    private static func makeDataSourceSnapshot(tableViewData: TableViewData, changes: [FirestoreDocumentChange]) -> NSDiffableDataSourceSnapshot<Date, String> {
+    private static func makeDataSourceSnapshot(tableViewData: TableViewData, changes: [FirestoreDocumentChange<InboxItemProtocol>]) -> NSDiffableDataSourceSnapshot<Date, String> {
         var snapshot = NSDiffableDataSourceSnapshot<Date, String>()
 
         snapshot.appendSections(tableViewData.sections.map { $0.date })
@@ -87,9 +87,10 @@ class InboxItemTableViewDataSource: UITableViewDiffableDataSource<Date, String> 
         }
 
         let updatedItemIdentifiers = changes.compactMap { change in
-            if case .update(let index) = change {
-                return tableViewData.items[Int(index)].identifier
-            } else {
+            switch change.type {
+            case .modification:
+                return change.document.identifier
+            default:
                 return nil
             }
         }

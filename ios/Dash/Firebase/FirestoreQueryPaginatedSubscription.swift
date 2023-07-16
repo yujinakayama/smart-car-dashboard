@@ -11,7 +11,7 @@ import FirebaseFirestore
 
 actor FirestoreQueryPaginatedSubscription<DocumentObject> {
     typealias DocumentDecoder = (DocumentSnapshot) -> DocumentObject?
-    typealias Update = (documents: [DocumentObject], changes: [FirestoreDocumentChange], isCausedByPagination: Bool)
+    typealias Update = (documents: [DocumentObject], changes: [FirestoreDocumentChange<DocumentObject>], isCausedByPagination: Bool)
     typealias UpdateHandler = (Result<Update, Error>) -> Void
 
     let query: Query

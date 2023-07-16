@@ -95,18 +95,19 @@ class ETCCardTableViewDataSource: UITableViewDiffableDataSource<ETCCardTableView
         }
     }
 
-    private static func makeDataSourceSnapshot(cards: [ETCCard], changes: [FirestoreDocumentChange]) -> NSDiffableDataSourceSnapshot<Section, UUID> {
+    private static func makeDataSourceSnapshot(cards: [ETCCard], changes: [FirestoreDocumentChange<ETCCard>]) -> NSDiffableDataSourceSnapshot<Section, UUID> {
         var snapshot = NSDiffableDataSourceSnapshot<Section, UUID>()
 
         snapshot.appendSections(Section.allCases)
 
         snapshot.appendItems([Self.allPaymentsRowUUID], toSection: .allPayments)
         snapshot.appendItems(cards.map { $0.uuid }, toSection: .cards)
-
+        
         let updatedCardUUIDs = changes.compactMap { change in
-            if case .update(let index) = change {
-                return cards[Int(index)].uuid
-            } else {
+            switch change.type {
+            case .modification:
+                return change.document.uuid
+            default:
                 return nil
             }
         }

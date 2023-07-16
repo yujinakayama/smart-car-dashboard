@@ -71,7 +71,7 @@ class ETCPaymentTableViewDataSource: UITableViewDiffableDataSource<Date, UUID> {
         }
     }
 
-    private static func makeDataSourceSnapshot(tableViewData: TableViewData, changes: [FirestoreDocumentChange]) -> NSDiffableDataSourceSnapshot<Date, UUID> {
+    private static func makeDataSourceSnapshot(tableViewData: TableViewData, changes: [FirestoreDocumentChange<ETCPayment>]) -> NSDiffableDataSourceSnapshot<Date, UUID> {
         var snapshot = NSDiffableDataSourceSnapshot<Date, UUID>()
 
         snapshot.appendSections(tableViewData.sections.map { $0.date })
@@ -81,9 +81,10 @@ class ETCPaymentTableViewDataSource: UITableViewDiffableDataSource<Date, UUID> {
         }
 
         let updatedPaymentUUIDs = changes.compactMap { change in
-            if case .update(let index) = change {
-                return tableViewData.payments[Int(index)].uuid
-            } else {
+            switch change.type {
+            case .modification:
+                return change.document.uuid
+            default:
                 return nil
             }
         }

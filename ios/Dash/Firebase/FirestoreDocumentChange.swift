@@ -9,24 +9,25 @@
 import Foundation
 import FirebaseFirestore
 
-enum FirestoreDocumentChange {
-    case addition(newIndex: UInt)
-    case removal(oldIndex: UInt)
-    case move(oldIndex: UInt, newIndex: UInt)
-    case update(index: UInt)
+struct FirestoreDocumentChange<DocumentObject> {
+    var type: FirestoreDocumentChangeType
+    var document: DocumentObject
+}
+
+// Firestore's DocumentChange doesn't print its type when debugging
+enum FirestoreDocumentChangeType {
+    case addition
+    case removal
+    case modification
     
     init(_ change: DocumentChange) {
         switch change.type {
         case .added:
-            self = Self.addition(newIndex: change.newIndex)
+            self = .addition
         case .removed:
-            self = Self.removal(oldIndex: change.oldIndex)
+            self = .removal
         case .modified:
-            if change.oldIndex == change.newIndex {
-                self = Self.update(index: change.newIndex)
-            } else {
-                self = Self.move(oldIndex: change.oldIndex, newIndex: change.newIndex)
-            }
+            self = .modification
         }
     }
 }
