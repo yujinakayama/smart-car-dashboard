@@ -43,12 +43,12 @@ extension MapConfigurator {
     static let standard = MapConfigurator(
         identifier: "standard",
         name: String(localized: "Map"),
-        configuration: MKStandardMapConfiguration()
+        configuration: MKStandardMapConfiguration(elevationStyle: .realistic)
     )
 
     static let satellite = MapConfigurator(
         identifier: "satellite",
         name: String(localized: "Satellite"),
-        configuration: MKHybridMapConfiguration()
+        configuration: MKHybridMapConfiguration(elevationStyle: .realistic)
     )
 }
