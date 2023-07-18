@@ -43,6 +43,17 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B934328B2A665DF9000F1D7C"
+               BuildableName = "FloatingViewKitTests.xctest"
+               BlueprintName = "FloatingViewKitTests"
+               ReferencedContainer = "container:Dash.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

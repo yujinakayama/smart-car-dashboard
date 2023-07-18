@@ -8,6 +8,7 @@
 
 import Foundation
 import MapKit
+import FloatingViewKit
 import CoreMotion
 import simd
 import XCGLogger
@@ -20,6 +21,7 @@ class Defaults {
     private enum Key: String {
         case connectionWithVehicle
         case lastBackgroundEntranceTime
+        case floatingWidgetPositionInRearviewWidget
         case locationInformationWidgetMode
         case mapTypeForETCRoute
         case automaticallyOpensUnopenedLocationWhenAppIsOpened
@@ -190,6 +192,17 @@ extension Defaults {
         }
     }
 
+    var floatingWidgetPositionInRearviewWidget: FloatingPosition {
+        get {
+            let rawValue = integer(for: .floatingWidgetPositionInRearviewWidget)
+            return .init(rawValue: rawValue) ?? .bottomLeft
+        }
+
+        set {
+            set(newValue.rawValue, for: .floatingWidgetPositionInRearviewWidget)
+        }
+    }
+    
     var locationInformationWidgetMode: LocationInformationWidgetViewController.LocationMode {
         get {
             let rawValue = integer(for: .locationInformationWidgetMode)

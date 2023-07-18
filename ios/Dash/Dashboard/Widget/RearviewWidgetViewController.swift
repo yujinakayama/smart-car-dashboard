@@ -8,11 +8,12 @@
 
 import UIKit
 import RearviewKit
+import FloatingViewKit
 
 class RearviewWidgetViewController: UIViewController {
     var rearviewViewController: RearviewViewController?
 
-    var widgetViewController: LocationInformationWidgetViewController?
+    var floatingWidgetContainerController: FloatingViewContainerController!
 
     var isVisible = false
 
@@ -60,9 +61,51 @@ class RearviewWidgetViewController: UIViewController {
 
         notificationCenter.addObserver(self, selector: #selector(vehicleDidDisconnect), name: .VehicleDidDisconnect, object: nil)
 
+        setUpFloatingWidgetContainerController()
         setUpRearviewViewControllerIfPossible()
     }
 
+    func setUpFloatingWidgetContainerController() {
+        floatingWidgetContainerController = FloatingViewContainerController(
+            floatingViewController: instanciateWidgetViewController(),
+            initialPosition: Defaults.shared.floatingWidgetPositionInRearviewWidget
+        )
+        floatingWidgetContainerController.delegate = self
+        floatingWidgetContainerController.additionalSafeAreaInsets = .init(top: 0, left: 20, bottom: 0, right: 20)
+        floatingWidgetContainerController.view.translatesAutoresizingMaskIntoConstraints = false
+
+        addChild(floatingWidgetContainerController)
+        view.addSubview(floatingWidgetContainerController.view)
+        NSLayoutConstraint.activate([
+            floatingWidgetContainerController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: floatingWidgetContainerController.view.trailingAnchor),
+            floatingWidgetContainerController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            view.bottomAnchor.constraint(equalTo: floatingWidgetContainerController.view.bottomAnchor),
+        ])
+        floatingWidgetContainerController.didMove(toParent: self)
+    }
+
+    func instanciateWidgetViewController() -> LocationInformationWidgetViewController {
+        let storyboard = UIStoryboard(name: "Widgets", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "LocationInformationWidgetViewController") as! LocationInformationWidgetViewController
+
+        viewController.view.backgroundColor = viewController.view.backgroundColor?.withAlphaComponent(0.93)
+        viewController.view.layer.cornerCurve = .continuous
+        viewController.view.layer.cornerRadius = 8
+        viewController.view.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            viewController.view.widthAnchor.constraint(equalToConstant: 280),
+            viewController.view.heightAnchor.constraint(equalToConstant: 78)
+        ])
+        
+        viewController.scaleLabelFontSizes(scale: 0.9)
+        viewController.showsLocationAccuracyWarning = false
+        viewController.activityIndicatorView.style = .medium
+
+        return viewController
+    }
+    
     func setUpRearviewViewControllerIfPossible() {
         if let configuration = RearviewDefaults.shared.configuration {
             setUpRearviewViewController(configuration: configuration)
@@ -80,7 +123,7 @@ class RearviewWidgetViewController: UIViewController {
 
         addChild(rearviewViewController)
         rearviewViewController.view.frame = view.bounds
-        view.addSubview(rearviewViewController.view)
+        view.insertSubview(rearviewViewController.view, belowSubview: floatingWidgetContainerController.view)
         rearviewViewController.didMove(toParent: self)
 
         rearviewViewController.view.addGestureRecognizer(doubleTapGestureRecognizer)
@@ -96,7 +139,7 @@ class RearviewWidgetViewController: UIViewController {
         label.numberOfLines = 0
         label.textAlignment = .center
 
-        view.addSubview(label)
+        view.insertSubview(label, belowSubview: floatingWidgetContainerController.view)
 
         label.translatesAutoresizingMaskIntoConstraints = false
 
@@ -139,56 +182,12 @@ class RearviewWidgetViewController: UIViewController {
         rearviewViewController?.stop()
     }
 
-    func setUpOrTearDownWidgetViewControllerIfNeeded() {
+    func showOrHideFloatingWidgetViewIfNeeded() {
         if traitCollection.horizontalSizeClass == .compact {
-            tearDownWidgetViewControllerIfNeeded()
+            floatingWidgetContainerController.hideFloatingView()
         } else {
-            setUpWidgetViewControllerIfNeeded()
+            floatingWidgetContainerController.showFloatingView()
         }
-    }
-
-    func setUpWidgetViewControllerIfNeeded() {
-        guard widgetViewController == nil else { return }
-
-        let widgetViewController = instanciateWidgetViewController()
-
-        addChild(widgetViewController)
-        view.addSubview(widgetViewController.view)
-        NSLayoutConstraint.activate([
-            widgetViewController.view.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-            view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: widgetViewController.view.bottomAnchor),
-            widgetViewController.view.widthAnchor.constraint(equalToConstant: 280),
-            widgetViewController.view.heightAnchor.constraint(equalToConstant: 78)
-        ])
-        widgetViewController.didMove(toParent: self)
-
-        self.widgetViewController = widgetViewController
-    }
-
-    func tearDownWidgetViewControllerIfNeeded() {
-        guard let widgetViewController = widgetViewController else { return }
-
-        widgetViewController.willMove(toParent: nil)
-        widgetViewController.view.removeFromSuperview()
-        widgetViewController.removeFromParent()
-
-        self.widgetViewController = nil
-    }
-
-    func instanciateWidgetViewController() -> LocationInformationWidgetViewController {
-        let storyboard = UIStoryboard(name: "Widgets", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "LocationInformationWidgetViewController") as! LocationInformationWidgetViewController
-
-        viewController.view.backgroundColor = viewController.view.backgroundColor?.withAlphaComponent(0.93)
-        viewController.view.layer.cornerCurve = .continuous
-        viewController.view.layer.cornerRadius = 8
-        viewController.view.translatesAutoresizingMaskIntoConstraints = false
-
-        viewController.scaleLabelFontSizes(scale: 0.9)
-        viewController.showsLocationAccuracyWarning = false
-        viewController.activityIndicatorView.style = .medium
-
-        return viewController
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -208,33 +207,31 @@ class RearviewWidgetViewController: UIViewController {
             }
         }
 
-        setUpOrTearDownWidgetViewControllerIfNeeded()
+        showOrHideFloatingWidgetViewIfNeeded()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isVisible = true
         startIfNeeded()
-        setUpOrTearDownWidgetViewControllerIfNeeded()
+        showOrHideFloatingWidgetViewIfNeeded()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         isVisible = false
         stop()
-        tearDownWidgetViewControllerIfNeeded()
+        floatingWidgetContainerController.hideFloatingView()
     }
 
     @objc func sceneWillEnterForeground() {
         setUpRearviewViewControllerIfPossible()
         startIfNeeded()
-        setUpOrTearDownWidgetViewControllerIfNeeded()
+        showOrHideFloatingWidgetViewIfNeeded()
     }
 
     @objc func sceneDidEnterBackground() {
         tearDownRearviewViewControllerIfNeeded()
-        tearDownWidgetViewControllerIfNeeded()
-
         warningLabel?.removeFromSuperview()
         warningLabel = nil
     }
@@ -265,5 +262,11 @@ class RearviewWidgetViewController: UIViewController {
 extension RearviewWidgetViewController: RearviewViewControllerDelegate {
     func rearviewViewController(didChangeCameraSensitivityMode cameraSensitivityMode: CameraSensitivityMode) {
         RearviewDefaults.shared.cameraSensitivityMode = cameraSensitivityMode
+    }
+}
+
+extension RearviewWidgetViewController: FloatingViewContainerControllerDelegate {
+    func floatingViewContainerController(_ containerController: FloatingViewContainerController, didChangePosition position: FloatingPosition) {
+        Defaults.shared.floatingWidgetPositionInRearviewWidget = position
     }
 }
