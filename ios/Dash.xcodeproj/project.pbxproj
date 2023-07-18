@@ -3044,10 +3044,10 @@
 		};
 		B990259F2A61B70B00BDCDE9 /* XCRemoteSwiftPackageReference "MarqueeLabel" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/yujinakayama/MarqueeLabel";
+			repositoryURL = "https://github.com/cbpowell/MarqueeLabel";
 			requirement = {
-				branch = "fix-triggerScrollStart";
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.3.1;
 			};
 		};
 		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */ = {

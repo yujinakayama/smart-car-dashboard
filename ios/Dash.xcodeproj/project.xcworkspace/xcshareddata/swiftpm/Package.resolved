@@ -219,10 +219,10 @@
     {
       "identity" : "marqueelabel",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/yujinakayama/MarqueeLabel",
+      "location" : "https://github.com/cbpowell/MarqueeLabel",
       "state" : {
-        "branch" : "fix-triggerScrollStart",
-        "revision" : "bfab54b316126f0fef03be49a1c54142bd728b34"
+        "revision" : "bc00d4cbff7f6c416035e3d16c21885452cd159e",
+        "version" : "4.3.1"
       }
     },
     {
