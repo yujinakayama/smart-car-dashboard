@@ -89,9 +89,8 @@ class RearviewWidgetViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Widgets", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "LocationInformationWidgetViewController") as! LocationInformationWidgetViewController
 
-        viewController.view.backgroundColor = viewController.view.backgroundColor?.withAlphaComponent(0.93)
         viewController.view.layer.cornerCurve = .continuous
-        viewController.view.layer.cornerRadius = 8
+        viewController.view.layer.cornerRadius = 10
         viewController.view.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
