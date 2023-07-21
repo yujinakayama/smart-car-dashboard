@@ -74,6 +74,7 @@ fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
 fastlane/Appfile
+fastlane/.env
 
 # Code Injection
 #
@@ -88,4 +89,4 @@ iOSInjectionProject/
 # Secrets
 GoogleService-Info.plist
 mapbox_access_token.txt
-opencage_api_key.txt
+*.p8
