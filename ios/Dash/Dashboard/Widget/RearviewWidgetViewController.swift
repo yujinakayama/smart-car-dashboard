@@ -231,6 +231,7 @@ class RearviewWidgetViewController: UIViewController {
 
     @objc func sceneDidEnterBackground() {
         tearDownRearviewViewControllerIfNeeded()
+        floatingWidgetContainerController.hideFloatingView()
         warningLabel?.removeFromSuperview()
         warningLabel = nil
     }
