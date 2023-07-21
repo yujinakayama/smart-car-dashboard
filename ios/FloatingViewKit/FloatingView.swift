@@ -12,6 +12,8 @@ class FloatingView: UIView {
     init(contentView: UIView) {
         super.init(frame: .zero)
 
+        layer.borderColor = UIColor(white: 1, alpha: 0.05).cgColor
+        layer.borderWidth = 1
         layer.cornerCurve = .continuous
         layer.cornerRadius = 10
         layer.masksToBounds = true
