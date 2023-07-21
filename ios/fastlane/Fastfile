@@ -16,8 +16,18 @@
 default_platform(:ios)
 
 platform :ios do
+  desc "Bump minor version and release"
+  lane :bump_minor do
+    bump_version_and_release(type: 'minor')
+  end
+
+  desc "Bump patch version and release"
+  lane :bump_patch do
+    bump_version_and_release(type: 'patch')
+  end
+
   desc "Push a new beta build to TestFlight"
-  lane :beta do
+  lane :release do
     app_store_connect_api_key(
       key_id: ENV['APP_STORE_CONNECT_API_KEY_ID'],
       issuer_id: ENV['APP_STORE_CONNECT_API_ISSUER_ID'],
@@ -28,4 +38,16 @@ platform :ios do
 
     upload_to_testflight
   end
+end
+
+def bump_version_and_release(type:)
+  increment_version_number_in_xcodeproj(
+    bump_type: type,
+    target: ENV['SCHEME']
+  )
+
+  version = get_version_number_from_xcodeproj(scheme: ENV['SCHEME'])
+  commit_version_bump(message: "[#{ENV['SCHEME']}] Version #{version}")
+
+  release
 end
