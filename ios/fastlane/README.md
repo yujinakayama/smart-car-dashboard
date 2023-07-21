@@ -21,7 +21,7 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 [bundle exec] fastlane ios bump_minor
 ```
 
-Bump minor version
+Bump minor version and release
 
 ### ios bump_patch
 
@@ -29,7 +29,7 @@ Bump minor version
 [bundle exec] fastlane ios bump_patch
 ```
 
-Bump patch version
+Bump patch version and release
 
 ### ios release
 
