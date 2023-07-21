@@ -11,9 +11,13 @@ import UIKit
 class FloatingView: UIView {
     init(contentView: UIView) {
         super.init(frame: .zero)
-        
-        addSubview(contentView)
+
+        layer.cornerCurve = .continuous
+        layer.cornerRadius = 10
+        layer.masksToBounds = true
         translatesAutoresizingMaskIntoConstraints = false
+
+        addSubview(contentView)
 
         NSLayoutConstraint.activate([
             contentView.leadingAnchor.constraint(equalTo: leadingAnchor),

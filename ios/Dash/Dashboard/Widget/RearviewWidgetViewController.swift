@@ -88,9 +88,6 @@ class RearviewWidgetViewController: UIViewController {
     func instanciateWidgetViewController() -> LocationInformationWidgetViewController {
         let storyboard = UIStoryboard(name: "Widgets", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "LocationInformationWidgetViewController") as! LocationInformationWidgetViewController
-
-        viewController.view.layer.cornerCurve = .continuous
-        viewController.view.layer.cornerRadius = 10
         viewController.view.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
