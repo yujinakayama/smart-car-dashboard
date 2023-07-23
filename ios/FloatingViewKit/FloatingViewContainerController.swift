@@ -180,6 +180,8 @@ open class FloatingViewContainerController: UIViewController {
             }
         }
     }
+
+    var isVisible = false
     
     var isFloatingViewVisible: Bool {
         !floatingView.isHidden
@@ -188,6 +190,8 @@ open class FloatingViewContainerController: UIViewController {
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        isVisible = true
+        
         if isFloatingViewVisible {
             floatingViewController.beginAppearanceTransition(true, animated: animated)
         }
@@ -195,7 +199,7 @@ open class FloatingViewContainerController: UIViewController {
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        
         if isFloatingViewVisible {
             floatingViewController.endAppearanceTransition()
         }
@@ -212,6 +216,8 @@ open class FloatingViewContainerController: UIViewController {
     open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 
+        isVisible = false
+
         if isFloatingViewVisible {
             floatingViewController.endAppearanceTransition()
         }
@@ -219,16 +225,30 @@ open class FloatingViewContainerController: UIViewController {
     
     open func showFloatingView() {
         guard !isFloatingViewVisible else { return }
-        floatingViewController.beginAppearanceTransition(true, animated: false)
+        
+        if isVisible {
+            floatingViewController.beginAppearanceTransition(true, animated: false)
+        }
+
         floatingView.isHidden = false
-        floatingViewController.endAppearanceTransition()
+
+        if isVisible {
+            floatingViewController.endAppearanceTransition()
+        }
     }
     
     open func hideFloatingView() {
         guard isFloatingViewVisible else { return }
-        floatingViewController.beginAppearanceTransition(false, animated: false)
+
+        if isVisible {
+            floatingViewController.beginAppearanceTransition(false, animated: false)
+        }
+
         floatingView.isHidden = true
-        floatingViewController.endAppearanceTransition()
+
+        if isVisible {
+            floatingViewController.endAppearanceTransition()
+        }
     }
 }
 
