@@ -75,6 +75,12 @@ class MapsViewController: UIViewController {
         let controller = FloatingPanelController()
         controller.delegate = self
 
+        // To avoid perfomance degradation of map view scrolling,
+        // hide backdrop view since we don't use the features
+        // such as tapping backdrop to hide surface view.
+        controller.view.backgroundColor = nil
+        controller.backdropView.isHidden = true
+        
         // TODO: Use blur visual effect for background
 
         controller.surfaceView.appearance = {
