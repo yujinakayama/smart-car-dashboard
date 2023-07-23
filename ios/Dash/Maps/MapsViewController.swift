@@ -595,7 +595,10 @@ class MapsViewController: UIViewController {
         super.traitCollectionDidChange(previousTraitCollection)
         changePlacementOfParkingSearchOptionsSheetViewIfNeeded()
         changePlacementOfOfficialParkingSearchStatusViewIfNeeded()
-        
+
+        if traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
+            pointOfInterestFloatingController.invalidateLayout()
+        }
     }
 
     @objc func locationTrackerDidStartTracking() {
