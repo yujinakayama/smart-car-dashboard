@@ -218,11 +218,7 @@ open class FloatingViewContainerController: UIViewController {
     }
     
     open func showFloatingView() {
-        guard !isFloatingViewVisible else {
-            print("aboting show")
-            return
-        }
-        print("showing")
+        guard !isFloatingViewVisible else { return }
         floatingViewController.beginAppearanceTransition(true, animated: false)
         floatingView.isHidden = false
         floatingViewController.endAppearanceTransition()
