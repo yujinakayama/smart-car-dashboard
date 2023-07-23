@@ -55,14 +55,14 @@ class DashboardViewController: UIViewController {
         musicViewController.panGestureRecognizer.addTarget(self, action: #selector(gestureRecognizerDidRecognizePanGesture))
         musicViewController.panGestureRecognizer.delegate = self
 
-        switchLayoutIfNeeded()
-
         updateMusicContainerViewShadow()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        switchLayoutIfNeeded()
+        
         if isWidgetViewVisible {
             widgetViewController.beginAppearanceTransition(true, animated: animated)
         }
@@ -167,12 +167,18 @@ class DashboardViewController: UIViewController {
     }
 
     func switchLayout(to layoutMode: LayoutMode) {
-        if layoutMode == currentLayoutMode { return }
+        guard layoutMode != currentLayoutMode else { return }
         guard allowedLayoutModes.contains(layoutMode) else { return }
 
-        widgetViewController.beginAppearanceTransition(layoutMode == .split, animated: false)
+        if isWidgetViewVisible {
+            widgetViewController.beginAppearanceTransition(layoutMode == .split, animated: false)
+        }
+
         updateLayoutConstraints(for: layoutMode)
-        widgetViewController.endAppearanceTransition()
+
+        if isWidgetViewVisible {
+            widgetViewController.endAppearanceTransition()
+        }
 
         currentLayoutMode = layoutMode
     }
