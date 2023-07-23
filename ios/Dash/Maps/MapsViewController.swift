@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import DirectionalUserLocationAnnotationView
 import ParkingSearchKit
+import FloatingPanel
 
 class MapsViewController: UIViewController {
     static let directionalUserLocationAnnotationViewIdentifier = String(describing: DirectionalUserLocationAnnotationView.self)
@@ -33,6 +34,7 @@ class MapsViewController: UIViewController {
         mapView.selectableMapFeatures = [.pointsOfInterest, .physicalFeatures]
 
         mapView.register(DirectionalUserLocationAnnotationView.self, forAnnotationViewWithReuseIdentifier: Self.directionalUserLocationAnnotationViewIdentifier)
+        mapView.register(PointOfInterestAnnotationView.self, forAnnotationViewWithReuseIdentifier: Self.pointOfInterestAnnotationViewIdentifier)
 
         mapView.addGestureRecognizer(gestureRecognizer)
 
@@ -62,6 +64,44 @@ class MapsViewController: UIViewController {
 
     var hasInitiallyEnabledUserTrackingMode = false
 
+    lazy var pointOfInterestViewController: PointOfInterestViewController = {
+        let viewController = PointOfInterestViewController()
+        viewController.directionsButton.addTarget(self, action: #selector(openDirectionsInMapsForSelectedPointOfInterestAnnotation), for: .touchUpInside)
+        viewController.parkingSearchButton.addTarget(self, action: #selector(startSearchingParkingsForSeletedPointOfInterestAnnotation), for: .touchUpInside)
+        return viewController
+    }()
+    
+    lazy var pointOfInterestFloatingController: FloatingPanelController = {
+        let controller = FloatingPanelController()
+        controller.delegate = self
+
+        // To avoid perfomance degradation of map view scrolling,
+        // hide backdrop view since we don't use the features
+        // such as tapping backdrop to hide surface view.
+        controller.view.backgroundColor = nil
+        controller.backdropView.isHidden = true
+        
+        // TODO: Use blur visual effect for background
+
+        controller.surfaceView.appearance = {
+            let appearance = SurfaceAppearance()
+            appearance.cornerCurve = .continuous
+            appearance.cornerRadius = 8
+            appearance.backgroundColor = .secondarySystemBackground
+            return appearance
+        }()
+
+        controller.layout = PointOfInterestPanelLayout()
+        
+        controller.surfaceView.grabberHandle.barColor = .systemGray2
+        controller.surfaceView.contentPadding = .init(top: 16, left: 16, bottom: 16, right: 16)
+
+        controller.set(contentViewController: pointOfInterestViewController)
+        controller.addPanel(toParent: self)
+
+        return controller
+    }()
+    
     lazy var gestureRecognizer: UIGestureRecognizer = {
         let gestureRecognizer = UILongPressGestureRecognizer()
         gestureRecognizer.delegate = self
@@ -265,6 +305,8 @@ class MapsViewController: UIViewController {
         ])
 
         applySelectedConfigurator()
+        
+        _ = pointOfInterestFloatingController
         
         changePlacementOfParkingSearchOptionsSheetViewIfNeeded()
         view.addSubview(parkingSearchOptionsSheetView)
@@ -534,18 +576,6 @@ class MapsViewController: UIViewController {
         return Set(locations)
     }
 
-    private func viewForPointOfInterestAnnotation(_ annotation: PointOfInterestAnnotation) -> MKAnnotationView {
-        if let view = mapView.dequeueReusableAnnotationView(withIdentifier: Self.pointOfInterestAnnotationViewIdentifier) as? PointOfInterestAnnotationView {
-            view.annotation = annotation
-            return view
-        } else {
-            let view = PointOfInterestAnnotationView(annotation: annotation, reuseIdentifier: Self.pointOfInterestAnnotationViewIdentifier)
-            view.callout.departureButton.addTarget(self, action: #selector(openDirectionsInMapsForSelectedPointOfInterestAnnotation), for: .touchUpInside)
-            view.callout.parkingSearchButton.addTarget(self, action: #selector(startSearchingParkingsForSeletedPointOfInterestAnnotation), for: .touchUpInside)
-            return view
-        }
-    }
-
     @objc func openDirectionsInMapsForSelectedPointOfInterestAnnotation() {
         guard let annotation = (mapView.selectedAnnotations.first as? PointOfInterestAnnotation) else { return }
 
@@ -565,6 +595,10 @@ class MapsViewController: UIViewController {
         super.traitCollectionDidChange(previousTraitCollection)
         changePlacementOfParkingSearchOptionsSheetViewIfNeeded()
         changePlacementOfOfficialParkingSearchStatusViewIfNeeded()
+
+        if traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
+            pointOfInterestFloatingController.invalidateLayout()
+        }
     }
 
     @objc func locationTrackerDidStartTracking() {
@@ -603,9 +637,7 @@ extension MapsViewController: MKMapViewDelegate {
         if annotation is MKUserLocation {
             return mapView.dequeueReusableAnnotationView(withIdentifier: Self.directionalUserLocationAnnotationViewIdentifier, for: annotation)
         } else if let annotation = annotation as? SharedLocationAnnotation {
-            return viewForPointOfInterestAnnotation(annotation)
-        } else if let annotation = annotation as? MKMapFeatureAnnotation {
-            return viewForPointOfInterestAnnotation(annotation)
+            return mapView.dequeueReusableAnnotationView(withIdentifier: Self.pointOfInterestAnnotationViewIdentifier, for: annotation)
         } else if currentMode == .parkingSearch {
             return parkingSearchManager.view(for: annotation)
         } else {
@@ -632,6 +664,34 @@ extension MapsViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         if let userLocationView = mapView.view(for: userLocation) as? DirectionalUserLocationAnnotationView {
             userLocationView.updateDirection(animated: true)
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect annotation: MKAnnotation) {
+        guard let pointOfInterestAnnotation = annotation as? PointOfInterestAnnotation else { return }
+        pointOfInterestViewController.annotation = pointOfInterestAnnotation
+        pointOfInterestFloatingController.move(to: .full, animated: true)
+    }
+    
+    func mapView(_ mapView: MKMapView, didDeselect actuallyOptionalAnnotation: MKAnnotation) {
+        // For some reason nil annotation may be given
+        let optionalAnnotation: MKAnnotation? = actuallyOptionalAnnotation
+        guard let annotation = optionalAnnotation else { return }
+
+        if annotation === pointOfInterestViewController.annotation {
+            pointOfInterestFloatingController.move(to: .hidden, animated: true)
+        }
+    }
+}
+
+extension MapsViewController: FloatingPanelControllerDelegate {
+    func floatingPanelDidChangeState(_ floatingPanelController: FloatingPanelController) {
+        // Deselect annotation if floating panel is dismissed by swiping down
+        if floatingPanelController.state == .hidden,
+           let selectedAnnotation = mapView.selectedAnnotations.first,
+           pointOfInterestViewController.annotation === selectedAnnotation
+        {
+            mapView.deselectAnnotation(selectedAnnotation, animated: true)
         }
     }
 }
@@ -727,5 +787,41 @@ extension MapsViewController {
 extension MapsViewController: TabReselectionRespondable {
     func tabBarControllerDidReselectAlreadyVisibleTab(_ tabBarController: UITabBarController) {
         mapView.setUserTrackingMode(.follow, animated: true)
+    }
+}
+
+class PointOfInterestPanelLayout: FloatingPanelLayout {
+    var position: FloatingPanelPosition {
+        .bottom
+    }
+
+    var initialState: FloatingPanelState {
+        .hidden
+    }
+
+    var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] {
+        return [
+            .full: FloatingPanelIntrinsicLayoutAnchor(fractionalOffset: 0, referenceGuide: .safeArea),
+            .hidden: FloatingPanelLayoutAnchor(fractionalInset: 0, edge: .bottom, referenceGuide: .superview)
+        ]
+    }
+
+    func prepareLayout(surfaceView: UIView, in view: UIView) -> [NSLayoutConstraint] {
+        if view.traitCollection.horizontalSizeClass == .compact {
+            return [
+                surfaceView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+                view.safeAreaLayoutGuide.rightAnchor.constraint(equalTo: surfaceView.rightAnchor)
+            ]
+        } else {
+            return [
+                // Same as compact width size class
+                surfaceView.widthAnchor.constraint(equalToConstant: 375),
+                view.safeAreaLayoutGuide.rightAnchor.constraint(equalTo: surfaceView.rightAnchor, constant: 10)
+            ]
+        }
+    }
+
+    func backdropAlpha(for state: FloatingPanelState) -> CGFloat {
+        return 0
     }
 }
