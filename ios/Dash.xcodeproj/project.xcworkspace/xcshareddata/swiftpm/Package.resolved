@@ -55,6 +55,15 @@
       }
     },
     {
+      "identity" : "floatingpanel",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/scenee/FloatingPanel.git",
+      "state" : {
+        "revision" : "0cb5307a6134a381e948d05fe0eaf4dacb349f1f",
+        "version" : "2.6.4"
+      }
+    },
+    {
       "identity" : "googleappmeasurement",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/GoogleAppMeasurement.git",
