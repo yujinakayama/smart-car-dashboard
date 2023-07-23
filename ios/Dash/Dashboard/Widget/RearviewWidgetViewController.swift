@@ -45,6 +45,11 @@ class RearviewWidgetViewController: UIViewController {
 
     var warningLabel: UILabel?
 
+    // Invoke child appearance methods manually because for some reason viewDidDissapear is not called automatically
+    override var shouldAutomaticallyForwardAppearanceMethods: Bool {
+        false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -211,13 +216,24 @@ class RearviewWidgetViewController: UIViewController {
         isVisible = true
         startIfNeeded()
         showOrHideFloatingWidgetViewIfNeeded()
+        children.forEach { $0.beginAppearanceTransition(true, animated: animated) }
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        children.forEach { $0.endAppearanceTransition() }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        children.forEach { $0.beginAppearanceTransition(false, animated: animated) }
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         isVisible = false
         stop()
-        floatingWidgetContainerController.hideFloatingView()
+        children.forEach { $0.endAppearanceTransition() }
     }
 
     @objc func sceneWillEnterForeground() {
