@@ -252,6 +252,7 @@
 		B9E6CC9C234F65A000E18603 /* TollgatePassingThrough.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9E6CC9B234F65A000E18603 /* TollgatePassingThrough.wav */; };
 		B9E6CCA1234F69B800E18603 /* Payment.wav in Resources */ = {isa = PBXBuildFile; fileRef = B9E6CCA0234F69B800E18603 /* Payment.wav */; };
 		B9E886892A6D58D600F789AA /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = B9E886882A6D58D600F789AA /* FloatingPanel */; };
+		B9E8868B2A6D5A1B00F789AA /* PointOfInterestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E8868A2A6D5A1B00F789AA /* PointOfInterestViewController.swift */; };
 		B9E8A077265B855E00709838 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B9E8A079265B855E00709838 /* InfoPlist.strings */; };
 		B9E96CBB22A3CE7500C2E009 /* DashTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CBA22A3CE7500C2E009 /* DashTests.swift */; };
 		B9E96CC822A4EF1300C2E009 /* ETCPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E96CC722A4EF1200C2E009 /* ETCPayment.swift */; };
@@ -681,6 +682,7 @@
 		B9E292A1279DDA0A00547269 /* ParkingSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkingSearch.swift; sourceTree = "<group>"; };
 		B9E6CC9B234F65A000E18603 /* TollgatePassingThrough.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = TollgatePassingThrough.wav; sourceTree = "<group>"; };
 		B9E6CCA0234F69B800E18603 /* Payment.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Payment.wav; sourceTree = "<group>"; };
+		B9E8868A2A6D5A1B00F789AA /* PointOfInterestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterestViewController.swift; sourceTree = "<group>"; };
 		B9E8A078265B855E00709838 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B9E8A07A265B857C00709838 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B9E96CB822A3CE7500C2E009 /* DashTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DashTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -839,6 +841,7 @@
 				B90CB2972904F95B003903D4 /* MKMapFeatureAnnotationExtension.swift */,
 				B9C1F40C27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift */,
 				B9BA5B5826A897CF004D5927 /* PointOfInterestAnnotationView.swift */,
+				B9E8868A2A6D5A1B00F789AA /* PointOfInterestViewController.swift */,
 				B92650112691CE29005FD73D /* SheetView.swift */,
 			);
 			path = Maps;
@@ -1979,6 +1982,7 @@
 				B9B154EE2575FCED0031761F /* FirebaseMessaging.swift in Sources */,
 				B94EC75327914C620008C447 /* UIApplicationExtension.swift in Sources */,
 				B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */,
+				B9E8868B2A6D5A1B00F789AA /* PointOfInterestViewController.swift in Sources */,
 				B964B2FF2A62462D003543CC /* ImageLoader.swift in Sources */,
 				B95E14C227BBDC480037FC94 /* Accelerometer.swift in Sources */,
 				B9F272C4259C91990098CB3B /* AltitudeWidgetViewController.swift in Sources */,
