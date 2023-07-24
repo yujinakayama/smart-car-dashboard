@@ -9,11 +9,7 @@
 import UIKit
 
 class PointOfInterestViewController: UIViewController {
-    var annotation: PointOfInterestAnnotation? {
-        didSet {
-            titleLabel.text = annotation?.title ?? nil
-        }
-    }
+    var annotation: PointOfInterestAnnotation?
 
     lazy var contentView: UIView = {
         let stackView = UIStackView(arrangedSubviews: [

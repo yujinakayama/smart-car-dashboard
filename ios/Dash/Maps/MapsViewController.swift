@@ -676,29 +676,31 @@ extension MapsViewController: MKMapViewDelegate {
 
         switch pointOfInterestAnnotation.location {
         case .full(let location):
-            configureMoreActionButtonForFullLocation(location)
+            configurePointOfInterestViewControllerForFullLocation(location)
         case .partial(let partialLocation):
-            configureMoreActionButtonForPartialLocation(partialLocation)
+            configurePointOfInterestViewControllerForPartialLocation(partialLocation)
         }
 
         pointOfInterestFloatingController.move(to: .full, animated: true)
     }
     
-    func configureMoreActionButtonForFullLocation(_ location: FullLocation) {
+    func configurePointOfInterestViewControllerForFullLocation(_ location: FullLocation) {
+        pointOfInterestViewController.titleLabel.text = location.name
+        
         let actions = LocationActions(location: location, viewController: self)
-
         pointOfInterestViewController.moreActionsButton.menu = actions.makeMenu(for: [
             .searchWeb,
             .openWebsite,
             .openDirectionsInGoogleMaps,
             .openDirectionsInYahooCarNavi
         ])
-
         pointOfInterestViewController.moreActionsButton.isEnabled = true
     }
 
-    func configureMoreActionButtonForPartialLocation(_ partialLocation: PartialLocation) {
+    func configurePointOfInterestViewControllerForPartialLocation(_ partialLocation: PartialLocation) {
         partialLocationTask?.cancel()
+
+        pointOfInterestViewController.titleLabel.text = partialLocation.name
 
         pointOfInterestViewController.moreActionsButton.menu = nil
         pointOfInterestViewController.moreActionsButton.isEnabled = false
@@ -712,7 +714,7 @@ extension MapsViewController: MKMapViewDelegate {
             do {
                 let location = try await partialLocation.fullLocation
                 try Task.checkCancellation()
-                configureMoreActionButtonForFullLocation(location)
+                configurePointOfInterestViewControllerForFullLocation(location)
             } catch {
                 logger.error(error)
             }
