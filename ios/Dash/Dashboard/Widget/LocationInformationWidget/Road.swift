@@ -140,55 +140,57 @@ class Road: Equatable {
     lazy var address = Address(placemark: placemark)
 }
 
-struct Address {
-    var placemark: CLPlacemark
-
-    var prefecture: String? {
-        return placemark.administrativeArea
-    }
-
-    var commandery: String? {
-        return placemark.subAdministrativeArea
-    }
-
-    var municipality: String?
-
-    var ward: String?
-
-    var town: String? {
-        return placemark.subLocality
-    }
-    
-    var components: [String] {
-        return [
-            prefecture,
-            commandery,
-            municipality,
-            ward,
-            town
-        ].compactMap { $0 }
-    }
-    
-    init(placemark: CLPlacemark) {
-        self.placemark = placemark
-        parseLocality()
-    }
-    
-    private mutating func parseLocality() {
-        guard var locality = placemark.locality else { return }
+extension Road {
+    struct Address {
+        var placemark: CLPlacemark
         
-        if let commandery = commandery {
-            locality.trimPrefix(commandery)
+        var prefecture: String? {
+            return placemark.administrativeArea
         }
         
-        if let match = try? /(.+市)(.+区)/.wholeMatch(in: locality) {
-            municipality = String(match.output.1)
-            ward = String(match.output.2)
-        } else {
-            municipality = locality
+        var commandery: String? {
+            return placemark.subAdministrativeArea
         }
+        
+        var municipality: String?
+        
+        var ward: String?
+        
+        var town: String? {
+            return placemark.subLocality
+        }
+        
+        var components: [String] {
+            return [
+                prefecture,
+                commandery,
+                municipality,
+                ward,
+                town
+            ].compactMap { $0 }
+        }
+        
+        init(placemark: CLPlacemark) {
+            self.placemark = placemark
+            parseLocality()
+        }
+        
+        private mutating func parseLocality() {
+            guard var locality = placemark.locality else { return }
+            
+            if let commandery = commandery {
+                locality.trimPrefix(commandery)
+            }
+            
+            if let match = try? /(.+市)(.+区)/.wholeMatch(in: locality) {
+                municipality = String(match.output.1)
+                ward = String(match.output.2)
+            } else {
+                municipality = locality
+            }
+        }
+        
     }
-    
 }
 
 // https://ja.wikipedia.org/wiki/ISO_3166-2:JP
