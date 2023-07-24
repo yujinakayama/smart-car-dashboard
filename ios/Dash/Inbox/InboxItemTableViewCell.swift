@@ -122,7 +122,7 @@ class InboxItemTableViewCell: UITableViewCell {
             iconShape = .standardRoundedRectangle
 
             switch item {
-            case let location as Location:
+            case let location as InboxLocation:
                 configureView(for: location)
             case let musicItem as MusicItem:
                 configureView(for: musicItem)
@@ -140,7 +140,7 @@ class InboxItemTableViewCell: UITableViewCell {
         }
     }
 
-    private func configureView(for location: Location) {
+    private func configureView(for location: InboxLocation) {
         let icon = PointOfInterestIcon(categories: location.categories)
 
         iconType = .template
@@ -215,7 +215,7 @@ class InboxItemTableViewCell: UITableViewCell {
     }
 
     private func updateActionButtonVisibility() {
-        let visible = item is Location && traitCollection.horizontalSizeClass != .compact
+        let visible = item is InboxLocation && traitCollection.horizontalSizeClass != .compact
         parkingSearchButton.isHidden = !visible
 
         actionStackView.isHidden = actionStackView.arrangedSubviews.allSatisfy { $0.isHidden }

@@ -10,7 +10,7 @@ import UIKit
 import SafariServices
 
 class InboxItemTableViewController: UITableViewController {
-    static func pushMapsViewControllerForParkingSearchInCurrentScene(location: Location) {
+    static func pushMapsViewControllerForParkingSearchInCurrentScene(location: InboxLocation) {
         guard let windowScene = UIApplication.shared.foregroundWindowScene,
               let sceneDelegate = windowScene.delegate as? SceneDelegate,
               let inboxNavigationController = sceneDelegate.tabBarController.viewController(for: .inbox) as? UINavigationController,
@@ -192,7 +192,7 @@ class InboxItemTableViewController: UITableViewController {
 
         while let superview = view.superview {
             if let cell = superview as? InboxItemTableViewCell {
-                if let location = cell.item as? Location {
+                if let location = cell.item as? InboxLocation {
                     location.markAsOpened(true)
                     pushMapsViewControllerForParkingSearch(location: location)
                 }
@@ -210,7 +210,7 @@ class InboxItemTableViewController: UITableViewController {
             guard let self = self else { return UIMenu() }
 
             switch dataSource.item(for: indexPath) {
-            case let location as Location:
+            case let location as InboxLocation:
                 return self.actionMenu(for: location)
             case let musicItem as MusicItem:
                 return self.actionMenu(for: musicItem)
@@ -226,7 +226,7 @@ class InboxItemTableViewController: UITableViewController {
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: actionProvider)
     }
 
-    func pushMapsViewControllerForParkingSearch(location: Location) {
+    func pushMapsViewControllerForParkingSearch(location: InboxLocation) {
         let mapsViewController = MapsViewController()
         mapsViewController.showsRecentSharedLocations = false
         mapsViewController.parkingSearchQuittingButton.isHidden = true
@@ -259,7 +259,7 @@ class InboxItemTableViewController: UITableViewController {
 }
 
 private extension InboxItemTableViewController {
-    func actionMenu(for location: Location) -> UIMenu {
+    func actionMenu(for location: InboxLocation) -> UIMenu {
         let actions = LocationActions(location: location, viewController: self, searchParkingsHandler: { location in
             self.pushMapsViewControllerForParkingSearch(location: location)
         })

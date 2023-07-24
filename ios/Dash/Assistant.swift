@@ -41,7 +41,7 @@ extension Assistant {
     class LocationOpener {
         let newItemThresholdTime: Date
         let maxDatabaseUpdateWaitTimeInterval: TimeInterval = 2
-        private var location: Location?
+        private var location: InboxLocation?
 
         init(newItemThresholdTime: Date) {
             self.newItemThresholdTime = newItemThresholdTime
@@ -67,12 +67,12 @@ extension Assistant {
             self.location = location
         }
 
-        func getLocationToOpen() async -> Location? {
+        func getLocationToOpen() async -> InboxLocation? {
             guard let database = Firebase.shared.inboxItemDatabase else { return nil }
 
             let query = database.items(type: .location, hasBeenOpened: false, createdAfter: newItemThresholdTime)
 
-            guard let unopenedLocations = try? await query.get() as? [Location] else { return nil }
+            guard let unopenedLocations = try? await query.get() as? [InboxLocation] else { return nil }
 
             if unopenedLocations.count == 1, let location = unopenedLocations.first {
                 return location

@@ -9,9 +9,9 @@
 import MapKit
 
 class SharedLocationAnnotation: NSObject, PointOfInterestAnnotation {
-    let location: Location
+    let location: InboxLocation
 
-    init(_ location: Location) {
+    init(_ location: InboxLocation) {
         self.location = location
         super.init()
     }

@@ -1,5 +1,5 @@
 //
-//  Location.swift
+//  InboxLocation.swift
 //  Dash
 //
 //  Created by Yuji Nakayama on 2020/02/01.
@@ -12,7 +12,7 @@ import FirebaseFirestore
 import CommonCrypto
 import ParkingSearchKit
 
-class Location: InboxItemProtocol {
+class InboxLocation: InboxItemProtocol {
     var firebaseDocument: DocumentReference?
     var identifier: String!
 
@@ -59,8 +59,8 @@ class Location: InboxItemProtocol {
     }
 }
 
-extension Location: Equatable, Hashable {
-    static func == (lhs: Location, rhs: Location) -> Bool {
+extension InboxLocation: Equatable, Hashable {
+    static func == (lhs: InboxLocation, rhs: InboxLocation) -> Bool {
         return lhs.coordinate == rhs.coordinate && lhs.name == rhs.name
     }
 
@@ -71,7 +71,7 @@ extension Location: Equatable, Hashable {
     }
 }
 
-extension Location {
+extension InboxLocation {
     struct Address: Decodable {
         let country: String?
         let prefecture: String?

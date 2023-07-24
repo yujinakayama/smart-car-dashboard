@@ -46,7 +46,7 @@ class RemoteNotification {
             await item.open(from: rootViewController)
         }
 
-        if let location = item as? Location,
+        if let location = item as? InboxLocation,
            !location.categories.contains(where: { $0.isKindOfParking }),
            Defaults.shared.automaticallySearchParkingsWhenLocationIsAutomaticallyOpened
         {
@@ -69,7 +69,7 @@ class RemoteNotification {
         case .openedByUser:
             return true
         case .receivedInForeground:
-            if inboxItem is Location {
+            if inboxItem is InboxLocation {
                 return !Vehicle.default.isMoving
             } else {
                 return true

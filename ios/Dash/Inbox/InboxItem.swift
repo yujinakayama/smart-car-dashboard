@@ -83,7 +83,7 @@ struct InboxItem {
 
         switch type {
         case .location:
-            item = try decoder.decode(Location.self, from: dictionary)
+            item = try decoder.decode(InboxLocation.self, from: dictionary)
         case .musicItem:
             item = try decoder.decode(MusicItem.self, from: dictionary)
         case .video:
@@ -106,7 +106,7 @@ struct InboxItem {
 
         switch type {
         case .location:
-            return try decoder.decode(Location.self, from: dictionary)
+            return try decoder.decode(InboxLocation.self, from: dictionary)
         case .musicItem:
             return try decoder.decode(MusicItem.self, from: dictionary)
         case .video:
