@@ -46,6 +46,7 @@ class PointOfInterestViewController: UIViewController {
         let stackView = UIStackView(arrangedSubviews: [
             directionsButton,
             parkingSearchButton,
+            moreActionsButton
         ])
 
         stackView.axis = .horizontal
@@ -76,6 +77,26 @@ class PointOfInterestViewController: UIViewController {
         backgroundColor: .systemFill
     )
 
+    lazy var moreActionsButton: UIButton = {
+        let button = makeButton(
+            systemImageName: "ellipsis",
+            subtitle: String(localized: "More"),
+            foregroundColor: UIColor(dynamicProvider: { [unowned self] traitCollection in
+                if traitCollection.userInterfaceStyle == .dark {
+                    return .white
+                } else {
+                    return .link
+                }
+            }),
+            backgroundColor: .systemFill
+        )
+        
+        button.showsMenuAsPrimaryAction = true
+        
+        return button
+    }()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

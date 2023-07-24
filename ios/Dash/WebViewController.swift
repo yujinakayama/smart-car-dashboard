@@ -330,3 +330,17 @@ extension WebViewController: WKUIDelegate {
         return nil
     }
 }
+
+extension WebViewController {
+    static func present(url: URL, from viewController: UIViewController) {
+        let webViewController = WebViewController()
+        webViewController.loadPage(url: url)
+
+        let navigationController = UINavigationController(rootViewController: webViewController)
+        navigationController.isToolbarHidden = false
+        navigationController.modalPresentationStyle = .formSheet
+        navigationController.preferredContentSize = UIScreen.main.bounds.size
+
+        viewController.present(navigationController, animated: true)
+    }
+}

@@ -31,15 +31,7 @@ extension InboxItemProtocol {
     }
 
     func openInInAppBrowser(from viewController: UIViewController) {
-        let webViewController = WebViewController()
-        webViewController.navigationItem.title = title
-        webViewController.loadPage(url: url)
-
-        let navigationController = UINavigationController(rootViewController: webViewController)
-        navigationController.isToolbarHidden = false
-        navigationController.modalPresentationStyle = .formSheet
-        navigationController.preferredContentSize = UIScreen.main.bounds.size
-        viewController.present(navigationController, animated: true)
+        WebViewController.present(url: url, from: viewController)
     }
 
     func markAsOpened(_ value: Bool) {

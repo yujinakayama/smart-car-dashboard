@@ -669,7 +669,25 @@ extension MapsViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect annotation: MKAnnotation) {
         guard let pointOfInterestAnnotation = annotation as? PointOfInterestAnnotation else { return }
+
         pointOfInterestViewController.annotation = pointOfInterestAnnotation
+
+        // TODO: Support MKMapFeatureAnnotation
+        if let location = (annotation as? SharedLocationAnnotation)?.location {
+            let actions = LocationActions(location: location, viewController: self)
+
+            pointOfInterestViewController.moreActionsButton.menu = actions.makeMenu(for: [
+                .searchWeb,
+                .openWebsite,
+                .openDirectionsInGoogleMaps,
+                .openDirectionsInYahooCarNavi
+            ])
+
+            pointOfInterestViewController.moreActionsButton.isEnabled = true
+        } else {
+            pointOfInterestViewController.moreActionsButton.isEnabled = false
+        }
+
         pointOfInterestFloatingController.move(to: .full, animated: true)
     }
     
@@ -698,7 +716,7 @@ extension MapsViewController: FloatingPanelControllerDelegate {
 
 extension MapsViewController: ParkingSearchMapViewManagerDelegate {
     func parkingSearchMapViewManager(_ manager: ParkingSearchMapViewManager, didSelectParking parking: ParkingProtocol, forReservationWebPage url: URL) {
-        presentWebViewController(url: url)
+        WebViewController.present(url: url, from: self)
     }
 
     func parkingSearchMapViewManager(_ manager: ParkingSearchMapViewManager, didSelectParkingForSearchingOnWeb parking: ParkingProtocol) {
@@ -717,19 +735,7 @@ extension MapsViewController: ParkingSearchMapViewManagerDelegate {
         urlComponents.queryItems = [URLQueryItem(name: "q", value: queryWords.joined(separator: " "))]
 
         guard let url = urlComponents.url else { return }
-        presentWebViewController(url: url)
-    }
-
-    private func presentWebViewController(url: URL) {
-        let webViewController = WebViewController()
-        webViewController.loadPage(url: url)
-
-        let navigationController = UINavigationController(rootViewController: webViewController)
-        navigationController.isToolbarHidden = false
-        navigationController.modalPresentationStyle = .formSheet
-        navigationController.preferredContentSize = UIScreen.main.bounds.size
-
-        present(navigationController, animated: true)
+        WebViewController.present(url: url, from: self)
     }
 }
 
