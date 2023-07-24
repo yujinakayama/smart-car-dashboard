@@ -28,7 +28,7 @@ class PointOfInterestAnnotationView: MKMarkerAnnotationView {
 
     func updateGlyph() {
         guard let annotation = annotation as? PointOfInterestAnnotation else { return }
-        let icon = PointOfInterestIcon(categories: annotation.categories)
+        let icon = PointOfInterestIcon(categories: annotation.location.categories)
         glyphImage = icon.image
         markerTintColor = icon.color
     }

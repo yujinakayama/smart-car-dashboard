@@ -182,7 +182,7 @@
 		B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B717DD23E6B26900A47207 /* UnknownItem.swift */; };
 		B9B7452029968B2C00C85825 /* MapboxCoreNavigation in Frameworks */ = {isa = PBXBuildFile; productRef = B9B7451F29968B2C00C85825 /* MapboxCoreNavigation */; };
 		B9BA5B5926A897CF004D5927 /* PointOfInterestAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BA5B5826A897CF004D5927 /* PointOfInterestAnnotationView.swift */; };
-		B9BA5B5B26A8982C004D5927 /* SharedLocationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BA5B5A26A8982C004D5927 /* SharedLocationAnnotation.swift */; };
+		B9BA5B5B26A8982C004D5927 /* InboxLocationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BA5B5A26A8982C004D5927 /* InboxLocationAnnotation.swift */; };
 		B9BA5B5C26A89C83004D5927 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04662642D5FA002CD861 /* UIButtonExtension.swift */; };
 		B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */; };
 		B9BC920923250A0A006F22FC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BC920823250A0A006F22FC /* Defaults.swift */; };
@@ -197,6 +197,7 @@
 		B9C0CEE52508F641006D246E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9C0CEE32508F641006D246E /* LaunchScreen.storyboard */; };
 		B9C0CEED250C3A27006D246E /* HeartAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0CEEC250C3A27006D246E /* HeartAnimation.swift */; };
 		B9C1A09C29B2551F00FA0B55 /* metropolitan-rainbowbridge-to-shibuya.gpx in Resources */ = {isa = PBXBuildFile; fileRef = B9C1A09B29B2551F00FA0B55 /* metropolitan-rainbowbridge-to-shibuya.gpx */; };
+		B9C1CDEF2A6E881700EAC2A3 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1CDEE2A6E881700EAC2A3 /* Location.swift */; };
 		B9C1DD1A2692EE350046E108 /* TLDExtract in Frameworks */ = {isa = PBXBuildFile; productRef = B9C1DD192692EE350046E108 /* TLDExtract */; };
 		B9C1DD1C269457910046E108 /* OfficialParkingSearchStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */; };
 		B9C1DD2026948B7D0046E108 /* OfficialParkingSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */; };
@@ -621,7 +622,7 @@
 		B9B4F706268CB55D009C5DC5 /* Road.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Road.swift; sourceTree = "<group>"; };
 		B9B717DD23E6B26900A47207 /* UnknownItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownItem.swift; sourceTree = "<group>"; };
 		B9BA5B5826A897CF004D5927 /* PointOfInterestAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterestAnnotationView.swift; sourceTree = "<group>"; };
-		B9BA5B5A26A8982C004D5927 /* SharedLocationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedLocationAnnotation.swift; sourceTree = "<group>"; };
+		B9BA5B5A26A8982C004D5927 /* InboxLocationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxLocationAnnotation.swift; sourceTree = "<group>"; };
 		B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewCell.swift; sourceTree = "<group>"; };
 		B9BC920823250A0A006F22FC /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		B9BE434B27A187F300AD86A5 /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
@@ -638,6 +639,7 @@
 		B9C0CEEA2508F711006D246E /* H264ByteStreamParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = H264ByteStreamParser.swift; sourceTree = "<group>"; };
 		B9C0CEEC250C3A27006D246E /* HeartAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartAnimation.swift; sourceTree = "<group>"; };
 		B9C1A09B29B2551F00FA0B55 /* metropolitan-rainbowbridge-to-shibuya.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "metropolitan-rainbowbridge-to-shibuya.gpx"; sourceTree = "<group>"; };
+		B9C1CDEE2A6E881700EAC2A3 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		B9C1DD1B269457910046E108 /* OfficialParkingSearchStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialParkingSearchStatusView.swift; sourceTree = "<group>"; };
 		B9C1DD1F26948B7C0046E108 /* OfficialParkingSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficialParkingSearch.swift; sourceTree = "<group>"; };
 		B9C1F40C27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterestAnnotation.swift; sourceTree = "<group>"; };
@@ -841,7 +843,7 @@
 			children = (
 				B904A2A5243968990087BD4A /* MapsViewController.swift */,
 				B9C0BF462698689B00C54BA9 /* OfficialParkingInformationWebViewController.swift */,
-				B9BA5B5A26A8982C004D5927 /* SharedLocationAnnotation.swift */,
+				B9BA5B5A26A8982C004D5927 /* InboxLocationAnnotation.swift */,
 				B90CB2972904F95B003903D4 /* MKMapFeatureAnnotationExtension.swift */,
 				B9C1F40C27AAEB1500C6D4DD /* PointOfInterestAnnotation.swift */,
 				B9BA5B5826A897CF004D5927 /* PointOfInterestAnnotationView.swift */,
@@ -1005,7 +1007,6 @@
 				B9FF2906284E04F400CCB320 /* Video.swift */,
 				B95F514923E5B2C10063CB3D /* Website.swift */,
 				B9B717DD23E6B26900A47207 /* UnknownItem.swift */,
-				B9CC98AE2A6E218A0088CA28 /* LocationActions.swift */,
 				B9EF566023DF3D61000D0CB2 /* GoogleSignInViewController.swift */,
 				B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */,
 				B91E0B61254D047D002928D3 /* PairingURLItem.swift */,
@@ -1204,6 +1205,8 @@
 				B9741F7623DF201A00F061E7 /* Inbox */,
 				B904A2A4243968840087BD4A /* Maps */,
 				B9C04B41257775B8001D6E0F /* WebViewController.swift */,
+				B9C1CDEE2A6E881700EAC2A3 /* Location.swift */,
+				B9CC98AE2A6E218A0088CA28 /* LocationActions.swift */,
 				B97BAE6124B61DB100AE7D13 /* Vehicle.swift */,
 				B92A61102576472A0073AB7B /* Assistant.swift */,
 				B9640ABC2575EBF200B779AD /* Firebase */,
@@ -1702,10 +1705,10 @@
 			);
 			mainGroup = B9DC5B18229D59BE00B645D5;
 			packageReferences = (
-				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */,
+				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */,
 				B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */,
 				B979456F27A81AFE007040E7 /* XCRemoteSwiftPackageReference "SwiftCBOR" */,
-				B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */,
+				B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */,
 				B9085FCE2A61A6B50014CCC1 /* XCRemoteSwiftPackageReference "XCGLogger" */,
 				B9085FDB2A61A8020014CCC1 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */,
 				B9085FDE2A61A8D20014CCC1 /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
@@ -1714,11 +1717,11 @@
 				B9085FE72A61AA0A0014CCC1 /* XCRemoteSwiftPackageReference "DictionaryCoding" */,
 				B9085FEA2A61AA720014CCC1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				B990259F2A61B70B00BDCDE9 /* XCRemoteSwiftPackageReference "MarqueeLabel" */,
-				B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */,
+				B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				B906AEC82A623D37008C7458 /* XCRemoteSwiftPackageReference "Solar" */,
 				B964B3002A6257EF003543CC /* XCRemoteSwiftPackageReference "PINCache" */,
 				B9BEAF252A625AAC00E23648 /* XCRemoteSwiftPackageReference "TransitionButton" */,
-				B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel.git" */,
+				B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 			);
 			productRefGroup = B9DC5B22229D59BE00B645D5 /* Products */;
 			projectDirPath = "";
@@ -2047,7 +2050,7 @@
 				B9FF2907284E04F400CCB320 /* Video.swift in Sources */,
 				B90C297225E3FB80004466C9 /* SIMDExtension.swift in Sources */,
 				B90A5500274A4B8E0078585A /* LocationTracker.swift in Sources */,
-				B9BA5B5B26A8982C004D5927 /* SharedLocationAnnotation.swift in Sources */,
+				B9BA5B5B26A8982C004D5927 /* InboxLocationAnnotation.swift in Sources */,
 				B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */,
 				B9640AAB2575D9E800B779AD /* Firebase.swift in Sources */,
 				B9FB33E124AE2ACD00FEB782 /* PlaybackModeButton.swift in Sources */,
@@ -2070,6 +2073,7 @@
 				B9DC5B3D229D9E0C00B645D5 /* BLECharacteristicsDiscovery.swift in Sources */,
 				B9D8E43A23D345D70078A057 /* UUIDExtension.swift in Sources */,
 				B9248B8B2728A27500952745 /* MPMediaItemExtension.swift in Sources */,
+				B9C1CDEF2A6E881700EAC2A3 /* Location.swift in Sources */,
 				B90265AB23EB4CE000B2EF6B /* InboxItemTableViewDataSource.swift in Sources */,
 				B9C1F41527B815C400C6D4DD /* FirestoreQuerySubscription.swift in Sources */,
 				B90CB2982904F95C003903D4 /* MKMapFeatureAnnotationExtension.swift in Sources */,
@@ -3269,7 +3273,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */ = {
+		B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -3349,7 +3353,7 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */ = {
+		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yujinakayama/DirectionalUserLocationAnnotationView.git";
 			requirement = {
@@ -3373,7 +3377,7 @@
 				minimumVersion = 4.3.1;
 			};
 		};
-		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */ = {
+		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mapbox/mapbox-navigation-ios.git";
 			requirement = {
@@ -3397,7 +3401,7 @@
 				kind = branch;
 			};
 		};
-		B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel.git" */ = {
+		B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scenee/FloatingPanel.git";
 			requirement = {
@@ -3410,22 +3414,22 @@
 /* Begin XCSwiftPackageProductDependency section */
 		B906AEC02A6239E6008C7458 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
 		B906AEC22A6239E6008C7458 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
 		B906AEC42A6239E6008C7458 /* FirebaseFirestoreSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
 		};
 		B906AEC62A6239E6008C7458 /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
 		};
 		B906AEC92A623D37008C7458 /* Solar */ = {
@@ -3495,7 +3499,7 @@
 		};
 		B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */;
+			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */;
 			productName = DirectionalUserLocationAnnotationView;
 		};
 		B964B3012A6257EF003543CC /* PINCache */ = {
@@ -3520,7 +3524,7 @@
 		};
 		B9B7451F29968B2C00C85825 /* MapboxCoreNavigation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */;
+			package = B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */;
 			productName = MapboxCoreNavigation;
 		};
 		B9BEAF262A625AAC00E23648 /* TransitionButton */ = {
@@ -3540,7 +3544,7 @@
 		};
 		B9E886882A6D58D600F789AA /* FloatingPanel */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel.git" */;
+			package = B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel" */;
 			productName = FloatingPanel;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -9,8 +9,6 @@
 import MapKit
 
 protocol PointOfInterestAnnotation: MKAnnotation {
-    var categories: [PointOfInterestCategory] { get }
-    var mapItem: MKMapItem { get }
-    func markAsOpened(_ value: Bool)
+    var location: Location { get }
     func openDirectionsInMaps() async
 }

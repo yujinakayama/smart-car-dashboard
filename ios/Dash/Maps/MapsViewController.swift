@@ -221,6 +221,8 @@ class MapsViewController: UIViewController {
 
     var isVisible = false
 
+    var partialLocationTask: Task<Void, Never>?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -537,24 +539,24 @@ class MapsViewController: UIViewController {
     }
 
     private func removeSharedLocationAnnotations() {
-        let annotations = mapView.annotations.filter { $0 is SharedLocationAnnotation }
+        let annotations = mapView.annotations.filter { $0 is InboxLocationAnnotation }
         mapView.removeAnnotations(annotations)
     }
 
     private func updateSharedLocationAnnotations() async {
         guard let recentLocations = await recentLocations() else { return }
 
-        let existingAnnotations = mapView.annotations.filter { $0 is SharedLocationAnnotation } as! [SharedLocationAnnotation]
-        let existingLocations = Set(existingAnnotations.map { $0.location })
+        let existingAnnotations = mapView.annotations.filter { $0 is InboxLocationAnnotation } as! [InboxLocationAnnotation]
+        let existingLocations = Set(existingAnnotations.map { $0.inboxLocation })
 
         let locationsToAdd = recentLocations.subtracting(existingLocations)
         let annotationsToAdd = locationsToAdd.map { (location) in
-            return SharedLocationAnnotation(location)
+            return InboxLocationAnnotation(location)
         }
 
         let locationsToRemove = existingLocations.subtracting(recentLocations)
         let annotationsToRemove = locationsToRemove.compactMap { (location) in
-            return existingAnnotations.first { $0.location == location }
+            return existingAnnotations.first { $0.inboxLocation == location }
         }
 
         await MainActor.run {
@@ -579,7 +581,7 @@ class MapsViewController: UIViewController {
     @objc func openDirectionsInMapsForSelectedPointOfInterestAnnotation() {
         guard let annotation = (mapView.selectedAnnotations.first as? PointOfInterestAnnotation) else { return }
 
-        annotation.markAsOpened(true)
+        annotation.location.markAsOpened(true)
 
         Task {
             await annotation.openDirectionsInMaps()
@@ -588,7 +590,7 @@ class MapsViewController: UIViewController {
 
     @objc func startSearchingParkingsForSeletedPointOfInterestAnnotation() {
         guard let annotation = (mapView.selectedAnnotations.first as? PointOfInterestAnnotation) else { return }
-        startSearchingParkings(destination: annotation.mapItem)
+        startSearchingParkings(destination: annotation.location.mapItem)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -636,7 +638,7 @@ extension MapsViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             return mapView.dequeueReusableAnnotationView(withIdentifier: Self.directionalUserLocationAnnotationViewIdentifier, for: annotation)
-        } else if let annotation = annotation as? SharedLocationAnnotation {
+        } else if let annotation = annotation as? InboxLocationAnnotation {
             return mapView.dequeueReusableAnnotationView(withIdentifier: Self.pointOfInterestAnnotationViewIdentifier, for: annotation)
         } else if currentMode == .parkingSearch {
             return parkingSearchManager.view(for: annotation)
@@ -672,23 +674,49 @@ extension MapsViewController: MKMapViewDelegate {
 
         pointOfInterestViewController.annotation = pointOfInterestAnnotation
 
-        // TODO: Support MKMapFeatureAnnotation
-        if let location = (annotation as? SharedLocationAnnotation)?.location {
-            let actions = LocationActions(location: location, viewController: self)
-
-            pointOfInterestViewController.moreActionsButton.menu = actions.makeMenu(for: [
-                .searchWeb,
-                .openWebsite,
-                .openDirectionsInGoogleMaps,
-                .openDirectionsInYahooCarNavi
-            ])
-
-            pointOfInterestViewController.moreActionsButton.isEnabled = true
-        } else {
-            pointOfInterestViewController.moreActionsButton.isEnabled = false
+        switch pointOfInterestAnnotation.location {
+        case .full(let location):
+            configureMoreActionButtonForFullLocation(location)
+        case .partial(let partialLocation):
+            configureMoreActionButtonForPartialLocation(partialLocation)
         }
 
         pointOfInterestFloatingController.move(to: .full, animated: true)
+    }
+    
+    func configureMoreActionButtonForFullLocation(_ location: FullLocation) {
+        let actions = LocationActions(location: location, viewController: self)
+
+        pointOfInterestViewController.moreActionsButton.menu = actions.makeMenu(for: [
+            .searchWeb,
+            .openWebsite,
+            .openDirectionsInGoogleMaps,
+            .openDirectionsInYahooCarNavi
+        ])
+
+        pointOfInterestViewController.moreActionsButton.isEnabled = true
+    }
+
+    func configureMoreActionButtonForPartialLocation(_ partialLocation: PartialLocation) {
+        partialLocationTask?.cancel()
+
+        pointOfInterestViewController.moreActionsButton.menu = nil
+        pointOfInterestViewController.moreActionsButton.isEnabled = false
+        pointOfInterestViewController.moreActionsButton.configuration?.showsActivityIndicator = true
+
+        partialLocationTask = Task {
+            defer {
+                pointOfInterestViewController.moreActionsButton.configuration?.showsActivityIndicator = false
+            }
+
+            do {
+                let location = try await partialLocation.fullLocation
+                try Task.checkCancellation()
+                configureMoreActionButtonForFullLocation(location)
+            } catch {
+                logger.error(error)
+            }
+        }
     }
     
     func mapView(_ mapView: MKMapView, didDeselect actuallyOptionalAnnotation: MKAnnotation) {

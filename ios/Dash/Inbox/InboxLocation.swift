@@ -12,7 +12,7 @@ import FirebaseFirestore
 import CommonCrypto
 import ParkingSearchKit
 
-class InboxLocation: InboxItemProtocol {
+class InboxLocation: InboxItemProtocol, FullLocation {
     var firebaseDocument: DocumentReference?
     var identifier: String!
 
@@ -68,43 +68,5 @@ extension InboxLocation: Equatable, Hashable {
         hasher.combine(coordinate.latitude)
         hasher.combine(coordinate.longitude)
         hasher.combine(name)
-    }
-}
-
-extension InboxLocation {
-    struct Address: Decodable {
-        let country: String?
-        let prefecture: String?
-        let distinct: String?
-        let locality: String?
-        let subLocality: String?
-        let houseNumber: String?
-
-        func format() -> String? {
-            let components = [
-                prefecture,
-                distinct,
-                locality,
-                subLocality,
-                houseNumber
-            ].compactMap { $0 }
-
-            guard !components.isEmpty else { return nil }
-
-            return components.reduce(into: [] as [String]) { (components, currentComponent) in
-                guard let previousComponent = components.last else {
-                    components.append(currentComponent)
-                    return
-                }
-
-                if previousComponent.last?.isNumber ?? false && currentComponent.first?.isNumber ?? false {
-                    components.append("-")
-                } else {
-                    components.append(" ")
-                }
-
-                components.append(currentComponent)
-            }.joined()
-        }
     }
 }

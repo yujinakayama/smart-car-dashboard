@@ -18,15 +18,15 @@ enum LocationActionType {
 }
 
 class LocationActions {
-    typealias SearchParkingsHandler = (InboxLocation) -> Void
+    typealias SearchParkingsHandler = (FullLocation) -> Void
 
     static let hostnameParser = try! TLDExtract(useFrozenData: true)
     
-    let location: InboxLocation
+    let location: FullLocation
     let viewController: UIViewController
     let searchParkingsHandler: SearchParkingsHandler?
 
-    init(location: InboxLocation, viewController: UIViewController, searchParkingsHandler: SearchParkingsHandler? = nil) {
+    init(location: FullLocation, viewController: UIViewController, searchParkingsHandler: SearchParkingsHandler? = nil) {
         self.location = location
         self.viewController = viewController
         self.searchParkingsHandler = searchParkingsHandler
