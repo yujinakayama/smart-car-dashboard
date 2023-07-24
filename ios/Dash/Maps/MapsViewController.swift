@@ -701,13 +701,20 @@ extension MapsViewController: MKMapViewDelegate {
         partialLocationTask?.cancel()
 
         pointOfInterestViewController.titleLabel.text = partialLocation.name
-
         pointOfInterestViewController.moreActionsButton.menu = nil
-        pointOfInterestViewController.moreActionsButton.isEnabled = false
 
         partialLocationTask = Task {
+            // Disable moreActionsButton if the request takes more than 200 milliseconds
+            // to avoid flicker
+            let moreActionButtonDisablementTask = Task {
+                try await Task.sleep(for: .milliseconds(200))
+                try Task.checkCancellation()
+                pointOfInterestViewController.moreActionsButton.isEnabled = false
+            }
+
             do {
                 let location = try await partialLocation.fullLocation
+                moreActionButtonDisablementTask.cancel()
                 try Task.checkCancellation()
                 configurePointOfInterestViewControllerForFullLocation(location)
             } catch {
