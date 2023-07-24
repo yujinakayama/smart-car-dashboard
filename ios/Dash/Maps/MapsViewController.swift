@@ -86,7 +86,7 @@ class MapsViewController: UIViewController {
         controller.surfaceView.appearance = {
             let appearance = SurfaceAppearance()
             appearance.cornerCurve = .continuous
-            appearance.cornerRadius = 8
+            appearance.cornerRadius = 10
             appearance.backgroundColor = .secondarySystemBackground
             return appearance
         }()
