@@ -72,7 +72,7 @@ import UIKit
 
     func applyCornerMasks() {
         if placement == .bottomAttached {
-            visualEffectView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            visualEffectView.layer.maskedCorners = []
         } else {
             visualEffectView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner]
         }
