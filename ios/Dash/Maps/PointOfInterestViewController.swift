@@ -115,7 +115,7 @@ fileprivate func makeButton(systemImageName: String, subtitle: String, foregroun
     configuration.contentInsets = .init(top: 10, leading: 8, bottom: 8, trailing: 8)
     configuration.cornerStyle = .medium
 
-    let symbolConfiguration = UIImage.SymbolConfiguration(textStyle: .callout)
+    let symbolConfiguration = UIImage.SymbolConfiguration(textStyle: .headline)
     configuration.image = UIImage(systemName: systemImageName, withConfiguration: symbolConfiguration)
     configuration.imagePlacement = .top
     configuration.imagePadding = 8
