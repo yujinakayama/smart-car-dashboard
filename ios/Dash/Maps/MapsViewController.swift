@@ -704,13 +704,8 @@ extension MapsViewController: MKMapViewDelegate {
 
         pointOfInterestViewController.moreActionsButton.menu = nil
         pointOfInterestViewController.moreActionsButton.isEnabled = false
-        pointOfInterestViewController.moreActionsButton.configuration?.showsActivityIndicator = true
 
         partialLocationTask = Task {
-            defer {
-                pointOfInterestViewController.moreActionsButton.configuration?.showsActivityIndicator = false
-            }
-
             do {
                 let location = try await partialLocation.fullLocation
                 try Task.checkCancellation()
