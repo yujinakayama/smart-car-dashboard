@@ -81,13 +81,22 @@ class MapsViewController: UIViewController {
         controller.view.backgroundColor = nil
         controller.backdropView.isHidden = true
         
-        // TODO: Use blur visual effect for background
-
+        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .systemThickMaterial))
+        visualEffectView.translatesAutoresizingMaskIntoConstraints = false
+        let surfaceContainerView = controller.surfaceView.containerView
+        surfaceContainerView.addSubview(visualEffectView)
+        NSLayoutConstraint.activate([
+            visualEffectView.leftAnchor.constraint(equalTo: surfaceContainerView.leftAnchor),
+            visualEffectView.rightAnchor.constraint(equalTo: surfaceContainerView.rightAnchor),
+            visualEffectView.topAnchor.constraint(equalTo: surfaceContainerView.topAnchor),
+            visualEffectView.bottomAnchor.constraint(equalTo: surfaceContainerView.bottomAnchor),
+        ])
+        
         controller.surfaceView.appearance = {
             let appearance = SurfaceAppearance()
             appearance.cornerCurve = .continuous
             appearance.cornerRadius = 10
-            appearance.backgroundColor = .secondarySystemBackground
+            appearance.backgroundColor = nil
             return appearance
         }()
 
