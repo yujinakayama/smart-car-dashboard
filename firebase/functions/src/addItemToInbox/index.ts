@@ -18,12 +18,6 @@ export const addItemToInbox = onRequest({
     secrets: requiredSecrets,
     minInstances: 1
 }, async (functionRequest, functionResponse) => {
-    if (functionRequest.method === 'GET') {
-        await warmUpFirestore()
-        functionResponse.sendStatus(200)
-        return
-    }
-
     const request = functionRequest.body as Request
 
     console.log('request:', request)
@@ -51,13 +45,6 @@ export const addItemToInbox = onRequest({
 
     functionResponse.sendStatus(200)
 })
-
-function warmUpFirestore(): Promise<any> {
-    // Initial call to Firestore client takes about 5 seconds,
-    // so we warm up the client every 2 minutes.
-    // https://github.com/firebase/firebase-functions/issues/263#issuecomment-397129178
-    return admin.firestore().collection('health').get()
-}
 
 function normalize(inputData: InputData): Promise<NormalizedData> {
     if (isAppleMapsLocation(inputData)) {
