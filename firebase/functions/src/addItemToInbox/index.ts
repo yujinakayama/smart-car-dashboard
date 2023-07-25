@@ -11,7 +11,7 @@ import { isYouTubeVideo, normalizeYouTubeVideo } from './youtube'
 import { normalizeWebpage } from './website'
 import { notify } from './notification'
 
-export const addItemToInbox = onRequest({ region: 'asia-northeast1' }, async (functionRequest, functionResponse) => {
+export const addItemToInbox = onRequest({ region: 'asia-northeast1', minInstances: 1 }, async (functionRequest, functionResponse) => {
     if (functionRequest.method === 'GET') {
         await warmUpFirestore()
         functionResponse.sendStatus(200)
