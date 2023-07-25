@@ -1,4 +1,4 @@
-import * as functions from 'firebase-functions'
+import { onRequest } from 'firebase-functions/v2/https'
 import * as admin from 'firebase-admin'
 
 import { Request, InputData } from './inputData'
@@ -11,7 +11,7 @@ import { isYouTubeVideo, normalizeYouTubeVideo } from './youtube'
 import { normalizeWebpage } from './website'
 import { notify } from './notification'
 
-export const addItemToInbox = functions.region('asia-northeast1').https.onRequest(async (functionRequest, functionResponse) => {
+export const addItemToInbox = onRequest({ region: 'asia-northeast1' }, async (functionRequest, functionResponse) => {
     if (functionRequest.method === 'GET') {
         await warmUpFirestore()
         functionResponse.sendStatus(200)
