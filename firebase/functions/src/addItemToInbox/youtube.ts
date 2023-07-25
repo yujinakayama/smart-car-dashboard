@@ -1,12 +1,12 @@
 import { google, youtube_v3 } from 'googleapis'
-import * as functions from 'firebase-functions'
 
 import { InputData } from './inputData'
 import { Video } from './normalizedData'
 
-const client = google.youtube('v3')
+export const requiredEnvName = 'GOOGLE_API_KEY'
+const apiKey = process.env[requiredEnvName]
 
-const apiKey = process.env.GOOGLE_API_KEY || functions.config().google.api_key
+const client = google.youtube('v3')
 
 export function isYouTubeVideo(inputData: InputData): boolean {
     const url = inputData.url

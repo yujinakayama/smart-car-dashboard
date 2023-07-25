@@ -5,13 +5,19 @@ import { Request, InputData } from './inputData'
 import { NormalizedData } from './normalizedData'
 import { Item } from './item'
 import { isAppleMapsLocation, normalizeAppleMapsLocation } from './appleMaps'
-import { isGoogleMapsLocation, normalizeGoogleMapsLocation } from './googleMaps'
-import { isAppleMusicItem, normalizeAppleMusicItem } from './appleMusic'
-import { isYouTubeVideo, normalizeYouTubeVideo } from './youtube'
+import { isGoogleMapsLocation, normalizeGoogleMapsLocation, requiredEnvName as googleMapsRequiredEnvName } from './googleMaps'
+import { isAppleMusicItem, normalizeAppleMusicItem, requiredEnvName as appleMusicRequiredEnvName } from './appleMusic'
+import { isYouTubeVideo, normalizeYouTubeVideo, requiredEnvName as youtubeRequiredEnvName } from './youtube'
 import { normalizeWebpage } from './website'
 import { notify } from './notification'
 
-export const addItemToInbox = onRequest({ region: 'asia-northeast1', minInstances: 1 }, async (functionRequest, functionResponse) => {
+const requiredSecrets = Array.from(new Set([googleMapsRequiredEnvName, appleMusicRequiredEnvName, youtubeRequiredEnvName]))
+
+export const addItemToInbox = onRequest({
+    region: 'asia-northeast1',
+    secrets: requiredSecrets,
+    minInstances: 1
+}, async (functionRequest, functionResponse) => {
     if (functionRequest.method === 'GET') {
         await warmUpFirestore()
         functionResponse.sendStatus(200)

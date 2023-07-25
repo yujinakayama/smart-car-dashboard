@@ -1,5 +1,3 @@
-import * as functions from 'firebase-functions'
-
 import { URL } from 'url'
 
 import { Client } from '@yujinakayama/apple-music'
@@ -23,8 +21,12 @@ interface ItemParameters {
     songID: string | null
 }
 
+export const requiredEnvName = 'APPLE_MUSIC_DEVELOPER_TOKEN'
+// If the secret is missing, it'll be error on deployment
+const developerToken = process.env[requiredEnvName] ?? ''
+
 const client = new Client({
-    developerToken: functions.config().apple_music.developer_token
+    developerToken: developerToken
 })
 
 export function isAppleMusicItem(inputData: InputData): boolean {

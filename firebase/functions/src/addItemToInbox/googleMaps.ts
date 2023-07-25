@@ -1,6 +1,5 @@
 import { AddressType, Client, Language, PlaceData, PlaceDetailsRequest, PlaceInputType, PlaceType1, PlaceType2 } from '@googlemaps/google-maps-services-js'
 import axios from 'axios'
-import * as functions from 'firebase-functions'
 // @ts-ignore: no type definition provided
 import { parse_host as parseHost } from 'tld-extract'
 
@@ -69,8 +68,11 @@ const googleMapsAddressComponentKeys = [
     'point_of_interest'
 ]
 
+export const requiredEnvName = 'GOOGLE_API_KEY'
+// If the secret is missing, it'll be error on deployment
+const apiKey = process.env[requiredEnvName] ?? ''
+
 const client = new Client()
-const apiKey = process.env.GOOGLE_API_KEY || functions.config().google.api_key
 
 export function isGoogleMapsLocation(inputData: InputData): boolean {
     const url = inputData.url
