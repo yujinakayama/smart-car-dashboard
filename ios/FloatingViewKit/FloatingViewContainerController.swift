@@ -54,6 +54,10 @@ open class FloatingViewContainerController: UIViewController {
         return false
     }
 
+    open override func loadView() {
+        view = ContainerView()
+    }
+    
     open override func viewDidLoad() {
         super.viewDidLoad()
 
