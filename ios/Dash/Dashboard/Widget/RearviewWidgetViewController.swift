@@ -76,7 +76,7 @@ class RearviewWidgetViewController: UIViewController {
             initialPosition: Defaults.shared.floatingWidgetPositionInRearviewWidget
         )
         floatingWidgetContainerController.delegate = self
-        floatingWidgetContainerController.additionalSafeAreaInsets = .init(top: 0, left: 20, bottom: 0, right: 20)
+        floatingWidgetContainerController.additionalSafeAreaInsets = .init(top: 0, left: 24, bottom: 0, right: 24)
         floatingWidgetContainerController.view.translatesAutoresizingMaskIntoConstraints = false
 
         addChild(floatingWidgetContainerController)
