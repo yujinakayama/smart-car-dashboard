@@ -434,8 +434,8 @@ extension RearviewViewController {
     }
 
     public enum SensitivityModeControlPosition: CGFloat {
-        case top    = 0.15
+        case top    = 0.23
         case center = 0.50
-        case bottom = 0.85
+        case bottom = 0.77
     }
 }
