@@ -64,7 +64,7 @@ class MapsViewController: UIViewController {
 
     var hasInitiallyEnabledUserTrackingMode = false
 
-    lazy var pointOfInterestViewController = PointOfInterestViewController(searchParkingsHandler: { [weak self] (location) in
+    lazy var pointOfInterestViewController = PointOfInterestViewController(delegate: self, searchParkingsHandler: { [weak self] (location) in
         self?.startSearchingParkings(destination: location.mapItem)
     })
     
@@ -685,6 +685,16 @@ extension MapsViewController: FloatingPanelControllerDelegate {
            pointOfInterestViewController.annotation === selectedAnnotation
         {
             mapView.deselectAnnotation(selectedAnnotation, animated: true)
+        }
+    }
+}
+
+extension MapsViewController: PointOfInterestViewControllerDelegate {
+    func pointOfInterestViewController(_ viewController: PointOfInterestViewController, didFetchFullLocation fullLocation: FullLocation, fromPartialLocation partialLocation: PartialLocation) {
+        // If partial location and full location have different title,
+        // height of title label may be changed.
+        if fullLocation.name != partialLocation.name {
+            pointOfInterestFloatingController.move(to: .full, animated: true)
         }
     }
 }

@@ -8,10 +8,16 @@
 
 import UIKit
 
-class PointOfInterestViewController: UIViewController {
-    let searchParkingsHandler: (Location) -> Void
+protocol PointOfInterestViewControllerDelegate: NSObject {
+    func pointOfInterestViewController(_ viewController: PointOfInterestViewController, didFetchFullLocation fullLocation: FullLocation, fromPartialLocation partialLocation: PartialLocation)
+}
 
-    init(searchParkingsHandler: @escaping (Location) -> Void) {
+class PointOfInterestViewController: UIViewController {
+    weak var delegate: PointOfInterestViewControllerDelegate?
+    let searchParkingsHandler: (Location) -> Void
+    
+    init(delegate: PointOfInterestViewControllerDelegate? = nil, searchParkingsHandler: @escaping (Location) -> Void) {
+        self.delegate = delegate
         self.searchParkingsHandler = searchParkingsHandler
         super.init(nibName: nil, bundle: nil)
     }
@@ -170,6 +176,7 @@ class PointOfInterestViewController: UIViewController {
                 let fullLocation = try await partialLocation.fullLocation
                 try Task.checkCancellation()
                 update(for: .full(fullLocation))
+                delegate?.pointOfInterestViewController(self, didFetchFullLocation: fullLocation, fromPartialLocation: partialLocation)
             } catch {
                 logger.error(error)
             }
