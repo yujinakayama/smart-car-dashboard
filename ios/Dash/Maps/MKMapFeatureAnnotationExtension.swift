@@ -10,15 +10,11 @@ import MapKit
 
 extension MKMapFeatureAnnotation: PointOfInterestAnnotation {
     var location: Location {
-        .partial(MapFeatureAnnotatioLocation(annotation: self))
-    }
-        
-    func openDirectionsInMaps() async {
-        await AppleMaps.shared.openDirections(to: location.mapItem, snappingToPointOfInterest: true)
+        .partial(MapFeatureAnnotationLocation(annotation: self))
     }
 }
 
-class MapFeatureAnnotatioLocation: PartialLocation {
+class MapFeatureAnnotationLocation: PartialLocation {
     let annotation: MKMapFeatureAnnotation
 
     init(annotation: MKMapFeatureAnnotation) {
@@ -55,7 +51,11 @@ class MapFeatureAnnotatioLocation: PartialLocation {
             return MapItemLocation(mapItem: mapItem)
         }
     }
-    
+
+    func openDirectionsInMaps() async {
+        await AppleMaps.shared.openDirections(to: mapItem, snappingToPointOfInterest: true)
+    }
+
     func markAsOpened(_ value: Bool) {
         // No-op
     }
@@ -89,7 +89,11 @@ class MapItemLocation: FullLocation {
     var websiteURL: URL? {
         mapItem.url
     }
-    
+
+    func openDirectionsInMaps() async {
+        AppleMaps.shared.openDirections(to: mapItem)
+    }
+
     func markAsOpened(_ value: Bool) {
         // No-op
     }

@@ -47,13 +47,22 @@ enum Location {
             return location.name
         }
     }
-    
+
+    func openDirectionsInMaps() async {
+        switch self {
+        case .full(let location):
+            await location.openDirectionsInMaps()
+        case .partial(let location):
+            await location.openDirectionsInMaps()
+        }
+    }
+
     func markAsOpened(_ value: Bool) {
         switch self {
         case .full(let location):
-            return location.markAsOpened(value)
+            location.markAsOpened(value)
         case .partial(let location):
-            return location.markAsOpened(value)
+            location.markAsOpened(value)
         }
     }
 }
@@ -66,6 +75,7 @@ protocol FullLocation {
     var name: String? { get }
     var websiteURL: URL? { get }
 
+    func openDirectionsInMaps() async
     func markAsOpened(_ value: Bool)
 }
 
@@ -77,6 +87,7 @@ protocol PartialLocation {
     
     var fullLocation: FullLocation { get async throws }
     
+    func openDirectionsInMaps() async
     func markAsOpened(_ value: Bool)
 }
 

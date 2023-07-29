@@ -261,7 +261,7 @@ class InboxItemTableViewController: UITableViewController {
 
 private extension InboxItemTableViewController {
     func actionMenu(for location: InboxLocation) -> UIMenu {
-        let actions = LocationActions(location: location, viewController: self, searchParkingsHandler: { location in
+        let actions = LocationActions(location: .full(location), viewController: self, searchParkingsHandler: { location in
             self.pushMapsViewControllerForParkingSearch(destination: location.mapItem)
         })
 

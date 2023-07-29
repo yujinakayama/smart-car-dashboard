@@ -64,12 +64,9 @@ class MapsViewController: UIViewController {
 
     var hasInitiallyEnabledUserTrackingMode = false
 
-    lazy var pointOfInterestViewController: PointOfInterestViewController = {
-        let viewController = PointOfInterestViewController()
-        viewController.directionsButton.addTarget(self, action: #selector(openDirectionsInMapsForSelectedPointOfInterestAnnotation), for: .touchUpInside)
-        viewController.parkingSearchButton.addTarget(self, action: #selector(startSearchingParkingsForSeletedPointOfInterestAnnotation), for: .touchUpInside)
-        return viewController
-    }()
+    lazy var pointOfInterestViewController = PointOfInterestViewController(searchParkingsHandler: { [weak self] (location) in
+        self?.startSearchingParkings(destination: location.mapItem)
+    })
     
     lazy var pointOfInterestFloatingController: FloatingPanelController = {
         let controller = FloatingPanelController()
@@ -587,21 +584,6 @@ class MapsViewController: UIViewController {
         return Set(locations)
     }
 
-    @objc func openDirectionsInMapsForSelectedPointOfInterestAnnotation() {
-        guard let annotation = (mapView.selectedAnnotations.first as? PointOfInterestAnnotation) else { return }
-
-        annotation.location.markAsOpened(true)
-
-        Task {
-            await annotation.openDirectionsInMaps()
-        }
-    }
-
-    @objc func startSearchingParkingsForSeletedPointOfInterestAnnotation() {
-        guard let annotation = (mapView.selectedAnnotations.first as? PointOfInterestAnnotation) else { return }
-        startSearchingParkings(destination: annotation.location.mapItem)
-    }
-
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         changePlacementOfParkingSearchOptionsSheetViewIfNeeded()
@@ -680,58 +662,10 @@ extension MapsViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect annotation: MKAnnotation) {
         guard let pointOfInterestAnnotation = annotation as? PointOfInterestAnnotation else { return }
-
         pointOfInterestViewController.annotation = pointOfInterestAnnotation
-
-        switch pointOfInterestAnnotation.location {
-        case .full(let location):
-            configurePointOfInterestViewControllerForFullLocation(location)
-        case .partial(let partialLocation):
-            configurePointOfInterestViewControllerForPartialLocation(partialLocation)
-        }
-
         pointOfInterestFloatingController.move(to: .full, animated: true)
     }
-    
-    func configurePointOfInterestViewControllerForFullLocation(_ location: FullLocation) {
-        pointOfInterestViewController.titleLabel.text = location.name
-        
-        let actions = LocationActions(location: location, viewController: self)
-        pointOfInterestViewController.moreActionsButton.menu = actions.makeMenu(for: [
-            .searchWeb,
-            .openWebsite,
-            .openDirectionsInGoogleMaps,
-            .openDirectionsInYahooCarNavi
-        ])
-        pointOfInterestViewController.moreActionsButton.isEnabled = true
-    }
 
-    func configurePointOfInterestViewControllerForPartialLocation(_ partialLocation: PartialLocation) {
-        partialLocationTask?.cancel()
-
-        pointOfInterestViewController.titleLabel.text = partialLocation.name
-        pointOfInterestViewController.moreActionsButton.menu = nil
-
-        partialLocationTask = Task {
-            // Disable moreActionsButton if the request takes more than 200 milliseconds
-            // to avoid flicker
-            let moreActionButtonDisablementTask = Task {
-                try await Task.sleep(for: .milliseconds(200))
-                try Task.checkCancellation()
-                pointOfInterestViewController.moreActionsButton.isEnabled = false
-            }
-
-            do {
-                let location = try await partialLocation.fullLocation
-                moreActionButtonDisablementTask.cancel()
-                try Task.checkCancellation()
-                configurePointOfInterestViewControllerForFullLocation(location)
-            } catch {
-                logger.error(error)
-            }
-        }
-    }
-    
     func mapView(_ mapView: MKMapView, didDeselect actuallyOptionalAnnotation: MKAnnotation) {
         // For some reason nil annotation may be given
         let optionalAnnotation: MKAnnotation? = actuallyOptionalAnnotation

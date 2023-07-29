@@ -10,5 +10,4 @@ import MapKit
 
 protocol PointOfInterestAnnotation: MKAnnotation {
     var location: Location { get }
-    func openDirectionsInMaps() async
 }

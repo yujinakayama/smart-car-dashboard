@@ -31,8 +31,4 @@ class InboxLocationAnnotation: NSObject, PointOfInterestAnnotation {
     var location: Location {
         .full(inboxLocation)
     }
-    
-    func openDirectionsInMaps() async {
-        await inboxLocation.openDirectionsInMaps()
-    }
 }

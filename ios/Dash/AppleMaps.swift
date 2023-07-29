@@ -23,7 +23,7 @@ class AppleMaps {
         }
     }
 
-    private func openDirections(to destination: MKMapItem) {
+    func openDirections(to destination: MKMapItem) {
         destination.openInMaps(launchOptions: [
             MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
         ])

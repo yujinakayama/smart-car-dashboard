@@ -9,9 +9,36 @@
 import UIKit
 
 class PointOfInterestViewController: UIViewController {
-    var annotation: PointOfInterestAnnotation?
+    let searchParkingsHandler: (Location) -> Void
 
-    lazy var contentView: UIView = {
+    init(searchParkingsHandler: @escaping (Location) -> Void) {
+        self.searchParkingsHandler = searchParkingsHandler
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    var annotation: PointOfInterestAnnotation? {
+        didSet {
+            if let location = annotation?.location {
+                update(for: location)
+                if case .partial(let partialLocation) = location {
+                    fetchFullLocation(partialLocation: partialLocation)
+                }
+            } else {
+                partialLocationTask?.cancel()
+                actions = nil
+            }
+        }
+    }
+
+    private var actions: LocationActions?
+    
+    private var partialLocationTask: Task<Void, Never>?
+
+    private lazy var contentView: UIView = {
         let stackView = UIStackView(arrangedSubviews: [
             titleLabel,
             actionStackView,
@@ -25,7 +52,7 @@ class PointOfInterestViewController: UIViewController {
         return stackView
     }()
 
-    lazy var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .label
         label.numberOfLines = 2
@@ -38,7 +65,7 @@ class PointOfInterestViewController: UIViewController {
         return label
     }()
     
-    lazy var actionStackView: UIView = {
+    private lazy var actionStackView: UIView = {
         let stackView = UIStackView(arrangedSubviews: [
             directionsButton,
             parkingSearchButton,
@@ -53,27 +80,43 @@ class PointOfInterestViewController: UIViewController {
         return stackView
     }()
 
-    lazy var directionsButton: UIButton = makeButton(
-        systemImageName: "car.fill",
-        subtitle: String(localized: "Get Directions"),
-        foregroundColor: .white,
-        backgroundColor: .link // Not sure why but setting view.tintColor makes button's target-action not firing
-    )
+    private lazy var directionsButton: UIButton = {
+        let button = makeButton(
+            systemImageName: "car.fill",
+            subtitle: String(localized: "Directions"),
+            foregroundColor: .white,
+            backgroundColor: .link // Not sure why but setting view.tintColor makes button's target-action not firing
+        )
 
-    lazy var parkingSearchButton: UIButton = makeButton(
-        systemImageName: "parkingsign",
-        subtitle: String(localized: "Search Parkings"),
-        foregroundColor: UIColor(dynamicProvider: { [unowned self] traitCollection in
-            if traitCollection.userInterfaceStyle == .dark {
-                return .white
-            } else {
-                return .link
-            }
-        }),
-        backgroundColor: .systemFill
-    )
+        button.addAction(.init(handler: { [weak self] _ in
+            self?.actions?.action(for: .openDirectionsInAppleMaps)?.perform()
+        }), for: .touchUpInside)
+        
+        return button
+    }()
 
-    lazy var moreActionsButton: UIButton = {
+    private lazy var parkingSearchButton: UIButton = {
+        let button = makeButton(
+            systemImageName: "parkingsign",
+            subtitle: String(localized: "Search Parkings"),
+            foregroundColor: UIColor(dynamicProvider: { [unowned self] traitCollection in
+                if traitCollection.userInterfaceStyle == .dark {
+                    return .white
+                } else {
+                    return .link
+                }
+            }),
+            backgroundColor: .systemFill
+        )
+
+        button.addAction(.init(handler: { [weak self] _ in
+            self?.actions?.action(for: .searchParkings)?.perform()
+        }), for: .touchUpInside)
+        
+        return button
+    }()
+
+    private lazy var moreActionsButton: UIButton = {
         let button = makeButton(
             systemImageName: "ellipsis",
             subtitle: String(localized: "More"),
@@ -92,7 +135,6 @@ class PointOfInterestViewController: UIViewController {
         return button
     }()
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -104,6 +146,34 @@ class PointOfInterestViewController: UIViewController {
             view.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             view.rightAnchor.constraint(equalTo: contentView.rightAnchor),
         ])
+    }
+    
+    private func update(for location: Location) {
+        partialLocationTask?.cancel()
+
+        titleLabel.text = location.name
+
+        let actions = LocationActions(location: location, viewController: self, searchParkingsHandler: searchParkingsHandler)
+        moreActionsButton.menu = actions.makeMenu(for: [
+            .searchWeb,
+            .openWebsite,
+            .openDirectionsInGoogleMaps,
+            .openDirectionsInYahooCarNavi
+        ])
+
+        self.actions = actions
+    }
+    
+    private func fetchFullLocation(partialLocation: PartialLocation) {
+        partialLocationTask = Task {
+            do {
+                let fullLocation = try await partialLocation.fullLocation
+                try Task.checkCancellation()
+                update(for: .full(fullLocation))
+            } catch {
+                logger.error(error)
+            }
+        }
     }
 }
 
