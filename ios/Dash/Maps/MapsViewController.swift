@@ -107,7 +107,9 @@ class MapsViewController: UIViewController {
 
         return controller
     }()
-    
+
+    private var pointOfInterestViewHidingTimer: Timer?
+
     lazy var gestureRecognizer: UIGestureRecognizer = {
         let gestureRecognizer = UILongPressGestureRecognizer()
         gestureRecognizer.delegate = self
@@ -227,8 +229,6 @@ class MapsViewController: UIViewController {
 
     var isVisible = false
 
-    var partialLocationTask: Task<Void, Never>?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -662,6 +662,10 @@ extension MapsViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect annotation: MKAnnotation) {
         guard let pointOfInterestAnnotation = annotation as? PointOfInterestAnnotation else { return }
+
+        pointOfInterestViewHidingTimer?.invalidate()
+        pointOfInterestViewHidingTimer = nil
+
         pointOfInterestViewController.annotation = pointOfInterestAnnotation
         pointOfInterestFloatingController.move(to: .full, animated: true)
     }
@@ -672,7 +676,14 @@ extension MapsViewController: MKMapViewDelegate {
         guard let annotation = optionalAnnotation else { return }
 
         if annotation === pointOfInterestViewController.annotation {
-            pointOfInterestFloatingController.move(to: .hidden, animated: true)
+            // When user selected another annotation,
+            // mapView(didDeselect:) is called first before mapView(didSelect:).
+            // In such case we don't want to hide the floating panel
+            // so we defer the hiding operation so that it can be canceled in mapView(didSelect:),
+            // Without this handling, animation may move strangely.
+            pointOfInterestViewHidingTimer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false, block: { [weak self] timer in
+                self?.pointOfInterestFloatingController.move(to: .hidden, animated: true)
+            })
         }
     }
 }
