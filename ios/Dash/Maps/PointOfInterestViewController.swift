@@ -174,8 +174,13 @@ class PointOfInterestViewController: UIViewController {
         partialLocationTask = Task {
             do {
                 let fullLocation = try await partialLocation.fullLocation
+
                 try Task.checkCancellation()
-                update(for: .full(fullLocation))
+
+                UIView.transition(with: view, duration: 0.25, options: .transitionCrossDissolve) {
+                    self.update(for: .full(fullLocation))
+                }
+
                 delegate?.pointOfInterestViewController(self, didFetchFullLocation: fullLocation, fromPartialLocation: partialLocation)
             } catch {
                 logger.error(error)
