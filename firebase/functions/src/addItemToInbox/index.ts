@@ -22,15 +22,14 @@ export const addItemToInbox = onRequest({
 
     console.log('request:', request)
 
-    const attachments = request.attachments || request.item || {}
-    const inputData = new InputData(attachments)
+    const inputData = new InputData(request.attachments)
     const normalizedData = await normalize(inputData)
 
     console.log('normalizedData:', normalizedData)
 
     const item = {
         hasBeenOpened: false,
-        raw: attachments,
+        raw: request.attachments,
         ...normalizedData
     }
 
