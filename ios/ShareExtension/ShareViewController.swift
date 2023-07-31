@@ -54,20 +54,20 @@ class ShareViewController: UIViewController {
 
     func share() {
         guard let vehicleID = PairedVehicle.defaultVehicleID else {
-            self.cancelRequest(withError: ShareError.pairingRequired, message: "Pairing Required")
+            self.cancelRequest(withError: ShareError.pairingRequired, message: String(localized: "Pairing Required"))
             return
         }
 
         guard let item = item else {
-            self.cancelRequest(withError: ShareError.invalidItem, message: "Invalid Item")
+            self.cancelRequest(withError: ShareError.invalidItem, message: String(localized: "Invalid Item"))
             return
         }
 
-        hud.textLabel.text = "Sending"
+        hud.textLabel.text = String(localized: "Sending")
 
         cloudClient.add(item, toInboxOf: vehicleID) { (error) in
             if let error = error {
-                self.cancelRequest(withError: error, message: "Failed")
+                self.cancelRequest(withError: error, message: String(localized: "Failed"))
             } else {
                 self.completeRequest()
             }
@@ -82,7 +82,7 @@ class ShareViewController: UIViewController {
     }()
 
     func completeRequest() {
-        hud.textLabel.text = "Sent"
+        hud.textLabel.text = String(localized: "Sent")
         hud.indicatorView = JGProgressHUDSuccessIndicatorView()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
