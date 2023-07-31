@@ -29,6 +29,19 @@ class AppleMaps {
         ])
     }
 
+    func url(for mapItem: MKMapItem) -> URL {
+        let coordinate = mapItem.placemark.coordinate
+        var queryItems = [URLQueryItem(name: "ll", value: "\(coordinate.latitude),\(coordinate.longitude)")]
+
+        if let name = mapItem.name {
+            queryItems.append(URLQueryItem(name: "q", value: name))
+        }
+
+        var components = URLComponents(string: "https://maps.apple.com/")!
+        components.queryItems = queryItems
+        return components.url!
+    }
+    
     private func findCorrespondingPointOfInterest(to mapItem: MKMapItem) async throws -> MKMapItem? {
         let pointOfInterestFinder = PointOfInterestFinder(name: mapItem.name ?? "", coordinate: mapItem.placemark.coordinate, maxDistance: 50)
         return try await pointOfInterestFinder.find()

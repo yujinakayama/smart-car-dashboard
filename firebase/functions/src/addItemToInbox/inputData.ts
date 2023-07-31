@@ -4,8 +4,8 @@ import { urlPattern } from './util'
 
 export interface Request {
     vehicleID: string;
-    attachments?: Attachments;
-    item?: Attachments; // For backward compatibility
+    attachments: Attachments;
+    notification?: boolean;
 }
 
 export class InputData {
