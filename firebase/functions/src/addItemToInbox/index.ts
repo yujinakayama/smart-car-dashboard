@@ -37,10 +37,11 @@ export const addItemToInbox = onRequest({
     // https://github.com/googleapis/nodejs-firestore/blob/v3.8.6/dev/src/reference.ts#L2414-L2479
     const document = admin.firestore().collection('vehicles').doc(request.vehicleID).collection('items').doc()
 
-    await Promise.all([
-        notify(request.vehicleID, item, document.id),
-        addItemToFirestore(item, document)
-    ])
+    const promises = [addItemToFirestore(item, document)]
+    if (request.notification !== false) {
+        promises.push(notify(request.vehicleID, item, document.id))
+    }
+    await Promise.all(promises)
 
     functionResponse.sendStatus(200)
 })
@@ -65,5 +66,5 @@ async function addItemToFirestore(item: Item, document: FirebaseFirestore.Docume
         ...item
     }
 
-    return await document.create(data)
+    return document.create(data)
 }

@@ -5,6 +5,7 @@ import { urlPattern } from './util'
 export interface Request {
     vehicleID: string;
     attachments: Attachments;
+    notification?: boolean;
 }
 
 export class InputData {
