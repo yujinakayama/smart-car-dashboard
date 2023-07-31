@@ -8,12 +8,14 @@
 
 import MapKit
 import TLDExtract
+import DashCloudKit
 
 enum LocationActionType {
     case openDirectionsInAppleMaps
     case searchParkings
     case searchWeb
     case openWebsite
+    case addToInbox
     case openDirectionsInGoogleMaps
     case openDirectionsInYahooCarNavi
 }
@@ -60,6 +62,11 @@ class LocationActions {
             return PerformableAction(title: String(localized: "Open Website"), subtitle: rootDomain, image: UIImage(systemName: "safari")) {
                 openWebsite(fullLocation: fullLocation, viewController: viewController)
             }
+        case .addToInbox:
+            guard case .full(let fullLocation) = location else { return nil }
+            return PerformableAction(title: String(localized: "Add to Inbox"), image: UIImage(systemName: "tray.and.arrow.down.fill")) {
+                addToInbox(fullLocation: fullLocation)
+            }
         case .openDirectionsInGoogleMaps:
             return PerformableAction(title: String(localized: "Google Maps"), image: UIImage(systemName: "g.circle.fill")) {
                 openDirectionsInGoogleMaps(location: location)
@@ -72,7 +79,7 @@ class LocationActions {
     }
 
     func makeMenu(for requestedActionTypes: [LocationActionType]) -> UIMenu {
-        let locationActionTypes: [LocationActionType] = [.openDirectionsInAppleMaps, .searchParkings, .searchWeb, .openWebsite]
+        let locationActionTypes: [LocationActionType] = [.openDirectionsInAppleMaps, .searchParkings, .searchWeb, .openWebsite, .addToInbox]
         let locationActionsMenu = UIMenu(title: "", options: .displayInline, children: locationActionTypes.compactMap {
             guard requestedActionTypes.contains($0) else { return nil }
             return action(for: $0)?.uiAction
@@ -145,6 +152,24 @@ fileprivate func openWebsite(fullLocation: FullLocation, viewController: UIViewC
     guard let websiteURL = fullLocation.websiteURL else { return }
     fullLocation.markAsOpened(true)
     WebViewController.present(url: websiteURL, from: viewController)
+}
+
+fileprivate func addToInbox(fullLocation: FullLocation) {
+    guard let vehicleID = Firebase.shared.authentication.vehicleID else { return }
+
+    let mapItem = fullLocation.mapItem
+    
+    let encoder = Item.Encoder()
+    encoder.add(mapItem)
+    encoder.add(AppleMaps.shared.url(for: mapItem))
+    let item = Item(encoder: encoder)
+
+    let cloudClient = DashCloudClient()
+    cloudClient.add(item, toInboxOf: vehicleID, notification: false) { error in
+        if let error = error {
+            logger.error(error)
+        }
+    }
 }
 
 fileprivate func openDirectionsInGoogleMaps(location: Location) {

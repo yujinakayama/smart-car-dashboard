@@ -163,6 +163,7 @@ class PointOfInterestViewController: UIViewController {
         moreActionsButton.menu = actions.makeMenu(for: [
             .searchWeb,
             .openWebsite,
+            .addToInbox,
             .openDirectionsInGoogleMaps,
             .openDirectionsInYahooCarNavi
         ])
