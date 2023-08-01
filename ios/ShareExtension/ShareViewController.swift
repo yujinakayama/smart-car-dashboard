@@ -49,7 +49,7 @@ class ShareViewController: UIViewController {
         super.viewDidAppear(animated)
         // We want to show the HUD after the modal transition animation is finished
         // so that the HUD won't appear from bottom and won't move the position strangely by change of the view frame.
-        hud.show(in: view, animated: true)
+        showHUD()
     }
 
     func share() {
@@ -81,9 +81,16 @@ class ShareViewController: UIViewController {
         return extensionItems.map { Item(extensionItem: $0) }.first { $0.isValid }
     }()
 
+    func showHUD() {
+        hud.show(in: view, animated: true)
+    }
+    
     func completeRequest() {
         hud.textLabel.text = String(localized: "Sent")
         hud.indicatorView = JGProgressHUDSuccessIndicatorView()
+        // In case the request completed before viewDidAppear(),
+        // show the HUD even though the sheet appearance animation is in progress
+        showHUD()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.extensionContext!.completeRequest(returningItems: nil)
@@ -95,6 +102,9 @@ class ShareViewController: UIViewController {
     func cancelRequest(withError error: Error, message: String) {
         hud.textLabel.text = message
         hud.indicatorView = JGProgressHUDErrorIndicatorView()
+        // In case the request completed before viewDidAppear(),
+        // show the HUD even though the sheet appearance animation is in progress
+        showHUD()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.extensionContext!.cancelRequest(withError: error)
