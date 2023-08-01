@@ -9,6 +9,7 @@
 import UIKit
 import DashCloudKit
 import JGProgressHUD
+import CheckmarkView
 
 enum ShareError: Error {
     case pairingRequired
@@ -87,7 +88,12 @@ class ShareViewController: UIViewController {
     
     func completeRequest() {
         hud.textLabel.text = String(localized: "Sent")
-        hud.indicatorView = JGProgressHUDSuccessIndicatorView()
+
+        let checkmarkView = CheckmarkView(frame: hud.indicatorView?.bounds ?? .zero)
+        checkmarkView.tintColor = .label
+        hud.indicatorView = JGProgressHUDIndicatorView(contentView: checkmarkView)
+        checkmarkView.startAnimating()
+
         // In case the request completed before viewDidAppear(),
         // show the HUD even though the sheet appearance animation is in progress
         showHUD()
