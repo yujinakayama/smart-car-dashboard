@@ -57,7 +57,7 @@ public class CheckmarkView: UIView {
         shapeLayer.lineWidth = lineWidth
         shapeLayer.lineCap = .round
 
-        shapeLayer.strokeColor = tintColor.cgColor
+        shapeLayer.strokeColor = tintColor.resolvedColor(with: traitCollection).cgColor
         shapeLayer.fillColor = nil
 
         return shapeLayer
@@ -115,7 +115,7 @@ public class CheckmarkView: UIView {
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection),
            let shapeLayer = shapeLayer
         {
-            shapeLayer.strokeColor = tintColor.cgColor
+            shapeLayer.strokeColor = tintColor.resolvedColor(with: traitCollection).cgColor
         }
     }
 }
