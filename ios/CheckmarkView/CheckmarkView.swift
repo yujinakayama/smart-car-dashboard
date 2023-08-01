@@ -9,23 +9,37 @@
 import UIKit
 
 public class CheckmarkView: UIView {
-    let ratioOfShorterLineLengthToLongerLineLength: CGFloat = 0.422
+    public static let defaultAnimationDuration: TimeInterval = 0.5
 
-    public func startAnimating() {
-        if shapeLayer.superlayer == nil {
-            layer.addSublayer(shapeLayer)
-        }
+    static let ratioOfShorterLineLengthToLongerLineLength: CGFloat = 0.422
 
+    public var showsDebugGuides = false
+    
+    public func startAnimating(duration: TimeInterval = CheckmarkView.defaultAnimationDuration) {
+        shapeLayer?.removeFromSuperlayer()
+
+        let shapeLayer = makeShapeLayer()
+        layer.addSublayer(shapeLayer)
+
+        let animation = makeAnimation(for: shapeLayer, duration: duration)
         shapeLayer.add(animation, forKey: nil)
+        
+        self.shapeLayer = shapeLayer
+        
+        if showsDebugGuides {
+            showDebugGuides(for: shapeLayer)
+        }
     }
 
-    lazy var shapeLayer: CAShapeLayer = {
+    var shapeLayer: CAShapeLayer?
+
+    func makeShapeLayer() -> CAShapeLayer {
         let shapeLayer = CAShapeLayer()
 
         // In view's coordinate system
         shapeLayer.frame = drawingRegionSquareFrame
 
-        shapeLayer.path = squareStrokePath.cgPath
+        shapeLayer.path = makeSquareStrokePath().cgPath
 
         //         Stroke direction
         //              ---->
@@ -37,7 +51,7 @@ public class CheckmarkView: UIView {
         //          |           |
         //          +-----------+
         //      0.75             0.50
-        shapeLayer.strokeEnd = 0.75 + (0.25 * ratioOfShorterLineLengthToLongerLineLength)
+        shapeLayer.strokeEnd = 0.75 + (0.25 * Self.ratioOfShorterLineLengthToLongerLineLength)
         shapeLayer.strokeStart = 0.50
 
         shapeLayer.lineWidth = lineWidth
@@ -47,9 +61,9 @@ public class CheckmarkView: UIView {
         shapeLayer.fillColor = nil
 
         return shapeLayer
-    }()
+    }
 
-    var squareStrokePath: UIBezierPath {
+    func makeSquareStrokePath() -> UIBezierPath {
         // In shape layer's coordinate system
         let squareStrokeSideLength = (drawingRegionSideLength - lineWidth) * 0.98
         let squareOrigin = CGPoint(x: -squareStrokeSideLength * 0.5, y: -squareStrokeSideLength * 0.5)
@@ -69,14 +83,14 @@ public class CheckmarkView: UIView {
         return path
     }
 
-    open lazy var animation: CAAnimation = {
+    func makeAnimation(for shapeLayer: CAShapeLayer, duration: TimeInterval) -> CAAnimation {
         let animation = CABasicAnimation(keyPath: "strokeStart")
         animation.fromValue = shapeLayer.strokeEnd
         animation.toValue = shapeLayer.strokeStart
-        animation.duration = animationDuration
+        animation.duration = duration
         animation.timingFunction = CAMediaTimingFunction(controlPoints: 0.5, 0, 0, 1)
         return animation
-    }()
+    }
 
     var drawingRegionSquareFrame: CGRect {
         return CGRect(
@@ -92,22 +106,12 @@ public class CheckmarkView: UIView {
     }
 
     var lineWidth: CGFloat {
-        get {
-            return _lineWidth ?? drawingRegionSideLength * 0.11
-        }
-
-        set {
-            _lineWidth = newValue
-        }
+        return drawingRegionSideLength * 0.11
     }
-
-    private var _lineWidth: CGFloat?
-
-    var animationDuration: CFTimeInterval = 0.5
 }
 
 extension CheckmarkView {
-    public func showDebugGuides() {
+    func showDebugGuides(for shapeLayer: CAShapeLayer) {
         // Entire view
         backgroundColor = UIColor.label.withAlphaComponent(0.05)
 
