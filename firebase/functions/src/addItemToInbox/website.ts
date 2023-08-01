@@ -34,7 +34,8 @@ async function fetchTitle(url: URL): Promise<string | null> {
     try {
         const response = await axios.get(url.toString(), { headers: { 'User-Agent': userAgent }})
         const document = libxmljs.parseHtml(response.data)
-        return document.get('//head/title')?.text().trim().replace(/\n/g, ' ') || null
+        // Amazon pages may have <title> outside of <head> :(
+        return document.get('//title')?.text().trim().replace(/\n/g, ' ') || null
     } catch (error) {
         console.error(error)
         return null
