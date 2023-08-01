@@ -37,16 +37,11 @@ export const addItemToInbox = onRequest({
     // https://github.com/googleapis/nodejs-firestore/blob/v3.8.6/dev/src/reference.ts#L2414-L2479
     const document = admin.firestore().collection('vehicles').doc(request.vehicleID).collection('items').doc()
 
+    const promises = [addItemToFirestore(item, document)]
     if (request.notification !== false) {
-        // We intentionally do not await the promise since this notify() takes longer than addItemToFirestore()
-        // and it makes less responsive on the client.
-        // Technically not awaiting the promise might abort the process
-        // since Cloud Functions doesn't guarantee process after response,
-        // in 99% cases it works for notification.
-        notify(request.vehicleID, item, document.id)
+        promises.push(notify(request.vehicleID, item, document.id))
     }
-
-    await addItemToFirestore(item, document)
+    await Promise.all(promises)
 
     functionResponse.sendStatus(200)
 })
