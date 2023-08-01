@@ -14,7 +14,7 @@ public class CheckmarkView: UIView {
     static let ratioOfShorterLineLengthToLongerLineLength: CGFloat = 0.422
 
     public var showsDebugGuides = false
-    
+
     public func startAnimating(duration: TimeInterval = CheckmarkView.defaultAnimationDuration) {
         shapeLayer?.removeFromSuperlayer()
 
@@ -107,6 +107,16 @@ public class CheckmarkView: UIView {
 
     var lineWidth: CGFloat {
         return drawingRegionSideLength * 0.11
+    }
+    
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection),
+           let shapeLayer = shapeLayer
+        {
+            shapeLayer.strokeColor = tintColor.cgColor
+        }
     }
 }
 
