@@ -25,7 +25,7 @@ class ShareViewController: UIViewController {
         hud.square = true
 
         let animation = JGProgressHUDFadeAnimation()
-        animation.duration = 0.1
+        animation.duration = 0.25
         hud.animation = animation
 
         return hud
