@@ -166,7 +166,6 @@
 		B9A3B68526537A9B00D1D64C /* ParkingSearchActionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B9A3B67926537A9B00D1D64C /* ParkingSearchActionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B9A3DDEA2792C41200A2BEC4 /* MapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A3DDE92792C41200A2BEC4 /* MapItem.swift */; };
 		B9A45A9B252C229200CA7921 /* InboxItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A45A9A252C229200CA7921 /* InboxItemDatabase.swift */; };
-		B9A481FE23EF01DB00AA7590 /* SuccessCheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */; };
 		B9A4820023EF025200AA7590 /* SuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FF23EF025200AA7590 /* SuccessViewController.swift */; };
 		B9A4820123EFCEC200AA7590 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
 		B9ADFEAD2704B19100F230E0 /* TimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9ADFEAC2704B19000F230E0 /* TimePicker.swift */; };
@@ -229,6 +228,10 @@
 		B9D4AF2E2673203400849129 /* UTTypeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D4AF2D2673203400849129 /* UTTypeExtension.swift */; };
 		B9D8E43823D345940078A057 /* ETCCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43723D345940078A057 /* ETCCard.swift */; };
 		B9D8E43A23D345D70078A057 /* UUIDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43923D345D70078A057 /* UUIDExtension.swift */; };
+		B9DC26882A7940E6001B7409 /* CheckmarkView.h in Headers */ = {isa = PBXBuildFile; fileRef = B9DC26872A7940E6001B7409 /* CheckmarkView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B9DC268B2A7940E6001B7409 /* CheckmarkView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9DC26852A7940E6001B7409 /* CheckmarkView.framework */; };
+		B9DC268C2A7940E6001B7409 /* CheckmarkView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B9DC26852A7940E6001B7409 /* CheckmarkView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B9DC26902A7940FD001B7409 /* CheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FD23EF01DB00AA7590 /* CheckmarkView.swift */; };
 		B9DC5B25229D59BE00B645D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B24229D59BE00B645D5 /* AppDelegate.swift */; };
 		B9DC5B27229D59BE00B645D5 /* ETCPaymentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B26229D59BE00B645D5 /* ETCPaymentTableViewController.swift */; };
 		B9DC5B29229D59BE00B645D5 /* ETCPaymentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC5B28229D59BE00B645D5 /* ETCPaymentDetailViewController.swift */; };
@@ -348,6 +351,13 @@
 			remoteGlobalIDString = B98B783223ED4C3F00A5102F;
 			remoteInfo = DashCloudKit;
 		};
+		B9DC26892A7940E6001B7409 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9DC26842A7940E6001B7409;
+			remoteInfo = CheckmarkView;
+		};
 		B9DD29EB2A51D733003345AB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
@@ -447,6 +457,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				B9B18DD423EDFFF40096D603 /* DashCloudKit.framework in Embed Frameworks */,
+				B9DC268C2A7940E6001B7409 /* CheckmarkView.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -614,7 +625,7 @@
 		B9A3C09423E163F500EF1C4A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../ShareExtension/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9A3DDE92792C41200A2BEC4 /* MapItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItem.swift; sourceTree = "<group>"; };
 		B9A45A9A252C229200CA7921 /* InboxItemDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxItemDatabase.swift; sourceTree = "<group>"; };
-		B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessCheckmarkView.swift; sourceTree = "<group>"; };
+		B9A481FD23EF01DB00AA7590 /* CheckmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckmarkView.swift; sourceTree = "<group>"; };
 		B9A481FF23EF025200AA7590 /* SuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessViewController.swift; sourceTree = "<group>"; };
 		B9ADFEAC2704B19000F230E0 /* TimePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimePicker.swift; sourceTree = "<group>"; };
 		B9B154ED2575FCED0031761F /* FirebaseMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMessaging.swift; sourceTree = "<group>"; };
@@ -669,6 +680,8 @@
 		B9D4AF2D2673203400849129 /* UTTypeExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UTTypeExtension.swift; sourceTree = "<group>"; };
 		B9D8E43723D345940078A057 /* ETCCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCCard.swift; sourceTree = "<group>"; };
 		B9D8E43923D345D70078A057 /* UUIDExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUIDExtension.swift; sourceTree = "<group>"; };
+		B9DC26852A7940E6001B7409 /* CheckmarkView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CheckmarkView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9DC26872A7940E6001B7409 /* CheckmarkView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CheckmarkView.h; sourceTree = "<group>"; };
 		B9DC5B21229D59BE00B645D5 /* Dash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9DC5B24229D59BE00B645D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9DC5B26229D59BE00B645D5 /* ETCPaymentTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentTableViewController.swift; sourceTree = "<group>"; };
@@ -733,6 +746,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9DC268B2A7940E6001B7409 /* CheckmarkView.framework in Frameworks */,
 				B9085FE32A61A92D0014CCC1 /* KeychainAccess in Frameworks */,
 				B9C2455F23EDA2EA00E00523 /* MapKit.framework in Frameworks */,
 				B9B18DD323EDFFF40096D603 /* DashCloudKit.framework in Frameworks */,
@@ -771,6 +785,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9F4378225D41C19004B9140 /* RearviewKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9DC26822A7940E6001B7409 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -974,7 +995,6 @@
 				B988A66B254D0E570012A4CB /* PairingRequirementViewController.swift */,
 				B98B784C23ED530E00A5102F /* SignInWithAppleViewController.swift */,
 				B91B5DD423ED7886003F4AEF /* Account.swift */,
-				B9A481FD23EF01DB00AA7590 /* SuccessCheckmarkView.swift */,
 				B98B784E23ED583600A5102F /* AppIconImageView.swift */,
 				B9C2456423EDBB4800E00523 /* FloatButton.swift */,
 				B964BCC823E066FF00288E0D /* Main.storyboard */,
@@ -1154,6 +1174,15 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
+		B9DC26862A7940E6001B7409 /* CheckmarkView */ = {
+			isa = PBXGroup;
+			children = (
+				B9DC26872A7940E6001B7409 /* CheckmarkView.h */,
+				B9A481FD23EF01DB00AA7590 /* CheckmarkView.swift */,
+			);
+			path = CheckmarkView;
+			sourceTree = "<group>";
+		};
 		B9DC5B18229D59BE00B645D5 = {
 			isa = PBXGroup;
 			children = (
@@ -1169,6 +1198,7 @@
 				B9F4377C25D41C19004B9140 /* RearviewKit */,
 				B93432862A665DF9000F1D7C /* FloatingViewKit */,
 				B93432922A665DF9000F1D7C /* FloatingViewKitTests */,
+				B9DC26862A7940E6001B7409 /* CheckmarkView */,
 				B92B8418268C63870019D050 /* Shared */,
 				B9DC5B22229D59BE00B645D5 /* Products */,
 				B9CD1D8B22A51AAD00170082 /* Frameworks */,
@@ -1191,6 +1221,7 @@
 				B9DD29E72A51D733003345AB /* CacheKit.framework */,
 				B93432852A665DF9000F1D7C /* FloatingViewKit.framework */,
 				B934328C2A665DF9000F1D7C /* FloatingViewKitTests.xctest */,
+				B9DC26852A7940E6001B7409 /* CheckmarkView.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1348,6 +1379,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B9DC26802A7940E6001B7409 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9DC26882A7940E6001B7409 /* CheckmarkView.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B9DD29E22A51D733003345AB /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -1427,6 +1466,7 @@
 			dependencies = (
 				B964BCE123E067EB00288E0D /* PBXTargetDependency */,
 				B9B18DD623EDFFF40096D603 /* PBXTargetDependency */,
+				B9DC268A2A7940E6001B7409 /* PBXTargetDependency */,
 			);
 			name = DashRemote;
 			packageProductDependencies = (
@@ -1514,6 +1554,24 @@
 			productName = Rearview;
 			productReference = B9C0CED62508F63F006D246E /* Rearview.app */;
 			productType = "com.apple.product-type.application";
+		};
+		B9DC26842A7940E6001B7409 /* CheckmarkView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B9DC268D2A7940E6001B7409 /* Build configuration list for PBXNativeTarget "CheckmarkView" */;
+			buildPhases = (
+				B9DC26802A7940E6001B7409 /* Headers */,
+				B9DC26812A7940E6001B7409 /* Sources */,
+				B9DC26822A7940E6001B7409 /* Frameworks */,
+				B9DC26832A7940E6001B7409 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CheckmarkView;
+			productName = CheckmarkView;
+			productReference = B9DC26852A7940E6001B7409 /* CheckmarkView.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 		B9DC5B20229D59BE00B645D5 /* Dash */ = {
 			isa = PBXNativeTarget;
@@ -1681,6 +1739,9 @@
 					B9C0CED52508F63F006D246E = {
 						CreatedOnToolsVersion = 11.7;
 					};
+					B9DC26842A7940E6001B7409 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
 					B9DC5B20229D59BE00B645D5 = {
 						CreatedOnToolsVersion = 10.2.1;
 					};
@@ -1710,10 +1771,10 @@
 			);
 			mainGroup = B9DC5B18229D59BE00B645D5;
 			packageReferences = (
-				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */,
+				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */,
 				B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */,
 				B979456F27A81AFE007040E7 /* XCRemoteSwiftPackageReference "SwiftCBOR" */,
-				B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */,
+				B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */,
 				B9085FCE2A61A6B50014CCC1 /* XCRemoteSwiftPackageReference "XCGLogger" */,
 				B9085FDB2A61A8020014CCC1 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */,
 				B9085FDE2A61A8D20014CCC1 /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
@@ -1722,11 +1783,11 @@
 				B9085FE72A61AA0A0014CCC1 /* XCRemoteSwiftPackageReference "DictionaryCoding" */,
 				B9085FEA2A61AA720014CCC1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				B990259F2A61B70B00BDCDE9 /* XCRemoteSwiftPackageReference "MarqueeLabel" */,
-				B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */,
+				B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				B906AEC82A623D37008C7458 /* XCRemoteSwiftPackageReference "Solar" */,
 				B964B3002A6257EF003543CC /* XCRemoteSwiftPackageReference "PINCache" */,
 				B9BEAF252A625AAC00E23648 /* XCRemoteSwiftPackageReference "TransitionButton" */,
-				B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel.git" */,
+				B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 			);
 			productRefGroup = B9DC5B22229D59BE00B645D5 /* Products */;
 			projectDirPath = "";
@@ -1744,6 +1805,7 @@
 				B9F4377A25D41C19004B9140 /* RearviewKit */,
 				B93432842A665DF9000F1D7C /* FloatingViewKit */,
 				B934328B2A665DF9000F1D7C /* FloatingViewKitTests */,
+				B9DC26842A7940E6001B7409 /* CheckmarkView */,
 			);
 		};
 /* End PBXProject section */
@@ -1806,6 +1868,13 @@
 				B940A460250E5B57006BDFBB /* Settings.bundle in Resources */,
 				B9C0CEE52508F641006D246E /* LaunchScreen.storyboard in Resources */,
 				B9C0CEE22508F641006D246E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9DC26832A7940E6001B7409 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1933,7 +2002,6 @@
 				B9A4820023EF025200AA7590 /* SuccessViewController.swift in Sources */,
 				B932E5F023F9082600726615 /* RendezvousPoint.swift in Sources */,
 				B964BCC723E066FF00288E0D /* MapViewController.swift in Sources */,
-				B9A481FE23EF01DB00AA7590 /* SuccessCheckmarkView.swift in Sources */,
 				B9C2456523EDBB4800E00523 /* FloatButton.swift in Sources */,
 				B964BCC323E066FF00288E0D /* AppDelegate.swift in Sources */,
 				B9B4F700268CB366009C5DC5 /* PairedVehicle.swift in Sources */,
@@ -1985,6 +2053,14 @@
 				B940A462250E5CDD006BDFBB /* RearviewDefaults.swift in Sources */,
 				B9C0CED92508F63F006D246E /* AppDelegate.swift in Sources */,
 				B9C0CEDB2508F63F006D246E /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9DC26812A7940E6001B7409 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9DC26902A7940FD001B7409 /* CheckmarkView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2232,6 +2308,11 @@
 			target = B98B783223ED4C3F00A5102F /* DashCloudKit */;
 			targetProxy = B9D4AF262671324B00849129 /* PBXContainerItemProxy */;
 		};
+		B9DC268A2A7940E6001B7409 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9DC26842A7940E6001B7409 /* CheckmarkView */;
+			targetProxy = B9DC26892A7940E6001B7409 /* PBXContainerItemProxy */;
+		};
 		B9DD29EC2A51D733003345AB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B9DD29E62A51D733003345AB /* CacheKit */;
@@ -2470,6 +2551,7 @@
 		B964BCD123E0670100288E0D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "DashRemote/Dash Remote.entitlements";
 				CODE_SIGN_STYLE = Automatic;
@@ -2492,6 +2574,7 @@
 		B964BCD223E0670100288E0D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "DashRemote/Dash Remote.entitlements";
 				CODE_SIGN_STYLE = Automatic;
@@ -2725,6 +2808,74 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B9DC268E2A7940E6001B7409 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8LSN3WQC77;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Yuji Nakayama. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.CheckmarkView;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		B9DC268F2A7940E6001B7409 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8LSN3WQC77;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Yuji Nakayama. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.CheckmarkView;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -3230,6 +3381,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		B9DC268D2A7940E6001B7409 /* Build configuration list for PBXNativeTarget "CheckmarkView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9DC268E2A7940E6001B7409 /* Debug */,
+				B9DC268F2A7940E6001B7409 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B9DC5B1C229D59BE00B645D5 /* Build configuration list for PBXProject "Dash" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -3287,7 +3447,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */ = {
+		B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -3367,7 +3527,7 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */ = {
+		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yujinakayama/DirectionalUserLocationAnnotationView.git";
 			requirement = {
@@ -3391,7 +3551,7 @@
 				minimumVersion = 4.3.1;
 			};
 		};
-		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */ = {
+		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mapbox/mapbox-navigation-ios.git";
 			requirement = {
@@ -3415,7 +3575,7 @@
 				kind = branch;
 			};
 		};
-		B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel.git" */ = {
+		B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scenee/FloatingPanel.git";
 			requirement = {
@@ -3428,22 +3588,22 @@
 /* Begin XCSwiftPackageProductDependency section */
 		B906AEC02A6239E6008C7458 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
 		B906AEC22A6239E6008C7458 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
 		B906AEC42A6239E6008C7458 /* FirebaseFirestoreSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
 		};
 		B906AEC62A6239E6008C7458 /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
 		};
 		B906AEC92A623D37008C7458 /* Solar */ = {
@@ -3513,7 +3673,7 @@
 		};
 		B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */;
+			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */;
 			productName = DirectionalUserLocationAnnotationView;
 		};
 		B964B3012A6257EF003543CC /* PINCache */ = {
@@ -3538,7 +3698,7 @@
 		};
 		B9B7451F29968B2C00C85825 /* MapboxCoreNavigation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */;
+			package = B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */;
 			productName = MapboxCoreNavigation;
 		};
 		B9BEAF262A625AAC00E23648 /* TransitionButton */ = {
@@ -3558,7 +3718,7 @@
 		};
 		B9E886882A6D58D600F789AA /* FloatingPanel */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel.git" */;
+			package = B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel" */;
 			productName = FloatingPanel;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -1,6 +1,6 @@
 //
-//  CheckView.swift
-//  AnimationTest
+//  CheckmarkView.swift
+//  CheckmarkView
 //
 //  Created by Yuji Nakayama on 2020/02/08.
 //  Copyright © 2020 Yuji Nakayama. All rights reserved.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-class SuccessCheckmarkView: UIView {
+public class CheckmarkView: UIView {
     let ratioOfShorterLineLengthToLongerLineLength: CGFloat = 0.422
 
-    func startAnimating() {
+    public func startAnimating() {
         if shapeLayer.superlayer == nil {
             layer.addSublayer(shapeLayer)
         }
@@ -106,8 +106,8 @@ class SuccessCheckmarkView: UIView {
     var animationDuration: CFTimeInterval = 0.5
 }
 
-extension SuccessCheckmarkView {
-    func showDebugGuides() {
+extension CheckmarkView {
+    public func showDebugGuides() {
         // Entire view
         backgroundColor = UIColor.label.withAlphaComponent(0.05)
 

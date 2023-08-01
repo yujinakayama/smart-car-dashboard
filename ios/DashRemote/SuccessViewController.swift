@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import CheckmarkView
 
 class SuccessViewController: UIViewController {
-    @IBOutlet weak var checkmarkView: SuccessCheckmarkView!
+    @IBOutlet weak var checkmarkView: CheckmarkView!
 
     let feedbackGenerator = UINotificationFeedbackGenerator()
 
