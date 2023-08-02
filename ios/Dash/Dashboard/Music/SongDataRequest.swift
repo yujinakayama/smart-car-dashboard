@@ -17,7 +17,7 @@ class SongDataRequest {
     }
 
     // 50MB, no expiration
-    private static let cache = Cache(name: "SongDataRequest", byteLimit: 50 * 1024 * 1024)
+    static let cache = Cache(name: "SongDataRequest", byteLimit: 50 * 1024 * 1024)
 
     static func hasCachedSong(id: String) -> Bool {
         return SongDataRequest.cache.containsObject(forKey: id)

@@ -8,6 +8,8 @@
 
 import UIKit
 import MapboxCoreNavigation
+import CacheKit
+import ParkingSearchKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -21,6 +23,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UserNotificationCenter.shared.setUp()
         Vehicle.default.connect()
+
+        if Defaults.shared.clearCachesOnNextLaunch {
+            caches.forEach { $0.clear() }
+            Defaults.shared.clearCachesOnNextLaunch = false
+        }
+
         return true
     }
 
@@ -31,5 +39,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         logger.info()
         Firebase.shared.messaging.deviceToken = deviceToken
+    }
+    
+    var caches: [Cache] {
+        [
+            ArtworkView.appleMusicImageCache,
+            SongDataRequest.cache,
+            WebsiteIcon.cache,
+            LocationTracker.cache,
+            AppleMaps.PointOfInterestFinder.cache,
+            ImageLoader.cache,
+            OfficialParkingSearch.cache
+        ]
     }
 }

@@ -44,6 +44,7 @@ class Defaults {
         case additionalVolumeAt120KilometersPerHour
         case minimumSpeedInKilometersPerHourForAdditionalVolume
         case logLevel
+        case clearCachesOnNextLaunch
         case clearFirestoreOfflineCacheOnNextLaunch
     }
 
@@ -326,6 +327,16 @@ extension Defaults {
         }
     }
 
+    var clearCachesOnNextLaunch: Bool {
+        get {
+            return bool(for: .clearCachesOnNextLaunch)
+        }
+
+        set {
+            set(newValue, for: .clearCachesOnNextLaunch)
+        }
+    }
+    
     var clearFirestoreOfflineCacheOnNextLaunch: Bool {
         get {
             return bool(for: .clearFirestoreOfflineCacheOnNextLaunch)

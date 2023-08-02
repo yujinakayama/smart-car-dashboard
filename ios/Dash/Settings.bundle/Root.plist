@@ -412,6 +412,16 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
+			<string>Clear Caches on Next Launch</string>
+			<key>Key</key>
+			<string>clearCachesOnNextLaunch</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
 			<string>Clear Firestore Offline Cache on Next Launch</string>
 			<key>Key</key>
 			<string>clearFirestoreOfflineCacheOnNextLaunch</string>

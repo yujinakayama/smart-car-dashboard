@@ -36,7 +36,7 @@ class LocationTracker: NSObject {
         return locationManager
     }()
 
-    private let cache = Cache(name: "LocationTracker", byteLimit: 50 * 1024 * 1024, ageLimit: 24 * 60 * 60)
+    static let cache = Cache(name: "LocationTracker", byteLimit: 50 * 1024 * 1024, ageLimit: 24 * 60 * 60)
 
     override init() {
         super.init()
@@ -89,12 +89,12 @@ class LocationTracker: NSObject {
               let data = try? CodableCBOREncoder().encode(currentTrack) as NSData
         else { return }
 
-        cache.setObject(data, forKey: Self.currentTrackCacheKey)
+        Self.cache.setObject(data, forKey: Self.currentTrackCacheKey)
     }
 
     private func restoreCurrentTrackFromCache() -> Track? {
-        guard let data = cache.object(forKey: Self.currentTrackCacheKey) as? Data else { return nil }
-        cache.removeObject(forKey: Self.currentTrackCacheKey)
+        guard let data = Self.cache.object(forKey: Self.currentTrackCacheKey) as? Data else { return nil }
+        Self.cache.removeObject(forKey: Self.currentTrackCacheKey)
         return try? CodableCBORDecoder().decode(Track.self, from: data)
     }
 }
