@@ -27,6 +27,9 @@ class WebsiteIcon {
     // 10MB, 30 days
     static let cache = Cache(name: "WebsiteIcon", byteLimit: 10 * 1024 * 1024, ageLimit: 60 * 60 * 24 * 30)
 
+    // Some websites such as YouTube provide less icon variants when accessed with mobile user agent.
+    static let userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"
+    
     let websiteURL: URL
 
     private (set) var cachedURL: URL? {
@@ -100,8 +103,7 @@ class WebsiteIcon {
 
     private func extractIconURLFromHTMLDocument() async throws -> URL?  {
         var request = URLRequest(url: websiteURL)
-        // Some websites such as YouTube provide less icon variants when accessed with mobile user agent.
-        request.setValue("Mozilla/5.0 (Macintosh) AppleWebKit (KHTML, like Gecko) Safari", forHTTPHeaderField: "User-Agent")
+        request.setValue(Self.userAgent, forHTTPHeaderField: "User-Agent")
 
         let (data, _) = try await URLSession.shared.data(for: request)
 
