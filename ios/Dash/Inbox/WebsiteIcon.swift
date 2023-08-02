@@ -51,29 +51,35 @@ class WebsiteIcon {
         self.websiteURL = websiteURL
     }
 
-    func getURL() async -> URL? {
-        if isCached {
-            return cachedURL
-        }
+    var url: URL? {
+        get async {
+            if isCached {
+                return cachedURL
+            }
 
-        do {
-            let url = try await fetchIconURL()
-            cachedURL = url
-            return url
-        } catch is WebsiteIconError {
-            cachedURL = nil // Cache the fact there's no valid icon
-            return nil
-        } catch {
-            return nil
+            do {
+                let url = try await fetchIconURL()
+                cachedURL = url
+                return url
+            } catch is WebsiteIconError {
+                cachedURL = nil // Cache the fact there's no valid icon
+                return nil
+            } catch {
+                return nil
+            }
         }
     }
 
     private func fetchIconURL() async throws -> URL? {
         if let url = try await checkFixedAppleTouchIconURL() {
             return url
-        } else {
-            return try await extractIconURLFromHTMLDocument()
         }
+        
+        if let url = try await extractIconURLFromHTMLDocument() {
+            return url
+        }
+
+        return try await checkFixedFaviconURL()
     }
 
     private func checkFixedAppleTouchIconURL() async throws -> URL? {
@@ -83,20 +89,9 @@ class WebsiteIcon {
 
         urlComponents.path = "/apple-touch-icon.png"
         urlComponents.query = nil
-
         let url = urlComponents.url!
 
-        var request = URLRequest(url: url)
-        request.httpMethod = "HEAD"
-
-        // Some websites such as Netflix redirects to "Not found" page with 200 status :(
-        let (_, response) = try await URLSession.shared.data(for: request, delegate: redirectionDisabler)
-
-        guard let response = response as? HTTPURLResponse else {
-            throw WebsiteIconError.unknown
-        }
-
-        if response.isSuccessful {
+        if try await checkExistenceOf(url: url) {
             return url
         } else {
             return nil
@@ -165,6 +160,36 @@ class WebsiteIcon {
 
             return (type, iconURL, size)
         }
+    }
+    
+    private func checkFixedFaviconURL() async throws -> URL? {
+        guard var urlComponents = URLComponents(url: websiteURL, resolvingAgainstBaseURL: false) else {
+            throw WebsiteIconError.invalidWebsiteURL
+        }
+
+        urlComponents.path = "/favicon.ico"
+        urlComponents.query = nil
+        let url = urlComponents.url!
+
+        if try await checkExistenceOf(url: url) {
+            return url
+        } else {
+            return nil
+        }
+    }
+
+    private func checkExistenceOf(url: URL) async throws -> Bool {
+        var request = URLRequest(url: url)
+        request.httpMethod = "HEAD"
+
+        // Some websites such as Netflix redirects to "Not found" page with 200 status :(
+        let (_, response) = try await URLSession.shared.data(for: request, delegate: redirectionDisabler)
+
+        guard let response = response as? HTTPURLResponse else {
+            throw WebsiteIconError.unknown
+        }
+
+        return response.isSuccessful
     }
 }
 

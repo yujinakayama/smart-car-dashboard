@@ -190,7 +190,7 @@ class InboxItemTableViewCell: UITableViewCell {
         detailLabel.text = website.simplifiedHost
 
         task = Task {
-            guard let iconURL = await website.icon.getURL() else { return }
+            guard let iconURL = await website.icon.url else { return }
             try Task.checkCancellation()
             await setIconImage(from: iconURL, shape: .standardRoundedRectangle)
         }
