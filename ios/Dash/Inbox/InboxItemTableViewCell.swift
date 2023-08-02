@@ -191,11 +191,12 @@ class InboxItemTableViewCell: UITableViewCell {
         detailLabel.text = website.simplifiedHost
 
         task = Task {
-            guard let iconURL = await website.icon.url else { return }
-            try Task.checkCancellation()
-            guard let image = try? await imageLoader.loadImage(from: iconURL),
+            guard let image = await website.icon.image,
                   image.size.width >= Self.minimumWebsiteIconSizeToDisplay
             else { return }
+
+            try Task.checkCancellation()
+
             iconImageView.image = image
             iconBackgroundView.backgroundColor = .white
             iconType = .image
