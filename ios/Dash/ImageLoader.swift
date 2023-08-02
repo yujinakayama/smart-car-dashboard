@@ -33,7 +33,9 @@ actor ImageLoader {
             }
         }
 
-        if let image = await Self.cache.object(forKey: url.absoluteString) as? UIImage {
+        let cacheKey = Cache.digestString(of: url.absoluteString)
+
+        if let image = await Self.cache.object(forKey: cacheKey) as? UIImage {
             return image
         }
 
@@ -46,7 +48,7 @@ actor ImageLoader {
                 throw ImageLoaderError.nonImageData
             }
 
-            await Self.cache.setObject(image, forKey: url.absoluteString)
+            await Self.cache.setObject(image, forKey: cacheKey)
 
             return image
         }
