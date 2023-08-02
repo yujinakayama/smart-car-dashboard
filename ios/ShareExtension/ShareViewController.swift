@@ -39,6 +39,7 @@ class ShareViewController: UIViewController {
         // On Mac clear background doesn't appear correctly
         #if targetEnvironment(macCatalyst)
         view.backgroundColor = .systemBackground
+        view.layer.cornerRadius = 16
         #endif
 
         feedbackGenerator.prepare()
