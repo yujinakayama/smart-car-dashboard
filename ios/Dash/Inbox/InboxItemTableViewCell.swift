@@ -12,6 +12,7 @@ class InboxItemTableViewCell: UITableViewCell {
     typealias Icon = (image: UIImage, color: UIColor)
 
     static let screenScale = UIScreen.main.scale
+    static let minimumWebsiteIconSizeToDisplay: CGFloat = 33 // Reject 32px
 
     @IBOutlet weak var iconBackgroundView: BorderedView!
     @IBOutlet weak var iconImageView: UIImageView!
@@ -192,7 +193,13 @@ class InboxItemTableViewCell: UITableViewCell {
         task = Task {
             guard let iconURL = await website.icon.url else { return }
             try Task.checkCancellation()
-            await setIconImage(from: iconURL, shape: .standardRoundedRectangle)
+            guard let image = try? await imageLoader.loadImage(from: iconURL),
+                  image.size.width >= Self.minimumWebsiteIconSizeToDisplay
+            else { return }
+            iconImageView.image = image
+            iconBackgroundView.backgroundColor = .white
+            iconType = .image
+            iconShape = .standardRoundedRectangle
         }
     }
 
