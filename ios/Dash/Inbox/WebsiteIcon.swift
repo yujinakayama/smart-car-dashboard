@@ -148,7 +148,7 @@ class WebsiteIcon {
     }
 
     private func extractIcons(from document: Document) throws -> [Icon] {
-        let links = try document.select("link[rel='apple-touch-icon'], link[rel='apple-touch-icon-precomposed'], link[rel='icon']")
+        let links = try document.select("link[rel~=apple-touch-icon], link[rel~=apple-touch-icon-precomposed], link[rel~=icon]")
 
         return links.compactMap { (link) -> Icon? in
             guard let href = try? link.attr("href"),
