@@ -48,7 +48,9 @@ actor ImageLoader {
                 throw ImageLoaderError.nonImageData
             }
 
-            await Self.cache.setObject(image, forKey: cacheKey)
+            Task {
+                await Self.cache.setObject(image, forKey: cacheKey)
+            }
 
             return image
         }
