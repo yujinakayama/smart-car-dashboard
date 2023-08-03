@@ -67,7 +67,8 @@ actor WebsiteIcon {
     private lazy var cacheKey: String = Cache.digestString(of: websiteURL.absoluteString)
     
     private func fetchBestImage() async throws -> UIImage? {
-        let icons = try await extractValidIconsFromHTMLDocument()
+        let document = try await fetchHTMLDocument()
+        let icons = try extractValidIcons(from: document)
         
         try Task.checkCancellation()
 
@@ -93,27 +94,20 @@ actor WebsiteIcon {
         
         try Task.checkCancellation()
 
-        return try await fetchValidImage(from: fixedFaviconURL)
+        if let image = try await fetchValidImage(from: fixedFaviconURL) {
+            return image
+        }
+
+        try Task.checkCancellation()
+
+        return try await fetchSquarishOGPImage(from: document)
     }
 
-    private func extractValidIconsFromHTMLDocument() async throws -> [Icon]  {
+    private func fetchHTMLDocument() async throws -> Document {
         var request = URLRequest(url: websiteURL)
         request.setValue(Self.userAgent, forHTTPHeaderField: "User-Agent")
         let (data, _) = try await URLSession.shared.data(for: request)
 
-        let document = try parseHTML(data: data)
-        let icons = try extractIcons(from: document)
-
-        return icons.filter { icon in
-            if let size = icon.largestSize.cgSize {
-                return size.isLargerThanOrEqualTo(minimumSize)
-            } else {
-                return true
-            }
-        }
-    }
-
-    private func parseHTML(data: Data) throws -> Document {
         guard let html = String(data: data, encoding: .utf8) else {
             throw WebsiteIconError.htmlEncodingError
         }
@@ -121,10 +115,10 @@ actor WebsiteIcon {
         return try SwiftSoup.parse(html, websiteURL.absoluteString)
     }
 
-    private func extractIcons(from document: Document) throws -> [Icon] {
+    private func extractValidIcons(from document: Document) throws -> [Icon]  {
         let links = try document.select("link[rel~=apple-touch-icon], link[rel~=apple-touch-icon-precomposed], link[rel~=icon]")
 
-        return links.compactMap { (link) -> Icon? in
+        let icons = links.compactMap { (link) -> Icon? in
             guard let href = try? link.attr("href"),
                   let iconURL = URL(string: href, relativeTo: websiteURL),
                   let rel = try? link.attr("rel")
@@ -150,6 +144,14 @@ actor WebsiteIcon {
             }
 
             return Icon(url: iconURL, type: type, sizes: sizes)
+        }
+
+        return icons.filter { icon in
+            if let size = icon.largestSize.cgSize {
+                return size.isLargerThanOrEqualTo(minimumSize)
+            } else {
+                return true
+            }
         }
     }
 
@@ -187,6 +189,20 @@ actor WebsiteIcon {
             urlComponents.query = nil
             return urlComponents.url!
         }
+    }
+
+    private func fetchSquarishOGPImage(from document: Document) async throws -> UIImage?  {
+        guard let meta = try document.select("meta[property='og:image']").first() else {
+            return nil
+        }
+
+        guard let content = try? meta.attr("content"),
+              let iconURL = URL(string: content, relativeTo: websiteURL),
+              let image = try await fetchValidImage(from: iconURL),
+              (0.9...1.1).contains(image.size.width / image.size.height)
+        else { return nil }
+
+        return image
     }
 }
 
