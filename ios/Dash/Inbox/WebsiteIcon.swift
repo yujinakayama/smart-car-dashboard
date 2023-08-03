@@ -11,7 +11,7 @@ import SwiftSoup
 import CacheKit
 
 enum WebsiteIconError: Error {
-    case invalidWebsiteURL
+    case invalidURL
     case htmlEncodingError
     case unknown
 }
@@ -80,7 +80,7 @@ actor WebsiteIcon {
 
         try Task.checkCancellation()
 
-        if let image = try await fetchValidImage(from: fixedAppleTouchIconURL) {
+        if let image = try await fetchValidImage(from: fixedAppleTouchIconURL(documentURL: document.url)) {
             return image
         }
 
@@ -94,7 +94,7 @@ actor WebsiteIcon {
         
         try Task.checkCancellation()
 
-        if let image = try await fetchValidImage(from: fixedFaviconURL) {
+        if let image = try await fetchValidImage(from: fixedFaviconURL(documentURL: document.url)) {
             return image
         }
 
@@ -103,24 +103,31 @@ actor WebsiteIcon {
         return try await fetchSquarishOGPImage(from: document)
     }
 
-    private func fetchHTMLDocument() async throws -> Document {
+    private func fetchHTMLDocument() async throws -> HTMLDocument {
         var request = URLRequest(url: websiteURL)
         request.setValue(Self.userAgent, forHTTPHeaderField: "User-Agent")
-        let (data, _) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await URLSession.shared.data(for: request)
 
+        guard let documentURL = response.url else {
+            throw WebsiteIconError.unknown
+        }
+        
         guard let html = String(data: data, encoding: .utf8) else {
             throw WebsiteIconError.htmlEncodingError
         }
 
-        return try SwiftSoup.parse(html, websiteURL.absoluteString)
+        return HTMLDocument(
+            url: documentURL,
+            document: try SwiftSoup.parse(html, documentURL.absoluteString)
+        )
     }
 
-    private func extractValidIcons(from document: Document) throws -> [Icon]  {
-        let links = try document.select("link[rel~=apple-touch-icon], link[rel~=apple-touch-icon-precomposed], link[rel~=icon]")
+    private func extractValidIcons(from htmlDocument: HTMLDocument) throws -> [Icon]  {
+        let links = try htmlDocument.document.select("link[rel~=apple-touch-icon], link[rel~=apple-touch-icon-precomposed], link[rel~=icon]")
 
         let icons = links.compactMap { (link) -> Icon? in
             guard let href = try? link.attr("href"),
-                  let iconURL = URL(string: href, relativeTo: websiteURL),
+                  let iconURL = URL(string: href, relativeTo: htmlDocument.url),
                   let rel = try? link.attr("rel")
             else { return nil }
             
@@ -167,37 +174,34 @@ actor WebsiteIcon {
         }
     }
 
-    private var fixedAppleTouchIconURL: URL {
-        get throws {
-            guard var urlComponents = URLComponents(url: websiteURL, resolvingAgainstBaseURL: false) else {
-                throw WebsiteIconError.invalidWebsiteURL
-            }
-            
-            urlComponents.path = "/apple-touch-icon.png"
-            urlComponents.query = nil
-            return urlComponents.url!
+    private func fixedAppleTouchIconURL(documentURL: URL) throws -> URL {
+        guard var urlComponents = URLComponents(url: documentURL, resolvingAgainstBaseURL: false) else {
+            throw WebsiteIconError.invalidURL
         }
+        
+        urlComponents.path = "/apple-touch-icon.png"
+        urlComponents.query = nil
+        return urlComponents.url!
     }
     
-    private var fixedFaviconURL: URL {
-        get throws {
-            guard var urlComponents = URLComponents(url: websiteURL, resolvingAgainstBaseURL: false) else {
-                throw WebsiteIconError.invalidWebsiteURL
-            }
-
-            urlComponents.path = "/favicon.ico"
-            urlComponents.query = nil
-            return urlComponents.url!
+    private func fixedFaviconURL(documentURL : URL) throws -> URL {
+        guard var urlComponents = URLComponents(url: documentURL, resolvingAgainstBaseURL: false) else {
+            throw WebsiteIconError.invalidURL
         }
+
+        urlComponents.path = "/favicon.ico"
+        urlComponents.query = nil
+        print(urlComponents.url!)
+        return urlComponents.url!
     }
 
-    private func fetchSquarishOGPImage(from document: Document) async throws -> UIImage?  {
-        guard let meta = try document.select("meta[property='og:image']").first() else {
+    private func fetchSquarishOGPImage(from htmlDocument: HTMLDocument) async throws -> UIImage?  {
+        guard let meta = try htmlDocument.document.select("meta[property='og:image']").first() else {
             return nil
         }
 
         guard let content = try? meta.attr("content"),
-              let iconURL = URL(string: content, relativeTo: websiteURL),
+              let iconURL = URL(string: content, relativeTo: htmlDocument.url),
               let image = try await fetchValidImage(from: iconURL),
               (0.9...1.1).contains(image.size.width / image.size.height)
         else { return nil }
@@ -207,6 +211,11 @@ actor WebsiteIcon {
 }
 
 extension WebsiteIcon {
+    struct HTMLDocument {
+        var url: URL
+        var document: Document
+    }
+
     struct Icon {
         var url: URL
         var type: IconType
