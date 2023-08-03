@@ -104,7 +104,7 @@ actor WebsiteIcon {
 
         try Task.checkCancellation()
 
-        return try await fetchSquarishOGPImage(from: document)
+        return try await fetchOGPImage(from: document)
     }
 
     private func fetchHTMLDocument() async throws -> HTMLDocument {
@@ -215,15 +215,14 @@ actor WebsiteIcon {
         return urlComponents.url!
     }
 
-    private func fetchSquarishOGPImage(from htmlDocument: HTMLDocument) async throws -> UIImage?  {
+    private func fetchOGPImage(from htmlDocument: HTMLDocument) async throws -> UIImage?  {
         guard let meta = try htmlDocument.document.select("meta[property='og:image']").first() else {
             return nil
         }
 
         guard let content = try? meta.attr("content"),
               let iconURL = URL(possiblyInvalidString: content, relativeTo: htmlDocument.url),
-              let image = try await fetchValidImage(from: iconURL),
-              (0.9...1.1).contains(image.size.width / image.size.height)
+              let image = try await fetchValidImage(from: iconURL)
         else { return nil }
 
         return image
