@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { wrapper as addCookieHandlingInterceptor } from 'axios-cookiejar-support'
 import { CookieJar } from 'tough-cookie'
+import Encoding from 'encoding-japanese'
+import iconv from 'iconv-lite'
 import * as libxmljs from 'libxmljs'
 
 import { InputData } from './inputData'
@@ -16,6 +18,7 @@ function createAxiosInstance() {
         headers: {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15'
         },
+        responseType: 'arraybuffer', // To Prevent response data from being parsed as UTF-8 by axios
         timeout: 3000,
         jar: cookieJar,
     })
@@ -60,17 +63,30 @@ async function getTitle(inputData: InputData): Promise<string | null> {
 export async function fetchTitle(url: URL): Promise<string | null> {
     try {
         const response = await axiosInstance.get(url.toString())
-        const document = libxmljs.parseHtml(response.data)
+        const data = convertToUTF8String(response.data as Buffer)
+        // Ignore <meta charset=shift_jis">
+        const document = libxmljs.parseHtml(data, { ignore_enc: true })
         // Amazon pages may have <title> outside of <head> :(
         const titleElement = document.get('//title')
 
         if (!titleElement) {
-            console.debug(`No <title> element found in page: ${response.data}`)
+            console.debug(`No <title> element found in page: ${data}`)
         }
 
         return titleElement?.text().trim().replace(/\n/g, ' ') ?? null
     } catch (error) {
         console.error(error)
         return null
+    }
+}
+
+function convertToUTF8String(buffer: Buffer): string {
+    const detectedEncoding = Encoding.detect(buffer)
+
+    if (detectedEncoding == 'UTF8' || !detectedEncoding || !iconv.encodingExists(detectedEncoding)) {
+        return buffer.toString()
+    } else {
+        // Not sure why but Encoding.convert() cannot convert SJIS to UTF8 properly
+        return iconv.decode(buffer, detectedEncoding)
     }
 }
