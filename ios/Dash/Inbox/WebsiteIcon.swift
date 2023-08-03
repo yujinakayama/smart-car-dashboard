@@ -127,7 +127,7 @@ actor WebsiteIcon {
 
         let icons = links.compactMap { (link) -> Icon? in
             guard let href = try? link.attr("href"),
-                  let iconURL = URL(string: href, relativeTo: htmlDocument.url),
+                  let iconURL = URL(possiblyInvalidString: href, relativeTo: htmlDocument.url),
                   let rel = try? link.attr("rel")
             else { return nil }
             
@@ -201,7 +201,7 @@ actor WebsiteIcon {
         }
 
         guard let content = try? meta.attr("content"),
-              let iconURL = URL(string: content, relativeTo: htmlDocument.url),
+              let iconURL = URL(possiblyInvalidString: content, relativeTo: htmlDocument.url),
               let image = try await fetchValidImage(from: iconURL),
               (0.9...1.1).contains(image.size.width / image.size.height)
         else { return nil }
@@ -268,5 +268,21 @@ fileprivate extension CGSize {
     
     var rect: CGRect {
         CGRect(origin: .zero, size: self)
+    }
+}
+
+fileprivate extension URL {
+    init?(possiblyInvalidString: String, relativeTo url: URL?) {
+        if let url = URL(string: possiblyInvalidString, relativeTo: url) {
+            self = url
+            return
+        }
+
+        // URL -> URLComponents -> URL fixes invalid URLs such as URL without percent encoding
+        guard let components = URLComponents(string: possiblyInvalidString),
+              let validString = components.string
+        else { return nil }
+
+        self.init(string: validString, relativeTo: url)
     }
 }
