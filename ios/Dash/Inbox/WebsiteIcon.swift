@@ -23,8 +23,6 @@ actor WebsiteIcon {
     // Some websites such as YouTube provide less icon variants when accessed with mobile user agent.
     static let userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"
 
-    static let htmlEncodingCandidates: [String.Encoding] = [.utf8, .shiftJIS, .japaneseEUC]
-    
     let websiteURL: URL
     let minimumSize: CGSize
 
@@ -118,7 +116,9 @@ actor WebsiteIcon {
             throw WebsiteIconError.unknown
         }
 
-        let html = try stringFromData(data: data)
+        guard let html = convertToStringByDetectingEncoding(from: data) else {
+            throw WebsiteIconError.htmlEncodingError
+        }
 
         return HTMLDocument(
             url: documentURL,
@@ -126,14 +126,21 @@ actor WebsiteIcon {
         )
     }
 
-    private func stringFromData(data: Data) throws -> String {
-        for encoding in Self.htmlEncodingCandidates {
-            if let string = String(data: data, encoding: encoding) {
-                return string
-            }
+    // https://stackoverflow.com/a/59843310
+    private func convertToStringByDetectingEncoding(from data: Data) -> String? {
+        var nsString: NSString?
+
+        let encodingRawValue = NSString.stringEncoding(for: data, encodingOptions: nil, convertedString: &nsString, usedLossyConversion: nil)
+
+        if encodingRawValue == 0 {
+            return nil
+        } else if let nsString = nsString {
+            let encoding = String.Encoding(rawValue: encodingRawValue)
+            logger.debug("Detected encoding \(encoding) (rawValue \(encodingRawValue)) for \(websiteURL)")
+            return nsString as String
+        } else {
+            return nil
         }
-        
-        throw WebsiteIconError.htmlEncodingError
     }
     
     private func extractValidIcons(from htmlDocument: HTMLDocument) throws -> [Icon]  {
