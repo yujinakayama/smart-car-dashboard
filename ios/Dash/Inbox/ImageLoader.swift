@@ -16,8 +16,8 @@ enum ImageLoaderError: Error {
 actor ImageLoader {
     typealias LoadingTask = (task: Task<UIImage, Error>, url: URL)
 
-    // 100MB, 30 days
-    static let cache = Cache(name: "ImageLoader", byteLimit: 100 * 1024 * 1024, ageLimit: 60 * 60 * 24 * 30)
+    // 200MB, 90 days
+    static let cache = Cache(name: "ImageLoader", byteLimit: 100 * 1024 * 1024, ageLimit: 60 * 60 * 24 * 90)
 
     private var currentLoadingTask: LoadingTask?
     

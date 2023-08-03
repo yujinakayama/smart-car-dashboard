@@ -17,8 +17,8 @@ enum WebsiteIconError: Error {
 }
 
 actor WebsiteIcon {
-    // 10MB, 30 days
-    static let cache = Cache(name: "WebsiteIcon", byteLimit: 100 * 1024 * 1024, ageLimit: 60 * 60 * 24 * 30)
+    // 200MB, 90 days
+    static let cache = Cache(name: "WebsiteIcon", byteLimit: 100 * 1024 * 1024, ageLimit: 60 * 60 * 24 * 90)
 
     // Some websites such as YouTube provide less icon variants when accessed with mobile user agent.
     static let userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"
