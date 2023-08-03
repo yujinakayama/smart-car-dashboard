@@ -22,6 +22,8 @@ actor WebsiteIcon {
 
     // Some websites such as YouTube provide less icon variants when accessed with mobile user agent.
     static let userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"
+
+    static let htmlEncodingCandidates: [String.Encoding] = [.utf8, .shiftJIS, .japaneseEUC]
     
     let websiteURL: URL
     let minimumSize: CGSize
@@ -111,10 +113,8 @@ actor WebsiteIcon {
         guard let documentURL = response.url else {
             throw WebsiteIconError.unknown
         }
-        
-        guard let html = String(data: data, encoding: .utf8) else {
-            throw WebsiteIconError.htmlEncodingError
-        }
+
+        let html = try stringFromData(data: data)
 
         return HTMLDocument(
             url: documentURL,
@@ -122,6 +122,16 @@ actor WebsiteIcon {
         )
     }
 
+    private func stringFromData(data: Data) throws -> String {
+        for encoding in Self.htmlEncodingCandidates {
+            if let string = String(data: data, encoding: encoding) {
+                return string
+            }
+        }
+        
+        throw WebsiteIconError.htmlEncodingError
+    }
+    
     private func extractValidIcons(from htmlDocument: HTMLDocument) throws -> [Icon]  {
         let links = try htmlDocument.document.select("link[rel~=apple-touch-icon], link[rel~=apple-touch-icon-precomposed], link[rel~=icon]")
 
