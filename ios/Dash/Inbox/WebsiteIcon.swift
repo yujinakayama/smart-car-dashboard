@@ -205,7 +205,6 @@ actor WebsiteIcon {
 
         urlComponents.path = "/favicon.ico"
         urlComponents.query = nil
-        print(urlComponents.url!)
         return urlComponents.url!
     }
 
