@@ -35,16 +35,16 @@ actor WebsiteIcon {
 
     var image: UIImage? {
         get async {
-            if isCached {
-                return cachedImage
+            if await isCached {
+                return await cachedImage
             }
 
             do {
                 let image = try await fetchBestImage()
-                cachedImage = image
+                setCachedImage(image)
                 return image
             } catch is WebsiteIconError {
-                cachedImage = nil // Cache the fact there's no valid icon
+                setCachedImage(nil) // Cache the fact there's no valid icon
                 return nil
             } catch {
                 return nil
@@ -53,16 +53,20 @@ actor WebsiteIcon {
     }
 
     private var isCached: Bool {
-        Self.cache.containsObject(forKey: cacheKey)
+        get async {
+            await Self.cache.containsObject(forKey: cacheKey)
+        }
     }
 
-    private (set) var cachedImage: UIImage? {
-        get {
-            return Self.cache.object(forKey: cacheKey) as? UIImage
+    private var cachedImage: UIImage? {
+        get async {
+            await Self.cache.object(forKey: cacheKey) as? UIImage
         }
+    }
 
-        set {
-            Self.cache.setObject(newValue, forKey: cacheKey)
+    private func setCachedImage(_ image: UIImage?) {
+        Task {
+            await Self.cache.setObject(image, forKey: cacheKey)
         }
     }
 
