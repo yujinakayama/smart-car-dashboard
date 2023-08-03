@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import SafariServices
+import FirebaseFirestore
 
 class InboxItemTableViewController: UITableViewController {
     static func pushMapsViewControllerForParkingSearchInCurrentScene(location: InboxLocation) {
@@ -132,10 +133,15 @@ class InboxItemTableViewController: UITableViewController {
               let indexPaths = tableView.indexPathsForSelectedRows
         else { return }
 
+        let batch = Firestore.firestore().batch()
+
         for indexPath in indexPaths {
-            dataSource.item(for: indexPath).delete()
+            guard let document = dataSource.item(for: indexPath).firebaseDocument else { continue }
+            batch.deleteDocument(document)
         }
 
+        batch.commit()
+        
         setEditing(false, animated: true)
     }
 
