@@ -14,10 +14,21 @@ function createAxiosInstance() {
 
     const instance = axios.create({
         headers: {
-            // https://qiita.com/JunkiHiroi/items/f03d4297e11ce5db172e
-            'User-Agent': 'Bot for Dash'
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15'
         },
         jar: cookieJar,
+    })
+
+    instance.interceptors.request.use((request) => {
+        if (request.url) {
+            const url = new URL(request.url)
+            if (url.hostname == 'twitter.com') {
+                // https://qiita.com/JunkiHiroi/items/f03d4297e11ce5db172e#解決時のサイトプレビュー実装user-agent-の追加
+                request.headers['User-Agent'] = 'Dash Bot'
+            }
+        }
+
+        return request
     })
 
     return addCookieHandlingInterceptor(instance)
