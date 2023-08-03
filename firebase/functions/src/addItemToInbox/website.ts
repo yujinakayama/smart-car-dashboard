@@ -61,7 +61,13 @@ export async function fetchTitle(url: URL): Promise<string | null> {
         const response = await axiosInstance.get(url.toString())
         const document = libxmljs.parseHtml(response.data)
         // Amazon pages may have <title> outside of <head> :(
-        return document.get('//title')?.text().trim().replace(/\n/g, ' ') || null
+        const titleElement = document.get('//title')
+
+        if (!titleElement) {
+            console.debug(`No <title> element found in page: ${response.data}`)
+        }
+
+        return titleElement?.text().trim().replace(/\n/g, ' ') ?? null
     } catch (error) {
         console.error(error)
         return null
