@@ -162,7 +162,7 @@ class InboxItemTableViewCell: UITableViewCell {
 
         if let artworkURL = musicItem.artworkURL(size: iconImagePixelSize) {
             task = Task {
-                await setIconImage(from: artworkURL, shape: .sharpRoundedRectangle)
+                try await setIconImage(from: artworkURL, shape: .sharpRoundedRectangle)
             }
         }
     }
@@ -177,7 +177,7 @@ class InboxItemTableViewCell: UITableViewCell {
 
         if let thumbnailURL = video.thumbnailURL {
             task = Task {
-                await setIconImage(from: thumbnailURL, shape: .circle)
+                try await setIconImage(from: thumbnailURL, shape: .circle)
             }
         }
     }
@@ -211,8 +211,10 @@ class InboxItemTableViewCell: UITableViewCell {
         detailLabel.text = unknownItem?.url.absoluteString
     }
     
-    private func setIconImage(from url: URL, shape: IconShape) async {
+    private func setIconImage(from url: URL, shape: IconShape) async throws {
         if let image = try? await imageLoader.loadImage(from: url) {
+            try Task.checkCancellation()
+
             iconImageView.image = image
             iconBackgroundView.backgroundColor = .white
             iconType = .image
