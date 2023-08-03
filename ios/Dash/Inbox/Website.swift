@@ -18,7 +18,9 @@ class Website: InboxItemProtocol {
     let creationDate: Date?
     var hasBeenOpened: Bool
 
-    lazy var icon = WebsiteIcon(websiteURL: url)
+    func icon(minimumSize: CGSize) -> WebsiteIcon {
+        WebsiteIcon(websiteURL: url, minimumSize: minimumSize)
+    }
 
     lazy var simplifiedHost = url.host?.replacingOccurrences(of: "^www\\d*\\.", with: "", options: .regularExpression)
 

@@ -24,9 +24,11 @@ actor WebsiteIcon {
     static let userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"
     
     let websiteURL: URL
+    let minimumSize: CGSize
 
-    init(websiteURL: URL) {
+    init(websiteURL: URL, minimumSize: CGSize) {
         self.websiteURL = websiteURL
+        self.minimumSize = minimumSize
     }
 
     var image: UIImage? {
@@ -65,38 +67,50 @@ actor WebsiteIcon {
     private lazy var cacheKey: String = Cache.digestString(of: websiteURL.absoluteString)
     
     private func fetchBestImage() async throws -> UIImage? {
-        let icons = try await extractIconsFromHTMLDocument()
+        let icons = try await extractValidIconsFromHTMLDocument()
         
         try Task.checkCancellation()
 
-        if let appleIcon = icons.first(where: { $0.type == .apple }) {
-            return try await fetchImage(from: appleIcon.url)
-        }
-
-        try Task.checkCancellation()
-
-        if let image = try await fetchImage(from: fixedAppleTouchIconURL) {
+        if let appleIcon = icons.first(where: { $0.type == .apple }),
+           let image = try await fetchValidImage(from: appleIcon.url)
+        {
             return image
         }
 
         try Task.checkCancellation()
 
-        if let largestIcon = icons.max(by: { $0.largestSize < $1.largestSize }) {
-            return try await fetchImage(from: largestIcon.url)
+        if let image = try await fetchValidImage(from: fixedAppleTouchIconURL) {
+            return image
+        }
+
+        try Task.checkCancellation()
+
+        if let largestIcon = icons.max(by: { $0.largestSize < $1.largestSize }),
+           let image = try await fetchValidImage(from: largestIcon.url)
+        {
+            return image
         }
         
         try Task.checkCancellation()
 
-        return try await fetchImage(from: fixedFaviconURL)
+        return try await fetchValidImage(from: fixedFaviconURL)
     }
 
-    private func extractIconsFromHTMLDocument() async throws -> [Icon]  {
+    private func extractValidIconsFromHTMLDocument() async throws -> [Icon]  {
         var request = URLRequest(url: websiteURL)
         request.setValue(Self.userAgent, forHTTPHeaderField: "User-Agent")
         let (data, _) = try await URLSession.shared.data(for: request)
 
         let document = try parseHTML(data: data)
-        return try extractIcons(from: document)
+        let icons = try extractIcons(from: document)
+
+        return icons.filter { icon in
+            if let size = icon.largestSize.cgSize {
+                return size.isLargerThanOrEqualTo(minimumSize)
+            } else {
+                return true
+            }
+        }
     }
 
     private func parseHTML(data: Data) throws -> Document {
@@ -139,10 +153,16 @@ actor WebsiteIcon {
         }
     }
 
-    private func fetchImage(from url: URL) async throws -> UIImage? {
+    private func fetchValidImage(from url: URL) async throws -> UIImage? {
         let (data, _) = try await URLSession.shared.data(from: url)
+
         try Task.checkCancellation()
-        return UIImage(data: data)
+
+        if let image = UIImage(data: data), image.size.isLargerThanOrEqualTo(minimumSize) {
+            return image
+        } else {
+            return nil
+        }
     }
 
     private var fixedAppleTouchIconURL: URL {
@@ -191,6 +211,18 @@ extension WebsiteIcon {
         case any
         case unknown
 
+        var cgSize: CGSize? {
+            if case .pixel(let width, let height) = self {
+                return CGSize(width: width, height: height)
+            } else {
+                return nil
+            }
+        }
+        
+        static func < (lhs: Self, rhs: Self) -> Bool {
+            lhs.comparisonValue < rhs.comparisonValue
+        }
+
         private var comparisonValue: Double {
             switch self {
             case .pixel(let width, let height):
@@ -201,9 +233,15 @@ extension WebsiteIcon {
                 return -1
             }
         }
-        
-        static func < (lhs: Self, rhs: Self) -> Bool {
-            lhs.comparisonValue < rhs.comparisonValue
-        }
+    }
+}
+
+fileprivate extension CGSize {
+    func isLargerThanOrEqualTo(_ other: CGSize) -> Bool {
+        self.rect.contains(other.rect)
+    }
+    
+    var rect: CGRect {
+        CGRect(origin: .zero, size: self)
     }
 }

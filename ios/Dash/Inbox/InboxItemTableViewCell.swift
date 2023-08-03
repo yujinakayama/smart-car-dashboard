@@ -12,7 +12,7 @@ class InboxItemTableViewCell: UITableViewCell {
     typealias Icon = (image: UIImage, color: UIColor)
 
     static let screenScale = UIScreen.main.scale
-    static let minimumWebsiteIconSizeToDisplay: CGFloat = 33 // Reject 32px
+    static let minimumWebsiteIconSizeToDisplay = CGSize(width: 33, height: 33) // Reject 32px
 
     @IBOutlet weak var iconBackgroundView: BorderedView!
     @IBOutlet weak var iconImageView: UIImageView!
@@ -191,9 +191,7 @@ class InboxItemTableViewCell: UITableViewCell {
         detailLabel.text = website.simplifiedHost
 
         task = Task {
-            guard let image = await website.icon.image,
-                  image.size.width >= Self.minimumWebsiteIconSizeToDisplay
-            else { return }
+            guard let image = await website.icon(minimumSize: Self.minimumWebsiteIconSizeToDisplay).image else { return }
 
             try Task.checkCancellation()
 
