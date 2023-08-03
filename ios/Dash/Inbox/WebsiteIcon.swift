@@ -81,7 +81,7 @@ actor WebsiteIcon {
 
         try Task.checkCancellation()
 
-        if let largestIcon = icons.max(by: { ($0.size ?? 0) < ($1.size ?? 0) }) {
+        if let largestIcon = icons.max(by: { $0.largestSize < $1.largestSize }) {
             return try await fetchImage(from: largestIcon.url)
         }
         
@@ -115,15 +115,27 @@ actor WebsiteIcon {
                   let iconURL = URL(string: href, relativeTo: websiteURL),
                   let rel = try? link.attr("rel")
             else { return nil }
-
+            
             let type: IconType = rel.contains("apple") ? .apple : .generic
-
-            var size: Int?
-            if let sizeString = try? link.attr("sizes").components(separatedBy: "x").first {
-                size = Int(sizeString)
+            
+            // https://html.spec.whatwg.org/dev/semantics.html#attr-link-sizes
+            let sizes: [Size]
+            if let sizesString = try? link.attr("sizes") {
+                sizes = sizesString.lowercased().components(separatedBy: .whitespaces).compactMap { sizeString -> Size? in
+                    if sizeString == "any" {
+                        return .any
+                    }
+                    
+                    let dimensions = sizeString.components(separatedBy: "x").compactMap { Int($0) }
+                    guard dimensions.count == 2 else { return nil }
+                    
+                    return .pixel(width: dimensions[0], height: dimensions[1])
+                }
+            } else {
+                sizes = []
             }
 
-            return Icon(url: iconURL, type: type, size: size)
+            return Icon(url: iconURL, type: type, sizes: sizes)
         }
     }
 
@@ -162,11 +174,36 @@ extension WebsiteIcon {
     struct Icon {
         var url: URL
         var type: IconType
-        var size: Int?
+        var sizes: [Size]
+        
+        var largestSize: Size {
+            sizes.max() ?? .unknown
+        }
     }
 
     enum IconType {
         case apple
         case generic
+    }
+    
+    enum Size: Comparable {
+        case pixel(width: Int, height: Int)
+        case any
+        case unknown
+
+        private var comparisonValue: Double {
+            switch self {
+            case .pixel(let width, let height):
+                return Double(min(width, height))
+            case .any:
+                return .infinity
+            case .unknown:
+                return -1
+            }
+        }
+        
+        static func < (lhs: Self, rhs: Self) -> Bool {
+            lhs.comparisonValue < rhs.comparisonValue
+        }
     }
 }
