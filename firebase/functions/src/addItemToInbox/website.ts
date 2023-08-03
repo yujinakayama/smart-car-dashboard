@@ -1,12 +1,27 @@
 import axios from 'axios'
+import { wrapper as addCookieHandlingInterceptor } from 'axios-cookiejar-support'
+import { CookieJar } from 'tough-cookie'
 import * as libxmljs from 'libxmljs'
 
 import { InputData } from './inputData'
 import { Website } from './normalizedData'
 import { urlPattern } from './util'
 
-// https://qiita.com/JunkiHiroi/items/f03d4297e11ce5db172e
-const userAgent = 'Bot for Dash'
+const axiosInstance = createAxiosInstance()
+
+function createAxiosInstance() {
+    const cookieJar = new CookieJar()
+
+    const instance = axios.create({
+        headers: {
+            // https://qiita.com/JunkiHiroi/items/f03d4297e11ce5db172e
+            'User-Agent': 'Bot for Dash'
+        },
+        jar: cookieJar,
+    })
+
+    return addCookieHandlingInterceptor(instance)
+}
 
 export async function normalizeWebpage(inputData: InputData): Promise<Website> {
     return {
@@ -30,9 +45,9 @@ async function getTitle(inputData: InputData): Promise<string | null> {
     return title?.replace(/\n/g, ' ') || null
 }
 
-async function fetchTitle(url: URL): Promise<string | null> {
+export async function fetchTitle(url: URL): Promise<string | null> {
     try {
-        const response = await axios.get(url.toString(), { headers: { 'User-Agent': userAgent }})
+        const response = await axiosInstance.get(url.toString())
         const document = libxmljs.parseHtml(response.data)
         // Amazon pages may have <title> outside of <head> :(
         return document.get('//title')?.text().trim().replace(/\n/g, ' ') || null
