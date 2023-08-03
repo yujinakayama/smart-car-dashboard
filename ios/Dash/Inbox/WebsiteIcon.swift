@@ -278,8 +278,10 @@ fileprivate extension URL {
             return
         }
 
+        let trimmedString = possiblyInvalidString.trimmingCharacters(in: .whitespacesAndNewlines)
+        
         // URL -> URLComponents -> URL fixes invalid URLs such as URL without percent encoding
-        guard let components = URLComponents(string: possiblyInvalidString),
+        guard let components = URLComponents(string: trimmedString),
               let validString = components.string
         else { return nil }
 
