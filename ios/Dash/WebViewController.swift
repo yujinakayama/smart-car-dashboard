@@ -86,10 +86,11 @@ class WebViewController: UIViewController {
     private var pendingURL: URL?
 
     lazy var doneBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
-
+    lazy var reloadOrStopLoadingBarButtonItem = UIBarButtonItem()
+    
     lazy var backwardBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(goBackward))
     lazy var forwardBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.forward"), style: .plain, target: self, action: #selector(goForward))
-    lazy var reloadOrStopLoadingBarButtonItem = UIBarButtonItem()
+    lazy var shareBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share))
     lazy var openInSafariBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "safari"), style: .plain, target: self, action: #selector(openInSafari))
 
     var keyValueObservations: [NSKeyValueObservation] = []
@@ -126,7 +127,8 @@ class WebViewController: UIViewController {
             toolbar.scrollEdgeAppearance = toolbar.standardAppearance
         }
 
-        navigationItem.rightBarButtonItem = doneBarButtonItem
+        navigationItem.leftBarButtonItem = doneBarButtonItem
+        navigationItem.rightBarButtonItem = reloadOrStopLoadingBarButtonItem
 
         addWebView()
 
@@ -150,7 +152,7 @@ class WebViewController: UIViewController {
             .flexibleSpace(),
             forwardBarButtonItem,
             .flexibleSpace(),
-            reloadOrStopLoadingBarButtonItem,
+            shareBarButtonItem,
             .flexibleSpace(),
             openInSafariBarButtonItem
         ]
@@ -172,6 +174,7 @@ class WebViewController: UIViewController {
         }))
 
         keyValueObservations.append(webView.observe(\.url, options: .initial, changeHandler: { [weak self] (webView, change) in
+            self?.shareBarButtonItem.isEnabled = webView.url != nil
             self?.openInSafariBarButtonItem.isEnabled = webView.url != nil
         }))
     }
@@ -280,14 +283,6 @@ class WebViewController: UIViewController {
         dismiss(animated: true)
     }
 
-    @objc func goBackward() {
-        webView.goBack()
-    }
-
-    @objc func goForward() {
-        webView.goForward()
-    }
-
     @objc func reload() {
         let dataStore = webView.configuration.websiteDataStore
 
@@ -304,6 +299,32 @@ class WebViewController: UIViewController {
         webView.stopLoading()
     }
 
+    @objc func goBackward() {
+        webView.goBack()
+    }
+
+    @objc func goForward() {
+        webView.goForward()
+    }
+
+    @objc func share() {
+        guard let url = webView.url else { return }
+        
+        var activityItem: [Any] = [url]
+        
+        if let title = webView.title {
+            activityItem.append(title)
+        }
+        
+        let activityViewController = UIActivityViewController(activityItems: activityItem, applicationActivities: nil)
+        
+        if let popoverPresentationController = activityViewController.popoverPresentationController {
+            popoverPresentationController.sourceItem = shareBarButtonItem
+        }
+        
+        present(activityViewController, animated: true)
+    }
+    
     @objc func openInSafari() {
         guard let url = webView.url else { return }
         UIApplication.shared.open(url)
