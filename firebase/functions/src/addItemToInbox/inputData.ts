@@ -1,6 +1,7 @@
 import { URL } from 'url'
 
 import { urlPattern } from './util'
+import axios from 'axios'
 
 export interface Request {
     vehicleID: string;
@@ -11,6 +12,7 @@ export interface Request {
 export class InputData {
     attachments: Attachments
     url: URL
+    private _expandedURL: URL | undefined
 
     constructor(attachments: Attachments) {
         this.attachments = attachments
@@ -31,6 +33,26 @@ export class InputData {
         }
 
         throw new Error('Attachments have no URL')
+    }
+
+    async expandURL(): Promise<URL> {
+        if (this._expandedURL) {
+            return this._expandedURL
+        }
+
+        const response = await axios.get(this.url.toString(), {
+            maxRedirects: 0,
+            validateStatus: () => true
+        })
+
+        const expandedURLString = response.headers['location']
+
+        if (expandedURLString) {
+            this._expandedURL = new URL(expandedURLString)
+            return this._expandedURL
+        } else {
+            throw new Error(`URL could not be expanded: ${this.url.toString()}`)
+        }
     }
 }
 

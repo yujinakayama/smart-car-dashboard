@@ -46,14 +46,14 @@ export const addItemToInbox = onRequest({
     functionResponse.sendStatus(200)
 })
 
-function normalize(inputData: InputData): Promise<NormalizedData> {
+async function normalize(inputData: InputData): Promise<NormalizedData> {
     if (isAppleMapsLocation(inputData)) {
         return normalizeAppleMapsLocation(inputData)
-    } else if (isGoogleMapsLocation(inputData)) {
+    } else if (await isGoogleMapsLocation(inputData)) {
         return normalizeGoogleMapsLocation(inputData)
     } else if (isAppleMusicItem(inputData)) {
         return normalizeAppleMusicItem(inputData)
-    } else if (isYouTubeVideo(inputData)) {
+    } else if (await isYouTubeVideo(inputData)) {
         return normalizeYouTubeVideo(inputData)
     } else {
         return normalizeWebpage(inputData)

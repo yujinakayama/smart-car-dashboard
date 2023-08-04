@@ -8,11 +8,11 @@ const apiKey = process.env[requiredEnvName]
 
 const client = google.youtube('v3')
 
-export function isYouTubeVideo(inputData: InputData): boolean {
-    const url = inputData.url
+export async function isYouTubeVideo(inputData: InputData): Promise<boolean> {
+    let url = inputData.url
 
-    if (url.toString().startsWith('https://youtu.be/')) {
-        return true
+    if (url.host == 'youtu.be') {
+        url = await inputData.expandURL()
     }
 
     return !!url.hostname.match(/(www\.)?youtube\.com/)
@@ -21,7 +21,8 @@ export function isYouTubeVideo(inputData: InputData): boolean {
 }
 
 export async function normalizeYouTubeVideo(inputData: InputData): Promise<Video> {
-    const videoID = inputData.url.searchParams.get('v')
+    const expandedURL = await inputData.expandURL()
+    const videoID = expandedURL.searchParams.get('v')
 
     if (!videoID) {
         throw new Error(`YouTube URL must have a video ID: ${inputData.url}`)

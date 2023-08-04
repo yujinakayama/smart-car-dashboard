@@ -1,5 +1,4 @@
 import { AddressType, Client, Language, PlaceData, PlaceDetailsRequest, PlaceInputType, PlaceType1, PlaceType2 } from '@googlemaps/google-maps-services-js'
-import axios from 'axios'
 // @ts-ignore: no type definition provided
 import { parse_host as parseHost } from 'tld-extract'
 
@@ -74,15 +73,20 @@ const apiKey = process.env[requiredEnvName] ?? ''
 
 const client = new Client()
 
-export function isGoogleMapsLocation(inputData: InputData): boolean {
-    const url = inputData.url
+export async function isGoogleMapsLocation(inputData: InputData): Promise<boolean> {
+    let url = inputData.url
 
     if (isGoogleShortenURL(url)) {
-        return true
+        url = await inputData.expandURL()
     }
 
-    return !!url.hostname.match(/((www|maps)\.)google\.(com|co\.jp)$/)
-        && (url.searchParams.has('q') || url.searchParams.has('ftid') || url.pathname.startsWith('/maps/place/'))
+    if (url.hostname.match(/^maps\.google\.(com|co\.jp)$/)) {
+        return url.searchParams.has('q') || url.searchParams.has('ftid')
+    } else if (url.hostname.match(/\.google\.(com|co\.jp)$/)) {
+        return url.pathname.startsWith('/maps/place/')
+    } else {
+        return false
+    }
 }
 
 function isGoogleShortenURL(url: URL): boolean {
@@ -90,7 +94,7 @@ function isGoogleShortenURL(url: URL): boolean {
 }
 
 export async function normalizeGoogleMapsLocation(inputData: InputData): Promise<Location> {
-    const expandedURL = await expandShortenURL(inputData.url)
+    const expandedURL = await inputData.expandURL()
 
     let locationData: Location | null
 
@@ -110,25 +114,6 @@ export async function normalizeGoogleMapsLocation(inputData: InputData): Promise
     }
 
     throw new Error('Cannot find details for the Google Maps URL')
-}
-
-async function expandShortenURL(url: URL): Promise<URL> {
-    if (!isGoogleShortenURL(url)) {
-        return url
-    }
-
-    const response = await axios.get(url.toString(), {
-        maxRedirects: 0,
-        validateStatus: (_statusCode) => true
-    })
-
-    const expandedURLString = response.headers['location']
-
-    if (expandedURLString) {
-        return new URL(expandedURLString)
-    } else {
-        throw new Error(`URL could not be expanded: ${url.toString()}`)
-    }
 }
 
 // Point of Interests
