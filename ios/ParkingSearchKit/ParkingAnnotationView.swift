@@ -241,17 +241,19 @@ extension ParkingAnnotationView {
         }
 
         lazy var departureButton: UIButton = {
-            let image = UIImage(systemName: "car.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 24))
+            var configuration = UIButton.Configuration.filled()
 
-            let button = UIButton()
-            button.setImage(image, for: .normal)
-            button.tintColor = .white
-            button.setBackgroundColor(Self.departureColor, for: .normal)
+            configuration.baseForegroundColor = .white
+            configuration.baseBackgroundColor = .link
+            configuration.cornerStyle = .medium
 
+            let symbolConfiguration = UIImage.SymbolConfiguration(textStyle: .headline)
+            configuration.image = UIImage(systemName: "arrow.triangle.turn.up.right.circle.fill", withConfiguration: symbolConfiguration)
+            configuration.imagePlacement = .top
+            configuration.imagePadding = 8
+
+            let button = UIButton(configuration: configuration)
             button.frame.size = CGSize(width: 40, height: 40)
-            button.clipsToBounds = true
-            button.layer.cornerRadius = 8
-
             button.addTarget(self, action: #selector(openDirectionsInMaps), for: .touchUpInside)
 
             return button

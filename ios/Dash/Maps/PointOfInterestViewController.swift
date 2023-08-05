@@ -88,7 +88,7 @@ class PointOfInterestViewController: UIViewController {
 
     private lazy var directionsButton: UIButton = {
         let button = makeButton(
-            systemImageName: "car.fill",
+            systemImageName: "arrow.triangle.turn.up.right.circle.fill",
             subtitle: String(localized: "Directions"),
             foregroundColor: .white,
             backgroundColor: .link // Not sure why but setting view.tintColor makes button's target-action not firing
