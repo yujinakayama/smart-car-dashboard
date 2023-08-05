@@ -1,10 +1,12 @@
 import { onRequest } from 'firebase-functions/v2/https'
 
 import { Attachments, InputData } from './addItemToInbox/inputData'
-import { isGoogleMapsLocation, normalizeGoogleMapsLocation } from './addItemToInbox/googleMaps'
+import { isGoogleMapsLocation, normalizeGoogleMapsLocation, requiredEnvName } from './addItemToInbox/googleMaps'
 
-
-export const geocode = onRequest({ region: 'asia-northeast1' }, async (functionRequest, functionResponse) => {
+export const geocode = onRequest({
+    region: 'asia-northeast1',
+    secrets: [requiredEnvName]
+}, async (functionRequest, functionResponse) => {
     const request = functionRequest.body
 
     console.log('request:', request)
@@ -12,7 +14,7 @@ export const geocode = onRequest({ region: 'asia-northeast1' }, async (functionR
     const attachments = request.attachments as Attachments
     const inputData = new InputData(attachments)
 
-    if (!isGoogleMapsLocation(inputData)) {
+    if (!await isGoogleMapsLocation(inputData)) {
         functionResponse.sendStatus(400)
         return
     }
