@@ -13,6 +13,8 @@ import WebKit
 class OfficialParkingInformationWebViewController: WebViewController {
     let officialParkingSearch: OfficialParkingSearch
 
+    var hasHighlightedElementDescribingParking = false
+
     init(officialParkingSearch: OfficialParkingSearch) {
         self.officialParkingSearch = officialParkingSearch
         super.init(webView: officialParkingSearch.webView, contentMode: .mobile)
@@ -24,10 +26,14 @@ class OfficialParkingInformationWebViewController: WebViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        highlightAndScrollToElementDescribingParking()
+
+        if !hasHighlightedElementDescribingParking {
+            highlightElementDescribingParking()
+            hasHighlightedElementDescribingParking = true
+        }
     }
 
-    private func highlightAndScrollToElementDescribingParking() {
+    private func highlightElementDescribingParking() {
         let function = """
             (element) => {
                 function highlight(element) {
