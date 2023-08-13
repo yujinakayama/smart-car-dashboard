@@ -16,19 +16,24 @@ static const char* TAG = "CarSmartKey";
 static const char* kSetupID = "SKEY"; // This must be unique
 
 static const char* kEngineServiceName = "Engine";
+static const char* kDoorLockServiceName = "Door Lock";
 
 static int identifyAccessory(hap_acc_t* ha);
 static int readEngineServiceCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv);
 static int writeEngineServiceCharacteristic(hap_write_data_t write_data[], int count, void* serv_priv, void* write_priv);
 static void onEngineStateChange(void* arg);
+static int readDoorLockServiceCharacteristic(hap_char_t *hc, hap_status_t *status_code, void *serv_priv, void *read_priv);
+static int writeDoorLockServiceCharacteristic(hap_write_data_t write_data[], int count, void *serv_priv, void *write_priv);
 
-CarSmartKey::CarSmartKey(gpio_num_t powerOutputPin, gpio_num_t lockButtonOutputPin, gpio_num_t engineStateInputPin) {
+CarSmartKey::CarSmartKey(gpio_num_t powerOutputPin, gpio_num_t lockButtonOutputPin, gpio_num_t unlockButtonOutputPin, gpio_num_t engineStateInputPin) {
   this->powerPin = powerOutputPin;
   this->lockButtonPin = lockButtonOutputPin;
+  this->unlockButtonPin = unlockButtonOutputPin;
   this->engineStatePin = engineStateInputPin;
 
   gpio_set_direction(this->powerPin, GPIO_MODE_OUTPUT);
   gpio_set_direction(this->lockButtonPin, GPIO_MODE_OUTPUT);
+  gpio_set_direction(this->unlockButtonPin, GPIO_MODE_OUTPUT);
   gpio_set_direction(this->engineStatePin, GPIO_MODE_INPUT);
 
   // Ensure the smart key power is off for security
@@ -40,6 +45,7 @@ void CarSmartKey::registerBridgedHomeKitAccessory() {
 
   this->createAccessory();
   this->addEngineService();
+  this->addDoorLockService();
   this->addFirmwareUpgradeService();
   /* Add the Accessory to the HomeKit Database */
   hap_add_bridged_accessory(this->accessory, hap_get_unique_aid(kSetupID));
@@ -51,14 +57,14 @@ void CarSmartKey::createAccessory() {
   /* Initialise the mandatory parameters for Accessory which will be added as
    * the mandatory services internally
    */
-  this->accessoryConfig.name = (char*)"CarSmartKey";
+  this->accessoryConfig.name = (char*)"Car Smart Key";
   this->accessoryConfig.manufacturer = (char*)"Yuji Nakayama";
   this->accessoryConfig.model = (char*)"Model";
   this->accessoryConfig.serial_num = (char*)"Serial Number";
   this->accessoryConfig.fw_rev = (char*)"Firmware Version";
   this->accessoryConfig.hw_rev = NULL;
   this->accessoryConfig.pv = (char*)"1.0.0";
-  this->accessoryConfig.cid = HAP_CID_SWITCH;
+  this->accessoryConfig.cid = HAP_CID_BRIDGE;
   this->accessoryConfig.identify_routine = identifyAccessory;
 
   /* Create accessory object */
@@ -88,6 +94,25 @@ void CarSmartKey::addEngineService() {
   hap_acc_add_serv(this->accessory, service);
 
   this->engineOnCharacteristic = hap_serv_get_char_by_uuid(service, HAP_CHAR_UUID_ON);
+}
+
+void CarSmartKey::addDoorLockService() {
+  /* Create a Lock Mechanism service. Include the "name" since this is a user visible service  */
+  hap_serv_t* service = hap_serv_lock_mechanism_create(LockMechanismStateUnknown, LockMechanismStateUnsecured);
+
+  hap_serv_add_char(service, hap_char_name_create(strdup(kDoorLockServiceName)));
+
+  /* Set the write callback for the service */
+  hap_serv_set_write_cb(service, writeDoorLockServiceCharacteristic);
+
+  /* Set the read callback for the service (optional) */
+  hap_serv_set_read_cb(service, readDoorLockServiceCharacteristic);
+
+  // Allow access to CarSmartKey instance from the read/write callbals
+  hap_serv_set_priv(service, this);
+
+  /* Add the Lock Mechanism service to the accessory object */
+  hap_acc_add_serv(this->accessory, service);
 }
 
 /* Create the Firmware Upgrade HomeKit Custom Service.
@@ -164,6 +189,24 @@ void CarSmartKey::stopEngine() {
   delay(500); // Wait for the engine to actually stop
 }
 
+void CarSmartKey::lockDoors() {
+  ESP_LOGD(TAG, "lockDoors");
+
+  this->activateSmartKey();
+  // For some reason pressing for 150ms does not work (maybe to avoid unintentional unlock by mistake?)
+  this->pressSmartKeyLockButton(500);
+  this->deactivateSmartKey();
+}
+
+void CarSmartKey::unlockDoors() {
+  ESP_LOGD(TAG, "unlockDoors");
+
+  this->activateSmartKey();
+  // For some reason pressing for 150ms does not work (maybe to avoid unintentional unlock by mistake?)
+  this->pressSmartKeyUnlockButton(500);
+  this->deactivateSmartKey();
+}
+
 void CarSmartKey::activateSmartKey() {
   ESP_LOGV(TAG, "activateSmartKey");
   gpio_set_level(this->powerPin, 1);
@@ -187,6 +230,16 @@ void CarSmartKey::pressSmartKeyLockButton(uint32_t durationInMilliseconds) {
 
   ESP_LOGV(TAG, "pressSmartKeyLockButton off");
   gpio_set_level(this->lockButtonPin, 0);
+}
+
+void CarSmartKey::pressSmartKeyUnlockButton(uint32_t durationInMilliseconds) {
+  ESP_LOGV(TAG, "pressSmartKeyUnlockButton on");
+  gpio_set_level(this->unlockButtonPin, 1);
+
+  delay(durationInMilliseconds);
+
+  ESP_LOGV(TAG, "pressSmartKeyUnlockButton off");
+  gpio_set_level(this->unlockButtonPin, 0);
 }
 
 /* Mandatory identify routine for the accessory.
@@ -265,4 +318,70 @@ static void onEngineStateChange(void* arg) {
   hap_val_t value;
   value.b = state;
   hap_char_update_val(smartKey->engineOnCharacteristic, &value);
+}
+
+static int readDoorLockServiceCharacteristic(hap_char_t *hc, hap_status_t *status_code, void *serv_priv, void *read_priv) {
+  const char* characteristicUUID = hap_char_get_type_uuid(hc);
+  ESP_LOGD(TAG, "readDoorLockServiceCharacteristic: %s", characteristicUUID);
+
+  int entireResult = HAP_SUCCESS;
+
+  hap_val_t value;
+
+  if (strcmp(characteristicUUID, HAP_CHAR_UUID_LOCK_CURRENT_STATE) == 0) {
+    // Currently we don't support reading current lock state, so always return unknown
+    value.u = LockMechanismStateUnknown;
+    hap_char_update_val(hc, &value);
+    *status_code = HAP_STATUS_SUCCESS;
+  } else if (strcmp(characteristicUUID, HAP_CHAR_UUID_LOCK_TARGET_STATE) == 0) {
+    // Currently we don't support reading target lock state, so always return unknown
+    value.u = LockMechanismStateUnknown;
+    hap_char_update_val(hc, &value);
+    *status_code = HAP_STATUS_SUCCESS;
+  } else if (strcmp(characteristicUUID, HAP_CHAR_UUID_NAME) == 0) {
+    value.s = strdup(kDoorLockServiceName);
+    hap_char_update_val(hc, &value);
+    *status_code = HAP_STATUS_SUCCESS;
+  } else {
+    ESP_LOGE(TAG, "unsupported characteristic %s", characteristicUUID);
+    *status_code = HAP_STATUS_RES_ABSENT;
+    entireResult = HAP_FAIL;
+  }
+
+  return entireResult;
+}
+
+static int writeDoorLockServiceCharacteristic(hap_write_data_t write_data[], int count, void *serv_priv, void *write_priv) {
+  int entireResult = HAP_SUCCESS;
+  CarSmartKey* smartKey = (CarSmartKey*)serv_priv;
+
+  for (int i = 0; i < count; i++) {
+    hap_write_data_t* data = &write_data[i];
+    const char* characteristicUUID = hap_char_get_type_uuid(data->hc);
+
+    if (strcmp(characteristicUUID, HAP_CHAR_UUID_LOCK_TARGET_STATE) == 0) {
+      LockMechanismState newState = (LockMechanismState)data->val.u;
+
+      switch (newState) {
+      case LockMechanismStateUnsecured:
+        smartKey->unlockDoors();
+        *(data->status) = HAP_STATUS_SUCCESS;
+        break;      
+      case LockMechanismStateSecured:
+        smartKey->lockDoors();
+        *(data->status) = HAP_STATUS_SUCCESS;
+        break;      
+      default:
+        ESP_LOGE(TAG, "unsupported target lock mechanism state %i", newState);
+        *(data->status) = HAP_STATUS_VAL_INVALID;
+        break;
+      }
+    } else {
+      ESP_LOGE(TAG, "unsupported characteristic %s", characteristicUUID);
+      *(data->status) = HAP_STATUS_RES_ABSENT;
+      entireResult = HAP_FAIL;
+    }
+  }
+
+  return entireResult;
 }
