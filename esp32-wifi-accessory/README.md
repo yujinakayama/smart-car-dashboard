@@ -6,7 +6,7 @@
 
 ### Software
 
-* [ESP-IDF](https://github.com/espressif/esp-idf) 4.3
+* [ESP-IDF](https://github.com/espressif/esp-idf) 4.3.5
 
 ## Project Configuration
 
