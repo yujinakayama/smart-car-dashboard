@@ -8,7 +8,8 @@
 static void configureDHCPServer() {
   esp_netif_t* netif = esp_netif_create_default_wifi_ap();
 
-  esp_netif_dhcps_stop(netif); // Need to stop DHCP server to update IP info
+  ESP_ERROR_CHECK(esp_netif_dhcps_stop(netif)); // Need to stop DHCP server to update IP info
+
   // https://github.com/espressif/esp-idf/blob/8bc19ba893e5544d571a753d82b44a84799b94b1/components/esp_netif/esp_netif_defaults.c#L42-L45
   esp_netif_ip_info_t ipInfo;
   ESP_ERROR_CHECK(esp_netif_get_ip_info(netif, &ipInfo));
@@ -16,6 +17,8 @@ static void configureDHCPServer() {
   gatewayAddress.addr = 0; // 0.0.0.0
   ipInfo.gw = gatewayAddress;
   ESP_ERROR_CHECK(esp_netif_set_ip_info(netif, &ipInfo));
+
+  ESP_ERROR_CHECK(esp_netif_dhcps_start(netif));
 }
 
 void configureWiFi() {
