@@ -15,9 +15,11 @@ static const char* TAG = "CarSmartKey";
 
 static const char* kSetupID = "SKEY"; // This must be unique
 
+static const char* kEngineServiceName = "Engine";
+
 static int identifyAccessory(hap_acc_t* ha);
-static int readEngineOnCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv);
-static int writeEngineOnCharacteristic(hap_write_data_t write_data[], int count, void* serv_priv, void* write_priv);
+static int readEngineServiceCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv);
+static int writeEngineServiceCharacteristic(hap_write_data_t write_data[], int count, void* serv_priv, void* write_priv);
 static void onEngineStateChange(void* arg);
 
 CarSmartKey::CarSmartKey(gpio_num_t powerOutputPin, gpio_num_t lockButtonOutputPin, gpio_num_t engineStateInputPin) {
@@ -37,7 +39,7 @@ void CarSmartKey::registerBridgedHomeKitAccessory() {
   ESP_LOGI(TAG, "registerBridgedHomeKitAccessory");
 
   this->createAccessory();
-  this->addEngineSwitchService();
+  this->addEngineService();
   this->addFirmwareUpgradeService();
   /* Add the Accessory to the HomeKit Database */
   hap_add_bridged_accessory(this->accessory, hap_get_unique_aid(kSetupID));
@@ -67,17 +69,17 @@ void CarSmartKey::createAccessory() {
   hap_acc_add_product_data(accessory, product_data, sizeof(product_data));
 }
 
-void CarSmartKey::addEngineSwitchService() {
+void CarSmartKey::addEngineService() {
   /* Create the Switch Service. Include the "name" since this is a user visible service  */
   hap_serv_t* service = hap_serv_switch_create(false);
 
-  hap_serv_add_char(service, hap_char_name_create((char*)"Engine"));
+  hap_serv_add_char(service, hap_char_name_create(strdup(kEngineServiceName)));
 
   /* Set the write callback for the service */
-  hap_serv_set_write_cb(service, writeEngineOnCharacteristic);
+  hap_serv_set_write_cb(service, writeEngineServiceCharacteristic);
 
   /* Set the read callback for the service (optional) */
-  hap_serv_set_read_cb(service, readEngineOnCharacteristic);
+  hap_serv_set_read_cb(service, readEngineServiceCharacteristic);
 
   // Allow access to CarSmartKey instance from the read/write callbals
   hap_serv_set_priv(service, this);
@@ -196,9 +198,11 @@ static int identifyAccessory(hap_acc_t* ha) {
   return HAP_SUCCESS;
 }
 
-static int readEngineOnCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv) {
+static int readEngineServiceCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv) {
   const char* characteristicUUID = hap_char_get_type_uuid(hc);
-  ESP_LOGD(TAG, "readEngineOnCharacteristic: %s", characteristicUUID);
+  ESP_LOGD(TAG, "readEngineServiceCharacteristic: %s", characteristicUUID);
+
+  int entireResult = HAP_SUCCESS;
 
   CarSmartKey* smartKey = (CarSmartKey*)serv_priv;
   hap_val_t value;
@@ -206,24 +210,46 @@ static int readEngineOnCharacteristic(hap_char_t* hc, hap_status_t* status_code,
   if (strcmp(characteristicUUID, HAP_CHAR_UUID_ON) == 0) {
     value.b = smartKey->getEngineState();
     hap_char_update_val(hc, &value);
+    *status_code = HAP_STATUS_SUCCESS;
+  } else if (strcmp(characteristicUUID, HAP_CHAR_UUID_NAME) == 0) {
+    value.s = strdup(kEngineServiceName);
+    hap_char_update_val(hc, &value);
+    *status_code = HAP_STATUS_SUCCESS;
+  } else {
+    ESP_LOGE(TAG, "unsupported characteristic %s", characteristicUUID);
+    *status_code = HAP_STATUS_RES_ABSENT;
+    entireResult = HAP_FAIL;
   }
 
-  *status_code = HAP_STATUS_SUCCESS;
-
-  return HAP_SUCCESS;
+  return entireResult;
 }
 
-static int writeEngineOnCharacteristic(hap_write_data_t write_data[], int count, void* serv_priv, void* write_priv) {
-  CarSmartKey* smartKey = (CarSmartKey*)serv_priv;
+static int writeEngineServiceCharacteristic(hap_write_data_t write_data[], int count, void* serv_priv, void* write_priv) {
+  int entireResult = HAP_SUCCESS;
+  CarSmartKey *smartKey = (CarSmartKey *)serv_priv;
 
-  // TODO: Handle all data
-  hap_write_data_t* data = &write_data[0];
-  bool newState = data->val.b;
-  smartKey->setEngineState(newState);
+  for (int i = 0; i < count; i++) {
+    hap_write_data_t* data = &write_data[i];
+    const char *characteristicUUID = hap_char_get_type_uuid(data->hc);
 
-  bool successful = smartKey->getEngineState() == newState;
-  *(data->status) = successful ? HAP_STATUS_SUCCESS : HAP_STATUS_COMM_ERR;
-  return successful ? HAP_SUCCESS : HAP_FAIL;
+    if (strcmp(characteristicUUID, HAP_CHAR_UUID_ON) == 0) {
+      bool newState = data->val.b;
+      smartKey->setEngineState(newState);
+
+      if (smartKey->getEngineState() == newState) {
+        *(data->status) = HAP_STATUS_SUCCESS;
+      } else {
+        *(data->status) = HAP_STATUS_COMM_ERR;
+        entireResult = HAP_FAIL;
+      }
+    } else {
+      ESP_LOGE(TAG, "unsupported characteristic %s", characteristicUUID);
+      *(data->status) = HAP_STATUS_RES_ABSENT;
+      entireResult = HAP_FAIL;
+    }
+  }
+
+  return entireResult;
 }
 
 static void onEngineStateChange(void* arg) {

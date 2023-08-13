@@ -17,6 +17,8 @@ static const char* TAG = "GarageRemote";
 
 static const char* kSetupID = "GRGR"; // This must be unique
 
+static const char* kServiceName = "Garage";
+
 static esp_timer_handle_t timer;
 typedef void (*callback_with_arg_t)(void*);
 
@@ -73,7 +75,7 @@ void GarageRemote::addGarageDoorOpenerService() {
   /* Create the Fan Service. Include the "name" since this is a user visible service  */
   hap_serv_t* service = hap_serv_garage_door_opener_create(this->currentDoorState, this->targetDoorState, false);
 
-  hap_serv_add_char(service, hap_char_name_create((char*)"Garage"));
+  hap_serv_add_char(service, hap_char_name_create(strdup(kServiceName)));
 
   /* Set the write callback for the service */
   hap_serv_set_write_cb(service, writeTargetDoorState);
@@ -167,32 +169,56 @@ static int readCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* s
   const char* characteristicUUID = hap_char_get_type_uuid(hc);
   ESP_LOGD(TAG, "readCharacteristic: %s", characteristicUUID);
 
+  int entireResult = HAP_SUCCESS;
+
   GarageRemote* garageRemote = (GarageRemote*)serv_priv;
   hap_val_t value;
 
   if (strcmp(characteristicUUID, HAP_CHAR_UUID_TARGET_DOOR_STATE) == 0) {
     value.u = garageRemote->getTargetDoorState();
     hap_char_update_val(hc, &value);
+    *status_code = HAP_STATUS_SUCCESS;
   } else if (strcmp(characteristicUUID, HAP_CHAR_UUID_CURRENT_DOOR_STATE) == 0) {
     value.u = garageRemote->getCurrentDoorState();
     hap_char_update_val(hc, &value);
+    *status_code = HAP_STATUS_SUCCESS;
+  } else if (strcmp(characteristicUUID, HAP_CHAR_UUID_OBSTRUCTION_DETECTED) == 0) {
+    value.b = false;
+    hap_char_update_val(hc, &value);
+    *status_code = HAP_STATUS_SUCCESS;
+  } else if (strcmp(characteristicUUID, HAP_CHAR_UUID_NAME) == 0) {
+    value.s = strdup(kServiceName);
+    hap_char_update_val(hc, &value);
+    *status_code = HAP_STATUS_SUCCESS;
+  } else {
+    ESP_LOGE(TAG, "unsupported characteristic %s", characteristicUUID);
+    *status_code = HAP_STATUS_RES_ABSENT;
+    entireResult = HAP_FAIL;
   }
 
-  *status_code = HAP_STATUS_SUCCESS;
-
-  return HAP_SUCCESS;
+  return entireResult;
 }
 
 static int writeTargetDoorState(hap_write_data_t write_data[], int count, void* serv_priv, void* write_priv) {
-  GarageRemote* garageRemote = (GarageRemote*)serv_priv;
+  int entireResult = HAP_SUCCESS;
+  GarageRemote *garageRemote = (GarageRemote *)serv_priv;
 
-  // TODO: Handle all data
-  hap_write_data_t* data = &write_data[0];
-  TargetDoorState state = (TargetDoorState)data->val.u;
+  for (int i = 0; i < count; i++) {
+    hap_write_data_t *data = &write_data[i];
+    const char* characteristicUUID = hap_char_get_type_uuid(data->hc);
 
-  garageRemote->setTargetDoorState(state);
+    if (strcmp(characteristicUUID, HAP_CHAR_UUID_TARGET_DOOR_STATE) == 0) {
+      TargetDoorState state = (TargetDoorState)data->val.u;
+      garageRemote->setTargetDoorState(state);
+      *(data->status) = HAP_STATUS_SUCCESS;
+    } else {
+      ESP_LOGE(TAG, "unsupported characteristic %s", characteristicUUID);
+      *(data->status) = HAP_STATUS_RES_ABSENT;
+      entireResult = HAP_FAIL;
+    }
+  }
 
-  return HAP_SUCCESS;
+  return entireResult;
 }
 
 static void performLater(uint32_t milliseconds, callback_with_arg_t callback, void* arg) {

@@ -21,7 +21,7 @@ public:
 
 private:
   void createAccessory();
-  void addEngineSwitchService();
+  void addEngineService();
   void addFirmwareUpgradeService();
   void startObservingEngineState();
   void startEngine();
