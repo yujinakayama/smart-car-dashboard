@@ -24,6 +24,7 @@ static int writeEngineServiceCharacteristic(hap_write_data_t write_data[], int c
 static void onEngineStateChange(void* arg);
 static int readDoorLockServiceCharacteristic(hap_char_t *hc, hap_status_t *status_code, void *serv_priv, void *read_priv);
 static int writeDoorLockServiceCharacteristic(hap_write_data_t write_data[], int count, void *serv_priv, void *write_priv);
+static void notifyLockStateUpdate(hap_acc_t* characteristic, LockMechanismState state);
 
 CarSmartKey::CarSmartKey(gpio_num_t powerOutputPin, gpio_num_t lockButtonOutputPin, gpio_num_t unlockButtonOutputPin, gpio_num_t engineStateInputPin) {
   this->powerPin = powerOutputPin;
@@ -38,6 +39,8 @@ CarSmartKey::CarSmartKey(gpio_num_t powerOutputPin, gpio_num_t lockButtonOutputP
 
   // Ensure the smart key power is off for security
   this->deactivateSmartKey();
+
+  this->lastTargetDoorLockState = LockMechanismStateUnknown;
 }
 
 void CarSmartKey::registerBridgedHomeKitAccessory() {
@@ -113,6 +116,9 @@ void CarSmartKey::addDoorLockService() {
 
   /* Add the Lock Mechanism service to the accessory object */
   hap_acc_add_serv(this->accessory, service);
+
+  this->currentDoorLockStateCharacteristic = hap_serv_get_char_by_uuid(service, HAP_CHAR_UUID_LOCK_CURRENT_STATE);
+  this->targetDoorLockStateCharacteristic = hap_serv_get_char_by_uuid(service, HAP_CHAR_UUID_LOCK_TARGET_STATE);
 }
 
 /* Create the Firmware Upgrade HomeKit Custom Service.
@@ -160,6 +166,36 @@ void CarSmartKey::setEngineState(bool newState) {
     this->startEngine();
   } else if (!newState && this->getEngineState()) {
     this->stopEngine();
+  }
+}
+
+
+LockMechanismState CarSmartKey::getCurrentDoorLockState() {
+  // TODO: Fetch real current state from the vehicle
+  return this->lastTargetDoorLockState;
+}
+
+LockMechanismState CarSmartKey::getTargetDoorLockState() {
+  return this->lastTargetDoorLockState;
+}
+
+void CarSmartKey::setDoorLockState(LockMechanismState newTargetState) {
+  if (newTargetState != LockMechanismStateUnsecured && newTargetState != LockMechanismStateSecured) {
+    ESP_LOGE(TAG, "unsupported target lock mechanism state %i", newTargetState);
+    return;
+  }
+
+  this->lastTargetDoorLockState = newTargetState;
+
+  switch (newTargetState) {
+  case LockMechanismStateSecured:
+    this->lockDoors();
+    break;
+  case LockMechanismStateUnsecured:
+    this->unlockDoors();
+    break;
+  default:
+    break;
   }
 }
 
@@ -224,22 +260,32 @@ void CarSmartKey::deactivateSmartKey() {
 
 void CarSmartKey::pressSmartKeyLockButton(uint32_t durationInMilliseconds) {
   ESP_LOGV(TAG, "pressSmartKeyLockButton on");
+
+  notifyLockStateUpdate(this->targetDoorLockStateCharacteristic, LockMechanismStateSecured);
+
   gpio_set_level(this->lockButtonPin, 1);
 
   delay(durationInMilliseconds);
 
   ESP_LOGV(TAG, "pressSmartKeyLockButton off");
   gpio_set_level(this->lockButtonPin, 0);
+
+  notifyLockStateUpdate(this->currentDoorLockStateCharacteristic, LockMechanismStateSecured);
 }
 
 void CarSmartKey::pressSmartKeyUnlockButton(uint32_t durationInMilliseconds) {
   ESP_LOGV(TAG, "pressSmartKeyUnlockButton on");
+
+  notifyLockStateUpdate(this->targetDoorLockStateCharacteristic, LockMechanismStateUnsecured);
+
   gpio_set_level(this->unlockButtonPin, 1);
 
   delay(durationInMilliseconds);
 
   ESP_LOGV(TAG, "pressSmartKeyUnlockButton off");
   gpio_set_level(this->unlockButtonPin, 0);
+
+  notifyLockStateUpdate(this->currentDoorLockStateCharacteristic, LockMechanismStateUnsecured);
 }
 
 /* Mandatory identify routine for the accessory.
@@ -325,17 +371,16 @@ static int readDoorLockServiceCharacteristic(hap_char_t *hc, hap_status_t *statu
   ESP_LOGD(TAG, "readDoorLockServiceCharacteristic: %s", characteristicUUID);
 
   int entireResult = HAP_SUCCESS;
+  CarSmartKey* smartKey = (CarSmartKey*)serv_priv;
 
   hap_val_t value;
 
   if (strcmp(characteristicUUID, HAP_CHAR_UUID_LOCK_CURRENT_STATE) == 0) {
-    // Currently we don't support reading current lock state, so always return unknown
-    value.u = LockMechanismStateUnknown;
+    value.u = smartKey->getCurrentDoorLockState();
     hap_char_update_val(hc, &value);
     *status_code = HAP_STATUS_SUCCESS;
   } else if (strcmp(characteristicUUID, HAP_CHAR_UUID_LOCK_TARGET_STATE) == 0) {
-    // Currently we don't support reading target lock state, so always return unknown
-    value.u = LockMechanismStateUnknown;
+    value.u = smartKey->getTargetDoorLockState();
     hap_char_update_val(hc, &value);
     *status_code = HAP_STATUS_SUCCESS;
   } else if (strcmp(characteristicUUID, HAP_CHAR_UUID_NAME) == 0) {
@@ -362,19 +407,12 @@ static int writeDoorLockServiceCharacteristic(hap_write_data_t write_data[], int
     if (strcmp(characteristicUUID, HAP_CHAR_UUID_LOCK_TARGET_STATE) == 0) {
       LockMechanismState newState = (LockMechanismState)data->val.u;
 
-      switch (newState) {
-      case LockMechanismStateUnsecured:
-        smartKey->unlockDoors();
+      if (newState == LockMechanismStateUnsecured || newState == LockMechanismStateSecured) {
+        smartKey->setDoorLockState(newState);
         *(data->status) = HAP_STATUS_SUCCESS;
-        break;      
-      case LockMechanismStateSecured:
-        smartKey->lockDoors();
-        *(data->status) = HAP_STATUS_SUCCESS;
-        break;      
-      default:
+      } else {
         ESP_LOGE(TAG, "unsupported target lock mechanism state %i", newState);
         *(data->status) = HAP_STATUS_VAL_INVALID;
-        break;
       }
     } else {
       ESP_LOGE(TAG, "unsupported characteristic %s", characteristicUUID);
@@ -384,4 +422,10 @@ static int writeDoorLockServiceCharacteristic(hap_write_data_t write_data[], int
   }
 
   return entireResult;
+}
+
+static void notifyLockStateUpdate(hap_acc_t* characteristic, LockMechanismState state) {
+  hap_val_t value;
+  value.u = state;
+  hap_char_update_val(characteristic, &value);
 }
