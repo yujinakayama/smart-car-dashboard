@@ -163,15 +163,17 @@ async function normalizeLocationWithCoordinate(expandedURL: URL, inputData: Inpu
         return null
     }
 
+    const address = normalizeAddressComponents(place.address_components)
+
     return {
         type: 'location',
-        address: normalizeAddressComponents(place.address_components),
+        address: address,
         categories: normalizeCategories(place),
         coordinate: {
             latitude: place.geometry.location.lat,
             longitude: place.geometry.location.lng
         },
-        name: convertAlphanumericsToAscii(inputData.attachments['public.plain-text']),
+        name: convertAlphanumericsToAscii(inputData.attachments['public.plain-text'] || address.subLocality),
         url: expandedURL.toString(),
         websiteURL: null
     }
