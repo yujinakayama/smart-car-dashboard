@@ -12,59 +12,59 @@ import { convertAlphanumericsToAscii } from './util'
 
 // https://developers.google.com/maps/documentation/geocoding/intro#Types
 interface GoogleMapsAddressComponents {
-    street_address?: string;
-    route?: string;
-    intersection?: string;
-    political?: string;
-    country?: string;
     administrative_area_level_1?: string;
     administrative_area_level_2?: string;
     administrative_area_level_3?: string;
     administrative_area_level_4?: string;
     administrative_area_level_5?: string;
+    airport?: string;
     colloquial_area?: string;
+    country?: string;
+    intersection?: string;
     locality?: string;
+    natural_feature?: string;
+    neighborhood?: string;
+    park?: string;
+    point_of_interest?: string;
+    political?: string;
+    postal_code?: string;
+    premise?: string;
+    route?: string;
+    street_address?: string;
     sublocality_level_1?: string;
     sublocality_level_2?: string;
     sublocality_level_3?: string;
     sublocality_level_4?: string;
     sublocality_level_5?: string;
-    neighborhood?: string;
-    premise?: string;
     subpremise?: string;
-    postal_code?: string;
-    natural_feature?: string;
-    airport?: string;
-    park?: string;
-    point_of_interest?: string;
 }
 
 const googleMapsAddressComponentKeys = [
-    'street_address',
-    'route',
-    'intersection',
-    'political',
-    'country',
     'administrative_area_level_1',
     'administrative_area_level_2',
     'administrative_area_level_3',
     'administrative_area_level_4',
     'administrative_area_level_5',
+    'airport',
     'colloquial_area',
+    'country',
+    'intersection',
     'locality',
+    'natural_feature',
+    'neighborhood',
+    'park',
+    'point_of_interest',
+    'political',
+    'postal_code',
+    'premise',
+    'route',
+    'street_address',
     'sublocality_level_1',
     'sublocality_level_2',
     'sublocality_level_3',
     'sublocality_level_4',
     'sublocality_level_5',
-    'neighborhood',
-    'premise',
     'subpremise',
-    'postal_code',
-    'natural_feature',
-    'airport',
-    'park',
-    'point_of_interest'
 ]
 
 export const requiredEnvName = 'GOOGLE_API_KEY'
