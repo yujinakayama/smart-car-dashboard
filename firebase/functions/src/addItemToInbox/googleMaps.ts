@@ -26,7 +26,6 @@ interface GoogleMapsAddressComponents {
     neighborhood?: string;
     park?: string;
     point_of_interest?: string;
-    political?: string;
     postal_code?: string;
     premise?: string;
     route?: string;
@@ -54,7 +53,6 @@ const googleMapsAddressComponentKeys = [
     'neighborhood',
     'park',
     'point_of_interest',
-    'political',
     'postal_code',
     'premise',
     'route',
