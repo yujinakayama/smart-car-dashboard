@@ -10,25 +10,16 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    var vehicleProximityDetector: VehicleProximityDetector?
+    let doorLockManager = DoorLockManager()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        updateVehicleProximityDetector()
-
-        NotificationCenter.default.addObserver(forName: .PairedVehicleDidChangeDefaultVehicleID, object: nil, queue: nil) { [weak self] (notification) in
-            self?.updateVehicleProximityDetector()
+        UNUserNotificationCenter.current().delegate = self
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, error in
+            print(error as Any)
         }
 
         return true
-    }
-
-    func updateVehicleProximityDetector() {
-        if let vehicleID = PairedVehicle.defaultVehicleID {
-            vehicleProximityDetector = VehicleProximityDetector(vehicleID: vehicleID)
-        } else {
-            vehicleProximityDetector = nil
-        }
     }
 
     // MARK: UISceneSession Lifecycle
@@ -46,3 +37,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    // Received notification in foreground
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .sound])
+
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+//            UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+//        }
+    }
+}

@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import HomeKit
 
 class ProximityViewController: UITableViewController {
     enum Section: Int {
@@ -27,7 +28,7 @@ class ProximityViewController: UITableViewController {
 
     var detector: VehicleProximityDetector! {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.vehicleProximityDetector
+        return appDelegate.doorLockManager.vehicleProximityDetector
     }
 
     var lastBeaconRangingTime: Date?
@@ -39,8 +40,6 @@ class ProximityViewController: UITableViewController {
         switchView.isOn = Defaults.shared.autoLockDoorsWhenLeave
         switchView.addTarget(self, action: #selector(autoLockDoorsWhenLeaveSwitchValueChanged), for: .valueChanged)
         autoLockDoorsWhenLeaveTableViewCell.accessoryView = switchView
-
-        updateForCurrentlyDetectedBeacon(nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(vehicleProximityDetectorDidRangeBeacon), name: .VehicleProximityDetectorDidRangeBeacon, object: nil)
     }
@@ -61,6 +60,10 @@ class ProximityViewController: UITableViewController {
             text: "Major",
             secondaryText: String(detector.beaconMajorValue)
         )
+
+        updateAutoLockCell()
+
+        updateCurrentlyDetectedBeaconSection(nil)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -81,8 +84,25 @@ class ProximityViewController: UITableViewController {
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
+
+        postLocalNotification(body: "foobar")
     }
 
+    private func postLocalNotification(body: String) {
+        let content = UNMutableNotificationContent()
+        content.body = body
+        content.sound = .default
+
+        let notificationRequest = UNNotificationRequest(
+            identifier: UUID().uuidString,
+            content: content,
+            trigger: nil
+        )
+
+        UNUserNotificationCenter.current().add(notificationRequest) { error in
+            print(#function, error as Any)
+        }
+    }
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch Section(rawValue: section) {
         case .targetIBeacon:
@@ -100,19 +120,39 @@ class ProximityViewController: UITableViewController {
         }
     }
 
+    func updateAutoLockCell() {
+        updateContentConfiguration(
+            of: autoLockDoorsWhenLeaveTableViewCell,
+            text: "Auto-lock doors when leave",
+            secondaryText: Defaults.shared.lockMechanismAccessoryName
+        )
+    }
+
     @objc func autoLockDoorsWhenLeaveSwitchValueChanged(_ switchView: UISwitch) {
         Defaults.shared.autoLockDoorsWhenLeave = switchView.isOn
+
+        if switchView.isOn {
+            let pickerController = HomeAccessoryPickerController(serviceType: HMServiceTypeLockMechanism)
+            pickerController.delegate = self
+            pickerController.navigationItem.title = "Select Vehicle Door Lock"
+            let navigationController = UINavigationController(rootViewController: pickerController)
+            present(navigationController, animated: true)
+        } else {
+            Defaults.shared.lockMechanismServiceUUID = nil
+            Defaults.shared.lockMechanismAccessoryName = nil
+            updateAutoLockCell()
+        }
     }
 
     @objc func vehicleProximityDetectorDidRangeBeacon(_ notification: Notification) {
         let beacon = notification.userInfo?[VehicleProximityDetector.UserInfoKey.beacon] as? CLBeacon
         lastBeaconRangingTime = Date()
-        updateForCurrentlyDetectedBeacon(beacon)
         // Update section header
         tableView.reloadSections(.init(integer: Section.currentlyDetectedBeacon.rawValue), with: .none)
+        updateCurrentlyDetectedBeaconSection(beacon)
     }
 
-    func updateForCurrentlyDetectedBeacon(_ beacon: CLBeacon?) {
+    func updateCurrentlyDetectedBeaconSection(_ beacon: CLBeacon?) {
         updateContentConfiguration(
             of: proximityTableViewCell,
             text: "Proximity",
@@ -149,6 +189,18 @@ class ProximityViewController: UITableViewController {
         formatter.timeStyle = .medium
         return formatter
     }()
+}
+
+extension ProximityViewController: HomeAccessoryPickerControllerDelegate {
+    func homeAccessoryPickerController(_ pickerController: HomeAccessoryPickerController, didFinishPickingAccessory accessory: HMAccessory) {
+        pickerController.dismiss(animated: true)
+
+        guard let lockMechanismService = accessory.services.first(where: { $0.serviceType == HMServiceTypeLockMechanism }) else { return }
+
+        Defaults.shared.lockMechanismServiceUUID = lockMechanismService.uniqueIdentifier
+        Defaults.shared.lockMechanismAccessoryName = accessory.name
+        updateAutoLockCell()
+    }
 }
 
 fileprivate func updateContentConfiguration(of cell: UITableViewCell, text: String?, secondaryText: String?) {

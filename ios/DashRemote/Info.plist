@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSHomeKitUsageDescription</key>
+	<string>This app needs to access to your HomeKit information to auto-unlock vehicle doors.</string>
 	<key>AppIdentifierPrefix</key>
 	<string>$(AppIdentifierPrefix)</string>
 	<key>CFBundleDevelopmentRegion</key>

@@ -82,6 +82,8 @@
 		B93AEAFE2A8E1DE1001A12A4 /* ProximityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEAFD2A8E1DE1001A12A4 /* ProximityViewController.swift */; };
 		B93AEB012A8E1FD6001A12A4 /* VehicleProximityDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEB002A8E1FD6001A12A4 /* VehicleProximityDetector.swift */; };
 		B93AEB032A8E35D2001A12A4 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEB022A8E35D2001A12A4 /* Defaults.swift */; };
+		B93AEB052A8E514E001A12A4 /* DoorLockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEB042A8E514E001A12A4 /* DoorLockManager.swift */; };
+		B93AEB072A8E56FB001A12A4 /* HomeAccessoryPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEB062A8E56FB001A12A4 /* HomeAccessoryPickerController.swift */; };
 		B940A460250E5B57006BDFBB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B940A45F250E5B57006BDFBB /* Settings.bundle */; };
 		B940A462250E5CDD006BDFBB /* RearviewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */; };
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
@@ -537,6 +539,8 @@
 		B93AEAFD2A8E1DE1001A12A4 /* ProximityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProximityViewController.swift; sourceTree = "<group>"; };
 		B93AEB002A8E1FD6001A12A4 /* VehicleProximityDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleProximityDetector.swift; sourceTree = "<group>"; };
 		B93AEB022A8E35D2001A12A4 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		B93AEB042A8E514E001A12A4 /* DoorLockManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorLockManager.swift; sourceTree = "<group>"; };
+		B93AEB062A8E56FB001A12A4 /* HomeAccessoryPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAccessoryPickerController.swift; sourceTree = "<group>"; };
 		B93C04622642CD32002CD861 /* ParkingAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAnnotation.swift; sourceTree = "<group>"; };
 		B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAnnotationView.swift; sourceTree = "<group>"; };
 		B93C04662642D5FA002CD861 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
@@ -924,6 +928,7 @@
 			isa = PBXGroup;
 			children = (
 				B93AEAFD2A8E1DE1001A12A4 /* ProximityViewController.swift */,
+				B93AEB062A8E56FB001A12A4 /* HomeAccessoryPickerController.swift */,
 				B93AEB002A8E1FD6001A12A4 /* VehicleProximityDetector.swift */,
 			);
 			path = Proximity;
@@ -1009,6 +1014,7 @@
 				B93AEAF82A8E1055001A12A4 /* Localizable.strings */,
 				B964BCC223E066FF00288E0D /* AppDelegate.swift */,
 				B964BCC423E066FF00288E0D /* SceneDelegate.swift */,
+				B93AEB042A8E514E001A12A4 /* DoorLockManager.swift */,
 				B93AEAF92A8E1305001A12A4 /* RootViewController.swift */,
 				B99058702A8E056C00EA3E79 /* PickMeUp */,
 				B93AEAFF2A8E1FB3001A12A4 /* Proximity */,
@@ -2036,6 +2042,7 @@
 				B932E5F023F9082600726615 /* RendezvousPoint.swift in Sources */,
 				B964BCC723E066FF00288E0D /* PickMeUpViewController.swift in Sources */,
 				B9C2456523EDBB4800E00523 /* FloatButton.swift in Sources */,
+				B93AEB052A8E514E001A12A4 /* DoorLockManager.swift in Sources */,
 				B93AEAFE2A8E1DE1001A12A4 /* ProximityViewController.swift in Sources */,
 				B964BCC323E066FF00288E0D /* AppDelegate.swift in Sources */,
 				B93AEB012A8E1FD6001A12A4 /* VehicleProximityDetector.swift in Sources */,
@@ -2044,6 +2051,7 @@
 				B964BCC523E066FF00288E0D /* SceneDelegate.swift in Sources */,
 				B93AEB032A8E35D2001A12A4 /* Defaults.swift in Sources */,
 				B98B784D23ED530E00A5102F /* SignInWithAppleViewController.swift in Sources */,
+				B93AEB072A8E56FB001A12A4 /* HomeAccessoryPickerController.swift in Sources */,
 				B98B784F23ED583600A5102F /* AppIconImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
