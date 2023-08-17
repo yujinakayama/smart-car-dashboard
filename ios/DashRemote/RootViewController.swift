@@ -9,9 +9,11 @@
 import UIKit
 
 class RootViewController: UIViewController {
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        presentAppropriateViewController()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DispatchQueue.main.async {
+            self.presentAppropriateViewController()
+        }
     }
 
     func presentAppropriateViewController() {
