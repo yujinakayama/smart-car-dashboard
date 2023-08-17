@@ -79,6 +79,7 @@
 		B93432A32A69137B000F1D7C /* FloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93432A22A69137B000F1D7C /* FloatingView.swift */; };
 		B93AEAF62A8E1055001A12A4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B93AEAF82A8E1055001A12A4 /* Localizable.strings */; };
 		B93AEAFA2A8E1305001A12A4 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEAF92A8E1305001A12A4 /* RootViewController.swift */; };
+		B93AEAFE2A8E1DE1001A12A4 /* ProximityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEAFD2A8E1DE1001A12A4 /* ProximityViewController.swift */; };
 		B940A460250E5B57006BDFBB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B940A45F250E5B57006BDFBB /* Settings.bundle */; };
 		B940A462250E5CDD006BDFBB /* RearviewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */; };
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
@@ -531,6 +532,7 @@
 		B93432A22A69137B000F1D7C /* FloatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingView.swift; sourceTree = "<group>"; };
 		B93AEAF72A8E1055001A12A4 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B93AEAF92A8E1305001A12A4 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		B93AEAFD2A8E1DE1001A12A4 /* ProximityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProximityViewController.swift; sourceTree = "<group>"; };
 		B93C04622642CD32002CD861 /* ParkingAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAnnotation.swift; sourceTree = "<group>"; };
 		B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAnnotationView.swift; sourceTree = "<group>"; };
 		B93C04662642D5FA002CD861 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
@@ -914,6 +916,14 @@
 			path = FloatingViewKitTests;
 			sourceTree = "<group>";
 		};
+		B93AEAFF2A8E1FB3001A12A4 /* Proximity */ = {
+			isa = PBXGroup;
+			children = (
+				B93AEAFD2A8E1DE1001A12A4 /* ProximityViewController.swift */,
+			);
+			path = Proximity;
+			sourceTree = "<group>";
+		};
 		B944C68E24A9E4C8000D1E99 /* Music */ = {
 			isa = PBXGroup;
 			children = (
@@ -996,6 +1006,7 @@
 				B964BCC423E066FF00288E0D /* SceneDelegate.swift */,
 				B93AEAF92A8E1305001A12A4 /* RootViewController.swift */,
 				B99058702A8E056C00EA3E79 /* PickMeUp */,
+				B93AEAFF2A8E1FB3001A12A4 /* Proximity */,
 				B988A66B254D0E570012A4CB /* PairingRequirementViewController.swift */,
 				B98B784C23ED530E00A5102F /* SignInWithAppleViewController.swift */,
 				B91B5DD423ED7886003F4AEF /* Account.swift */,
@@ -2019,6 +2030,7 @@
 				B932E5F023F9082600726615 /* RendezvousPoint.swift in Sources */,
 				B964BCC723E066FF00288E0D /* PickMeUpViewController.swift in Sources */,
 				B9C2456523EDBB4800E00523 /* FloatButton.swift in Sources */,
+				B93AEAFE2A8E1DE1001A12A4 /* ProximityViewController.swift in Sources */,
 				B964BCC323E066FF00288E0D /* AppDelegate.swift in Sources */,
 				B9B4F700268CB366009C5DC5 /* PairedVehicle.swift in Sources */,
 				B988A66C254D0E570012A4CB /* PairingRequirementViewController.swift in Sources */,
