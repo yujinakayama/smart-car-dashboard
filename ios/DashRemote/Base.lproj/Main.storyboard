@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="c1H-1q-mX8">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -10,10 +10,30 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Root View Controller-->
+        <scene sceneID="zd3-IQ-8TM">
+            <objects>
+                <viewController id="c1H-1q-mX8" customClass="RootViewController" customModule="Dash_Remote" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lmj-Vg-4Zl">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="phx-4E-LEf"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <connections>
+                        <segue destination="IuF-dg-PPy" kind="presentation" identifier="pairingRequirement" id="0Vk-EV-i5f"/>
+                        <segue destination="pQK-Ah-sn9" kind="presentation" identifier="signInWithApple" id="whN-R9-f1R"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="main" id="ONJ-PN-66P"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jzb-uI-ohE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="151" y="-299"/>
+        </scene>
         <!--Map View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="Dash_Remote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="MapViewController" customModule="Dash_Remote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -25,7 +45,7 @@
                                 </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Szy-qw-dMC" customClass="FloatButton" customModule="Dash_Remote" customModuleProvider="target">
-                                <rect key="frame" x="350" y="68" width="44" height="44"/>
+                                <rect key="frame" x="350" y="20" width="44" height="44"/>
                                 <color key="backgroundColor" name="Current Location Button Background Color"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Szy-qw-dMC" secondAttribute="height" multiplier="1:1" id="ANB-xz-HsE"/>
@@ -66,7 +86,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BIf-6G-XGM" customClass="FloatButton" customModule="Dash_Remote" customModuleProvider="target">
-                                <rect key="frame" x="62" y="785" width="290" height="53"/>
+                                <rect key="frame" x="62" y="819" width="290" height="53"/>
                                 <color key="backgroundColor" systemColor="linkColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="360" id="RQb-5B-9o0"/>
@@ -130,14 +150,12 @@
                     <connections>
                         <outlet property="mapView" destination="HTS-8g-YUt" id="SgG-hG-wGx"/>
                         <outlet property="pickUpButton" destination="BIf-6G-XGM" id="2kA-wL-CXN"/>
-                        <segue destination="pQK-Ah-sn9" kind="presentation" identifier="signInWithApple" animates="NO" id="KtU-Q2-8au"/>
                         <segue destination="6ag-Zw-1wE" kind="presentation" identifier="success" animates="NO" id="O7O-0q-687"/>
-                        <segue destination="IuF-dg-PPy" kind="presentation" identifier="pairingRequirement" animates="NO" id="Und-5J-eEa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="139" y="113"/>
+            <point key="canvasLocation" x="1532" y="500"/>
         </scene>
         <!--Sign In With Apple View Controller-->
         <scene sceneID="NJU-5X-rcj">
@@ -222,7 +240,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DY9-ck-7sZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1532" y="-1203"/>
+            <point key="canvasLocation" x="1532" y="-1037"/>
         </scene>
         <!--Success View Controller-->
         <scene sceneID="IVQ-GC-2zq">
@@ -255,7 +273,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C34-NT-CzV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1532" y="587"/>
+            <point key="canvasLocation" x="2572" y="500"/>
         </scene>
     </scenes>
     <designables>

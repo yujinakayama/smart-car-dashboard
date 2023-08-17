@@ -11,7 +11,7 @@ import MapKit
 import TransitionButton
 import DashCloudKit
 
-class MapViewController: UIViewController, MKMapViewDelegate, AccountDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var pickUpButton: TransitionButton!
 
@@ -25,8 +25,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, AccountDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         Account.default.delegate = self
+        locationManager.requestWhenInUseAuthorization()
     }
 
     deinit {
@@ -34,43 +34,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, AccountDelegate {
         // > remember to set that object’s delegate property to nil.
         // https://developer.apple.com/documentation/mapkit/mkmapviewdelegate
         mapView.delegate = nil
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        showRequirementsIfNeeded()
-    }
-
-    func accountDidSignOut(_ account: Account) {
-        showRequirementsIfNeeded()
-    }
-
-    func showRequirementsIfNeeded() {
-        if PairedVehicle.defaultVehicleID == nil {
-            showPairingRequirement()
-        } else {
-            Account.default.checkSignInState { (signedIn) in
-                if signedIn {
-                    self.setUpMapView()
-                } else {
-                    self.showSignInWithApple()
-                }
-            }
-        }
-    }
-
-    func showPairingRequirement() {
-        performSegue(withIdentifier: "pairingRequirement", sender: nil)
-    }
-
-    func showSignInWithApple() {
-        DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "signInWithApple", sender: nil)
-        }
-    }
-
-    func setUpMapView() {
-        locationManager.requestWhenInUseAuthorization()
     }
 
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
@@ -126,4 +89,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, AccountDelegate {
     }
 
     lazy var cloudClient = DashCloudClient()
+}
+
+extension MapViewController: AccountDelegate {
+    func accountDidSignOut(_ account: Account) {
+        dismiss(animated: true)
+    }
 }
