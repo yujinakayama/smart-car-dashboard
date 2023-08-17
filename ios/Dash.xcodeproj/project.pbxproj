@@ -80,6 +80,8 @@
 		B93AEAF62A8E1055001A12A4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B93AEAF82A8E1055001A12A4 /* Localizable.strings */; };
 		B93AEAFA2A8E1305001A12A4 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEAF92A8E1305001A12A4 /* RootViewController.swift */; };
 		B93AEAFE2A8E1DE1001A12A4 /* ProximityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEAFD2A8E1DE1001A12A4 /* ProximityViewController.swift */; };
+		B93AEB012A8E1FD6001A12A4 /* VehicleProximityDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEB002A8E1FD6001A12A4 /* VehicleProximityDetector.swift */; };
+		B93AEB032A8E35D2001A12A4 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEB022A8E35D2001A12A4 /* Defaults.swift */; };
 		B940A460250E5B57006BDFBB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B940A45F250E5B57006BDFBB /* Settings.bundle */; };
 		B940A462250E5CDD006BDFBB /* RearviewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */; };
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
@@ -533,6 +535,8 @@
 		B93AEAF72A8E1055001A12A4 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B93AEAF92A8E1305001A12A4 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		B93AEAFD2A8E1DE1001A12A4 /* ProximityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProximityViewController.swift; sourceTree = "<group>"; };
+		B93AEB002A8E1FD6001A12A4 /* VehicleProximityDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleProximityDetector.swift; sourceTree = "<group>"; };
+		B93AEB022A8E35D2001A12A4 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		B93C04622642CD32002CD861 /* ParkingAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAnnotation.swift; sourceTree = "<group>"; };
 		B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAnnotationView.swift; sourceTree = "<group>"; };
 		B93C04662642D5FA002CD861 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
@@ -920,6 +924,7 @@
 			isa = PBXGroup;
 			children = (
 				B93AEAFD2A8E1DE1001A12A4 /* ProximityViewController.swift */,
+				B93AEB002A8E1FD6001A12A4 /* VehicleProximityDetector.swift */,
 			);
 			path = Proximity;
 			sourceTree = "<group>";
@@ -1010,6 +1015,7 @@
 				B988A66B254D0E570012A4CB /* PairingRequirementViewController.swift */,
 				B98B784C23ED530E00A5102F /* SignInWithAppleViewController.swift */,
 				B91B5DD423ED7886003F4AEF /* Account.swift */,
+				B93AEB022A8E35D2001A12A4 /* Defaults.swift */,
 				B98B784E23ED583600A5102F /* AppIconImageView.swift */,
 				B964BCC823E066FF00288E0D /* Main.storyboard */,
 				B964BCCB23E0670100288E0D /* Assets.xcassets */,
@@ -2032,9 +2038,11 @@
 				B9C2456523EDBB4800E00523 /* FloatButton.swift in Sources */,
 				B93AEAFE2A8E1DE1001A12A4 /* ProximityViewController.swift in Sources */,
 				B964BCC323E066FF00288E0D /* AppDelegate.swift in Sources */,
+				B93AEB012A8E1FD6001A12A4 /* VehicleProximityDetector.swift in Sources */,
 				B9B4F700268CB366009C5DC5 /* PairedVehicle.swift in Sources */,
 				B988A66C254D0E570012A4CB /* PairingRequirementViewController.swift in Sources */,
 				B964BCC523E066FF00288E0D /* SceneDelegate.swift in Sources */,
+				B93AEB032A8E35D2001A12A4 /* Defaults.swift in Sources */,
 				B98B784D23ED530E00A5102F /* SignInWithAppleViewController.swift in Sources */,
 				B98B784F23ED583600A5102F /* AppIconImageView.swift in Sources */,
 			);

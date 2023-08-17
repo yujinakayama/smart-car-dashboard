@@ -39,6 +39,8 @@
 	<array/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs to access to your location to show the current location on maps.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app needs to always access to your location to detect proximity to your vehicle.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

@@ -42,7 +42,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="82o-3k-UjK"/>
-                        <segue destination="aaD-gt-ZWb" kind="relationship" relationship="viewControllers" id="aJ0-9m-zu3"/>
+                        <segue destination="27E-ce-8c7" kind="relationship" relationship="viewControllers" id="eeZ-CC-HOS"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yMs-nc-OyE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -50,20 +50,98 @@
             <point key="canvasLocation" x="657" y="500"/>
         </scene>
         <!--Proximity-->
-        <scene sceneID="eAS-aa-vVR">
+        <scene sceneID="wfI-Bb-Ota">
             <objects>
-                <viewController id="aaD-gt-ZWb" userLabel="Proximity" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="aAU-6s-EpX">
+                <tableViewController id="27E-ce-8c7" customClass="ProximityViewController" customModule="Dash_Remote" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="r3l-zr-OrH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="B2T-2M-2pe"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Proximity" image="car.top.radiowaves.rear.right.fill" catalog="system" id="ifd-VZ-wnE"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="h0P-sf-0ab" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                        <sections>
+                            <tableViewSection headerTitle="Target iBeacon" id="N0t-zw-3Bn">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="A4V-QV-HEi">
+                                        <rect key="frame" x="20" y="55.5" width="374" height="85.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="A4V-QV-HEi" id="bDW-HQ-wYR">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="85.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <listContentConfiguration key="contentConfiguration" style="valueCell" text="UUID" secondaryText="FB42EA58-A9EB-4431-B5BF-E98A81C4837F"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="s7i-nv-b0F">
+                                        <rect key="frame" x="20" y="141" width="374" height="63.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="s7i-nv-b0F" id="0zC-wr-3zj">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="63.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <listContentConfiguration key="contentConfiguration" style="valueCell" text="Major" secondaryText="65535"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Automation" id="qFM-7A-2aC">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="2g6-7U-n9a">
+                                        <rect key="frame" x="20" y="260.5" width="374" height="44.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2g6-7U-n9a" id="ULb-eT-qqF">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="44.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <listContentConfiguration key="contentConfiguration" text="Auto-lock doors when leave" secondaryText=""/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Currently Detected Beacon" id="GMe-2T-cfW">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="lDr-fg-dYe">
+                                        <rect key="frame" x="20" y="361" width="374" height="63.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lDr-fg-dYe" id="UeM-ia-bnp">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="63.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <listContentConfiguration key="contentConfiguration" style="valueCell" text="Proximity" secondaryText="Near"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Oju-2Z-Siv">
+                                        <rect key="frame" x="20" y="424.5" width="374" height="63.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Oju-2Z-Siv" id="nyf-hX-UvC">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="63.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <listContentConfiguration key="contentConfiguration" style="valueCell" text="Accuracy" secondaryText="±5 m"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="mXz-LL-hOC">
+                                        <rect key="frame" x="20" y="488" width="374" height="63.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mXz-LL-hOC" id="vMp-fr-meg">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="63.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <listContentConfiguration key="contentConfiguration" style="valueCell" text="Received Signal Strength Indicator" secondaryText="-51 dB"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="27E-ce-8c7" id="dBh-cc-kx2"/>
+                            <outlet property="delegate" destination="27E-ce-8c7" id="ryu-nA-q3Z"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Proximity" image="car.top.radiowaves.rear.right.fill" catalog="system" id="ZxN-eR-Ghe"/>
+                    <connections>
+                        <outlet property="accuracyTableViewCell" destination="Oju-2Z-Siv" id="uLc-bX-rme"/>
+                        <outlet property="autoLockDoorsWhenLeaveTableViewCell" destination="2g6-7U-n9a" id="GwF-1j-rAl"/>
+                        <outlet property="majorTableViewCell" destination="s7i-nv-b0F" id="6Yy-cj-bUh"/>
+                        <outlet property="proximityTableViewCell" destination="lDr-fg-dYe" id="vcM-BI-AbM"/>
+                        <outlet property="rssiTableViewCell" destination="mXz-LL-hOC" id="Ylc-ZF-RdH"/>
+                        <outlet property="uuidTableViewCell" destination="A4V-QV-HEi" id="f65-QM-KD7"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hsH-ZR-gVY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1929" y="1017"/>
+            <point key="canvasLocation" x="1929" y="1012"/>
         </scene>
         <!--Pick Me Up-->
         <scene sceneID="tne-QT-ifu">
