@@ -81,7 +81,7 @@ fileprivate func specificIcon(for category: PointOfInterestCategory) -> PointOfI
         image = UIImage(systemName: "tram.fill")!
         color = UIColor(rgb: 0x4C9EF8)
     case .rendezvous:
-        image = UIImage(systemName: "hand.raised.fill")!
+        image = UIImage(systemName: "figure.wave")!
         color = UIColor(rgb: 0xEB5674)
     case .restArea:
         image = UIImage(systemName: "parkingsign")!
