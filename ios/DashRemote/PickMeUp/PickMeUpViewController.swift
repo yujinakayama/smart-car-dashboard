@@ -11,7 +11,7 @@ import MapKit
 import TransitionButton
 import DashCloudKit
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class PickMeUpViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var pickUpButton: TransitionButton!
 
@@ -91,7 +91,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     lazy var cloudClient = DashCloudClient()
 }
 
-extension MapViewController: AccountDelegate {
+extension PickMeUpViewController: AccountDelegate {
     func accountDidSignOut(_ account: Account) {
         dismiss(animated: true)
     }
