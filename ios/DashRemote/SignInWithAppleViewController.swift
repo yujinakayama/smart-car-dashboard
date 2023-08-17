@@ -9,14 +9,8 @@
 import UIKit
 import AuthenticationServices
 
-protocol SignInWithAppleViewControllerDelegate: NSObjectProtocol {
-    func signInWithAppleViewControllerDidCompleteAuthorization(_ viewController: SignInWithAppleViewController)
-}
-
 class SignInWithAppleViewController: UIViewController, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     @IBOutlet weak var verticalStackView: UIStackView!
-
-    weak var delegate: SignInWithAppleViewControllerDelegate?
 
     let buttonHeight: CGFloat = 50
 
@@ -57,9 +51,6 @@ class SignInWithAppleViewController: UIViewController, ASAuthorizationController
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential else { return }
         try! Account.default.save(credential: credential)
-
-        delegate?.signInWithAppleViewControllerDidCompleteAuthorization(self)
-
         dismiss(animated: true)
     }
 
