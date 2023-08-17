@@ -22,7 +22,7 @@ class PairingRequirementViewController: UIViewController {
     func showPairingCompletionAlert() {
         let alertController = UIAlertController(
             title: nil,
-            message: "Pairing completed.",
+            message: String(localized: "Pairing completed."),
             preferredStyle: .alert
         )
 

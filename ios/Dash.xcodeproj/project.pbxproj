@@ -77,6 +77,7 @@
 		B93432992A665DF9000F1D7C /* FloatingViewKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B93432852A665DF9000F1D7C /* FloatingViewKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B93432A12A665E13000F1D7C /* FloatingViewContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93432A02A665E13000F1D7C /* FloatingViewContainerController.swift */; };
 		B93432A32A69137B000F1D7C /* FloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93432A22A69137B000F1D7C /* FloatingView.swift */; };
+		B93AEAF62A8E1055001A12A4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B93AEAF82A8E1055001A12A4 /* Localizable.strings */; };
 		B940A460250E5B57006BDFBB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B940A45F250E5B57006BDFBB /* Settings.bundle */; };
 		B940A462250E5CDD006BDFBB /* RearviewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */; };
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
@@ -527,6 +528,7 @@
 		B93432932A665DF9000F1D7C /* FloatingViewKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingViewKitTests.swift; sourceTree = "<group>"; };
 		B93432A02A665E13000F1D7C /* FloatingViewContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingViewContainerController.swift; sourceTree = "<group>"; };
 		B93432A22A69137B000F1D7C /* FloatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingView.swift; sourceTree = "<group>"; };
+		B93AEAF72A8E1055001A12A4 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B93C04622642CD32002CD861 /* ParkingAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAnnotation.swift; sourceTree = "<group>"; };
 		B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAnnotationView.swift; sourceTree = "<group>"; };
 		B93C04662642D5FA002CD861 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
@@ -987,6 +989,7 @@
 		B964BCC123E066FF00288E0D /* DashRemote */ = {
 			isa = PBXGroup;
 			children = (
+				B93AEAF82A8E1055001A12A4 /* Localizable.strings */,
 				B964BCC223E066FF00288E0D /* AppDelegate.swift */,
 				B964BCC423E066FF00288E0D /* SceneDelegate.swift */,
 				B99058702A8E056C00EA3E79 /* Map */,
@@ -1838,6 +1841,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B964BCCF23E0670100288E0D /* LaunchScreen.storyboard in Resources */,
+				B93AEAF62A8E1055001A12A4 /* Localizable.strings in Resources */,
 				B964BCCC23E0670100288E0D /* Assets.xcassets in Resources */,
 				B964BCCA23E066FF00288E0D /* Main.storyboard in Resources */,
 			);
@@ -2354,6 +2358,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		B93AEAF82A8E1055001A12A4 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B93AEAF72A8E1055001A12A4 /* ja */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		B960B0E72A77F48100567E25 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

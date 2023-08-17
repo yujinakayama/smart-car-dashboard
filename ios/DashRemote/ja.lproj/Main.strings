@@ -3,4 +3,4 @@
 "BIf-6G-XGM.normalTitle" = "ここへ来てもらう";
 
 /* Class = "UILabel"; text = "Pairing Required"; ObjectID = "PxI-mK-GFO"; */
-"PxI-mK-GFO.text" = "Pairing Required";
+"PxI-mK-GFO.text" = "Dashとのペアリングが必要です";
