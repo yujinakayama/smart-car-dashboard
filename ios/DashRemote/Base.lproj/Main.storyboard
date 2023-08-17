@@ -23,17 +23,35 @@
                     <connections>
                         <segue destination="IuF-dg-PPy" kind="presentation" identifier="pairingRequirement" id="0Vk-EV-i5f"/>
                         <segue destination="pQK-Ah-sn9" kind="presentation" identifier="signInWithApple" id="whN-R9-f1R"/>
-                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="main" id="ONJ-PN-66P"/>
+                        <segue destination="E1Y-66-Etd" kind="presentation" identifier="main" id="rZf-rQ-43j"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jzb-uI-ohE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="151" y="-299"/>
+            <point key="canvasLocation" x="-672" y="500"/>
         </scene>
-        <!--Map View Controller-->
+        <!--Tab Bar Controller-->
+        <scene sceneID="3e3-MQ-Cz0">
+            <objects>
+                <tabBarController modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="E1Y-66-Etd" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jT7-xN-Shd">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <tabBarAppearance key="scrollEdgeAppearance"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="82o-3k-UjK"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yMs-nc-OyE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="657" y="500"/>
+        </scene>
+        <!--Pick Me Up-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="MapViewController" customModule="Dash_Remote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="Dash_Remote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -86,7 +104,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BIf-6G-XGM" customClass="FloatButton" customModule="Dash_Remote" customModuleProvider="target">
-                                <rect key="frame" x="62" y="819" width="290" height="53"/>
+                                <rect key="frame" x="62" y="770" width="290" height="53"/>
                                 <color key="backgroundColor" systemColor="linkColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="360" id="RQb-5B-9o0"/>
@@ -147,6 +165,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="BIf-6G-XGM" secondAttribute="bottom" constant="24" id="yS7-Sc-PlW"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Pick Me Up" image="figure.wave" catalog="system" id="IIU-Q8-qeC"/>
                     <connections>
                         <outlet property="mapView" destination="HTS-8g-YUt" id="SgG-hG-wGx"/>
                         <outlet property="pickUpButton" destination="BIf-6G-XGM" id="2kA-wL-CXN"/>
@@ -155,7 +174,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1532" y="500"/>
+            <point key="canvasLocation" x="1930" y="58"/>
         </scene>
         <!--Sign In With Apple View Controller-->
         <scene sceneID="NJU-5X-rcj">
@@ -196,7 +215,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j4e-xL-SS8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1533" y="-299"/>
+            <point key="canvasLocation" x="228" y="-327"/>
         </scene>
         <!--Pairing Requirement View Controller-->
         <scene sceneID="oJK-7S-1xl">
@@ -240,7 +259,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DY9-ck-7sZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1532" y="-1037"/>
+            <point key="canvasLocation" x="228" y="-1013"/>
         </scene>
         <!--Success View Controller-->
         <scene sceneID="IVQ-GC-2zq">
@@ -273,7 +292,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C34-NT-CzV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2572" y="500"/>
+            <point key="canvasLocation" x="2867" y="58"/>
         </scene>
     </scenes>
     <designables>
@@ -287,6 +306,7 @@
     <resources>
         <image name="Icon" width="1024" height="1024"/>
         <image name="car.fill" catalog="system" width="128" height="95"/>
+        <image name="figure.wave" catalog="system" width="80" height="128"/>
         <image name="location" catalog="system" width="128" height="121"/>
         <image name="location.fill" catalog="system" width="128" height="119"/>
         <namedColor name="Current Location Button Background Color">
