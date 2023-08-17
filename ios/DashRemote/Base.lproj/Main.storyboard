@@ -142,7 +142,7 @@
         <!--Sign In With Apple View Controller-->
         <scene sceneID="NJU-5X-rcj">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="pQK-Ah-sn9" customClass="SignInWithAppleViewController" customModule="Dash_Remote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="pQK-Ah-sn9" customClass="SignInWithAppleViewController" customModule="Dash_Remote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PJk-Gb-VH1">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -183,7 +183,7 @@
         <!--Pairing Requirement View Controller-->
         <scene sceneID="oJK-7S-1xl">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="IuF-dg-PPy" customClass="PairingRequirementViewController" customModule="Dash_Remote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="IuF-dg-PPy" customClass="PairingRequirementViewController" customModule="Dash_Remote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hSY-zg-FJA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

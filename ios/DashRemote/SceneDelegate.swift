@@ -78,18 +78,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     private func handlePairing(urlComponents: URLComponents) {
         guard let vehicleID = urlComponents.queryItems?.first(where: { $0.name == "vehicleID" })?.value  else { return }
-
         PairedVehicle.defaultVehicleID = vehicleID
-
-        let alertController = UIAlertController(
-            title: nil,
-            message: "Pairing completed.",
-            preferredStyle: .alert
-        )
-
-        alertController.addAction(UIAlertAction(title: "OK", style: .default))
-
-        window?.rootViewController?.present(alertController, animated: true)
     }
 }
 
