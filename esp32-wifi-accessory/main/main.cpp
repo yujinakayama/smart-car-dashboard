@@ -30,6 +30,7 @@
 #include "garage_remote.h"
 #include "homekit_bridge.h"
 #include "homekit.h"
+#include "http_server.h"
 #include "log_config.h"
 #include "util.h"
 #include "wifi.h"
@@ -78,6 +79,8 @@ static void mainTask(void *p) {
   hap_start();
 
   bridge->printSetupQRCode();
+
+  startHTTPServer(8888, smartKey);
 
   /* The task ends here. The read/write callbacks will be invoked by the HAP Framework */
   vTaskDelete(NULL);
