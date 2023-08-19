@@ -6,15 +6,14 @@
 //  Copyright © 2023 Yuji Nakayama. All rights reserved.
 //
 
-import HomeKit
+import UIKit
 import UserNotifications
+import DashCloudKit
 
 class DoorLockManager {
     static let shared = DoorLockManager()
 
     var vehicleProximityDetector: VehicleProximityDetector?
-
-    private let homeManager = HMHomeManager()
 
     init() {
         updateVehicleProximityDetector()
@@ -47,36 +46,24 @@ class DoorLockManager {
     }
 
     @objc func vehicleProximityDetectorDidExitRegion() {
-        if Defaults.shared.autoLockDoorsWhenLeave, let serviceUUID = Defaults.shared.lockMechanismServiceUUID {
-            secureLockMechanism(serviceID: serviceUUID)
+        if Defaults.shared.autoLockDoorsWhenLeave, let vehicleID = vehicleProximityDetector?.vehicleID {
+            lockDoors(of: vehicleID)
         }
     }
 
-    private func secureLockMechanism(serviceID: UUID) {
-        guard let lockMechanismService = allLockMechanismServices.first(where: { $0.uniqueIdentifier == serviceID }),
-              let targetLockStateCharacteristic = lockMechanismService.characteristics.first(where: { $0.characteristicType == HMCharacteristicTypeTargetLockMechanismState })
-        else {
-            postLocalNotification(body: "ドアロックのHomeKitアクセサリが見つかりません。")
-            return
-        }
+    private func lockDoors(of vehicleID: String) {
+        cloudClient.lockDoors(of: vehicleID) { [weak self] error in
+            guard let self = self else { return }
 
-        Task {
-            do {
-                try await targetLockStateCharacteristic.writeValue(HMCharacteristicValueLockMechanismState.secured.rawValue)
-                postLocalNotification(body: "ドアを自動ロックしました。")
-            } catch {
+            if let error = error {
                 postLocalNotification(body: error.localizedDescription)
+            } else {
+                postLocalNotification(body: "ドアを自動ロックしました。")
             }
         }
     }
 
-    private var allLockMechanismServices: [HMService] {
-        guard homeManager.authorizationStatus.contains(.authorized) else { return [] }
-
-        return homeManager.homes.flatMap { home in
-            home.servicesWithTypes([HMServiceTypeLockMechanism]) ?? []
-        }
-    }
+    let cloudClient = DashCloudClient()
 
     private func postLocalNotification(body: String) {
         let content = UNMutableNotificationContent()

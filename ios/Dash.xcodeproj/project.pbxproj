@@ -84,7 +84,6 @@
 		B93AEB012A8E1FD6001A12A4 /* VehicleProximityDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEB002A8E1FD6001A12A4 /* VehicleProximityDetector.swift */; };
 		B93AEB032A8E35D2001A12A4 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEB022A8E35D2001A12A4 /* Defaults.swift */; };
 		B93AEB052A8E514E001A12A4 /* DoorLockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEB042A8E514E001A12A4 /* DoorLockManager.swift */; };
-		B93AEB072A8E56FB001A12A4 /* HomeAccessoryPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEB062A8E56FB001A12A4 /* HomeAccessoryPickerController.swift */; };
 		B93AEB0F2A8E9CED001A12A4 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEB0E2A8E9CED001A12A4 /* NotificationService.swift */; };
 		B93AEB132A8E9CED001A12A4 /* NotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B93AEB0C2A8E9CED001A12A4 /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B940A460250E5B57006BDFBB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B940A45F250E5B57006BDFBB /* Settings.bundle */; };
@@ -552,7 +551,6 @@
 		B93AEB002A8E1FD6001A12A4 /* VehicleProximityDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleProximityDetector.swift; sourceTree = "<group>"; };
 		B93AEB022A8E35D2001A12A4 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		B93AEB042A8E514E001A12A4 /* DoorLockManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorLockManager.swift; sourceTree = "<group>"; };
-		B93AEB062A8E56FB001A12A4 /* HomeAccessoryPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAccessoryPickerController.swift; sourceTree = "<group>"; };
 		B93AEB0C2A8E9CED001A12A4 /* NotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B93AEB0E2A8E9CED001A12A4 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		B93AEB102A8E9CED001A12A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -950,7 +948,6 @@
 			isa = PBXGroup;
 			children = (
 				B93AEAFD2A8E1DE1001A12A4 /* ProximityViewController.swift */,
-				B93AEB062A8E56FB001A12A4 /* HomeAccessoryPickerController.swift */,
 				B93AEB002A8E1FD6001A12A4 /* VehicleProximityDetector.swift */,
 			);
 			path = Proximity;
@@ -2123,7 +2120,6 @@
 				B964BCC523E066FF00288E0D /* SceneDelegate.swift in Sources */,
 				B93AEB032A8E35D2001A12A4 /* Defaults.swift in Sources */,
 				B98B784D23ED530E00A5102F /* SignInWithAppleViewController.swift in Sources */,
-				B93AEB072A8E56FB001A12A4 /* HomeAccessoryPickerController.swift in Sources */,
 				B98B784F23ED583600A5102F /* AppIconImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

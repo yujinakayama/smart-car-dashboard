@@ -46,25 +46,4 @@ extension Defaults {
             set(newValue, for: .autoLockDoorsWhenLeave)
         }
     }
-
-    var lockMechanismServiceUUID: UUID? {
-        get {
-            guard let string = string(for: .lockMechanismServiceUUID) else { return nil }
-            return UUID(uuidString: string)
-        }
-
-        set {
-            set(newValue?.uuidString, for: .lockMechanismServiceUUID)
-        }
-    }
-
-    var lockMechanismAccessoryName: String? {
-        get {
-            string(for: .lockMechanismAccessoryName)
-        }
-
-        set {
-            set(newValue, for: .lockMechanismAccessoryName)
-        }
-    }
 }

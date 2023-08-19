@@ -8,7 +8,6 @@
 
 import UIKit
 import CoreLocation
-import HomeKit
 
 class ProximityViewController: UITableViewController {
     enum Section: Int {
@@ -26,6 +25,8 @@ class ProximityViewController: UITableViewController {
     @IBOutlet weak var accuracyTableViewCell: UITableViewCell!
     @IBOutlet weak var rssiTableViewCell: UITableViewCell!
 
+    let autoLockDoorsWhenLeaveSwitch = UISwitch()
+
     var detector: VehicleProximityDetector! {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.doorLockManager.vehicleProximityDetector
@@ -36,10 +37,8 @@ class ProximityViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let switchView = UISwitch()
-        switchView.isOn = Defaults.shared.autoLockDoorsWhenLeave
-        switchView.addTarget(self, action: #selector(autoLockDoorsWhenLeaveSwitchValueChanged), for: .valueChanged)
-        autoLockDoorsWhenLeaveTableViewCell.accessoryView = switchView
+        autoLockDoorsWhenLeaveSwitch.addTarget(self, action: #selector(autoLockDoorsWhenLeaveSwitchValueChanged), for: .valueChanged)
+        autoLockDoorsWhenLeaveTableViewCell.accessoryView = autoLockDoorsWhenLeaveSwitch
 
         NotificationCenter.default.addObserver(self, selector: #selector(vehicleProximityDetectorDidRangeBeacon), name: .VehicleProximityDetectorDidRangeBeacon, object: nil)
     }
@@ -61,7 +60,7 @@ class ProximityViewController: UITableViewController {
             secondaryText: String(detector.beaconMajorValue)
         )
 
-        updateAutoLockCell()
+        autoLockDoorsWhenLeaveSwitch.isOn = Defaults.shared.autoLockDoorsWhenLeave
 
         updateCurrentlyDetectedBeaconSection(nil)
     }
@@ -120,28 +119,8 @@ class ProximityViewController: UITableViewController {
         }
     }
 
-    func updateAutoLockCell() {
-        updateContentConfiguration(
-            of: autoLockDoorsWhenLeaveTableViewCell,
-            text: "Auto-lock doors when leave",
-            secondaryText: Defaults.shared.lockMechanismAccessoryName
-        )
-    }
-
-    @objc func autoLockDoorsWhenLeaveSwitchValueChanged(_ switchView: UISwitch) {
-        Defaults.shared.autoLockDoorsWhenLeave = switchView.isOn
-
-        if switchView.isOn {
-            let pickerController = HomeAccessoryPickerController(serviceType: HMServiceTypeLockMechanism)
-            pickerController.delegate = self
-            pickerController.navigationItem.title = "Select Vehicle Door Lock"
-            let navigationController = UINavigationController(rootViewController: pickerController)
-            present(navigationController, animated: true)
-        } else {
-            Defaults.shared.lockMechanismServiceUUID = nil
-            Defaults.shared.lockMechanismAccessoryName = nil
-            updateAutoLockCell()
-        }
+    @objc func autoLockDoorsWhenLeaveSwitchValueChanged() {
+        Defaults.shared.autoLockDoorsWhenLeave = autoLockDoorsWhenLeaveSwitch.isOn
     }
 
     @objc func vehicleProximityDetectorDidRangeBeacon(_ notification: Notification) {
@@ -189,18 +168,6 @@ class ProximityViewController: UITableViewController {
         formatter.timeStyle = .medium
         return formatter
     }()
-}
-
-extension ProximityViewController: HomeAccessoryPickerControllerDelegate {
-    func homeAccessoryPickerController(_ pickerController: HomeAccessoryPickerController, didFinishPickingAccessory accessory: HMAccessory) {
-        pickerController.dismiss(animated: true)
-
-        guard let lockMechanismService = accessory.services.first(where: { $0.serviceType == HMServiceTypeLockMechanism }) else { return }
-
-        Defaults.shared.lockMechanismServiceUUID = lockMechanismService.uniqueIdentifier
-        Defaults.shared.lockMechanismAccessoryName = accessory.name
-        updateAutoLockCell()
-    }
 }
 
 fileprivate func updateContentConfiguration(of cell: UITableViewCell, text: String?, secondaryText: String?) {
