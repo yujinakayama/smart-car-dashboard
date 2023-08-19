@@ -1,5 +1,4 @@
-#ifndef IPAD_CAR_INTEGRATION_LOG_CONFIG_H_
-#define IPAD_CAR_INTEGRATION_LOG_CONFIG_H_
+#pragma once
 
 // https://docs.espressif.com/projects/esp-idf/en/latest/api-reference/system/log.html
 
@@ -8,5 +7,3 @@
 #include <esp_log.h>
 
 void setupLogLevel();
-
-#endif
