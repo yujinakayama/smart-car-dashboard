@@ -49,7 +49,10 @@ static void mainTask(void *p) {
   // https://dreamerdream.hateblo.jp/entry/2019/12/04/120000
   delay(50);
 
-  setupLogLevel();
+  // Setting all module log level.
+  // If you need to change log level of specific module,
+  // call esp_log_level_set() with the TAG for the module.
+  esp_log_level_set("*", LOG_LOCAL_LEVEL);
 
   configureGPIOPins();
 
