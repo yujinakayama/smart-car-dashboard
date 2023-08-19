@@ -41,9 +41,5 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     // Received notification in foreground
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([.banner, .sound])
-
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-//            UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-//        }
     }
 }
