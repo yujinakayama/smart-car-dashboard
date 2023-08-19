@@ -1,5 +1,4 @@
-#ifndef IPAD_CAR_INTEGRATION_ENGINE_H_
-#define IPAD_CAR_INTEGRATION_ENGINE_H_
+#pragma once
 
 #include <hap.h>
 #include <driver/gpio.h>
@@ -52,5 +51,3 @@ private:
   void pressSmartKeyLockButton(uint32_t durationInMilliseconds);
   void pressSmartKeyUnlockButton(uint32_t durationInMilliseconds);
 };
-
-#endif

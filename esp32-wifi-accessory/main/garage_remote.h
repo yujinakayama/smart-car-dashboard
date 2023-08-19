@@ -1,5 +1,4 @@
-#ifndef IPAD_CAR_INTEGRATION_GARAGE_REMOTE_H_
-#define IPAD_CAR_INTEGRATION_GARAGE_REMOTE_H_
+#pragma once
 
 #include <hap.h>
 #include <driver/gpio.h>
@@ -42,5 +41,3 @@ private:
   void addFirmwareUpgradeService();
   void open();
 };
-
-#endif

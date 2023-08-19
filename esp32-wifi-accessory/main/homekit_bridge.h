@@ -1,5 +1,4 @@
-#ifndef IPAD_CAR_INTEGRATION_HOMEKIT_BRIDGE_H_
-#define IPAD_CAR_INTEGRATION_HOMEKIT_BRIDGE_H_
+#pragma once
 
 #include <hap.h>
 
@@ -16,5 +15,3 @@ private:
   void createAccessory();
   void configureHomeKitSetupCode();
 };
-
-#endif

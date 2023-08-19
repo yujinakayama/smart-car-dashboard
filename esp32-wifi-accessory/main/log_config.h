@@ -1,5 +1,8 @@
-#ifndef IPAD_CAR_INTEGRATION_LOG_CONFIG_H_
-#define IPAD_CAR_INTEGRATION_LOG_CONFIG_H_
+#pragma once
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 // https://docs.espressif.com/projects/esp-idf/en/latest/api-reference/system/log.html
 
@@ -9,4 +12,6 @@
 
 void setupLogLevel();
 
+#ifdef __cplusplus
+}
 #endif

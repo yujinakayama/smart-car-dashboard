@@ -4,12 +4,8 @@
 #include <hap_apple_servs.h>
 #include <hap_apple_chars.h>
 #include <hap_fw_upgrade.h>
-
 #include <cstring>
-
-extern "C" {
-  #include "util.h"
-}
+#include "util.h"
 
 static const char* TAG = "CarSmartKey";
 

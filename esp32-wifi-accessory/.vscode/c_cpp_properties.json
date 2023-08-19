@@ -1,0 +1,14 @@
+// With this configuration, first we need to run idf.py to generate build/compile_commands.json
+// and then vscode will use it for IntelliSense.
+// https://github.com/espressif/vscode-esp-idf-extension/blob/master/docs/C_CPP_CONFIGURATION.md#configuration-with-compile_commandsjson
+{
+  "configurations": [
+    {
+      "name": "ESP-IDF",
+      "cStandard": "c11",
+      "cppStandard": "c++17",
+      "compileCommands": "${workspaceFolder}/build/compile_commands.json"
+    }
+  ],
+  "version": 4
+}
