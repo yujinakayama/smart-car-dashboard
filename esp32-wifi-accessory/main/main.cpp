@@ -24,19 +24,15 @@
 
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
+#include <driver/gpio.h>
 
 #include "car_smart_key.h"
 #include "garage_remote.h"
 #include "homekit_bridge.h"
-
-extern "C" {
-  #include <driver/gpio.h>
-
-  #include "homekit.h"
-  #include "log_config.h"
-  #include "util.h"
-  #include "wifi.h"
-}
+#include "homekit.h"
+#include "log_config.h"
+#include "util.h"
+#include "wifi.h"
 
 static void configureGPIOPins() {
   // Configure 12-15 GPIO pins since they cannot be used as output pins by default.
