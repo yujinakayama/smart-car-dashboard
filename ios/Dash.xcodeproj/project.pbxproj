@@ -69,6 +69,7 @@
 		B931C4FF23D369760020DF13 /* ETCDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B931C4FE23D369760020DF13 /* ETCDeviceManager.swift */; };
 		B932E5EC23F86C5F00726615 /* MusicItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932E5EB23F86C5F00726615 /* MusicItem.swift */; };
 		B932E5F023F9082600726615 /* RendezvousPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932E5EF23F9082600726615 /* RendezvousPoint.swift */; };
+		B933081C2A90A51800F0BE53 /* DoorLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B933081B2A90A51800F0BE53 /* DoorLock.swift */; };
 		B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93321ED2323C9D500BFAB21 /* BorderedView.swift */; };
 		B934328D2A665DF9000F1D7C /* FloatingViewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B93432852A665DF9000F1D7C /* FloatingViewKit.framework */; };
 		B93432942A665DF9000F1D7C /* FloatingViewKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93432932A665DF9000F1D7C /* FloatingViewKitTests.swift */; };
@@ -84,6 +85,8 @@
 		B93AEB032A8E35D2001A12A4 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEB022A8E35D2001A12A4 /* Defaults.swift */; };
 		B93AEB052A8E514E001A12A4 /* DoorLockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEB042A8E514E001A12A4 /* DoorLockManager.swift */; };
 		B93AEB072A8E56FB001A12A4 /* HomeAccessoryPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEB062A8E56FB001A12A4 /* HomeAccessoryPickerController.swift */; };
+		B93AEB0F2A8E9CED001A12A4 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEB0E2A8E9CED001A12A4 /* NotificationService.swift */; };
+		B93AEB132A8E9CED001A12A4 /* NotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B93AEB0C2A8E9CED001A12A4 /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B940A460250E5B57006BDFBB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B940A45F250E5B57006BDFBB /* Settings.bundle */; };
 		B940A462250E5CDD006BDFBB /* RearviewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */; };
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
@@ -316,6 +319,13 @@
 			remoteGlobalIDString = B93432842A665DF9000F1D7C;
 			remoteInfo = FloatingViewKit;
 		};
+		B93AEB112A8E9CED001A12A4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B93AEB0B2A8E9CED001A12A4;
+			remoteInfo = NotificationServiceExtension;
+		};
 		B964BCE023E067EB00288E0D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
@@ -453,6 +463,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				B9A3B68526537A9B00D1D64C /* ParkingSearchActionExtension.appex in Embed Foundation Extensions */,
+				B93AEB132A8E9CED001A12A4 /* NotificationServiceExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -527,6 +538,7 @@
 		B932E5EB23F86C5F00726615 /* MusicItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicItem.swift; sourceTree = "<group>"; };
 		B932E5EF23F9082600726615 /* RendezvousPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendezvousPoint.swift; sourceTree = "<group>"; };
 		B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocationCoordinate2DExtension.swift; sourceTree = "<group>"; };
+		B933081B2A90A51800F0BE53 /* DoorLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorLock.swift; sourceTree = "<group>"; };
 		B93321ED2323C9D500BFAB21 /* BorderedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedView.swift; sourceTree = "<group>"; };
 		B93432852A665DF9000F1D7C /* FloatingViewKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FloatingViewKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B93432872A665DF9000F1D7C /* FloatingViewKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FloatingViewKit.h; sourceTree = "<group>"; };
@@ -541,6 +553,9 @@
 		B93AEB022A8E35D2001A12A4 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		B93AEB042A8E514E001A12A4 /* DoorLockManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorLockManager.swift; sourceTree = "<group>"; };
 		B93AEB062A8E56FB001A12A4 /* HomeAccessoryPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAccessoryPickerController.swift; sourceTree = "<group>"; };
+		B93AEB0C2A8E9CED001A12A4 /* NotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B93AEB0E2A8E9CED001A12A4 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		B93AEB102A8E9CED001A12A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B93C04622642CD32002CD861 /* ParkingAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAnnotation.swift; sourceTree = "<group>"; };
 		B93C04642642CD55002CD861 /* ParkingAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingAnnotationView.swift; sourceTree = "<group>"; };
 		B93C04662642D5FA002CD861 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
@@ -756,6 +771,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B93AEB092A8E9CED001A12A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B964BCBD23E066FF00288E0D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -932,6 +954,16 @@
 				B93AEB002A8E1FD6001A12A4 /* VehicleProximityDetector.swift */,
 			);
 			path = Proximity;
+			sourceTree = "<group>";
+		};
+		B93AEB0D2A8E9CED001A12A4 /* NotificationServiceExtension */ = {
+			isa = PBXGroup;
+			children = (
+				B93AEB0E2A8E9CED001A12A4 /* NotificationService.swift */,
+				B933081B2A90A51800F0BE53 /* DoorLock.swift */,
+				B93AEB102A8E9CED001A12A4 /* Info.plist */,
+			);
+			path = NotificationServiceExtension;
 			sourceTree = "<group>";
 		};
 		B944C68E24A9E4C8000D1E99 /* Music */ = {
@@ -1226,6 +1258,7 @@
 			children = (
 				B9DC5B23229D59BE00B645D5 /* Dash */,
 				B9E96CB922A3CE7500C2E009 /* DashTests */,
+				B93AEB0D2A8E9CED001A12A4 /* NotificationServiceExtension */,
 				B9A3B67A26537A9B00D1D64C /* ParkingSearchActionExtension */,
 				B9DD4CCB26517F920010B120 /* ParkingSearchKit */,
 				B964BCC123E066FF00288E0D /* DashRemote */,
@@ -1260,6 +1293,7 @@
 				B93432852A665DF9000F1D7C /* FloatingViewKit.framework */,
 				B934328C2A665DF9000F1D7C /* FloatingViewKitTests.xctest */,
 				B9DC26852A7940E6001B7409 /* CheckmarkView.framework */,
+				B93AEB0C2A8E9CED001A12A4 /* NotificationServiceExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1488,6 +1522,23 @@
 			productReference = B934328C2A665DF9000F1D7C /* FloatingViewKitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		B93AEB0B2A8E9CED001A12A4 /* NotificationServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B93AEB162A8E9CEE001A12A4 /* Build configuration list for PBXNativeTarget "NotificationServiceExtension" */;
+			buildPhases = (
+				B93AEB082A8E9CED001A12A4 /* Sources */,
+				B93AEB092A8E9CED001A12A4 /* Frameworks */,
+				B93AEB0A2A8E9CED001A12A4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NotificationServiceExtension;
+			productName = NotificationServiceExtension;
+			productReference = B93AEB0C2A8E9CED001A12A4 /* NotificationServiceExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		B964BCBF23E066FF00288E0D /* DashRemote */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B964BCD323E0670100288E0D /* Build configuration list for PBXNativeTarget "DashRemote" */;
@@ -1631,6 +1682,7 @@
 				B9A3B68426537A9B00D1D64C /* PBXTargetDependency */,
 				B9DD29EC2A51D733003345AB /* PBXTargetDependency */,
 				B93432972A665DF9000F1D7C /* PBXTargetDependency */,
+				B93AEB122A8E9CED001A12A4 /* PBXTargetDependency */,
 			);
 			name = Dash;
 			packageProductDependencies = (
@@ -1760,6 +1812,9 @@
 						CreatedOnToolsVersion = 14.3.1;
 						TestTargetID = B9DC5B20229D59BE00B645D5;
 					};
+					B93AEB0B2A8E9CED001A12A4 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
 					B964BCBF23E066FF00288E0D = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
@@ -1834,6 +1889,7 @@
 				B9E96CB722A3CE7500C2E009 /* DashTests */,
 				B9A3B67826537A9B00D1D64C /* ParkingSearchActionExtension */,
 				B9DD4CC926517F920010B120 /* ParkingSearchKit */,
+				B93AEB0B2A8E9CED001A12A4 /* NotificationServiceExtension */,
 				B964BCBF23E066FF00288E0D /* DashRemote */,
 				B964BCD723E067EB00288E0D /* ShareExtension */,
 				B98B783223ED4C3F00A5102F /* DashCloudKit */,
@@ -1856,6 +1912,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B934328A2A665DF9000F1D7C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B93AEB0A2A8E9CED001A12A4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2029,6 +2092,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				B93432942A665DF9000F1D7C /* FloatingViewKitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B93AEB082A8E9CED001A12A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B933081C2A90A51800F0BE53 /* DoorLock.swift in Sources */,
+				B93AEB0F2A8E9CED001A12A4 /* NotificationService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2322,6 +2394,11 @@
 			target = B93432842A665DF9000F1D7C /* FloatingViewKit */;
 			targetProxy = B93432962A665DF9000F1D7C /* PBXContainerItemProxy */;
 		};
+		B93AEB122A8E9CED001A12A4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B93AEB0B2A8E9CED001A12A4 /* NotificationServiceExtension */;
+			targetProxy = B93AEB112A8E9CED001A12A4 /* PBXContainerItemProxy */;
+		};
 		B964BCE123E067EB00288E0D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B964BCD723E067EB00288E0D /* ShareExtension */;
@@ -2597,6 +2674,62 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dash.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Dash";
+			};
+			name = Release;
+		};
+		B93AEB142A8E9CEE001A12A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8LSN3WQC77;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Yuji Nakayama. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash.NotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B93AEB152A8E9CEE001A12A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8LSN3WQC77;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Yuji Nakayama. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash.NotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -3384,6 +3517,15 @@
 			buildConfigurations = (
 				B934329C2A665DF9000F1D7C /* Debug */,
 				B934329D2A665DF9000F1D7C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B93AEB162A8E9CEE001A12A4 /* Build configuration list for PBXNativeTarget "NotificationServiceExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B93AEB142A8E9CEE001A12A4 /* Debug */,
+				B93AEB152A8E9CEE001A12A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
