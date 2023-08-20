@@ -47,6 +47,8 @@ class VehicleProximityDetector: NSObject {
     func startMonitoringForRegion() {
         guard !isMonitoringForRegion else { return }
 
+        logger.info()
+
         switch locationManager.authorizationStatus {
         case .authorizedAlways:
             monitoringState = .running
@@ -57,6 +59,7 @@ class VehicleProximityDetector: NSObject {
     }
 
     func stopMonitoringForRegion() {
+        logger.info()
         monitoringState = .idle
         locationManager.stopMonitoring(for: targetBeaconRegion)
     }
@@ -81,6 +84,8 @@ class VehicleProximityDetector: NSObject {
     func startRangingBeacon() {
         guard !isRangingBeacon else { return }
 
+        logger.info()
+
         switch locationManager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
             rangingState = .running
@@ -91,6 +96,7 @@ class VehicleProximityDetector: NSObject {
     }
 
     func stopRangingBeacon() {
+        logger.info()
         rangingState = .idle
         locationManager.stopRangingBeacons(satisfying: beaconConstraint)
     }
@@ -116,6 +122,8 @@ class VehicleProximityDetector: NSObject {
 
 extension VehicleProximityDetector: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        logger.info(manager.authorizationStatus.rawValue)
+
         switch manager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
             if monitoringState == .requested {
@@ -133,17 +141,17 @@ extension VehicleProximityDetector: CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        print(#function)
+        logger.info(region)
         NotificationCenter.default.post(name: .VehicleProximityDetectorDidEnterRegion, object: self)
     }
 
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-        print(#function)
+        logger.info(region)
         NotificationCenter.default.post(name: .VehicleProximityDetectorDidExitRegion, object: self)
     }
 
     func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
-        print(#function, error.localizedDescription)
+        logger.error(error)
     }
 
     func locationManager(_ manager: CLLocationManager, didRange beacons: [CLBeacon], satisfying beaconConstraint: CLBeaconIdentityConstraint) {
@@ -155,7 +163,7 @@ extension VehicleProximityDetector: CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didFailRangingFor beaconConstraint: CLBeaconIdentityConstraint, error: Error) {
-        print(#function, error.localizedDescription)
+        logger.error(error)
     }
 }
 

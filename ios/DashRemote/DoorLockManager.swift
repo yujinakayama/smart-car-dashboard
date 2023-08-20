@@ -77,7 +77,7 @@ class DoorLockManager {
         )
 
         UNUserNotificationCenter.current().add(notificationRequest) { error in
-            print(#function, error as Any)
+            logger.info(error)
         }
     }
 }

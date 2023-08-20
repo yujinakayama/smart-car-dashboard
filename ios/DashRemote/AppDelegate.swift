@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         UNUserNotificationCenter.current().delegate = self
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, error in
-            print(error as Any)
+            logger.info("granted: \(granted), error: \(error as Any)")
         }
 
         return true

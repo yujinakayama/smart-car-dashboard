@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import XCGLogger
 
 class Defaults {
     static var shared = Defaults()
@@ -18,6 +19,14 @@ class Defaults {
     }
 
     private func set(_ value: Bool, for key: Key) {
+        userDefaults.setValue(value, forKey: key.rawValue)
+    }
+
+    private func integer(for key: Key) -> Int {
+        return userDefaults.integer(forKey: key.rawValue)
+    }
+
+    private func set(_ value: Int, for key: Key) {
         userDefaults.setValue(value, forKey: key.rawValue)
     }
 
@@ -33,8 +42,7 @@ class Defaults {
 extension Defaults {
     private enum Key: String {
         case autoLockDoorsWhenLeave
-        case lockMechanismServiceUUID
-        case lockMechanismAccessoryName
+        case logLevel
     }
 
     var autoLockDoorsWhenLeave: Bool {
@@ -44,6 +52,12 @@ extension Defaults {
 
         set {
             set(newValue, for: .autoLockDoorsWhenLeave)
+        }
+    }
+
+    var logLevel: XCGLogger.Level {
+        get {
+            return XCGLogger.Level(rawValue: integer(for: .logLevel)) ?? .info
         }
     }
 }
