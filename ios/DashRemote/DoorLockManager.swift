@@ -56,7 +56,7 @@ class DoorLockManager {
             guard let self = self else { return }
 
             if let error = error {
-                postLocalNotification(body: error.localizedDescription)
+                postLocalNotification(body: "ドアロックに失敗しました。 \(error.localizedDescription)")
             } else {
                 postLocalNotification(body: "ドアを自動ロックしました。")
             }
