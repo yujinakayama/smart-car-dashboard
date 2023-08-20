@@ -83,25 +83,8 @@ class ProximityViewController: UITableViewController {
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
-
-        postLocalNotification(body: "foobar")
     }
 
-    private func postLocalNotification(body: String) {
-        let content = UNMutableNotificationContent()
-        content.body = body
-        content.sound = .default
-
-        let notificationRequest = UNNotificationRequest(
-            identifier: UUID().uuidString,
-            content: content,
-            trigger: nil
-        )
-
-        UNUserNotificationCenter.current().add(notificationRequest) { error in
-            print(#function, error as Any)
-        }
-    }
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch Section(rawValue: section) {
         case .targetIBeacon:
