@@ -56,18 +56,20 @@ void CarSmartKey::createAccessory() {
   /* Initialise the mandatory parameters for Accessory which will be added as
    * the mandatory services internally
    */
-  this->accessoryConfig.name = (char*)"Car Smart Key";
-  this->accessoryConfig.manufacturer = (char*)"Yuji Nakayama";
-  this->accessoryConfig.model = (char*)"Model";
-  this->accessoryConfig.serial_num = (char*)"Serial Number";
-  this->accessoryConfig.fw_rev = (char*)"Firmware Version";
-  this->accessoryConfig.hw_rev = NULL;
-  this->accessoryConfig.pv = (char*)"1.0.0";
-  this->accessoryConfig.cid = HAP_CID_BRIDGE;
-  this->accessoryConfig.identify_routine = identifyAccessory;
+  hap_acc_cfg_t config = {
+    .name = (char*)"Car Smart Key",
+    .model = (char*)"Model",
+    .manufacturer = (char*)"Yuji Nakayama",
+    .serial_num = (char*)"Serial Number",
+    .fw_rev = (char*)"Firmware Version",
+    .hw_rev = NULL,
+    .pv = (char*)"1.0.0",
+    .cid = HAP_CID_BRIDGE,
+    .identify_routine = identifyAccessory,
+  };
 
   /* Create accessory object */
-  this->accessory = hap_acc_create(&this->accessoryConfig);
+  this->accessory = hap_acc_create(&config);
 
   /* Add a dummy Product Data */
   uint8_t product_data[] = {'E','S','P','3','2','H','A','P'};

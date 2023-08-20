@@ -19,7 +19,6 @@ public:
   gpio_num_t engineStatePin;
 
   hap_acc_t* accessory;
-  hap_acc_cfg_t accessoryConfig;
   hap_char_t* engineOnCharacteristic;
   hap_char_t* currentDoorLockStateCharacteristic;
   hap_char_t* targetDoorLockStateCharacteristic;

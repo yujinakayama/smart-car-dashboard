@@ -25,11 +25,12 @@ void startHTTPServer(uint16_t port, CarSmartKey* smartKey) {
     httpd_handle_t server = NULL;
 
     if (httpd_start(&server, &config) == ESP_OK) {
-        httpd_uri_t doorsLockEndpoint = {};
-        doorsLockEndpoint.method   = HTTP_POST;
-        doorsLockEndpoint.uri      = "/doors/lock";
-        doorsLockEndpoint.handler  = doorsLockHandler;
-        doorsLockEndpoint.user_ctx = smartKey;
+        httpd_uri_t doorsLockEndpoint = {
+          .uri      = "/doors/lock",
+          .method = HTTP_POST,
+          .handler  = doorsLockHandler,
+          .user_ctx = smartKey,
+        };
         httpd_register_uri_handler(server, &doorsLockEndpoint);
 
         ESP_LOGI(TAG, "HTTP server running on port %d", port);

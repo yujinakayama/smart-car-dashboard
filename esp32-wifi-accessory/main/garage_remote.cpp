@@ -48,18 +48,20 @@ void GarageRemote::createAccessory() {
   /* Initialise the mandatory parameters for Accessory which will be added as
    * the mandatory services internally
    */
-  this->accessoryConfig.name = (char*)"Garage";
-  this->accessoryConfig.manufacturer = (char*)"Yuji Nakayama";
-  this->accessoryConfig.model = (char*)"Model";
-  this->accessoryConfig.serial_num = (char*)"Serial Number";
-  this->accessoryConfig.fw_rev = (char*)"Firmware Version";
-  this->accessoryConfig.hw_rev = NULL;
-  this->accessoryConfig.pv = (char*)"1.1.0";
-  this->accessoryConfig.cid = HAP_CID_GARAGE_DOOR_OPENER;
-  this->accessoryConfig.identify_routine = identifyAccessory;
+  hap_acc_cfg_t config = {
+    .name = (char*)"Garage",
+    .model = (char*)"Model",
+    .manufacturer = (char*)"Yuji Nakayama",
+    .serial_num = (char*)"Serial Number",
+    .fw_rev = (char*)"Firmware Version",
+    .hw_rev = NULL,
+    .pv = (char*)"1.1.0",
+    .cid = HAP_CID_GARAGE_DOOR_OPENER,
+    .identify_routine = identifyAccessory,
+  };
 
   /* Create accessory object */
-  this->accessory = hap_acc_create(&this->accessoryConfig);
+  this->accessory = hap_acc_create(&config);
 
   /* Add a dummy Product Data */
   uint8_t product_data[] = {'E','S','P','3','2','H','A','P'};
@@ -94,7 +96,7 @@ void GarageRemote::addFirmwareUpgradeService() {
   char server_cert[] = {};
 
   hap_fw_upgrade_config_t ota_config = {
-      .server_cert_pem = server_cert,
+    .server_cert_pem = server_cert,
   };
 
   hap_serv_t* service = hap_serv_fw_upgrade_create(&ota_config);
@@ -217,11 +219,12 @@ static int writeTargetDoorState(hap_write_data_t write_data[], int count, void* 
 }
 
 static void performLater(uint32_t milliseconds, callback_with_arg_t callback, void* arg) {
-  esp_timer_create_args_t config;
-  config.arg = reinterpret_cast<void*>(arg);
-  config.callback = callback;
-  config.dispatch_method = ESP_TIMER_TASK;
-  config.name = "Ticker";
+  esp_timer_create_args_t config = {
+    .callback = callback,
+    .arg = reinterpret_cast<void*>(arg),
+    .dispatch_method = ESP_TIMER_TASK,
+    .name = "Ticker",
+  };
 
   if (timer) {
     esp_timer_stop(timer);

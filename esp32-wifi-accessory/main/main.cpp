@@ -38,9 +38,10 @@
 static void configureGPIOPins() {
   // Configure 12-15 GPIO pins since they cannot be used as output pins by default.
   // https://esp32.com/viewtopic.php?f=14&t=2687
-  gpio_config_t config;
-  config.pin_bit_mask = (1 << GPIO_NUM_12) | (1 << GPIO_NUM_13) | (1 << GPIO_NUM_14) | (1 << GPIO_NUM_15);
-  config.mode = GPIO_MODE_INPUT_OUTPUT;
+  gpio_config_t config = {
+    .pin_bit_mask = (1 << GPIO_NUM_12) | (1 << GPIO_NUM_13) | (1 << GPIO_NUM_14) | (1 << GPIO_NUM_15),
+    .mode = GPIO_MODE_INPUT_OUTPUT
+  };
   ESP_ERROR_CHECK(gpio_config(&config));
 }
 
