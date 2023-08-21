@@ -16,6 +16,11 @@
 default_platform(:ios)
 
 platform :ios do
+  desc "Bump major version and release"
+  lane :bump_major do
+    bump_version_and_release(type: 'major')
+  end
+
   desc "Bump minor version and release"
   lane :bump_minor do
     bump_version_and_release(type: 'minor')
