@@ -16,7 +16,7 @@ extension Notification.Name {
 }
 
 class VehicleProximityDetector: NSObject {
-    static let beaconUUID = UUID(uuidString: "FB42EA58-A9EB-4431-B5BF-E98A81C4837F")!
+    static let beaconProximityUUID = UUID(uuidString: "FB42EA58-A9EB-4431-B5BF-E98A81C4837F")!
     private static let beaconRegionIdentifier = "VehicleProximityDetector"
 
     let vehicleID: String
@@ -102,7 +102,7 @@ class VehicleProximityDetector: NSObject {
     }
 
     private lazy var beaconConstraint = CLBeaconIdentityConstraint(
-        uuid: Self.beaconUUID,
+        uuid: Self.beaconProximityUUID,
         major: beaconMajorValue
     )
 

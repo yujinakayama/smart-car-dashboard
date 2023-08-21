@@ -16,7 +16,7 @@ class ProximityViewController: UITableViewController {
         case currentlyDetectedBeacon
     }
 
-    @IBOutlet weak var uuidTableViewCell: UITableViewCell!
+    @IBOutlet weak var proximityUUIDTableViewCell: UITableViewCell!
     @IBOutlet weak var majorTableViewCell: UITableViewCell!
 
     @IBOutlet weak var autoLockDoorsWhenLeaveTableViewCell: UITableViewCell!
@@ -49,9 +49,9 @@ class ProximityViewController: UITableViewController {
         detector?.startRangingBeacon()
 
         updateContentConfiguration(
-            of: uuidTableViewCell,
-            text: "UUID",
-            secondaryText: VehicleProximityDetector.beaconUUID.uuidString
+            of: proximityUUIDTableViewCell,
+            text: "Proximity UUID",
+            secondaryText: VehicleProximityDetector.beaconProximityUUID.uuidString
         )
 
         if let detector = detector {
@@ -76,8 +76,8 @@ class ProximityViewController: UITableViewController {
         guard let selectedCell = tableView.cellForRow(at: indexPath) else { return }
 
         switch selectedCell {
-        case uuidTableViewCell:
-            UIPasteboard.general.string = VehicleProximityDetector.beaconUUID.uuidString
+        case proximityUUIDTableViewCell:
+            UIPasteboard.general.string = VehicleProximityDetector.beaconProximityUUID.uuidString
         case majorTableViewCell:
             if let detector = detector {
                 UIPasteboard.general.string = String(detector.beaconMajorValue)
