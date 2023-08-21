@@ -44,7 +44,7 @@ class VehicleProximityDetector: NSObject {
         self.vehicleID = vehicleID
     }
 
-    func startMonitoringForRegion() {
+    func startMonitoringForRegionIfNeeded() {
         guard !isMonitoringForRegion else { return }
 
         logger.info()
