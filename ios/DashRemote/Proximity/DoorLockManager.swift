@@ -16,7 +16,7 @@ class DoorLockManager {
     init() {
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(pairedVehicleDidChangeDefaultVehicleID),
+            selector: #selector(restartVehicleProximityDetectorIfNeeded),
             name: .PairedVehicleDidChangeDefaultVehicleID,
             object: nil
         )
@@ -31,7 +31,7 @@ class DoorLockManager {
         startVehicleProximityDetectorIfNeeded()
     }
 
-    func startVehicleProximityDetectorIfNeeded() {
+    private func startVehicleProximityDetectorIfNeeded() {
         if let vehicleID = PairedVehicle.defaultVehicleID, Defaults.shared.autoLockDoorsWhenLeave {
             let detector = VehicleProximityDetector(vehicleID: vehicleID)
             detector.startMonitoringForRegionIfNeeded()
@@ -41,7 +41,7 @@ class DoorLockManager {
         }
     }
 
-    @objc func pairedVehicleDidChangeDefaultVehicleID() {
+    @objc func restartVehicleProximityDetectorIfNeeded() {
         // We don't want to unnecessarily invoke stopMonitoringForRegion() on app launch,
         // which may stop existing region monitoring.
         vehicleProximityDetector?.stopMonitoringForRegion()

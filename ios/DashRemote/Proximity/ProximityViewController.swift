@@ -27,9 +27,13 @@ class ProximityViewController: UITableViewController {
 
     let autoLockDoorsWhenLeaveSwitch = UISwitch()
 
-    var detector: VehicleProximityDetector? {
+    var doorLockManager: DoorLockManager {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.doorLockManager.vehicleProximityDetector
+        return appDelegate.doorLockManager
+    }
+
+    var proximityDetector: VehicleProximityDetector? {
+        return doorLockManager.vehicleProximityDetector
     }
 
     var lastBeaconRangingTime: Date?
@@ -46,7 +50,7 @@ class ProximityViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        detector?.startRangingBeacon()
+        proximityDetector?.startRangingBeacon()
 
         updateContentConfiguration(
             of: proximityUUIDTableViewCell,
@@ -54,11 +58,11 @@ class ProximityViewController: UITableViewController {
             secondaryText: VehicleProximityDetector.beaconProximityUUID.uuidString
         )
 
-        if let detector = detector {
+        if let proximityDetector = proximityDetector {
             updateContentConfiguration(
                 of: majorTableViewCell,
                 text: "Major",
-                secondaryText: String(detector.beaconMajorValue)
+                secondaryText: String(proximityDetector.beaconMajorValue)
             )
         }
 
@@ -69,7 +73,7 @@ class ProximityViewController: UITableViewController {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        detector?.stopRangingBeacon()
+        proximityDetector?.stopRangingBeacon()
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -79,8 +83,8 @@ class ProximityViewController: UITableViewController {
         case proximityUUIDTableViewCell:
             UIPasteboard.general.string = VehicleProximityDetector.beaconProximityUUID.uuidString
         case majorTableViewCell:
-            if let detector = detector {
-                UIPasteboard.general.string = String(detector.beaconMajorValue)
+            if let proximityDetector = proximityDetector {
+                UIPasteboard.general.string = String(proximityDetector.beaconMajorValue)
             }
         default:
             break
@@ -108,6 +112,7 @@ class ProximityViewController: UITableViewController {
 
     @objc func autoLockDoorsWhenLeaveSwitchValueChanged() {
         Defaults.shared.autoLockDoorsWhenLeave = autoLockDoorsWhenLeaveSwitch.isOn
+        doorLockManager.restartVehicleProximityDetectorIfNeeded()
     }
 
     @objc func vehicleProximityDetectorDidRangeBeacon(_ notification: Notification) {
