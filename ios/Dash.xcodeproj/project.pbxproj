@@ -954,6 +954,7 @@
 			isa = PBXGroup;
 			children = (
 				B93AEAFD2A8E1DE1001A12A4 /* ProximityViewController.swift */,
+				B93AEB042A8E514E001A12A4 /* DoorLockManager.swift */,
 				B93AEB002A8E1FD6001A12A4 /* VehicleProximityDetector.swift */,
 			);
 			path = Proximity;
@@ -1049,7 +1050,6 @@
 				B93AEAF82A8E1055001A12A4 /* Localizable.strings */,
 				B964BCC223E066FF00288E0D /* AppDelegate.swift */,
 				B964BCC423E066FF00288E0D /* SceneDelegate.swift */,
-				B93AEB042A8E514E001A12A4 /* DoorLockManager.swift */,
 				B93AEAF92A8E1305001A12A4 /* RootViewController.swift */,
 				B99058702A8E056C00EA3E79 /* PickMeUp */,
 				B93AEAFF2A8E1FB3001A12A4 /* Proximity */,

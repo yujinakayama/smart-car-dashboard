@@ -27,7 +27,7 @@ class ProximityViewController: UITableViewController {
 
     let autoLockDoorsWhenLeaveSwitch = UISwitch()
 
-    var detector: VehicleProximityDetector! {
+    var detector: VehicleProximityDetector? {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.doorLockManager.vehicleProximityDetector
     }
@@ -46,7 +46,7 @@ class ProximityViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        detector.startRangingBeacon()
+        detector?.startRangingBeacon()
 
         updateContentConfiguration(
             of: uuidTableViewCell,
@@ -54,11 +54,13 @@ class ProximityViewController: UITableViewController {
             secondaryText: VehicleProximityDetector.beaconUUID.uuidString
         )
 
-        updateContentConfiguration(
-            of: majorTableViewCell,
-            text: "Major",
-            secondaryText: String(detector.beaconMajorValue)
-        )
+        if let detector = detector {
+            updateContentConfiguration(
+                of: majorTableViewCell,
+                text: "Major",
+                secondaryText: String(detector.beaconMajorValue)
+            )
+        }
 
         autoLockDoorsWhenLeaveSwitch.isOn = Defaults.shared.autoLockDoorsWhenLeave
 
@@ -67,7 +69,7 @@ class ProximityViewController: UITableViewController {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        detector.stopRangingBeacon()
+        detector?.stopRangingBeacon()
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -77,7 +79,9 @@ class ProximityViewController: UITableViewController {
         case uuidTableViewCell:
             UIPasteboard.general.string = VehicleProximityDetector.beaconUUID.uuidString
         case majorTableViewCell:
-            UIPasteboard.general.string = String(detector.beaconMajorValue)
+            if let detector = detector {
+                UIPasteboard.general.string = String(detector.beaconMajorValue)
+            }
         default:
             break
         }

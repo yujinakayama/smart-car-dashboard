@@ -11,8 +11,6 @@ import UserNotifications
 import DashCloudKit
 
 class DoorLockManager {
-    static let shared = DoorLockManager()
-
     var vehicleProximityDetector: VehicleProximityDetector?
 
     init() {
