@@ -18,6 +18,7 @@ class ProximityViewController: UITableViewController {
 
     @IBOutlet weak var proximityUUIDTableViewCell: UITableViewCell!
     @IBOutlet weak var majorTableViewCell: UITableViewCell!
+    @IBOutlet weak var minorTableViewCell: UITableViewCell!
 
     @IBOutlet weak var autoLockDoorsWhenLeaveTableViewCell: UITableViewCell!
 
@@ -58,17 +59,21 @@ class ProximityViewController: UITableViewController {
             secondaryText: VehicleProximityDetector.beaconProximityUUID.uuidString
         )
 
-        if let proximityDetector = proximityDetector {
-            updateContentConfiguration(
-                of: majorTableViewCell,
-                text: "Major",
-                secondaryText: String(proximityDetector.beaconMajorValue)
-            )
-        }
+        updateContentConfiguration(
+            of: majorTableViewCell,
+            text: "Major",
+            secondaryText: proximityDetector != nil ? String(proximityDetector!.beaconMajorValue) : "-"
+        )
+
+        updateContentConfiguration(
+            of: minorTableViewCell,
+            text: "Minor",
+            secondaryText: "Any"
+        )
 
         autoLockDoorsWhenLeaveSwitch.isOn = Defaults.shared.autoLockDoorsWhenLeave
 
-        updateCurrentlyDetectedBeaconSection(nil)
+        updateCurrentlyDetectedBeaconSection(for: nil)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -120,10 +125,10 @@ class ProximityViewController: UITableViewController {
         lastBeaconRangingTime = Date()
         // Update section header
         tableView.reloadSections(.init(integer: Section.currentlyDetectedBeacon.rawValue), with: .none)
-        updateCurrentlyDetectedBeaconSection(beacon)
+        updateCurrentlyDetectedBeaconSection(for: beacon)
     }
 
-    func updateCurrentlyDetectedBeaconSection(_ beacon: CLBeacon?) {
+    func updateCurrentlyDetectedBeaconSection(for beacon: CLBeacon?) {
         updateContentConfiguration(
             of: proximityTableViewCell,
             text: "Proximity",
@@ -167,6 +172,7 @@ fileprivate func updateContentConfiguration(of cell: UITableViewCell, text: Stri
     content.text = text
     content.secondaryText = secondaryText
     content.secondaryTextProperties.color = .secondaryLabel
+    content.secondaryTextProperties.font = .preferredFont(forTextStyle: .subheadline)
     cell.contentConfiguration = content
 }
 

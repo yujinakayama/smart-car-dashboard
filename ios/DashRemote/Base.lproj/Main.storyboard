@@ -143,6 +143,7 @@
                         <outlet property="accuracyTableViewCell" destination="Oju-2Z-Siv" id="uLc-bX-rme"/>
                         <outlet property="autoLockDoorsWhenLeaveTableViewCell" destination="2g6-7U-n9a" id="GwF-1j-rAl"/>
                         <outlet property="majorTableViewCell" destination="s7i-nv-b0F" id="6Yy-cj-bUh"/>
+                        <outlet property="minorTableViewCell" destination="9yI-SQ-vfE" id="jqa-8L-8Uq"/>
                         <outlet property="proximityTableViewCell" destination="lDr-fg-dYe" id="vcM-BI-AbM"/>
                         <outlet property="proximityUUIDTableViewCell" destination="A4V-QV-HEi" id="f65-QM-KD7"/>
                         <outlet property="rssiTableViewCell" destination="mXz-LL-hOC" id="Ylc-ZF-RdH"/>
