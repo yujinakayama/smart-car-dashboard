@@ -21,7 +21,6 @@ public:
   gpio_num_t powerButtonPin;
   gpio_num_t openButtonPin;
   hap_acc_t* accessory;
-  hap_acc_cfg_t accessoryConfig;
   TargetDoorState targetDoorState;
   CurrentDoorState currentDoorState;
 

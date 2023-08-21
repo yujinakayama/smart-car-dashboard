@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         UNUserNotificationCenter.current().delegate = self
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, error in
-            print(error as Any)
+            logger.info("granted: \(granted), error: \(error as Any)")
         }
 
         return true
@@ -41,9 +41,5 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     // Received notification in foreground
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([.banner, .sound])
-
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-//            UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-//        }
     }
 }

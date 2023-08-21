@@ -66,7 +66,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="85.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
-                                        <listContentConfiguration key="contentConfiguration" style="valueCell" text="UUID" secondaryText="FB42EA58-A9EB-4431-B5BF-E98A81C4837F"/>
+                                        <listContentConfiguration key="contentConfiguration" style="valueCell" text="Proximity UUID" secondaryText="FB42EA58-A9EB-4431-B5BF-E98A81C4837F"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="s7i-nv-b0F">
                                         <rect key="frame" x="20" y="141" width="374" height="63.5"/>
@@ -77,12 +77,21 @@
                                         </tableViewCellContentView>
                                         <listContentConfiguration key="contentConfiguration" style="valueCell" text="Major" secondaryText="65535"/>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="9yI-SQ-vfE">
+                                        <rect key="frame" x="20" y="204.5" width="374" height="63.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9yI-SQ-vfE" id="d3Y-Ox-xUh">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="63.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <listContentConfiguration key="contentConfiguration" style="valueCell" text="Minor" secondaryText="Any"/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Automation" id="qFM-7A-2aC">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="2g6-7U-n9a">
-                                        <rect key="frame" x="20" y="260.5" width="374" height="44.5"/>
+                                        <rect key="frame" x="20" y="324" width="374" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2g6-7U-n9a" id="ULb-eT-qqF">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="44.5"/>
@@ -95,7 +104,7 @@
                             <tableViewSection headerTitle="Currently Detected Beacon" id="GMe-2T-cfW">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="lDr-fg-dYe">
-                                        <rect key="frame" x="20" y="361" width="374" height="63.5"/>
+                                        <rect key="frame" x="20" y="424.5" width="374" height="63.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lDr-fg-dYe" id="UeM-ia-bnp">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="63.5"/>
@@ -104,7 +113,7 @@
                                         <listContentConfiguration key="contentConfiguration" style="valueCell" text="Proximity" secondaryText="Near"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Oju-2Z-Siv">
-                                        <rect key="frame" x="20" y="424.5" width="374" height="63.5"/>
+                                        <rect key="frame" x="20" y="488" width="374" height="63.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Oju-2Z-Siv" id="nyf-hX-UvC">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="63.5"/>
@@ -113,7 +122,7 @@
                                         <listContentConfiguration key="contentConfiguration" style="valueCell" text="Accuracy" secondaryText="±5 m"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="mXz-LL-hOC">
-                                        <rect key="frame" x="20" y="488" width="374" height="63.5"/>
+                                        <rect key="frame" x="20" y="551.5" width="374" height="63.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mXz-LL-hOC" id="vMp-fr-meg">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="63.5"/>
@@ -135,8 +144,8 @@
                         <outlet property="autoLockDoorsWhenLeaveTableViewCell" destination="2g6-7U-n9a" id="GwF-1j-rAl"/>
                         <outlet property="majorTableViewCell" destination="s7i-nv-b0F" id="6Yy-cj-bUh"/>
                         <outlet property="proximityTableViewCell" destination="lDr-fg-dYe" id="vcM-BI-AbM"/>
+                        <outlet property="proximityUUIDTableViewCell" destination="A4V-QV-HEi" id="f65-QM-KD7"/>
                         <outlet property="rssiTableViewCell" destination="mXz-LL-hOC" id="Ylc-ZF-RdH"/>
-                        <outlet property="uuidTableViewCell" destination="A4V-QV-HEi" id="f65-QM-KD7"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hsH-ZR-gVY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

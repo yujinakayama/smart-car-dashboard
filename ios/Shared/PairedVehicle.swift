@@ -29,7 +29,10 @@ class PairedVehicle {
             } else {
                 try? keychain.remove(Key.defaultPairedVehicleID.rawValue)
             }
-            NotificationCenter.default.post(name: .PairedVehicleDidChangeDefaultVehicleID, object: nil)
+
+            if newValue != defaultVehicleID {
+                NotificationCenter.default.post(name: .PairedVehicleDidChangeDefaultVehicleID, object: nil)
+            }
         }
     }
 

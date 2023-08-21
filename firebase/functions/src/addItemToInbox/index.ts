@@ -9,7 +9,8 @@ import { isGoogleMapsLocation, normalizeGoogleMapsLocation, requiredEnvName as g
 import { isAppleMusicItem, normalizeAppleMusicItem, requiredEnvName as appleMusicRequiredEnvName } from './appleMusic'
 import { isYouTubeVideo, normalizeYouTubeVideo, requiredEnvName as youtubeRequiredEnvName } from './youtube'
 import { normalizeWebpage } from './website'
-import { notify } from './notification'
+import { makeNotificationPayload } from './notification'
+import { sendNotificationToVehicle } from '../notification'
 
 const requiredSecrets = Array.from(new Set([googleMapsRequiredEnvName, appleMusicRequiredEnvName, youtubeRequiredEnvName]))
 
@@ -39,7 +40,8 @@ export const addItemToInbox = onRequest({
 
     const promises = [addItemToFirestore(item, document)]
     if (request.notification !== false) {
-        promises.push(notify(request.vehicleID, item, document.id))
+        const payload = makeNotificationPayload(item, document.id)
+        promises.push(sendNotificationToVehicle(request.vehicleID, payload))
     }
     await Promise.all(promises)
 

@@ -2,42 +2,22 @@ import * as admin from 'firebase-admin'
 
 import { Item } from './item'
 import { NormalizedData } from './normalizedData'
+import { NotificationPayload, UNNotificationPresentationOptions } from '../notification'
 
 admin.initializeApp()
 
-interface ItemWithIdentifier extends Item {
-    identifier: string;
-}
-
-interface NotificationPayload {
+interface ShareNotificationPayload extends NotificationPayload {
     aps: admin.messaging.Aps;
     foregroundPresentationOptions: UNNotificationPresentationOptions;
     item: ItemWithIdentifier;
     notificationType: 'share';
 }
 
-enum UNNotificationPresentationOptions {
-    none = 0,
-    badge = 1 << 0,
-    sound = 1 << 1,
-    alert = 1 << 2
+interface ItemWithIdentifier extends Item {
+    identifier: string;
 }
 
-export function notify(vehicleID: string, item: Item, itemIdentifier: string): Promise<any> {
-    const payload = makeNotificationPayload(item, itemIdentifier)
-
-    const message = {
-        topic: vehicleID,
-        apns: {
-            // admin.messaging.ApnsPayload type requires `object` value for custom keys but it's wrong
-            payload: payload as any
-        }
-    }
-
-    return admin.messaging().send(message)
-}
-
-function makeNotificationPayload(item: Item, identifier: string): NotificationPayload {
+export function makeNotificationPayload(item: Item, identifier: string): ShareNotificationPayload {
     const normalizedData = item as unknown as NormalizedData
 
     let alert: admin.messaging.ApsAlert

@@ -77,6 +77,23 @@ public class DashCloudClient {
         }
     }
 
+    public func lockDoors(of vehicleID: String, completionHandler: @escaping (Error?) -> Void) {
+        let url = URL(string: "lockDoors", relativeTo: baseURL)!
+
+        let payload: [String: Any] = [
+            "vehicleID": vehicleID
+        ]
+
+        post(url: url, payload: payload) { (result) in
+            switch result {
+            case .success:
+                completionHandler(nil)
+            case .failure(let error):
+                completionHandler(error)
+            }
+        }
+    }
+
     private func geocodeGoogleMapsLocation(_ attachments: [String: Any], completionHandler: @escaping (Result<Location, Error>) -> Void) {
         let url = URL(string: "geocode", relativeTo: baseURL)!
 
