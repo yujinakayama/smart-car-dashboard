@@ -92,21 +92,25 @@ function isGoogleShortenURL(url: URL): boolean {
 }
 
 export async function normalizeGoogleMapsLocation(inputData: InputData): Promise<Location> {
-    const expandedURL = await inputData.expandURL()
+    let url = inputData.url
 
+    if (isGoogleShortenURL(url)) {
+        url = await inputData.expandURL()
+    }
+    
     let locationData: Location | null
 
-    locationData = await normalizeLocationWithFtid(expandedURL, inputData)
+    locationData = await normalizeLocationWithFtid(url, inputData)
     if (locationData) {
         return locationData
     }
 
-    locationData = await normalizeLocationWithCoordinate(expandedURL, inputData)
+    locationData = await normalizeLocationWithCoordinate(url, inputData)
     if (locationData) {
         return locationData
     }
 
-    locationData = await normalizeLocationWithQuery(expandedURL, inputData)
+    locationData = await normalizeLocationWithQuery(url, inputData)
     if (locationData) {
         return locationData
     }
