@@ -10,7 +10,7 @@ import AppIntents
 
 struct OpenDash: AppIntent {
     static var title: LocalizedStringResource = "Open Dash"
-    static var description: IntentDescription? = .init("Opens Dash app.")
+    static var description: IntentDescription? = IntentDescription("Opens Dash app.")
     static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
