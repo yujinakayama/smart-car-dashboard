@@ -9,6 +9,7 @@
 import Foundation
 import UniformTypeIdentifiers
 import MapKit
+import DictionaryCoding
 
 public class Item {
     private let encoder: ItemEncoderProtocol
@@ -77,27 +78,8 @@ extension Item {
         }
 
         private func dictionary(for mapItem: MKMapItem) -> [String: Any] {
-            return [
-                "placemark": [
-                    "coordinate": [
-                        "latitude": mapItem.placemark.coordinate.latitude,
-                        "longitude": mapItem.placemark.coordinate.longitude
-                    ],
-                    "isoCountryCode": mapItem.placemark.isoCountryCode as Any,
-                    "country": mapItem.placemark.country as Any,
-                    "postalCode": mapItem.placemark.postalCode as Any,
-                    "administrativeArea": mapItem.placemark.administrativeArea as Any,
-                    "subAdministrativeArea": mapItem.placemark.subAdministrativeArea as Any,
-                    "locality": mapItem.placemark.locality as Any,
-                    "subLocality": mapItem.placemark.subLocality as Any,
-                    "thoroughfare": mapItem.placemark.thoroughfare as Any,
-                    "subThoroughfare": mapItem.placemark.subThoroughfare as Any
-                ],
-                "name": mapItem.name as Any,
-                "phoneNumber": mapItem.phoneNumber as Any,
-                "pointOfInterestCategory": mapItem.pointOfInterestCategory?.rawValue as Any,
-                "url": mapItem.url?.absoluteString as Any,
-            ]
+            let encoder = DictionaryEncoder()
+            return try! encoder.encode(mapItem)
         }
     }
 }

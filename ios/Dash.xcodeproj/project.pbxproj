@@ -89,6 +89,7 @@
 		B93AEB052A8E514E001A12A4 /* DoorLockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEB042A8E514E001A12A4 /* DoorLockManager.swift */; };
 		B93AEB0F2A8E9CED001A12A4 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AEB0E2A8E9CED001A12A4 /* NotificationService.swift */; };
 		B93AEB132A8E9CED001A12A4 /* NotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B93AEB0C2A8E9CED001A12A4 /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B93E25092AB5858E002C969A /* DashCloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98B783323ED4C3F00A5102F /* DashCloudKit.framework */; };
 		B940A460250E5B57006BDFBB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B940A45F250E5B57006BDFBB /* Settings.bundle */; };
 		B940A462250E5CDD006BDFBB /* RearviewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */; };
 		B942553D22B8C3E2008B053B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B942553C22B8C3E2008B053B /* Logger.swift */; };
@@ -102,6 +103,8 @@
 		B948F95B281177B000511CA7 /* UUIDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D8E43923D345D70078A057 /* UUIDExtension.swift */; };
 		B948F95C2811782400511CA7 /* ETCTollbooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9515F1527BA8C07001C1D8D /* ETCTollbooth.swift */; };
 		B94BD2E92680486700B768A2 /* BorderedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94BD2E82680486700B768A2 /* BorderedLabel.swift */; };
+		B94E464D2AB45DE800E0BBFB /* DictionaryCoding in Frameworks */ = {isa = PBXBuildFile; productRef = B94E464C2AB45DE800E0BBFB /* DictionaryCoding */; };
+		B94E464F2AB573A700E0BBFB /* SearchResultWebpage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94E464E2AB573A700E0BBFB /* SearchResultWebpage.swift */; };
 		B94E69D123F7A313004CCC7C /* WebsiteIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */; };
 		B94EC75327914C620008C447 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94EC75227914C620008C447 /* UIApplicationExtension.swift */; };
 		B94EC75427914DFF0008C447 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94EC75227914C620008C447 /* UIApplicationExtension.swift */; };
@@ -188,7 +191,7 @@
 		B9B4A89A2569310400FE0C9F /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B4A8992569310400FE0C9F /* DashboardViewController.swift */; };
 		B9B4F700268CB366009C5DC5 /* PairedVehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A676254D0EB30012A4CB /* PairedVehicle.swift */; };
 		B9B4F701268CB367009C5DC5 /* PairedVehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988A676254D0EB30012A4CB /* PairedVehicle.swift */; };
-		B9B4F702268CB3D0009C5DC5 /* CLLocationCoordinate2DExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */; };
+		B9B4F702268CB3D0009C5DC5 /* CodableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B932EE4A26577CBC006FE423 /* CodableExtension.swift */; };
 		B9B4F703268CB3F5009C5DC5 /* ParkingSearchURLItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C87A1626671CCE00ABCBB4 /* ParkingSearchURLItem.swift */; };
 		B9B4F707268CB55D009C5DC5 /* Road.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B4F706268CB55D009C5DC5 /* Road.swift */; };
 		B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B717DD23E6B26900A47207 /* UnknownItem.swift */; };
@@ -327,6 +330,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = B93AEB0B2A8E9CED001A12A4;
 			remoteInfo = NotificationServiceExtension;
+		};
+		B93E250B2AB5858E002C969A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B98B783223ED4C3F00A5102F;
+			remoteInfo = DashCloudKit;
 		};
 		B964BCE023E067EB00288E0D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -541,7 +551,7 @@
 		B931C4FE23D369760020DF13 /* ETCDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceManager.swift; sourceTree = "<group>"; };
 		B932E5EB23F86C5F00726615 /* MusicItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicItem.swift; sourceTree = "<group>"; };
 		B932E5EF23F9082600726615 /* RendezvousPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendezvousPoint.swift; sourceTree = "<group>"; };
-		B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocationCoordinate2DExtension.swift; sourceTree = "<group>"; };
+		B932EE4A26577CBC006FE423 /* CodableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableExtension.swift; sourceTree = "<group>"; };
 		B933081B2A90A51800F0BE53 /* DoorLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorLock.swift; sourceTree = "<group>"; };
 		B93321ED2323C9D500BFAB21 /* BorderedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedView.swift; sourceTree = "<group>"; };
 		B93432852A665DF9000F1D7C /* FloatingViewKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FloatingViewKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -575,6 +585,7 @@
 		B9483DA32A5596E00062EA26 /* ebinasa.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ebinasa.gpx; sourceTree = "<group>"; };
 		B9483DA52A559A360062EA26 /* LandmarkTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandmarkTracker.swift; sourceTree = "<group>"; };
 		B94BD2E82680486700B768A2 /* BorderedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedLabel.swift; sourceTree = "<group>"; };
+		B94E464E2AB573A700E0BBFB /* SearchResultWebpage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultWebpage.swift; sourceTree = "<group>"; };
 		B94E69D023F7A313004CCC7C /* WebsiteIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteIcon.swift; sourceTree = "<group>"; };
 		B94EC75227914C620008C447 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		B9515F1527BA8C07001C1D8D /* ETCTollbooth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCTollbooth.swift; sourceTree = "<group>"; };
@@ -809,6 +820,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B94E464D2AB45DE800E0BBFB /* DictionaryCoding in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -878,6 +890,7 @@
 				B9085FD62A61A6D60014CCC1 /* ObjcExceptionBridging in Frameworks */,
 				B9DD29F32A51D7A0003345AB /* CacheKit.framework in Frameworks */,
 				B9085FD42A61A6CE0014CCC1 /* XCGLogger in Frameworks */,
+				B93E25092AB5858E002C969A /* DashCloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1110,7 +1123,8 @@
 				B98B784023ED4C5000A5102F /* Item.swift */,
 				B9A3DDE92792C41200A2BEC4 /* MapItem.swift */,
 				B92ADE9C269C396A0086E4D8 /* Location.swift */,
-				B932EE4A26577CBC006FE423 /* CLLocationCoordinate2DExtension.swift */,
+				B94E464E2AB573A700E0BBFB /* SearchResultWebpage.swift */,
+				B932EE4A26577CBC006FE423 /* CodableExtension.swift */,
 				B9D4AF2D2673203400849129 /* UTTypeExtension.swift */,
 				B92451D523E3204D007556D5 /* GoogleServieInfo.swift */,
 				B9A3C09423E163F500EF1C4A /* GoogleService-Info.plist */,
@@ -1608,6 +1622,9 @@
 			dependencies = (
 			);
 			name = DashCloudKit;
+			packageProductDependencies = (
+				B94E464C2AB45DE800E0BBFB /* DictionaryCoding */,
+			);
 			productName = DashCloudKit;
 			productReference = B98B783323ED4C3F00A5102F /* DashCloudKit.framework */;
 			productType = "com.apple.product-type.framework";
@@ -1745,6 +1762,7 @@
 			);
 			dependencies = (
 				B9DD29F62A51D7A0003345AB /* PBXTargetDependency */,
+				B93E250C2AB5858E002C969A /* PBXTargetDependency */,
 			);
 			name = ParkingSearchKit;
 			packageProductDependencies = (
@@ -1869,10 +1887,10 @@
 			);
 			mainGroup = B9DC5B18229D59BE00B645D5;
 			packageReferences = (
-				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */,
+				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */,
 				B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */,
 				B979456F27A81AFE007040E7 /* XCRemoteSwiftPackageReference "SwiftCBOR" */,
-				B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */,
+				B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */,
 				B9085FCE2A61A6B50014CCC1 /* XCRemoteSwiftPackageReference "XCGLogger" */,
 				B9085FDB2A61A8020014CCC1 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */,
 				B9085FDE2A61A8D20014CCC1 /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
@@ -1881,11 +1899,11 @@
 				B9085FE72A61AA0A0014CCC1 /* XCRemoteSwiftPackageReference "DictionaryCoding" */,
 				B9085FEA2A61AA720014CCC1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				B990259F2A61B70B00BDCDE9 /* XCRemoteSwiftPackageReference "MarqueeLabel" */,
-				B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */,
+				B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				B906AEC82A623D37008C7458 /* XCRemoteSwiftPackageReference "Solar" */,
 				B964B3002A6257EF003543CC /* XCRemoteSwiftPackageReference "PINCache" */,
 				B9BEAF252A625AAC00E23648 /* XCRemoteSwiftPackageReference "TransitionButton" */,
-				B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel.git" */,
+				B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 			);
 			productRefGroup = B9DC5B22229D59BE00B645D5 /* Products */;
 			projectDirPath = "";
@@ -2149,7 +2167,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9D4AF2E2673203400849129 /* UTTypeExtension.swift in Sources */,
-				B9B4F702268CB3D0009C5DC5 /* CLLocationCoordinate2DExtension.swift in Sources */,
+				B9B4F702268CB3D0009C5DC5 /* CodableExtension.swift in Sources */,
+				B94E464F2AB573A700E0BBFB /* SearchResultWebpage.swift in Sources */,
 				B9D4AF22267124FC00849129 /* DashCloudClient.swift in Sources */,
 				B98B784223ED4C5A00A5102F /* GoogleServieInfo.swift in Sources */,
 				B92ADE9D269C396A0086E4D8 /* Location.swift in Sources */,
@@ -2405,6 +2424,11 @@
 			isa = PBXTargetDependency;
 			target = B93AEB0B2A8E9CED001A12A4 /* NotificationServiceExtension */;
 			targetProxy = B93AEB112A8E9CED001A12A4 /* PBXContainerItemProxy */;
+		};
+		B93E250C2AB5858E002C969A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B98B783223ED4C3F00A5102F /* DashCloudKit */;
+			targetProxy = B93E250B2AB5858E002C969A /* PBXContainerItemProxy */;
 		};
 		B964BCE123E067EB00288E0D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3648,7 +3672,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */ = {
+		B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -3728,7 +3752,7 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */ = {
+		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yujinakayama/DirectionalUserLocationAnnotationView.git";
 			requirement = {
@@ -3752,7 +3776,7 @@
 				minimumVersion = 4.3.1;
 			};
 		};
-		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */ = {
+		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mapbox/mapbox-navigation-ios.git";
 			requirement = {
@@ -3776,7 +3800,7 @@
 				kind = branch;
 			};
 		};
-		B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel.git" */ = {
+		B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scenee/FloatingPanel.git";
 			requirement = {
@@ -3794,22 +3818,22 @@
 		};
 		B906AEC02A6239E6008C7458 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
 		B906AEC22A6239E6008C7458 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
 		B906AEC42A6239E6008C7458 /* FirebaseFirestoreSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
 		};
 		B906AEC62A6239E6008C7458 /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
 		};
 		B906AEC92A623D37008C7458 /* Solar */ = {
@@ -3879,8 +3903,13 @@
 		};
 		B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */;
+			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */;
 			productName = DirectionalUserLocationAnnotationView;
+		};
+		B94E464C2AB45DE800E0BBFB /* DictionaryCoding */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9085FE72A61AA0A0014CCC1 /* XCRemoteSwiftPackageReference "DictionaryCoding" */;
+			productName = DictionaryCoding;
 		};
 		B964B3012A6257EF003543CC /* PINCache */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -3904,7 +3933,7 @@
 		};
 		B9B7451F29968B2C00C85825 /* MapboxCoreNavigation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */;
+			package = B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */;
 			productName = MapboxCoreNavigation;
 		};
 		B9BEAF262A625AAC00E23648 /* TransitionButton */ = {
@@ -3924,7 +3953,7 @@
 		};
 		B9E886882A6D58D600F789AA /* FloatingPanel */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel.git" */;
+			package = B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel" */;
 			productName = FloatingPanel;
 		};
 /* End XCSwiftPackageProductDependency section */

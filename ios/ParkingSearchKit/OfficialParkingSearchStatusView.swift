@@ -87,9 +87,9 @@ public class OfficialParkingSearchStatusView: UIStackView {
             configuration.baseForegroundColor = .secondaryLabel
             configuration.image = nil
             configuration.showsActivityIndicator = true
-        case .actionRequired:
-            button.isEnabled = true
-            configuration.attributedTitle = AttributedString("公式駐車場検索エラー・要操作", attributes: semiboldFontAttributes)
+        case .error:
+            button.isEnabled = false
+            configuration.attributedTitle = AttributedString("公式駐車場検索エラー", attributes: semiboldFontAttributes)
             configuration.baseForegroundColor = .label
             configuration.image = exclamationImage
             configuration.showsActivityIndicator = false
@@ -116,8 +116,8 @@ public class OfficialParkingSearchStatusView: UIStackView {
             configuration.image = infoImage
             configuration.showsActivityIndicator = false
         case .notFound:
-            button.isEnabled = true
-            configuration.attributedTitle = AttributedString("公式駐車場不明", attributes: regularFontAttributes)
+            button.isEnabled = false
+            configuration.attributedTitle = AttributedString("公式駐車場情報なし", attributes: regularFontAttributes)
             configuration.baseForegroundColor = .secondaryLabel
             configuration.image = infoImage
             configuration.showsActivityIndicator = false

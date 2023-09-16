@@ -8,6 +8,8 @@
 
 import Foundation
 import CoreLocation
+import MapKit
+import DictionaryCoding
 
 public class DashCloudClient {
     public static let defaultURLSessionConfiguration: URLSessionConfiguration = {
@@ -71,6 +73,28 @@ public class DashCloudClient {
             switch result {
             case .success(let attachments):
                 self.geocodeGoogleMapsLocation(attachments, completionHandler: completionHandler)
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
+        }
+    }
+
+    public func searchOfficialParkings(for mapItem: MKMapItem, completionHandler: @escaping (Result<SearchResultWebpage?, Error>) -> Void) {
+        let url = URL(string: "searchOfficialParkings", relativeTo: baseURL)!
+
+        let payload: [String: Any] = [
+            "mapItem": try! DictionaryEncoder().encode(mapItem) as [String: Any]
+        ]
+
+        post(url: url, payload: payload) { (result) in
+            switch result {
+            case .success(let data):
+                do {
+                    let webpage = try JSONDecoder().decode(Optional<SearchResultWebpage>.self, from: data)
+                    completionHandler(.success(webpage))
+                } catch {
+                    completionHandler(.failure(error))
+                }
             case .failure(let error):
                 completionHandler(.failure(error))
             }
