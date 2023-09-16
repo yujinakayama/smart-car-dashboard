@@ -1,4 +1,4 @@
-import { AddressType, Client, Language, PlaceData, PlaceDetailsRequest, PlaceInputType, PlaceType1, PlaceType2 } from '@googlemaps/google-maps-services-js'
+import { AddressComponent, AddressType, Client, Language, PlaceData, PlaceDetailsRequest, PlaceInputType, PlaceType1, PlaceType2 } from '@googlemaps/google-maps-services-js'
 // @ts-ignore: no type definition provided
 import { parse_host as parseHost } from 'tld-extract'
 
@@ -9,61 +9,7 @@ import { decodeURLDataParameter } from './googleMapsURLDataParameter'
 import { InputData } from './inputData'
 import { Location, Address } from './normalizedData'
 import { convertAlphanumericsToAscii } from './util'
-
-// https://developers.google.com/maps/documentation/geocoding/intro#Types
-interface GoogleMapsAddressComponents {
-    administrative_area_level_1?: string;
-    administrative_area_level_2?: string;
-    administrative_area_level_3?: string;
-    administrative_area_level_4?: string;
-    administrative_area_level_5?: string;
-    airport?: string;
-    colloquial_area?: string;
-    country?: string;
-    intersection?: string;
-    locality?: string;
-    natural_feature?: string;
-    neighborhood?: string;
-    park?: string;
-    point_of_interest?: string;
-    postal_code?: string;
-    premise?: string;
-    route?: string;
-    street_address?: string;
-    sublocality_level_1?: string;
-    sublocality_level_2?: string;
-    sublocality_level_3?: string;
-    sublocality_level_4?: string;
-    sublocality_level_5?: string;
-    subpremise?: string;
-}
-
-const googleMapsAddressComponentKeys = [
-    'administrative_area_level_1',
-    'administrative_area_level_2',
-    'administrative_area_level_3',
-    'administrative_area_level_4',
-    'administrative_area_level_5',
-    'airport',
-    'colloquial_area',
-    'country',
-    'intersection',
-    'locality',
-    'natural_feature',
-    'neighborhood',
-    'park',
-    'point_of_interest',
-    'postal_code',
-    'premise',
-    'route',
-    'street_address',
-    'sublocality_level_1',
-    'sublocality_level_2',
-    'sublocality_level_3',
-    'sublocality_level_4',
-    'sublocality_level_5',
-    'subpremise',
-]
+import { convertAddressComponentsToObject } from '../googleMapsUtil'
 
 export const requiredEnvName = 'GOOGLE_API_KEY'
 // If the secret is missing, it'll be error on deployment
@@ -264,14 +210,8 @@ async function normalizeLocationWithIdentifier(id: { placeid?: string, ftid?: st
     }
 }
 
-function normalizeAddressComponents(rawAddressComponents: object[]): Address {
-    const components: GoogleMapsAddressComponents = rawAddressComponents.reverse().reduce((object: any, rawComponent: any) => {
-        const key = rawComponent.types.find((type: string) => googleMapsAddressComponentKeys.includes(type))
-        if (!object[key]) {
-            object[key] = convertAlphanumericsToAscii(rawComponent.long_name)
-        }
-        return object
-    }, {})
+function normalizeAddressComponents(rawAddressComponents: AddressComponent[]): Address {
+    const components = convertAddressComponentsToObject(rawAddressComponents)
 
     return {
         country: components.country || null,

@@ -1,5 +1,6 @@
 import { URL } from 'url'
 
+import { MKMapItem } from '../mapItem'
 import { urlPattern } from './util'
 import axios from 'axios'
 
@@ -59,25 +60,5 @@ export class InputData {
 export interface Attachments {
     'public.url'?: string;
     'public.plain-text'?: string;
-    'com.apple.mapkit.map-item'?: {
-        placemark: {
-            coordinate: {
-                latitude: number;
-                longitude: number;
-            };
-            isoCountryCode: string | null;
-            country: string | null;
-            postalCode: string | null;
-            administrativeArea: string | null;
-            subAdministrativeArea: string | null;
-            locality: string | null;
-            subLocality: string | null;
-            thoroughfare: string | null;
-            subThoroughfare: string | null;
-        };
-        name: string | null;
-        phoneNumber: string | null;
-        pointOfInterestCategory: string | null;
-        url: string | null;
-    };
+    'com.apple.mapkit.map-item'?: MKMapItem;
 }
