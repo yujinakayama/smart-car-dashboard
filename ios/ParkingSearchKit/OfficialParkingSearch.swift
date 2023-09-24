@@ -20,9 +20,10 @@ public class OfficialParkingSearch: NSObject {
     // 10MB, 7 days
     public static let cache = Cache(name: "OfficialParkingSearch", byteLimit: 10 * 1024 * 1024, ageLimit: 60 * 60 * 24 * 7)
 
-    public let destination: MKMapItem
+    private static let messageHandlerName = "OfficialParkingSearch"
 
-    public let webView: WKWebView
+    public let destination: MKMapItem
+    public let webViewConfiguration: WKWebViewConfiguration
 
     public private (set) var state: State = .idle {
         didSet {
@@ -52,17 +53,14 @@ public class OfficialParkingSearch: NSObject {
         }
     }
 
-    public init(destination: MKMapItem, webView: WKWebView) throws {
+    public init(destination: MKMapItem, webViewConfiguration: WKWebViewConfiguration) throws {
         if destination.name == nil || destination.name?.isEmpty == true {
             throw OfficialParkingSearchError.destinationMustHaveName
         }
 
         self.destination = destination
-        self.webView = webView
-
+        self.webViewConfiguration = webViewConfiguration
         super.init()
-
-        webView.navigationDelegate = self
     }
 
     deinit {
@@ -73,7 +71,7 @@ public class OfficialParkingSearch: NSObject {
         state = .searching
 
         if let cachedURL = cachedURL {
-            webView.load(URLRequest(url: cachedURL))
+            load(url: cachedURL)
         } else {
             performSearch()
         }
@@ -92,7 +90,7 @@ public class OfficialParkingSearch: NSObject {
                 cachedURL = webpage?.link
 
                 if let webpage = webpage {
-                    webView.load(URLRequest(url: webpage.link))
+                    load(url: webpage.link)
                 } else {
                     state = .notFound
                 }
@@ -103,11 +101,31 @@ public class OfficialParkingSearch: NSObject {
         }
     }
 
-    private func tryExtractingParkingDescription(completion: @escaping (Result<String?, Error>) -> Void) {
-        let function = """
+    private func load(url: URL) {
+        logger.info(url.absoluteString)
+        webView.load(URLRequest(url: url))
+    }
+
+    public lazy var webView = {
+        let userContentController = WKUserContentController()
+        userContentController.add(self, name: Self.messageHandlerName)
+        userContentController.addUserScript(generateUserScriptForExtractingParkingDescription())
+        webViewConfiguration.userContentController = userContentController
+
+        let webView = WKWebView(frame: .zero, configuration: webViewConfiguration)
+        webView.navigationDelegate = self
+        return webView
+    }()
+
+    private func generateUserScriptForExtractingParkingDescription() -> WKUserScript {
+        let scriptForExtractingParkingDescription = generateScriptForFindingBestElement(describing: "駐車場", callbackJavaScriptFunction: """
             (element) => {
+                const postMessage = (message) => {
+                    window.webkit.messageHandlers.\(Self.messageHandlerName).postMessage(message);
+                };
+
                 if (!element) {
-                    return null;
+                    postMessage(null);
                 }
 
                 const ancestorElementsOf = (baseElement) => {
@@ -124,24 +142,31 @@ public class OfficialParkingSearch: NSObject {
                 });
 
                 if (!labelElement) {
-                    return null;
+                    postMessage(null);
                 }
 
                 const descriptionElement = labelElement.nextElementSibling;
-                return descriptionElement?.innerText.trim() || descriptionElement?.textContent.trim();
+                const description = descriptionElement?.innerText.trim() || descriptionElement?.textContent.trim();
+                postMessage(description);
+            }
+        """)
+
+        let script = """
+            const extractParkingDescription = () => {
+                \(scriptForExtractingParkingDescription)
+            };
+
+            if (["interactive", "complete"].includes(document.readyState)) {
+                // Already DOMContentLoaded
+                extractParkingDescription();
+            } else {
+                document.addEventListener("DOMContentLoaded", (event) => {
+                    extractParkingDescription();
+                });
             }
         """
 
-        evaluateJavaScriptWithElementDescribingParking(function) { (result) in
-            switch result {
-            case .success(let value as String):
-                completion(.success(value))
-            case .success:
-                completion(.success(nil))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+        return WKUserScript(source: script, injectionTime: .atDocumentStart, forMainFrameOnly: true)
     }
 
     public func evaluateJavaScriptWithElementDescribingParking(_ javaScriptFunction: String, completion: @escaping (Result<Any, Error>) -> Void) {
@@ -149,7 +174,21 @@ public class OfficialParkingSearch: NSObject {
     }
 
     private func findBestElement(describing text: String, andEvaluate javaScriptFunction: String, completion: @escaping (Result<Any, Error>) -> Void) {
-        let script = """
+        let script = generateScriptForFindingBestElement(describing: text, callbackJavaScriptFunction: javaScriptFunction)
+
+        webView.callAsyncJavaScript(
+            script,
+            in: nil,
+            in: .defaultClient,
+            completionHandler: completion
+        )
+    }
+
+    private func generateScriptForFindingBestElement(describing searchText: String, callbackJavaScriptFunction: String) -> String {
+        return """
+            const searchText = \(escapeStringForJavaScript(searchText));
+            const callbackSnippet = \(escapeStringForJavaScript(callbackJavaScriptFunction));
+
             function getElements(xpath) {
                 const result = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 
@@ -205,14 +244,6 @@ public class OfficialParkingSearch: NSObject {
             const callback = new Function(`return ${callbackSnippet}`).call();
             return callback(bestElement);
         """
-
-        webView.callAsyncJavaScript(
-            script,
-            arguments: ["searchText": text, "callbackSnippet": javaScriptFunction as Any],
-            in: nil,
-            in: .defaultClient,
-            completionHandler: completion
-        )
     }
 }
 
@@ -232,26 +263,15 @@ extension OfficialParkingSearch: WKNavigationDelegate {
             decisionHandler(.allow)
         }
     }
+}
 
-    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+extension OfficialParkingSearch: WKScriptMessageHandler {
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard state == .searching, let url = webView.url else { return }
 
-        tryExtractingParkingDescription { [weak self] (result) in
-            guard let self = self else { return }
-
-            let parkingInformation: ParkingInformation
-
-            switch result {
-            case .success(let description):
-                logger.debug("Extracted parking description: \(String(describing: description))")
-                parkingInformation = ParkingInformation(url: url, description: description)
-            case .failure(let error):
-                logger.error(error)
-                parkingInformation = ParkingInformation(url: url)
-            }
-
-            state = .found(parkingInformation)
-        }
+        logger.info(message.body)
+        let parkingInformation = ParkingInformation(url: url, description: message.body as? String)
+        state = .found(parkingInformation)
     }
 }
 
@@ -328,4 +348,9 @@ extension OfficialParkingSearch {
 enum OfficialParkingSearchError: Error {
     case destinationMustHaveName
     case webViewMustBeAddedToWindowButNoKeyWindowIsAvailable
+}
+
+fileprivate func escapeStringForJavaScript(_ string: String) -> String {
+    let data = try! JSONEncoder().encode(string)
+    return String(data: data, encoding: .utf8)!
 }

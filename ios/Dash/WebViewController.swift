@@ -39,7 +39,7 @@ class WebViewController: UIViewController {
         .replacingOccurrences(of: " Mobile/\\S+", with: "", options: .regularExpression)
         + safariLikeUserAgentSuffix
 
-    static func makeWebView() -> WKWebView {
+    static var webViewConfiguration: WKWebViewConfiguration {
         let configuration = WKWebViewConfiguration()
         configuration.dataDetectorTypes = [.address, .link, .phoneNumber]
         configuration.ignoresViewportScaleLimits = true
@@ -54,10 +54,7 @@ class WebViewController: UIViewController {
         // Instead, we dynamically modify user agent by ourselves.
         configuration.defaultWebpagePreferences.preferredContentMode = .mobile
 
-        let webView = WKWebView(frame: .zero, configuration: configuration)
-        webView.allowsBackForwardNavigationGestures = true
-        webView.backgroundColor = .secondarySystemBackground
-        return webView
+        return configuration
     }
 
     static func userAgent(for contentMode: ContentMode) -> String {
@@ -96,12 +93,12 @@ class WebViewController: UIViewController {
     var keyValueObservations: [NSKeyValueObservation] = []
 
     init(webView: WKWebView? = nil, contentMode: PreferredContentMode = .auto) {
-        self.webView = webView ?? Self.makeWebView()
+        self.webView = webView ?? WKWebView(frame: .zero, configuration: Self.webViewConfiguration)
         self.preferredContentMode = contentMode
 
         super.init(nibName: nil, bundle: nil)
 
-        self.webView.uiDelegate = self
+        configureWebView()
         configureToolBarButtonItems()
     }
 
@@ -144,6 +141,12 @@ class WebViewController: UIViewController {
 
     deinit {
         progressView.removeFromSuperview()
+    }
+
+    private func configureWebView() {
+        webView.uiDelegate = self
+        webView.allowsBackForwardNavigationGestures = true
+        webView.backgroundColor = .secondarySystemBackground
     }
 
     private func configureToolBarButtonItems() {

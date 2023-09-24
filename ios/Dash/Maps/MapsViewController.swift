@@ -474,7 +474,7 @@ class MapsViewController: UIViewController {
         parkingSearchManager.preferredMaxDistanceFromDestinationToParking = Defaults.shared.preferredMaxDistanceFromDestinationToParking
         parkingSearchManager.destination = destination.placemark.coordinate
 
-        if let officialParkingSearch = try? OfficialParkingSearch(destination: destination, webView: WebViewController.makeWebView()) {
+        if let officialParkingSearch = try? OfficialParkingSearch(destination: destination, webViewConfiguration: WebViewController.webViewConfiguration) {
             officialParkingSearch.delegate = self
             officialParkingSearch.webView.customUserAgent = WebViewController.userAgent(for: .mobile)
             officialParkingSearch.start()
