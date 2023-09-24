@@ -95,7 +95,7 @@
                             <constraint firstAttribute="trailing" secondItem="tZz-9P-vdJ" secondAttribute="trailing" id="pZ2-PS-XSX"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Dashboard" image="speedometer" catalog="system" id="8iC-BB-hC9"/>
+                    <tabBarItem key="tabBarItem" title="Dashboard" image="gauge.with.dots.needle.67percent" catalog="system" id="8iC-BB-hC9"/>
                     <connections>
                         <outlet property="musicContainerView" destination="8PU-dv-E76" id="Ap8-Vk-BGW"/>
                         <outlet property="musicEdgeGlossView" destination="Hvx-z0-zUB" id="FUs-0J-9bv"/>
@@ -1453,10 +1453,10 @@
         <image name="Mastercard" width="117" height="73"/>
         <image name="Visa" width="496" height="161"/>
         <image name="arrow.right" catalog="system" width="128" height="95"/>
+        <image name="gauge.with.dots.needle.67percent" catalog="system" width="128" height="123"/>
         <image name="map.fill" catalog="system" width="128" height="110"/>
         <image name="mappin" catalog="system" width="106" height="128"/>
         <image name="signature" catalog="system" width="128" height="89"/>
-        <image name="speedometer" catalog="system" width="128" height="123"/>
         <image name="tray.and.arrow.down.fill" catalog="system" width="128" height="115"/>
         <image name="yensign.square.fill" catalog="system" width="128" height="114"/>
         <namedColor name="Hairline Border Color">

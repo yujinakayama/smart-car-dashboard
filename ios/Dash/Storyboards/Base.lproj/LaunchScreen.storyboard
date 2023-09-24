@@ -50,7 +50,7 @@
                         <viewLayoutGuide key="safeArea" id="E9n-i4-Rue"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Dashboard" image="speedometer" catalog="system" id="5MN-5g-w6L"/>
+                    <tabBarItem key="tabBarItem" title="Dashboard" image="gauge.with.dots.needle.67percent" catalog="system" id="5MN-5g-w6L"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xFQ-xk-DP7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -94,8 +94,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="gauge.with.dots.needle.67percent" catalog="system" width="128" height="123"/>
         <image name="map.fill" catalog="system" width="128" height="110"/>
-        <image name="speedometer" catalog="system" width="128" height="121"/>
         <image name="tray.and.arrow.down.fill" catalog="system" width="128" height="114"/>
         <image name="yensign.square.fill" catalog="system" width="128" height="114"/>
         <systemColor name="systemBackgroundColor">
