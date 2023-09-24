@@ -103,6 +103,7 @@ public class OfficialParkingSearch: NSObject {
 
     private func load(url: URL) {
         logger.info(url.absoluteString)
+        state = .loadingPage
         webView.load(URLRequest(url: url))
     }
 
@@ -156,13 +157,14 @@ public class OfficialParkingSearch: NSObject {
                 \(scriptForExtractingParkingDescription)
             };
 
-            if (["interactive", "complete"].includes(document.readyState)) {
-                // Already DOMContentLoaded
-                extractParkingDescription();
-            } else {
+            // https://developer.mozilla.org/en-US/docs/Web/API/Document/DOMContentLoaded_event#checking_whether_loading_is_already_complete
+            if (document.readyState === "loading") {
                 document.addEventListener("DOMContentLoaded", (event) => {
                     extractParkingDescription();
                 });
+            } else {
+                // Already DOMContentLoaded
+                extractParkingDescription();
             }
         """
 
@@ -267,7 +269,7 @@ extension OfficialParkingSearch: WKNavigationDelegate {
 
 extension OfficialParkingSearch: WKScriptMessageHandler {
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        guard state == .searching, let url = webView.url else { return }
+        guard state == .loadingPage, let url = webView.url else { return }
 
         logger.info(message.body)
         let parkingInformation = ParkingInformation(url: url, description: message.body as? String)
@@ -279,6 +281,7 @@ extension OfficialParkingSearch {
     public enum State: Equatable {
         case idle
         case searching
+        case loadingPage
         case error
         case found(ParkingInformation)
         case notFound

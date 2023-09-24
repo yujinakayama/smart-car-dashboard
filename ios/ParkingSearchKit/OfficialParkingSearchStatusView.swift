@@ -18,8 +18,6 @@ public class OfficialParkingSearchStatusView: UIStackView {
         }
     }
 
-    public var parkingInformation: OfficialParkingSearch.ParkingInformation?
-
     let fontMetrics = UIFontMetrics(forTextStyle: .callout)
 
     public lazy var button: UIButton = {
@@ -87,6 +85,12 @@ public class OfficialParkingSearchStatusView: UIStackView {
             configuration.baseForegroundColor = .secondaryLabel
             configuration.image = nil
             configuration.showsActivityIndicator = true
+        case .loadingPage:
+            button.isEnabled = true
+            configuration.attributedTitle = AttributedString("公式駐車場を検索中", attributes: regularFontAttributes)
+            configuration.baseForegroundColor = .secondaryLabel
+            configuration.image = nil
+            configuration.showsActivityIndicator = true
         case .error:
             button.isEnabled = false
             configuration.attributedTitle = AttributedString("公式駐車場検索エラー", attributes: semiboldFontAttributes)
@@ -119,7 +123,7 @@ public class OfficialParkingSearchStatusView: UIStackView {
             button.isEnabled = false
             configuration.attributedTitle = AttributedString("公式駐車場情報なし", attributes: regularFontAttributes)
             configuration.baseForegroundColor = .secondaryLabel
-            configuration.image = infoImage
+            configuration.image = nil
             configuration.showsActivityIndicator = false
         }
 

@@ -478,9 +478,6 @@ class MapsViewController: UIViewController {
             officialParkingSearch.delegate = self
             officialParkingSearch.webView.customUserAgent = WebViewController.userAgent(for: .mobile)
             officialParkingSearch.start()
-
-            officialParkingSearchStatusView.state = .searching
-
             self.officialParkingSearch = officialParkingSearch
         }
 
