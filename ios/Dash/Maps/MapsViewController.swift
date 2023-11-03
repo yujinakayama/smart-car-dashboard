@@ -26,7 +26,7 @@ class MapsViewController: UIViewController {
         mapView.showsTraffic = true
         mapView.showsUserLocation = true
 
-        mapView.isPitchEnabled = false
+        mapView.isPitchEnabled = true
         mapView.isRotateEnabled = false
         mapView.isScrollEnabled = true
         mapView.isZoomEnabled = true
