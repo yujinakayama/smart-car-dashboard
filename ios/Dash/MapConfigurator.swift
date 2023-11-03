@@ -47,12 +47,14 @@ extension MapConfigurator {
             let configuration = MKStandardMapConfiguration(elevationStyle: .realistic)
             configuration.showsTraffic = true
             return configuration
-        }()
+        }(),
+        isPitchEnabled: true
     )
 
     static let satellite = MapConfigurator(
         identifier: "satellite",
         name: String(localized: "Satellite"),
-        configuration: MKHybridMapConfiguration(elevationStyle: .realistic)
+        configuration: MKHybridMapConfiguration(elevationStyle: .realistic),
+        isPitchEnabled: true
     )
 }
