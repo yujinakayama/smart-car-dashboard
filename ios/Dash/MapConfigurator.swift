@@ -43,7 +43,11 @@ extension MapConfigurator {
     static let standard = MapConfigurator(
         identifier: "standard",
         name: String(localized: "Map"),
-        configuration: MKStandardMapConfiguration(elevationStyle: .realistic)
+        configuration: {
+            let configuration = MKStandardMapConfiguration(elevationStyle: .realistic)
+            configuration.showsTraffic = true
+            return configuration
+        }()
     )
 
     static let satellite = MapConfigurator(
