@@ -1,8 +1,8 @@
 import { URL } from 'url'
-
 import { Client } from '@yujinakayama/apple-music'
 import { InputData } from './inputData'
 import { MusicItem } from './normalizedData'
+import jwt from 'jsonwebtoken'
 
 interface AppleMusicData {
   artworkURLTemplate: string | null
@@ -21,13 +21,11 @@ interface ItemParameters {
   songID: string | null
 }
 
-export const requiredEnvName = 'APPLE_MUSIC_DEVELOPER_TOKEN'
-// If the secret is missing, it'll be error on deployment
-const developerToken = process.env[requiredEnvName] ?? ''
+const keyIDEnvName = 'APPLE_MUSIC_KEY_ID'
+const privateKeyEnvName = 'APPLE_MUSIC_PRIVATE_KEY'
+const teamIDEnvName = 'APPLE_MUSIC_TEAM_ID'
 
-const client = new Client({
-  developerToken: developerToken,
-})
+export const requiredEnvNames = [keyIDEnvName, privateKeyEnvName, teamIDEnvName]
 
 export function isAppleMusicItem(inputData: InputData): boolean {
   return extractItemParameters(inputData.url) !== null
@@ -59,6 +57,7 @@ async function fetchDataFromAppleMusic(url: URL): Promise<AppleMusicData | null>
     return null
   }
 
+  const client = createClient()
   const { storefront, type, id, songID } = itemParameters
 
   if (songID) {
@@ -145,4 +144,36 @@ function extractItemParameters(url: URL): ItemParameters | null {
     id,
     songID: url.searchParams.get('i'),
   }
+}
+
+function createClient(): Client {
+  const developerToken = generateDeveloperToken(
+    requireEnv(keyIDEnvName),
+    requireEnv(privateKeyEnvName),
+    requireEnv(teamIDEnvName),
+  )
+
+  return new Client({
+    developerToken: developerToken,
+  })
+}
+
+function generateDeveloperToken(keyID: string, privateKey: string, teamID: string): string {
+  return jwt.sign({}, privateKey, {
+    algorithm: 'ES256',
+    expiresIn: 60,
+    issuer: teamID,
+    header: {
+      alg: 'ES256',
+      kid: keyID,
+    },
+  })
+}
+
+function requireEnv(name: string): string {
+  const value = process.env[name]
+  if (!value) {
+    throw new Error(`Env ${name} is missing`)
+  }
+  return value
 }

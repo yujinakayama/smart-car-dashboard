@@ -9,4 +9,5 @@ node_modules/
 
 /playground/
 
+/secrets
 firebase-service-account.json

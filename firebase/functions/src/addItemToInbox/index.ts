@@ -13,7 +13,7 @@ import {
 import {
   isAppleMusicItem,
   normalizeAppleMusicItem,
-  requiredEnvName as appleMusicRequiredEnvName,
+  requiredEnvNames as appleMusicRequiredEnvName,
 } from './appleMusic'
 import {
   isYouTubeVideo,
@@ -25,7 +25,7 @@ import { makeNotificationPayload } from './notification'
 import { sendNotificationToVehicle } from '../notification'
 
 const requiredSecrets = Array.from(
-  new Set([googleMapsRequiredEnvName, appleMusicRequiredEnvName, youtubeRequiredEnvName]),
+  new Set([googleMapsRequiredEnvName, appleMusicRequiredEnvName, youtubeRequiredEnvName].flat()),
 )
 
 export const addItemToInbox = onRequest(
