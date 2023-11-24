@@ -1,7 +1,7 @@
 {
   "name": "functions",
   "scripts": {
-    "lint": "prettier --check . && eslint src",
+    "lint": "prettier --check . && eslint .",
     "format": "prettier --write . && eslint --fix .",
     "build": "tsc",
     "serve": "npm run build && firebase serve --only functions",
