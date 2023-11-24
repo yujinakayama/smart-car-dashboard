@@ -6,10 +6,8 @@ import { Location } from '../src/addItemToInbox/normalizedData'
 import { isAppleMapsLocation, normalizeAppleMapsLocation } from '../src/addItemToInbox/appleMaps'
 import { isGoogleMapsLocation, normalizeGoogleMapsLocation } from '../src/addItemToInbox/googleMaps'
 
-const serviceAccount = require('./firebase-service-account.json')
-
 initializeApp({
-  credential: cert(serviceAccount),
+  credential: cert('./firebase-service-account.json'),
 })
 
 const firestore = getFirestore()

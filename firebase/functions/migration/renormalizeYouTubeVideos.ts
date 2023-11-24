@@ -4,10 +4,8 @@ import { DocumentData, getFirestore } from 'firebase-admin/firestore'
 import { Attachments, InputData } from '../src/addItemToInbox/inputData'
 import { isYouTubeVideo, normalizeYouTubeVideo } from '../src/addItemToInbox/youtube'
 
-const serviceAccount = require('./firebase-service-account.json')
-
 initializeApp({
-  credential: cert(serviceAccount),
+  credential: cert('./firebase-service-account.json'),
 })
 
 const firestore = getFirestore()
