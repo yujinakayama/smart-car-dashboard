@@ -6,11 +6,17 @@ import * as admin from 'firebase-admin'
 // you can still develop and deploy this functionality together with 2nd gen functions.
 // https://firebase.google.com/docs/functions/auth-events
 
-export const createVehicle = functions.region('asia-northeast1').auth.user().onCreate(async (user) => {
+export const createVehicle = functions
+  .region('asia-northeast1')
+  .auth.user()
+  .onCreate(async (user) => {
     const document = admin.firestore().collection('vehicles').doc(user.uid)
     await document.create({ email: user.email })
-})
+  })
 
-export const deleteVehicle = functions.region('asia-northeast1').auth.user().onDelete(async (user) => {
+export const deleteVehicle = functions
+  .region('asia-northeast1')
+  .auth.user()
+  .onDelete(async (user) => {
     await admin.firestore().collection('vehicles').doc(user.uid).delete
-})
+  })

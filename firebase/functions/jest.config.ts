@@ -1,7 +1,7 @@
-import { InitialOptionsTsJest } from "ts-jest"
+import { InitialOptionsTsJest } from 'ts-jest'
 
 const config: InitialOptionsTsJest = {
-  preset: "ts-jest",
+  preset: 'ts-jest',
 }
 
 export default config
