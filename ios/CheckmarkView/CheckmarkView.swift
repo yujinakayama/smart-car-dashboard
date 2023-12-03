@@ -11,8 +11,6 @@ import UIKit
 public class CheckmarkView: UIView {
     public static let defaultAnimationDuration: TimeInterval = 0.5
 
-    static let ratioOfShorterLineLengthToLongerLineLength: CGFloat = 0.422
-
     public var showsDebugGuides = false
 
     public func startAnimating(duration: TimeInterval = CheckmarkView.defaultAnimationDuration) {
@@ -41,21 +39,9 @@ public class CheckmarkView: UIView {
 
         shapeLayer.path = makeSquareStrokePath().cgPath
 
-        //         Stroke direction
-        //              ---->
-        // 0.00/1.00             0.25
-        //          +-----------+
-        //          |           |
-        //          |           |
-        //          |           |
-        //          |           |
-        //          +-----------+
-        //      0.75             0.50
-        shapeLayer.strokeEnd = 0.75 + (0.25 * Self.ratioOfShorterLineLengthToLongerLineLength)
-        shapeLayer.strokeStart = 0.50
-
         shapeLayer.lineWidth = lineWidth
         shapeLayer.lineCap = .round
+        shapeLayer.lineJoin = .round
 
         shapeLayer.strokeColor = tintColor.resolvedColor(with: traitCollection).cgColor
         shapeLayer.fillColor = nil
@@ -65,29 +51,23 @@ public class CheckmarkView: UIView {
 
     func makeSquareStrokePath() -> UIBezierPath {
         // In shape layer's coordinate system
-        let squareStrokeSideLength = (drawingRegionSideLength - lineWidth) * 0.98
-        let squareOrigin = CGPoint(x: -squareStrokeSideLength * 0.5, y: -squareStrokeSideLength * 0.5)
-        let squareSize = CGSize(width: squareStrokeSideLength, height: squareStrokeSideLength)
 
-        let path = UIBezierPath(roundedRect: CGRect(origin: squareOrigin, size: squareSize), cornerRadius: 0.001)
+        let sideLength = drawingRegionSideLength
+        let lineHalfWidth = lineWidth / 2
 
-        let fortyFiveDegreesCounterClockwise = CGFloat(-Double.pi / 4)
-        path.apply(CGAffineTransform(rotationAngle: fortyFiveDegreesCounterClockwise))
-
-        let movement = CGAffineTransform(
-            translationX: (drawingRegionSideLength * 0.303) + (lineWidth * 0.191),
-            y: (drawingRegionSideLength * 0.155) + (lineWidth * 0.325)
-        )
-        path.apply(movement)
-
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: 0.01 * sideLength + lineHalfWidth, y: 0.525 * sideLength))
+        path.addLine(to: CGPoint(x: 0.392 * sideLength, y: 0.98 * sideLength - lineHalfWidth))
+        path.addLine(to: CGPoint(x: sideLength - lineHalfWidth, y: lineHalfWidth))
         return path
     }
 
     func makeAnimation(for shapeLayer: CAShapeLayer, duration: TimeInterval) -> CAAnimation {
-        let animation = CABasicAnimation(keyPath: "strokeStart")
-        animation.fromValue = shapeLayer.strokeEnd
-        animation.toValue = shapeLayer.strokeStart
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
+        animation.fromValue = shapeLayer.strokeStart
+        animation.toValue = shapeLayer.strokeEnd
         animation.duration = duration
+        // https://cubic-bezier.com/#.5,0,0,1
         animation.timingFunction = CAMediaTimingFunction(controlPoints: 0.5, 0, 0, 1)
         return animation
     }
@@ -106,7 +86,7 @@ public class CheckmarkView: UIView {
     }
 
     var lineWidth: CGFloat {
-        return drawingRegionSideLength * 0.11
+        return drawingRegionSideLength * 0.132
     }
     
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -128,9 +108,6 @@ extension CheckmarkView {
         // Drawing region
         shapeLayer.backgroundColor = UIColor.green.withAlphaComponent(0.2).cgColor
         layer.addSublayer(rulerLayer)
-
-        // Square shape
-        shapeLayer.fillColor = UIColor.blue.withAlphaComponent(0.2).cgColor
 
         // Checkmark stroke
         shapeLayer.strokeColor = UIColor.red.withAlphaComponent(0.5).cgColor
