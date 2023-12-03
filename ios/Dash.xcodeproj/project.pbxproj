@@ -183,6 +183,14 @@
 		B9A45A9B252C229200CA7921 /* InboxItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A45A9A252C229200CA7921 /* InboxItemDatabase.swift */; };
 		B9A4820023EF025200AA7590 /* SuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A481FF23EF025200AA7590 /* SuccessViewController.swift */; };
 		B9A4820123EFCEC200AA7590 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C2455E23EDA2EA00E00523 /* MapKit.framework */; };
+		B9A9CE272B1CB10B00DC5620 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A9CE262B1CB10B00DC5620 /* AppDelegate.swift */; };
+		B9A9CE292B1CB10B00DC5620 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A9CE282B1CB10B00DC5620 /* SceneDelegate.swift */; };
+		B9A9CE2B2B1CB10B00DC5620 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A9CE2A2B1CB10B00DC5620 /* ViewController.swift */; };
+		B9A9CE2E2B1CB10B00DC5620 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9A9CE2C2B1CB10B00DC5620 /* Main.storyboard */; };
+		B9A9CE302B1CB10C00DC5620 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9A9CE2F2B1CB10C00DC5620 /* Assets.xcassets */; };
+		B9A9CE332B1CB10C00DC5620 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9A9CE312B1CB10C00DC5620 /* LaunchScreen.storyboard */; };
+		B9A9CE382B1CB11D00DC5620 /* CheckmarkView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9DC26852A7940E6001B7409 /* CheckmarkView.framework */; };
+		B9A9CE392B1CB11D00DC5620 /* CheckmarkView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B9DC26852A7940E6001B7409 /* CheckmarkView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B9ADFEAD2704B19100F230E0 /* TimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9ADFEAC2704B19000F230E0 /* TimePicker.swift */; };
 		B9B154EE2575FCED0031761F /* FirebaseMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B154ED2575FCED0031761F /* FirebaseMessaging.swift */; };
 		B9B154F82576075C0031761F /* TabBarBadgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B154F72576075C0031761F /* TabBarBadgeManager.swift */; };
@@ -366,6 +374,13 @@
 			remoteGlobalIDString = B9A3B67826537A9B00D1D64C;
 			remoteInfo = ParkingSearchActionExtension;
 		};
+		B9A9CE3A2B1CB11D00DC5620 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9DC26842A7940E6001B7409;
+			remoteInfo = CheckmarkView;
+		};
 		B9B18DD523EDFFF40096D603 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B9DC5B19229D59BE00B645D5 /* Project object */;
@@ -478,6 +493,17 @@
 				B93AEB132A8E9CED001A12A4 /* NotificationServiceExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9A9CE3C2B1CB11D00DC5620 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B9A9CE392B1CB11D00DC5620 /* CheckmarkView.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B9B18DD723EDFFF60096D603 /* Embed Frameworks */ = {
@@ -670,6 +696,14 @@
 		B9A45A9A252C229200CA7921 /* InboxItemDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxItemDatabase.swift; sourceTree = "<group>"; };
 		B9A481FD23EF01DB00AA7590 /* CheckmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckmarkView.swift; sourceTree = "<group>"; };
 		B9A481FF23EF025200AA7590 /* SuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessViewController.swift; sourceTree = "<group>"; };
+		B9A9CE242B1CB10B00DC5620 /* CheckmarkViewDevApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckmarkViewDevApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9A9CE262B1CB10B00DC5620 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B9A9CE282B1CB10B00DC5620 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		B9A9CE2A2B1CB10B00DC5620 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B9A9CE2D2B1CB10B00DC5620 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B9A9CE2F2B1CB10C00DC5620 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B9A9CE322B1CB10C00DC5620 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B9A9CE342B1CB10C00DC5620 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9ADFEAC2704B19000F230E0 /* TimePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimePicker.swift; sourceTree = "<group>"; };
 		B9B154ED2575FCED0031761F /* FirebaseMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMessaging.swift; sourceTree = "<group>"; };
 		B9B154F72576075C0031761F /* TabBarBadgeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarBadgeManager.swift; sourceTree = "<group>"; };
@@ -829,6 +863,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9D4AF242671324B00849129 /* DashCloudKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9A9CE212B1CB10B00DC5620 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9A9CE382B1CB11D00DC5620 /* CheckmarkView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1156,6 +1198,20 @@
 			path = ParkingSearchActionExtension;
 			sourceTree = "<group>";
 		};
+		B9A9CE252B1CB10B00DC5620 /* CheckmarkViewDevApp */ = {
+			isa = PBXGroup;
+			children = (
+				B9A9CE262B1CB10B00DC5620 /* AppDelegate.swift */,
+				B9A9CE282B1CB10B00DC5620 /* SceneDelegate.swift */,
+				B9A9CE2A2B1CB10B00DC5620 /* ViewController.swift */,
+				B9A9CE2C2B1CB10B00DC5620 /* Main.storyboard */,
+				B9A9CE2F2B1CB10C00DC5620 /* Assets.xcassets */,
+				B9A9CE312B1CB10C00DC5620 /* LaunchScreen.storyboard */,
+				B9A9CE342B1CB10C00DC5620 /* Info.plist */,
+			);
+			path = CheckmarkViewDevApp;
+			sourceTree = "<group>";
+		};
 		B9B4A88C2569306500FE0C9F /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -1289,6 +1345,7 @@
 				B93432862A665DF9000F1D7C /* FloatingViewKit */,
 				B93432922A665DF9000F1D7C /* FloatingViewKitTests */,
 				B9DC26862A7940E6001B7409 /* CheckmarkView */,
+				B9A9CE252B1CB10B00DC5620 /* CheckmarkViewDevApp */,
 				B92B8418268C63870019D050 /* Shared */,
 				B9DC5B22229D59BE00B645D5 /* Products */,
 				B9CD1D8B22A51AAD00170082 /* Frameworks */,
@@ -1313,6 +1370,7 @@
 				B934328C2A665DF9000F1D7C /* FloatingViewKitTests.xctest */,
 				B9DC26852A7940E6001B7409 /* CheckmarkView.framework */,
 				B93AEB0C2A8E9CED001A12A4 /* NotificationServiceExtension.appex */,
+				B9A9CE242B1CB10B00DC5620 /* CheckmarkViewDevApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1647,6 +1705,25 @@
 			productReference = B9A3B67926537A9B00D1D64C /* ParkingSearchActionExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		B9A9CE232B1CB10B00DC5620 /* CheckmarkViewDevApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B9A9CE372B1CB10C00DC5620 /* Build configuration list for PBXNativeTarget "CheckmarkViewDevApp" */;
+			buildPhases = (
+				B9A9CE202B1CB10B00DC5620 /* Sources */,
+				B9A9CE212B1CB10B00DC5620 /* Frameworks */,
+				B9A9CE222B1CB10B00DC5620 /* Resources */,
+				B9A9CE3C2B1CB11D00DC5620 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B9A9CE3B2B1CB11D00DC5620 /* PBXTargetDependency */,
+			);
+			name = CheckmarkViewDevApp;
+			productName = CheckmarkViewDevApp;
+			productReference = B9A9CE242B1CB10B00DC5620 /* CheckmarkViewDevApp.app */;
+			productType = "com.apple.product-type.application";
+		};
 		B9C0CED52508F63F006D246E /* Rearview */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B9C0CEE92508F641006D246E /* Build configuration list for PBXNativeTarget "Rearview" */;
@@ -1824,7 +1901,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 1430;
+				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = "Yuji Nakayama";
 				TargetAttributes = {
@@ -1851,6 +1928,9 @@
 					};
 					B9A3B67826537A9B00D1D64C = {
 						CreatedOnToolsVersion = 12.5;
+					};
+					B9A9CE232B1CB10B00DC5620 = {
+						CreatedOnToolsVersion = 15.0;
 					};
 					B9C0CED52508F63F006D246E = {
 						CreatedOnToolsVersion = 11.7;
@@ -1887,10 +1967,10 @@
 			);
 			mainGroup = B9DC5B18229D59BE00B645D5;
 			packageReferences = (
-				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */,
+				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */,
 				B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */,
 				B979456F27A81AFE007040E7 /* XCRemoteSwiftPackageReference "SwiftCBOR" */,
-				B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */,
+				B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */,
 				B9085FCE2A61A6B50014CCC1 /* XCRemoteSwiftPackageReference "XCGLogger" */,
 				B9085FDB2A61A8020014CCC1 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */,
 				B9085FDE2A61A8D20014CCC1 /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
@@ -1899,11 +1979,11 @@
 				B9085FE72A61AA0A0014CCC1 /* XCRemoteSwiftPackageReference "DictionaryCoding" */,
 				B9085FEA2A61AA720014CCC1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				B990259F2A61B70B00BDCDE9 /* XCRemoteSwiftPackageReference "MarqueeLabel" */,
-				B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */,
+				B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				B906AEC82A623D37008C7458 /* XCRemoteSwiftPackageReference "Solar" */,
 				B964B3002A6257EF003543CC /* XCRemoteSwiftPackageReference "PINCache" */,
 				B9BEAF252A625AAC00E23648 /* XCRemoteSwiftPackageReference "TransitionButton" */,
-				B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel.git" */,
+				B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 			);
 			productRefGroup = B9DC5B22229D59BE00B645D5 /* Products */;
 			projectDirPath = "";
@@ -1923,6 +2003,7 @@
 				B93432842A665DF9000F1D7C /* FloatingViewKit */,
 				B934328B2A665DF9000F1D7C /* FloatingViewKitTests */,
 				B9DC26842A7940E6001B7409 /* CheckmarkView */,
+				B9A9CE232B1CB10B00DC5620 /* CheckmarkViewDevApp */,
 			);
 		};
 /* End PBXProject section */
@@ -1984,6 +2065,16 @@
 			files = (
 				B9A3B67C26537A9B00D1D64C /* Media.xcassets in Resources */,
 				B9E8A077265B855E00709838 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9A9CE222B1CB10B00DC5620 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9A9CE332B1CB10C00DC5620 /* LaunchScreen.storyboard in Resources */,
+				B9A9CE302B1CB10C00DC5620 /* Assets.xcassets in Resources */,
+				B9A9CE2E2B1CB10B00DC5620 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2184,6 +2275,16 @@
 				B9A3B67E26537A9B00D1D64C /* ActionViewController.swift in Sources */,
 				B9B4F703268CB3F5009C5DC5 /* ParkingSearchURLItem.swift in Sources */,
 				B9D4AF2A26727D8000849129 /* MapItemFetcher.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9A9CE202B1CB10B00DC5620 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9A9CE2B2B1CB10B00DC5620 /* ViewController.swift in Sources */,
+				B9A9CE272B1CB10B00DC5620 /* AppDelegate.swift in Sources */,
+				B9A9CE292B1CB10B00DC5620 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2450,6 +2551,11 @@
 			target = B9A3B67826537A9B00D1D64C /* ParkingSearchActionExtension */;
 			targetProxy = B9A3B68326537A9B00D1D64C /* PBXContainerItemProxy */;
 		};
+		B9A9CE3B2B1CB11D00DC5620 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9DC26842A7940E6001B7409 /* CheckmarkView */;
+			targetProxy = B9A9CE3A2B1CB11D00DC5620 /* PBXContainerItemProxy */;
+		};
 		B9B18DD623EDFFF40096D603 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B98B783223ED4C3F00A5102F /* DashCloudKit */;
@@ -2554,6 +2660,22 @@
 				B99C698226F5F1E30064162D /* ja */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		B9A9CE2C2B1CB10B00DC5620 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B9A9CE2D2B1CB10B00DC5620 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B9A9CE312B1CB10C00DC5620 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B9A9CE322B1CB10C00DC5620 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 		B9C0CEE32508F641006D246E /* LaunchScreen.storyboard */ = {
@@ -2974,6 +3096,75 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.Dash.ParkingSearchActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B9A9CE352B1CB10C00DC5620 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8LSN3WQC77;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CheckmarkViewDevApp/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.CheckmarkViewDevApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B9A9CE362B1CB10C00DC5620 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8LSN3WQC77;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CheckmarkViewDevApp/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.CheckmarkViewDevApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -3599,6 +3790,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		B9A9CE372B1CB10C00DC5620 /* Build configuration list for PBXNativeTarget "CheckmarkViewDevApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9A9CE352B1CB10C00DC5620 /* Debug */,
+				B9A9CE362B1CB10C00DC5620 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B9C0CEE92508F641006D246E /* Build configuration list for PBXNativeTarget "Rearview" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -3674,7 +3874,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */ = {
+		B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -3754,7 +3954,7 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */ = {
+		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yujinakayama/DirectionalUserLocationAnnotationView.git";
 			requirement = {
@@ -3778,7 +3978,7 @@
 				minimumVersion = 4.3.1;
 			};
 		};
-		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */ = {
+		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mapbox/mapbox-navigation-ios.git";
 			requirement = {
@@ -3802,7 +4002,7 @@
 				kind = branch;
 			};
 		};
-		B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel.git" */ = {
+		B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scenee/FloatingPanel.git";
 			requirement = {
@@ -3820,22 +4020,22 @@
 		};
 		B906AEC02A6239E6008C7458 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
 		B906AEC22A6239E6008C7458 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
 		B906AEC42A6239E6008C7458 /* FirebaseFirestoreSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
 		};
 		B906AEC62A6239E6008C7458 /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
 		};
 		B906AEC92A623D37008C7458 /* Solar */ = {
@@ -3905,7 +4105,7 @@
 		};
 		B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */;
+			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */;
 			productName = DirectionalUserLocationAnnotationView;
 		};
 		B94E464C2AB45DE800E0BBFB /* DictionaryCoding */ = {
@@ -3935,7 +4135,7 @@
 		};
 		B9B7451F29968B2C00C85825 /* MapboxCoreNavigation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */;
+			package = B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */;
 			productName = MapboxCoreNavigation;
 		};
 		B9BEAF262A625AAC00E23648 /* TransitionButton */ = {
@@ -3955,7 +4155,7 @@
 		};
 		B9E886882A6D58D600F789AA /* FloatingPanel */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel.git" */;
+			package = B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel" */;
 			productName = FloatingPanel;
 		};
 /* End XCSwiftPackageProductDependency section */

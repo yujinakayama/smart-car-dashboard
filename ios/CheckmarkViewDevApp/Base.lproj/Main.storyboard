@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="CheckmarkViewDevApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.25" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap_more_endframe__gmwoiaftvaa2_large" translatesAutoresizingMaskIntoConstraints="NO" id="RwX-QE-vv9">
+                                <rect key="frame" x="0.0" y="229.66666666666663" width="393" height="393"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="RwX-QE-vv9" secondAttribute="height" multiplier="1:1" id="RkG-OJ-amd"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HGF-LS-ujd" customClass="CheckmarkView" customModule="CheckmarkView">
+                                <rect key="frame" x="113.33333333333333" y="343" width="166.33333333333337" height="166"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="HGF-LS-ujd" secondAttribute="height" multiplier="1:1" id="5Rg-wM-J5w"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="HGF-LS-ujd" firstAttribute="centerX" secondItem="RwX-QE-vv9" secondAttribute="centerX" id="0Hz-UW-wGO"/>
+                            <constraint firstItem="HGF-LS-ujd" firstAttribute="centerY" secondItem="RwX-QE-vv9" secondAttribute="centerY" id="G5B-Rs-1Fw"/>
+                            <constraint firstItem="HGF-LS-ujd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Qxv-Pd-RFu"/>
+                            <constraint firstItem="RwX-QE-vv9" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="kZj-KS-gqr"/>
+                            <constraint firstItem="HGF-LS-ujd" firstAttribute="width" secondItem="RwX-QE-vv9" secondAttribute="width" multiplier="0.423" id="rz0-6Y-qmB"/>
+                            <constraint firstItem="HGF-LS-ujd" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="zag-15-1Ze"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="checkmarkView" destination="HGF-LS-ujd" id="3lR-H3-ZhJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="132" y="4"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="tap_more_endframe__gmwoiaftvaa2_large" width="352" height="352"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
