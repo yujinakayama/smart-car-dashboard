@@ -105,6 +105,10 @@ class MapsViewController: UIViewController {
         controller.set(contentViewController: pointOfInterestViewController)
         controller.addPanel(toParent: self)
 
+        pointOfInterestViewController.registerForTraitChanges([UITraitHorizontalSizeClass.self]) { (_: PointOfInterestViewController, _) in
+            controller.invalidateLayout()
+        }
+
         return controller
     }()
 
@@ -585,10 +589,6 @@ class MapsViewController: UIViewController {
         super.traitCollectionDidChange(previousTraitCollection)
         changePlacementOfParkingSearchOptionsSheetViewIfNeeded()
         changePlacementOfOfficialParkingSearchStatusViewIfNeeded()
-
-        if traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
-            pointOfInterestFloatingController.invalidateLayout()
-        }
     }
 
     @objc func locationTrackerDidStartTracking() {
