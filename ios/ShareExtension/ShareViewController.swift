@@ -19,8 +19,11 @@ enum ShareError: Error {
 }
 
 class ShareViewController: UIViewController {
+    static let hudIndicatorFrame = CGRect(origin: .zero, size: CGSize(width: 50, height: 50))
+
     lazy var hud: JGProgressHUD = {
         let hud = JGProgressHUD()
+        hud.tintColor = .label
         hud.square = true
         hud.indicatorView = JGProgressHUDIndicatorView(contentView: progressCheckmarkView)
 
@@ -31,11 +34,7 @@ class ShareViewController: UIViewController {
         return hud
     }()
 
-    lazy var progressCheckmarkView = {
-        let view = ProgressCheckmarkView(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 50)))
-        view.tintColor = .label
-        return view
-    }()
+    lazy var progressCheckmarkView = ProgressCheckmarkView(frame: Self.hudIndicatorFrame)
 
     let feedbackGenerator = UINotificationFeedbackGenerator()
 
@@ -111,7 +110,13 @@ class ShareViewController: UIViewController {
 
     func cancelRequest(withError error: Error, message: String) {
         hud.textLabel.text = message
-        hud.indicatorView = JGProgressHUDErrorIndicatorView()
+
+        let image = UIImage(systemName: "xmark")
+        let imageView = UIImageView(image: image)
+        imageView.frame = Self.hudIndicatorFrame
+        imageView.contentMode = .scaleAspectFit
+        hud.indicatorView = JGProgressHUDIndicatorView(contentView: imageView)
+
         // In case the request completed before viewDidAppear(),
         // show the HUD even though the sheet appearance animation is in progress
         showHUD()
