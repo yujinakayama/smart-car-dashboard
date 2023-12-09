@@ -21,14 +21,20 @@ enum ShareError: Error {
 class ShareViewController: UIViewController {
     lazy var hud: JGProgressHUD = {
         let hud = JGProgressHUD()
-
         hud.square = true
+        hud.indicatorView = JGProgressHUDIndicatorView(contentView: progressCheckmarkView)
 
         let animation = JGProgressHUDFadeAnimation()
         animation.duration = 0.25
         hud.animation = animation
 
         return hud
+    }()
+
+    lazy var progressCheckmarkView = {
+        let view = ProgressCheckmarkView(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 50)))
+        view.tintColor = .label
+        return view
     }()
 
     let feedbackGenerator = UINotificationFeedbackGenerator()
@@ -52,6 +58,7 @@ class ShareViewController: UIViewController {
         // We want to show the HUD after the modal transition animation is finished
         // so that the HUD won't appear from bottom and won't move the position strangely by change of the view frame.
         showHUD()
+        progressCheckmarkView.state = .inProgress
     }
 
     func share() {
@@ -88,12 +95,8 @@ class ShareViewController: UIViewController {
     }
     
     func completeRequest() {
-        hud.textLabel.text = String(localized: "Sent")
-
-        let checkmarkView = CheckmarkView(frame: hud.indicatorView?.bounds ?? .zero)
-        checkmarkView.tintColor = .label
-        hud.indicatorView = JGProgressHUDIndicatorView(contentView: checkmarkView)
-        checkmarkView.startAnimating()
+        hud.textLabel.text = String(localized: "Done")
+        progressCheckmarkView.state = .done
 
         // In case the request completed before viewDidAppear(),
         // show the HUD even though the sheet appearance animation is in progress
