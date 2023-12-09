@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Il7-Pu-JPV">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
@@ -8,22 +8,22 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Checkmark-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="CheckmarkViewDevApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="CheckmarkViewController" customModule="CheckmarkViewDevApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.25" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap_more_endframe__gmwoiaftvaa2_large" translatesAutoresizingMaskIntoConstraints="NO" id="RwX-QE-vv9">
-                                <rect key="frame" x="0.0" y="229.66666666666663" width="393" height="393"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.25" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ApplePayCheckmark" translatesAutoresizingMaskIntoConstraints="NO" id="RwX-QE-vv9">
+                                <rect key="frame" x="0.0" y="59" width="393" height="393"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="RwX-QE-vv9" secondAttribute="height" multiplier="1:1" id="RkG-OJ-amd"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HGF-LS-ujd" customClass="CheckmarkView" customModule="CheckmarkView">
-                                <rect key="frame" x="113.33333333333333" y="343" width="166.33333333333337" height="166"/>
+                                <rect key="frame" x="113.33333333333333" y="172.33333333333331" width="166.33333333333337" height="166.33333333333331"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="HGF-LS-ujd" secondAttribute="height" multiplier="1:1" id="5Rg-wM-J5w"/>
                                 </constraints>
@@ -34,25 +34,151 @@
                         <constraints>
                             <constraint firstItem="HGF-LS-ujd" firstAttribute="centerX" secondItem="RwX-QE-vv9" secondAttribute="centerX" id="0Hz-UW-wGO"/>
                             <constraint firstItem="HGF-LS-ujd" firstAttribute="centerY" secondItem="RwX-QE-vv9" secondAttribute="centerY" id="G5B-Rs-1Fw"/>
-                            <constraint firstItem="HGF-LS-ujd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Qxv-Pd-RFu"/>
+                            <constraint firstItem="RwX-QE-vv9" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="KIa-gf-yET"/>
                             <constraint firstItem="RwX-QE-vv9" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="kZj-KS-gqr"/>
                             <constraint firstItem="HGF-LS-ujd" firstAttribute="width" secondItem="RwX-QE-vv9" secondAttribute="width" multiplier="0.423" id="rz0-6Y-qmB"/>
-                            <constraint firstItem="HGF-LS-ujd" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="zag-15-1Ze"/>
+                            <constraint firstItem="RwX-QE-vv9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="uPH-LU-9EA"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Checkmark" image="checkmark" catalog="system" id="c6G-F9-Y5o"/>
                     <connections>
                         <outlet property="checkmarkView" destination="HGF-LS-ujd" id="3lR-H3-ZhJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="132" y="4"/>
+            <point key="canvasLocation" x="-66" y="-14"/>
+        </scene>
+        <!--Progress-->
+        <scene sceneID="pew-Hm-eTh">
+            <objects>
+                <viewController id="Z9M-Ql-8ja" customClass="ProgressViewController" customModule="CheckmarkViewDevApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4jK-TG-tFe">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.25" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OpenedCircle" translatesAutoresizingMaskIntoConstraints="NO" id="TpE-oU-aB2">
+                                <rect key="frame" x="39.333333333333343" y="59" width="314.33333333333326" height="314.33333333333331"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="TpE-oU-aB2" secondAttribute="height" multiplier="1:1" id="LtE-DN-yNm"/>
+                                </constraints>
+                            </imageView>
+                            <view alpha="0.25" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ri-FR-WGc" customClass="ProgressView" customModule="CheckmarkView">
+                                <rect key="frame" x="43" y="62.666666666666657" width="307" height="307"/>
+                                <color key="backgroundColor" red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="0.25" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" systemColor="systemRedColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="6Ri-FR-WGc" secondAttribute="height" multiplier="1:1" id="rPq-m9-seP"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="VWH-dd-aJJ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="TpE-oU-aB2" firstAttribute="width" secondItem="4jK-TG-tFe" secondAttribute="width" multiplier="0.8" id="5Kz-EU-fOQ"/>
+                            <constraint firstItem="6Ri-FR-WGc" firstAttribute="width" secondItem="TpE-oU-aB2" secondAttribute="width" multiplier="0.977" id="8Kc-EK-N1J"/>
+                            <constraint firstItem="6Ri-FR-WGc" firstAttribute="centerX" secondItem="TpE-oU-aB2" secondAttribute="centerX" id="Sjf-fQ-HzR"/>
+                            <constraint firstItem="6Ri-FR-WGc" firstAttribute="centerY" secondItem="TpE-oU-aB2" secondAttribute="centerY" id="VEM-DQ-j63"/>
+                            <constraint firstItem="TpE-oU-aB2" firstAttribute="top" secondItem="4jK-TG-tFe" secondAttribute="topMargin" id="fRe-A8-ogj"/>
+                            <constraint firstItem="TpE-oU-aB2" firstAttribute="centerX" secondItem="4jK-TG-tFe" secondAttribute="centerX" id="vRB-yL-uuL"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Progress" image="circle" catalog="system" id="4NL-V3-ir3"/>
+                    <connections>
+                        <outlet property="imageView" destination="TpE-oU-aB2" id="hH4-G8-Ux8"/>
+                        <outlet property="progressView" destination="6Ri-FR-WGc" id="fLA-w7-wZO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iMc-8o-Z5O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-66" y="697"/>
+        </scene>
+        <!--Combination-->
+        <scene sceneID="XIX-8n-gzm">
+            <objects>
+                <viewController id="70L-Ba-SiI" customClass="CombinationViewController" customModule="CheckmarkViewDevApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Er4-or-gKc">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view alpha="0.25" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kpV-4i-S5R" customClass="VideoPlayerView" customModule="CheckmarkViewDevApp" customModuleProvider="target">
+                                <rect key="frame" x="19.666666666666657" y="59" width="353.66666666666674" height="353.66666666666669"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="kpV-4i-S5R" secondAttribute="height" multiplier="1:1" id="I0c-0w-DwG"/>
+                                </constraints>
+                            </view>
+                            <view alpha="0.25" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jtZ-Yw-Kyz" customClass="ProgressCheckmarkView" customModule="CheckmarkView">
+                                <rect key="frame" x="118" y="104.66666666666667" width="159" height="159.33333333333331"/>
+                                <color key="tintColor" systemColor="systemRedColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="jtZ-Yw-Kyz" secondAttribute="height" multiplier="1:1" id="5kG-rU-Hwx"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L3P-rL-wVB">
+                                <rect key="frame" x="173" y="412.66666666666669" width="49.333333333333343" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" image="arrow.forward" catalog="system"/>
+                                <connections>
+                                    <action selector="toggleAnimation" destination="70L-Ba-SiI" eventType="touchUpInside" id="ifo-g5-wtE"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="7IP-n7-NeP"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="jtZ-Yw-Kyz" firstAttribute="centerX" secondItem="kpV-4i-S5R" secondAttribute="centerX" constant="1" id="3tf-wp-mSm"/>
+                            <constraint firstItem="kpV-4i-S5R" firstAttribute="centerX" secondItem="Er4-or-gKc" secondAttribute="centerX" id="DiF-Fu-E0Z"/>
+                            <constraint firstItem="kpV-4i-S5R" firstAttribute="width" secondItem="Er4-or-gKc" secondAttribute="width" multiplier="0.9" id="KXh-QN-lVy"/>
+                            <constraint firstItem="kpV-4i-S5R" firstAttribute="top" secondItem="7IP-n7-NeP" secondAttribute="top" id="LyN-s2-Iq7"/>
+                            <constraint firstItem="jtZ-Yw-Kyz" firstAttribute="width" secondItem="kpV-4i-S5R" secondAttribute="width" multiplier="0.45" id="Uiu-jf-Tao"/>
+                            <constraint firstItem="L3P-rL-wVB" firstAttribute="centerX" secondItem="jtZ-Yw-Kyz" secondAttribute="centerX" id="Zfy-aA-Nud"/>
+                            <constraint firstItem="jtZ-Yw-Kyz" firstAttribute="centerY" secondItem="kpV-4i-S5R" secondAttribute="centerY" constant="-51.5" id="fWB-Qb-yLi"/>
+                            <constraint firstItem="L3P-rL-wVB" firstAttribute="top" secondItem="kpV-4i-S5R" secondAttribute="bottom" id="sOp-80-7ec"/>
+                            <constraint firstItem="kpV-4i-S5R" firstAttribute="centerX" secondItem="Er4-or-gKc" secondAttribute="centerX" id="uSx-Hn-NJG"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Combination" image="checkmark.circle" catalog="system" id="6fz-ZD-qjE"/>
+                    <connections>
+                        <outlet property="progressCheckmarkView" destination="jtZ-Yw-Kyz" id="Y8f-To-gEm"/>
+                        <outlet property="videoPlayerView" destination="kpV-4i-S5R" id="nuS-pD-ACn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Odb-ON-k8e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-66" y="1442"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="TzR-8D-bMo">
+            <objects>
+                <tabBarController id="Il7-Pu-JPV" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9ev-Dh-TD9">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="Y59-ii-Hol"/>
+                        <segue destination="Z9M-Ql-8ja" kind="relationship" relationship="viewControllers" id="jhV-UQ-8U3"/>
+                        <segue destination="70L-Ba-SiI" kind="relationship" relationship="viewControllers" id="zhf-Cu-SiV"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ofR-A7-Kwb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1199" y="696"/>
         </scene>
     </scenes>
     <resources>
-        <image name="tap_more_endframe__gmwoiaftvaa2_large" width="352" height="352"/>
+        <image name="ApplePayCheckmark" width="352" height="352"/>
+        <image name="OpenedCircle" width="147" height="147"/>
+        <image name="arrow.forward" catalog="system" width="128" height="95"/>
+        <image name="checkmark" catalog="system" width="128" height="114"/>
+        <image name="checkmark.circle" catalog="system" width="128" height="123"/>
+        <image name="circle" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

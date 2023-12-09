@@ -19,14 +19,17 @@ public class CheckmarkView: UIView {
         let shapeLayer = makeShapeLayer()
         layer.addSublayer(shapeLayer)
 
-        let animation = makeAnimation(for: shapeLayer, duration: duration)
-        shapeLayer.add(animation, forKey: nil)
-        
+        shapeLayer.add(makeAnimation(duration: duration), forKey: nil)
+
         self.shapeLayer = shapeLayer
         
         if showsDebugGuides {
             showDebugGuides(for: shapeLayer)
         }
+    }
+
+    public func clear() {
+        shapeLayer?.removeFromSuperlayer()
     }
 
     var shapeLayer: CAShapeLayer?
@@ -62,13 +65,32 @@ public class CheckmarkView: UIView {
         return path
     }
 
-    func makeAnimation(for shapeLayer: CAShapeLayer, duration: TimeInterval) -> CAAnimation {
+    func makeAnimation(duration: TimeInterval) -> CAAnimation {
+        let group = CAAnimationGroup()
+        group.animations = [
+            makeStrokeAnimation(duration: duration),
+            makeFadeInAnimation(duration: duration),
+        ]
+        group.duration = duration
+        return group
+    }
+
+    func makeStrokeAnimation(duration: TimeInterval) -> CAAnimation {
         let animation = CABasicAnimation(keyPath: "strokeEnd")
-        animation.fromValue = shapeLayer.strokeStart
-        animation.toValue = shapeLayer.strokeEnd
+        animation.fromValue = 0
+        animation.toValue = 1
         animation.duration = duration
         // https://cubic-bezier.com/#.5,0,0,1
         animation.timingFunction = CAMediaTimingFunction(controlPoints: 0.5, 0, 0, 1)
+        return animation
+    }
+
+    func makeFadeInAnimation(duration: TimeInterval) -> CAAnimation {
+        let animation = CABasicAnimation(keyPath: "opacity")
+        animation.fromValue = 0
+        animation.toValue = 1
+        animation.duration = duration
+        animation.timingFunction = CAMediaTimingFunction(name: .easeOut)
         return animation
     }
 

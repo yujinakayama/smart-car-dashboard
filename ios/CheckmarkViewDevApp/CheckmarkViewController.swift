@@ -9,13 +9,13 @@
 import UIKit
 import CheckmarkView
 
-class ViewController: UIViewController {
+class CheckmarkViewController: UIViewController {
     @IBOutlet weak var checkmarkView: CheckmarkView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        checkmarkView.showsDebugGuides = true
+//        checkmarkView.showsDebugGuides = true
     }
 
     override func viewDidAppear(_ animated: Bool) {
