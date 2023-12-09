@@ -2924,7 +2924,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.2.0;
+				MARKETING_VERSION = 4.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.DashRemote;
 				PRODUCT_NAME = "Dash Remote";
 				SUPPORTS_MACCATALYST = YES;
@@ -2947,7 +2947,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.2.0;
+				MARKETING_VERSION = 4.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujinakayama.DashRemote;
 				PRODUCT_NAME = "Dash Remote";
 				SUPPORTS_MACCATALYST = YES;
