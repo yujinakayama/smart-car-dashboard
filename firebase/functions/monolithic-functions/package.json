@@ -1,5 +1,5 @@
 {
-  "name": "functions",
+  "name": "monolithic-functions",
   "scripts": {
     "lint": "prettier --check . && eslint .",
     "format": "prettier --write . && eslint --fix .",
@@ -7,7 +7,7 @@
     "serve": "npm run build && firebase serve --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
-    "deploy": "firebase deploy --only functions",
+    "deploy": "firebase deploy --only functions:monolithic-functions",
     "logs": "firebase functions:log",
     "test": "jest"
   },
