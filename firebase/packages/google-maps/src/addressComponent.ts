@@ -1,9 +1,8 @@
+import { convertAlphanumericsToASCII } from '@dash/text-util'
 import { AddressComponent } from '@googlemaps/google-maps-services-js'
 
-import { convertAlphanumericsToAscii } from './addItemToInbox/util'
-
 // https://developers.google.com/maps/documentation/geocoding/intro#Types
-export interface GoogleMapsAddressComponents {
+export interface Address {
   administrative_area_level_1?: string
   administrative_area_level_2?: string
   administrative_area_level_3?: string
@@ -30,7 +29,7 @@ export interface GoogleMapsAddressComponents {
   subpremise?: string
 }
 
-const googleMapsAddressComponentKeys = [
+const componentKeys = [
   'administrative_area_level_1',
   'administrative_area_level_2',
   'administrative_area_level_3',
@@ -59,13 +58,11 @@ const googleMapsAddressComponentKeys = [
 
 export function convertAddressComponentsToObject(
   rawAddressComponents: AddressComponent[],
-): GoogleMapsAddressComponents {
+): Address {
   return rawAddressComponents.reverse().reduce((object: any, rawComponent: AddressComponent) => {
-    const key = rawComponent.types.find((type: string) =>
-      googleMapsAddressComponentKeys.includes(type),
-    )
+    const key = rawComponent.types.find((type: string) => componentKeys.includes(type))
     if (key && !object[key]) {
-      object[key] = convertAlphanumericsToAscii(rawComponent.long_name)
+      object[key] = convertAlphanumericsToASCII(rawComponent.long_name)
     }
     return object
   }, {})

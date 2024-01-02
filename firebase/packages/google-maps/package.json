@@ -1,0 +1,16 @@
+{
+  "name": "@dash/google-maps",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "private": true,
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "rm -rf lib tsconfig.tsbuildinfo"
+  },
+  "dependencies": {
+    "@dash/text-util": "file:../text-util"
+  },
+  "devDependencies": {
+    "@googlemaps/google-maps-services-js": "^3.3.42"
+  }
+}

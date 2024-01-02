@@ -1,5 +1,7 @@
 import { URL } from 'url'
 
+import { convertAddressComponentsToObject, decodeURLDataParameter } from '@dash/google-maps'
+import { convertAlphanumericsToASCII } from '@dash/text-util'
 import {
   AddressComponent,
   AddressType,
@@ -14,12 +16,8 @@ import {
 // @ts-ignore: no type definition provided
 import { parse_host as parseHost } from 'tld-extract'
 
-import { convertAddressComponentsToObject } from '../googleMapsUtil'
-
-import { decodeURLDataParameter } from './googleMapsURLDataParameter'
 import { InputData } from './inputData'
 import { Location, Address } from './normalizedData'
-import { convertAlphanumericsToAscii } from './util'
 
 export const requiredEnvName = 'GOOGLE_API_KEY'
 // If the secret is missing, it'll be error on deployment
@@ -139,7 +137,7 @@ async function normalizeLocationWithCoordinate(
       latitude: place.geometry.location.lat,
       longitude: place.geometry.location.lng,
     },
-    name: convertAlphanumericsToAscii(
+    name: convertAlphanumericsToASCII(
       inputData.attachments['public.plain-text'] || address.subLocality,
     ),
     url: expandedURL.toString(),
@@ -229,7 +227,7 @@ async function normalizeLocationWithIdentifier(
       latitude: place.geometry.location.lat,
       longitude: place.geometry.location.lng,
     },
-    name: convertAlphanumericsToAscii(name),
+    name: convertAlphanumericsToASCII(name),
     url: expandedURL.toString(),
     websiteURL: place.website ? new URL(place.website).toString() : null, // // To handle internationalized domain names
   }
@@ -275,7 +273,7 @@ function normalizeCategories(place: Partial<PlaceData>): string[] {
   const categories = types.map((type) => convertToCamelCase(type.toString()))
 
   if (place.name) {
-    const names = extractNameSegments(convertAlphanumericsToAscii(place.name) ?? '')
+    const names = extractNameSegments(convertAlphanumericsToASCII(place.name) ?? '')
 
     if (types.includes(PlaceType2.place_of_worship) && !isGooglePredefinedWorshipPlace(types)) {
       if (names.some((name) => name.match(/(寺|院|大師|薬師|観音|帝釈天)$/))) {

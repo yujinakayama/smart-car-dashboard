@@ -4,23 +4,13 @@
     "rootDir": "src",
     "outDir": "lib"
   },
-  "exclude": [
-    "**/*.test.ts",
-    "**/*.spec.ts",
-    "jest.config.ts",
-    "packages",
-    "migration/*",
-    "playground/*"
-  ],
+  "exclude": ["**/*.test.ts", "**/*.spec.ts", "jest.config.ts", "packages"],
   "references": [
     {
       "path": "../../packages/google-maps"
     },
     {
       "path": "../../packages/mapkit"
-    },
-    {
-      "path": "../../packages/text-util"
     }
   ]
 }

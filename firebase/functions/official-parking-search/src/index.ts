@@ -1,9 +1,8 @@
+import { Address, convertAddressComponentsToObject } from '@dash/google-maps'
 import { CLLocationCoordinate2D, MKMapItem } from '@dash/mapkit'
 import { Client, Language } from '@googlemaps/google-maps-services-js'
 import { onRequest } from 'firebase-functions/v2/https'
 import { customsearch_v1, google } from 'googleapis'
-
-import { GoogleMapsAddressComponents, convertAddressComponentsToObject } from './googleMapsUtil'
 
 export const requiredEnvName = 'GOOGLE_API_KEY'
 // If the secret is missing, it'll be error on deployment
@@ -41,14 +40,12 @@ export const searchOfficialParkings = onRequest(
     console.log('request:', request)
     const { mapItem } = request
     const address = await fetchAddressOf(mapItem.placemark.coordinate)
-    const webpage = await fetchWebpageForOfficinalParkingOf(mapItem, address)
+    const webpage = await fetchWebpageForOfficialParkingOf(mapItem, address)
     functionResponse.send(webpage)
   },
 )
 
-async function fetchAddressOf(
-  coordinate: CLLocationCoordinate2D,
-): Promise<GoogleMapsAddressComponents> {
+async function fetchAddressOf(coordinate: CLLocationCoordinate2D): Promise<Address> {
   const response = await mapsClient.reverseGeocode({
     params: {
       latlng: coordinate,
@@ -68,9 +65,9 @@ async function fetchAddressOf(
 
 type SearchResultWebpage = Pick<customsearch_v1.Schema$Result, 'title' | 'link'>
 
-async function fetchWebpageForOfficinalParkingOf(
+async function fetchWebpageForOfficialParkingOf(
   mapItem: MKMapItem,
-  address: GoogleMapsAddressComponents,
+  address: Address,
 ): Promise<SearchResultWebpage | null> {
   const searchWords = [
     mapItem.name,
