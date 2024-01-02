@@ -1,5 +1,5 @@
-import * as admin from 'firebase-admin'
-import * as functions from 'firebase-functions'
+import * as firebase from 'firebase-admin'
+import * as functions from 'firebase-functions/v1'
 
 // Note: Cloud Functions for Firebase (2nd gen) does not provide support for the events and triggers described in this guide.
 // Because 1st gen and 2nd gen functions can coexist side-by-side in the same source file,
@@ -10,7 +10,7 @@ export const createVehicle = functions
   .region('asia-northeast1')
   .auth.user()
   .onCreate(async (user) => {
-    const document = admin.firestore().collection('vehicles').doc(user.uid)
+    const document = firebase.firestore().collection('vehicles').doc(user.uid)
     await document.create({ email: user.email })
   })
 
@@ -18,5 +18,5 @@ export const deleteVehicle = functions
   .region('asia-northeast1')
   .auth.user()
   .onDelete(async (user) => {
-    await admin.firestore().collection('vehicles').doc(user.uid).delete
+    await firebase.firestore().collection('vehicles').doc(user.uid).delete
   })
