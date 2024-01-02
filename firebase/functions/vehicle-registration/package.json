@@ -1,6 +1,7 @@
 {
   "name": "vehicle-registration",
   "scripts": {
+    "clean": "rm -rf lib tsconfig.tsbuildinfo",
     "lint": "prettier --check . && eslint .",
     "format": "prettier --write . && eslint --fix .",
     "build": "tsc --build",

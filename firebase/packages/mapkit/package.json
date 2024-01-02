@@ -4,6 +4,7 @@
   "main": "lib/index.js",
   "private": true,
   "scripts": {
-    "build": "tsc --build"
+    "build": "tsc --build",
+    "clean": "rm -rf lib tsconfig.tsbuildinfo"
   }
 }
