@@ -4,8 +4,10 @@
   "main": "lib/index.js",
   "private": true,
   "scripts": {
-    "build": "tsc --build",
-    "clean": "rm -rf lib tsconfig.tsbuildinfo"
+    "clean": "rm -rf lib tsconfig.tsbuildinfo",
+    "lint": "prettier --check . && eslint .",
+    "format": "prettier --write . && eslint --fix .",
+    "build": "tsc --build"
   },
   "dependencies": {
     "@dash/text-util": "file:../text-util"
