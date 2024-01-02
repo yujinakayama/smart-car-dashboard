@@ -1,7 +1,6 @@
+import { sendNotificationToVehicle } from '@dash/push-notification'
 import * as admin from 'firebase-admin'
 import { onRequest } from 'firebase-functions/v2/https'
-
-import { sendNotificationToVehicle } from '../notification'
 
 import { isAppleMapsLocation, normalizeAppleMapsLocation } from './appleMaps'
 import {

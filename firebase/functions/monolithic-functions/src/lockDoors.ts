@@ -1,10 +1,9 @@
-import { onRequest } from 'firebase-functions/v2/https'
-
 import {
   NotificationPayload,
   UNNotificationPresentationOptions,
   sendNotificationToVehicle,
-} from './notification'
+} from '@dash/push-notification'
+import { onRequest } from 'firebase-functions/v2/https'
 
 interface Request {
   vehicleID: string

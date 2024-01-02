@@ -20,6 +20,9 @@
       "path": "../../packages/mapkit"
     },
     {
+      "path": "../../packages/push-notification"
+    },
+    {
       "path": "../../packages/text-util"
     }
   ]
