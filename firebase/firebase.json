@@ -17,6 +17,14 @@
       ]
     },
     {
+      "source": "functions/vehicle-door-lock",
+      "codebase": "vehicle-door-lock",
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint",
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ]
+    },
+    {
       "source": "functions/vehicle-registration",
       "codebase": "vehicle-registration",
       "predeploy": [
