@@ -1,0 +1,8 @@
+{
+  "extends": "../../node-project-configs/tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "lib"
+  },
+  "exclude": ["**/*.test.ts", "**/*.spec.ts", "jest.config.ts", "packages"]
+}

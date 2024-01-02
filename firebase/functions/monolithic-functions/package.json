@@ -1,0 +1,49 @@
+{
+  "name": "monolithic-functions",
+  "scripts": {
+    "clean": "rm -rf lib tsconfig.tsbuildinfo",
+    "lint": "prettier --check . && eslint .",
+    "format": "prettier --write . && eslint --fix .",
+    "build": "tsc --build",
+    "serve": "npm run build && firebase serve --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions:monolithic-functions",
+    "logs": "firebase functions:log",
+    "test": "jest"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "@dash/google-maps": "file:packages/google-maps",
+    "@dash/mapkit": "file:packages/mapkit",
+    "@dash/push-notification": "file:packages/push-notification",
+    "@dash/text-util": "file:packages/text-util",
+    "@googlemaps/google-maps-services-js": "^3.3.4",
+    "@yujinakayama/apple-music": "^0.4.0",
+    "axios": "^0.21.2",
+    "axios-cookiejar-support": "^4.0.7",
+    "encoding-japanese": "^2.0.0",
+    "firebase-admin": "^11.4.1",
+    "firebase-functions": "^4.1.1",
+    "googleapis": "^100.0.0",
+    "iconv-lite": "^0.6.3",
+    "jsonwebtoken": "^9.0.2",
+    "libxmljs": "^0.19.7",
+    "re2": "^1.17.3",
+    "tld-extract": "^2.0.1",
+    "tough-cookie": "^4.1.3",
+    "url-regex-safe": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/encoding-japanese": "^2.0.1",
+    "@types/iconv-lite": "^0.0.1",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/libxmljs": "^0.18.6",
+    "@types/tough-cookie": "^4.0.2",
+    "@types/url-regex-safe": "^1.0.0"
+  },
+  "private": true
+}

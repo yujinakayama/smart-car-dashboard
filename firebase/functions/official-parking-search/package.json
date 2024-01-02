@@ -1,0 +1,28 @@
+{
+  "name": "official-parking-search",
+  "version": "1.0.0",
+  "scripts": {
+    "clean": "rm -rf lib tsconfig.tsbuildinfo",
+    "lint": "prettier --check . && eslint .",
+    "format": "prettier --write . && eslint --fix .",
+    "build": "tsc --build",
+    "serve": "npm run build && firebase serve --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions:official-parking-search",
+    "logs": "firebase functions:log",
+    "test": "jest"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "@dash/google-maps": "file:packages/google-maps",
+    "@dash/mapkit": "file:packages/mapkit",
+    "@googlemaps/google-maps-services-js": "^3.3.42",
+    "firebase-functions": "^4.5.0",
+    "googleapis": "^129.0.0"
+  },
+  "private": true
+}

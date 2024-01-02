@@ -1,0 +1,29 @@
+{
+  "extends": "../../node-project-configs/tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "lib"
+  },
+  "exclude": [
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "jest.config.ts",
+    "packages",
+    "migration/*",
+    "playground/*"
+  ],
+  "references": [
+    {
+      "path": "../../packages/google-maps"
+    },
+    {
+      "path": "../../packages/mapkit"
+    },
+    {
+      "path": "../../packages/push-notification"
+    },
+    {
+      "path": "../../packages/text-util"
+    }
+  ]
+}

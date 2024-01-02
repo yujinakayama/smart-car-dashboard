@@ -1,0 +1,24 @@
+{
+  "name": "vehicle-registration",
+  "scripts": {
+    "clean": "rm -rf lib tsconfig.tsbuildinfo",
+    "lint": "prettier --check . && eslint .",
+    "format": "prettier --write . && eslint --fix .",
+    "build": "tsc --build",
+    "serve": "npm run build && firebase serve --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions:vehicle-registration",
+    "logs": "firebase functions:log",
+    "test": "jest"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^11.11.1",
+    "firebase-functions": "^4.5.0"
+  },
+  "private": true
+}
