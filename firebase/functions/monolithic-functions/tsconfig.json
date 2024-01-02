@@ -4,7 +4,14 @@
     "rootDir": "src",
     "outDir": "lib"
   },
-  "exclude": ["**/*.test.ts", "**/*.spec.ts", "jest.config.ts", "migration/*", "playground/*"],
+  "exclude": [
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "jest.config.ts",
+    "packages",
+    "migration/*",
+    "playground/*"
+  ],
   "references": [
     {
       "path": "../../packages/mapkit"

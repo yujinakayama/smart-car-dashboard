@@ -17,7 +17,7 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "@dash/mapkit": "file:../../packages/mapkit",
+    "@dash/mapkit": "file:packages/mapkit",
     "@googlemaps/google-maps-services-js": "^3.3.4",
     "@yujinakayama/apple-music": "^0.4.0",
     "axios": "^0.21.2",

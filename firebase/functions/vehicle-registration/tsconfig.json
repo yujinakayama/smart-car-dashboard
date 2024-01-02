@@ -4,5 +4,5 @@
     "rootDir": "src",
     "outDir": "lib"
   },
-  "exclude": ["**/*.test.ts", "**/*.spec.ts", "jest.config.ts"]
+  "exclude": ["**/*.test.ts", "**/*.spec.ts", "jest.config.ts", "packages"]
 }
