@@ -3,7 +3,7 @@
   "scripts": {
     "lint": "prettier --check . && eslint .",
     "format": "prettier --write . && eslint --fix .",
-    "build": "tsc",
+    "build": "tsc --build",
     "serve": "npm run build && firebase serve --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",

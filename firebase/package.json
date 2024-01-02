@@ -1,7 +1,8 @@
 {
   "name": "firebase",
   "workspaces": [
-    "functions/*"
+    "functions/*",
+    "packages/*"
   ],
   "devDependencies": {
     "@types/jest": "^29.5.11",

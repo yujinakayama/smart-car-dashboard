@@ -1,8 +1,7 @@
 import { URL } from 'url'
 
+import { MKMapItem } from '@dash/mapkit'
 import axios from 'axios'
-
-import { MKMapItem } from '../mapItem'
 
 import { urlPattern } from './util'
 

@@ -3,7 +3,7 @@
   "scripts": {
     "lint": "prettier --check . && eslint .",
     "format": "prettier --write . && eslint --fix .",
-    "build": "tsc",
+    "build": "tsc --build",
     "serve": "npm run build && firebase serve --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
@@ -16,6 +16,7 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "@dash/mapkit": "file:../../packages/mapkit",
     "@googlemaps/google-maps-services-js": "^3.3.4",
     "@yujinakayama/apple-music": "^0.4.0",
     "axios": "^0.21.2",

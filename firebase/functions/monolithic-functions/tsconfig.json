@@ -1,1 +1,13 @@
-../../node-project-configs/tsconfig.json
+{
+  "extends": "../../node-project-configs/tsconfig.json",
+  "compilerOptions": {
+    "outDir": "lib"
+  },
+  "include": ["src"],
+  "exclude": ["**/*.test.ts", "**/*.spec.ts"],
+  "references": [
+    {
+      "path": "../../packages/mapkit"
+    }
+  ]
+}

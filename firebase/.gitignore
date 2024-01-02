@@ -63,3 +63,10 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+# TypeScript generated files
+*.d.ts
+*.d.ts.map
+*.js
+*.js.map
+*.tsbuildinfo
