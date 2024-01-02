@@ -1,8 +1,10 @@
 import { URL } from 'url'
 
-import { MKMapItem } from '../mapItem'
-import { urlPattern } from './util'
 import axios from 'axios'
+
+import { MKMapItem } from '../mapItem'
+
+import { urlPattern } from './util'
 
 export interface Request {
   vehicleID: string

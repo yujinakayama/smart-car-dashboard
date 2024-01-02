@@ -1,8 +1,9 @@
+import { Client, Language } from '@googlemaps/google-maps-services-js'
 import { onRequest } from 'firebase-functions/v2/https'
 import { customsearch_v1, google } from 'googleapis'
-import { Client, Language } from '@googlemaps/google-maps-services-js'
-import { CLLocationCoordinate2D, MKMapItem } from './mapItem'
+
 import { GoogleMapsAddressComponents, convertAddressComponentsToObject } from './googleMapsUtil'
+import { CLLocationCoordinate2D, MKMapItem } from './mapItem'
 
 export const requiredEnvName = 'GOOGLE_API_KEY'
 // If the secret is missing, it'll be error on deployment

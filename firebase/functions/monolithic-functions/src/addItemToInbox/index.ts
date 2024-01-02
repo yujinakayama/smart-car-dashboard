@@ -1,28 +1,29 @@
-import { onRequest } from 'firebase-functions/v2/https'
 import * as admin from 'firebase-admin'
+import { onRequest } from 'firebase-functions/v2/https'
 
-import { Request, InputData } from './inputData'
-import { NormalizedData } from './normalizedData'
-import { Item } from './item'
+import { sendNotificationToVehicle } from '../notification'
+
 import { isAppleMapsLocation, normalizeAppleMapsLocation } from './appleMaps'
-import {
-  isGoogleMapsLocation,
-  normalizeGoogleMapsLocation,
-  requiredEnvName as googleMapsRequiredEnvName,
-} from './googleMaps'
 import {
   isAppleMusicItem,
   normalizeAppleMusicItem,
   requiredEnvNames as appleMusicRequiredEnvName,
 } from './appleMusic'
 import {
+  isGoogleMapsLocation,
+  normalizeGoogleMapsLocation,
+  requiredEnvName as googleMapsRequiredEnvName,
+} from './googleMaps'
+import { Request, InputData } from './inputData'
+import { Item } from './item'
+import { NormalizedData } from './normalizedData'
+import { makeNotificationPayload } from './notification'
+import { normalizeWebpage } from './website'
+import {
   isYouTubeVideo,
   normalizeYouTubeVideo,
   requiredEnvName as youtubeRequiredEnvName,
 } from './youtube'
-import { normalizeWebpage } from './website'
-import { makeNotificationPayload } from './notification'
-import { sendNotificationToVehicle } from '../notification'
 
 const requiredSecrets = Array.from(
   new Set([googleMapsRequiredEnvName, appleMusicRequiredEnvName, youtubeRequiredEnvName].flat()),

@@ -1,5 +1,5 @@
-import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
+import * as functions from 'firebase-functions'
 
 // Note: Cloud Functions for Firebase (2nd gen) does not provide support for the events and triggers described in this guide.
 // Because 1st gen and 2nd gen functions can coexist side-by-side in the same source file,

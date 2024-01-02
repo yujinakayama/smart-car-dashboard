@@ -1,3 +1,5 @@
+import { URL } from 'url'
+
 import {
   AddressComponent,
   AddressType,
@@ -12,13 +14,12 @@ import {
 // @ts-ignore: no type definition provided
 import { parse_host as parseHost } from 'tld-extract'
 
-import { URL } from 'url'
+import { convertAddressComponentsToObject } from '../googleMapsUtil'
 
 import { decodeURLDataParameter } from './googleMapsURLDataParameter'
 import { InputData } from './inputData'
 import { Location, Address } from './normalizedData'
 import { convertAlphanumericsToAscii } from './util'
-import { convertAddressComponentsToObject } from '../googleMapsUtil'
 
 export const requiredEnvName = 'GOOGLE_API_KEY'
 // If the secret is missing, it'll be error on deployment

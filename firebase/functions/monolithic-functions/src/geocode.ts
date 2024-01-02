@@ -1,11 +1,11 @@
 import { onRequest } from 'firebase-functions/v2/https'
 
-import { Attachments, InputData } from './addItemToInbox/inputData'
 import {
   isGoogleMapsLocation,
   normalizeGoogleMapsLocation,
   requiredEnvName,
 } from './addItemToInbox/googleMaps'
+import { Attachments, InputData } from './addItemToInbox/inputData'
 
 export const geocode = onRequest(
   {

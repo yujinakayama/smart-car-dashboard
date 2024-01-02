@@ -1,10 +1,10 @@
 import { initializeApp, cert } from 'firebase-admin/app'
 import { DocumentData, getFirestore } from 'firebase-admin/firestore'
 
-import { Attachments, InputData } from '../src/addItemToInbox/inputData'
-import { Location } from '../src/addItemToInbox/normalizedData'
 import { isAppleMapsLocation, normalizeAppleMapsLocation } from '../src/addItemToInbox/appleMaps'
 import { isGoogleMapsLocation, normalizeGoogleMapsLocation } from '../src/addItemToInbox/googleMaps'
+import { Attachments, InputData } from '../src/addItemToInbox/inputData'
+import { Location } from '../src/addItemToInbox/normalizedData'
 
 initializeApp({
   credential: cert('./firebase-service-account.json'),

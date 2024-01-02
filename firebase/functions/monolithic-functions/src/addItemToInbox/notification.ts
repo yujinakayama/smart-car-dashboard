@@ -1,8 +1,9 @@
 import * as admin from 'firebase-admin'
 
+import { NotificationPayload, UNNotificationPresentationOptions } from '../notification'
+
 import { Item } from './item'
 import { NormalizedData } from './normalizedData'
-import { NotificationPayload, UNNotificationPresentationOptions } from '../notification'
 
 admin.initializeApp()
 

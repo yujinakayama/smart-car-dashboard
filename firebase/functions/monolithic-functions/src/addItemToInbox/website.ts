@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { wrapper as addCookieHandlingInterceptor } from 'axios-cookiejar-support'
-import { CookieJar } from 'tough-cookie'
 import Encoding from 'encoding-japanese'
 import iconv from 'iconv-lite'
 import * as libxmljs from 'libxmljs'
+import { CookieJar } from 'tough-cookie'
 
 import { InputData } from './inputData'
 import { Website } from './normalizedData'
