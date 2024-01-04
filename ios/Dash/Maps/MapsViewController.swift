@@ -666,6 +666,9 @@ extension MapsViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             return mapView.dequeueReusableAnnotationView(withIdentifier: Self.directionalUserLocationAnnotationViewIdentifier, for: annotation)
+        } else if annotation is MKMapFeatureAnnotation {
+            // Use the default view for MKMapFeatureAnnotation
+            return nil
         } else if let annotation = annotation as? PointOfInterestAnnotation {
             return mapView.dequeueReusableAnnotationView(withIdentifier: Self.pointOfInterestAnnotationViewIdentifier, for: annotation)
         } else if currentMode == .parkingSearch {
