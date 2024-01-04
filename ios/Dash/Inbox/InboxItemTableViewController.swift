@@ -267,16 +267,12 @@ class InboxItemTableViewController: UITableViewController {
 
 private extension InboxItemTableViewController {
     func actionMenu(for location: InboxLocation) -> UIMenu {
-        let actions = LocationActions(location: .full(location), viewController: self, searchParkingsHandler: { location in
-            self.pushMapsViewControllerForParkingSearch(destination: location.mapItem)
-        })
-
-        return actions.makeMenu(for: [
-            .searchParkings,
-            .searchWeb,
-            .openWebsite,
-            .openDirectionsInGoogleMaps,
-            .openDirectionsInYahooCarNavi
+        return LocationActions.makeMenu(for: [
+            LocationActions.SearchParkings(location: .full(location), handler: { self.pushMapsViewControllerForParkingSearch(destination: location.mapItem) }),
+            LocationActions.SearchWeb(fullLocation: location, viewController: self),
+            LocationActions.OpenWebsite(fullLocation: location, viewController: self),
+            LocationActions.OpenDirectionsInGoogleMaps(location: .full(location)),
+            LocationActions.OpenDirectionsInYahooCarNavi(location: .full(location)),
         ])
     }
 

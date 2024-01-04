@@ -35,13 +35,14 @@ class PointOfInterestViewController: UIViewController {
                 }
             } else {
                 partialLocationTask?.cancel()
-                actions = nil
             }
         }
     }
 
-    private var actions: LocationActions?
-    
+    var location: Location? {
+        annotation?.location
+    }
+
     private var partialLocationTask: Task<Void, Never>?
 
     private lazy var contentView: UIView = {
@@ -95,7 +96,8 @@ class PointOfInterestViewController: UIViewController {
         )
 
         button.addAction(.init(handler: { [weak self] _ in
-            self?.actions?.action(for: .openDirectionsInAppleMaps)?.perform()
+            guard let location = self?.location else { return }
+            LocationActions.OpenDirectionsInAppleMaps(location: location).perform()
         }), for: .touchUpInside)
         
         return button
@@ -116,7 +118,8 @@ class PointOfInterestViewController: UIViewController {
         )
 
         button.addAction(.init(handler: { [weak self] _ in
-            self?.actions?.action(for: .searchParkings)?.perform()
+            guard let self = self, let location = self.location else { return }
+            self.searchParkingsHandler(location)
         }), for: .touchUpInside)
         
         return button
@@ -159,16 +162,21 @@ class PointOfInterestViewController: UIViewController {
 
         titleLabel.text = location.name
 
-        let actions = LocationActions(location: location, viewController: self, searchParkingsHandler: searchParkingsHandler)
-        moreActionsButton.menu = actions.makeMenu(for: [
-            .searchWeb,
-            .openWebsite,
-            .addToInbox,
-            .openDirectionsInGoogleMaps,
-            .openDirectionsInYahooCarNavi
-        ])
-
-        self.actions = actions
+        switch location {
+        case .full(let fullLocation):
+            moreActionsButton.menu = LocationActions.makeMenu(for: [
+                LocationActions.SearchWeb(fullLocation: fullLocation, viewController: self),
+                LocationActions.OpenWebsite(fullLocation: fullLocation, viewController: self),
+                LocationActions.AddToInbox(fullLocation: fullLocation),
+                LocationActions.OpenDirectionsInGoogleMaps(location: location),
+                LocationActions.OpenDirectionsInYahooCarNavi(location: location),
+            ])
+        default:
+            moreActionsButton.menu = LocationActions.makeMenu(for: [
+                LocationActions.OpenDirectionsInGoogleMaps(location: location),
+                LocationActions.OpenDirectionsInYahooCarNavi(location: location),
+            ])
+        }
     }
     
     private func fetchFullLocation(partialLocation: PartialLocation) {
