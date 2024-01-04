@@ -87,8 +87,32 @@ extension LocationActions {
         }
     }
 
-    struct SearchWeb: LocationAction {
+    struct ShowInMaps: LocationAction {
         var menuPosition = MenuPosition(group: .main, order: 2)
+        var location: Location
+        var handler: () -> Void
+
+        func perform() {
+            location.markAsOpened(true)
+            handler()
+        }
+
+        var title: String {
+            String(localized: "Show in Maps")
+
+        }
+
+        var subtitle: String? {
+            nil
+        }
+
+        var image: UIImage {
+            UIImage(systemName: "mappin")!
+        }
+    }
+
+    struct SearchWeb: LocationAction {
+        var menuPosition = MenuPosition(group: .main, order: 3)
         var fullLocation: FullLocation
         var viewController: UIViewController
 
@@ -124,7 +148,7 @@ extension LocationActions {
     struct OpenWebsite: LocationAction {
         static let hostnameParser = try! TLDExtract(useFrozenData: true)
 
-        var menuPosition = MenuPosition(group: .main, order: 3)
+        var menuPosition = MenuPosition(group: .main, order: 4)
         var fullLocation: FullLocation
         var viewController: UIViewController
 
@@ -151,7 +175,7 @@ extension LocationActions {
     }
 
     struct AddToInbox: LocationAction {
-        var menuPosition = MenuPosition(group: .main, order: 4)
+        var menuPosition = MenuPosition(group: .main, order: 5)
         var fullLocation: FullLocation
 
         func perform() {

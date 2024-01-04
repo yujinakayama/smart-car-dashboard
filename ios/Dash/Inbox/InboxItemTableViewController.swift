@@ -233,12 +233,20 @@ class InboxItemTableViewController: UITableViewController {
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: actionProvider)
     }
 
+    func pushMapsViewControllerToShowLocation(_ location: InboxLocation) {
+        let mapsViewController = MapsViewController()
+        mapsViewController.focusedLocation = .full(location)
+        mapsViewController.showsRecentSharedLocations = true
+
+        navigationController?.pushViewController(mapsViewController, animated: true)
+    }
+
     func pushMapsViewControllerForParkingSearch(destination: MKMapItem) {
         let mapsViewController = MapsViewController()
         mapsViewController.showsRecentSharedLocations = false
         mapsViewController.parkingSearchQuittingButton.isHidden = true
 
-        self.navigationController?.pushViewController(mapsViewController, animated: true)
+        navigationController?.pushViewController(mapsViewController, animated: true)
 
         mapsViewController.startSearchingParkings(destination: destination)
     }
@@ -269,6 +277,7 @@ private extension InboxItemTableViewController {
     func actionMenu(for location: InboxLocation) -> UIMenu {
         return LocationActions.makeMenu(for: [
             LocationActions.SearchParkings(location: .full(location), handler: { self.pushMapsViewControllerForParkingSearch(destination: location.mapItem) }),
+            LocationActions.ShowInMaps(location: .full(location), handler: { self.pushMapsViewControllerToShowLocation(location) }),
             LocationActions.SearchWeb(fullLocation: location, viewController: self),
             LocationActions.OpenWebsite(fullLocation: location, viewController: self),
             LocationActions.OpenDirectionsInGoogleMaps(location: .full(location)),

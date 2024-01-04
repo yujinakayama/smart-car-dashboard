@@ -43,6 +43,23 @@ class MapsViewController: UIViewController {
         return mapView
     }()
 
+    var focusedLocation: Location? {
+        didSet {
+            let annotations = mapView.annotations.filter { $0 is FocusedLocationAnnotation }
+            mapView.removeAnnotations(annotations)
+
+            if let location = focusedLocation {
+                navigationItem.title = location.name
+                mapView.addAnnotation(FocusedLocationAnnotation(location))
+                setRegion(for: location, animated: true)
+            } else {
+                navigationItem.title = nil
+            }
+
+            applyCurrentMode()
+        }
+    }
+
     lazy var configuratorSegmentedControl: MapConfiguratorSegmentedControl = {
         let segmentedControl = MapConfiguratorSegmentedControl(configurators: [.standard, .satellite])
         segmentedControl.selectedConfigurator = .standard
@@ -393,7 +410,7 @@ class MapsViewController: UIViewController {
     func applyCurrentMode() {
         switch currentMode {
         case .standard:
-            navigationController?.setNavigationBarHidden(true, animated: true)
+            navigationController?.setNavigationBarHidden(focusedLocation == nil, animated: true)
             parkingSearchOptionsSheetView.hide()
             parkingSearchManager.clearMapView()
             geocoder.cancelGeocode()
@@ -466,6 +483,22 @@ class MapsViewController: UIViewController {
     var pointOfInterestFilterForParkingSearchMode: MKPointOfInterestFilter {
         return MKPointOfInterestFilter(including: [.parking, .publicTransport])
     }
+
+    private func setRegion(for location: Location, animated: Bool) {
+        let region = MKCoordinateRegion(
+            center: location.coordinate,
+            latitudinalMeters: 1000,
+            longitudinalMeters: 1000
+        )
+
+        if isViewLoaded {
+            mapView.setRegion(region, animated: animated)
+        } else {
+            pendingRegion = region
+        }
+    }
+
+    private var pendingRegion: MKCoordinateRegion?
 
     func startSearchingParkings(destination: MKMapItem) {
         guard let destinationName = destination.name else {
@@ -623,10 +656,17 @@ class MapsViewController: UIViewController {
 }
 
 extension MapsViewController: MKMapViewDelegate {
+    func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
+        if let pendingRegion = pendingRegion {
+            mapView.region = pendingRegion
+            self.pendingRegion = nil
+        }
+    }
+
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             return mapView.dequeueReusableAnnotationView(withIdentifier: Self.directionalUserLocationAnnotationViewIdentifier, for: annotation)
-        } else if let annotation = annotation as? InboxLocationAnnotation {
+        } else if let annotation = annotation as? PointOfInterestAnnotation {
             return mapView.dequeueReusableAnnotationView(withIdentifier: Self.pointOfInterestAnnotationViewIdentifier, for: annotation)
         } else if currentMode == .parkingSearch {
             return parkingSearchManager.view(for: annotation)
