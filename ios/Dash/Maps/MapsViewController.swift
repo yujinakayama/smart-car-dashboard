@@ -235,7 +235,7 @@ class MapsViewController: UIViewController {
 
     private var inboxItemDatabaseObservation: NSKeyValueObservation?
     private var inboxItemQuerySubscription: FirestoreQuery<InboxItemProtocol>.CountSubscription?
-    private var inboxLocationUpdateTimer: Timer?
+    private weak var inboxLocationUpdateTimer: Timer?
 
     var isVisible = false
 
@@ -261,6 +261,8 @@ class MapsViewController: UIViewController {
     }
 
     deinit {
+        inboxLocationUpdateTimer?.invalidate()
+
         // > Before releasing an MKMapView object for which you have set a delegate,
         // > remember to set that object’s delegate property to nil.
         // https://developer.apple.com/documentation/mapkit/mkmapviewdelegate
