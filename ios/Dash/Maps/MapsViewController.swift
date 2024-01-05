@@ -661,6 +661,17 @@ extension MapsViewController: MKMapViewDelegate {
         }
     }
 
+    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
+        if focusedLocation == nil { return }
+
+        for view in views {
+            if let annotation = view.annotation as? FocusedLocationAnnotation {
+                mapView.selectAnnotation(annotation, animated: true)
+                return
+            }
+        }
+    }
+
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         switch overlay {
         case let polyline as MKPolyline:
