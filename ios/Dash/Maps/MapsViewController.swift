@@ -339,7 +339,7 @@ class MapsViewController: UIViewController {
 
             self.inboxItemQuerySubscription = database.items(type: .location).subscribeToCountUpdates { (result) in
                 Task {
-                    await self.updateSharedLocationAnnotations()
+                    await self.updateInboxLocationAnnotations()
                 }
             }
         }
@@ -558,7 +558,7 @@ class MapsViewController: UIViewController {
         present(navigationController, animated: true)
     }
 
-    private func updateSharedLocationAnnotations() async {
+    private func updateInboxLocationAnnotations() async {
         guard let recentLocations = await recentLocations() else { return }
 
         let existingAnnotations = mapView.annotations.filter { $0 is InboxLocationAnnotation } as! [InboxLocationAnnotation]
