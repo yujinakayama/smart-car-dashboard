@@ -28,6 +28,7 @@ class Defaults {
         case snapLocationToPointOfInterest
         case automaticallySearchParkingsWhenLocationIsAutomaticallyOpened
         case showTrackOnMaps
+        case thresholdDaysForShownRecentInboxLocationsOnMaps
         case preferredMaxDistanceFromDestinationToParking
         case mainETCCardUUID
         case lastPendingETCGateEntranceDate
@@ -150,6 +151,13 @@ extension Defaults {
     var showTrackOnMaps: Bool {
         get {
             return bool(for: .showTrackOnMaps)
+        }
+    }
+
+    var thresholdTimeIntervalForShownRecentInboxLocationsOnMaps: TimeInterval {
+        get {
+            let days = integer(for: .thresholdDaysForShownRecentInboxLocationsOnMaps)
+            return TimeInterval(days * 24 * 60 * 60)
         }
     }
 

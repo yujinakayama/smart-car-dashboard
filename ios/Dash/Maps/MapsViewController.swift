@@ -233,18 +233,6 @@ class MapsViewController: UIViewController {
 
     private lazy var geocoder = CLGeocoder()
 
-    var showsRecentSharedLocations = true {
-        didSet {
-            if showsRecentSharedLocations {
-                Task {
-                    await updateSharedLocationAnnotations()
-                }
-            } else {
-                removeSharedLocationAnnotations()
-            }
-        }
-    }
-
     private var inboxItemDatabaseObservation: NSKeyValueObservation?
     private var inboxItemQuerySubscription: FirestoreQuery<InboxItemProtocol>.CountSubscription?
 
@@ -344,24 +332,16 @@ class MapsViewController: UIViewController {
     }
 
     private func configureInboxItemDatabase() {
-        if showsRecentSharedLocations {
-            inboxItemDatabaseObservation = Firebase.shared.observe(\.inboxItemDatabase, options: .initial) { [weak self] (firebase, change) in
-                guard let self = self else { return }
+        guard Defaults.shared.thresholdTimeIntervalForShownRecentInboxLocationsOnMaps > 0 else { return }
 
-                if let database = Firebase.shared.inboxItemDatabase {
-                    self.inboxItemQuerySubscription = database.items(type: .location).subscribeToCountUpdates { (result) in
-                        Task {
-                            await self.updateSharedLocationAnnotations()
-                        }
-                    }
-                } else {
-                    self.inboxItemQuerySubscription = nil
-                    self.removeSharedLocationAnnotations()
+        inboxItemDatabaseObservation = Firebase.shared.observe(\.inboxItemDatabase, options: .initial) { [weak self] (firebase, change) in
+            guard let self = self, let database = Firebase.shared.inboxItemDatabase else { return }
+
+            self.inboxItemQuerySubscription = database.items(type: .location).subscribeToCountUpdates { (result) in
+                Task {
+                    await self.updateSharedLocationAnnotations()
                 }
             }
-        } else {
-            inboxItemDatabaseObservation?.invalidate()
-            inboxItemDatabaseObservation = nil
         }
     }
 
@@ -578,11 +558,6 @@ class MapsViewController: UIViewController {
         present(navigationController, animated: true)
     }
 
-    private func removeSharedLocationAnnotations() {
-        let annotations = mapView.annotations.filter { $0 is InboxLocationAnnotation }
-        mapView.removeAnnotations(annotations)
-    }
-
     private func updateSharedLocationAnnotations() async {
         guard let recentLocations = await recentLocations() else { return }
 
@@ -608,8 +583,8 @@ class MapsViewController: UIViewController {
     private func recentLocations() async -> Set<InboxLocation>? {
         guard let database = Firebase.shared.inboxItemDatabase else { return nil }
 
-        let oneWeekAgo = Date(timeIntervalSinceNow: -7 * 24 * 60 * 60)
-        let query = database.items(type: .location, createdAfter: oneWeekAgo)
+        let someDaysAgo = Date(timeIntervalSinceNow: -Defaults.shared.thresholdTimeIntervalForShownRecentInboxLocationsOnMaps)
+        let query = database.items(type: .location, createdAfter: someDaysAgo)
 
         guard let locations = try? await query.get() as? [InboxLocation] else {
             return nil
