@@ -243,7 +243,7 @@ class InboxItemTableViewController: UITableViewController {
 
     func pushMapsViewControllerForParkingSearch(destination: MKMapItem) {
         let mapsViewController = MapsViewController()
-        mapsViewController.showsRecentSharedLocations = false
+        mapsViewController.showsRecentSharedLocations = true
         mapsViewController.parkingSearchQuittingButton.isHidden = true
 
         navigationController?.pushViewController(mapsViewController, animated: true)
