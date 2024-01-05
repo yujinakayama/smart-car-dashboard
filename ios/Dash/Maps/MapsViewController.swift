@@ -235,6 +235,7 @@ class MapsViewController: UIViewController {
 
     private var inboxItemDatabaseObservation: NSKeyValueObservation?
     private var inboxItemQuerySubscription: FirestoreQuery<InboxItemProtocol>.CountSubscription?
+    private var inboxLocationUpdateTimer: Timer?
 
     var isVisible = false
 
@@ -343,6 +344,13 @@ class MapsViewController: UIViewController {
                 }
             }
         }
+
+        inboxLocationUpdateTimer = Timer.scheduledTimer(
+            timeInterval: 60 * 60,
+            target: self, selector: #selector(updateInboxLocationAnnotations),
+            userInfo: nil,
+            repeats: true
+        )
     }
 
     private func changePlacementOfParkingSearchOptionsSheetViewIfNeeded() {
@@ -558,7 +566,7 @@ class MapsViewController: UIViewController {
         present(navigationController, animated: true)
     }
 
-    private func updateInboxLocationAnnotations() async {
+    @objc private func updateInboxLocationAnnotations() async {
         guard let recentLocations = await recentLocations() else { return }
 
         let existingAnnotations = mapView.annotations.filter { $0 is InboxLocationAnnotation } as! [InboxLocationAnnotation]
