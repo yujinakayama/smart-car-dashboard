@@ -345,12 +345,13 @@ class MapsViewController: UIViewController {
             }
         }
 
-        inboxLocationUpdateTimer = Timer.scheduledTimer(
-            timeInterval: 60 * 60,
-            target: self, selector: #selector(updateInboxLocationAnnotations),
-            userInfo: nil,
-            repeats: true
-        )
+        inboxLocationUpdateTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] (timer) in
+            guard let self = self else { return }
+
+            Task {
+                await self.updateInboxLocationAnnotations()
+            }
+        }
     }
 
     private func changePlacementOfParkingSearchOptionsSheetViewIfNeeded() {
@@ -566,7 +567,7 @@ class MapsViewController: UIViewController {
         present(navigationController, animated: true)
     }
 
-    @objc private func updateInboxLocationAnnotations() async {
+    private func updateInboxLocationAnnotations() async {
         guard let recentLocations = await recentLocations() else { return }
 
         let existingAnnotations = mapView.annotations.filter { $0 is InboxLocationAnnotation } as! [InboxLocationAnnotation]
