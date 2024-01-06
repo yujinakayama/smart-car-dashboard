@@ -274,6 +274,8 @@ public class ParkingSearchMapViewManager: NSObject {
         view.animatesDrop = true
         view.canShowCallout = true
         view.displayPriority = .required
+        // Show DestinationAnnotation over other annotations such as PointOfInterestAnnotation
+        view.zPriority = .init(MKAnnotationViewZPriority.defaultUnselected.rawValue + 1)
 
         let activityIndicatorView = UIActivityIndicatorView()
         activityIndicatorView.startAnimating()
