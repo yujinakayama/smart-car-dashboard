@@ -71,6 +71,7 @@ protocol FullLocation {
     var address: Address { get }
     var categories: [PointOfInterestCategory] { get }
     var coordinate: CLLocationCoordinate2D { get }
+    var googleMapsURL: URL? { get }
     var mapItem: MKMapItem { get }
     var name: String? { get }
     var websiteURL: URL? { get }

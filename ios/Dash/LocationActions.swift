@@ -12,6 +12,7 @@ import DashCloudKit
 
 protocol LocationAction {
     var menuPosition: LocationActions.MenuPosition { get }
+    var isPerformable: Bool { get }
     func perform()
     var title: String { get }
     var subtitle: String? { get }
@@ -43,6 +44,10 @@ extension LocationActions {
         var menuPosition = MenuPosition(group: .main, order: 0)
         var location: Location
 
+        var isPerformable: Bool {
+            return true
+        }
+
         func perform() {
             location.markAsOpened(true)
             Task {
@@ -68,6 +73,10 @@ extension LocationActions {
         var location: Location
         var handler: () -> Void
 
+        var isPerformable: Bool {
+            return true
+        }
+
         func perform() {
             location.markAsOpened(true)
             handler()
@@ -92,6 +101,10 @@ extension LocationActions {
         var location: Location
         var handler: () -> Void
 
+        var isPerformable: Bool {
+            return true
+        }
+
         func perform() {
             location.markAsOpened(true)
             handler()
@@ -115,6 +128,10 @@ extension LocationActions {
         var menuPosition = MenuPosition(group: .main, order: 3)
         var fullLocation: FullLocation
         var viewController: UIViewController
+
+        var isPerformable: Bool {
+            return true
+        }
 
         func perform() {
             let query = [
@@ -152,6 +169,10 @@ extension LocationActions {
         var fullLocation: FullLocation
         var viewController: UIViewController
 
+        var isPerformable: Bool {
+            return fullLocation.websiteURL != nil
+        }
+
         func perform() {
             guard let websiteURL = fullLocation.websiteURL else { return }
             fullLocation.markAsOpened(true)
@@ -174,9 +195,59 @@ extension LocationActions {
         }
     }
 
-    struct AddToInbox: LocationAction {
+    struct OpenInTabelog: LocationAction {
         var menuPosition = MenuPosition(group: .main, order: 5)
         var fullLocation: FullLocation
+        var viewController: UIViewController
+
+        var isPerformable: Bool {
+            return fullLocation.googleMapsURL != nil && fullLocation.categories.contains { $0.isFoodProvider }
+        }
+
+        func perform() {
+            guard let googleMapsURL = fullLocation.googleMapsURL else { return }
+
+            let cloudClient = DashCloudClient()
+            cloudClient.searchTabelogPage(for: googleMapsURL) { (result) in
+                switch result {
+                case .success(let webpage):
+                    if let webpage = webpage {
+                        openTabelogURL(url: webpage.link)
+                    }
+                case .failure(let error):
+                    logger.error(error)
+                }
+            }
+        }
+
+        private func openTabelogURL(url: URL) {
+            UIApplication.shared.open(url, options: [.universalLinksOnly: true]) { (success) in
+                if (!success) {
+                    WebViewController.present(url: url, from: viewController)
+                }
+            }
+        }
+
+        var title: String {
+            String(localized: "Open in Tabelog")
+        }
+
+        var subtitle: String? {
+            nil
+        }
+
+        var image: UIImage {
+            UIImage(systemName: "fork.knife")!
+        }
+    }
+
+    struct AddToInbox: LocationAction {
+        var menuPosition = MenuPosition(group: .main, order: 6)
+        var fullLocation: FullLocation
+
+        var isPerformable: Bool {
+            return true
+        }
 
         func perform() {
             guard let vehicleID = Firebase.shared.authentication.vehicleID else { return }
@@ -213,6 +284,10 @@ extension LocationActions {
         var menuPosition = MenuPosition(group: .otherApp, order: 0)
         var location: Location
 
+        var isPerformable: Bool {
+            return true
+        }
+
         func perform() {
             // https://developers.google.com/maps/documentation/urls/get-started#directions-action
             var components = URLComponents(string: "https://www.google.com/maps/dir/")!
@@ -243,6 +318,10 @@ extension LocationActions {
     struct OpenDirectionsInYahooCarNavi: LocationAction {
         var menuPosition = MenuPosition(group: .otherApp, order: 1)
         var location: Location
+
+        var isPerformable: Bool {
+            return true
+        }
 
         func perform() {
             // https://note.com/yahoo_carnavi/n/n1d6b819a816c

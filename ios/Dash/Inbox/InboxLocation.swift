@@ -11,8 +11,11 @@ import MapKit
 import FirebaseFirestore
 import CommonCrypto
 import ParkingSearchKit
+import TLDExtract
 
 class InboxLocation: InboxItemProtocol, FullLocation {
+    static let hostnameParser = try! TLDExtract(useFrozenData: true)
+
     var firebaseDocument: DocumentReference?
     var identifier: String!
 
@@ -40,6 +43,16 @@ class InboxLocation: InboxItemProtocol, FullLocation {
             to: mapItem,
             snappingToPointOfInterest: shouldBeSnappedToPointOfInterestInAppleMaps
         )
+    }
+
+    var googleMapsURL: URL? {
+        if let rootDomain = Self.hostnameParser.parse(url)?.rootDomain,
+           rootDomain.hasPrefix("google.")
+        {
+            return url
+        } else {
+            return nil
+        }
     }
 
     var mapItem: MKMapItem {

@@ -278,9 +278,10 @@ private extension InboxItemTableViewController {
             LocationActions.ShowInMaps(location: .full(location), handler: { self.pushMapsViewControllerToShowLocation(location) }),
             LocationActions.SearchWeb(fullLocation: location, viewController: self),
             LocationActions.OpenWebsite(fullLocation: location, viewController: self),
+            LocationActions.OpenInTabelog(fullLocation: location, viewController: self),
             LocationActions.OpenDirectionsInGoogleMaps(location: .full(location)),
             LocationActions.OpenDirectionsInYahooCarNavi(location: .full(location)),
-        ])
+        ].filter { $0.isPerformable })
     }
 
     func actionMenu(for musicItem: MusicItem) -> UIMenu {

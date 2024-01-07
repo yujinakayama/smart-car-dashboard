@@ -235,6 +235,16 @@ extension PointOfInterestCategory {
         }
     }
 
+
+    var isFoodProvider: Bool {
+        switch self {
+        case .bakery, .bar, .cafe, .food, .foodMarket, .mealDelivery, .mealTakeaway, .restaurant:
+            return true
+        default:
+            return false
+        }
+    }
+
     var requiresAccurateCoordinate: Bool {
         switch self {
         case .parking, .rendezvous:

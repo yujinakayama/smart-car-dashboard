@@ -101,6 +101,30 @@ public class DashCloudClient {
         }
     }
 
+    public func searchTabelogPage(for googleMapsURL: URL, completionHandler: @escaping (Result<SearchResultWebpage?, Error>) -> Void) {
+        let url = URL(string: "searchTabelogPage", relativeTo: baseURL)!
+
+        let payload: [String: Any] = [
+            "place": [
+                "url": googleMapsURL.absoluteString
+            ]
+        ]
+
+        post(url: url, payload: payload) { (result) in
+            switch result {
+            case .success(let data):
+                do {
+                    let webpage = try JSONDecoder().decode(Optional<SearchResultWebpage>.self, from: data)
+                    completionHandler(.success(webpage))
+                } catch {
+                    completionHandler(.failure(error))
+                }
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
+        }
+    }
+
     public func lockDoors(of vehicleID: String, completionHandler: @escaping (Error?) -> Void) {
         let url = URL(string: "lockDoors", relativeTo: baseURL)!
 

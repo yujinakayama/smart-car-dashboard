@@ -167,15 +167,16 @@ class PointOfInterestViewController: UIViewController {
             moreActionsButton.menu = LocationActions.makeMenu(for: [
                 LocationActions.SearchWeb(fullLocation: fullLocation, viewController: self),
                 LocationActions.OpenWebsite(fullLocation: fullLocation, viewController: self),
+                LocationActions.OpenInTabelog(fullLocation: fullLocation, viewController: self),
                 LocationActions.AddToInbox(fullLocation: fullLocation),
                 LocationActions.OpenDirectionsInGoogleMaps(location: location),
                 LocationActions.OpenDirectionsInYahooCarNavi(location: location),
-            ])
+            ].filter { $0.isPerformable })
         default:
             moreActionsButton.menu = LocationActions.makeMenu(for: [
                 LocationActions.OpenDirectionsInGoogleMaps(location: location),
                 LocationActions.OpenDirectionsInYahooCarNavi(location: location),
-            ])
+            ].filter { $0.isPerformable })
         }
     }
     
