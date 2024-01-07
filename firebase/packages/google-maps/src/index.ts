@@ -1,3 +1,5 @@
 export * from './addressComponent'
 export * from './addressComponent'
+export * from './placeURL'
+export * from './url'
 export * from './urlDataParameter'
