@@ -8,7 +8,8 @@
     "lint": "npm run lint --workspaces --if-present",
     "format": "npm run format --workspaces --if-present",
     "build": "npm run build --workspaces --if-present",
-    "clean": "npm run clean --workspaces --if-present"
+    "clean": "npm run clean --workspaces --if-present",
+    "deploy": "firebase deploy --only functions"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
