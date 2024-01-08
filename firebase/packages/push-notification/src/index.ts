@@ -1,4 +1,7 @@
-import { messaging } from 'firebase-admin'
+import * as firebase from 'firebase-admin'
+import { initializeApp } from 'firebase-admin/app'
+
+initializeApp()
 
 export function sendNotificationToVehicle(
   vehicleID: string,
@@ -11,11 +14,11 @@ export function sendNotificationToVehicle(
     },
   }
 
-  return messaging().send(message)
+  return firebase.messaging().send(message)
 }
 
 export interface NotificationPayload {
-  aps: messaging.Aps
+  aps: firebase.messaging.Aps
   foregroundPresentationOptions: UNNotificationPresentationOptions
   notificationType: string
 }

@@ -1,5 +1,8 @@
 import { sendNotificationToVehicle } from '@dash/push-notification'
-import * as admin from 'firebase-admin'
+// Destructured imports are not supported in firebase-admin
+// https://github.com/firebase/firebase-admin-node/issues/593#issuecomment-917173625
+import * as firebase from 'firebase-admin'
+import { initializeApp } from 'firebase-admin/app'
 import { onRequest } from 'firebase-functions/v2/https'
 
 import { isAppleMapsLocation, normalizeAppleMapsLocation } from './appleMaps'
@@ -23,6 +26,8 @@ import {
   normalizeYouTubeVideo,
   requiredEnvName as youtubeRequiredEnvName,
 } from './youtube'
+
+initializeApp()
 
 const requiredSecrets = Array.from(
   new Set([googleMapsRequiredEnvName, appleMusicRequiredEnvName, youtubeRequiredEnvName].flat()),
@@ -52,7 +57,7 @@ export const addItemToInbox = onRequest(
 
     // Create a Firestore document without network access to get document identifier
     // https://github.com/googleapis/nodejs-firestore/blob/v3.8.6/dev/src/reference.ts#L2414-L2479
-    const document = admin
+    const document = firebase
       .firestore()
       .collection('vehicles')
       .doc(request.vehicleID)
@@ -87,9 +92,9 @@ async function normalize(inputData: InputData): Promise<NormalizedData> {
 async function addItemToFirestore(
   item: Item,
   document: FirebaseFirestore.DocumentReference,
-): Promise<admin.firestore.WriteResult> {
+): Promise<firebase.firestore.WriteResult> {
   const data = {
-    creationDate: admin.firestore.FieldValue.serverTimestamp(),
+    creationDate: firebase.firestore.FieldValue.serverTimestamp(),
     ...item,
   }
 

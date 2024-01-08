@@ -1,13 +1,11 @@
 import { NotificationPayload, UNNotificationPresentationOptions } from '@dash/push-notification'
-import * as admin from 'firebase-admin'
+import * as firebase from 'firebase-admin'
 
 import { Item } from './item'
 import { NormalizedData } from './normalizedData'
 
-admin.initializeApp()
-
 interface ShareNotificationPayload extends NotificationPayload {
-  aps: admin.messaging.Aps
+  aps: firebase.messaging.Aps
   foregroundPresentationOptions: UNNotificationPresentationOptions
   item: ItemWithIdentifier
   notificationType: 'share'
@@ -20,7 +18,7 @@ interface ItemWithIdentifier extends Item {
 export function makeNotificationPayload(item: Item, identifier: string): ShareNotificationPayload {
   const normalizedData = item as unknown as NormalizedData
 
-  let alert: admin.messaging.ApsAlert
+  let alert: firebase.messaging.ApsAlert
 
   switch (normalizedData.type) {
     case 'location':

@@ -1,5 +1,10 @@
+// Destructured imports are not supported in firebase-admin
+// https://github.com/firebase/firebase-admin-node/issues/593#issuecomment-917173625
 import * as firebase from 'firebase-admin'
+import { initializeApp } from 'firebase-admin/app'
 import * as functions from 'firebase-functions/v1'
+
+initializeApp()
 
 // Note: Cloud Functions for Firebase (2nd gen) does not provide support for the events and triggers described in this guide.
 // Because 1st gen and 2nd gen functions can coexist side-by-side in the same source file,
