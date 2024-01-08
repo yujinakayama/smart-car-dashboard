@@ -38,6 +38,9 @@ fileprivate func specificIcon(for category: PointOfInterestCategory) -> PointOfI
     case .airport:
         image = UIImage(systemName: "airplane")!
         color = UIColor(rgb: 0x6599F8)
+    case .bar:
+        image = UIImage(systemName: "wineglass.fill")!
+        color = UIColor(rgb: 0xEA9A52)
     case .buddhistTemple:
         image = UIImage(named: "manji")!
         color = UIColor(rgb: 0xA8825B)
