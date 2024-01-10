@@ -1,0 +1,146 @@
+import { z } from 'zod'
+
+// Generated from real response JSON with https://rsinohara.github.io/json-to-zod-react/
+export const restaurantDetailShowResponseSchema = z.object({
+  restaurant: z.object({
+    id: z.number(),
+    status: z.string(),
+    name: z.string(),
+    thumbnail_image_url_list: z.array(z.string()),
+    area_name: z.string(),
+    genre_name_list: z.array(z.string()),
+    owner_plan_status: z.number(),
+    yoyakuplan_flg: z.number(),
+    paid_member_flg: z.boolean(),
+    location_information: z.object({
+      latitude: z.number(),
+      longitude: z.number(),
+      granularity: z.string(),
+    }),
+    prefecture_name: z.string(),
+    total_review_count: z.number(),
+    total_hozon_count: z.number(),
+    total_score: z.number(),
+    average_budget: z.object({
+      lunch: z.string(),
+      dinner: z.string(),
+      granularity: z.string(),
+    }),
+    regular_holiday: z.string(),
+    opened_date: z.string(),
+    common_plan_information: z.object({
+      partner_type: z.string(),
+      tax_display_type: z.string(),
+      granularity: z.string(),
+    }),
+    official_information_flg: z.boolean(),
+    show_advertisement_flg: z.boolean().optional(),
+    ranking_badge_icon_url: z.string().optional(),
+    catch_copy: z.string(),
+    kana_name: z.string(),
+    alias_name: z.string(),
+    formal_name: z.string(),
+    address: z.string(),
+    seat_type_photo_count: z.number(),
+    photo_count_data: z.object({
+      all: z.number(),
+      food: z.number(),
+      drink: z.number(),
+      menu: z.number(),
+      interior: z.number(),
+      exterior: z.number(),
+      other: z.number(),
+      user_post: z.number(),
+      granularity: z.string(),
+    }),
+    menu_count_data: z.object({
+      food: z.number(),
+      drink: z.number(),
+      lunch: z.number(),
+      granularity: z.string(),
+    }),
+    plan_count: z.number(),
+    coupon_count: z.number(),
+    valid_phone_number_flg: z.boolean(),
+    tel: z.string(),
+    reservation_status: z.string(),
+    tabelog_url: z.string(),
+    recommended_total_review_information_list: z
+      .array(
+        z.object({
+          bookmark_id: z.number(),
+          owner_pickup_flg: z.boolean(),
+          tabelog_pickup_flg: z.boolean(),
+          granularity: z.string(),
+        }),
+      )
+      .optional(),
+    recommended_posted_photo_id_list: z.array(z.number()).optional(),
+    business_hour: z.string(),
+    tax_display_type: z.string(),
+    owner_budget: z
+      .object({
+        lunch: z.string(),
+        dinner: z.string(),
+        granularity: z.string(),
+      })
+      .optional(),
+    user_budget: z
+      .object({
+        lunch: z.string(),
+        dinner: z.string(),
+        granularity: z.string(),
+      })
+      .optional(),
+    transportation: z.string(),
+    payment: z.string(),
+    service_charge: z.string(),
+    reservation: z.string(),
+    seat: z.string(),
+    private_room: z.string(),
+    charter: z.string(),
+    smoking: z.string(),
+    parking: z.string(),
+    space_equipment: z.string(),
+    course: z.string(),
+    drink: z.string(),
+    food: z.string(),
+    usage_scene: z.string(),
+    location: z.string(),
+    service: z.string(),
+    kids: z.string(),
+    dress_code: z.string(),
+    remark: z.string(),
+    homepage_url: z.string().optional(),
+    instagram_url: z.string().optional(),
+    test_restaurant_flg: z.boolean(),
+    tabelog_hyakumeiten: z
+      .object({
+        award_year: z.number(),
+        category_id: z.number(),
+        detail_badge_icon_url: z.string(),
+        lp_url: z.string(),
+        open_browser_flg: z.boolean(),
+        granularity: z.string(),
+      })
+      .optional(),
+    tabelog_hyakumeiten_history_list: z
+      .array(
+        z.object({
+          award_year: z.number(),
+          category_id: z.number(),
+          detail_badge_icon_url: z.string(),
+          lp_url: z.string(),
+          open_browser_flg: z.boolean(),
+          granularity: z.string(),
+        }),
+      )
+      .optional(),
+    review_point_flg: z.boolean(),
+    prefecture_id: z.number(),
+    sustainable_information_flg: z.boolean(),
+    rich_appearance_flg: z.boolean(),
+    map_icon_type: z.string(),
+    granularity: z.string(),
+  }),
+})

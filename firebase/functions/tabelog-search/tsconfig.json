@@ -8,6 +8,9 @@
   "references": [
     {
       "path": "../../packages/google-maps"
+    },
+    {
+      "path": "../../packages/tabelog"
     }
   ]
 }

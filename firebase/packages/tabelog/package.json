@@ -1,0 +1,23 @@
+{
+  "name": "@dash/tabelog",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "private": true,
+  "scripts": {
+    "clean": "rm -rf lib tsconfig.tsbuildinfo",
+    "lint": "prettier --check . && eslint .",
+    "format": "prettier --write . && eslint --fix .",
+    "build": "tsc --build",
+    "test": "jest"
+  },
+  "dependencies": {
+    "axios": "^1.6.5",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/uuid": "^9.0.7",
+    "talkback": "^3.0.2",
+    "uuid": "^9.0.1"
+  }
+}
