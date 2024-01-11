@@ -27,6 +27,22 @@ describe('extractRestaurantIDFromURL()', () => {
     })
   })
 
+  describe('with a English top page URL of a restaurant', () => {
+    it('returns the restaurant ID', () => {
+      expect(
+        extractRestaurantIDFromURL('https://tabelog.com/en/tokyo/A1301/A130102/13168901/'),
+      ).toEqual(13168901)
+    })
+  })
+
+  describe('with a Taiwanese top page URL of a restaurant', () => {
+    it('returns the restaurant ID', () => {
+      expect(
+        extractRestaurantIDFromURL('https://tabelog.com/tw/tokyo/A1301/A130102/13168901/'),
+      ).toEqual(13168901)
+    })
+  })
+
   describe('with a restaurant search page URL', () => {
     it('returns null', () => {
       expect(

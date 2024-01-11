@@ -11,7 +11,8 @@ export function extractRestaurantIDFromURL(url: URL | string): number | null {
 
   // https://tabelog.com/tokyo/A1301/A130102/13168901/
   // https://tabelog.com/tokyo/A1301/A130102/13168901/dtlphotolst/smp2/
-  const result = url.pathname.match(/^\/[a-z]+\/[A-Z]\d+\/[A-Z]\d+\/(\d+)/)
+  // https://tabelog.com/en/tokyo/A1301/A130102/13168901/
+  const result = url.pathname.match(/^(?:\/[a-z]{2})?\/[a-z]+\/[A-Z]\d+\/[A-Z]\d+\/(\d+)/)
   if (!result) {
     return null
   }
