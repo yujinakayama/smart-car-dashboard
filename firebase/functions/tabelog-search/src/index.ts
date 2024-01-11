@@ -5,7 +5,7 @@ import { Place as GooglePlace } from '@googlemaps/google-maps-services-js'
 import { onRequest } from 'firebase-functions/v2/https'
 import { customsearch_v1, google } from 'googleapis'
 
-import { distanceBetween } from './coordinate'
+import { Coordinate, distanceBetween } from './coordinate'
 
 const googleAPIKeyEnvName = 'GOOGLE_API_KEY'
 // If the secret is missing, it'll be error on deployment
@@ -27,6 +27,10 @@ interface Request {
   }
 }
 
+interface Response {
+  restaurant?: Restaurant
+}
+
 export const searchTabelogPage = onRequest(
   {
     region: 'asia-northeast1',
@@ -36,27 +40,34 @@ export const searchTabelogPage = onRequest(
     const request = functionRequest.body as Request
     console.log('request:', request)
 
-    const url = await expandURL(request.place.url)
-    const placeURL = new PlaceURL(url, googleAPIKey)
-    const place = await placeURL.fetchPlaceDetails(['address_component', 'geometry', 'name'])
-    if (!place) {
-      throw new Error(`no Google Maps place found for ${placeURL}`)
-    }
-    const webpage = await searchTabelogPageFor(place)
+    const url = new URL(request.place.url)
+    const restaurant = await searchTabelogRestaurantFor(url)
 
-    functionResponse.send(webpage)
+    let response: Response
+    if (restaurant) {
+      response = { restaurant }
+    } else {
+      response = {}
+    }
+    functionResponse.send(response)
   },
 )
 
 type SearchResultWebpage = Pick<customsearch_v1.Schema$Result, 'title' | 'link'>
 
-async function searchTabelogPageFor(place: GooglePlace): Promise<SearchResultWebpage | null> {
+async function searchTabelogRestaurantFor(url: URL): Promise<Restaurant | null> {
+  const expandedURL = await expandURL(url)
+  const placeURL = new PlaceURL(expandedURL, googleAPIKey)
+
+  const place = await placeURL.fetchPlaceDetails(['address_component', 'geometry', 'name'])
+  if (!place) {
+    throw new Error(`No Google Maps place found for ${placeURL}`)
+  }
   if (!place.address_components || !place.geometry || !place.name) {
     throw new Error('address_component, geometry, or name is missing in the Place')
   }
 
   const address = convertAddressComponentsToObject(place.address_components)
-
   const searchWords = [place.name, address.administrative_area_level_1, address.locality].filter(
     (string) => string,
   )
@@ -66,16 +77,10 @@ async function searchTabelogPageFor(place: GooglePlace): Promise<SearchResultWeb
     return null
   }
 
-  const restaurant = await findMatchingTabelogRestaurant(webpages, place)
-  if (!restaurant) {
-    return null
-  }
-
-  // For backward compatibility
-  return {
-    title: restaurant.name,
-    link: restaurant.webURL.toString(),
-  }
+  return await findTabelogRestaurantNear(webpages, {
+    latitude: place.geometry.location.lat,
+    longitude: place.geometry.location.lng,
+  })
 }
 
 async function searchGoogle(query: string): Promise<SearchResultWebpage[] | null> {
@@ -98,20 +103,11 @@ async function searchGoogle(query: string): Promise<SearchResultWebpage[] | null
   return response.data.items ?? null
 }
 
-async function findMatchingTabelogRestaurant(
+async function findTabelogRestaurantNear(
   webpages: SearchResultWebpage[],
-  place: GooglePlace,
+  targetCoordinate: Coordinate,
 ): Promise<Restaurant | null> {
-  if (!place.geometry) {
-    throw new Error('geometry is missing in the Place')
-  }
-
   const restaurantIDs = collectRestaurantIDsFrom(webpages)
-
-  const placeCoordinate = {
-    latitude: place.geometry.location.lat,
-    longitude: place.geometry.location.lng,
-  }
 
   for (const restaurantID of restaurantIDs) {
     const restaurant = await tabelogClient.getRestaurant(restaurantID)
@@ -119,7 +115,7 @@ async function findMatchingTabelogRestaurant(
       continue
     }
 
-    const distance = distanceBetween(restaurant.coordinate, placeCoordinate)
+    const distance = distanceBetween(restaurant.coordinate, targetCoordinate)
     if (distance <= 100) {
       return restaurant
     }
