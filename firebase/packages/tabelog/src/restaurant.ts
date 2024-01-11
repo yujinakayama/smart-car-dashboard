@@ -1,3 +1,5 @@
+import { Coordinate } from './coordinate'
+
 export interface Restaurant {
   address: string
   averageBudget: Budget
@@ -8,11 +10,6 @@ export interface Restaurant {
   reviewCount: number
   score: number
   webURL: URL
-}
-
-interface Coordinate {
-  latitude: number
-  longitude: number
 }
 
 interface Budget {

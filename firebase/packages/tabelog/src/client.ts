@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosPromise, Method } from 'axios'
 
 import { restaurantDetailShowResponseSchema } from './apiSchema'
+import { TokyoDatumCoordinate } from './coordinate'
 import { Restaurant } from './restaurant'
 
 export interface ClientOptions {
@@ -41,7 +42,10 @@ export class Client {
     return {
       address: rawRestaurant.address,
       averageBudget: rawRestaurant.average_budget,
-      coordinate: rawRestaurant.location_information,
+      coordinate: new TokyoDatumCoordinate(
+        rawRestaurant.location_information.latitude,
+        rawRestaurant.location_information.longitude,
+      ).worldGeodeticSystemCoordinate,
       genres: rawRestaurant.genre_name_list,
       id: rawRestaurant.id,
       name: rawRestaurant.name,
