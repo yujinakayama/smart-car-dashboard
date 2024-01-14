@@ -69,10 +69,10 @@ static void mainTask(void *p) {
   HomeKitBridge* bridge = new HomeKitBridge();
   bridge->registerHomeKitAccessory();
 
-  CarSmartKey* smartKey = new CarSmartKey(GPIO_NUM_27, GPIO_NUM_14, GPIO_NUM_25, GPIO_NUM_26);
+  CarSmartKey* smartKey = new CarSmartKey(GPIO_NUM_14, GPIO_NUM_27, GPIO_NUM_26, GPIO_NUM_32);
   smartKey->registerBridgedHomeKitAccessory();
 
-  GarageRemote* garageRemote = new GarageRemote(GPIO_NUM_12, GPIO_NUM_13);
+  GarageRemote* garageRemote = new GarageRemote(GPIO_NUM_13, GPIO_NUM_12);
   garageRemote->registerBridgedHomeKitAccessory();
 
   startWiFiAccessPoint();
