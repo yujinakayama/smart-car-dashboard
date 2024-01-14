@@ -208,11 +208,11 @@ extension LocationActions {
             guard let googleMapsURL = fullLocation.googleMapsURL else { return }
 
             let cloudClient = DashCloudClient()
-            cloudClient.searchTabelogPage(for: googleMapsURL) { (result) in
+            cloudClient.searchTabelogRestaurant(for: googleMapsURL) { (result) in
                 switch result {
-                case .success(let webpage):
-                    if let webpage = webpage {
-                        openTabelogURL(url: webpage.link)
+                case .success(let restaurant):
+                    if let restaurant = restaurant {
+                        openInTabelogAppOrWebViewController(url: restaurant.webURL)
                     }
                 case .failure(let error):
                     logger.error(error)
@@ -220,7 +220,7 @@ extension LocationActions {
             }
         }
 
-        private func openTabelogURL(url: URL) {
+        private func openInTabelogAppOrWebViewController(url: URL) {
             UIApplication.shared.open(url, options: [.universalLinksOnly: true]) { (success) in
                 if (!success) {
                     WebViewController.present(url: url, from: viewController)

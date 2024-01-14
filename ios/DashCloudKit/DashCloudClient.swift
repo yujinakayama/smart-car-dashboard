@@ -101,7 +101,7 @@ public class DashCloudClient {
         }
     }
 
-    public func searchTabelogPage(for googleMapsURL: URL, completionHandler: @escaping (Result<SearchResultWebpage?, Error>) -> Void) {
+    public func searchTabelogRestaurant(for googleMapsURL: URL, completionHandler: @escaping (Result<TabelogRestaurant?, Error>) -> Void) {
         let url = URL(string: "searchTabelogPage", relativeTo: baseURL)!
 
         let payload: [String: Any] = [
@@ -114,8 +114,8 @@ public class DashCloudClient {
             switch result {
             case .success(let data):
                 do {
-                    let webpage = try JSONDecoder().decode(Optional<SearchResultWebpage>.self, from: data)
-                    completionHandler(.success(webpage))
+                    let response = try JSONDecoder().decode(SearchTabelogRestaurantResponse.self, from: data)
+                    completionHandler(.success(response.restaurant))
                 } catch {
                     completionHandler(.failure(error))
                 }
@@ -197,4 +197,8 @@ public class DashCloudClient {
 
 enum DashCloudClientError: Error {
     case serverError
+}
+
+fileprivate struct SearchTabelogRestaurantResponse: Decodable {
+    let restaurant: TabelogRestaurant?
 }
