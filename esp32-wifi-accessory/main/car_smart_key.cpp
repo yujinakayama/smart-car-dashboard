@@ -227,7 +227,7 @@ void CarSmartKey::lockDoors() {
   ESP_LOGD(TAG, "lockDoors");
 
   this->activateSmartKey();
-  // For some reason pressing for 150ms does not work (maybe to avoid unintentional unlock by mistake?)
+  // For some reason pressing for 150ms does not work (maybe to avoid unintentional lock by mistake?)
   this->pressSmartKeyLockButton(600);
   this->deactivateSmartKey();
 }
