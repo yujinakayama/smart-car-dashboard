@@ -4,3 +4,6 @@
 [submodule "esp32-wifi-accessory/esp-homekit-sdk"]
 	path = esp32-wifi-accessory/esp-homekit-sdk
 	url = https://github.com/espressif/esp-homekit-sdk
+[submodule "esp32-wifi-accessory/esp-idf-lib"]
+	path = esp32-wifi-accessory/esp-idf-lib
+	url = https://github.com/UncleRus/esp-idf-lib.git

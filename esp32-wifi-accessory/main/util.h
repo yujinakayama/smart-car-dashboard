@@ -4,6 +4,8 @@
 extern "C" {
 #endif
 
+unsigned long millis();
+
 void delay(uint32_t ms);
 
 char* strdup(const char* string);

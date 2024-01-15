@@ -33,6 +33,7 @@
 #include "http_server.h"
 #include "log_config.h"
 #include "util.h"
+#include "weather_sensor.h"
 #include "wifi.h"
 
 static void configureGPIOPins() {
@@ -74,6 +75,9 @@ static void mainTask(void *p) {
 
   GarageRemote* garageRemote = new GarageRemote(GPIO_NUM_13, GPIO_NUM_12);
   garageRemote->registerBridgedHomeKitAccessory();
+
+  WeatherSensor* weatherSensor = new WeatherSensor(GPIO_NUM_21, GPIO_NUM_22);
+  weatherSensor->registerBridgedHomeKitAccessory();
 
   startWiFiAccessPoint();
   /* After all the initializations are done, start the HAP core */
