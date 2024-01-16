@@ -23,9 +23,7 @@ static int identifyAccessory(hap_acc_t* ha);
 static int readTemperatureSensorCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv);
 static int readHumiditySensorCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv);
 
-WeatherSensor::WeatherSensor(gpio_num_t sdaPin, gpio_num_t sdlPin) {
-  memset(&this->lastData, 0, sizeof(SensorData));
-
+bmp280_t* initBMP280(gpio_num_t sdaPin, gpio_num_t sdlPin) {
   ESP_ERROR_CHECK(i2cdev_init());
 
   bmp280_t* bmp280 = (bmp280_t*)malloc(sizeof(bmp280_t));
@@ -42,7 +40,13 @@ WeatherSensor::WeatherSensor(gpio_num_t sdaPin, gpio_num_t sdlPin) {
   };
   ESP_ERROR_CHECK(bmp280_init(bmp280, &params));
 
-  this->bmp280 = bmp280;
+  return bmp280;
+}
+
+WeatherSensor::WeatherSensor(gpio_num_t sdaPin, gpio_num_t sdlPin, float temperatureCalidation) {
+  this->bmp280 = initBMP280(sdaPin, sdlPin);
+  this->temperatureCalidation = temperatureCalidation;
+  memset(&this->lastData, 0, sizeof(SensorData));
 }
 
 void WeatherSensor::registerBridgedHomeKitAccessory() {
@@ -137,14 +141,22 @@ void WeatherSensor::addFirmwareUpgradeService() {
 }
 
 SensorData WeatherSensor::getData() {
-  if (this->lastData.time > 0) {
-    unsigned long elapsedTime = millis() - this->lastData.time;
-    if (elapsedTime < 3000) {
-      return this->lastData;
-    }
+  if (!this->hasValidLastData()) {
+    this->lastData = this->readData();
   }
 
-  return this->readData();
+  SensorData calibratedData = this->lastData;
+  calibratedData.temperature += this->temperatureCalidation;
+  return calibratedData;
+}
+
+bool WeatherSensor::hasValidLastData() {
+  if (this->lastData.time == 0) {
+    return false;
+  }
+
+  unsigned long elapsedTime = millis() - this->lastData.time;
+  return elapsedTime <= 3000;
 }
 
 SensorData WeatherSensor::readData() {

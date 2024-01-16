@@ -15,9 +15,10 @@ class WeatherSensor {
 public:
   bmp280_t* bmp280;
   hap_acc_t* accessory;
+  float temperatureCalidation;
   SensorData lastData;
 
-  WeatherSensor(gpio_num_t sdaPin, gpio_num_t sdlPin);
+  WeatherSensor(gpio_num_t sdaPin, gpio_num_t sdlPin, float temperatureCalidation);
   void registerBridgedHomeKitAccessory();
 
   SensorData getData();
@@ -27,6 +28,7 @@ private:
   void addTemperatureSensorService();
   void addHumiditySensorService();
   void addFirmwareUpgradeService();
+  bool hasValidLastData();
   SensorData readData();
 };
 

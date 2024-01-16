@@ -76,7 +76,8 @@ static void mainTask(void *p) {
   GarageRemote* garageRemote = new GarageRemote(GPIO_NUM_13, GPIO_NUM_12);
   garageRemote->registerBridgedHomeKitAccessory();
 
-  WeatherSensor* weatherSensor = new WeatherSensor(GPIO_NUM_21, GPIO_NUM_22);
+  // Calibrate temperature by subtracting 2 degrees
+  WeatherSensor* weatherSensor = new WeatherSensor(GPIO_NUM_21, GPIO_NUM_22, -2);
   weatherSensor->registerBridgedHomeKitAccessory();
 
   startWiFiAccessPoint();
