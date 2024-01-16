@@ -38,15 +38,25 @@ bmp280_t* initBMP280(gpio_num_t sdaPin, gpio_num_t sdlPin) {
     .oversampling_humidity = BMP280_HIGH_RES,
     .standby = BMP280_STANDBY_05 // No effect for forced mode; just to suppress warning for `missing initializer for member`
   };
-  ESP_ERROR_CHECK(bmp280_init(bmp280, &params));
 
-  return bmp280;
+  if (bmp280_init(bmp280, &params) == ESP_OK) {
+    // Sensor found
+    return bmp280;
+  } else {
+    ESP_LOGE(TAG, "bmp280_init() failed. WeatherSensor cannot be used.");
+    // Sensor not found
+    return NULL;
+  }
 }
 
 WeatherSensor::WeatherSensor(gpio_num_t sdaPin, gpio_num_t sdlPin, float temperatureCalidation) {
   this->bmp280 = initBMP280(sdaPin, sdlPin);
   this->temperatureCalidation = temperatureCalidation;
   memset(&this->lastData, 0, sizeof(SensorData));
+}
+
+bool WeatherSensor::isFound() {
+  return this->bmp280 != NULL;
 }
 
 void WeatherSensor::registerBridgedHomeKitAccessory() {

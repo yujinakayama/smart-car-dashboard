@@ -19,6 +19,7 @@ public:
   SensorData lastData;
 
   WeatherSensor(gpio_num_t sdaPin, gpio_num_t sdlPin, float temperatureCalidation);
+  bool isFound();
   void registerBridgedHomeKitAccessory();
 
   SensorData getData();

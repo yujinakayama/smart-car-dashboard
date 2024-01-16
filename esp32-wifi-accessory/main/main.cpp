@@ -78,7 +78,10 @@ static void mainTask(void *p) {
 
   // Calibrate temperature by subtracting 2 degrees
   WeatherSensor* weatherSensor = new WeatherSensor(GPIO_NUM_21, GPIO_NUM_22, -2);
-  weatherSensor->registerBridgedHomeKitAccessory();
+  // Do not crash even if the sensor is not found
+  if (weatherSensor->isFound()) {
+    weatherSensor->registerBridgedHomeKitAccessory();
+  }
 
   startWiFiAccessPoint();
   /* After all the initializations are done, start the HAP core */
