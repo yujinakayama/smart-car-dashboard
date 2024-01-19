@@ -72,6 +72,10 @@ class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelega
         }
     }
 
+    override var childForStatusBarStyle: UIViewController? {
+        return viewControllers?.first
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -130,6 +134,7 @@ class WidgetPageViewController: UIPageViewController, UIPageViewControllerDelega
 
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         updatePageControl(animated: true)
+        setNeedsStatusBarAppearanceUpdate()
     }
 
     func updatePageControl(animated: Bool) {

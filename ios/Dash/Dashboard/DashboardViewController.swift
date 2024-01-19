@@ -26,7 +26,11 @@ class DashboardViewController: UIViewController {
     lazy var musicContainerViewTopConstraintForSplitLayout = musicContainerView.topAnchor.constraint(equalTo: widgetView.bottomAnchor)
     lazy var musicContainerViewTopConstraintForDraggingState = musicContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0)
 
-    private(set) var currentLayoutMode: LayoutMode = .fullMusicView
+    private(set) var currentLayoutMode: LayoutMode = .fullMusicView {
+        didSet {
+            setNeedsStatusBarAppearanceUpdate()
+        }
+    }
 
     var layoutSwitchGesture: LayoutSwitchGesture {
         return LayoutSwitchGesture(
@@ -41,6 +45,14 @@ class DashboardViewController: UIViewController {
 
     override var shouldAutomaticallyForwardAppearanceMethods: Bool {
         return false
+    }
+
+    override var childForStatusBarStyle: UIViewController? {
+        if isWidgetViewVisible {
+            return widgetViewController
+        } else {
+            return musicViewController
+        }
     }
 
     override func viewDidLoad() {
