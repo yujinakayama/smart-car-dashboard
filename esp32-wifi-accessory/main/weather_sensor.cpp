@@ -294,7 +294,7 @@ static int readAirPressureSensorCharacteristic(hap_char_t* hc, hap_status_t* sta
 
   if (strcmp(characteristicUUID, HAP_CHAR_UUID_CURRENT_AIR_PRESSURE) == 0) {
     SensorData data = sensor->getData();
-    value.i = data.pressure;
+    value.f = data.pressure;
     hap_char_update_val(hc, &value);
     *status_code = HAP_STATUS_SUCCESS;
   } else if (strcmp(characteristicUUID, HAP_CHAR_UUID_NAME) == 0) {

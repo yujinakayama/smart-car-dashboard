@@ -34,7 +34,7 @@ hap_char_t *hap_char_current_air_pressure_create(float curr_pressure)
     }
 
     // 0 - 2000 hPa
-    hap_char_int_set_constraints(hc, 0, 200000, 1);
+    hap_char_float_set_constraints(hc, 0, 200000, 1);
     hap_char_add_unit(hc, HAP_CHAR_UNIT_PASCALS);
 
     return hc;
