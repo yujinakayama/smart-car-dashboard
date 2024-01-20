@@ -76,8 +76,15 @@ class StatusBarManager {
         switch statusBarManager.statusBarStyle {
         case .lightContent:
             itemStackView.overrideUserInterfaceStyle = .dark
-        default:
+        case .darkContent:
             itemStackView.overrideUserInterfaceStyle = .light
+        default:
+            switch windowScene.traitCollection.userInterfaceStyle {
+            case .dark:
+                itemStackView.overrideUserInterfaceStyle = .dark
+            default:
+                itemStackView.overrideUserInterfaceStyle = .light
+            }
         }
     }
 
