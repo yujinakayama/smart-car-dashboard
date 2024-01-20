@@ -38,7 +38,7 @@ bmp280_t* initBMP280(gpio_num_t sdaPin, gpio_num_t sdlPin) {
   bmp280_params_t params = {
     .mode = BMP280_MODE_FORCED,
     .filter = BMP280_FILTER_OFF,
-    .oversampling_pressure = BMP280_SKIPPED, // Not using pressure for now
+    .oversampling_pressure = BMP280_HIGH_RES,
     .oversampling_temperature = BMP280_HIGH_RES,
     .oversampling_humidity = BMP280_HIGH_RES,
     .standby = BMP280_STANDBY_05 // No effect for forced mode; just to suppress warning for `missing initializer for member`
