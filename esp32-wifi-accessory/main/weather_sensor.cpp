@@ -5,6 +5,9 @@
 #include <hap_apple_chars.h>
 #include <hap_fw_upgrade.h>
 
+#include "hap_custom_servs.h"
+#include "hap_custom_chars.h"
+
 #include <cstring>
 #include <freertos/semphr.h>
 
@@ -18,10 +21,12 @@ static const char* kSetupID = "WTHR"; // This must be unique
 
 static const char* kTemperatureSensorServiceName = "Temperature Sensor";
 static const char* kHumiditySensorServiceName = "Humidity Sensor";
+static const char* kAirPressureSensorServiceName = "Air Pressure Sensor";
 
 static int identifyAccessory(hap_acc_t* ha);
 static int readTemperatureSensorCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv);
 static int readHumiditySensorCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv);
+static int readAirPressureSensorCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv);
 
 bmp280_t* initBMP280(gpio_num_t sdaPin, gpio_num_t sdlPin) {
   ESP_ERROR_CHECK(i2cdev_init());
@@ -124,6 +129,25 @@ void WeatherSensor::addHumiditySensorService() {
 
   /* Set the read callback for the service (optional) */
   hap_serv_set_read_cb(service, readHumiditySensorCharacteristic);
+
+  // Allow access to WeatherSensor instance from the read/write callbacks
+  hap_serv_set_priv(service, this);
+
+  /* Add the sensor service to the accessory object */
+  hap_acc_add_serv(this->accessory, service);
+}
+
+void WeatherSensor::addAirPressureSensorService() {
+  /*
+    Create a temperature sensor service with initial humidity value.
+    Include the "name" since this is a user visible service.
+   */
+  hap_serv_t* service = hap_serv_air_pressure_sensor_create(0);
+
+  hap_serv_add_char(service, hap_char_name_create(strdup(kAirPressureSensorServiceName)));
+
+  /* Set the read callback for the service (optional) */
+  hap_serv_set_read_cb(service, readAirPressureSensorCharacteristic);
 
   // Allow access to WeatherSensor instance from the read/write callbacks
   hap_serv_set_priv(service, this);
@@ -244,6 +268,33 @@ static int readHumiditySensorCharacteristic(hap_char_t* hc, hap_status_t* status
   if (strcmp(characteristicUUID, HAP_CHAR_UUID_CURRENT_RELATIVE_HUMIDITY) == 0) {
     SensorData data = sensor->getData();
     value.f = data.humidity;
+    hap_char_update_val(hc, &value);
+    *status_code = HAP_STATUS_SUCCESS;
+  } else if (strcmp(characteristicUUID, HAP_CHAR_UUID_NAME) == 0) {
+    value.s = strdup(kHumiditySensorServiceName);
+    hap_char_update_val(hc, &value);
+    *status_code = HAP_STATUS_SUCCESS;
+  } else {
+    ESP_LOGE(TAG, "unsupported characteristic %s", characteristicUUID);
+    *status_code = HAP_STATUS_RES_ABSENT;
+    entireResult = HAP_FAIL;
+  }
+
+  return entireResult;
+}
+
+static int readAirPressureSensorCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv) {
+  const char* characteristicUUID = hap_char_get_type_uuid(hc);
+  ESP_LOGD(TAG, "readHumiditySensorCharacteristic: %s", characteristicUUID);
+
+  int entireResult = HAP_SUCCESS;
+
+  WeatherSensor* sensor = (WeatherSensor*)serv_priv;
+  hap_val_t value;
+
+  if (strcmp(characteristicUUID, HAP_CHAR_UUID_CURRENT_AIR_PRESSURE) == 0) {
+    SensorData data = sensor->getData();
+    value.i = data.pressure;
     hap_char_update_val(hc, &value);
     *status_code = HAP_STATUS_SUCCESS;
   } else if (strcmp(characteristicUUID, HAP_CHAR_UUID_NAME) == 0) {

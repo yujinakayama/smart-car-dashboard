@@ -28,6 +28,7 @@ private:
   void createAccessory();
   void addTemperatureSensorService();
   void addHumiditySensorService();
+  void addAirPressureSensorService();
   void addFirmwareUpgradeService();
   bool hasValidLastData();
   SensorData readData();
