@@ -80,7 +80,7 @@ class ClimateStatusManager: NSObject {
 
         if let temperatureValue = try? await temperatureValue {
             items.append(.init(
-                text: String(format: "%.1f°", temperatureValue),
+                text: String(format: "%.0f°", temperatureValue),
                 symbolName: "thermometer.medium"
             ))
         }
