@@ -87,7 +87,7 @@ class ClimateStatusManager: NSObject {
 
         if let humidityValue = try? await humidityValue {
             items.append(.init(
-                text: String(format: "%.0f%", humidityValue),
+                text: String(format: "%.0f%%", humidityValue),
                 symbolName: "humidity.fill"
             ))
         }
