@@ -44,6 +44,8 @@ class Defaults {
         case speedSensitiveVolumeControlEnabled
         case additionalVolumeAt120KilometersPerHour
         case minimumSpeedInKilometersPerHourForAdditionalVolume
+        case showClimateInStatusBar
+        case homeKitHomeName
         case logLevel
         case clearCachesOnNextLaunch
         case clearFirestoreOfflineCacheOnNextLaunch
@@ -326,6 +328,22 @@ extension Defaults {
         get {
             let minimumSpeedInKilometersPerHourForAdditionalVolume = double(for: .minimumSpeedInKilometersPerHourForAdditionalVolume)
             return minimumSpeedInKilometersPerHourForAdditionalVolume * 1000 / (60 * 60)
+        }
+    }
+
+    var showClimateInStatusBar: Bool {
+        get {
+            return bool(for: .showClimateInStatusBar)
+        }
+    }
+
+    var homeKitHomeName: String? {
+        get {
+            if let string = string(for: .homeKitHomeName), !string.isEmpty {
+                return string
+            } else {
+                return nil
+            }
         }
     }
 

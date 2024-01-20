@@ -113,6 +113,7 @@
 		B954CA2325693CCC00BAD0F0 /* WidgetPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */; };
 		B954CA3225693EDA00BAD0F0 /* RearviewWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */; };
 		B9588B5D23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */; };
+		B95B143B2B5ADF430089E98A /* ClimateStatusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95B143A2B5ADF430089E98A /* ClimateStatusManager.swift */; };
 		B95BF23823EBF43900A30DE0 /* ETCCardEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95BF23723EBF43900A30DE0 /* ETCCardEditViewController.swift */; };
 		B95BF23C23EBFFE300A30DE0 /* ETCCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95BF23B23EBFFE300A30DE0 /* ETCCardView.swift */; };
 		B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift */; };
@@ -214,6 +215,8 @@
 		B9BA5B5926A897CF004D5927 /* PointOfInterestAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BA5B5826A897CF004D5927 /* PointOfInterestAnnotationView.swift */; };
 		B9BA5B5B26A8982C004D5927 /* InboxLocationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BA5B5A26A8982C004D5927 /* InboxLocationAnnotation.swift */; };
 		B9BA5B5C26A89C83004D5927 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93C04662642D5FA002CD861 /* UIButtonExtension.swift */; };
+		B9BA756F2B569C09007F6253 /* UIWindowScene+MultitaskState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BA756E2B569C09007F6253 /* UIWindowScene+MultitaskState.swift */; };
+		B9BA75712B56A221007F6253 /* StatusBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BA75702B56A221007F6253 /* StatusBarManager.swift */; };
 		B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */; };
 		B9BC920923250A0A006F22FC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BC920823250A0A006F22FC /* Defaults.swift */; };
 		B9BE434C27A187F300AD86A5 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BE434B27A187F300AD86A5 /* Time.swift */; };
@@ -627,6 +630,7 @@
 		B954CA2225693CCC00BAD0F0 /* WidgetPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetPageViewController.swift; sourceTree = "<group>"; };
 		B954CA3125693EDA00BAD0F0 /* RearviewWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RearviewWidgetViewController.swift; sourceTree = "<group>"; };
 		B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentDebugInformationViewController.swift; sourceTree = "<group>"; };
+		B95B143A2B5ADF430089E98A /* ClimateStatusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClimateStatusManager.swift; sourceTree = "<group>"; };
 		B95BF23723EBF43900A30DE0 /* ETCCardEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCCardEditViewController.swift; sourceTree = "<group>"; };
 		B95BF23B23EBFFE300A30DE0 /* ETCCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardView.swift; sourceTree = "<group>"; };
 		B95D630C23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCDeviceStatusBarItemManager.swift; sourceTree = "<group>"; };
@@ -729,6 +733,8 @@
 		B9B717DD23E6B26900A47207 /* UnknownItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownItem.swift; sourceTree = "<group>"; };
 		B9BA5B5826A897CF004D5927 /* PointOfInterestAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterestAnnotationView.swift; sourceTree = "<group>"; };
 		B9BA5B5A26A8982C004D5927 /* InboxLocationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxLocationAnnotation.swift; sourceTree = "<group>"; };
+		B9BA756E2B569C09007F6253 /* UIWindowScene+MultitaskState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindowScene+MultitaskState.swift"; sourceTree = "<group>"; };
+		B9BA75702B56A221007F6253 /* StatusBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarManager.swift; sourceTree = "<group>"; };
 		B9BB0C6523D4530C00B749CF /* ETCCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCCardTableViewCell.swift; sourceTree = "<group>"; };
 		B9BC920823250A0A006F22FC /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		B9BE434B27A187F300AD86A5 /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
@@ -1327,6 +1333,7 @@
 				B90C297125E3FB80004466C9 /* SIMDExtension.swift */,
 				B9248B8A2728A27500952745 /* MPMediaItemExtension.swift */,
 				B99AD73627BA9D6000EE467A /* NSLayoutConstraintExtension.swift */,
+				B9BA756E2B569C09007F6253 /* UIWindowScene+MultitaskState.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1407,6 +1414,8 @@
 				B9458C622A41C6A700F9ABE5 /* Intents */,
 				B907C78D272555690085ED7E /* SceneDelegate.swift */,
 				B907C78F272589490085ED7E /* AppState.swift */,
+				B95B143A2B5ADF430089E98A /* ClimateStatusManager.swift */,
+				B9BA75702B56A221007F6253 /* StatusBarManager.swift */,
 				B90E21F824CBB1BF008330AD /* TabBarController.swift */,
 				B9B154F72576075C0031761F /* TabBarBadgeManager.swift */,
 				B9B4A88C2569306500FE0C9F /* Dashboard */,
@@ -1991,10 +2000,10 @@
 			);
 			mainGroup = B9DC5B18229D59BE00B645D5;
 			packageReferences = (
-				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */,
+				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */,
 				B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */,
 				B979456F27A81AFE007040E7 /* XCRemoteSwiftPackageReference "SwiftCBOR" */,
-				B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */,
+				B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */,
 				B9085FCE2A61A6B50014CCC1 /* XCRemoteSwiftPackageReference "XCGLogger" */,
 				B9085FDB2A61A8020014CCC1 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */,
 				B9085FDE2A61A8D20014CCC1 /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
@@ -2003,11 +2012,11 @@
 				B9085FE72A61AA0A0014CCC1 /* XCRemoteSwiftPackageReference "DictionaryCoding" */,
 				B9085FEA2A61AA720014CCC1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				B990259F2A61B70B00BDCDE9 /* XCRemoteSwiftPackageReference "MarqueeLabel" */,
-				B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */,
+				B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				B906AEC82A623D37008C7458 /* XCRemoteSwiftPackageReference "Solar" */,
 				B964B3002A6257EF003543CC /* XCRemoteSwiftPackageReference "PINCache" */,
 				B9BEAF252A625AAC00E23648 /* XCRemoteSwiftPackageReference "TransitionButton" */,
-				B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel.git" */,
+				B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 			);
 			productRefGroup = B9DC5B22229D59BE00B645D5 /* Products */;
 			projectDirPath = "";
@@ -2369,6 +2378,7 @@
 				B9C1F41D27B87E5500C6D4DD /* ETCPaymentTableViewDataSource.swift in Sources */,
 				B944C69024A9E4C8000D1E99 /* MusicViewController.swift in Sources */,
 				B9D02089268CD1850020BF9A /* RoadTracker.swift in Sources */,
+				B95B143B2B5ADF430089E98A /* ClimateStatusManager.swift in Sources */,
 				B9C1F41B27B8575800C6D4DD /* ETCCardTableViewDataSource.swift in Sources */,
 				B9C1F41927B82B9400C6D4DD /* FirestoreQueryCountSubscription.swift in Sources */,
 				B9E96CC822A4EF1300C2E009 /* ETCPayment.swift in Sources */,
@@ -2397,6 +2407,7 @@
 				B9A45A9B252C229200CA7921 /* InboxItemDatabase.swift in Sources */,
 				B9BA5B5926A897CF004D5927 /* PointOfInterestAnnotationView.swift in Sources */,
 				B9BF2F0523F6946100967316 /* GradientPathRenderer.swift in Sources */,
+				B9BA756F2B569C09007F6253 /* UIWindowScene+MultitaskState.swift in Sources */,
 				B9B4A89A2569310400FE0C9F /* DashboardViewController.swift in Sources */,
 				B983BF402A2ADE80001A8E57 /* MapConfigurator.swift in Sources */,
 				B9C87A1726671CCE00ABCBB4 /* ParkingSearchURLItem.swift in Sources */,
@@ -2457,6 +2468,7 @@
 				B9458C612A41C69D00F9ABE5 /* OpenDash.swift in Sources */,
 				B954CA3225693EDA00BAD0F0 /* RearviewWidgetViewController.swift in Sources */,
 				B9C1F41727B8240F00C6D4DD /* FirestoreQuery.swift in Sources */,
+				B9BA75712B56A221007F6253 /* StatusBarManager.swift in Sources */,
 				B9DC5B4A229EDA0000B645D5 /* SerialPort.swift in Sources */,
 				B9640AC22575EC0400B779AD /* FirebaseAuthentication.swift in Sources */,
 			);
@@ -3906,7 +3918,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */ = {
+		B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -3986,7 +3998,7 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */ = {
+		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yujinakayama/DirectionalUserLocationAnnotationView.git";
 			requirement = {
@@ -4010,7 +4022,7 @@
 				minimumVersion = 4.3.1;
 			};
 		};
-		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */ = {
+		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mapbox/mapbox-navigation-ios.git";
 			requirement = {
@@ -4034,7 +4046,7 @@
 				kind = branch;
 			};
 		};
-		B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel.git" */ = {
+		B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scenee/FloatingPanel.git";
 			requirement = {
@@ -4052,22 +4064,22 @@
 		};
 		B906AEC02A6239E6008C7458 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
 		B906AEC22A6239E6008C7458 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
 		B906AEC42A6239E6008C7458 /* FirebaseFirestoreSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
 		};
 		B906AEC62A6239E6008C7458 /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
 		};
 		B906AEC92A623D37008C7458 /* Solar */ = {
@@ -4137,7 +4149,7 @@
 		};
 		B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */;
+			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */;
 			productName = DirectionalUserLocationAnnotationView;
 		};
 		B94E464C2AB45DE800E0BBFB /* DictionaryCoding */ = {
@@ -4167,7 +4179,7 @@
 		};
 		B9B7451F29968B2C00C85825 /* MapboxCoreNavigation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */;
+			package = B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */;
 			productName = MapboxCoreNavigation;
 		};
 		B9BEAF262A625AAC00E23648 /* TransitionButton */ = {
@@ -4187,7 +4199,7 @@
 		};
 		B9E886882A6D58D600F789AA /* FloatingPanel */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel.git" */;
+			package = B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel" */;
 			productName = FloatingPanel;
 		};
 /* End XCSwiftPackageProductDependency section */

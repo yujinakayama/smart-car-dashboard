@@ -226,6 +226,7 @@ class RearviewWidgetViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         children.forEach { $0.endAppearanceTransition() }
+        NotificationCenter.default.post(name: .StatusBarDidUpdateAppearance, object: self)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -238,6 +239,7 @@ class RearviewWidgetViewController: UIViewController {
         isVisible = false
         stop()
         children.forEach { $0.endAppearanceTransition() }
+        NotificationCenter.default.post(name: .StatusBarDidUpdateAppearance, object: self)
     }
 
     @objc func sceneWillEnterForeground() {

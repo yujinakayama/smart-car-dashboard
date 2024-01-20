@@ -143,6 +143,16 @@ class WebViewController: UIViewController {
         progressView.removeFromSuperview()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        NotificationCenter.default.post(name: .StatusBarDidUpdateAppearance, object: self)
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.post(name: .StatusBarDidUpdateAppearance, object: self)
+    }
+
     private func configureWebView() {
         webView.uiDelegate = self
         webView.allowsBackForwardNavigationGestures = true

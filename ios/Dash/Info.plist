@@ -60,6 +60,8 @@
 	<string>This app needs to use Bluetooth to communicate with ETC devices.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs to access to your location to show the current location on maps.</string>
+	<key>NSHomeKitUsageDescription</key>
+	<string>This app needs to access to your HomeKit database to show climate status.</string>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>GetCurrentAudioOutputTypeIntent</string>
