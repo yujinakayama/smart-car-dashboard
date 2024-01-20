@@ -9,6 +9,10 @@
 import Foundation
 import HomeKit
 
+// Custom HomeKit types
+fileprivate let HMServiceTypeAirPressureSensor         = "A54E5D5C-BFE7-4060-ACD0-69F9D6FDB30E"
+fileprivate let HMCharacteristicTypeCurrentAirPressure = "C13C8795-D950-453A-A3E7-DF244913560A"
+
 class ClimateStatusManager: NSObject {
     let homeName: String
     let statusBarManager: StatusBarManager
@@ -16,6 +20,7 @@ class ClimateStatusManager: NSObject {
 
     private var temperature: Characteristic<Double>?
     private var humidity: Characteristic<Double>?
+    private var airPressure: Characteristic<Double>?
 
     private var updateTimer: DispatchSourceTimer?
 
@@ -59,6 +64,12 @@ class ClimateStatusManager: NSObject {
             characteristicType: HMCharacteristicTypeCurrentRelativeHumidity
         )
 
+        airPressure = Characteristic<Double>(
+            home: home,
+            serviceType: HMServiceTypeAirPressureSensor,
+            characteristicType: HMCharacteristicTypeCurrentAirPressure
+        )
+
         updateTimer = startBackgroundRepeatingTimer(label: "ClimateStatusManager", interval: 60) { [weak self] in
             guard let self = self else { return }
             Task {
@@ -75,6 +86,7 @@ class ClimateStatusManager: NSObject {
     private func update() async {
         async let temperatureValue = temperature?.value
         async let humidityValue = humidity?.value
+        async let airPressureValue = airPressure?.value
 
         var items: [StatusBarItem] = []
 
@@ -89,6 +101,13 @@ class ClimateStatusManager: NSObject {
             items.append(.init(
                 text: String(format: "%.0f%%", humidityValue),
                 symbolName: "humidity.fill"
+            ))
+        }
+
+        if let airPressureValue = try? await airPressureValue {
+            items.append(.init(
+                text: String(format: "%d hPa", Int(airPressureValue / 100)),
+                symbolName: "mountain.2.fill"
             ))
         }
 
