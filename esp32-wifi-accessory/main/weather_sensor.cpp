@@ -70,6 +70,7 @@ void WeatherSensor::registerBridgedHomeKitAccessory() {
   this->createAccessory();
   this->addTemperatureSensorService();
   this->addHumiditySensorService();
+  this->addAirPressureSensorService();
   this->addFirmwareUpgradeService();
   /* Add the Accessory to the HomeKit Database */
   hap_add_bridged_accessory(this->accessory, hap_get_unique_aid(kSetupID));
