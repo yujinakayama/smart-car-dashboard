@@ -10,8 +10,8 @@ import Foundation
 import HomeKit
 
 // Custom HomeKit types
-fileprivate let HMServiceTypeAirPressureSensor         = "A54E5D5C-BFE7-4060-ACD0-69F9D6FDB30E"
-fileprivate let HMCharacteristicTypeCurrentAirPressure = "C13C8795-D950-453A-A3E7-DF244913560A"
+fileprivate let HMServiceTypeAirPressureSensor         = "00010000-3420-4EDC-90D1-E326457409CF"
+fileprivate let HMCharacteristicTypeCurrentAirPressure = "00000001-3420-4EDC-90D1-E326457409CF"
 
 class ClimateStatusManager: NSObject {
     let homeName: String

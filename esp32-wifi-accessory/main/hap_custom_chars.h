@@ -12,7 +12,8 @@ extern "C" {
 
 #define HAP_CHAR_UNIT_PASCALS "pascals"
 
-#define HAP_CHAR_UUID_CURRENT_AIR_PRESSURE "C13C8795-D950-453A-A3E7-DF244913560A"
+// https://github.com/apple/HomeKitADK/blob/fb201f98f5fdc7fef6a455054f08b59cca5d1ec8/HAP/HAPUUID.h#L27-L28
+#define HAP_CHAR_UUID_CURRENT_AIR_PRESSURE "00000001-3420-4EDC-90D1-E326457409CF"
 
 /** Current Air Pressure Characteristic
  *

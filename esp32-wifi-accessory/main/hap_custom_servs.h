@@ -37,7 +37,8 @@
 extern "C" {
 #endif
 
-#define HAP_SERV_UUID_AIR_PRESSURE_SENSOR "A54E5D5C-BFE7-4060-ACD0-69F9D6FDB30E"
+// https://github.com/apple/HomeKitADK/blob/fb201f98f5fdc7fef6a455054f08b59cca5d1ec8/HAP/HAPUUID.h#L27-L28
+#define HAP_SERV_UUID_AIR_PRESSURE_SENSOR "00010000-3420-4EDC-90D1-E326457409CF"
 
 /** Air Pressure Sensor Service
  *
