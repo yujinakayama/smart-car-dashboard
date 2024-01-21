@@ -106,8 +106,8 @@ class ClimateStatusManager: NSObject {
 
         if let airPressureValue = try? await airPressureValue {
             items.append(.init(
-                text: String(format: "%d hPa", Int(airPressureValue / 100)),
-                symbolName: "mountain.2.fill"
+                text: String(format: "%dhPa", Int(airPressureValue / 100)),
+                symbolName: "gauge.with.dots.needle.bottom.50percent"
             ))
         }
 

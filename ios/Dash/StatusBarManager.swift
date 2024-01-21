@@ -167,7 +167,7 @@ fileprivate class StatusBarItemView: UIStackView {
         axis = .horizontal
         alignment = .center
         distribution = .equalSpacing
-        spacing = 3
+        spacing = 2
 
         if let symbolName = item.symbolName {
             symbolImageView.image = UIImage(systemName: symbolName, withConfiguration: Self.symbolConfiguration)
