@@ -92,21 +92,24 @@ class ClimateStatusManager: NSObject {
 
         if let temperatureValue = try? await temperatureValue {
             items.append(.init(
-                text: String(format: "%.0f℃", temperatureValue),
+                text: String(format: "%.0f", temperatureValue),
+                unit: "℃",
                 symbolName: "thermometer.medium"
             ))
         }
 
         if let humidityValue = try? await humidityValue {
             items.append(.init(
-                text: String(format: "%.0f%%", humidityValue),
+                text: String(format: "%.0f", humidityValue),
+                unit: "%",
                 symbolName: "humidity.fill"
             ))
         }
 
         if let airPressureValue = try? await airPressureValue {
             items.append(.init(
-                text: String(format: "%dhPa", Int(airPressureValue / 100)),
+                text: String(format: "%d", Int(airPressureValue / 100)),
+                unit: "hPa",
                 symbolName: "gauge.with.dots.needle.bottom.50percent"
             ))
         }

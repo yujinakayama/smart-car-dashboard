@@ -133,6 +133,7 @@ class StatusBarManager {
 
 struct StatusBarItem {
     var text: String
+    var unit: String?
     var symbolName: String?
 }
 
@@ -175,7 +176,17 @@ fileprivate class StatusBarItemView: UIStackView {
             addArrangedSubview(symbolImageView)
         }
 
-        label.text = item.text
+        var attributedString = AttributedString(item.text, attributes: .init([
+            .font: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: .medium)
+        ]))
+
+        if let unit = item.unit {
+            attributedString.append(AttributedString(unit, attributes: .init([
+                .font: UIFont.monospacedDigitSystemFont(ofSize: 10, weight: .medium)
+            ])))
+        }
+
+        label.attributedText = NSAttributedString(attributedString)
         addArrangedSubview(label)
     }
 
