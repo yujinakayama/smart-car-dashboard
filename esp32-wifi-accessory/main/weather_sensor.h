@@ -17,20 +17,30 @@ public:
   hap_acc_t* accessory;
   float temperatureCalidation;
   SensorData lastData;
+  SemaphoreHandle_t lastDataMutex;
 
   WeatherSensor(gpio_num_t sdaPin, gpio_num_t sdlPin, float temperatureCalidation);
   bool isFound();
   void registerBridgedHomeKitAccessory();
 
-  SensorData getData();
+  void startMonitoringSensor();
+  void updateCharacteristicValues();
+  void updateTemperatureCharacteristicValue(SensorData data);
+  void updateRelativeHumidityCharacteristicValue(SensorData data);
+  void updateAirPressureCharacteristicValue(SensorData data);
+  SensorData getSensorData();
 
 private:
+  hap_char_t* temperatureCharacteristic;
+  hap_char_t* relativeHumidityCharacteristic;
+  hap_char_t* airPressureCharacteristic;
+
   void createAccessory();
   void addTemperatureSensorService();
   void addHumiditySensorService();
   void addAirPressureSensorService();
   void addFirmwareUpgradeService();
-  bool hasValidLastData();
-  SensorData readData();
+  bool hasValidLastSensorData();
+  SensorData readSensorData();
 };
 

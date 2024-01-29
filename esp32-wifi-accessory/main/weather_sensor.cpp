@@ -12,6 +12,7 @@
 #include <freertos/semphr.h>
 
 extern "C" {
+  #include "math.h"
   #include "util.h"
 }
 
@@ -24,6 +25,7 @@ static const char* kHumiditySensorServiceName = "Humidity Sensor";
 static const char* kAirPressureSensorServiceName = "Air Pressure Sensor";
 
 static int identifyAccessory(hap_acc_t* ha);
+void monitoringTask(void* arg);
 static int readTemperatureSensorCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv);
 static int readHumiditySensorCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv);
 static int readAirPressureSensorCharacteristic(hap_char_t* hc, hap_status_t* status_code, void* serv_priv, void* read_priv);
@@ -35,13 +37,14 @@ bmp280_t* initBMP280(gpio_num_t sdaPin, gpio_num_t sdlPin) {
   memset(bmp280, 0, sizeof(bmp280_t));
   ESP_ERROR_CHECK(bmp280_init_desc(bmp280, BMP280_I2C_ADDRESS_0, I2C_NUM_0, sdaPin, sdlPin));
 
+  // https://community.bosch-sensortec.com/t5/Knowledge-base/BME280-Sensor-Data-Interpretation/ta-p/13912
   bmp280_params_t params = {
-    .mode = BMP280_MODE_FORCED,
-    .filter = BMP280_FILTER_OFF,
+    .mode = BMP280_MODE_NORMAL,
+    .filter = BMP280_FILTER_4, // coefficient X means: currentValue = (prevValue * (X - 1) + sensorData) / X
     .oversampling_pressure = BMP280_HIGH_RES,
     .oversampling_temperature = BMP280_HIGH_RES,
     .oversampling_humidity = BMP280_HIGH_RES,
-    .standby = BMP280_STANDBY_05 // No effect for forced mode; just to suppress warning for `missing initializer for member`
+    .standby = BMP280_STANDBY_250
   };
 
   if (bmp280_init(bmp280, &params) == ESP_OK) {
@@ -58,6 +61,7 @@ WeatherSensor::WeatherSensor(gpio_num_t sdaPin, gpio_num_t sdlPin, float tempera
   this->bmp280 = initBMP280(sdaPin, sdlPin);
   this->temperatureCalidation = temperatureCalidation;
   memset(&this->lastData, 0, sizeof(SensorData));
+  this->lastDataMutex = xSemaphoreCreateMutex();
 }
 
 bool WeatherSensor::isFound() {
@@ -117,6 +121,8 @@ void WeatherSensor::addTemperatureSensorService() {
 
   /* Add the sensor service to the accessory object */
   hap_acc_add_serv(this->accessory, service);
+
+  this->temperatureCharacteristic = hap_serv_get_char_by_uuid(service, HAP_CHAR_UUID_CURRENT_TEMPERATURE);
 }
 
 void WeatherSensor::addHumiditySensorService() {
@@ -136,6 +142,8 @@ void WeatherSensor::addHumiditySensorService() {
 
   /* Add the sensor service to the accessory object */
   hap_acc_add_serv(this->accessory, service);
+
+  this->relativeHumidityCharacteristic = hap_serv_get_char_by_uuid(service, HAP_CHAR_UUID_CURRENT_RELATIVE_HUMIDITY);
 }
 
 void WeatherSensor::addAirPressureSensorService() {
@@ -155,6 +163,8 @@ void WeatherSensor::addAirPressureSensorService() {
 
   /* Add the sensor service to the accessory object */
   hap_acc_add_serv(this->accessory, service);
+
+  this->airPressureCharacteristic = hap_serv_get_char_by_uuid(service, HAP_CHAR_UUID_CURRENT_AIR_PRESSURE);
 }
 
 /* Create the Firmware Upgrade HomeKit Custom Service.
@@ -175,49 +185,82 @@ void WeatherSensor::addFirmwareUpgradeService() {
   hap_acc_add_serv(accessory, service);
 }
 
-SensorData WeatherSensor::getData() {
-  if (!this->hasValidLastData()) {
-    this->lastData = this->readData();
+void WeatherSensor::startMonitoringSensor() {
+  esp_timer_create_args_t args = {
+    .callback = &monitoringTask,
+    .arg = this,
+    .name = "updateData" // name is optional, but may help identify the timer when debugging
+  };
+
+  esp_timer_handle_t timer;
+  ESP_ERROR_CHECK(esp_timer_create(&args, &timer));
+  ESP_ERROR_CHECK(esp_timer_start_periodic(timer, 1 * 1000 * 1000)); // every second
+}
+
+void monitoringTask(void* arg) {
+  WeatherSensor* sensor = (WeatherSensor*)arg;
+  sensor->updateCharacteristicValues();
+}
+
+void WeatherSensor::updateCharacteristicValues() {
+  SensorData data = this->getSensorData();
+  this->updateTemperatureCharacteristicValue(data);
+  this->updateRelativeHumidityCharacteristicValue(data);
+  this->updateAirPressureCharacteristicValue(data);
+}
+
+void WeatherSensor::updateTemperatureCharacteristicValue(SensorData data) {
+  hap_val_t value;
+  // Round value with 0.5 step so that small changes won't be notified in HomeKit
+  // to prevent wasteful Wi-Fi communication.
+  // https://github.com/espressif/esp-homekit-sdk/blob/bd236e710c658d3bea47bbcc0fb0ce6c80171527/components/homekit/esp_hap_core/src/esp_hap_char.c#L195-L200
+  value.f = round(data.temperature * 2) / 2;
+  hap_char_update_val(this->temperatureCharacteristic, &value);
+}
+
+void WeatherSensor::updateRelativeHumidityCharacteristicValue(SensorData data) {
+  hap_val_t value;
+  value.f = round(data.humidity);
+  hap_char_update_val(this->relativeHumidityCharacteristic, &value);
+}
+
+void WeatherSensor::updateAirPressureCharacteristicValue(SensorData data) {
+  hap_val_t value;
+  // Round to hPa
+  value.f = round(data.pressure / 100) * 100;
+  hap_char_update_val(this->airPressureCharacteristic, &value);
+}
+
+SensorData WeatherSensor::getSensorData() {
+  xSemaphoreTake(this->lastDataMutex, 100 / portTICK_PERIOD_MS);
+  if (!this->hasValidLastSensorData()) {
+    this->lastData = this->readSensorData();
   }
 
   SensorData calibratedData = this->lastData;
+  xSemaphoreGive(this->lastDataMutex);
   calibratedData.temperature += this->temperatureCalidation;
   return calibratedData;
 }
 
-bool WeatherSensor::hasValidLastData() {
+bool WeatherSensor::hasValidLastSensorData() {
   if (this->lastData.time == 0) {
     return false;
   }
 
   unsigned long elapsedTime = millis() - this->lastData.time;
-  return elapsedTime <= 3000;
+  return elapsedTime <= 100;
 }
 
-SensorData WeatherSensor::readData() {
-  ESP_LOGD(TAG, "Reading sensor...");
-
-  // 3.3.3 Forced mode
-  // In forced mode, a single measurement is performed in accordance to the selected measurement and filter options.
-  // When the measurement is finished,
-  // the sensor returns to sleep mode and the measurement results can be obtained from the data registers.
-  // For a next measurement, forced mode needs to be selected again.
-  // This is similar to BMP180 operation.
-  // Using forced mode is recommended for applications which require low sampling rate or host-based synchronization.
-  //
-  // https://www.mouser.com/datasheet/2/783/BST-BME280-DS002-1509607.pdf
-  ESP_ERROR_CHECK(bmp280_force_measurement(this->bmp280));
-
-  bool isMeasuring;
-  do {
-    vTaskDelay(pdMS_TO_TICKS(1));
-    bmp280_is_measuring(this->bmp280, &isMeasuring);
-  } while (isMeasuring);
-
+SensorData WeatherSensor::readSensorData() {
   SensorData data;
-  ESP_ERROR_CHECK(bmp280_read_float(this->bmp280, &data.temperature, &data.pressure, &data.humidity));
-  data.time = millis();
-  ESP_LOGI(TAG, "temperature: %f, pressure: %f, humidity: %f", data.temperature, data.pressure, data.humidity);
+  esp_err_t code = bmp280_read_float(this->bmp280, &data.temperature, &data.pressure, &data.humidity);
+  if (code == ESP_OK) {
+    data.time = millis();
+    ESP_LOGI(TAG, "temperature: %f, pressure: %f, humidity: %f", data.temperature, data.pressure, data.humidity);
+  } else {
+    ESP_LOGW(TAG, "Failed reading sensor: %s", esp_err_to_name(code));
+  }
   return data;
 }
 
@@ -237,14 +280,12 @@ static int readTemperatureSensorCharacteristic(hap_char_t* hc, hap_status_t* sta
   int entireResult = HAP_SUCCESS;
 
   WeatherSensor* sensor = (WeatherSensor*)serv_priv;
-  hap_val_t value;
 
   if (strcmp(characteristicUUID, HAP_CHAR_UUID_CURRENT_TEMPERATURE) == 0) {
-    SensorData data = sensor->getData();
-    value.f = data.temperature;
-    hap_char_update_val(hc, &value);
+    sensor->updateTemperatureCharacteristicValue(sensor->getSensorData());
     *status_code = HAP_STATUS_SUCCESS;
   } else if (strcmp(characteristicUUID, HAP_CHAR_UUID_NAME) == 0) {
+    hap_val_t value;
     value.s = strdup(kTemperatureSensorServiceName);
     hap_char_update_val(hc, &value);
     *status_code = HAP_STATUS_SUCCESS;
@@ -264,14 +305,12 @@ static int readHumiditySensorCharacteristic(hap_char_t* hc, hap_status_t* status
   int entireResult = HAP_SUCCESS;
 
   WeatherSensor* sensor = (WeatherSensor*)serv_priv;
-  hap_val_t value;
 
   if (strcmp(characteristicUUID, HAP_CHAR_UUID_CURRENT_RELATIVE_HUMIDITY) == 0) {
-    SensorData data = sensor->getData();
-    value.f = data.humidity;
-    hap_char_update_val(hc, &value);
+    sensor->updateRelativeHumidityCharacteristicValue(sensor->getSensorData());
     *status_code = HAP_STATUS_SUCCESS;
   } else if (strcmp(characteristicUUID, HAP_CHAR_UUID_NAME) == 0) {
+    hap_val_t value;
     value.s = strdup(kHumiditySensorServiceName);
     hap_char_update_val(hc, &value);
     *status_code = HAP_STATUS_SUCCESS;
@@ -291,14 +330,12 @@ static int readAirPressureSensorCharacteristic(hap_char_t* hc, hap_status_t* sta
   int entireResult = HAP_SUCCESS;
 
   WeatherSensor* sensor = (WeatherSensor*)serv_priv;
-  hap_val_t value;
 
   if (strcmp(characteristicUUID, HAP_CHAR_UUID_CURRENT_AIR_PRESSURE) == 0) {
-    SensorData data = sensor->getData();
-    value.f = data.pressure;
-    hap_char_update_val(hc, &value);
+    sensor->updateAirPressureCharacteristicValue(sensor->getSensorData());
     *status_code = HAP_STATUS_SUCCESS;
   } else if (strcmp(characteristicUUID, HAP_CHAR_UUID_NAME) == 0) {
+    hap_val_t value;
     value.s = strdup(kHumiditySensorServiceName);
     hap_char_update_val(hc, &value);
     *status_code = HAP_STATUS_SUCCESS;

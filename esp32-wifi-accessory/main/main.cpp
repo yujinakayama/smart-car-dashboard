@@ -81,6 +81,7 @@ static void mainTask(void *p) {
   // Do not crash even if the sensor is not found
   if (weatherSensor->isFound()) {
     weatherSensor->registerBridgedHomeKitAccessory();
+    weatherSensor->startMonitoringSensor();
   }
 
   startWiFiAccessPoint();
