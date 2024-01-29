@@ -18,16 +18,14 @@ extension Notification.Name {
     static let StatusBarDidUpdateAppearance = Notification.Name("StatusBarDidUpdateAppearance")
 }
 
-class StatusBarManager {
+typealias StatusBarSlot = CaseIterable & Hashable
+
+class StatusBarManager<Slot: StatusBarSlot> {
     let windowScene: UIWindowScene
 
-    var rightItems: [StatusBarItem] = [] {
-        didSet {
-            applyItems()
-        }
-    }
+    private let itemViews: [Slot: StatusBarItemView]
 
-    private lazy var itemStackView = {
+    private let stackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.alignment = .fill
@@ -40,7 +38,17 @@ class StatusBarManager {
     init(windowScene: UIWindowScene) {
         self.windowScene = windowScene
 
-        update()
+        itemViews = Slot.allCases.reduce(into: [Slot: StatusBarItemView](), { (dictionary, slot) in
+            let view = StatusBarItemView()
+            dictionary[slot] = view
+        })
+
+        for slot in Slot.allCases {
+            let view = itemViews[slot]!
+            stackView.addArrangedSubview(view)
+        }
+
+        updateAppearance()
 
         NotificationCenter.default.addObserver(forName: .StatusBarDidUpdateAppearance, object: nil, queue: .main) { [weak self] (notification) in
             guard let self = self else { return }
@@ -54,18 +62,15 @@ class StatusBarManager {
         }
     }
 
-    private func applyItems() {
-        for view in itemStackView.arrangedSubviews {
-            view.removeFromSuperview()
-        }
-
-        for item in rightItems {
-            let view = StatusBarItemView(item: item)
-            itemStackView.addArrangedSubview(view)
-        }
+    func setItem(_ item: StatusBarItem, for slot: Slot) {
+        itemViews[slot]!.item = item
     }
 
-    func update() {
+    func removeItem(for slot: Slot) {
+        itemViews[slot]!.item = nil
+    }
+
+    func updateAppearance() {
         updateStyle()
         updateVisibility()
     }
@@ -75,15 +80,15 @@ class StatusBarManager {
 
         switch statusBarManager.statusBarStyle {
         case .lightContent:
-            itemStackView.overrideUserInterfaceStyle = .dark
+            stackView.overrideUserInterfaceStyle = .dark
         case .darkContent:
-            itemStackView.overrideUserInterfaceStyle = .light
+            stackView.overrideUserInterfaceStyle = .light
         default:
             switch windowScene.traitCollection.userInterfaceStyle {
             case .dark:
-                itemStackView.overrideUserInterfaceStyle = .dark
+                stackView.overrideUserInterfaceStyle = .dark
             default:
-                itemStackView.overrideUserInterfaceStyle = .light
+                stackView.overrideUserInterfaceStyle = .light
             }
         }
     }
@@ -94,20 +99,20 @@ class StatusBarManager {
         else { return }
 
         if shouldShowItems {
-            if itemStackView.superview == nil {
-                window.addSubview(itemStackView)
+            if stackView.superview == nil {
+                window.addSubview(stackView)
 
                 NSLayoutConstraint.activate([
-                    itemStackView.rightAnchor.constraint(equalTo: window.rightAnchor, constant: -10),
-                    itemStackView.topAnchor.constraint(equalTo: window.topAnchor),
-                    itemStackView.heightAnchor.constraint(equalToConstant: statusBarManager.statusBarFrame.height - 1) // Tweaking base line
+                    stackView.rightAnchor.constraint(equalTo: window.rightAnchor, constant: -10),
+                    stackView.topAnchor.constraint(equalTo: window.topAnchor),
+                    stackView.heightAnchor.constraint(equalToConstant: statusBarManager.statusBarFrame.height - 1) // Tweaking base line
                 ])
 
                 NotificationCenter.default.post(name: .StatusBarManagerDidUpdateVisibility, object: self)
             }
         } else {
-            if itemStackView.superview != nil {
-                itemStackView.removeFromSuperview()
+            if stackView.superview != nil {
+                stackView.removeFromSuperview()
                 NotificationCenter.default.post(name: .StatusBarManagerDidUpdateVisibility, object: self)
             }
         }
@@ -137,31 +142,34 @@ struct StatusBarItem {
     var symbolName: String?
 }
 
+fileprivate let symbolConfiguration = UIImage.SymbolConfiguration(
+    pointSize: 10,
+    weight: .regular,
+    scale: .default
+)
+
 fileprivate class StatusBarItemView: UIStackView {
-    static let symbolConfiguration = UIImage.SymbolConfiguration(
-        pointSize: 10,
-        weight: .regular,
-        scale: .default
-    )
+    var item: StatusBarItem? {
+        didSet {
+            applyItem()
+        }
+    }
 
-    let item: StatusBarItem
-
-    lazy var label = {
+    private let label = {
         let label = UILabel()
         label.font = .monospacedDigitSystemFont(ofSize: 12, weight: .medium)
         return label
     }()
 
-    lazy var symbolImageView = {
+    private let symbolImageView = {
         let imageView = UIImageView()
-        imageView.preferredSymbolConfiguration = Self.symbolConfiguration
+        imageView.tintColor = .label
+        imageView.preferredSymbolConfiguration = symbolConfiguration
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
 
-    init(item: StatusBarItem) {
-        self.item = item
-
+    init() {
         // https://stackoverflow.com/q/36502790
         super.init(frame: .zero)
 
@@ -170,27 +178,37 @@ fileprivate class StatusBarItemView: UIStackView {
         distribution = .equalSpacing
         spacing = 2
 
-        if let symbolName = item.symbolName {
-            symbolImageView.image = UIImage(systemName: symbolName, withConfiguration: Self.symbolConfiguration)
-            symbolImageView.tintColor = .label
-            addArrangedSubview(symbolImageView)
-        }
-
-        var attributedString = AttributedString(item.text, attributes: .init([
-            .font: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: .medium)
-        ]))
-
-        if let unit = item.unit {
-            attributedString.append(AttributedString(unit, attributes: .init([
-                .font: UIFont.monospacedDigitSystemFont(ofSize: 10, weight: .medium)
-            ])))
-        }
-
-        label.attributedText = NSAttributedString(attributedString)
+        addArrangedSubview(symbolImageView)
         addArrangedSubview(label)
     }
 
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func applyItem() {
+        if let symbolName = item?.symbolName {
+            symbolImageView.image = UIImage(systemName: symbolName, withConfiguration: symbolConfiguration)
+        } else {
+            symbolImageView.image = nil
+        }
+
+        if let text = item?.text {
+            var attributedString = AttributedString(text, attributes: .init([
+                .font: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: .medium)
+            ]))
+
+            if let unit = item?.unit {
+                attributedString.append(AttributedString(unit, attributes: .init([
+                    .font: UIFont.monospacedDigitSystemFont(ofSize: 10, weight: .medium)
+                ])))
+            }
+
+            label.attributedText = NSAttributedString(attributedString)
+        } else {
+            label.text = nil
+        }
+
+        isHidden = item == nil
     }
 }

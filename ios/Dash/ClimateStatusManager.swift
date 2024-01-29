@@ -15,16 +15,12 @@ fileprivate let HMCharacteristicTypeCurrentAirPressure = "00000001-3420-4EDC-90D
 
 class ClimateStatusManager: NSObject {
     let homeName: String
-    let statusBarManager: StatusBarManager
+    let statusBarManager: StatusBarManager<DashStatusBarSlot>
     let homeManager = HMHomeManager()
 
-    private var temperature: Characteristic<Double>?
-    private var humidity: Characteristic<Double>?
-    private var airPressure: Characteristic<Double>?
+    private var monitoredCharacteristics: [HMCharacteristic] = []
 
-    private var updateTimer: DispatchSourceTimer?
-
-    init(homeName: String, statusBarManager: StatusBarManager) {
+    init(homeName: String, statusBarManager: StatusBarManager<DashStatusBarSlot>) {
         self.homeName = homeName
         self.statusBarManager = statusBarManager
         super.init()
@@ -38,131 +34,137 @@ class ClimateStatusManager: NSObject {
     }
 
     @objc func statusBarManagerDidUpdateVisibility() {
-        startOrStopUpdating()
+        startOrStopMonitoring()
     }
 
-    private func startOrStopUpdating() {
+    private func startOrStopMonitoring() {
         if statusBarManager.isStatusBarVisible {
-            startUpdating()
+            startMonitoring()
         } else {
-            stopUpdating()
+            stopMonitoring()
         }
     }
 
-    private func startUpdating() {
-        guard updateTimer == nil, let home = home else { return }
+    private func startMonitoring() {
+        guard let home = home else { return }
 
-        temperature = Characteristic<Double>(
-            home: home,
-            serviceType: HMServiceTypeTemperatureSensor, // TODO: Avoid filtering with service type
-            characteristicType: HMCharacteristicTypeCurrentTemperature
-        )
+        startMonitoring(HMCharacteristicTypeCurrentTemperature, in: home)
+        startMonitoring(HMCharacteristicTypeCurrentRelativeHumidity, in: home)
+        startMonitoring(HMCharacteristicTypeCurrentAirPressure, in: home)
+    }
 
-        humidity = Characteristic<Double>(
-            home: home,
-            serviceType: HMServiceTypeHumiditySensor,
-            characteristicType: HMCharacteristicTypeCurrentRelativeHumidity
-        )
+    private func startMonitoring(_ characteristicType: String, in home: HMHome) {
+        guard let characteristic = home.findCharacteristic(type: characteristicType),
+              let accessory = characteristic.service?.accessory
+        else { return }
 
-        airPressure = Characteristic<Double>(
-            home: home,
-            serviceType: HMServiceTypeAirPressureSensor,
-            characteristicType: HMCharacteristicTypeCurrentAirPressure
-        )
+        accessory.delegate = self
 
-        updateTimer = startBackgroundRepeatingTimer(label: "ClimateStatusManager", interval: 60) { [weak self] in
-            guard let self = self else { return }
-            Task {
-                await self.update()
+        characteristic.enableNotification(true) { (error) in
+            logger.error(error)
+        }
+
+        monitoredCharacteristics.append(characteristic)
+
+        Task {
+            await updateItem(for: characteristic)
+        }
+    }
+
+    private func stopMonitoring() {
+        for characteristic in monitoredCharacteristics {
+            characteristic.enableNotification(false) { (error) in
+                logger.error(error)
             }
         }
+
+        monitoredCharacteristics.removeAll()
     }
 
-    private func stopUpdating() {
-        updateTimer?.cancel()
-        updateTimer = nil
-    }
-
-    private func update() async {
-        async let temperatureValue = temperature?.value
-        async let humidityValue = humidity?.value
-        async let airPressureValue = airPressure?.value
-
-        var items: [StatusBarItem] = []
-
-        if let temperatureValue = try? await temperatureValue {
-            items.append(.init(
-                text: String(format: "%.0f", temperatureValue),
-                unit: "℃",
-                symbolName: "thermometer.medium"
-            ))
-        }
-
-        if let humidityValue = try? await humidityValue {
-            items.append(.init(
-                text: String(format: "%.0f", humidityValue),
-                unit: "%",
-                symbolName: "humidity.fill"
-            ))
-        }
-
-        if let airPressureValue = try? await airPressureValue {
-            items.append(.init(
-                text: String(format: "%d", Int(airPressureValue / 100)),
-                unit: "hPa",
-                symbolName: "gauge.with.dots.needle.bottom.50percent"
-            ))
-        }
-
-        let fixedItems = items
-
-        await MainActor.run {
-            statusBarManager.rightItems = fixedItems
+    @MainActor
+    private func updateItem(for characteristic: HMCharacteristic) {
+        switch characteristic.characteristicType {
+        case HMCharacteristicTypeCurrentTemperature:
+            if let value: Double = valueOf(characteristic) {
+                let item = StatusBarItem(
+                    text: String(format: "%.0f", round(value)),
+                    unit: "℃",
+                    symbolName: "thermometer.medium"
+                )
+                statusBarManager.setItem(item, for: .temperature)
+            } else {
+                statusBarManager.removeItem(for: .temperature)
+            }
+        case HMCharacteristicTypeCurrentRelativeHumidity:
+            if let value: Double = valueOf(characteristic) {
+                let item = StatusBarItem(
+                    text: String(format: "%.0f", round(value)),
+                    unit: "%",
+                    symbolName: "humidity.fill"
+                )
+                statusBarManager.setItem(item, for: .humidity)
+            } else {
+                statusBarManager.removeItem(for: .humidity)
+            }
+        case HMCharacteristicTypeCurrentAirPressure:
+            if let value: Double = valueOf(characteristic) {
+                let item = StatusBarItem(
+                    text: String(format: "%.0f", round(value / 100)),
+                    unit: "hPa",
+                    symbolName: "gauge.with.dots.needle.bottom.50percent"
+                )
+                statusBarManager.setItem(item, for: .airPressure)
+            } else {
+                statusBarManager.removeItem(for: .airPressure)
+            }
+        default:
+            break
         }
     }
 }
 
 extension ClimateStatusManager: HMHomeManagerDelegate {
     func homeManagerDidUpdateHomes(_ manager: HMHomeManager) {
-        stopUpdating()
-        startOrStopUpdating()
+        stopMonitoring()
+        startOrStopMonitoring()
     }
 }
 
-fileprivate class Characteristic<Value> {
-    let home: HMHome
-    let serviceType: String
-    let characteristicType: String
-
-    init(home: HMHome, serviceType: String, characteristicType: String) {
-        self.home = home
-        self.serviceType = serviceType
-        self.characteristicType = characteristicType
-    }
-
-    var value: Value? {
-        get async throws {
-            guard let characteristic = characteristic else { return nil }
-            try await characteristic.readValue()
-            return characteristic.value as? Value
+extension ClimateStatusManager: HMAccessoryDelegate {
+    func accessory(_ accessory: HMAccessory, service: HMService, didUpdateValueFor characteristic: HMCharacteristic) {
+        Task {
+            await updateItem(for: characteristic)
         }
     }
 
-    private lazy var service: HMService? = {
-        return home.servicesWithTypes([serviceType])?.first
-    }()
-
-    private lazy var characteristic: HMCharacteristic? = {
-        return service?.characteristics.first { $0.characteristicType == characteristicType }
-    }()
-
+    func accessoryDidUpdateReachability(_ accessory: HMAccessory) {
+        Task {
+            for service in accessory.services {
+                for characteristic in service.characteristics {
+                    await updateItem(for: characteristic)
+                }
+            }
+        }
+    }
 }
 
-fileprivate func startBackgroundRepeatingTimer(label: String, interval: TimeInterval, handler: @escaping () -> Void) -> DispatchSourceTimer {
-    let queue = DispatchQueue(label: label)
-    let timer = DispatchSource.makeTimerSource(flags: [], queue: queue)
-    timer.setEventHandler(handler: handler)
-    timer.schedule(deadline: .now(), repeating: interval)
-    timer.resume()
-    return timer
+fileprivate extension HMHome {
+    func findCharacteristic(type: String) -> HMCharacteristic? {
+        for accessory in accessories {
+            for service in accessory.services {
+                for characteristic in service.characteristics {
+                    if characteristic.characteristicType == type {
+                        return characteristic
+                    }
+                }
+            }
+        }
+
+        return nil
+    }
+}
+
+fileprivate func valueOf<Value>(_ characteristic: HMCharacteristic) -> Value? {
+    guard let accessory = characteristic.service?.accessory, accessory.isReachable else { return nil }
+    return characteristic.value as? Value
 }

@@ -143,6 +143,7 @@
 		B96810752614C5C300D647FA /* ImageFilterChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96810742614C5C300D647FA /* ImageFilterChain.swift */; };
 		B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */; };
 		B9741F7523DF200600F061E7 /* InboxItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9741F7423DF200600F061E7 /* InboxItemTableViewController.swift */; };
+		B97541532B67D904005F0417 /* DashStatusBarSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97541522B67D904005F0417 /* DashStatusBarSlot.swift */; };
 		B979457127A81AFE007040E7 /* SwiftCBOR in Frameworks */ = {isa = PBXBuildFile; productRef = B979457027A81AFE007040E7 /* SwiftCBOR */; };
 		B97ABD3F27670D6E00C7EB1D /* PointOfInterestIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97ABD3E27670D6E00C7EB1D /* PointOfInterestIcon.swift */; };
 		B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97BAE6124B61DB100AE7D13 /* Vehicle.swift */; };
@@ -663,6 +664,7 @@
 		B96810742614C5C300D647FA /* ImageFilterChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilterChain.swift; sourceTree = "<group>"; };
 		B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9741F7423DF200600F061E7 /* InboxItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxItemTableViewController.swift; sourceTree = "<group>"; };
+		B97541522B67D904005F0417 /* DashStatusBarSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashStatusBarSlot.swift; sourceTree = "<group>"; };
 		B97A82232553F8A900CD2870 /* Sun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sun.swift; sourceTree = "<group>"; };
 		B97A8229255449C800CD2870 /* CameraOptionsAdjuster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOptionsAdjuster.swift; sourceTree = "<group>"; };
 		B97ABD3E27670D6E00C7EB1D /* PointOfInterestIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterestIcon.swift; sourceTree = "<group>"; };
@@ -1415,6 +1417,7 @@
 				B907C78D272555690085ED7E /* SceneDelegate.swift */,
 				B907C78F272589490085ED7E /* AppState.swift */,
 				B95B143A2B5ADF430089E98A /* ClimateStatusManager.swift */,
+				B97541522B67D904005F0417 /* DashStatusBarSlot.swift */,
 				B9BA75702B56A221007F6253 /* StatusBarManager.swift */,
 				B90E21F824CBB1BF008330AD /* TabBarController.swift */,
 				B9B154F72576075C0031761F /* TabBarBadgeManager.swift */,
@@ -2446,6 +2449,7 @@
 				B9C1F41527B815C400C6D4DD /* FirestoreQuerySubscription.swift in Sources */,
 				B90CB2982904F95C003903D4 /* MKMapFeatureAnnotationExtension.swift in Sources */,
 				B90E21F924CBB1BF008330AD /* TabBarController.swift in Sources */,
+				B97541532B67D904005F0417 /* DashStatusBarSlot.swift in Sources */,
 				B9CEA76E22D911140055C9A3 /* ETCSplitViewController.swift in Sources */,
 				B9CB753624AA1A17008264F5 /* VolumeView.swift in Sources */,
 				B9EF566123DF3D61000D0CB2 /* GoogleSignInViewController.swift in Sources */,

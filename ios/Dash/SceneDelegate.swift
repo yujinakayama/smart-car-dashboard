@@ -26,7 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         minimumSpeedForAdditionalVolume: Defaults.shared.minimumSpeedForAdditionalVolume
     )
 
-    var statusBarManager: StatusBarManager?
+    var statusBarManager: StatusBarManager<DashStatusBarSlot>?
     var climateStatusManager: ClimateStatusManager?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -38,7 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         _ = tabBarBadgeManager
 
         if Defaults.shared.showClimateInStatusBar, let homeName = Defaults.shared.homeKitHomeName {
-            let statusBarManager = StatusBarManager(windowScene: windowScene)
+            let statusBarManager = StatusBarManager<DashStatusBarSlot>(windowScene: windowScene)
             climateStatusManager = .init(homeName: homeName, statusBarManager: statusBarManager)
             self.statusBarManager = statusBarManager
         }
@@ -97,7 +97,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
         startOrStopLocationTracker()
-        statusBarManager?.update()
+        statusBarManager?.updateAppearance()
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -112,7 +112,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func windowScene(_ windowScene: UIWindowScene, didUpdate previousCoordinateSpace: UICoordinateSpace, interfaceOrientation previousInterfaceOrientation: UIInterfaceOrientation, traitCollection previousTraitCollection: UITraitCollection) {
-        statusBarManager?.update()
+        statusBarManager?.updateAppearance()
     }
 
     private func handleURL(_ url: URL) {
