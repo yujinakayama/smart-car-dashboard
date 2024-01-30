@@ -49,8 +49,8 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
     var connection: Connection?
 
     var expiredFrameFlushingTimer: Timer?
-    let frameExpirationPeriodInMilliseconds = 200
-    var lastFrameTime: __uint64_t?
+    let frameExpirationDuration = Duration.milliseconds(200)
+    var lastFrameTime: ContinuousClock.Instant?
 
     var retryTimer: Timer?
 
@@ -313,7 +313,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
     func parser(_ parser: H264ByteStreamParser, didBuildSampleBuffer sampleBuffer: CMSampleBuffer) {
         logger.verbose()
 
-        lastFrameTime = currentTime
+        lastFrameTime = ContinuousClock.now
 
         if !hasReceivedInitialFrame {
             DispatchQueue.main.async { [weak self] in
@@ -345,17 +345,13 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
     // For safety, avoid keeping displaying old frame when the connection is unstable
     // since it may mislead the driver to determine the frame is showing the current environment.
     @objc func flushExpiredFrame() {
-        guard let lastFrameTime = self.lastFrameTime else { return }
+        guard let lastFrameTime = lastFrameTime else { return }
 
-        let elapsedTimeSinceLastFrameInMilliseconds = (currentTime - lastFrameTime) / 1_000_000
+        let elapsedTimeSinceLastFrame = ContinuousClock.now - lastFrameTime
 
-        if elapsedTimeSinceLastFrameInMilliseconds >= frameExpirationPeriodInMilliseconds {
+        if elapsedTimeSinceLastFrame >= frameExpirationDuration {
             flushImage()
         }
-    }
-
-    var currentTime: __uint64_t {
-        return clock_gettime_nsec_np(CLOCK_MONOTONIC)
     }
 
     @IBAction func gestureRecognizerDidRecognizeTap() {
