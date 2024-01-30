@@ -278,7 +278,7 @@ public class RearviewViewController: UIViewController, ConnectionDelegate, H264B
             self.activityIndicatorView.stopAnimating()
 
             self.expiredFrameFlushingTimer = Timer.scheduledTimer(
-                timeInterval: 1.0 / 30,
+                timeInterval: 1.0 / 10,
                 target: self,
                 selector: #selector(self.flushExpiredFrame),
                 userInfo: nil,
