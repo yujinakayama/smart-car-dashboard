@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "5DED392E-96EE-4E67-A894-52E5A767F203",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Dash.xcodeproj",
+        "identifier" : "B95642BA2B6A022300821996",
+        "name" : "ClimateKitTests"
+      }
+    }
+  ],
+  "version" : 1
+}

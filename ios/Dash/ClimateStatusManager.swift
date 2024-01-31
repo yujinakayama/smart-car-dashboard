@@ -8,6 +8,7 @@
 
 import Foundation
 import HomeKit
+import ClimateKit
 
 // Custom HomeKit types
 fileprivate let HMServiceTypeAirPressureSensor         = "00010000-3420-4EDC-90D1-E326457409CF"
@@ -18,7 +19,7 @@ class ClimateStatusManager: NSObject {
     let statusBarManager: StatusBarManager<DashStatusBarSlot>
     let homeManager = HMHomeManager()
 
-    private var monitoredCharacteristics: [HMCharacteristic] = []
+    private var monitoredCharacteristics: [String: HMCharacteristic] = [:]
 
     init(homeName: String, statusBarManager: StatusBarManager<DashStatusBarSlot>) {
         self.homeName = homeName
@@ -64,7 +65,7 @@ class ClimateStatusManager: NSObject {
             logger.error(error)
         }
 
-        monitoredCharacteristics.append(characteristic)
+        monitoredCharacteristics[characteristicType] = characteristic
 
         Task {
             await updateItem(for: characteristic)
@@ -72,7 +73,7 @@ class ClimateStatusManager: NSObject {
     }
 
     private func stopMonitoring() {
-        for characteristic in monitoredCharacteristics {
+        for (_, characteristic) in monitoredCharacteristics {
             characteristic.enableNotification(false) { (error) in
                 logger.error(error)
             }
@@ -95,6 +96,7 @@ class ClimateStatusManager: NSObject {
             } else {
                 statusBarManager.removeItem(for: .temperature)
             }
+            updateDewPointItem()
         case HMCharacteristicTypeCurrentRelativeHumidity:
             if let value: Double = valueOf(characteristic) {
                 let item = StatusBarItem(
@@ -106,6 +108,7 @@ class ClimateStatusManager: NSObject {
             } else {
                 statusBarManager.removeItem(for: .humidity)
             }
+            updateDewPointItem()
         case HMCharacteristicTypeCurrentAirPressure:
             if let value: Double = valueOf(characteristic) {
                 let item = StatusBarItem(
@@ -120,6 +123,27 @@ class ClimateStatusManager: NSObject {
         default:
             break
         }
+    }
+
+    private func updateDewPointItem() {
+        guard let temperatureCharacteristic = monitoredCharacteristics[HMCharacteristicTypeCurrentTemperature],
+              let humidityCharacteristic = monitoredCharacteristics[HMCharacteristicTypeCurrentRelativeHumidity],
+              let temperature: DegreeCelsius = valueOf(temperatureCharacteristic),
+              let humidityPercentage: Double = valueOf(humidityCharacteristic)
+        else {
+            statusBarManager.removeItem(for: .dewPoint)
+            return
+        }
+
+        let humidity: RelativeHumidity = humidityPercentage / 100
+
+        let item = StatusBarItem(
+            text: String(format: "%.0f", round(dewPointAt(temperature: temperature, humidity: humidity))),
+            unit: "℃",
+            symbolName: "drop.degreesign.fill"
+        )
+
+        statusBarManager.setItem(item, for: .dewPoint)
     }
 }
 

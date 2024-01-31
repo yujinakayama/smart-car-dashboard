@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1430"
+   LastUpgradeVersion = "1500"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B9DC5B20229D59BE00B645D5"
-               BuildableName = "Dash.app"
-               BlueprintName = "Dash"
+               BlueprintIdentifier = "B95642B32B6A022300821996"
+               BuildableName = "ClimateKit.framework"
+               BlueprintName = "ClimateKit"
                ReferencedContainer = "container:Dash.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -27,27 +27,12 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B9DC5B20229D59BE00B645D5"
-            BuildableName = "Dash.app"
-            BlueprintName = "Dash"
-            ReferencedContainer = "container:Dash.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B9E96CB722A3CE7500C2E009"
-               BuildableName = "DashTests.xctest"
-               BlueprintName = "DashTests"
-               ReferencedContainer = "container:Dash.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-      </Testables>
+      <TestPlans>
+         <TestPlanReference
+            reference = "container:ClimateKit/ClimateKit.xctestplan"
+            default = "YES">
+         </TestPlanReference>
+      </TestPlans>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -58,21 +43,7 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
-      allowLocationSimulation = "NO">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B9DC5B20229D59BE00B645D5"
-            BuildableName = "Dash.app"
-            BlueprintName = "Dash"
-            ReferencedContainer = "container:Dash.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
-      <LocationScenarioReference
-         identifier = "../SimulatedLocations/ebinasa.gpx"
-         referenceType = "0">
-      </LocationScenarioReference>
+      allowLocationSimulation = "YES">
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -80,16 +51,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B9DC5B20229D59BE00B645D5"
-            BuildableName = "Dash.app"
-            BlueprintName = "Dash"
+            BlueprintIdentifier = "B95642B32B6A022300821996"
+            BuildableName = "ClimateKit.framework"
+            BlueprintName = "ClimateKit"
             ReferencedContainer = "container:Dash.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

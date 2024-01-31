@@ -11,5 +11,6 @@ import Foundation
 enum DashStatusBarSlot: StatusBarSlot {
     case temperature
     case humidity
+    case dewPoint
     case airPressure
 }
