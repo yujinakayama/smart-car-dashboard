@@ -15,16 +15,28 @@ fileprivate let HMServiceTypeAirPressureSensor         = "00010000-3420-4EDC-90D
 fileprivate let HMCharacteristicTypeCurrentAirPressure = "00000001-3420-4EDC-90D1-E326457409CF"
 
 class ClimateStatusManager: NSObject {
-    let homeName: String
+    static let requiredCharacteristicTypesBySlot: [DashStatusBarSlot: [String]] = [
+        .temperature: [HMCharacteristicTypeCurrentTemperature],
+        .humidity: [HMCharacteristicTypeCurrentRelativeHumidity],
+        .dewPoint: [HMCharacteristicTypeCurrentTemperature, HMCharacteristicTypeCurrentRelativeHumidity],
+        .airPressure: [HMCharacteristicTypeCurrentAirPressure],
+    ]
+
     let statusBarManager: StatusBarManager<DashStatusBarSlot>
+    let homeName: String
+    let enabledSlots: [DashStatusBarSlot]
+
     let homeManager = HMHomeManager()
 
     private var monitoredCharacteristics: [String: HMCharacteristic] = [:]
 
-    init(homeName: String, statusBarManager: StatusBarManager<DashStatusBarSlot>) {
-        self.homeName = homeName
+    init(statusBarManager: StatusBarManager<DashStatusBarSlot>, homeName: String, enabledSlots: [DashStatusBarSlot]) {
         self.statusBarManager = statusBarManager
+        self.homeName = homeName
+        self.enabledSlots = enabledSlots
+
         super.init()
+
         homeManager.delegate = self
 
         NotificationCenter.default.addObserver(self, selector: #selector(statusBarManagerDidUpdateVisibility), name: .StatusBarManagerDidUpdateVisibility, object: nil)
@@ -49,9 +61,13 @@ class ClimateStatusManager: NSObject {
     private func startMonitoring() {
         guard let home = home else { return }
 
-        startMonitoring(HMCharacteristicTypeCurrentTemperature, in: home)
-        startMonitoring(HMCharacteristicTypeCurrentRelativeHumidity, in: home)
-        startMonitoring(HMCharacteristicTypeCurrentAirPressure, in: home)
+        let requiredCharacteristicTypes = enabledSlots.flatMap { (slot) in
+            Self.requiredCharacteristicTypesBySlot[slot] ?? []
+        }
+
+        for characteristicType in Set(requiredCharacteristicTypes) {
+            startMonitoring(characteristicType, in: home)
+        }
     }
 
     private func startMonitoring(_ characteristicType: String, in home: HMHome) {
@@ -86,64 +102,85 @@ class ClimateStatusManager: NSObject {
     private func updateItem(for characteristic: HMCharacteristic) {
         switch characteristic.characteristicType {
         case HMCharacteristicTypeCurrentTemperature:
-            if let value: Double = valueOf(characteristic) {
-                let item = StatusBarItem(
-                    text: String(format: "%.0f", round(value)),
-                    unit: "℃",
-                    symbolName: "thermometer.medium"
-                )
-                statusBarManager.setItem(item, for: .temperature)
-            } else {
-                statusBarManager.removeItem(for: .temperature)
-            }
+            updateTemperatureItem()
             updateDewPointItem()
         case HMCharacteristicTypeCurrentRelativeHumidity:
-            if let value: Double = valueOf(characteristic) {
-                let item = StatusBarItem(
-                    text: String(format: "%.0f", round(value)),
-                    unit: "%",
-                    symbolName: "humidity.fill"
-                )
-                statusBarManager.setItem(item, for: .humidity)
-            } else {
-                statusBarManager.removeItem(for: .humidity)
-            }
+            updateHumidityItem()
             updateDewPointItem()
         case HMCharacteristicTypeCurrentAirPressure:
-            if let value: Double = valueOf(characteristic) {
-                let item = StatusBarItem(
-                    text: String(format: "%.0f", round(value / 100)),
-                    unit: "hPa",
-                    symbolName: "gauge.with.dots.needle.bottom.50percent"
-                )
-                statusBarManager.setItem(item, for: .airPressure)
-            } else {
-                statusBarManager.removeItem(for: .airPressure)
-            }
+            updateAirPressureItem()
         default:
             break
         }
     }
 
-    private func updateDewPointItem() {
-        guard let temperatureCharacteristic = monitoredCharacteristics[HMCharacteristicTypeCurrentTemperature],
-              let humidityCharacteristic = monitoredCharacteristics[HMCharacteristicTypeCurrentRelativeHumidity],
-              let temperature: DegreeCelsius = valueOf(temperatureCharacteristic),
-              let humidityPercentage: Double = valueOf(humidityCharacteristic)
-        else {
-            statusBarManager.removeItem(for: .dewPoint)
-            return
+    private func updateTemperatureItem() {
+        if enabledSlots.contains(.temperature),
+           let characteristic = monitoredCharacteristics[HMCharacteristicTypeCurrentTemperature],
+           let value: Double = valueOf(characteristic)
+        {
+            let item = StatusBarItem(
+                text: String(format: "%.0f", round(value)),
+                unit: "℃",
+                symbolName: "thermometer.medium"
+            )
+            statusBarManager.setItem(item, for: .temperature)
+        } else {
+            statusBarManager.removeItem(for: .temperature)
         }
+    }
 
-        let humidity: RelativeHumidity = humidityPercentage / 100
+    private func updateHumidityItem() {
+        if enabledSlots.contains(.humidity),
+           let characteristic = monitoredCharacteristics[HMCharacteristicTypeCurrentRelativeHumidity],
+           let value: Double = valueOf(characteristic)
+        {
+            let item = StatusBarItem(
+                text: String(format: "%.0f", round(value)),
+                unit: "%",
+                symbolName: "humidity.fill"
+            )
+            statusBarManager.setItem(item, for: .humidity)
+        } else {
+            statusBarManager.removeItem(for: .humidity)
+        }
+    }
 
-        let item = StatusBarItem(
-            text: String(format: "%.0f", round(dewPointAt(temperature: temperature, humidity: humidity))),
-            unit: "℃",
-            symbolName: "drop.degreesign.fill"
-        )
+    private func updateAirPressureItem() {
+        if enabledSlots.contains(.airPressure),
+           let characteristic = monitoredCharacteristics[HMCharacteristicTypeCurrentAirPressure],
+           let value: Double = valueOf(characteristic)
+        {
+            let item = StatusBarItem(
+                text: String(format: "%.0f", round(value / 100)),
+                unit: "hPa",
+                symbolName: "gauge.with.dots.needle.bottom.50percent"
+            )
+            statusBarManager.setItem(item, for: .airPressure)
+        } else {
+            statusBarManager.removeItem(for: .airPressure)
+        }
+    }
 
-        statusBarManager.setItem(item, for: .dewPoint)
+    private func updateDewPointItem() {
+        if enabledSlots.contains(.dewPoint),
+           let temperatureCharacteristic = monitoredCharacteristics[HMCharacteristicTypeCurrentTemperature],
+           let humidityCharacteristic = monitoredCharacteristics[HMCharacteristicTypeCurrentRelativeHumidity],
+           let temperature: DegreeCelsius = valueOf(temperatureCharacteristic),
+           let humidityPercentage: Double = valueOf(humidityCharacteristic)
+        {
+            let humidity: RelativeHumidity = humidityPercentage / 100
+
+            let item = StatusBarItem(
+                text: String(format: "%.0f", round(dewPointAt(temperature: temperature, humidity: humidity))),
+                unit: "℃",
+                symbolName: "drop.degreesign.fill"
+            )
+
+            statusBarManager.setItem(item, for: .dewPoint)
+        } else {
+            statusBarManager.removeItem(for: .dewPoint)
+        }
     }
 }
 

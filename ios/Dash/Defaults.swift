@@ -44,7 +44,10 @@ class Defaults {
         case speedSensitiveVolumeControlEnabled
         case additionalVolumeAt120KilometersPerHour
         case minimumSpeedInKilometersPerHourForAdditionalVolume
-        case showClimateInStatusBar
+        case showTemperatureInStatusBar
+        case showHumidityInStatusBar
+        case showDewPointInStatusBar
+        case showAirPressureInStatusBar
         case homeKitHomeName
         case logLevel
         case clearCachesOnNextLaunch
@@ -331,10 +334,26 @@ extension Defaults {
         }
     }
 
-    var showClimateInStatusBar: Bool {
-        get {
-            return bool(for: .showClimateInStatusBar)
+    var enabledStatusBarSlots: [DashStatusBarSlot] {
+        var slots: [DashStatusBarSlot] = []
+
+        if bool(for: .showTemperatureInStatusBar) {
+            slots.append(.temperature)
         }
+
+        if bool(for: .showHumidityInStatusBar) {
+            slots.append(.humidity)
+        }
+
+        if bool(for: .showDewPointInStatusBar) {
+            slots.append(.dewPoint)
+        }
+
+        if bool(for: .showAirPressureInStatusBar) {
+            slots.append(.airPressure)
+        }
+
+        return slots
     }
 
     var homeKitHomeName: String? {

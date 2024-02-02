@@ -37,9 +37,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         _ = tabBarBadgeManager
 
-        if Defaults.shared.showClimateInStatusBar, let homeName = Defaults.shared.homeKitHomeName {
+        if !Defaults.shared.enabledStatusBarSlots.isEmpty, let homeName = Defaults.shared.homeKitHomeName {
             let statusBarManager = StatusBarManager<DashStatusBarSlot>(windowScene: windowScene)
-            climateStatusManager = .init(homeName: homeName, statusBarManager: statusBarManager)
+            climateStatusManager = .init(statusBarManager: statusBarManager, homeName: homeName, enabledSlots: Defaults.shared.enabledStatusBarSlots)
             self.statusBarManager = statusBarManager
         }
 

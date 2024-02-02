@@ -394,7 +394,7 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>Status Bar</string>
+			<string>Shown Items in Status Bar</string>
 			<key>FooterText</key>
 			<string>You need to restart the app for this change to take effect.</string>
 		</dict>
@@ -402,9 +402,39 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Show Climate in Status Bar</string>
+			<string>Temperature</string>
 			<key>Key</key>
-			<string>showClimateInStatusBar</string>
+			<string>showTemperatureInStatusBar</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Humidity</string>
+			<key>Key</key>
+			<string>showHumidityInStatusBar</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Dew Point</string>
+			<key>Key</key>
+			<string>showDewPointInStatusBar</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Air Pressure</string>
+			<key>Key</key>
+			<string>showAirPressureInStatusBar</string>
 			<key>DefaultValue</key>
 			<false/>
 		</dict>
