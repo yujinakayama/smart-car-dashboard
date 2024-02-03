@@ -98,7 +98,7 @@ class StatusBarManager<Slot: StatusBarSlot> {
               let statusBarManager = windowScene.statusBarManager
         else { return }
 
-        if shouldShowItems {
+        if canShowItems {
             if stackView.superview == nil {
                 window.addSubview(stackView)
 
@@ -118,11 +118,7 @@ class StatusBarManager<Slot: StatusBarSlot> {
         }
     }
 
-    var isStatusBarVisible: Bool {
-        return shouldShowItems
-    }
-
-    private var shouldShowItems: Bool {
+    var canShowItems: Bool {
         guard let statusBarManager = windowScene.statusBarManager else {
             return false
         }

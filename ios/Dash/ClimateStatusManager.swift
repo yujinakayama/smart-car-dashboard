@@ -51,7 +51,7 @@ class ClimateStatusManager: NSObject {
     }
 
     private func startOrStopMonitoring() {
-        if statusBarManager.isStatusBarVisible {
+        if statusBarManager.canShowItems {
             startMonitoring()
         } else {
             stopMonitoring()
