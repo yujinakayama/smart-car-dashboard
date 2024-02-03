@@ -99,6 +99,11 @@ class InboxItemTableViewController: UITableViewController {
     }()
 
     private lazy var userBarButtonItem: UIBarButtonItem = {
+        let settingsMenuItem = UIAction(title: String(localized: "Settings")) { [unowned self] (action) in
+            guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+            UIApplication.shared.open(url)
+        }
+
         let pairingMenuItem = UIAction(title: String(localized: "Pair with Dash Remote")) { [unowned self] (action) in
             self.sharePairingURL()
         }
@@ -107,7 +112,7 @@ class InboxItemTableViewController: UITableViewController {
             self.authentication.signOut()
         }
 
-        let menu = UIMenu(title: authentication.email ?? "", children: [pairingMenuItem, signOutMenuItem])
+        let menu = UIMenu(title: authentication.email ?? "", children: [settingsMenuItem, pairingMenuItem, signOutMenuItem])
 
         return UIBarButtonItem(title: nil, image: UIImage(systemName: "person.circle"), primaryAction: nil, menu: menu)
     }()
