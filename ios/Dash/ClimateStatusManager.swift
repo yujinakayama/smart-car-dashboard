@@ -174,7 +174,7 @@ class ClimateStatusManager: NSObject {
             let item = StatusBarItem(
                 text: String(format: "%.0f", round(dewPointAt(temperature: temperature, humidity: humidity))),
                 unit: "℃",
-                symbolName: "drop.degreesign.fill"
+                symbolName: "drop.fill"
             )
 
             statusBarManager.setItem(item, for: .dewPoint)
