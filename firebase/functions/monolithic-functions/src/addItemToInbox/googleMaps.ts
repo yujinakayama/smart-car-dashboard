@@ -54,17 +54,17 @@ export async function normalizeGoogleMapsLocation(inputData: InputData): Promise
 
   let locationData: Location | null
 
-  locationData = await normalizeLocationWithFtid(url, inputData)
+  locationData = await normalizeLocationWithFtid(inputData)
   if (locationData) {
     return locationData
   }
 
-  locationData = await normalizeLocationWithCoordinate(url, inputData)
+  locationData = await normalizeLocationWithCoordinate(inputData)
   if (locationData) {
     return locationData
   }
 
-  locationData = await normalizeLocationWithQuery(url, inputData)
+  locationData = await normalizeLocationWithQuery(inputData)
   if (locationData) {
     return locationData
   }
@@ -74,10 +74,8 @@ export async function normalizeGoogleMapsLocation(inputData: InputData): Promise
 
 // Point of Interests
 // https://stackoverflow.com/a/47042514/784241
-async function normalizeLocationWithFtid(
-  expandedURL: URL,
-  inputData: InputData,
-): Promise<Location | null> {
+async function normalizeLocationWithFtid(inputData: InputData): Promise<Location | null> {
+  const expandedURL = await inputData.expandURL()
   let ftid = expandedURL.searchParams.get('ftid')
 
   if (!ftid) {
@@ -99,10 +97,8 @@ async function normalizeLocationWithFtid(
   return await normalizeLocationWithIdentifier({ ftid: ftid }, expandedURL, inputData)
 }
 
-async function normalizeLocationWithCoordinate(
-  expandedURL: URL,
-  inputData: InputData,
-): Promise<Location | null> {
+async function normalizeLocationWithCoordinate(inputData: InputData): Promise<Location | null> {
+  const expandedURL = await inputData.expandURL()
   const query = expandedURL.searchParams.get('q')
 
   if (!query) {
@@ -146,10 +142,8 @@ async function normalizeLocationWithCoordinate(
 }
 
 // Last resort
-async function normalizeLocationWithQuery(
-  expandedURL: URL,
-  inputData: InputData,
-): Promise<Location | null> {
+async function normalizeLocationWithQuery(inputData: InputData): Promise<Location | null> {
+  const expandedURL = await inputData.expandURL()
   let query = expandedURL.searchParams.get('q')
 
   if (!query) {
