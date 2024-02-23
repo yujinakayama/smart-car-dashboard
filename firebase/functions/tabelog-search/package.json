@@ -19,6 +19,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "@dash/google-maps": "file:packages/google-maps",
+    "@dash/location-util": "file:packages/location-util",
     "@dash/tabelog": "file:packages/tabelog",
     "firebase-functions": "^4.5.0",
     "googleapis": "^129.0.0"

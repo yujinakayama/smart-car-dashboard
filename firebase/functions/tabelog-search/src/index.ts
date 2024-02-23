@@ -1,10 +1,9 @@
 import { PlaceURL, convertAddressComponentsToObject, expandURL } from '@dash/google-maps'
+import { Coordinate, distanceBetween } from '@dash/location-util'
 import { Client, extractRestaurantIDFromURL } from '@dash/tabelog'
 import { Restaurant } from '@dash/tabelog/src/restaurant'
 import { onRequest } from 'firebase-functions/v2/https'
 import { customsearch_v1, google } from 'googleapis'
-
-import { Coordinate, distanceBetween } from './coordinate'
 
 const googleAPIKeyEnvName = 'GOOGLE_API_KEY'
 // If the secret is missing, it'll be error on deployment
