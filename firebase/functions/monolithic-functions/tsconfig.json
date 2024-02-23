@@ -17,6 +17,9 @@
       "path": "../../packages/google-maps"
     },
     {
+      "path": "../../packages/location-util"
+    },
+    {
       "path": "../../packages/mapkit"
     },
     {
