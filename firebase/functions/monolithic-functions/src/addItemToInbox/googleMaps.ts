@@ -98,7 +98,11 @@ async function normalizeLocationWithFtid(inputData: InputData): Promise<Location
     return null
   }
 
-  return await normalizeLocationWithIdentifier({ ftid: ftid }, expandedURL, inputData)
+  return await normalizeLocationWithIdentifier(
+    { ftid: ftid },
+    inputData,
+    inputData.attachments['public.plain-text'],
+  )
 }
 
 async function normalizeLocationWithCoordinate(inputData: InputData): Promise<Location | null> {
@@ -175,14 +179,18 @@ async function normalizeLocationWithQuery(inputData: InputData): Promise<Locatio
     return null
   }
 
-  return normalizeLocationWithIdentifier({ placeid: place.place_id }, expandedURL, inputData)
+  return normalizeLocationWithIdentifier(
+    { placeid: place.place_id },
+    inputData,
+    inputData.attachments['public.plain-text'],
+  )
 }
 
-async function normalizeLocationWithIdentifier(
+export async function normalizeLocationWithIdentifier(
   identifier: PlaceIdentifier,
-  expandedURL: URL,
   inputData: InputData,
-): Promise<Location | null> {
+  fallbackName?: string,
+): Promise<Location> {
   const requestParameters: PlaceDetailsRequest = {
     params: {
       place_id: 'placeid' in identifier ? identifier.placeid : '',
@@ -202,15 +210,15 @@ async function normalizeLocationWithIdentifier(
   const place = response.data.result
 
   if (!place.geometry || !place.address_components) {
-    return null
+    throw new Error('Google API did not return requested fields') // This won't happen
   }
 
   let name: string | undefined
 
   if (isPointOfInterest(place)) {
-    name = place.name || inputData.attachments['public.plain-text']
+    name = place.name || fallbackName
   } else {
-    name = inputData.attachments['public.plain-text'] || place.name
+    name = fallbackName || place.name
   }
 
   return {
@@ -222,7 +230,7 @@ async function normalizeLocationWithIdentifier(
       longitude: place.geometry.location.lng,
     },
     name: convertAlphanumericsToASCII(name),
-    url: expandedURL.toString(),
+    url: (await inputData.expandURL()).toString(),
     websiteURL: place.website ? new URL(place.website).toString() : null, // // To handle internationalized domain names
   }
 }

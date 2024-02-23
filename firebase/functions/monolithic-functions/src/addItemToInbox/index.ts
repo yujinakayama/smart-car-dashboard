@@ -5,11 +5,15 @@ import * as firebase from 'firebase-admin'
 import { initializeApp } from 'firebase-admin/app'
 import { onRequest } from 'firebase-functions/v2/https'
 
-import { isAppleMapsLocation, normalizeAppleMapsLocation } from './appleMaps'
+import {
+  isAppleMapsLocation,
+  normalizeAppleMapsLocation,
+  requiredEnvName as appleMapsRequiredEnvName,
+} from './appleMaps'
 import {
   isAppleMusicItem,
   normalizeAppleMusicItem,
-  requiredEnvNames as appleMusicRequiredEnvName,
+  requiredEnvNames as appleMusicRequiredEnvNames,
 } from './appleMusic'
 import {
   isGoogleMapsLocation,
@@ -30,7 +34,14 @@ import {
 initializeApp()
 
 const requiredSecrets = Array.from(
-  new Set([googleMapsRequiredEnvName, appleMusicRequiredEnvName, youtubeRequiredEnvName].flat()),
+  new Set(
+    [
+      appleMapsRequiredEnvName,
+      googleMapsRequiredEnvName,
+      appleMusicRequiredEnvNames,
+      youtubeRequiredEnvName,
+    ].flat(),
+  ),
 )
 
 export const addItemToInbox = onRequest(
