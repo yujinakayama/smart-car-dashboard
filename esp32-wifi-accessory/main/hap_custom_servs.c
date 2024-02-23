@@ -24,6 +24,7 @@
 #include <hap.h>
 #include "hap_custom_servs.h"
 #include "hap_custom_chars.h"
+#include "hap_apple_servs.h"
 
 hap_serv_t *hap_serv_air_pressure_sensor_create(float curr_pressure)
 {
@@ -39,3 +40,19 @@ err:
     hap_serv_delete(hs);
     return NULL;
 }
+
+hap_serv_t *hap_serv_temperature_sensor_with_negative_value_create(float curr_temp)
+{
+    hap_serv_t *hs = hap_serv_create(HAP_SERV_UUID_TEMPERATURE_SENSOR);
+    if (!hs) {
+        return NULL;
+    }
+    if (hap_serv_add_char(hs, hap_char_current_temperature_with_negative_value_create(curr_temp)) != HAP_SUCCESS) {
+        goto err;
+    }
+    return hs;
+err:
+    hap_serv_delete(hs);
+    return NULL;
+}
+

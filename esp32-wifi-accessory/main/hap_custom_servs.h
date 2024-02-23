@@ -52,6 +52,18 @@ extern "C" {
  */
 hap_serv_t *hap_serv_air_pressure_sensor_create(float curr_pressure);
 
+/** Temperature Sensor Service (which can be negative value)
+ *
+ * This API will create the Temperature Sensor Service with the mandatory
+ * characteristics as per the HAP Specs.
+ *
+ * @param[in]  curr_temp  Initial value of Current Temprature characteristic
+ *
+ * @return Pointer to the service object on success
+ * @return NULL on failure
+ */
+hap_serv_t *hap_serv_temperature_sensor_with_negative_value_create(float curr_temp);
+
 #ifdef __cplusplus
 }
 #endif

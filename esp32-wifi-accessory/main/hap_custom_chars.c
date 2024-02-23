@@ -23,6 +23,7 @@
  */
 #include <hap.h>
 #include "hap_custom_chars.h"
+#include "hap_apple_chars.h"
 
 /* Char: Current Air Pressure */
 hap_char_t *hap_char_current_air_pressure_create(float curr_pressure)
@@ -36,6 +37,20 @@ hap_char_t *hap_char_current_air_pressure_create(float curr_pressure)
     // 0 - 2000 hPa
     hap_char_float_set_constraints(hc, 0, 200000, 1);
     hap_char_add_unit(hc, HAP_CHAR_UNIT_PASCALS);
+
+    return hc;
+}
+
+hap_char_t *hap_char_current_temperature_with_negative_value_create(float curr_temp)
+{
+    hap_char_t *hc = hap_char_float_create(HAP_CHAR_UUID_CURRENT_TEMPERATURE,
+                                           HAP_CHAR_PERM_PR | HAP_CHAR_PERM_EV, curr_temp);
+    if (!hc) {
+        return NULL;
+    }
+
+    hap_char_float_set_constraints(hc, -100.0, 100.0, 0.1); // Changed default minimum value from 0 to -100
+    hap_char_add_unit(hc, HAP_CHAR_UNIT_CELSIUS);
 
     return hc;
 }

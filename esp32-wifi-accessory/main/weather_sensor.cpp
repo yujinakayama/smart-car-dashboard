@@ -109,7 +109,7 @@ void WeatherSensor::addTemperatureSensorService() {
     Create a temperature sensor service with initial temperature value.
     Include the "name" since this is a user visible service.
    */
-  hap_serv_t* service = hap_serv_temperature_sensor_create(0);
+  hap_serv_t* service = hap_serv_temperature_sensor_with_negative_value_create(0);
 
   hap_serv_add_char(service, hap_char_name_create(strdup(kTemperatureSensorServiceName)));
 

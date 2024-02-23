@@ -27,6 +27,18 @@ extern "C" {
  */
 hap_char_t *hap_char_current_air_pressure_create(float curr_pressure);
 
+/** Current Temperature Characteristic (which can be negative value)
+ *
+ * This API creates the Current Temperature characteristic object with other metadata
+ * (format, constraints, permissions, etc.) set as per the HAP Specs
+ *
+ * @param[in] curr_temp Initial value of current temperature characteristic
+ *
+ * @return Pointer to the characteristic object on success
+ * @return NULL on failure
+ */
+hap_char_t *hap_char_current_temperature_with_negative_value_create(float curr_temp);
+
 #ifdef __cplusplus
 }
 #endif
