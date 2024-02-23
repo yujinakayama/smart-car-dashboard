@@ -87,5 +87,5 @@ function convertPhoneNumberToE164Format(phoneNumber: string): string {
     return phoneNumber
   }
 
-  return '+81-' + phoneNumber.replace(/^0/, '')
+  return '+81' + phoneNumber.replace(/^0/, '').replace(/[^\d]/g, '')
 }
