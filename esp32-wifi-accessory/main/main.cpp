@@ -76,8 +76,7 @@ static void mainTask(void *p) {
   GarageRemote* garageRemote = new GarageRemote(GPIO_NUM_13, GPIO_NUM_12);
   garageRemote->registerBridgedHomeKitAccessory();
 
-  // Calibrate temperature by subtracting 2 degrees
-  WeatherSensor* weatherSensor = new WeatherSensor(GPIO_NUM_21, GPIO_NUM_22, -2);
+  WeatherSensor* weatherSensor = new WeatherSensor(GPIO_NUM_21, GPIO_NUM_22, 0);
   // Do not crash even if the sensor is not found
   if (weatherSensor->isFound()) {
     weatherSensor->registerBridgedHomeKitAccessory();
