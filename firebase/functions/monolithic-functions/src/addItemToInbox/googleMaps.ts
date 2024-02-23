@@ -1,6 +1,10 @@
 import { URL } from 'url'
 
-import { convertAddressComponentsToObject, decodeURLDataParameter } from '@dash/google-maps'
+import {
+  PlaceIdentifier,
+  convertAddressComponentsToObject,
+  decodeURLDataParameter,
+} from '@dash/google-maps'
 import { convertAlphanumericsToASCII } from '@dash/text-util'
 import {
   AddressComponent,
@@ -167,7 +171,7 @@ async function normalizeLocationWithQuery(inputData: InputData): Promise<Locatio
 
   const place = response.data.candidates[0]
 
-  if (!place) {
+  if (!place.place_id) {
     return null
   }
 
@@ -175,26 +179,22 @@ async function normalizeLocationWithQuery(inputData: InputData): Promise<Locatio
 }
 
 async function normalizeLocationWithIdentifier(
-  id: { placeid?: string; ftid?: string },
+  identifier: PlaceIdentifier,
   expandedURL: URL,
   inputData: InputData,
 ): Promise<Location | null> {
-  if (!id.placeid && !id.ftid) {
-    throw new Error('Either placeid or ftid must be given')
-  }
-
   const requestParameters: PlaceDetailsRequest = {
     params: {
-      place_id: id.placeid || '',
+      place_id: 'placeid' in identifier ? identifier.placeid : '',
       fields: ['address_component', 'geometry', 'name', 'type', 'website'],
       language: Language.ja,
       key: apiKey,
     },
   }
 
-  if (id.ftid) {
+  if ('ftid' in identifier) {
     // @ts-ignore ftid is not officially supported but works
-    requestParameters.params.ftid = id.ftid
+    requestParameters.params.ftid = identifier.ftid
   }
 
   const response = await client.placeDetails(requestParameters)

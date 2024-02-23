@@ -9,7 +9,7 @@ import {
 import { ExpandedURL } from './url'
 import { decodeURLDataParameter } from './urlDataParameter'
 
-type PlaceIdentifier = { placeid: string } | { ftid: string }
+export type PlaceIdentifier = { placeid: string } | { ftid: string }
 
 export class PlaceURL {
   client: Client
