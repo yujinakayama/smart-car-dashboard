@@ -27,7 +27,7 @@
     "axios-cookiejar-support": "^4.0.7",
     "encoding-japanese": "^2.0.0",
     "firebase-admin": "^11.4.1",
-    "firebase-functions": "^4.1.1",
+    "firebase-functions": "^4.7.0",
     "googleapis": "^100.0.0",
     "iconv-lite": "^0.6.3",
     "jsonwebtoken": "^9.0.2",
