@@ -40,11 +40,11 @@ class LocationInformationWidgetViewController: UIViewController {
     
     lazy var tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewDidRecognizeTap))
     
-    var roadTracker: RoadTracker {
-        return RoadTracker.shared
+    var drivingLocationTracker: DrivingLocationTracker {
+        return DrivingLocationTracker.shared
     }
 
-    var lastRoad: Road?
+    var lastLocation: DrivingLocation?
 
     var landmarkTracker: LandmarkTracker {
         return LandmarkTracker.shared
@@ -79,8 +79,8 @@ class LocationInformationWidgetViewController: UIViewController {
 
         resetViews()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(roadTrackerDidUpdateCurrentLocation), name: .RoadTrackerDidUpdateCurrentLocation, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(roadTrackerDidUpdateCurrentRoad), name: .RoadTrackerDidUpdateCurrentRoad, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(drivingLocationTrackerDidUpdateCurrentLocation), name: .DrivingLocationTrackerDidUpdateCurrentLocation, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(drivingLocationTrackerDidUpdateCurrentDrivingLocation), name: .DrivingLocationTrackerDidUpdateCurrentDrivingLocation, object: nil)
 
         view.addGestureRecognizer(tapGestureRecognizer)
         
@@ -112,30 +112,30 @@ class LocationInformationWidgetViewController: UIViewController {
 
         isVisible = true
 
-        if let road = roadTracker.currentRoad, let location = roadTracker.currentLocation {
-            update(for: road)
+        if let drivingLocation = drivingLocationTracker.currentDrivingLocation, let location = drivingLocationTracker.currentLocation {
+            update(for: drivingLocation)
             updateLowLocationAccuracyLabel(location: location)
         } else {
             activityIndicatorView.startAnimating()
         }
 
-        roadTracker.registerObserver(self)
+        drivingLocationTracker.registerObserver(self)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         isVisible = false
-        roadTracker.unregisterObserver(self)
-        lastRoad = nil
+        drivingLocationTracker.unregisterObserver(self)
+        lastLocation = nil
         resetViews()
     }
 
     deinit {
-        roadTracker.unregisterObserver(self)
+        drivingLocationTracker.unregisterObserver(self)
     }
 
     @objc func viewDidRecognizeTap() {
-        guard lastRoad != nil else { return }
+        guard lastLocation != nil else { return }
 
         Task {
             await toggleLocationView()
@@ -153,7 +153,7 @@ class LocationInformationWidgetViewController: UIViewController {
             relativeLocationView.isHidden = false
             relativeLocationLabel.text = " "
             
-            if let currentLocation = roadTracker.currentLocation,
+            if let currentLocation = drivingLocationTracker.currentLocation,
                let relativeLocation = await landmarkTracker.relativeLocationToMostInterestingLandmark(around: currentLocation, with: policyOfMostInterestingLandmarkDetection)
             {
                 updateRelativeLocationView(for: relativeLocation)
@@ -166,18 +166,18 @@ class LocationInformationWidgetViewController: UIViewController {
             relativeLocationAngleImageView.transform = .identity
             relativeLocationAngleImageView.isHidden = true
 
-            if let currentRoad = roadTracker.currentRoad {
-                updateAddressLabel(for: currentRoad)
+            if let location = drivingLocationTracker.currentDrivingLocation {
+                updateAddressLabel(location.address)
             }
         }
     }
     
-    @objc func roadTrackerDidUpdateCurrentLocation(notification: Notification) {
+    @objc func drivingLocationTrackerDidUpdateCurrentLocation(notification: Notification) {
         guard isVisible else { return }
 
         logger.debug()
 
-        guard let location = notification.userInfo?[RoadTracker.NotificationKeys.location] as? CLLocation else {
+        guard let location = notification.userInfo?[DrivingLocationTracker.NotificationKeys.location] as? CLLocation else {
             return
         }
 
@@ -192,22 +192,22 @@ class LocationInformationWidgetViewController: UIViewController {
         }
     }
 
-    @objc func roadTrackerDidUpdateCurrentRoad(notification: Notification) {
+    @objc func drivingLocationTrackerDidUpdateCurrentDrivingLocation(notification: Notification) {
         guard isVisible else { return }
 
         logger.debug()
 
-        guard let road = notification.userInfo?[RoadTracker.NotificationKeys.road] as? Road else {
+        guard let drivingLocation = notification.userInfo?[DrivingLocationTracker.NotificationKeys.drivingLocation] as? DrivingLocation else {
             return
         }
 
-        update(for: road)
+        update(for: drivingLocation)
     }
 
-    func update(for road: Road) {
+    func update(for location: DrivingLocation) {
         var shouldAnimate = false
-        if let lastRoad = lastRoad {
-            shouldAnimate = road != lastRoad
+        if let lastDrivingLocation = lastLocation {
+            shouldAnimate = location.road != lastDrivingLocation.road
         } else {
             shouldAnimate = true
         }
@@ -222,27 +222,27 @@ class LocationInformationWidgetViewController: UIViewController {
                 }
             }
 
-            self.updateLabels(for: road, animated: shouldAnimate)
+            self.updateLabels(for: location, animated: shouldAnimate)
         }
 
-        lastRoad = road
+        lastLocation = location
     }
 
-    func updateLabels(for road: Road, animated: Bool) {
+    func updateLabels(for location: DrivingLocation, animated: Bool) {
         if animated {
             withRoadChangeAnimation {
-                self.updateViews(for: road)
+                self.updateViews(for: location)
             }
         } else {
-            updateViews(for: road)
+            updateViews(for: location)
         }
     }
 
-    func updateViews(for road: Road) {
-        updateRoadNameLabels(for: road)
-        
+    func updateViews(for location: DrivingLocation) {
+        updateRoadNameLabels(for: location)
+
         if locationMode == .address {
-            updateAddressLabel(for: road)
+            updateAddressLabel(location.address)
         }
     }
 
@@ -278,14 +278,14 @@ class LocationInformationWidgetViewController: UIViewController {
         }
     }
     
-    func updateRoadNameLabels(for road: Road) {
-        if let popularName = road.popularName {
+    func updateRoadNameLabels(for location: DrivingLocation) {
+        if let popularName = location.popularName {
             roadNameLabel.text = popularName
-            canonicalRoadNameLabel.text = road.canonicalRoadName
-        } else if let canonicalRoadName = road.canonicalRoadName {
+            canonicalRoadNameLabel.text = location.canonicalRoadName
+        } else if let canonicalRoadName = location.canonicalRoadName {
             roadNameLabel.text = canonicalRoadName
             canonicalRoadNameLabel.text = nil
-        } else if let unnumberedRouteName = road.unnumberedRouteName {
+        } else if let unnumberedRouteName = location.unnumberedRouteName {
             roadNameLabel.text = unnumberedRouteName
             canonicalRoadNameLabel.text = nil
         } else {
@@ -297,8 +297,8 @@ class LocationInformationWidgetViewController: UIViewController {
         canonicalRoadNameLabel.isHidden = canonicalRoadNameLabel.text == nil
     }
 
-    func updateAddressLabel(for road: Road) {
-        addressLabel.text = road.address.components.joined(separator: " ")
+    func updateAddressLabel(_ address: DrivingLocation.Address) {
+        addressLabel.text = address.components.joined(separator: " ")
         addressLabel.isHidden = addressLabel.text == nil
     }
     

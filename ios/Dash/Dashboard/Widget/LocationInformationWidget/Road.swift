@@ -15,8 +15,7 @@ class Road: Equatable {
     static let nameComponentPattern = try! NSRegularExpression(pattern: "[^\\(\\)（）]+")
     
     let edge: RoadGraph.Edge.Metadata
-    let placemark: CLPlacemark
-    
+
     static func == (lhs: Road, rhs: Road) -> Bool {
         if let lhsPopularName = lhs.popularName {
             return lhsPopularName == rhs.popularName
@@ -29,17 +28,12 @@ class Road: Equatable {
         return lhs.roadClass == rhs.roadClass && lhs.routeNumber == rhs.routeNumber
     }
     
-    init(edge: RoadGraph.Edge.Metadata, placemark: CLPlacemark) {
+    init(edge: RoadGraph.Edge.Metadata) {
         self.edge = edge
-        self.placemark = placemark
     }
 
     var popularName: String? {
-        if roadClass == .service {
-            return placemark.name
-        } else {
-            return popularNames.first
-        }
+        return popularNames.first
     }
     
     private lazy var popularNames: [String] = {
@@ -55,7 +49,7 @@ class Road: Equatable {
         return edge.names.filter { $0.shield == nil }.map { $0.text }
     }
     
-    var canonicalRoadName: String? {
+    var canonicalName: String? {
         if let identifier = identifier {
             return identifier
         }
@@ -75,28 +69,7 @@ class Road: Equatable {
             return nil
         }
     }
-    
-    var unnumberedRouteName: String? {
-        switch roadClass {
-        case .motorway:
-            return "自動車専用道路"
-        case .trunk, .trunkLink:
-            return "国道"
-        case .primary, .secondary, .primaryLink, .secondaryLink:
-            return "\(prefecture?.name ?? "都道府県")道"
-        case .tertiary, .tertiaryLink:
-            return "\(address.municipality ?? "市町村")道"
-        case .track:
-            return "農道・林道"
-        case .service:
-            return "通路"
-        case .motorwayLink:
-            return "IC•JCT連絡路"
-        default:
-            return "一般道路"
-        }
-    }
-    
+
     var roadClass: MapboxStreetsRoadClass {
         return edge.mapboxStreetsRoadClass
     }
@@ -129,68 +102,14 @@ class Road: Equatable {
         return nil
     }
     
-    private var prefecture: Prefecture? {
+    var prefecture: Prefecture? {
         guard let regionCode = edge.regionCode else {
             return nil
         }
         return prefecturesByRegionCode[regionCode]
     }
-    
-    lazy var address = Address(placemark: placemark)
 }
 
-extension Road {
-    struct Address {
-        var placemark: CLPlacemark
-        
-        var prefecture: String? {
-            return placemark.administrativeArea
-        }
-        
-        var commandery: String? {
-            return placemark.subAdministrativeArea
-        }
-        
-        var municipality: String?
-        
-        var ward: String?
-        
-        var town: String? {
-            return placemark.subLocality
-        }
-        
-        var components: [String] {
-            return [
-                prefecture,
-                commandery,
-                municipality,
-                ward,
-                town
-            ].compactMap { $0 }
-        }
-        
-        init(placemark: CLPlacemark) {
-            self.placemark = placemark
-            parseLocality()
-        }
-        
-        private mutating func parseLocality() {
-            guard var locality = placemark.locality else { return }
-            
-            if let commandery = commandery {
-                locality.trimPrefix(commandery)
-            }
-            
-            if let match = try? /(.+市)(.+区)/.wholeMatch(in: locality) {
-                municipality = String(match.output.1)
-                ward = String(match.output.2)
-            } else {
-                municipality = locality
-            }
-        }
-        
-    }
-}
 
 // https://ja.wikipedia.org/wiki/ISO_3166-2:JP
 let prefecturesByRegionCode: [String: Prefecture] = [

@@ -1,5 +1,5 @@
 //
-//  RoadTracker.swift
+//  DrivingLocationTracker.swift
 //  Dash
 //
 //  Created by Yuji Nakayama on 2021/07/01.
@@ -11,12 +11,12 @@ import CoreLocation
 import MapboxCoreNavigation
 
 extension Notification.Name {
-    static let RoadTrackerDidUpdateCurrentLocation = Notification.Name("RoadTrackerDidUpdateCurrentLocation")
-    static let RoadTrackerDidUpdateCurrentRoad = Notification.Name("RoadTrackerDidUpdateCurrentRoad")
+    static let DrivingLocationTrackerDidUpdateCurrentLocation = Notification.Name("DrivingLocationTrackerDidUpdateCurrentLocation")
+    static let DrivingLocationTrackerDidUpdateCurrentDrivingLocation = Notification.Name("DrivingLocationTrackerDidUpdateCurrentDrivingLocation")
 }
 
-class RoadTracker: NSObject, CLLocationManagerDelegate {
-    static let shared = RoadTracker()
+class DrivingLocationTracker: NSObject, CLLocationManagerDelegate {
+    static let shared = DrivingLocationTracker()
 
     private lazy var passiveLocationManager: PassiveLocationManager = {
         let passiveLocationManager = PassiveLocationManager()
@@ -43,7 +43,7 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
 
     var isTracking = false
 
-    var currentRoad: Road?
+    var currentDrivingLocation: DrivingLocation?
 
     var currentLocation: CLLocation? {
         return passiveLocationManager.location
@@ -107,7 +107,7 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
         isTracking = false
         coreLocationManager.stopUpdatingLocation()
         passiveLocationManager.stopUpdatingElectronicHorizon()
-        currentRoad = nil
+        currentDrivingLocation = nil
         currentPlacemark = nil
     }
 
@@ -118,17 +118,17 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
         else { return }
 
         Task {
-            await updateCurrentRoad(edgeMetadata)
+            await updateCurrentDrivingLocation(edgeMetadata)
         }
     }
 
-    func updateCurrentRoad(_ edge: RoadGraph.Edge.Metadata) async {
+    func updateCurrentDrivingLocation(_ edge: RoadGraph.Edge.Metadata) async {
         let shouldUpdateCurrentPlacemarkNow =
             currentPlacemark == nil ||
             // When just entered service road, perform geocoding request for the location name
-            (edge.mapboxStreetsRoadClass == .service && currentRoad?.edge.mapboxStreetsRoadClass != .service) ||
+            (edge.mapboxStreetsRoadClass == .service && currentDrivingLocation?.road.edge.mapboxStreetsRoadClass != .service) ||
             // Update address when prefecture is changed
-            (edge.regionCode != currentRoad?.edge.regionCode)
+            (edge.regionCode != currentDrivingLocation?.road.edge.regionCode)
 
         if shouldUpdateCurrentPlacemarkNow, let currentLocation = currentLocation {
             logger.debug("Updating currentPlacemark due to road update; before: \(currentPlacemark?.name ?? "")")
@@ -137,12 +137,15 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
         }
         
         guard let currentPlacemark = currentPlacemark else { return }
-        
-        let road = Road(edge: edge, placemark: currentPlacemark)
-        currentRoad = road
 
-        NotificationCenter.default.post(name: .RoadTrackerDidUpdateCurrentRoad, object: self, userInfo: [
-            NotificationKeys.road: road
+        let drivingLocation = DrivingLocation(
+            road: Road(edge: edge),
+            placemark: currentPlacemark
+        )
+        currentDrivingLocation = drivingLocation
+
+        NotificationCenter.default.post(name: .DrivingLocationTrackerDidUpdateCurrentDrivingLocation, object: self, userInfo: [
+            NotificationKeys.drivingLocation: drivingLocation
         ])
     }
     
@@ -174,7 +177,7 @@ class RoadTracker: NSObject, CLLocationManagerDelegate {
     }
 }
 
-extension RoadTracker: PassiveLocationManagerDelegate {
+extension DrivingLocationTracker: PassiveLocationManagerDelegate {
     func passiveLocationManagerDidChangeAuthorization(_ manager: MapboxCoreNavigation.PassiveLocationManager) {
         logger.info(coreLocationManager.authorizationStatus.rawValue)
 
@@ -192,7 +195,7 @@ extension RoadTracker: PassiveLocationManagerDelegate {
     func passiveLocationManager(_ manager: MapboxCoreNavigation.PassiveLocationManager, didUpdateLocation location: CLLocation, rawLocation: CLLocation) {
         guard isTracking else { return }
 
-        NotificationCenter.default.post(name: .RoadTrackerDidUpdateCurrentLocation, object: self, userInfo: [
+        NotificationCenter.default.post(name: .DrivingLocationTrackerDidUpdateCurrentLocation, object: self, userInfo: [
             NotificationKeys.location: location
         ])
 
@@ -211,9 +214,9 @@ extension RoadTracker: PassiveLocationManagerDelegate {
     }
 }
 
-extension RoadTracker {
+extension DrivingLocationTracker {
     struct NotificationKeys {
-        static let road = "RoadTracker-road"
-        static let location = "RoadTracker-location"
+        static let drivingLocation = "DrivingLocationTracker-drivingLocation"
+        static let location = "DrivingLocationTracker-location"
     }
 }
