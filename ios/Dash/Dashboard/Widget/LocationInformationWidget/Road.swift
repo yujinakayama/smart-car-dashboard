@@ -83,8 +83,7 @@ class Road: Equatable {
         case .trunk, .trunkLink:
             return "国道"
         case .primary, .secondary, .primaryLink, .secondaryLink:
-            let prefectureType = prefecture?.suffix ?? "都道府県"
-            return "\(prefectureType)道"
+            return "\(prefecture?.name ?? "都道府県")道"
         case .tertiary, .tertiaryLink:
             return "\(address.municipality ?? "市町村")道"
         case .track:
@@ -292,6 +291,10 @@ enum Prefecture: String {
     case miyazaki = "宮崎県"
     case kagoshima = "鹿児島県"
     case okinawa = "沖縄県"
+
+    var name: String {
+        return rawValue
+    }
 
     var suffix: String {
         return String(rawValue.last!)
