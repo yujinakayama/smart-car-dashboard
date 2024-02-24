@@ -32,40 +32,6 @@ export async function normalizeAppleMapsLocation(inputData: InputData): Promise<
 }
 
 async function searchGooglePlaceFor(mapItem: MKMapItem): Promise<string | null> {
-  let placeID: string | undefined
-
-  console.debug('Searching Google place with phone number')
-  const place = await searchGooglePlaceWithPhoneNumber(mapItem)
-  placeID = place?.place_id
-
-  if (!placeID) {
-    console.debug('Searching Google place with query')
-    const place = await searchGooglePlaceWithQuery(mapItem)
-    placeID = place?.place_id
-  }
-
-  return placeID ?? null
-}
-
-async function searchGooglePlaceWithPhoneNumber(mapItem: MKMapItem): Promise<Place | null> {
-  if (!mapItem.phoneNumber) {
-    return null
-  }
-
-  const response = await googleMapsClient.findPlaceFromText({
-    params: {
-      input: convertPhoneNumberToE164Format(mapItem.phoneNumber),
-      inputtype: PlaceInputType.phoneNumber,
-      fields: ['place_id', 'geometry'],
-      language: Language.ja,
-      key: googleAPIKey,
-    },
-  })
-
-  return findNearestPlace(response.data.candidates, mapItem.placemark.coordinate)
-}
-
-async function searchGooglePlaceWithQuery(mapItem: MKMapItem): Promise<Place | null> {
   if (!mapItem.name) {
     return null
   }
@@ -84,15 +50,8 @@ async function searchGooglePlaceWithQuery(mapItem: MKMapItem): Promise<Place | n
     },
   })
 
-  return findNearestPlace(response.data.candidates, coordinate)
-}
-
-function convertPhoneNumberToE164Format(phoneNumber: string): string {
-  if (phoneNumber.startsWith('+')) {
-    return phoneNumber
-  }
-
-  return '+81' + phoneNumber.replace(/^0/, '').replace(/[^\d]/g, '')
+  const place = findNearestPlace(response.data.candidates, coordinate)
+  return place?.place_id ?? null
 }
 
 function findNearestPlace(places: Place[], targetCoordinate: Coordinate): Place | null {
