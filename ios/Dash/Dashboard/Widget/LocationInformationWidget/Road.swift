@@ -13,7 +13,8 @@ import MapboxDirections
 
 class Road: Equatable {
     static let nameComponentPattern = try! NSRegularExpression(pattern: "[^\\(\\)（）]+")
-    
+    static let canonicalNamePattern = /[国都道府県市町村]道\d+号/
+
     let edge: RoadGraph.Edge.Metadata
 
     static func == (lhs: Road, rhs: Road) -> Bool {
@@ -36,20 +37,24 @@ class Road: Equatable {
         return popularNames.first
     }
     
-    private lazy var popularNames: [String] = {
+    lazy var popularNames: [String] = {
         let names = rawNames.map { (name) -> [String] in
             let name = name.covertFullwidthAlphanumericsToHalfwidth()
             return Self.nameComponentPattern.matches(in: name).map { name[$0.range] }
         }.joined()
-        
-        return Array(names)
+
+        let popularNames = names.filter { !$0.contains(Self.canonicalNamePattern) }
+
+        return Array(popularNames)
     }()
-    
+
     private var rawNames: [String] {
-        return edge.names.filter { $0.shield == nil }.map { $0.text }
+        return edge.names.filter {
+            $0.shield == nil && ["", "ja"].contains($0.language)
+        }.map { $0.text }
     }
-    
-    var canonicalName: String? {
+
+    lazy var canonicalName: String? = {
         if let identifier = identifier {
             return identifier
         }
@@ -68,7 +73,7 @@ class Road: Equatable {
         default:
             return nil
         }
-    }
+    }()
 
     var roadClass: MapboxStreetsRoadClass {
         return edge.mapboxStreetsRoadClass

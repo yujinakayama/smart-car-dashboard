@@ -75,6 +75,10 @@
 		B933081C2A90A51800F0BE53 /* DoorLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B933081B2A90A51800F0BE53 /* DoorLock.swift */; };
 		B93321EE2323C9D500BFAB21 /* BorderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93321ED2323C9D500BFAB21 /* BorderedView.swift */; };
 		B9342A982B8A34F9000494B4 /* DrivingLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9342A972B8A34F9000494B4 /* DrivingLocation.swift */; };
+		B9342A9A2B8A3DBB000494B4 /* RoadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9342A992B8A3DBB000494B4 /* RoadTests.swift */; };
+		B9342A9B2B8A3DE2000494B4 /* Road.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B4F706268CB55D009C5DC5 /* Road.swift */; };
+		B9342A9C2B8A3F0F000494B4 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94215F026423A58003F94A0 /* StringExtension.swift */; };
+		B9342A9D2B8A3F40000494B4 /* NSRegularExpressionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADE7526998DE10086E4D8 /* NSRegularExpressionExtension.swift */; };
 		B934328D2A665DF9000F1D7C /* FloatingViewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B93432852A665DF9000F1D7C /* FloatingViewKit.framework */; };
 		B93432942A665DF9000F1D7C /* FloatingViewKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93432932A665DF9000F1D7C /* FloatingViewKitTests.swift */; };
 		B93432952A665DF9000F1D7C /* FloatingViewKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B93432872A665DF9000F1D7C /* FloatingViewKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -623,6 +627,7 @@
 		B933081B2A90A51800F0BE53 /* DoorLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorLock.swift; sourceTree = "<group>"; };
 		B93321ED2323C9D500BFAB21 /* BorderedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedView.swift; sourceTree = "<group>"; };
 		B9342A972B8A34F9000494B4 /* DrivingLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingLocation.swift; sourceTree = "<group>"; };
+		B9342A992B8A3DBB000494B4 /* RoadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoadTests.swift; sourceTree = "<group>"; };
 		B93432852A665DF9000F1D7C /* FloatingViewKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FloatingViewKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B93432872A665DF9000F1D7C /* FloatingViewKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FloatingViewKit.h; sourceTree = "<group>"; };
 		B934328C2A665DF9000F1D7C /* FloatingViewKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FloatingViewKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1583,6 +1588,7 @@
 				B9E96CBA22A3CE7500C2E009 /* DashTests.swift */,
 				B942554422B8ED10008B053B /* ETCMessageTests.swift */,
 				B99356DA22A9484700BA08AB /* ETCPaymentTests.swift */,
+				B9342A992B8A3DBB000494B4 /* RoadTests.swift */,
 				B9E96CBC22A3CE7500C2E009 /* Info.plist */,
 			);
 			path = DashTests;
@@ -2688,7 +2694,11 @@
 			files = (
 				B91BD8082323FD6B0064D2B5 /* ETCMessage.swift in Sources */,
 				B942554522B8ED10008B053B /* ETCMessageTests.swift in Sources */,
+				B9342A9C2B8A3F0F000494B4 /* StringExtension.swift in Sources */,
 				B948F95B281177B000511CA7 /* UUIDExtension.swift in Sources */,
+				B9342A9B2B8A3DE2000494B4 /* Road.swift in Sources */,
+				B9342A9A2B8A3DBB000494B4 /* RoadTests.swift in Sources */,
+				B9342A9D2B8A3F40000494B4 /* NSRegularExpressionExtension.swift in Sources */,
 				B99356DB22A9484700BA08AB /* ETCPaymentTests.swift in Sources */,
 				B91BD8092323FD820064D2B5 /* ETCPayment.swift in Sources */,
 				B948F95C2811782400511CA7 /* ETCTollbooth.swift in Sources */,
