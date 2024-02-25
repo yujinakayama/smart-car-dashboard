@@ -256,7 +256,7 @@ class LocationInformationWidgetViewController: UIViewController {
         }
 
         UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut) {
-            self.roadView.layer.setAffineTransform(.init(scaleX: 1.2, y: 1.2))
+            self.roadView.layer.setAffineTransform(.init(scaleX: 1.3, y: 1.3))
             self.roadView.layer.opacity = 0
         } completion: { (finished) in
             guard finished else { return }
