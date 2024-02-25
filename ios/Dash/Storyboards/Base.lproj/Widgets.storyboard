@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -107,18 +106,18 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="uGk-wZ-doc">
-                                        <rect key="frame" x="16" y="44.5" width="343" height="98.5"/>
+                                        <rect key="frame" x="16" y="31.5" width="343" height="124"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="651-Uo-jxa">
-                                                <rect key="frame" x="72" y="0.0" width="199.5" height="33.5"/>
+                                                <rect key="frame" x="78.5" y="0.0" width="186.5" height="33.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東名高速道路" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ZDE-jk-6TH">
-                                                        <rect key="frame" x="0.0" y="0.0" width="170.5" height="33.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="157.5" height="33.5"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="28"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="E1" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="7Gx-Jx-v31" customClass="BorderedLabel" customModule="Dash" customModuleProvider="target">
-                                                        <rect key="frame" x="178.5" y="4.5" width="21" height="24"/>
+                                                        <rect key="frame" x="165.5" y="5" width="21" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                                         <color key="textColor" systemColor="secondaryLabelColor"/>
                                                         <nil key="highlightedColor"/>
@@ -157,27 +156,33 @@
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東京都 世田谷区 岡本1丁目" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="n00-iQ-d2a">
-                                                <rect key="frame" x="44.5" y="47.5" width="254" height="25.5"/>
+                                                <rect key="frame" x="51.5" y="47.5" width="240.5" height="25.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="16b-J8-rMn">
-                                                <rect key="frame" x="68.5" y="73" width="206.5" height="25.5"/>
+                                                <rect key="frame" x="72.5" y="73" width="198" height="25.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東京駅 まで 750 m" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6bV-fG-syC">
-                                                        <rect key="frame" x="0.0" y="0.0" width="175.5" height="25.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="167" height="25.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                         <color key="textColor" systemColor="secondaryLabelColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" image="location.north.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="7Pl-Hh-Bs6">
-                                                        <rect key="frame" x="180.5" y="-3" width="26" height="31.5"/>
+                                                        <rect key="frame" x="172" y="-3" width="26" height="31.5"/>
                                                         <color key="tintColor" systemColor="secondaryLabelColor"/>
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                                     </imageView>
                                                 </subviews>
                                             </stackView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="800 m 先から 2 車線 （1.2 km 区間）" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="JEG-wW-Rdz">
+                                                <rect key="frame" x="15" y="98.5" width="313" height="25.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -211,6 +216,7 @@
                         <outlet property="activityIndicatorView" destination="p96-te-XPG" id="MWn-ka-dud"/>
                         <outlet property="addressLabel" destination="n00-iQ-d2a" id="PZ4-fa-kgP"/>
                         <outlet property="canonicalRoadNameLabel" destination="7Gx-Jx-v31" id="Fl4-Hj-0C0"/>
+                        <outlet property="laneCountLabel" destination="JEG-wW-Rdz" id="L7o-Tm-VIH"/>
                         <outlet property="lowLocationAccuracyLabel" destination="3Au-0L-lMa" id="J0d-ea-K7c"/>
                         <outlet property="relativeLocationAngleImageView" destination="7Pl-Hh-Bs6" id="1o9-B4-tLh"/>
                         <outlet property="relativeLocationLabel" destination="6bV-fG-syC" id="xOe-WB-slY"/>

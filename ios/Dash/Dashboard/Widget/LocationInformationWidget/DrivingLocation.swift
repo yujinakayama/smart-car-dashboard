@@ -8,15 +8,20 @@
 
 import Foundation
 import CoreLocation
+import MapboxCoreNavigation
 
 class DrivingLocation {
     let road: Road
+    let position: RoadGraph.Position
     let placemark: CLPlacemark
+    let mostProbablePath: RoadPath
 
     lazy var address = Address(placemark: placemark)
 
-    init(road: Road, placemark: CLPlacemark) {
+    init(road: Road, position: RoadGraph.Position, roadGraph: RoadGraph, placemark: CLPlacemark) {
         self.road = road
+        self.position = position
+        self.mostProbablePath = RoadPath(roadGraph: roadGraph, firstEdge: road.edge)
         self.placemark = placemark
     }
 

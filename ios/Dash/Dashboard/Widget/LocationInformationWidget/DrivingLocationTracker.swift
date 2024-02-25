@@ -25,7 +25,7 @@ class DrivingLocationTracker: NSObject, CLLocationManagerDelegate {
     }()
 
     private let electronicHorizonOptions = ElectronicHorizonOptions(
-        length: 1,
+        length: 20 * 1000,
         expansionLevel: 0,
         branchLength: 0,
         minTimeDeltaBetweenUpdates: nil
@@ -114,21 +114,24 @@ class DrivingLocationTracker: NSObject, CLLocationManagerDelegate {
     @objc func electronicHorizonDidUpdatePosition(_ notification: Notification) {
         guard isTracking,
               let edge = notification.userInfo?[RoadGraph.NotificationUserInfoKey.treeKey] as? RoadGraph.Edge,
-              let edgeMetadata = roadGraph.edgeMetadata(edgeIdentifier: edge.identifier)
+              let edgeMetadata = roadGraph.edgeMetadata(edgeIdentifier: edge.identifier),
+              let position = notification.userInfo?[RoadGraph.NotificationUserInfoKey.positionKey] as? RoadGraph.Position
         else { return }
 
+        print("fraction: \(position.fractionFromStart)")
+
         Task {
-            await updateCurrentDrivingLocation(edgeMetadata)
+            await updateCurrentDrivingLocation(edge: edge, metadata: edgeMetadata, position: position)
         }
     }
 
-    func updateCurrentDrivingLocation(_ edge: RoadGraph.Edge.Metadata) async {
+    func updateCurrentDrivingLocation(edge: RoadGraph.Edge, metadata: RoadGraph.Edge.Metadata, position: RoadGraph.Position) async {
         let shouldUpdateCurrentPlacemarkNow =
             currentPlacemark == nil ||
             // When just entered service road, perform geocoding request for the location name
-            (edge.mapboxStreetsRoadClass == .service && currentDrivingLocation?.road.edge.mapboxStreetsRoadClass != .service) ||
+            (metadata.mapboxStreetsRoadClass == .service && currentDrivingLocation?.road.metadata.mapboxStreetsRoadClass != .service) ||
             // Update address when prefecture is changed
-            (edge.regionCode != currentDrivingLocation?.road.edge.regionCode)
+            (metadata.regionCode != currentDrivingLocation?.road.metadata.regionCode)
 
         if shouldUpdateCurrentPlacemarkNow, let currentLocation = currentLocation {
             logger.debug("Updating currentPlacemark due to road update; before: \(currentPlacemark?.name ?? "")")
@@ -139,7 +142,9 @@ class DrivingLocationTracker: NSObject, CLLocationManagerDelegate {
         guard let currentPlacemark = currentPlacemark else { return }
 
         let drivingLocation = DrivingLocation(
-            road: Road(edge: edge),
+            road: Road(edge: edge, metadata: metadata),
+            position: position,
+            roadGraph: roadGraph,
             placemark: currentPlacemark
         )
         currentDrivingLocation = drivingLocation

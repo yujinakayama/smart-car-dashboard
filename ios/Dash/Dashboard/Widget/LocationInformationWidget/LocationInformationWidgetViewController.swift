@@ -14,15 +14,21 @@ class LocationInformationWidgetViewController: UIViewController {
     enum LocationMode: Int {
         case address
         case landmarkRelativeLocation
+        case laneCount
     }
 
     @IBOutlet weak var roadView: UIView!
     @IBOutlet weak var roadNameLabel: UILabel!
     @IBOutlet weak var canonicalRoadNameLabel: UILabel!
+
     @IBOutlet weak var addressLabel: UILabel!
+
     @IBOutlet weak var relativeLocationView: UIView!
     @IBOutlet weak var relativeLocationLabel: UILabel!
     @IBOutlet weak var relativeLocationAngleImageView: UIImageView!
+
+    @IBOutlet weak var laneCountLabel: UILabel!
+
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var lowLocationAccuracyLabel: UILabel!
 
@@ -71,6 +77,8 @@ class LocationInformationWidgetViewController: UIViewController {
             return addressLabel
         case .landmarkRelativeLocation:
             return relativeLocationView
+        case .laneCount:
+            return laneCountLabel
         }
     }
     
@@ -138,40 +146,62 @@ class LocationInformationWidgetViewController: UIViewController {
         guard lastLocation != nil else { return }
 
         Task {
-            await toggleLocationView()
+            await changeLocationMode()
         }
     }
     
-    func toggleLocationView() async {
+    func changeLocationMode() async {
         switch locationMode {
         case .address:
+            hideAddressLabel()
+
             locationMode = .landmarkRelativeLocation
 
-            addressLabel.text = nil
-            addressLabel.isHidden = true
             // Show relativeLocationView right now to avoid ugly layout shake
             relativeLocationView.isHidden = false
             relativeLocationLabel.text = " "
-            
+
             if let currentLocation = drivingLocationTracker.currentLocation,
                let relativeLocation = await landmarkTracker.relativeLocationToMostInterestingLandmark(around: currentLocation, with: policyOfMostInterestingLandmarkDetection)
             {
                 updateRelativeLocationView(for: relativeLocation)
             }
         case .landmarkRelativeLocation:
-            locationMode = .address
+            hideRelativeLocationView()
 
-            relativeLocationView.isHidden = true
-            relativeLocationLabel.text = " "
-            relativeLocationAngleImageView.transform = .identity
-            relativeLocationAngleImageView.isHidden = true
+            locationMode = .laneCount
+
+            if let location = drivingLocationTracker.currentDrivingLocation {
+                updateLaneCountLabel(location: location)
+            }
+        case .laneCount:
+            hideLaneCountLabel()
+
+            locationMode = .address
 
             if let location = drivingLocationTracker.currentDrivingLocation {
                 updateAddressLabel(location.address)
             }
         }
     }
-    
+
+    private func hideAddressLabel() {
+        addressLabel.text = nil
+        addressLabel.isHidden = true
+    }
+
+    private func hideRelativeLocationView() {
+        relativeLocationView.isHidden = true
+        relativeLocationLabel.text = " "
+        relativeLocationAngleImageView.transform = .identity
+        relativeLocationAngleImageView.isHidden = true
+    }
+
+    private func hideLaneCountLabel() {
+        laneCountLabel.text = nil
+        laneCountLabel.isHidden = true
+    }
+
     @objc func drivingLocationTrackerDidUpdateCurrentLocation(notification: Notification) {
         guard isVisible else { return }
 
@@ -241,8 +271,13 @@ class LocationInformationWidgetViewController: UIViewController {
     func updateViews(for location: DrivingLocation) {
         updateRoadNameLabels(for: location)
 
-        if locationMode == .address {
+        switch locationMode {
+        case .address:
             updateAddressLabel(location.address)
+        case .laneCount:
+            updateLaneCountLabel(location: location)
+        default:
+            break
         }
     }
 
@@ -325,6 +360,36 @@ class LocationInformationWidgetViewController: UIViewController {
         }
     }
 
+    func updateLaneCountLabel(location: DrivingLocation) {
+        let laneChangePrediction = findNextLaneCountChange(in: location.mostProbablePath, from: location.position)
+        let text: String
+
+        switch laneChangePrediction {
+        case .nextChangeContinuesFixedLength(let newLaneCount, let distance, let length):
+            text = [
+                distanceFormatter.string(from: distance),
+                " 先から",
+                newLaneCount == nil ? "車線数不明" : "\(newLaneCount!)車線",
+                "（\(distanceFormatter.string(from: length)) 区間）"
+            ].joined()
+        case .nextChangeContinuesAtLeast(let newLaneCount, let distance, _):
+            text = [
+                distanceFormatter.string(from: distance),
+                " 先から",
+                newLaneCount == nil ? "車線数不明" : "\(newLaneCount!)車線",
+            ].joined()
+        case .noChangeAtLeast(let currentLaneCount, let minimumDistance):
+            text = [
+                "\(distanceFormatter.string(from: min(minimumDistance, 100000))) 以上",
+                currentLaneCount == nil ? "車線数不明" : "\(currentLaneCount!)車線",
+                "のまま"
+            ].joined()
+        }
+
+        laneCountLabel.text = text
+        laneCountLabel.isHidden = false
+    }
+
     func resetViews() {
         roadNameLabel.text = nil
         roadNameLabel.isHidden = true
@@ -340,6 +405,9 @@ class LocationInformationWidgetViewController: UIViewController {
         relativeLocationAngleImageView.transform = .identity
         relativeLocationAngleImageView.isHidden = true
         relativeLocationView.isHidden = true
+
+        laneCountLabel.text = nil
+        laneCountLabel.isHidden = true
 
         lowLocationAccuracyLabel.isHidden = true
         activityIndicatorView.stopAnimating()

@@ -79,6 +79,8 @@
 		B9342A9B2B8A3DE2000494B4 /* Road.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B4F706268CB55D009C5DC5 /* Road.swift */; };
 		B9342A9C2B8A3F0F000494B4 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94215F026423A58003F94A0 /* StringExtension.swift */; };
 		B9342A9D2B8A3F40000494B4 /* NSRegularExpressionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92ADE7526998DE10086E4D8 /* NSRegularExpressionExtension.swift */; };
+		B9342A9F2B8AFC89000494B4 /* RoadPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9342A9E2B8AFC89000494B4 /* RoadPath.swift */; };
+		B9342AA12B8B2724000494B4 /* LaneCountChangePrediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9342AA02B8B2724000494B4 /* LaneCountChangePrediction.swift */; };
 		B934328D2A665DF9000F1D7C /* FloatingViewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B93432852A665DF9000F1D7C /* FloatingViewKit.framework */; };
 		B93432942A665DF9000F1D7C /* FloatingViewKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93432932A665DF9000F1D7C /* FloatingViewKitTests.swift */; };
 		B93432952A665DF9000F1D7C /* FloatingViewKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B93432872A665DF9000F1D7C /* FloatingViewKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -628,6 +630,8 @@
 		B93321ED2323C9D500BFAB21 /* BorderedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedView.swift; sourceTree = "<group>"; };
 		B9342A972B8A34F9000494B4 /* DrivingLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingLocation.swift; sourceTree = "<group>"; };
 		B9342A992B8A3DBB000494B4 /* RoadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoadTests.swift; sourceTree = "<group>"; };
+		B9342A9E2B8AFC89000494B4 /* RoadPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoadPath.swift; sourceTree = "<group>"; };
+		B9342AA02B8B2724000494B4 /* LaneCountChangePrediction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaneCountChangePrediction.swift; sourceTree = "<group>"; };
 		B93432852A665DF9000F1D7C /* FloatingViewKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FloatingViewKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B93432872A665DF9000F1D7C /* FloatingViewKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FloatingViewKit.h; sourceTree = "<group>"; };
 		B934328C2A665DF9000F1D7C /* FloatingViewKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FloatingViewKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1140,6 +1144,8 @@
 				B9D02088268CD1850020BF9A /* DrivingLocationTracker.swift */,
 				B9342A972B8A34F9000494B4 /* DrivingLocation.swift */,
 				B9B4F706268CB55D009C5DC5 /* Road.swift */,
+				B9342A9E2B8AFC89000494B4 /* RoadPath.swift */,
+				B9342AA02B8B2724000494B4 /* LaneCountChangePrediction.swift */,
 				B9483DA52A559A360062EA26 /* LandmarkTracker.swift */,
 			);
 			path = LocationInformationWidget;
@@ -2140,10 +2146,10 @@
 			);
 			mainGroup = B9DC5B18229D59BE00B645D5;
 			packageReferences = (
-				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */,
+				B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */,
 				B9C1DD182692EE350046E108 /* XCRemoteSwiftPackageReference "TLDExtractSwift" */,
 				B979456F27A81AFE007040E7 /* XCRemoteSwiftPackageReference "SwiftCBOR" */,
-				B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */,
+				B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */,
 				B9085FCE2A61A6B50014CCC1 /* XCRemoteSwiftPackageReference "XCGLogger" */,
 				B9085FDB2A61A8020014CCC1 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */,
 				B9085FDE2A61A8D20014CCC1 /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
@@ -2152,11 +2158,11 @@
 				B9085FE72A61AA0A0014CCC1 /* XCRemoteSwiftPackageReference "DictionaryCoding" */,
 				B9085FEA2A61AA720014CCC1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				B990259F2A61B70B00BDCDE9 /* XCRemoteSwiftPackageReference "MarqueeLabel" */,
-				B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */,
+				B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				B906AEC82A623D37008C7458 /* XCRemoteSwiftPackageReference "Solar" */,
 				B964B3002A6257EF003543CC /* XCRemoteSwiftPackageReference "PINCache" */,
 				B9BEAF252A625AAC00E23648 /* XCRemoteSwiftPackageReference "TransitionButton" */,
-				B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel.git" */,
+				B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 			);
 			productRefGroup = B9DC5B22229D59BE00B645D5 /* Products */;
 			projectDirPath = "";
@@ -2536,6 +2542,7 @@
 				B9F272C4259C91990098CB3B /* AltitudeWidgetViewController.swift in Sources */,
 				B9BB0C6623D4530C00B749CF /* ETCCardTableViewCell.swift in Sources */,
 				B9DC5B46229EB8B200B645D5 /* BLESerialPortManager.swift in Sources */,
+				B9342AA12B8B2724000494B4 /* LaneCountChangePrediction.swift in Sources */,
 				B97ABD3F27670D6E00C7EB1D /* PointOfInterestIcon.swift in Sources */,
 				B95D630D23D43FA500BEB9FD /* ETCDeviceStatusBarItemManager.swift in Sources */,
 				B92C6EC324AC2F0A001E9675 /* ArtworkView.swift in Sources */,
@@ -2587,6 +2594,7 @@
 				B9C87A1726671CCE00ABCBB4 /* ParkingSearchURLItem.swift in Sources */,
 				B99AD73727BA9D6000EE467A /* NSLayoutConstraintExtension.swift in Sources */,
 				B9C0BF472698689B00C54BA9 /* OfficialParkingInformationWebViewController.swift in Sources */,
+				B9342A9F2B8AFC89000494B4 /* RoadPath.swift in Sources */,
 				B9247DE523EC834C00B11A23 /* IndexPathExtension.swift in Sources */,
 				B9FF2907284E04F400CCB320 /* Video.swift in Sources */,
 				B90C297225E3FB80004466C9 /* SIMDExtension.swift in Sources */,
@@ -4261,7 +4269,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */ = {
+		B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -4341,7 +4349,7 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */ = {
+		B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yujinakayama/DirectionalUserLocationAnnotationView.git";
 			requirement = {
@@ -4365,7 +4373,7 @@
 				minimumVersion = 4.3.1;
 			};
 		};
-		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */ = {
+		B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mapbox/mapbox-navigation-ios.git";
 			requirement = {
@@ -4389,7 +4397,7 @@
 				kind = branch;
 			};
 		};
-		B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel.git" */ = {
+		B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scenee/FloatingPanel.git";
 			requirement = {
@@ -4407,22 +4415,22 @@
 		};
 		B906AEC02A6239E6008C7458 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
 		B906AEC22A6239E6008C7458 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
 		B906AEC42A6239E6008C7458 /* FirebaseFirestoreSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
 		};
 		B906AEC62A6239E6008C7458 /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = B906AEBD2A6239E6008C7458 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
 		};
 		B906AEC92A623D37008C7458 /* Solar */ = {
@@ -4492,7 +4500,7 @@
 		};
 		B91F7EBF2652F2B400B1233D /* DirectionalUserLocationAnnotationView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView.git" */;
+			package = B968655D26529621007182BC /* XCRemoteSwiftPackageReference "DirectionalUserLocationAnnotationView" */;
 			productName = DirectionalUserLocationAnnotationView;
 		};
 		B94E464C2AB45DE800E0BBFB /* DictionaryCoding */ = {
@@ -4522,7 +4530,7 @@
 		};
 		B9B7451F29968B2C00C85825 /* MapboxCoreNavigation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios.git" */;
+			package = B9B7451E29968B2C00C85825 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */;
 			productName = MapboxCoreNavigation;
 		};
 		B9BEAF262A625AAC00E23648 /* TransitionButton */ = {
@@ -4542,7 +4550,7 @@
 		};
 		B9E886882A6D58D600F789AA /* FloatingPanel */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel.git" */;
+			package = B9E886872A6D58D600F789AA /* XCRemoteSwiftPackageReference "FloatingPanel" */;
 			productName = FloatingPanel;
 		};
 /* End XCSwiftPackageProductDependency section */

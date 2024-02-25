@@ -15,7 +15,8 @@ class Road: Equatable {
     static let nameComponentPattern = try! NSRegularExpression(pattern: "[^\\(\\)（）]+")
     static let canonicalNamePattern = /[国都道府県市町村]道\d+号/
 
-    let edge: RoadGraph.Edge.Metadata
+    let edge: RoadGraph.Edge
+    let metadata: RoadGraph.Edge.Metadata
 
     static func == (lhs: Road, rhs: Road) -> Bool {
         if let lhsPopularName = lhs.popularName {
@@ -29,8 +30,9 @@ class Road: Equatable {
         return lhs.roadClass == rhs.roadClass && lhs.routeNumber == rhs.routeNumber
     }
     
-    init(edge: RoadGraph.Edge.Metadata) {
+    init(edge: RoadGraph.Edge, metadata: RoadGraph.Edge.Metadata) {
         self.edge = edge
+        self.metadata = metadata
     }
 
     var popularName: String? {
@@ -49,7 +51,7 @@ class Road: Equatable {
     }()
 
     private var rawNames: [String] {
-        return edge.names.filter {
+        return metadata.names.filter {
             $0.shield == nil && ["", "ja"].contains($0.language)
         }.map { $0.text }
     }
@@ -76,7 +78,7 @@ class Road: Equatable {
     }()
 
     var roadClass: MapboxStreetsRoadClass {
-        return edge.mapboxStreetsRoadClass
+        return metadata.mapboxStreetsRoadClass
     }
     
     private var routeNumber: Int? {
@@ -99,7 +101,7 @@ class Road: Equatable {
     }
     
     private var shield: RoadShield? {
-        for name in edge.names {
+        for name in metadata.names {
             if let shield = name.shield {
                 return shield
             }
@@ -108,10 +110,35 @@ class Road: Equatable {
     }
     
     var prefecture: Prefecture? {
-        guard let regionCode = edge.regionCode else {
+        guard let regionCode = metadata.regionCode else {
             return nil
         }
         return prefecturesByRegionCode[regionCode]
+    }
+
+    var length: CLLocationDistance {
+        return metadata.length
+    }
+
+    var heading: CLLocationDegrees {
+        return metadata.heading
+    }
+
+    var oneSideLaneCount: UInt? {
+        switch metadata.directionality {
+        case .bothWays:
+            guard let totalLaneCount = metadata.laneCount else {
+                return nil
+            }
+            if totalLaneCount == 1 {
+                return 1
+            } else {
+                return totalLaneCount / 2
+            }
+        case .oneWay:
+            return metadata.laneCount
+        }
+
     }
 }
 
