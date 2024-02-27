@@ -96,7 +96,14 @@ class LocationInformationWidgetViewController: UIViewController {
     }
 
     func scaleLabelFontSizes(scale: CGFloat) {
-        let labels: [UILabel] = [roadNameLabel, canonicalRoadNameLabel, addressLabel, relativeLocationLabel, lowLocationAccuracyLabel]
+        let labels: [UILabel] = [
+            roadNameLabel,
+            canonicalRoadNameLabel,
+            addressLabel,
+            relativeLocationLabel,
+            laneCountLabel,
+            lowLocationAccuracyLabel
+        ]
 
         for label in labels {
             let font = label.font!
