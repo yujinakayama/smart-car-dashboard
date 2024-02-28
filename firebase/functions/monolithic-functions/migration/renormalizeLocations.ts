@@ -7,7 +7,7 @@ import { Attachments, InputData } from '../src/addItemToInbox/inputData'
 import { Location } from '../src/addItemToInbox/normalizedData'
 
 initializeApp({
-  credential: cert('./firebase-service-account.json'),
+  credential: cert('./migration/firebase-service-account.json'),
 })
 
 const firestore = getFirestore()
@@ -21,8 +21,13 @@ async function main() {
   // const location = locationsSnapshot.docs[0];
 
   for (const vehicle of vehiclesSnapshot.docs) {
-    const vehicleItems = firestore.collection('vehicles').doc(vehicle.id).collection('items')
-    const locationsSnapshot = await vehicleItems.where('type', '==', 'location').get()
+    const vehicleItems = firestore
+      .collection('vehicles')
+      .doc(vehicle.id)
+      .collection('items')
+      .orderBy('creationDate', 'desc')
+
+    const locationsSnapshot = await vehicleItems.where('type', '==', 'location').limit(3).get()
 
     for (const location of locationsSnapshot.docs) {
       renormalize(location)
@@ -40,7 +45,7 @@ async function renormalize(document: FirebaseFirestore.QueryDocumentSnapshot<Doc
 
   try {
     const location = await normalize(inputData)
-    await document.ref.update(location)
+    await document.ref.update({ ...location })
   } catch (error) {
     if (error instanceof Error) {
       console.error(error.toString())
@@ -50,10 +55,10 @@ async function renormalize(document: FirebaseFirestore.QueryDocumentSnapshot<Doc
   }
 }
 
-function normalize(inputData: InputData): Promise<Location> {
+async function normalize(inputData: InputData): Promise<Location> {
   if (isAppleMapsLocation(inputData)) {
     return normalizeAppleMapsLocation(inputData)
-  } else if (isGoogleMapsLocation(inputData)) {
+  } else if (await isGoogleMapsLocation(inputData)) {
     return normalizeGoogleMapsLocation(inputData)
   } else {
     throw Error()
