@@ -141,6 +141,7 @@ async function normalizeLocationWithCoordinate(inputData: InputData): Promise<Lo
       latitude: place.geometry.location.lat,
       longitude: place.geometry.location.lng,
     },
+    description: null,
     name: convertAlphanumericsToASCII(
       inputData.attachments['public.plain-text'] || address.subLocality,
     ),
@@ -194,7 +195,7 @@ export async function normalizeLocationWithIdentifier(
   const requestParameters: PlaceDetailsRequest = {
     params: {
       place_id: 'placeid' in identifier ? identifier.placeid : '',
-      fields: ['address_component', 'geometry', 'name', 'type', 'website'],
+      fields: ['address_component', 'editorial_summary', 'geometry', 'name', 'type', 'website'],
       language: Language.ja,
       key: apiKey,
     },
@@ -229,6 +230,7 @@ export async function normalizeLocationWithIdentifier(
       latitude: place.geometry.location.lat,
       longitude: place.geometry.location.lng,
     },
+    description: place.editorial_summary?.overview ?? null,
     name: convertAlphanumericsToASCII(name),
     url: (await inputData.expandURL()).toString(),
     websiteURL: place.website ? new URL(place.website).toString() : null, // // To handle internationalized domain names

@@ -48,14 +48,17 @@ class PointOfInterestViewController: UIViewController {
     private lazy var contentView: UIView = {
         let stackView = UIStackView(arrangedSubviews: [
             titleLabel,
+            descriptionLabel,
             actionStackView,
         ])
 
         stackView.axis = .vertical
         stackView.alignment = .fill
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 12
-        
+        stackView.distribution = .fill
+
+        stackView.spacing = 4
+        stackView.setCustomSpacing(12, after: descriptionLabel)
+
         return stackView
     }()
 
@@ -71,7 +74,17 @@ class PointOfInterestViewController: UIViewController {
 
         return label
     }()
-    
+
+    private lazy var descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .secondaryLabel
+        label.numberOfLines = 0
+        label.font = .preferredFont(forTextStyle: .body)
+        label.adjustsFontForContentSizeCategory = true
+        return label
+    }()
+
+
     private lazy var actionStackView: UIView = {
         let stackView = UIStackView(arrangedSubviews: [
             directionsButton,
@@ -161,6 +174,8 @@ class PointOfInterestViewController: UIViewController {
         partialLocationTask?.cancel()
 
         titleLabel.text = location.name
+
+        descriptionLabel.text = location.description
 
         switch location {
         case .full(let fullLocation):

@@ -22,6 +22,7 @@ class InboxLocation: InboxItemProtocol, FullLocation {
     let address: Address
     let categories: [PointOfInterestCategory]
     let coordinate: CLLocationCoordinate2D
+    let description: String?
     let name: String?
     let url: URL
     let websiteURL: URL?

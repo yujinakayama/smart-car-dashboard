@@ -48,6 +48,15 @@ enum Location {
         }
     }
 
+    var description: String? {
+        switch self {
+        case .full(let location):
+            return location.description
+        case .partial:
+            return nil
+        }
+    }
+
     func openDirectionsInMaps() async {
         switch self {
         case .full(let location):
@@ -71,6 +80,7 @@ protocol FullLocation {
     var address: Address { get }
     var categories: [PointOfInterestCategory] { get }
     var coordinate: CLLocationCoordinate2D { get }
+    var description: String? { get }
     var googleMapsURL: URL? { get }
     var mapItem: MKMapItem { get }
     var name: String? { get }

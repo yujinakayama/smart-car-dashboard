@@ -82,6 +82,10 @@ class MapItemLocation: FullLocation {
         mapItem.placemark.coordinate
     }
     
+    var description: String? {
+        return nil
+    }
+
     var googleMapsURL: URL? {
         return nil
     }

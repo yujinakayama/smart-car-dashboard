@@ -12,6 +12,7 @@ export interface Location extends BaseNormalizedData {
     latitude: number
     longitude: number
   }
+  description: string | null
   name: string | null
   websiteURL: string | null
 }
