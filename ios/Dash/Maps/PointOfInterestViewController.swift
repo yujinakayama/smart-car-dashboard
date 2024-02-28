@@ -79,7 +79,7 @@ class PointOfInterestViewController: UIViewController {
         let label = UILabel()
         label.textColor = .secondaryLabel
         label.numberOfLines = 0
-        label.font = .preferredFont(forTextStyle: .body)
+        label.font = .preferredFont(forTextStyle: .subheadline)
         label.adjustsFontForContentSizeCategory = true
         return label
     }()
