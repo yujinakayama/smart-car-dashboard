@@ -120,7 +120,7 @@ class ClimateStatusManager: NSObject {
            let value: Double = valueOf(characteristic)
         {
             let item = StatusBarItem(
-                text: String(format: "%.0f", round(value)),
+                text: String(format: "%.0f", roundValueForDisplay(value)),
                 unit: "℃",
                 symbolName: "thermometer.medium"
             )
@@ -136,7 +136,7 @@ class ClimateStatusManager: NSObject {
            let value: Double = valueOf(characteristic)
         {
             let item = StatusBarItem(
-                text: String(format: "%.0f", round(value)),
+                text: String(format: "%.0f", roundValueForDisplay(value)),
                 unit: "%",
                 symbolName: "humidity.fill"
             )
@@ -152,7 +152,7 @@ class ClimateStatusManager: NSObject {
            let value: Double = valueOf(characteristic)
         {
             let item = StatusBarItem(
-                text: String(format: "%.0f", round(value / 100)),
+                text: String(format: "%.0f", roundValueForDisplay(value / 100)),
                 unit: "hPa",
                 symbolName: "gauge.with.dots.needle.bottom.50percent"
             )
@@ -170,9 +170,10 @@ class ClimateStatusManager: NSObject {
            let humidityPercentage: Double = valueOf(humidityCharacteristic)
         {
             let humidity: RelativeHumidity = humidityPercentage / 100
+            let dewPoint = dewPointAt(temperature: temperature, humidity: humidity)
 
             let item = StatusBarItem(
-                text: String(format: "%.0f", round(dewPointAt(temperature: temperature, humidity: humidity))),
+                text: String(format: "%.0f", roundValueForDisplay(dewPoint)),
                 unit: "℃",
                 symbolName: "drop.fill"
             )
@@ -228,4 +229,15 @@ fileprivate extension HMHome {
 fileprivate func valueOf<Value>(_ characteristic: HMCharacteristic) -> Value? {
     guard let accessory = characteristic.service?.accessory, accessory.isReachable else { return nil }
     return characteristic.value as? Value
+}
+
+// Handle ugly negative zero displayed as "-0"
+fileprivate func roundValueForDisplay(_ value: Double) -> Double {
+    let roundedValue = round(value)
+    switch roundedValue.floatingPointClass {
+    case .negativeZero:
+        return 0
+    default:
+        return roundedValue
+    }
 }
