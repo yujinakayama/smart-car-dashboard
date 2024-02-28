@@ -385,11 +385,9 @@ class LocationInformationWidgetViewController: UIViewController {
                 " 先から",
                 newLaneCount == nil ? "車線数不明" : "\(newLaneCount!)車線",
             ].joined()
-        case .noChangeAtLeast(let currentLaneCount, let minimumDistance):
+        case .noChangeAtLeast(let _, let minimumDistance):
             text = [
-                "\(distanceFormatter.string(from: min(minimumDistance, 100000))) 以上",
-                currentLaneCount == nil ? "車線数不明" : "\(currentLaneCount!)車線",
-                "のまま"
+                "\(distanceFormatter.string(from: min(minimumDistance, 100000))) 以上車線数変更なし",
             ].joined()
         }
 
