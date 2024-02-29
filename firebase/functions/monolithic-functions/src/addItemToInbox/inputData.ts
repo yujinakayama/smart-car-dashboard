@@ -51,10 +51,11 @@ export class InputData {
 
     if (expandedURLString) {
       this._expandedURL = new URL(expandedURLString)
-      return this._expandedURL
     } else {
-      throw new Error(`URL could not be expanded: ${this.url.toString()}`)
+      this._expandedURL = this.url
     }
+
+    return this._expandedURL
   }
 }
 
