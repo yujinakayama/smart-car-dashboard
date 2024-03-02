@@ -375,20 +375,22 @@ class LocationInformationWidgetViewController: UIViewController {
         case .nextChangeContinuesFixedLength(let newLaneCount, let distance, let length):
             text = [
                 distanceFormatter.string(from: distance),
-                " 先から",
+                "先から",
                 newLaneCount == nil ? "車線数不明" : "\(newLaneCount!)車線",
-                "（\(distanceFormatter.string(from: length)) 区間）"
+                "（\(distanceFormatter.string(from: length))区間）"
             ].joined()
         case .nextChangeContinuesAtLeast(let newLaneCount, let distance, _):
             text = [
                 distanceFormatter.string(from: distance),
-                " 先から",
+                "先から",
                 newLaneCount == nil ? "車線数不明" : "\(newLaneCount!)車線",
             ].joined()
-        case .noChangeAtLeast(let _, let minimumDistance):
-            text = [
-                "\(distanceFormatter.string(from: min(minimumDistance, 100000))) 以上車線数変更なし",
-            ].joined()
+        case .noChangeAtLeast(let currentLaneCount, _):
+            if let currentLaneCount = currentLaneCount {
+                text = "しばらく\(currentLaneCount)車線から変化なし"
+            } else {
+                text = "しばらく車線数変化なし"
+            }
         }
 
         laneCountLabel.text = text
