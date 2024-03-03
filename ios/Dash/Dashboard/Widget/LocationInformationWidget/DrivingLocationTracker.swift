@@ -118,8 +118,6 @@ class DrivingLocationTracker: NSObject, CLLocationManagerDelegate {
               let position = notification.userInfo?[RoadGraph.NotificationUserInfoKey.positionKey] as? RoadGraph.Position
         else { return }
 
-        print("fraction: \(position.fractionFromStart)")
-
         Task {
             await updateCurrentDrivingLocation(edge: edge, metadata: edgeMetadata, position: position)
         }
