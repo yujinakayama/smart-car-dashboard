@@ -192,6 +192,8 @@ class MapsViewController: UIViewController {
         }
     }
 
+    private var officialParkingInformationWebViewController: OfficialParkingInformationWebViewController?
+
     private lazy var officialParkingSearchStatusView: OfficialParkingSearchStatusView = {
         let view = OfficialParkingSearchStatusView()
         view.layer.cornerRadius = 8
@@ -560,7 +562,16 @@ class MapsViewController: UIViewController {
     @objc private func officialParkingSearchStatusViewButtonDidPush() {
         guard let officialParkingSearch = officialParkingSearch else { return }
 
-        let webViewController = OfficialParkingInformationWebViewController(officialParkingSearch: officialParkingSearch)
+        let webViewController: OfficialParkingInformationWebViewController
+
+        if let officialParkingInformationWebViewController = officialParkingInformationWebViewController,
+           officialParkingInformationWebViewController.webView == officialParkingSearch.webView
+        {
+            webViewController = officialParkingInformationWebViewController
+        } else {
+            webViewController = OfficialParkingInformationWebViewController(officialParkingSearch: officialParkingSearch)
+            officialParkingInformationWebViewController = webViewController
+        }
 
         let navigationController = UINavigationController(rootViewController: webViewController)
         navigationController.isToolbarHidden = false
