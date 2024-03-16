@@ -227,7 +227,7 @@ class MapsViewController: UIViewController {
             bottomBorderView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: bottomBorderView.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomBorderView.bottomAnchor),
-            bottomBorderView.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale)
+            bottomBorderView.heightAnchor.constraint(equalToConstant: .hairlineWidth)
         ])
 
         return stackView

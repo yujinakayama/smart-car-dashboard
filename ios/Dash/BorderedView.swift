@@ -39,7 +39,7 @@ import UIKit
     @IBInspectable var isHairlineBorderEnabled = false {
         didSet {
             if isHairlineBorderEnabled {
-                borderWidth = 1.0 / UIScreen.main.scale
+                borderWidth = .hairlineWidth
             }
         }
     }

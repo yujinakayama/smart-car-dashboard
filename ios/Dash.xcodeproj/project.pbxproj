@@ -126,6 +126,7 @@
 		B95642C82B6A022300821996 /* ClimateKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B95642B42B6A022300821996 /* ClimateKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B95642D12B6A02D800821996 /* DewPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95642D02B6A02D800821996 /* DewPoint.swift */; };
 		B95642D32B6A02E700821996 /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95642D22B6A02E700821996 /* Unit.swift */; };
+		B958023F2BA5A46100CE2491 /* CGFloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B958023E2BA5A46100CE2491 /* CGFloatExtension.swift */; };
 		B9588B5D23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */; };
 		B95B143B2B5ADF430089E98A /* ClimateStatusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95B143A2B5ADF430089E98A /* ClimateStatusManager.swift */; };
 		B95BF23823EBF43900A30DE0 /* ETCCardEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95BF23723EBF43900A30DE0 /* ETCCardEditViewController.swift */; };
@@ -677,6 +678,7 @@
 		B95642CF2B6A02B000821996 /* ClimateKit.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = ClimateKit.xctestplan; sourceTree = "<group>"; };
 		B95642D02B6A02D800821996 /* DewPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DewPoint.swift; sourceTree = "<group>"; };
 		B95642D22B6A02E700821996 /* Unit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unit.swift; sourceTree = "<group>"; };
+		B958023E2BA5A46100CE2491 /* CGFloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatExtension.swift; sourceTree = "<group>"; };
 		B9588B5C23CC997400711C0C /* ETCPaymentDebugInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCPaymentDebugInformationViewController.swift; sourceTree = "<group>"; };
 		B95B143A2B5ADF430089E98A /* ClimateStatusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClimateStatusManager.swift; sourceTree = "<group>"; };
 		B95BF23723EBF43900A30DE0 /* ETCCardEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETCCardEditViewController.swift; sourceTree = "<group>"; };
@@ -1415,6 +1417,7 @@
 			isa = PBXGroup;
 			children = (
 				B9247DE423EC834C00B11A23 /* IndexPathExtension.swift */,
+				B958023E2BA5A46100CE2491 /* CGFloatExtension.swift */,
 				B9D8E43923D345D70078A057 /* UUIDExtension.swift */,
 				B92E2AFB23E4958200BB4C0E /* UNNotificationContentExtension.swift */,
 				B90C297125E3FB80004466C9 /* SIMDExtension.swift */,
@@ -2586,6 +2589,7 @@
 				B9DC5B27229D59BE00B645D5 /* ETCPaymentTableViewController.swift in Sources */,
 				B92A61112576472A0073AB7B /* Assistant.swift in Sources */,
 				B9A45A9B252C229200CA7921 /* InboxItemDatabase.swift in Sources */,
+				B958023F2BA5A46100CE2491 /* CGFloatExtension.swift in Sources */,
 				B9BA5B5926A897CF004D5927 /* PointOfInterestAnnotationView.swift in Sources */,
 				B9BF2F0523F6946100967316 /* GradientPathRenderer.swift in Sources */,
 				B9BA756F2B569C09007F6253 /* UIWindowScene+MultitaskState.swift in Sources */,

@@ -61,7 +61,7 @@ class DashboardViewController: UIViewController {
         updateLayoutConstraints(for: currentLayoutMode)
 
         NSLayoutConstraint.activate([
-            musicEdgeGlossView.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale)
+            musicEdgeGlossView.heightAnchor.constraint(equalToConstant: .hairlineWidth)
         ])
 
         musicViewController.panGestureRecognizer.addTarget(self, action: #selector(gestureRecognizerDidRecognizePanGesture))
