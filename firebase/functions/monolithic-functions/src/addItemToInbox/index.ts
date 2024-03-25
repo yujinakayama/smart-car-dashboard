@@ -1,4 +1,6 @@
+import { InboxItem, Item, firestoreInboxItemConverter } from '@dash/inbox'
 import { sendNotificationToVehicle } from '@dash/push-notification'
+import { Timestamp } from '@google-cloud/firestore'
 // Destructured imports are not supported in firebase-admin
 // https://github.com/firebase/firebase-admin-node/issues/593#issuecomment-917173625
 import * as firebase from 'firebase-admin'
@@ -21,8 +23,6 @@ import {
   requiredEnvName as googleMapsRequiredEnvName,
 } from './googleMaps'
 import { Request, InputData } from './inputData'
-import { Item } from './item'
-import { NormalizedData } from './normalizedData'
 import { makeNotificationPayload } from './notification'
 import { normalizeWebpage } from './website'
 import {
@@ -56,14 +56,15 @@ export const addItemToInbox = onRequest(
     console.log('request:', request)
 
     const inputData = new InputData(request.attachments)
-    const normalizedData = await normalize(inputData)
+    const item = await normalize(inputData)
 
-    console.log('normalizedData:', normalizedData)
+    console.log('item:', item)
 
-    const item = {
+    const inboxItem: InboxItem = {
+      creationDate: Timestamp.now(),
       hasBeenOpened: false,
       raw: request.attachments,
-      ...normalizedData,
+      ...item,
     }
 
     // Create a Firestore document without network access to get document identifier
@@ -75,7 +76,7 @@ export const addItemToInbox = onRequest(
       .collection('items')
       .doc()
 
-    const promises = [addItemToFirestore(item, document)]
+    const promises = [document.withConverter(firestoreInboxItemConverter).create(inboxItem)]
     if (request.notification !== false) {
       const payload = makeNotificationPayload(item, document.id)
       promises.push(sendNotificationToVehicle(request.vehicleID, payload))
@@ -86,7 +87,7 @@ export const addItemToInbox = onRequest(
   },
 )
 
-async function normalize(inputData: InputData): Promise<NormalizedData> {
+async function normalize(inputData: InputData): Promise<Item> {
   if (isAppleMapsLocation(inputData)) {
     return normalizeAppleMapsLocation(inputData)
   } else if (await isGoogleMapsLocation(inputData)) {
@@ -98,16 +99,4 @@ async function normalize(inputData: InputData): Promise<NormalizedData> {
   } else {
     return normalizeWebpage(inputData)
   }
-}
-
-async function addItemToFirestore(
-  item: Item,
-  document: FirebaseFirestore.DocumentReference,
-): Promise<firebase.firestore.WriteResult> {
-  const data = {
-    creationDate: firebase.firestore.FieldValue.serverTimestamp(),
-    ...item,
-  }
-
-  return document.create(data)
 }

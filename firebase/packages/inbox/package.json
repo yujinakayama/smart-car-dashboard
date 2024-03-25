@@ -1,0 +1,18 @@
+{
+  "name": "@dash/inbox",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "private": true,
+  "scripts": {
+    "clean": "rm -rf lib tsconfig.tsbuildinfo",
+    "lint": "prettier --check . && eslint .",
+    "format": "prettier --write . && eslint --fix .",
+    "build": "tsc --build"
+  },
+  "dependencies": {
+    "@dash/mapkit": "file:../mapkit"
+  },
+  "devDependencies": {
+    "@google-cloud/firestore": "7.5.0"
+  }
+}

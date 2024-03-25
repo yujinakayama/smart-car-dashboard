@@ -1,10 +1,10 @@
 import { URL } from 'url'
 
+import { MusicItem } from '@dash/inbox'
 import { Client } from '@yujinakayama/apple-music'
 import jwt from 'jsonwebtoken'
 
 import { InputData } from './inputData'
-import { MusicItem } from './normalizedData'
 
 interface AppleMusicData {
   artworkURLTemplate: string | null

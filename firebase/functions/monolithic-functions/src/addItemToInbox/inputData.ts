@@ -1,6 +1,6 @@
 import { URL } from 'url'
 
-import { MKMapItem } from '@dash/mapkit'
+import { Attachments } from '@dash/inbox'
 import axios from 'axios'
 
 import { urlPattern } from './util'
@@ -57,10 +57,4 @@ export class InputData {
 
     return this._expandedURL
   }
-}
-
-export interface Attachments {
-  'public.url'?: string
-  'public.plain-text'?: string
-  'com.apple.mapkit.map-item'?: MKMapItem
 }

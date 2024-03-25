@@ -1,7 +1,7 @@
+import { Video } from '@dash/inbox'
 import { google, youtube_v3 } from 'googleapis'
 
 import { InputData } from './inputData'
-import { Video } from './normalizedData'
 
 export const requiredEnvName = 'GOOGLE_API_KEY'
 const apiKey = process.env[requiredEnvName]

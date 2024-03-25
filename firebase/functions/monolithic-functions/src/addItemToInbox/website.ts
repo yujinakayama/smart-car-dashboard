@@ -1,3 +1,4 @@
+import { Website } from '@dash/inbox'
 import axios from 'axios'
 import { wrapper as addCookieHandlingInterceptor } from 'axios-cookiejar-support'
 import Encoding from 'encoding-japanese'
@@ -6,7 +7,6 @@ import * as libxmljs from 'libxmljs'
 import { CookieJar } from 'tough-cookie'
 
 import { InputData } from './inputData'
-import { Website } from './normalizedData'
 import { urlPattern } from './util'
 
 const axiosInstance = createAxiosInstance()

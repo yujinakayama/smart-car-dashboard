@@ -1,39 +1,31 @@
+import { Item } from '@dash/inbox'
 import { NotificationPayload, UNNotificationPresentationOptions } from '@dash/push-notification'
 import * as firebase from 'firebase-admin'
-
-import { Item } from './item'
-import { NormalizedData } from './normalizedData'
 
 interface ShareNotificationPayload extends NotificationPayload {
   aps: firebase.messaging.Aps
   foregroundPresentationOptions: UNNotificationPresentationOptions
-  item: ItemWithIdentifier
+  item: Item & { identifier: string }
   notificationType: 'share'
 }
 
-interface ItemWithIdentifier extends Item {
-  identifier: string
-}
-
 export function makeNotificationPayload(item: Item, identifier: string): ShareNotificationPayload {
-  const normalizedData = item as unknown as NormalizedData
-
   let alert: firebase.messaging.ApsAlert
 
-  switch (normalizedData.type) {
+  switch (item.type) {
     case 'location':
       alert = {
         title: '目的地',
-        body: normalizedData.name || undefined,
+        body: item.name || undefined,
       }
       break
     case 'musicItem': {
       let body: string
 
-      if (normalizedData.name) {
-        body = [normalizedData.name, normalizedData.creator].filter((e) => e).join(' - ')
+      if (item.name) {
+        body = [item.name, item.creator].filter((e) => e).join(' - ')
       } else {
-        body = normalizedData.url
+        body = item.url
       }
 
       alert = {
@@ -46,14 +38,14 @@ export function makeNotificationPayload(item: Item, identifier: string): ShareNo
     case 'video':
       alert = {
         title: '動画',
-        body: normalizedData.title || undefined,
+        body: item.title || undefined,
       }
 
       break
     case 'website':
       alert = {
         title: 'Webサイト',
-        body: normalizedData.title || normalizedData.url,
+        body: item.title || item.url,
       }
       break
   }

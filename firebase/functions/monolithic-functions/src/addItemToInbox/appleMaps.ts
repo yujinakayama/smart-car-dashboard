@@ -1,10 +1,10 @@
+import { Location } from '@dash/inbox'
 import { Coordinate, distanceBetween } from '@dash/location-util'
 import { MKMapItem } from '@dash/mapkit'
 import { Place, Client, Language, PlaceInputType } from '@googlemaps/google-maps-services-js'
 
 import { normalizeLocationWithIdentifier } from './googleMaps'
 import { InputData } from './inputData'
-import { Location } from './normalizedData'
 
 export const requiredEnvName = 'GOOGLE_API_KEY'
 // If the secret is missing, it'll be error on deployment

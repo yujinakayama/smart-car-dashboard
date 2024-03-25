@@ -5,6 +5,7 @@ import {
   convertAddressComponentsToObject,
   decodeURLDataParameter,
 } from '@dash/google-maps'
+import { Location, Address } from '@dash/inbox'
 import { convertAlphanumericsToASCII } from '@dash/text-util'
 import {
   AddressComponent,
@@ -21,7 +22,6 @@ import {
 import { parse_host as parseHost } from 'tld-extract'
 
 import { InputData } from './inputData'
-import { Location, Address } from './normalizedData'
 
 export const requiredEnvName = 'GOOGLE_API_KEY'
 // If the secret is missing, it'll be error on deployment

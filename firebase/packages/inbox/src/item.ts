@@ -1,10 +1,9 @@
-export interface BaseNormalizedData {
+interface itemBase {
   type: string
   url: string
 }
 
-// Firebase doesn't allow `undefined` values
-export interface Location extends BaseNormalizedData {
+export interface Location extends itemBase {
   type: 'location'
   address: Address
   categories: string[]
@@ -12,7 +11,7 @@ export interface Location extends BaseNormalizedData {
     latitude: number
     longitude: number
   }
-  description: string | null
+  description: string | null // Firebase doesn't allow `undefined` values
   name: string | null
   websiteURL: string | null
 }
@@ -26,7 +25,7 @@ export interface Address {
   houseNumber: string | null // 番地
 }
 
-export interface MusicItem extends BaseNormalizedData {
+export interface MusicItem extends itemBase {
   type: 'musicItem'
   artworkURLTemplate: string | null
   creator: string | null
@@ -37,16 +36,17 @@ export interface MusicItem extends BaseNormalizedData {
   } | null
 }
 
-export interface Video extends BaseNormalizedData {
+export interface Video extends itemBase {
   type: 'video'
   creator: string | null
   thumbnailURL: string | null
   title: string | null
 }
 
-export interface Website extends BaseNormalizedData {
+export interface Website extends itemBase {
   type: 'website'
   title: string | null
 }
 
-export type NormalizedData = Location | MusicItem | Video | Website
+// A plain item reperesenting each concrete type
+export type Item = Location | MusicItem | Video | Website

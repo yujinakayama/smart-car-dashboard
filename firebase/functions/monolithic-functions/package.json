@@ -18,6 +18,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "@dash/google-maps": "file:packages/google-maps",
+    "@dash/inbox": "file:packages/inbox",
     "@dash/location-util": "file:packages/location-util",
     "@dash/mapkit": "file:packages/mapkit",
     "@dash/push-notification": "file:packages/push-notification",
