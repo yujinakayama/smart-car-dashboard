@@ -10,6 +10,6 @@
     "build": "tsc --build"
   },
   "dependencies": {
-    "@dash/mapkit": "file:../mapkit"
+    "@dash/mapkit": "^1.0.0"
   }
 }

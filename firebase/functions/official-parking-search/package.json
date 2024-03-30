@@ -18,8 +18,8 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "@dash/google-maps": "file:../../packages/google-maps",
-    "@dash/mapkit": "file:../../packages/mapkit",
+    "@dash/google-maps": "^1.0.0",
+    "@dash/mapkit": "^1.0.0",
     "@googlemaps/google-maps-services-js": "^3.3.42",
     "firebase-functions": "^4.5.0",
     "googleapis": "^129.0.0"

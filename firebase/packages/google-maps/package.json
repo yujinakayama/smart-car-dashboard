@@ -10,7 +10,7 @@
     "build": "tsc --build"
   },
   "dependencies": {
-    "@dash/text-util": "file:../text-util",
+    "@dash/text-util": "^1.0.0",
     "@googlemaps/google-maps-services-js": "^3.3.42",
     "axios": "^1.6.5",
     "tld-extract": "^2.1.0"
