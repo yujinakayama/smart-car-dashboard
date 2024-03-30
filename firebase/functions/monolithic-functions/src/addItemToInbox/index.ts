@@ -1,10 +1,6 @@
 import { InboxItem, Item, firestoreInboxItemConverter } from '@dash/inbox'
 import { sendNotificationToVehicle } from '@dash/push-notification'
-import { Timestamp } from '@google-cloud/firestore'
-// Destructured imports are not supported in firebase-admin
-// https://github.com/firebase/firebase-admin-node/issues/593#issuecomment-917173625
-import * as firebase from 'firebase-admin'
-import { initializeApp } from 'firebase-admin/app'
+import { Firestore, Timestamp } from '@google-cloud/firestore'
 import { onRequest } from 'firebase-functions/v2/https'
 
 import {
@@ -31,8 +27,6 @@ import {
   requiredEnvName as youtubeRequiredEnvName,
 } from './youtube'
 
-initializeApp()
-
 const requiredSecrets = Array.from(
   new Set(
     [
@@ -43,6 +37,8 @@ const requiredSecrets = Array.from(
     ].flat(),
   ),
 )
+
+const firestore = new Firestore()
 
 export const addItemToInbox = onRequest(
   {
@@ -69,8 +65,7 @@ export const addItemToInbox = onRequest(
 
     // Create a Firestore document without network access to get document identifier
     // https://github.com/googleapis/nodejs-firestore/blob/v3.8.6/dev/src/reference.ts#L2414-L2479
-    const document = firebase
-      .firestore()
+    const document = firestore
       .collection('vehicles')
       .doc(request.vehicleID)
       .collection('items')
