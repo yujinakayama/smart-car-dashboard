@@ -18,7 +18,7 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "@dash/push-notification": "file:packages/push-notification",
+    "@dash/push-notification": "file:../../packages/push-notification",
     "firebase-functions": "^4.5.0"
   },
   "private": true
