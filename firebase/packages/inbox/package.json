@@ -11,8 +11,5 @@
   },
   "dependencies": {
     "@dash/mapkit": "file:../mapkit"
-  },
-  "devDependencies": {
-    "@google-cloud/firestore": "7.5.0"
   }
 }
