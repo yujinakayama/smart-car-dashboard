@@ -1,7 +1,8 @@
 {
   "name": "vehicle-registration",
+  "version": "1.0.0",
   "scripts": {
-    "clean": "rm -rf lib tsconfig.tsbuildinfo",
+    "clean": "rm -rf isolate lib tsconfig.tsbuildinfo",
     "lint": "prettier --check . && eslint .",
     "format": "prettier --write . && eslint --fix .",
     "build": "tsc --build",
@@ -16,6 +17,9 @@
     "node": "18"
   },
   "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
   "dependencies": {
     "firebase-functions": "^4.5.0"
   },

@@ -2,6 +2,9 @@
   "name": "@dash/mapkit",
   "version": "1.0.0",
   "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
   "private": true,
   "scripts": {
     "clean": "rm -rf lib tsconfig.tsbuildinfo",

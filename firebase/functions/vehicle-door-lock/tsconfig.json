@@ -4,7 +4,7 @@
     "rootDir": "src",
     "outDir": "lib"
   },
-  "exclude": ["**/*.test.ts", "**/*.spec.ts", "jest.config.ts", "packages"],
+  "exclude": ["**/*.test.ts", "**/*.spec.ts", "isolate/*", "jest.config.ts"],
   "references": [
     {
       "path": "../../packages/push-notification"
