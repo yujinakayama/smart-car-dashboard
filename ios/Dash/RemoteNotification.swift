@@ -44,6 +44,13 @@ class RemoteNotification {
 
         Task {
             await item.open(from: rootViewController)
+
+            guard let database = Firebase.shared.inboxItemDatabase,
+                  let documentID = documentID
+            else { return }
+
+            let itemInFirestore = try await database.item(documentID: documentID).get()
+            itemInFirestore?.markAsOpened(true)
         }
 
         if let location = item as? InboxLocation,
@@ -51,14 +58,6 @@ class RemoteNotification {
            Defaults.shared.automaticallySearchParkingsWhenLocationIsAutomaticallyOpened
         {
             InboxItemTableViewController.pushMapsViewControllerForParkingSearchInCurrentScene(location: location)
-        }
-
-        Firebase.shared.inboxItemDatabase?.findItem(identifier: item.identifier) { (item, error) in
-            if let error = error {
-                logger.error(error)
-            }
-
-            item?.markAsOpened(true)
         }
 
         strongReference = item
@@ -89,6 +88,10 @@ class RemoteNotification {
             logger.error(error)
             return nil
         }
+    }
+
+    private var documentID: String? {
+        return userInfo["documentID"] as? String
     }
 
     var rootViewController: UIViewController? {

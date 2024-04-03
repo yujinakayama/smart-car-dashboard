@@ -17,7 +17,6 @@ class InboxLocation: InboxItemProtocol, FullLocation {
     static let hostnameParser = try! TLDExtract(useFrozenData: true)
 
     var firebaseDocument: DocumentReference?
-    var identifier: String!
 
     let address: Address
     let categories: [PointOfInterestCategory]

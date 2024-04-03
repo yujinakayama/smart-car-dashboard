@@ -10,6 +10,15 @@ import Foundation
 import FirebaseFirestore
 
 class InboxItemDatabase: NSObject {
+    static let documentDecoder = { (documentSnapshot: DocumentSnapshot) -> InboxItemProtocol? in
+        do {
+            return try InboxItem.makeItem(document: documentSnapshot)
+        } catch {
+            logger.error(error)
+            return nil
+        }
+    }
+
     let vehicleID: String
 
     private lazy var collection = Firestore.firestore().collection("vehicles").document(vehicleID).collection("items")
@@ -18,29 +27,6 @@ class InboxItemDatabase: NSObject {
 
     init(vehicleID: String) {
         self.vehicleID = vehicleID
-    }
-
-    func findItem(identifier: String, completion: @escaping (InboxItemProtocol?, Error?) -> Void) {
-        let document = collection.document(identifier)
-
-        document.getDocument { (snapshot, error) in
-            if let error = error {
-                completion(nil, error)
-                return
-            }
-
-            guard let snapshot = snapshot, snapshot.exists else {
-                completion(nil, nil)
-                return
-            }
-
-            do {
-                let item = try InboxItem.makeItem(document: snapshot)
-                completion(item, nil)
-            } catch {
-                completion(nil, error)
-            }
-        }
     }
 
     lazy var allItems = wrappedQuery(query)
@@ -63,17 +49,12 @@ class InboxItemDatabase: NSObject {
         return wrappedQuery(query)
     }
 
+    func item(documentID: String) -> FirestoreDocument<InboxItemProtocol> {
+        let document = collection.document(documentID)
+        return FirestoreDocument(document, documentDecoder: Self.documentDecoder)
+    }
+
     private func wrappedQuery(_ query: Query) -> FirestoreQuery<InboxItemProtocol> {
-        return FirestoreQuery(
-            query,
-            documentDecoder: { (documentSnapshot) in
-                do {
-                    return try InboxItem.makeItem(document: documentSnapshot)
-                } catch {
-                    logger.error(error)
-                    return nil
-                }
-            }
-        )
+        return FirestoreQuery(query, documentDecoder: Self.documentDecoder)
     }
 }

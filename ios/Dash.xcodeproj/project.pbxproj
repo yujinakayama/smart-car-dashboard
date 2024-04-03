@@ -156,6 +156,8 @@
 		B964BCE223E067EB00288E0D /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B964BCD823E067EB00288E0D /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B967D08225D51508000D9007 /* RearviewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940A461250E5CDD006BDFBB /* RearviewDefaults.swift */; };
 		B96810752614C5C300D647FA /* ImageFilterChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96810742614C5C300D647FA /* ImageFilterChain.swift */; };
+		B96888D32BBD493E003A4082 /* FirestoreDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96888D22BBD493D003A4082 /* FirestoreDocument.swift */; };
+		B96888D52BBD4AE9003A4082 /* FirestoreDocumentSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96888D42BBD4AE9003A4082 /* FirestoreDocumentSubscription.swift */; };
 		B9741F7123DED5BA00F061E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */; };
 		B9741F7523DF200600F061E7 /* InboxItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9741F7423DF200600F061E7 /* InboxItemTableViewController.swift */; };
 		B97541532B67D904005F0417 /* DashStatusBarSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97541522B67D904005F0417 /* DashStatusBarSlot.swift */; };
@@ -711,6 +713,8 @@
 		B964BCDF23E067EB00288E0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B967D07925D510A7000D9007 /* Rearview.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Rearview.entitlements; sourceTree = "<group>"; };
 		B96810742614C5C300D647FA /* ImageFilterChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilterChain.swift; sourceTree = "<group>"; };
+		B96888D22BBD493D003A4082 /* FirestoreDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreDocument.swift; sourceTree = "<group>"; };
+		B96888D42BBD4AE9003A4082 /* FirestoreDocumentSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreDocumentSubscription.swift; sourceTree = "<group>"; };
 		B9741F7023DED5BA00F061E7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9741F7423DF200600F061E7 /* InboxItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxItemTableViewController.swift; sourceTree = "<group>"; };
 		B97541522B67D904005F0417 /* DashStatusBarSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashStatusBarSlot.swift; sourceTree = "<group>"; };
@@ -1206,6 +1210,8 @@
 				B9C1F41427B815C400C6D4DD /* FirestoreQuerySubscription.swift */,
 				B910AF24273956C700A61795 /* FirestoreQueryPaginatedSubscription.swift */,
 				B9C1F41827B82B9400C6D4DD /* FirestoreQueryCountSubscription.swift */,
+				B96888D22BBD493D003A4082 /* FirestoreDocument.swift */,
+				B96888D42BBD4AE9003A4082 /* FirestoreDocumentSubscription.swift */,
 				B92736DF2A632FEB0088A818 /* FirestoreDocumentChange.swift */,
 			);
 			path = Firebase;
@@ -2537,6 +2543,7 @@
 				B99356E622A9525C00BA08AB /* ETCMessage.swift in Sources */,
 				B9B717DE23E6B26900A47207 /* UnknownItem.swift in Sources */,
 				B9B154EE2575FCED0031761F /* FirebaseMessaging.swift in Sources */,
+				B96888D52BBD4AE9003A4082 /* FirestoreDocumentSubscription.swift in Sources */,
 				B94EC75327914C620008C447 /* UIApplicationExtension.swift in Sources */,
 				B944C69224A9E647000D1E99 /* PlaybackControlView.swift in Sources */,
 				B9E8868B2A6D5A1B00F789AA /* PointOfInterestViewController.swift in Sources */,
@@ -2611,6 +2618,7 @@
 				B91E0B62254D047D002928D3 /* PairingURLItem.swift in Sources */,
 				B92E2AFC23E4958200BB4C0E /* UNNotificationContentExtension.swift in Sources */,
 				B97BAE6224B61DB100AE7D13 /* Vehicle.swift in Sources */,
+				B96888D32BBD493E003A4082 /* FirestoreDocument.swift in Sources */,
 				B99356E822A9553A00BA08AB /* MockSerialPort.swift in Sources */,
 				B92C6EC524AC68B7001E9675 /* SongTitleView.swift in Sources */,
 				B9D008452B471B73000B78F3 /* FocusedLocationAnnotation.swift in Sources */,

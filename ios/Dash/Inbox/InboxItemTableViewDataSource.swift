@@ -83,13 +83,13 @@ class InboxItemTableViewDataSource: UITableViewDiffableDataSource<Date, String> 
         snapshot.appendSections(tableViewData.sections.map { $0.date })
 
         for section in tableViewData.sections {
-            snapshot.appendItems(section.items.map { $0.identifier }, toSection: section.date)
+            snapshot.appendItems(section.items.map { $0.documentID! }, toSection: section.date)
         }
 
         let updatedItemIdentifiers = changes.compactMap { change in
             switch change.type {
             case .modification:
-                return change.document.identifier
+                return change.document.documentID!
             default:
                 return nil
             }

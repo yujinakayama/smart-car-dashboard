@@ -15,7 +15,6 @@ import WebKit
 // TODO: Split metadata and content so that we can handle them easily on instantiation.
 protocol InboxItemProtocol: Decodable {
     var firebaseDocument: DocumentReference? { get set }
-    var identifier: String! { get set }
     var title: String? { get }
     var url: URL { get }
     var creationDate: Date? { get }
@@ -26,6 +25,10 @@ protocol InboxItemProtocol: Decodable {
 }
 
 extension InboxItemProtocol {
+    var documentID: String? {
+        firebaseDocument?.documentID
+    }
+
     func openInDefaultApp() {
         UIApplication.shared.open(url, options: [:])
     }
@@ -95,7 +98,6 @@ struct InboxItem {
         }
 
         item.firebaseDocument = document.reference
-        item.identifier = document.documentID
 
         return item
     }

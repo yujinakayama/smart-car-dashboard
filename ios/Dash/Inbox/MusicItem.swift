@@ -13,7 +13,6 @@ import StoreKit
 
 class MusicItem: InboxItemProtocol {
     var firebaseDocument: DocumentReference?
-    var identifier: String!
 
     let artworkURLTemplate: String?
     let creator: String?

@@ -5,11 +5,12 @@ import * as firebase from 'firebase-admin'
 interface ShareNotificationPayload extends NotificationPayload {
   aps: firebase.messaging.Aps
   foregroundPresentationOptions: UNNotificationPresentationOptions
-  item: Item & { identifier: string }
+  item: Item
+  documentID: string
   notificationType: 'share'
 }
 
-export function makeNotificationPayload(item: Item, identifier: string): ShareNotificationPayload {
+export function makeNotificationPayload(item: Item, documentID: string): ShareNotificationPayload {
   let alert: firebase.messaging.ApsAlert
 
   switch (item.type) {
@@ -57,10 +58,8 @@ export function makeNotificationPayload(item: Item, identifier: string): ShareNo
     },
     foregroundPresentationOptions:
       UNNotificationPresentationOptions.sound | UNNotificationPresentationOptions.alert,
-    item: {
-      identifier: identifier,
-      ...item,
-    },
+    item,
+    documentID,
     notificationType: 'share',
   }
 }

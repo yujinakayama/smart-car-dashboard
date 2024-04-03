@@ -13,7 +13,6 @@ import StoreKit
 
 class Video: InboxItemProtocol {
     var firebaseDocument: DocumentReference?
-    var identifier: String!
 
     let creator: String?
     let title: String?

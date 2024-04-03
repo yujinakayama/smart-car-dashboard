@@ -11,7 +11,6 @@ import FirebaseFirestore
 
 class UnknownItem: InboxItemProtocol {
     var firebaseDocument: DocumentReference?
-    var identifier: String!
 
     let url: URL
     let creationDate: Date?

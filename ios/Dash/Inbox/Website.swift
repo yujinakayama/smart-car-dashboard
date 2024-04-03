@@ -11,7 +11,6 @@ import FirebaseFirestore
 
 class Website: InboxItemProtocol {
     var firebaseDocument: DocumentReference?
-    var identifier: String!
 
     let title: String?
     let url: URL
