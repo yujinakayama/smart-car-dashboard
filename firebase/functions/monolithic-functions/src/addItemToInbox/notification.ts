@@ -1,16 +1,19 @@
-import { Item } from '@dash/inbox'
+import { InboxItem } from '@dash/inbox'
 import { NotificationPayload, UNNotificationPresentationOptions } from '@dash/push-notification'
 import * as firebase from 'firebase-admin'
 
 interface ShareNotificationPayload extends NotificationPayload {
   aps: firebase.messaging.Aps
   foregroundPresentationOptions: UNNotificationPresentationOptions
-  item: Item
+  item: Omit<InboxItem, 'creationDate'>
   documentID: string
   notificationType: 'share'
 }
 
-export function makeNotificationPayload(item: Item, documentID: string): ShareNotificationPayload {
+export function makeNotificationPayload(
+  item: InboxItem,
+  documentID: string,
+): ShareNotificationPayload {
   let alert: firebase.messaging.ApsAlert
 
   switch (item.type) {
@@ -51,6 +54,10 @@ export function makeNotificationPayload(item: Item, documentID: string): ShareNo
       break
   }
 
+  // TODO: Migrate from Firebase timestamp to plain JS Date
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { creationDate, ...itemWithoutCreationDate } = item
+
   return {
     aps: {
       alert: alert,
@@ -58,7 +65,7 @@ export function makeNotificationPayload(item: Item, documentID: string): ShareNo
     },
     foregroundPresentationOptions:
       UNNotificationPresentationOptions.sound | UNNotificationPresentationOptions.alert,
-    item,
+    item: itemWithoutCreationDate,
     documentID,
     notificationType: 'share',
   }

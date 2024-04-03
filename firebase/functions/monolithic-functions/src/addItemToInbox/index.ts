@@ -73,7 +73,7 @@ export const addItemToInbox = onRequest(
 
     const promises = [document.withConverter(firestoreInboxItemConverter).create(inboxItem)]
     if (request.notification !== false) {
-      const payload = makeNotificationPayload(item, document.id)
+      const payload = makeNotificationPayload(inboxItem, document.id)
       promises.push(sendNotificationToVehicle(request.vehicleID, payload))
     }
     await Promise.all(promises)
