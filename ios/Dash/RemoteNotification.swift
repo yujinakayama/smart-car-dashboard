@@ -30,37 +30,35 @@ class RemoteNotification {
     func process(context: Context) {
         switch type {
         case .share:
-            processShareNotification(context: context)
+            Task {
+                try await processShareNotification(context: context)
+            }
         default:
             break
         }
     }
 
-    private func processShareNotification(context: Context) {
+    private func processShareNotification(context: Context) async throws {
         guard let item = inboxItem,
               shouldOpen(item, context: context), // TODO: Make configurable
               let rootViewController =  rootViewController
         else { return }
 
-        Task {
-            await item.open(from: rootViewController)
+        await item.open(from: rootViewController)
 
-            guard let database = Firebase.shared.inboxItemDatabase,
-                  let documentID = documentID
-            else { return }
+        guard let database = Firebase.shared.inboxItemDatabase,
+              let documentID = documentID
+        else { return }
 
-            let itemInFirestore = try await database.item(documentID: documentID).get()
-            itemInFirestore?.markAsOpened(true)
-        }
+        guard let itemInFirestore = try await database.item(documentID: documentID).get() else { return }
+        itemInFirestore.markAsOpened(true)
 
-        if let location = item as? InboxLocation,
+        if let location = itemInFirestore as? InboxLocation,
            !location.categories.contains(where: { $0.isKindOfParking }),
            Defaults.shared.automaticallySearchParkingsWhenLocationIsAutomaticallyOpened
         {
-            InboxItemTableViewController.pushMapsViewControllerForParkingSearchInCurrentScene(location: location)
+            await InboxItemTableViewController.pushMapsViewControllerForParkingSearchInCurrentScene(location: location)
         }
-
-        strongReference = item
     }
 
     private func shouldOpen(_ inboxItem: InboxItemProtocol, context: Context) -> Bool {
