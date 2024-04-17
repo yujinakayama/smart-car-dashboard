@@ -41,7 +41,7 @@ class RemoteNotification {
     private func processShareNotification(context: Context) async throws {
         guard let item = inboxItem,
               shouldOpen(item, context: context), // TODO: Make configurable
-              let rootViewController =  rootViewController
+              let rootViewController =  await rootViewController
         else { return }
 
         await item.open(from: rootViewController)
@@ -92,6 +92,7 @@ class RemoteNotification {
         return userInfo["documentID"] as? String
     }
 
+    @MainActor
     var rootViewController: UIViewController? {
         return UIApplication.shared.foregroundWindowScene?.keyWindow?.rootViewController
     }

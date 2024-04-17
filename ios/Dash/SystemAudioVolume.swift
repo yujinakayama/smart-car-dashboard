@@ -80,6 +80,7 @@ class SystemAudioVolume {
 
     private lazy var privateVolumeSlider = volumeView.subviews.first { $0 is UISlider} as! UISlider
 
+    @MainActor
     func setValue(_ value: Float, withIndicator showIndicator: Bool = false) {
         setVolumeViewVisibility(!showIndicator)
 
@@ -99,6 +100,7 @@ class SystemAudioVolume {
         delegate?.systemAudioVolumeDidDetectChangeByOthers(self)
     }
 
+    @MainActor
     private func setVolumeViewVisibility(_ visible: Bool) {
         if visible, volumeView.superview == nil {
             window?.addSubview(volumeView)
@@ -107,6 +109,7 @@ class SystemAudioVolume {
         volumeView.isHidden = !visible
     }
 
+    @MainActor
     private var window: UIWindow? {
         return UIApplication.shared.foregroundWindowScene?.keyWindow
     }

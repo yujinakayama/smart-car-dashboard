@@ -31,7 +31,9 @@ class SpeedSensitiveVolumeController: NSObject {
         }
 
         set {
-            volume.setValue(newValue, withIndicator: false)
+            DispatchQueue.main.async {
+                self.volume.setValue(newValue, withIndicator: false)
+            }
         }
     }
 

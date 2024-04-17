@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 extension UIApplication {
+    @MainActor
     var foregroundWindowScene: UIWindowScene? {
         return UIApplication.shared.connectedScenes.first { (scene) in
             (scene.activationState == .foregroundActive || scene.activationState == .foregroundInactive) && scene is UIWindowScene
