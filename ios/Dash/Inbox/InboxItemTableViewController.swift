@@ -277,7 +277,6 @@ private extension InboxItemTableViewController {
     func actionMenu(for location: InboxLocation) -> UIMenu {
         return LocationActions.makeMenu(for: [
             LocationActions.SearchParkings(location: .full(location), handler: { self.pushMapsViewControllerForParkingSearch(destination: location.mapItem) }),
-            LocationActions.ShowInMaps(location: .full(location), handler: { self.pushMapsViewControllerToShowLocation(location) }),
             LocationActions.SearchWeb(fullLocation: location, viewController: self),
             LocationActions.OpenWebsite(fullLocation: location, viewController: self),
             LocationActions.OpenInTabelog(fullLocation: location, viewController: self),

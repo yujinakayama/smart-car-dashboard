@@ -96,34 +96,6 @@ extension LocationActions {
         }
     }
 
-    struct ShowInMaps: LocationAction {
-        var menuPosition = MenuPosition(group: .main, order: 2)
-        var location: Location
-        var handler: () -> Void
-
-        var isPerformable: Bool {
-            return true
-        }
-
-        func perform() {
-            location.markAsOpened(true)
-            handler()
-        }
-
-        var title: String {
-            String(localized: "Show in Maps")
-
-        }
-
-        var subtitle: String? {
-            nil
-        }
-
-        var image: UIImage {
-            UIImage(systemName: "mappin")!
-        }
-    }
-
     struct SearchWeb: LocationAction {
         var menuPosition = MenuPosition(group: .main, order: 3)
         var fullLocation: FullLocation
