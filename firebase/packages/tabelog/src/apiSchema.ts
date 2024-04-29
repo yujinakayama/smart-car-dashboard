@@ -136,7 +136,7 @@ export const restaurantDetailShowResponseSchema = z.object({
         }),
       )
       .optional(),
-    review_point_flg: z.boolean(),
+    review_point_flg: z.boolean().optional(),
     prefecture_id: z.number(),
     sustainable_information_flg: z.boolean(),
     rich_appearance_flg: z.boolean(),
