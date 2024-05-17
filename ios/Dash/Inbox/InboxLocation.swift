@@ -23,6 +23,7 @@ class InboxLocation: InboxItemProtocol, FullLocation {
     let coordinate: CLLocationCoordinate2D
     let description: String?
     let name: String?
+    let tabelogRestaurant: TabelogRestaurant?
     let url: URL
     let websiteURL: URL?
     let creationDate: Date?
@@ -81,5 +82,22 @@ extension InboxLocation: Equatable, Hashable {
         hasher.combine(coordinate.latitude)
         hasher.combine(coordinate.longitude)
         hasher.combine(name)
+    }
+}
+
+struct TabelogRestaurant: Decodable {
+    var address: String
+    var averageBudget: Budget
+    var coordinate: CLLocationCoordinate2D
+    var genres: [String]
+    var id: UInt
+    var name: String
+    var reviewCount: UInt
+    var score: Float
+    var tabelogURL: URL
+
+    struct Budget: Decodable {
+      var lunch: String
+      var dinner: String
     }
 }

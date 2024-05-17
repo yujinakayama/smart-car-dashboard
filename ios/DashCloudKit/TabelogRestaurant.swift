@@ -18,7 +18,7 @@ public struct TabelogRestaurant: Decodable {
     public var name: String
     public var reviewCount: UInt
     public var score: Float
-    public var webURL: URL
+    public var tabelogURL: URL
 }
 
 extension TabelogRestaurant {

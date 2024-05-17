@@ -173,21 +173,32 @@ extension LocationActions {
         var viewController: UIViewController
 
         var isPerformable: Bool {
-            return fullLocation.googleMapsURL != nil && fullLocation.categories.contains { $0.isFoodProvider }
+            switch fullLocation {
+            case let inboxLocation as InboxLocation:
+                return inboxLocation.tabelogRestaurant != nil
+            default:
+                return fullLocation.googleMapsURL != nil && fullLocation.categories.contains { $0.isFoodProvider }
+            }
         }
 
         func perform() {
-            guard let googleMapsURL = fullLocation.googleMapsURL else { return }
+            switch fullLocation {
+            case let inboxLocation as InboxLocation:
+                guard let restaurant = inboxLocation.tabelogRestaurant else { return }
+                openInTabelogAppOrWebViewController(url: restaurant.tabelogURL)
+            default:
+                guard let googleMapsURL = fullLocation.googleMapsURL else { return }
 
-            let cloudClient = DashCloudClient()
-            cloudClient.searchTabelogRestaurant(for: googleMapsURL) { (result) in
-                switch result {
-                case .success(let restaurant):
-                    if let restaurant = restaurant {
-                        openInTabelogAppOrWebViewController(url: restaurant.webURL)
+                let cloudClient = DashCloudClient()
+                cloudClient.searchTabelogRestaurant(for: googleMapsURL) { (result) in
+                    switch result {
+                    case .success(let restaurant):
+                        if let restaurant = restaurant {
+                            openInTabelogAppOrWebViewController(url: restaurant.tabelogURL)
+                        }
+                    case .failure(let error):
+                        logger.error(error)
                     }
-                case .failure(let error):
-                    logger.error(error)
                 }
             }
         }
@@ -205,7 +216,11 @@ extension LocationActions {
         }
 
         var subtitle: String? {
-            nil
+            if let inboxLocation = fullLocation as? InboxLocation, let restaurant = inboxLocation.tabelogRestaurant {
+                return restaurant.name
+            } else {
+                return nil
+            }
         }
 
         var image: UIImage {
